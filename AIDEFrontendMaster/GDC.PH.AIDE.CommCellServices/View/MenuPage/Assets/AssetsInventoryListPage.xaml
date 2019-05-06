@@ -1,0 +1,826 @@
+﻿<Page x:Class="AssetsInventoryListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      Height="auto" Width="auto"
+      Title="AssetsInventoryListPage">
+    <Page.Resources>
+        <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
+            <Border Background="{TemplateBinding Background}" 
+                x:Name="Bd" BorderBrush="#FFA4A4A4"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4">
+                <ScrollViewer x:Name="PART_ContentHost"/>
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="Width" Value="Auto">
+                    <Setter Property="MinWidth" Value="100"/>
+                </Trigger>
+                <Trigger Property="Height" Value="Auto">
+                    <Setter Property="MinHeight" Value="20"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border>
+                            <Grid>
+                                <Grid>
+                                    <Border x:Name="border" 
+                                            CornerRadius="10,10,0,0"
+                                            Background="LightGray"/>
+                                </Grid>
+                                <ContentPresenter ContentSource="Header"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#FF4DB6AC" />
+                            </Trigger>
+                            <Trigger Property="IsSelected"
+                                     Value="True">
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#FF4DB6AC" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="RoundCorner" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="4" Background="#FF09A0C1">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          TextElement.FontWeight="Bold">
+                                </ContentPresenter>
+                            </Border>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FF005895"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FF09C2EA"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="styleDatePickerfrom" TargetType="{x:Type DatePicker}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DatePicker}">
+                        <Grid x:Name="PART_Root">
+                            <Grid.ColumnDefinitions>
+
+                                <ColumnDefinition Width="5*" />
+
+                            </Grid.ColumnDefinitions>
+
+                            <DatePickerTextBox x:Name="PART_TextBox"
+                                       BorderBrush="#FFFF7D00"
+                                       TextAlignment="Center"
+                                       HorizontalContentAlignment="Stretch"
+                                       Padding="{TemplateBinding Padding}"
+                                       VerticalContentAlignment="Center"
+                                       Visibility="Visible"
+                                       
+                                               HorizontalAlignment="Stretch"
+                                       Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="1,1,0,1" Foreground="#FF1D1D1D">
+                            </DatePickerTextBox>
+                            <Viewbox HorizontalAlignment="Right">
+
+                                <Button x:Name="PART_Button" VerticalAlignment="Stretch" >
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="OverridesDefaultStyle" Value="True"></Setter>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Image Name="buttonImage"
+                               Height="Auto"
+                               
+                               Margin="0"
+                               Source="..\..\..\Assets\Button\Calendar.png"
+                               Stretch="Fill"
+                               VerticalAlignment="Stretch"
+                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                                                            <Image.Effect>
+                                                                <DropShadowEffect  Direction="290" Opacity=".6" ShadowDepth="1" Color="LightGray" BlurRadius="1"/>
+                                                            </Image.Effect>
+                                                        </Image>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="buttonImage"
+                                        Property="Source"
+                                        Value="..\..\..\Assets\Button\edit.png"></Setter>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Viewbox>
+
+                            <TextBlock Text="from" Foreground="#FFFF7D00" VerticalAlignment="Stretch" Margin="0,10" HorizontalAlignment="left"  Background="#FFFF7D00" Padding="5" />
+                            <TextBlock Foreground="White" Text="from"  VerticalAlignment="Center" Margin="0,10" HorizontalAlignment="left"  Background="#FFFF7D00" Padding="5,0" />
+
+                            <Popup x:Name="PART_Popup" StaysOpen="False" AllowsTransparency="True" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="styleDatePickerto" TargetType="{x:Type DatePicker}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DatePicker}">
+                        <Grid x:Name="PART_Root">
+                            <Grid.ColumnDefinitions>
+
+                                <ColumnDefinition Width="5*" />
+
+                            </Grid.ColumnDefinitions>
+
+                            <DatePickerTextBox x:Name="PART_TextBox"
+                                       BorderBrush="#FFFF7D00"
+                                       TextAlignment="Center"
+                                       HorizontalContentAlignment="Stretch"
+                                       Padding="{TemplateBinding Padding}"
+                                       VerticalContentAlignment="Center"
+                                       Visibility="Visible"
+                                       
+                                               HorizontalAlignment="Stretch"
+                                       Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="1,1,0,1" Foreground="#FF1D1D1D">
+                            </DatePickerTextBox>
+                            <Viewbox HorizontalAlignment="Right">
+
+                                <Button x:Name="PART_Button" VerticalAlignment="Stretch" >
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="OverridesDefaultStyle" Value="True"></Setter>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Image Name="buttonImage"
+                               Height="Auto"
+                               
+                               Margin="0"
+                               Source="..\..\..\Assets\Button\Calendar.png"
+                               Stretch="Fill"
+                               VerticalAlignment="Stretch"
+                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                                                            <Image.Effect>
+                                                                <DropShadowEffect  Direction="290" Opacity=".6" ShadowDepth="1" Color="LightGray" BlurRadius="1"/>
+                                                            </Image.Effect>
+                                                        </Image>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="buttonImage"
+                                        Property="Source"
+                                        Value="..\..\..\Assets\Button\edit.png"></Setter>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Viewbox>
+                            <TextBlock Text="to     " Foreground="#FFFF7D00" VerticalAlignment="Stretch" Margin="0,10" HorizontalAlignment="left"  Background="#FFFF7D00" Padding="5" />
+                            <TextBlock Foreground="White" Text="to     "  VerticalAlignment="Center" Margin="0,10" HorizontalAlignment="left"  Background="#FFFF7D00" Padding="5,0" >
+
+                            </TextBlock>
+
+                            <Popup x:Name="PART_Popup" StaysOpen="False" AllowsTransparency="True" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="styleDatePickerTextBox" TargetType="{x:Type DatePickerTextBox}">
+            <Setter Property="Background" Value="#FFA9ADAF"></Setter>
+            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="IsEnabled" Value="True"></Setter>
+            <Setter Property="IsReadOnly" Value="False"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="Margin" Value="0,10"></Setter>
+
+
+        </Style>
+        <Style x:Key="ButtonAdd" TargetType="{x:Type Button}">
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Name="buttonImage"
+                               Height="Auto"
+                               HorizontalAlignment="Right"
+                               Margin="1"
+                               Source="..\..\..\Assets\Button\addnew.png"
+                               Stretch="Fill"
+                               VerticalAlignment="Stretch"
+                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                            <Image.Effect>
+                                <DropShadowEffect  Direction="290" Opacity="0.6" ShadowDepth="1" Color="Black"/>
+                            </Image.Effect>
+                        </Image>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonImage"
+                                        Property="Source"
+                                        Value="..\..\..\Assets\Button\addnewclick.png"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+        <Style x:Key="ButtonSearch" TargetType="{x:Type Button}">
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Name="buttonImage"
+                               Height="Auto"
+                               HorizontalAlignment="Right"
+                               Margin="1"
+                               Source="..\..\..\Assets\Button\search.png"
+                               Stretch="Fill"
+                               VerticalAlignment="Stretch"
+                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                            <Image.Effect>
+                                <DropShadowEffect  Direction="290" Opacity="0.9" ShadowDepth="2" Color="LightGray"/>
+                            </Image.Effect>
+                        </Image>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonImage"
+                                        Property="Source"
+                                        Value="..\..\..\Assets\Button\searchclick.png"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ButtonPrint" TargetType="{x:Type Button}">
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Name="buttonImage"
+                               Height="Auto"
+                               HorizontalAlignment="Right"
+                               Margin="1"
+                               Source="..\..\..\Assets\Button\Print.png"
+                               Stretch="Fill"
+                               VerticalAlignment="Stretch"
+                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                            <Image.Effect>
+                                <DropShadowEffect  Direction="290" Opacity="0.9" ShadowDepth="2" Color="LightGray"/>
+                            </Image.Effect>
+                        </Image>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonImage"
+                                        Property="Source"
+                                        Value="..\..\..\Assets\Button\PrintClick.png"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ButtonExport" TargetType="{x:Type Button}">
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Name="buttonImage"
+                               Height="32"
+                               HorizontalAlignment="Right"
+                               Margin="1"
+                               Source="..\..\..\Assets\Button\export.png"
+                               Stretch="Fill"
+                               VerticalAlignment="Stretch"
+                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                            <Image.Effect>
+                                <DropShadowEffect  Direction="290" Opacity="0.9" ShadowDepth="2" Color="LightGray"/>
+                            </Image.Effect>
+                        </Image>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ButtonPageNext" TargetType="{x:Type Button}">
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Name="buttonImage"
+                               Height="Auto"
+                               HorizontalAlignment="Right"
+                               Margin="1"
+                               Source="..\..\..\Assets\Button\next.png"
+                               Stretch="Fill"
+                               VerticalAlignment="Stretch"
+                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                            <Image.Effect>
+                                <DropShadowEffect  Direction="290" Opacity="0.6" ShadowDepth="1" Color="LightGray"/>
+                            </Image.Effect>
+                        </Image>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonImage"
+                                        Property="Source"
+                                        Value="..\..\..\Assets\Button\nextclick.png"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ButtonPageBack" TargetType="{x:Type Button}">
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Name="buttonImage"
+                               Height="Auto"
+                               HorizontalAlignment="Right"
+                               Margin="1"
+                               Source="..\..\..\Assets\Button\back.png"
+                               Stretch="Fill"
+                               VerticalAlignment="Stretch"
+                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                            <Image.Effect>
+                                <DropShadowEffect  Direction="290" Opacity="0.6" ShadowDepth="1" Color="LightGray"/>
+                            </Image.Effect>
+                        </Image>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonImage"
+                                        Property="Source"
+                                        Value="..\..\..\Assets\Button\backclick.png"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type DataGrid}">
+            <Setter Property="HeadersVisibility" Value="Column"/>
+            <Setter Property="GridLinesVisibility" Value="All"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="VerticalGridLinesBrush" Value="White"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="White"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserDeleteRows" Value="False"/>
+        </Style>
+        <Style TargetType="{x:Type DataGridCell}">
+
+            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Background" Value="#FF4DB6AC"/>
+
+            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+        <Style TargetType="{x:Type DataGridRow}">
+            <Setter Property="Background" Value="white" />
+            <Setter Property="Foreground" Value="#FF303030"/>
+
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"
+                           Value="True">
+                    <Setter Property="Background"
+                               Value="LightGray" />
+
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style x:Key="buttonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="SteelBlue" />
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Width" Value="auto" />
+            <Setter Property="Height" Value="auto" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Transparent">
+                            <ContentPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+
+                    <Setter Property="Background" Value="DimGray" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Page.Resources>
+    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="11*"/>
+
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="1*"/>
+
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="12*"/>
+
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
+                            <Image Source="..\..\..\Assets\Button\AssetInventoryLogo.png" />
+                        </Viewbox>
+
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Viewbox HorizontalAlignment="Left">
+                            <TextBlock TextWrapping="Wrap" Padding="0" Text="Asset Inventory" Margin="0,7,0,7" Foreground="DimGray"/>
+                        </Viewbox>
+                    </Grid>
+
+                </Grid>
+                <Grid Grid.Column="1">
+                    <!--<Viewbox Margin="15">
+                        <Button x:Name="btnSRAdd" Style="{DynamicResource ButtonAdd}" BorderBrush="{x:Null}">
+
+                        </Button>
+                    </Viewbox>-->
+                </Grid>
+
+            </Grid>
+            <Grid Grid.Row="1" Background="#FFFBFBFB">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="6*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="4*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Viewbox>
+                            <TextBlock TextWrapping="Wrap" Text="Search" Margin="0,18,0,18" 
+                                   Foreground="DimGray" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Viewbox>
+                    </Grid>
+                    <Grid Grid.Column="1" HorizontalAlignment="Stretch">
+
+                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtSearch" TextWrapping="Wrap" Margin="0,17,0,17" TextChanged="txtSearch_TextChanged" Width="auto" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                    </Grid>
+                </Grid>
+
+
+
+
+            </Grid>
+            <Grid Grid.Row="2" Background="White">
+                <TabControl x:Name="SR" Margin="0,10,0,0" BorderBrush="DimGray" BorderThickness="0" >
+                    <TabItem x:Name="Own"
+                         Foreground="White" Width="150" HorizontalContentAlignment="center" 
+                         Height="30" BorderThickness="0" Margin="0" >
+                        <TabItem.Header>
+                            <Viewbox HorizontalAlignment="Left">
+                                <TextBlock TextWrapping="Wrap" Padding="10,0,0,0" Text="My Asset" Margin="10" Foreground="White" FontSize="20"/>
+                            </Viewbox>
+                        </TabItem.Header>
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="9*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <WrapPanel HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Top">
+                                    <Grid Grid.Row="0" Margin="0">
+                                        <Grid Grid.Row="0">
+
+                                            <DataGrid x:Name="lv_assetInventoryListOwn" ItemsSource="{Binding AssetInventoryList}" 
+                                          CanUserAddRows="False" AutoGenerateColumns="False" CanUserResizeColumns="False"
+                                          CanUserReorderColumns="False" CanUserSortColumns="False"
+                                          BorderBrush="Transparent" IsReadOnly="True">
+                                                <DataGrid.Resources>
+                                                    <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="Red" Opacity="0.5" />
+                                                </DataGrid.Resources>
+
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset ID" Width="*" Binding="{Binding ASSET_ID}" />
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee ID" Width="1.3*" Binding="{Binding EMP_ID}" Visibility="Collapsed"/>
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee" Width="2*" Binding="{Binding FULL_NAME}" Visibility="Collapsed"/>
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Department" Width="1.5*" Binding="{Binding DEPARTMENT}" Visibility="Collapsed"/>
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Description" Width="2*" Binding="{Binding ASSET_DESC}" />
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Manufacturer" Width="1.5*" Binding="{Binding MANUFACTURER}" />
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Model No." Width="2*" Binding="{Binding MODEL_NO}" />
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Serial No." Width="2*" Binding="{Binding SERIAL_NO}" />
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Tag" Width="1.5*" Binding="{Binding ASSET_TAG}" />
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Assigned" Width="1.5*" Binding="{Binding DATE_ASSIGNED, StringFormat=d}" />
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="1.3*" Binding="{Binding STATUS_DESCR}" />
+                                                    <DataGridTemplateColumn Header="APPROVED" Width="100" >
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate >
+                                                                <CheckBox Name="chkDiscontinue" IsChecked="{Binding Path=ISAPPROVED}" IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Grid>
+                                    </Grid>
+                                </WrapPanel>
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width=".8*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*"/>
+                                            <ColumnDefinition Width="30*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0">
+                                            <Viewbox>
+                                                <Label HorizontalAlignment="Left" Background="White" BorderBrush="DimGray" BorderThickness="1" Margin="5"></Label>
+                                            </Viewbox>
+                                        </Grid>
+                                        <Grid Grid.Column="1">
+                                            <Viewbox HorizontalAlignment="Left">
+                                                <Label Foreground="DimGray" Content="Unassigned Assets" VerticalAlignment="Center"/>
+                                            </Viewbox>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="10*"/>
+                                            <ColumnDefinition Width="30*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0">
+                                            <Viewbox>
+                                                <Label HorizontalAlignment="Left" Background="#CCFFD8D8" BorderBrush="DimGray" BorderThickness="1" Margin="5"></Label>
+                                            </Viewbox>
+                                        </Grid>
+                                        <Grid Grid.Column="1">
+                                            <Viewbox HorizontalAlignment="Left">
+                                                <Label Foreground="DimGray" Content="Personal Assets" VerticalAlignment="Center"/>
+                                            </Viewbox>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+
+                                <Grid Grid.Column="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width=".2*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <Button Height="auto" Width="auto"  Margin="5"
+                            x:Name="btnPrev1" Click="btnPrev_Click" Style="{DynamicResource ButtonPageBack}" BorderBrush="{x:Null}" >
+
+                                        </Button>
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+
+                                    </Grid>
+                                    <Grid Grid.Column="2">
+                                        <Button Height="auto" Width="auto" Margin="5" 
+                             x:Name="btnNext1" Click="btnNext_Click" Style="{DynamicResource ButtonPageNext}" BorderBrush="{x:Null}">
+
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                                
+                                <Grid Grid.Column="2" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="6*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width=".3*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0"></Grid>
+                                    <Grid Grid.Column="1">
+
+                                    </Grid>
+
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+                    <TabItem x:Name="All" Foreground="White" 
+                         Width="150" HorizontalContentAlignment="Center"                         
+                         Height="30">
+                        <TabItem.Header>
+                            <Viewbox HorizontalAlignment="Left">
+                                <TextBlock TextWrapping="Wrap" Padding="10,0,0,0" Text="All Asset" Margin="10" Foreground="White" FontSize="20"/>
+                            </Viewbox>
+                        </TabItem.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="9*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row ="0">
+                                <WrapPanel HorizontalAlignment="Center" Grid.Row="0">
+                                    <DataGrid x:Name="lv_assetInventoryList" ItemsSource="{Binding AssetInventoryList}" 
+                                          CanUserAddRows="False" AutoGenerateColumns="False" CanUserResizeColumns="False"
+                                          CanUserReorderColumns="False" CanUserSortColumns="False"
+                                          BorderBrush="Transparent" IsReadOnly="True">
+                                        <DataGrid.Resources>
+                                            <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="Red" Opacity="0.5" />
+                                        </DataGrid.Resources>
+
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset ID" Width="*" Binding="{Binding ASSET_ID}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee ID" Width="1.3*" Binding="{Binding EMP_ID}" Visibility="Collapsed"/>
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Assigned To" Width="2*" Binding="{Binding FULL_NAME}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Department" Width="1.5*" Binding="{Binding DEPARTMENT}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Description" Width="2*" Binding="{Binding ASSET_DESC}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Manufacturer" Width="1.5*" Binding="{Binding MANUFACTURER}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Model No." Width="2*" Binding="{Binding MODEL_NO}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Serial No." Width="2*" Binding="{Binding SERIAL_NO}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Tag" Width="1.5*" Binding="{Binding ASSET_TAG}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Purchased" Width="1.8*" Binding="{Binding DATE_DESCR}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Assigned" Width="1.5*" Binding="{Binding DATE_ASSIGNED, StringFormat=d}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="1.3*" Binding="{Binding STATUS_DESCR}" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </WrapPanel>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width=".8*"/>
+                                    <ColumnDefinition Width="3*"/>
+                                </Grid.ColumnDefinitions>
+
+
+
+                                <Grid Grid.Column="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width=".2*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <Button Height="auto" Width="auto"  Margin="5"
+                            x:Name="btnPrev2" Click="btnPrev_Click" Style="{DynamicResource ButtonPageBack}" BorderBrush="{x:Null}" >
+
+                                        </Button>
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+
+                                    </Grid>
+                                    <Grid Grid.Column="2">
+                                        <Button Height="auto" Width="auto" Margin="5" 
+                             x:Name="btnNext2" Click="btnNext_Click" Style="{DynamicResource ButtonPageNext}" BorderBrush="{x:Null}">
+
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                                <Grid Grid.Column="2" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="6*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width=".3*"/>
+
+
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0"></Grid>
+                                    <Grid Grid.Column="1">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" />
+                                            <Button Style="{DynamicResource ButtonExport}" x:Name="btnExport" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Grid>
+
+                                </Grid>
+
+                            </Grid>
+
+                        </Grid>
+                    </TabItem>
+                    <TabItem x:Name="Unapproved"
+                         Foreground="White" Width="150" HorizontalContentAlignment="center" 
+                         Height="30" BorderThickness="0" Margin="0" Visibility="Hidden">
+                        <TabItem.Header>
+                            <Viewbox HorizontalAlignment="Left">
+                                <TextBlock TextWrapping="Wrap" Padding="10,0,0,0" Text="List of Unapproved Assets" Margin="10" Foreground="White" FontSize="20"/>
+                            </Viewbox>
+                        </TabItem.Header>
+                        <Grid >
+                            <WrapPanel HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Top">
+                                <Grid Grid.Row="0" Margin="0">
+                                    <Grid Grid.Row="0">
+                                        <Grid Margin="0">
+                                            <Label x:Name="lblPagingInfo3" />
+                                        </Grid>
+                                        <DataGrid x:Name="lv_assetInventoryListUnapproved" ItemsSource="{Binding AssetInventoryList}" 
+                                          CanUserAddRows="False" AutoGenerateColumns="False" CanUserResizeColumns="False"
+                                          CanUserReorderColumns="False" CanUserSortColumns="False"
+                                          BorderBrush="Transparent" IsReadOnly="True">
+                                            <DataGrid.Resources>
+                                                <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="Red" Opacity="0.5" />
+                                            </DataGrid.Resources>
+
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset ID" Width="*" Binding="{Binding ASSET_ID}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee ID" Width="1.3*" Binding="{Binding EMP_ID}" Visibility="Collapsed"/>
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Assigned To" Width="2*" Binding="{Binding FULL_NAME}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Department" Width="1.5*" Binding="{Binding DEPARTMENT}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Description" Width="2*" Binding="{Binding ASSET_DESC}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Manufacturer" Width="1.5*" Binding="{Binding MANUFACTURER}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Model No." Width="2*" Binding="{Binding MODEL_NO}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Serial No." Width="2*" Binding="{Binding SERIAL_NO}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Tag" Width="1.5*" Binding="{Binding ASSET_TAG}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Assigned" Width="1.5*" Binding="{Binding DATE_ASSIGNED, StringFormat=d}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="1.3*" Binding="{Binding STATUS_DESCR}" />
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+                                </Grid>
+                            </WrapPanel>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </Grid>
+    </Border>
+</Page>

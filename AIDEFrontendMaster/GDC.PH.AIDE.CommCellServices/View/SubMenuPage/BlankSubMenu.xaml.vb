@@ -1,0 +1,3 @@
+﻿Class BlankSubMenu
+
+End Class

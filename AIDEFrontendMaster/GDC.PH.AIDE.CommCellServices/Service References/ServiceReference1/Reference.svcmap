@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d6b4a9f1-3bb6-4731-aa79-f04a3c660b9f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/AIDE/AIDEService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="AIDEService.xsd" MetadataType="Schema" ID="d6d8072c-c019-4dfd-8f1d-2bc7cbbafe60" SourceId="1" SourceUrl="http://aide/AIDE/AIDEService.svc?xsd=xsd2" />
+    <MetadataFile FileName="AIDEService1.xsd" MetadataType="Schema" ID="e79c930e-e91d-4931-93c6-8745224cd411" SourceId="1" SourceUrl="http://aide/AIDE/AIDEService.svc?xsd=xsd1" />
+    <MetadataFile FileName="AIDEService2.xsd" MetadataType="Schema" ID="a0faa3eb-1798-482d-8dce-ea648e716688" SourceId="1" SourceUrl="http://aide/AIDE/AIDEService.svc?xsd=xsd0" />
+    <MetadataFile FileName="AIDEService.disco" MetadataType="Disco" ID="bef8574d-5bc0-4bf6-934c-c7daad35ecf7" SourceId="1" SourceUrl="http://aide/AIDE/AIDEService.svc?disco" />
+    <MetadataFile FileName="AIDEService.wsdl" MetadataType="Wsdl" ID="3a4cc36c-515c-4276-b9a5-32fb1f84eb01" SourceId="1" SourceUrl="http://aide/AIDE/AIDEService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

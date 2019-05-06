@@ -1,0 +1,275 @@
+﻿<Page x:Class="TaskPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      Height="Auto" Width="Auto"
+      Title="TaskPage">
+
+    <Page.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="SteelBlue"/>
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontFamily" Value="SegoeUI" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderThickness="0" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="DimGray" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="imageStyle" TargetType="{x:Type Image}">
+            <Setter Property="Margin" Value="36,10,5,5" />
+            <Setter Property="Width" Value="36"></Setter>
+            <Setter Property="Height" Value="36"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+        </Style>
+        
+
+
+        <Style TargetType="{x:Type Label}" x:Key="SideLabel">
+            <Setter Property="Foreground" Value="#FF191919" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="Height" Value="27" />
+            <Setter Property="Width" Value="100" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+
+        <Style TargetType="{x:Type Label}" x:Key="TitleLable">
+            <Setter Property="Foreground" Value="#FFB00808" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Height" Value="Auto" />
+        </Style>
+
+        <Style TargetType="{x:Type Label}" x:Key="DateLabel">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="#ff232323"/>
+            <Setter Property="FontFamily" Value="Times Roman" />
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="White"/>
+        </Style>
+
+        <Style x:Key="textblockStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+
+        <Style x:Key="dgTextColumnStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="FontWeight" Value="Normal" />
+        </Style>
+
+        <Style TargetType="{x:Type DatePicker}">
+            <Setter Property="Height" Value="23" />
+            <Setter Property="Width" Value="120" />
+            <Setter Property="BorderBrush" Value="DimGray" />
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+        </Style>
+
+        <Style TargetType="{x:Type DataGrid}">
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="white"/>
+            <Setter Property="VerticalGridLinesBrush" Value="white"/>
+            <Setter Property="AlternatingRowBackground" Value="SteelBlue"/>
+            <Setter Property="CanUserResizeColumns" Value="False"/>
+            <Setter Property="CanUserReorderColumns" Value="False"/>
+            <Setter Property="RowBackground" Value="#7a878c"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"  Value="Hidden" />
+            <Setter Property="BorderBrush" Value="white"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="HeadersVisibility" Value="Column" />
+        </Style>
+        
+        <DataTemplate x:Key="RotateHeaderTemplate" >
+            <TextBlock Text="{Binding}">
+                <TextBlock.LayoutTransform>
+                    <RotateTransform Angle="-90" />
+                </TextBlock.LayoutTransform>
+            </TextBlock>
+        </DataTemplate>
+        
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Background" Value="SteelBlue"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Height" Value="200" />
+            <Setter Property="BorderBrush" Value="#7a878c"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}" />
+        </Style>
+       
+        <Style TargetType="{x:Type DataGridCell}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" />
+                            <ContentPresenter HorizontalAlignment="Center" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        
+        <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="90*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Opacity="0.9">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="95*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Background="SteelBlue" Grid.ColumnSpan="2"></StackPanel>
+            <Grid Grid.Column="0">
+                <Image Source="Assets/Menu/TaskIcon.png" 
+                       VerticalAlignment="Center"  
+                       HorizontalAlignment="Center"    
+                       Width="auto" Height="auto" Margin="10">
+                </Image>
+            </Grid>
+            <Grid Grid.Column="1">
+                <TextBlock  Style="{DynamicResource textblockStyle}" FontSize="25" 
+                            Margin="0,15">EMPLOYEE TASK MONITORING</TextBlock>
+            </Grid>
+        </Grid>
+        
+        <Grid Grid.Row="1">
+            <Grid>
+                <Border Margin="10,20,20,20" BorderBrush="DimGray" BorderThickness="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="8*"/>
+                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="82*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Grid Grid.Row="0" Background="SteelBlue">
+                            <TextBlock Style="{DynamicResource textblockStyle}" 
+                                       FontSize="18"
+                                       Margin="15,0"
+                                       Text="TASK SUMMARY" />
+                        </Grid>
+                        
+                        <Grid Grid.Row="1">
+                            <!--
+                            <Button Content="Prev" Style="{DynamicResource buttonStyle}"  HorizontalAlignment="Left" Margin="19,10,0,0" VerticalAlignment="Top" Height="24" Width="47"/>
+                            <Button Content="Next" Style="{DynamicResource buttonStyle}" HorizontalAlignment="Left" Margin="70,10,0,0" VerticalAlignment="Top" Height="24" Width="48"/>
+                            
+                            <DatePicker HorizontalAlignment="Left" Margin="128,0,0,0" VerticalAlignment="Center" Height="24" Width="136"/>-->
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button x:Name="btnUpdateTask" Width="130" Height="35"  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,12,10,5" IsEnabled="False"  Content="Update" HorizontalContentAlignment="Center"/>
+                                <Button x:Name="btnCreateTask" Width="130" Height="35"  VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,12,10,5" >
+                                    <Image Source="Assets/Button/CreateIcon.png"></Image>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                        
+                        <Grid Grid.Row="2">
+                            <Grid Margin="5">
+                                <Grid Margin="0,50,0,0" HorizontalAlignment="Center" >
+                                    <Label Style="{StaticResource DateLabel}" Content="LAST WEEK" Height="60" />
+
+                                    <Label x:Name="lblMonday" Style="{StaticResource DateLabel}" Content="DD-MMM" Height="30" Margin="150,0,0,0" />
+                                    <Label x:Name="lblTuesday" Style="{StaticResource DateLabel}" Content="DD-MMM" Height="30" Margin="300,0,0,0" />
+                                    <Label x:Name="lblWednesday" Style="{StaticResource DateLabel}" Content="DD-MMM" Height="30" Margin="450,0,0,0" />
+                                    <Label x:Name="lblThursday" Style="{StaticResource DateLabel}" Content="DD-MMM" Height="30" Margin="600,0,0,0" />
+                                    <Label x:Name="lblFriday" Style="{StaticResource DateLabel}" Content="DD-MMM" Height="30" Margin="750,0,0,0" />
+
+                                    <Label Style="{StaticResource DateLabel}" Content="MONDAY" Height="30" Margin="150,30,0,0" />
+                                    <Label Style="{StaticResource DateLabel}" Content="TUESDAY" Height="30" Margin="300,30,0,0" />
+                                    <Label Style="{StaticResource DateLabel}" Content="WEDNESDAY" Height="30" Margin="450,30,0,0" />
+                                    <Label Style="{StaticResource DateLabel}" Content="THURSDAY" Height="30" Margin="600,30,0,0" />
+                                    <Label Style="{StaticResource DateLabel}" Content="FRIDAY" Height="30" Margin="750,30,0,0" />
+                                </Grid>
+                                
+                                <DataGrid Margin="0,110,0,0" 
+                                          Width="900"
+                                          ItemsSource="{Binding TasksSpList}" 
+                                          Background="Transparent"
+                                          Foreground="Gray" >
+                                    <DataGrid.Columns>
+                                        <!-- Last Week -->
+                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Outstanding Tasks" Width="150" Binding="{Binding LastWeekOutstanding}" />
+                                        <!-- Monday -->
+                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Assigned Today" Width="50" Binding="{Binding MonAt}" />
+                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Completed Today" Width="50" Binding="{Binding MonCt}" />
+                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Outstanding Tasks" Width="50" Binding="{Binding MonOt}" />
+                                        <!-- Tuesday -->
+                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Assigned Today" Width="50" Binding="{Binding TueAt}" />
+                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Completed Today" Width="50" Binding="{Binding TueCt}" />
+                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Outstanding Tasks" Width="50" Binding="{Binding TueOt}" />
+                                        <!-- Wednesday -->
+                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Assigned Today" Width="50" Binding="{Binding WedAt}" />
+                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Completed Today" Width="50" Binding="{Binding WedCt}" />
+                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Outstanding Tasks" Width="50" Binding="{Binding WedOt}" />
+                                        <!-- Thursday -->
+                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Assigned Today" Width="50" Binding="{Binding ThuAt}" />
+                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Completed Today" Width="50" Binding="{Binding ThuCt}" />
+                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Outstanding Tasks" Width="50" Binding="{Binding ThuOt}" />
+                                        <!-- Friday -->
+                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Assigned Today" Width="50" Binding="{Binding FriAt}" />
+                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Completed Today" Width="50" Binding="{Binding FriCt}" />
+                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Outstanding Tasks" Width="50" Binding="{Binding FriOt}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+ 
+</Page>
