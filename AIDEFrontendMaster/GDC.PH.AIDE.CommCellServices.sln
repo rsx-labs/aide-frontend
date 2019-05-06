@@ -1,13 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "GDC.PH.AIDE.CommCellServices", "GDC.PH.AIDE.CommCellServices\GDC.PH.AIDE.CommCellServices.vbproj", "{40BF5D04-AC7F-4436-8B29-36BD75ABAEFA}"
-EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "GDC.PH.AIDE.SETUP", "GDC.PH.AIDE.SETUP\GDC.PH.AIDE.SETUP.wixproj", "{AA6D7A56-498B-472F-A026-3F19F45E3631}"
-EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "GDC.PH.AIDE.CommCell.SETUP", "GDC.PH.AIDE.CommCell.SETUP\GDC.PH.AIDE.CommCell.SETUP.vdproj", "{6287F931-FF80-4C51-9A1B-3C85B756BF39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,28 +25,6 @@ Global
 		{40BF5D04-AC7F-4436-8B29-36BD75ABAEFA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{40BF5D04-AC7F-4436-8B29-36BD75ABAEFA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{40BF5D04-AC7F-4436-8B29-36BD75ABAEFA}.Release|x86.ActiveCfg = Release|Any CPU
-		{AA6D7A56-498B-472F-A026-3F19F45E3631}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{AA6D7A56-498B-472F-A026-3F19F45E3631}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{AA6D7A56-498B-472F-A026-3F19F45E3631}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{AA6D7A56-498B-472F-A026-3F19F45E3631}.Debug|x86.ActiveCfg = Debug|x86
-		{AA6D7A56-498B-472F-A026-3F19F45E3631}.Debug|x86.Build.0 = Debug|x86
-		{AA6D7A56-498B-472F-A026-3F19F45E3631}.Release|Any CPU.ActiveCfg = Release|x86
-		{AA6D7A56-498B-472F-A026-3F19F45E3631}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{AA6D7A56-498B-472F-A026-3F19F45E3631}.Release|Mixed Platforms.Build.0 = Release|x86
-		{AA6D7A56-498B-472F-A026-3F19F45E3631}.Release|x86.ActiveCfg = Release|x86
-		{AA6D7A56-498B-472F-A026-3F19F45E3631}.Release|x86.Build.0 = Release|x86
-		{6287F931-FF80-4C51-9A1B-3C85B756BF39}.Debug|Any CPU.ActiveCfg = Debug
-		{6287F931-FF80-4C51-9A1B-3C85B756BF39}.Debug|Any CPU.Build.0 = Debug
-		{6287F931-FF80-4C51-9A1B-3C85B756BF39}.Debug|Mixed Platforms.ActiveCfg = Debug
-		{6287F931-FF80-4C51-9A1B-3C85B756BF39}.Debug|Mixed Platforms.Build.0 = Debug
-		{6287F931-FF80-4C51-9A1B-3C85B756BF39}.Debug|x86.ActiveCfg = Debug
-		{6287F931-FF80-4C51-9A1B-3C85B756BF39}.Debug|x86.Build.0 = Debug
-		{6287F931-FF80-4C51-9A1B-3C85B756BF39}.Release|Any CPU.ActiveCfg = Release
-		{6287F931-FF80-4C51-9A1B-3C85B756BF39}.Release|Any CPU.Build.0 = Release
-		{6287F931-FF80-4C51-9A1B-3C85B756BF39}.Release|Mixed Platforms.ActiveCfg = Release
-		{6287F931-FF80-4C51-9A1B-3C85B756BF39}.Release|Mixed Platforms.Build.0 = Release
-		{6287F931-FF80-4C51-9A1B-3C85B756BF39}.Release|x86.ActiveCfg = Release
-		{6287F931-FF80-4C51-9A1B-3C85B756BF39}.Release|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
