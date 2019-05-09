@@ -101,7 +101,6 @@ Class TaskAddPage
 #Region "Sub Methods"
 
     Private Sub LoadControlsForUpdate()
-        txtIncID.IsReadOnly = True
         btnCreate.Visibility = Windows.Visibility.Collapsed
         'Project.Visibility = Windows.Visibility.Hidden
         cboProject.IsEnabled = False
