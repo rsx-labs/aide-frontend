@@ -12,7 +12,7 @@ Public Class BillabilityViewModel
 
     Private _billabilityMonthList As ObservableCollection(Of ResourcePlannerModel)
     Private _billabilityWeekList As ObservableCollection(Of ResourcePlannerModel)
-   
+
     Private client As AideServiceClient
 
     Sub New()

@@ -11,12 +11,10 @@ Class CreateProjectPage
 
     Private _pFrame As New Frame
     Public _empID As Integer
-    Public _permission As String
 
-    Public Sub New(pFrame As Frame, empID As Integer, permission As String)
+    Public Sub New(pFrame As Frame, empID As Integer)
         _pFrame = pFrame
         _empID = empID
-        _permission = permission
         InitializeComponent()
         LoadProjectList()
         SetPaging(CInt(PagingMode._Next))
@@ -123,7 +121,7 @@ Class CreateProjectPage
     Private Sub LoadProjectList()
         Try
             InitializeService()
-            lstProj = client.GetProjectList()
+            lstProj = client.GetProjectList(_empID)
             If lstProj.Length = 0 Then
 
             Else
@@ -251,11 +249,7 @@ Class CreateProjectPage
         ElseIf (String.IsNullOrEmpty((lblProjIdValidation.Content))) = False Then
             MsgBox("Project ID isn't available", MsgBoxStyle.Critical, "AIDE")
         Else
-            If _permission <> "Manager" Then
-                MsgBox("Sorry you do not have authorization to create a project", MsgBoxStyle.Critical, "AIDE")
-            Else
-                InsertNewProject()
-            End If
+            InsertNewProject()
         End If
         SetPaging(PagingMode._First)
     End Sub

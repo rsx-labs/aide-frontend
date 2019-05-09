@@ -21,7 +21,7 @@ Public Class AssetsSubMenuPage
     End Sub
 
     Private Sub AssetInventory_Click(sender As Object, e As RoutedEventArgs)
-        _pFrame.Navigate(New AssetsInventoryListPage(_pFrame, _profile, _addframe, _menugrid, _submenuframe))
+        _pFrame.Navigate(New AssetsInventoryListPage(_pFrame, _profile, _addframe, _menugrid, _submenuframe, ""))
     End Sub
 
     Private Sub AssetHistory_Click(sender As Object, e As RoutedEventArgs)

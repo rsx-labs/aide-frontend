@@ -51,6 +51,7 @@ Public Class BillabilityDBProvider
                 }
         _billabilityMonthList.Add(_birthdayObjectMonth)
     End Sub
+
 End Class
 
 Public Class MyBillability

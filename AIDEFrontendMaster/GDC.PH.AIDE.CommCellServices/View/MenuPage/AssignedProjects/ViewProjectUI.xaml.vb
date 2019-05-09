@@ -23,8 +23,10 @@ Class ViewProjectUI
     Private _addframe As Frame
     Private _menugrid As Grid
     Private _submenuframe As Frame
+    Private _empID As Integer
 
-    Public Sub New(_frame As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+
+    Public Sub New(_frame As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, empID As Integer)
 
         ' This call is required by the designer.
         InitializeComponent()
@@ -37,13 +39,15 @@ Class ViewProjectUI
         Me._addframe = _addframe
         Me._menugrid = _menugrid
         Me._submenuframe = _submenuframe
+        Me._empID = empID
         LoadProjectList()
     End Sub
 
 
     Public Sub LoadProjectList()
         Try
-            Dim lstProjects As ViewProject() = _AideServiceClient.ViewProjectListofEmployee()
+            '_empID
+            Dim lstProjects As ViewProject() = _AideServiceClient.ViewProjectListofEmployee(_empID)
             For Each objProject As ViewProject In lstProjects
                 _ViewProjectProvider.SetProjectList(objProject)
             Next
@@ -101,14 +105,14 @@ Class ViewProjectUI
     End Sub
 
     Private Sub btnAssign_Click(sender As Object, e As RoutedEventArgs) Handles btnAssign.Click
-        _addframe.Navigate(New NewProject(FrameNavi, email, _addframe, _menugrid, _submenuframe))
+        _addframe.Navigate(New NewProject(FrameNavi, email, _addframe, _menugrid, _submenuframe, _empID))
         FrameNavi.IsEnabled = False
         FrameNavi.Opacity = 0.3
         _menugrid.IsEnabled = False
         _menugrid.Opacity = 0.3
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(100, 50, 100, 50)
+        _addframe.Margin = New Thickness(50, 80, 50, 80)
         _addframe.Visibility = Visibility.Visible
     End Sub
 End Class

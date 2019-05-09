@@ -27,11 +27,12 @@ Public Class NewProject
     Private _addframe As Frame
     Private _menugrid As Grid
     Private _submenuframe As Frame
+    Private _empID As Integer
 #End Region
 
 
 
-    Public Sub New(_frame As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_frame As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, empID As Integer)
 
         ' This call is required by the designer.
         InitializeComponent()
@@ -41,6 +42,7 @@ Public Class NewProject
         Me._addframe = _addframe
         Me._menugrid = _menugrid
         Me._submenuframe = _submenuframe
+        Me._empID = empID
         InitializeService()
         LoadEmployeeList()
         LoadAllProjectName()
@@ -87,7 +89,7 @@ Public Class NewProject
             Dim _GetAllConcernDBProvider As New ProjectDBProvider
             Dim _projectViewModel As New ProjectViewModel
 
-            Dim lstConcern As Project() = _AideServiceClient.GetAllListOfProject()
+            Dim lstConcern As Project() = _AideServiceClient.GetAllListOfProject(_empID)
             Dim lstConcernList As New ObservableCollection(Of ProjectModel)
 
 
@@ -187,7 +189,7 @@ Public Class NewProject
 
     Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
 
-        _Frame.Navigate(New ViewProjectUI(_Frame, email, _addframe, _menugrid, _submenuframe))
+        _Frame.Navigate(New ViewProjectUI(_Frame, email, _addframe, _menugrid, _submenuframe, _empID))
 
         _frame.IsEnabled = True
         _frame.Opacity = 1

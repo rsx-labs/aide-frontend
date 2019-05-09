@@ -18,12 +18,12 @@
                         <Grid x:Name="grid">
                             <Border x:Name="border" CornerRadius="4" Background="#FF02CB5D">
                                 <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          TextElement.FontWeight="Bold">
+                                                  VerticalAlignment="Center"
+                                                  TextElement.FontWeight="Bold">
                                 </ContentPresenter>
                             </Border>
-
                         </Grid>
+                        
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter Property="Background" TargetName="border" Value="#FF09C35D"/>
@@ -34,7 +34,6 @@
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
                             </Trigger>
-
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -47,25 +46,22 @@
                     <ControlTemplate TargetType="{x:Type DatePicker}">
                         <Grid x:Name="PART_Root">
                             <Grid.ColumnDefinitions>
-
                                 <ColumnDefinition Width="5*" />
-
                             </Grid.ColumnDefinitions>
 
                             <DatePickerTextBox x:Name="PART_TextBox"
-                                       BorderBrush="#FF4E4E50"
-                                              
-                                       TextAlignment="Center"
-                                       HorizontalContentAlignment="Stretch"
-                                       Padding="{TemplateBinding Padding}"
-                                       VerticalContentAlignment="Center"
-                                       Visibility="Visible"
-                                       
+                                               BorderBrush="#FF4E4E50"
+                                               TextAlignment="Center"
+                                               HorizontalContentAlignment="Stretch"
+                                               Padding="{TemplateBinding Padding}"
+                                               VerticalContentAlignment="Center"
+                                               Visibility="Visible"
                                                HorizontalAlignment="Stretch"
-                                       Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="0.5" Foreground="#FF1D1D1D">
+                                               Style="{DynamicResource styleDatePickerTextBox}" 
+                                               Background="{x:Null}" BorderThickness="0.5" Foreground="#FF1D1D1D">
                             </DatePickerTextBox>
+                            
                             <Viewbox HorizontalAlignment="Right">
-
                                 <Button x:Name="PART_Button" VerticalAlignment="Stretch" >
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}">
@@ -74,13 +70,12 @@
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type Button}">
                                                         <Image Name="buttonImage"
-                               Height="Auto"
-                               
-                               Margin="0,10,0,15"
-                               Source="..\..\..\Assets\Button\Calendar.png"
-                               Stretch="Fill"
-                               VerticalAlignment="Stretch"
-                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                                                               Height="Auto"
+                                                               Margin="0,10,0,15"
+                                                               Source="..\..\..\Assets\Button\Calendar.png"
+                                                               Stretch="Fill"
+                                                               VerticalAlignment="Stretch"
+                                                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
                                                             <Image.Effect>
                                                                 <DropShadowEffect  Direction="290" Opacity=".6" ShadowDepth="1" Color="LightGray" BlurRadius="1"/>
                                                             </Image.Effect>
@@ -88,8 +83,9 @@
                                                         <ControlTemplate.Triggers>
                                                             <Trigger Property="IsMouseOver" Value="True">
                                                                 <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\CalendarClick.png"></Setter>
+                                                                        Property="Source"
+                                                                        Value="..\..\..\Assets\Button\CalendarClick.png">
+                                                                </Setter>
                                                             </Trigger>
                                                         </ControlTemplate.Triggers>
                                                     </ControlTemplate>
@@ -109,30 +105,29 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="styleDatePickerto" TargetType="{x:Type DatePicker}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DatePicker}">
                         <Grid x:Name="PART_Root">
                             <Grid.ColumnDefinitions>
-
                                 <ColumnDefinition Width="5*" />
-
                             </Grid.ColumnDefinitions>
 
                             <DatePickerTextBox x:Name="PART_TextBox"
-                                       BorderBrush="#FF4E4E50"
-                                       TextAlignment="Center"
-                                       HorizontalContentAlignment="Stretch"
-                                       Padding="{TemplateBinding Padding}"
-                                       VerticalContentAlignment="Center"
-                                       Visibility="Visible"
-                                       
+                                               BorderBrush="#FF4E4E50"
+                                               TextAlignment="Center"
+                                               HorizontalContentAlignment="Stretch"
+                                               Padding="{TemplateBinding Padding}"
+                                               VerticalContentAlignment="Center"
+                                               Visibility="Visible"
                                                HorizontalAlignment="Stretch"
-                                       Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="0.5" Foreground="#FF1D1D1D">
+                                               Style="{DynamicResource styleDatePickerTextBox}" 
+                                               Background="{x:Null}" BorderThickness="0.5" Foreground="#FF1D1D1D">
                             </DatePickerTextBox>
+                            
                             <Viewbox HorizontalAlignment="Right">
-
                                 <Button x:Name="PART_Button" VerticalAlignment="Stretch" >
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}">
@@ -141,13 +136,12 @@
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type Button}">
                                                         <Image Name="buttonImage"
-                               Height="Auto"
-                               
-                               Margin="0,10,0,15"
-                               Source="..\..\..\Assets\Button\Calendar.png"
-                               Stretch="Fill"
-                               VerticalAlignment="Stretch"
-                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                                                               Height="Auto"
+                                                               Margin="0,10,0,15"
+                                                               Source="..\..\..\Assets\Button\Calendar.png"
+                                                               Stretch="Fill"
+                                                               VerticalAlignment="Stretch"
+                                                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
                                                             <Image.Effect>
                                                                 <DropShadowEffect  Direction="290" Opacity=".6" ShadowDepth="1" Color="LightGray" BlurRadius="1"/>
                                                             </Image.Effect>
@@ -155,8 +149,9 @@
                                                         <ControlTemplate.Triggers>
                                                             <Trigger Property="IsMouseOver" Value="True">
                                                                 <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\CalendarClick.png"></Setter>
+                                                                        Property="Source"
+                                                                        Value="..\..\..\Assets\Button\CalendarClick.png">
+                                                                </Setter>
                                                             </Trigger>
                                                         </ControlTemplate.Triggers>
                                                     </ControlTemplate>
@@ -166,10 +161,9 @@
                                     </Button.Style>
                                 </Button>
                             </Viewbox>
+                            
                             <TextBlock Text="to     " Foreground="#FFFF7D00" VerticalAlignment="Stretch" Margin="0,10" HorizontalAlignment="left"  Background="#FF4E4E50" Padding="5" />
-                            <TextBlock Foreground="White" Text="to     "  VerticalAlignment="Center" Margin="0,10" HorizontalAlignment="left"  Background="#FF4E4E50" Padding="5,0" >
-
-                            </TextBlock>
+                            <TextBlock Foreground="White" Text="to     "  VerticalAlignment="Center" Margin="0,10" HorizontalAlignment="left"  Background="#FF4E4E50" Padding="5,0" />
 
                             <Popup x:Name="PART_Popup" StaysOpen="False" AllowsTransparency="True" />
                         </Grid>
@@ -177,6 +171,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="styleDatePickerTextBox" TargetType="{x:Type DatePickerTextBox}">
             <Setter Property="Background" Value="#FFA9ADAF"></Setter>
             <Setter Property="BorderBrush" Value="Transparent"></Setter>
@@ -185,11 +180,9 @@
             <Setter Property="IsReadOnly" Value="False"></Setter>
             <Setter Property="Foreground" Value="White"></Setter>
             <Setter Property="Margin" Value="0,10"></Setter>
-
-
         </Style>
+        
         <Style x:Key="ButtonAdd" TargetType="{x:Type Button}">
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -213,13 +206,11 @@
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
-
                 </Setter.Value>
             </Setter>
-
         </Style>
+        
         <Style x:Key="ButtonBack" TargetType="{x:Type Button}">
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -227,7 +218,6 @@
                                Height="Auto"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
-                               
                                Source="..\..\..\Assets\Button\closebtn.png"
                                Stretch="Fill">
                             <Image.Effect>
@@ -242,13 +232,11 @@
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
-
                 </Setter.Value>
             </Setter>
-
         </Style>
+        
         <Style x:Key="ButtonSearch" TargetType="{x:Type Button}">
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -264,6 +252,7 @@
                                 <DropShadowEffect  Direction="290" Opacity="0.9" ShadowDepth="2" Color="LightGray"/>
                             </Image.Effect>
                         </Image>
+                        
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="buttonImage"
@@ -275,8 +264,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="ButtonPrint" TargetType="{x:Type Button}">
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -303,8 +292,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="ButtonPageNext" TargetType="{x:Type Button}">
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -331,8 +320,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="ButtonPageBack" TargetType="{x:Type Button}">
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -359,6 +348,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style TargetType="{x:Type DataGrid}">
             <Setter Property="HeadersVisibility" Value="Column"/>
             <Setter Property="GridLinesVisibility" Value="All"/>
@@ -372,43 +362,53 @@
             <Setter Property="CanUserSortColumns" Value="False"/>
             <Setter Property="CanUserResizeRows" Value="False"/>
         </Style>
+        
         <Style TargetType="{x:Type DataGridCell}">
-
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+            <Setter Property="TextBlock.TextWrapping" Value="WrapWithOverflow"/>
         </Style>
+        
         <Style TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Height" Value="50"/>
             <Setter Property="Background" Value="#FF4DB6AC"/>
-            <Setter Property="TextBlock.TextWrapping" Value="WrapWithOverflow"/>
-
             <Setter Property="BorderThickness" Value="0,0,1,0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="BorderBrush" Value="White"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="5"/>
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock x:Name="TextBlock" TextWrapping="Wrap" Text="{Binding}" />
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridColumnHeader}}}" Value="Center">
+                                <Setter TargetName="TextBlock" Property="TextAlignment" Value="Center"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter> 
         </Style>
+        
         <Style TargetType="{x:Type DataGridRow}">
             <Setter Property="Background" Value="white" />
             <Setter Property="Foreground" Value="#FF303030"/>
-
-
             <Style.Triggers>
-                <Trigger Property="IsMouseOver"
-                           Value="True">
-                    <Setter Property="Background"
-                               Value="LightGray" />
-
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightGray" />
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
         <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="5" />
             <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
             <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
+        
         <Style x:Key="buttonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="SteelBlue" />
             <Setter Property="Foreground" Value="White"/>
@@ -428,7 +428,6 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-
                     <Setter Property="Background" Value="DimGray" />
                 </Trigger>
             </Style.Triggers>
@@ -436,8 +435,8 @@
 
         <Style x:Key="TextboxStyle" TargetType="TextBox">
             <Setter Property="Background" Value="Gainsboro"/>
-
         </Style>
+        
         <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
             <Border Background="{TemplateBinding Background}" 
                 x:Name="Bd" BorderBrush="#FFA4A4A4"
@@ -458,6 +457,7 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
+        
         <Style x:Key="PagebuttonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="SteelBlue"/>
@@ -476,15 +476,15 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-
                     <Setter Property="Background" Value="Gainsboro" />
                 </Trigger>
             </Style.Triggers>
         </Style>
-
     </Page.Resources>
+    
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
@@ -492,24 +492,23 @@
                 <RowDefinition Height="11.5*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
+            
             <Grid Grid.Row="0" Background="White">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10*"/>
                     <ColumnDefinition Width="1*"/>
-
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="12*"/>
-
                     </Grid.ColumnDefinitions>
+                    
                     <Grid Grid.Column="0">
                         <Viewbox HorizontalAlignment="Left" Margin="5,5,0,5" >
                             <Image Source="..\..\..\Assets\Button\TaskLogo.png" />
                         </Viewbox>
-
                     </Grid>
 
                     <Grid Grid.Column="1">
@@ -517,103 +516,108 @@
                             <TextBlock TextWrapping="Wrap" Padding="0" Text="View Outstanding Task" Margin="0,7,0,7" Foreground="DimGray"/>
                         </Viewbox>
                     </Grid>
-
-                </Grid>
-                <Grid Grid.Column="1">
-                    <Viewbox Margin="15">
-                        <Button x:Name="btnBack" Style="{DynamicResource ButtonBack}" HorizontalAlignment="Right" Click="btnBack_Click">
-                         
-                        </Button>
-                    </Viewbox>
-                    
                 </Grid>
                 
+                <Grid Grid.Column="1">
+                    <Viewbox Margin="15">
+                        <Button x:Name="btnBack" Style="{DynamicResource ButtonBack}" HorizontalAlignment="Right" Click="btnBack_Click"/>
+                    </Viewbox>
+                </Grid>
             </Grid>
+            
             <Grid Grid.Row="1" Background="White">
-                <Label x:Name="lblPagingInfo" Visibility="Hidden"/>
+                <Label x:Name="lblPagingInfo" Visibility="Hidden" HorizontalAlignment="Stretch"/>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock FontSize="15" Name="lbl_noOT" Margin="0,0,5,0" Visibility="Collapsed" 
-                            Foreground="Red" VerticalAlignment="Center">N O</TextBlock>
+                               Foreground="Red" VerticalAlignment="Center">N O</TextBlock>
                     <TextBlock FontSize="15" Name="lbl_noOT1" Margin="0,0,5,0" Visibility="Collapsed" 
-                            Foreground="Red" VerticalAlignment="Center">O U T S T A N D I N G</TextBlock>
+                               Foreground="Red" VerticalAlignment="Center">O U T S T A N D I N G</TextBlock>
                     <TextBlock  FontSize="15" Name="lbl_noOT2" Visibility="Collapsed" 
-                            Foreground="Red" VerticalAlignment="Center">T A S K</TextBlock>
+                                Foreground="Red" VerticalAlignment="Center">T A S K</TextBlock>
                 </StackPanel>
 
-                <DataGrid x:Name="lv_taskList" ItemsSource="{Binding TaskList}" 
-                                          CanUserAddRows="False" AutoGenerateColumns="False"
-                                          Margin="0,0,0,10" BorderBrush="Transparent" IsReadOnly="True">
+                <DataGrid x:Name="lv_taskList" 
+                          ItemsSource="{Binding TaskList}" 
+                          CanUserAddRows="False" 
+                          AutoGenerateColumns="False"
+                          Margin="0,0,0,10" 
+                          BorderBrush="Transparent" 
+                          IsReadOnly="True"
+                          HorizontalAlignment="Stretch" >
                     <DataGrid.Resources>
                         <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="Red" Opacity="0.5" />
                     </DataGrid.Resources>
-
+                    
                     <DataGrid.Columns>
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Task&#x0a;ID" Width="1.5*" Binding="{Binding TaskId}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee&#x0a;ID" Width="2*" Binding="{Binding EmpId}" Visibility="Collapsed"/>
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Incident&#x0a;ID" Width="2*" Binding="{Binding IncId}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Description" Width="5*" Binding="{Binding IncDescr}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Created&#x0a;Date" Width="2*" Binding="{Binding DateCreated, StringFormat=\{0:dd-MM-yyyy \}}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Started&#x0a;Date" Width="2*" Binding="{Binding DateStarted, StringFormat=\{0:dd-MM-yyyy \}}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Target&#x0a;Date" Width="2*" Binding="{Binding TargetDate, StringFormat=\{0:dd-MM-yyyy \}}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Completed&#x0a;Date" Width="2*" Binding="{Binding CompltdDate, StringFormat=\{0:dd-MM-yyyy \}}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Effort&#x0a;Estimate" Width="2*" Binding="{Binding EffortEst}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Actual Effort&#x0a;for the Week" Width="2.5*" Binding="{Binding ActEffortEstWk}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Actual&#x0a;Effort" Width="1.5*" Binding="{Binding ActEffortEst}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Phase" Width="1.5*" Binding="{Binding Phase}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="1.5*" Binding="{Binding Status}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Task ID" Width="80" Binding="{Binding TaskId}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee ID" Width="90" Binding="{Binding EmpId}" Visibility="Collapsed"/>
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Incident ID" Width="85" Binding="{Binding IncId}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Description" Width="200" Binding="{Binding IncDescr}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Created Date" Width="90" Binding="{Binding DateCreated, StringFormat='MM-dd-yyyy'}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Started Date" Width="90" Binding="{Binding DateStarted, StringFormat='MM-dd-yyyy'}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Target Date" Width="90" Binding="{Binding TargetDate, StringFormat='MM-dd-yyyy'}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Completed Date" Width="90" Binding="{Binding CompltdDate, StringFormat='MM-dd-yyyy'}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Effort Estimate" Width="90" Binding="{Binding EffortEst}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Actual Effort for the Week" Width="100" Binding="{Binding ActEffortEstWk}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Actual Effort (hrs)" Width="88" Binding="{Binding ActEffortEst}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Phase" Width="100" Binding="{Binding Phase}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="100" Binding="{Binding Status}" />
                     </DataGrid.Columns>
                 </DataGrid>
-
-
             </Grid>
+            
             <Grid Grid.Row="2" Background="White">
-
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width=".8*"/>
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
  
-
-
                 <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width=".2*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
+                    
                     <Grid Grid.Column="0">
-                        <Button Height="auto" Width="auto"  Margin="5"
-                            x:Name="btnPrev" Style="{DynamicResource ButtonPageBack}" BorderBrush="{x:Null}" >
-
+                        <Button Height="Auto" Width="Auto"  
+                                Margin="5"
+                                x:Name="btnPrev" 
+                                Style="{DynamicResource ButtonPageBack}" 
+                                BorderBrush="{x:Null}" >
                         </Button>
                     </Grid>
-                    <Grid Grid.Column="1">
-
-                    </Grid>
+                    
+                    <Grid Grid.Column="1"></Grid>
+                    
                     <Grid Grid.Column="2">
-                        <Button Height="auto" Width="auto" Margin="5" 
-                             x:Name="btnNext" Style="{DynamicResource ButtonPageNext}" BorderBrush="{x:Null}">
-
+                        <Button Height="Auto" Width="Auto" Margin="5" 
+                                x:Name="btnNext" 
+                                Style="{DynamicResource ButtonPageNext}" 
+                                BorderBrush="{x:Null}">
                         </Button>
                     </Grid>
                 </Grid>
+                
                 <Grid Grid.Column="2" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="6*"/>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width=".3*"/>
-
-
                     </Grid.ColumnDefinitions>
+                    
                     <Grid Grid.Column="0"></Grid>
+                    
                     <Grid Grid.Column="1">
-                        <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" >
-
+                        <Button Style="{DynamicResource ButtonPrint}" 
+                                x:Name="btnPrint" Content="Print" 
+                                HorizontalAlignment="Right"  
+                                Margin="10,5,10,5" 
+                                VerticalAlignment="Center" >
                         </Button>
                     </Grid>
-
                 </Grid>
             </Grid>
         </Grid>

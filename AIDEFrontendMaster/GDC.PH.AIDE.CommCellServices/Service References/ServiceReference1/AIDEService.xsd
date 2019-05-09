@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://aide/AIDE/AIDEService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://localhost:49627/AIDEService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:complexType name="ArrayOfDashboardEmployee">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="DashboardEmployee" nillable="true" type="tns:DashboardEmployee" />
@@ -130,6 +130,7 @@
       <xs:element minOccurs="0" name="EmployeeID" type="xs:int" />
       <xs:element minOccurs="0" name="Month" type="xs:short" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TimeIn" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Year" type="xs:short" />
     </xs:sequence>
   </xs:complexType>
@@ -178,6 +179,109 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DashboardTaskSummaryTotals" nillable="true" type="tns:DashboardTaskSummaryTotals" />
+  <xs:complexType name="SuccessRegister">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdditionalInformation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateInput" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DetailsOfSuccess" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Emp_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="Nick_Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SuccessID" type="xs:int" />
+      <xs:element minOccurs="0" name="WhosInvolve" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SuccessRegister" nillable="true" type="tns:SuccessRegister" />
+  <xs:complexType name="ArrayOfSuccessRegister">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SuccessRegister" nillable="true" type="tns:SuccessRegister" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSuccessRegister" nillable="true" type="tns:ArrayOfSuccessRegister" />
+  <xs:complexType name="ArrayOfNickname">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Nickname" nillable="true" type="tns:Nickname" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfNickname" nillable="true" type="tns:ArrayOfNickname" />
+  <xs:complexType name="Nickname">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Emp_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="Nick_Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Nickname" nillable="true" type="tns:Nickname" />
+  <xs:complexType name="Profile">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Birthdate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Cel_No" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CivilStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateHired" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Department" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Dept_ID" type="xs:short" />
+      <xs:element minOccurs="0" name="Division" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Dt_Reviewed" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Email_Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email_Address2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Emp_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Home_Phone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ImagePath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Local" type="xs:int" />
+      <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MiddleName" type="ser:char" />
+      <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Other_Phone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Permission" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Position" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Ws_EMP_ID" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Profile" nillable="true" type="tns:Profile" />
+  <xs:complexType name="ArrayOfContactList">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ContactList" nillable="true" type="tns:ContactList" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfContactList" nillable="true" type="tns:ArrayOfContactList" />
+  <xs:complexType name="ContactList">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CELL_NO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DESCRIPTION" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateReviewed" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EMADDRESS" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EMADDRESS2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmpID" type="xs:int" />
+      <xs:element minOccurs="0" name="FIRST_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FULL_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HOUSEPHONE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IMAGE_PATH" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsREVIEWED" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LAST_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LOC" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OTHERPHONE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="POS_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="lOCAL" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ContactList" nillable="true" type="tns:ContactList" />
+  <xs:complexType name="ArrayOfBirthdayList">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BirthdayList" nillable="true" type="tns:BirthdayList" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBirthdayList" nillable="true" type="tns:ArrayOfBirthdayList" />
+  <xs:complexType name="BirthdayList">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BIRTHDAY" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EmpID" type="xs:int" />
+      <xs:element minOccurs="0" name="FIRST_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FULL_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IMAGE_PATH" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LAST_NAME" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BirthdayList" nillable="true" type="tns:BirthdayList" />
   <xs:complexType name="ArrayOfConcern">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Concern" nillable="true" type="tns:Concern" />
@@ -226,9 +330,12 @@
       <xs:element minOccurs="0" name="DESCR" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DateEntry" type="xs:dateTime" />
       <xs:element minOccurs="0" name="EmpID" type="xs:int" />
+      <xs:element minOccurs="0" name="HalfBalance" type="xs:double" />
       <xs:element minOccurs="0" name="Image_Path" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NAME" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Status" type="xs:double" />
+      <xs:element minOccurs="0" name="TotalBalance" type="xs:double" />
+      <xs:element minOccurs="0" name="UsedLeaves" type="xs:double" />
       <xs:element minOccurs="0" name="dateFrom" type="xs:dateTime" />
       <xs:element minOccurs="0" name="dateTo" type="xs:dateTime" />
     </xs:sequence>
@@ -240,6 +347,21 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfResourcePlanner" nillable="true" type="tns:ArrayOfResourcePlanner" />
+  <xs:complexType name="Announcements">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EMP_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="END_DATE" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="MESSAGE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TITLE" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Announcements" nillable="true" type="tns:Announcements" />
+  <xs:complexType name="ArrayOfAnnouncements">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Announcements" nillable="true" type="tns:Announcements" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAnnouncements" nillable="true" type="tns:ArrayOfAnnouncements" />
   <xs:complexType name="Action">
     <xs:sequence>
       <xs:element minOccurs="0" name="Act_Assignee" type="xs:int" />
@@ -366,34 +488,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Employee" nillable="true" type="tns:Employee" />
-  <xs:complexType name="Profile">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Birthdate" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Cel_No" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="CivilStatus" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DateHired" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Department" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Dept_ID" type="xs:short" />
-      <xs:element minOccurs="0" name="Division" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Dt_Reviewed" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Email_Address" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Email_Address2" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Emp_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Home_Phone" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ImagePath" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Local" type="xs:int" />
-      <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MiddleName" type="ser:char" />
-      <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Other_Phone" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Permission" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Position" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Ws_EMP_ID" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Profile" nillable="true" type="tns:Profile" />
   <xs:complexType name="ArrayOfProject">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Project" nillable="true" type="tns:Project" />
@@ -442,19 +536,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfAssignedProject" nillable="true" type="tns:ArrayOfAssignedProject" />
-  <xs:complexType name="ArrayOfNickname">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Nickname" nillable="true" type="tns:Nickname" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfNickname" nillable="true" type="tns:ArrayOfNickname" />
-  <xs:complexType name="Nickname">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Emp_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="Nick_Name" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Nickname" nillable="true" type="tns:Nickname" />
   <xs:complexType name="ArrayOfStatusGroup">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="StatusGroup" nillable="true" type="tns:StatusGroup" />
@@ -568,66 +649,4 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="LessonLearnt" nillable="true" type="tns:LessonLearnt" />
-  <xs:complexType name="SuccessRegister">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="AdditionalInformation" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DateInput" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="DetailsOfSuccess" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Emp_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="Nick_Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SuccessID" type="xs:int" />
-      <xs:element minOccurs="0" name="WhosInvolve" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="SuccessRegister" nillable="true" type="tns:SuccessRegister" />
-  <xs:complexType name="ArrayOfSuccessRegister">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="SuccessRegister" nillable="true" type="tns:SuccessRegister" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfSuccessRegister" nillable="true" type="tns:ArrayOfSuccessRegister" />
-  <xs:complexType name="ArrayOfContactList">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="ContactList" nillable="true" type="tns:ContactList" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfContactList" nillable="true" type="tns:ArrayOfContactList" />
-  <xs:complexType name="ContactList">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="CELL_NO" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DESCRIPTION" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DateReviewed" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="EMADDRESS" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="EMADDRESS2" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="EmpID" type="xs:int" />
-      <xs:element minOccurs="0" name="FIRST_NAME" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FULL_NAME" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="HOUSEPHONE" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="IMAGE_PATH" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="IsREVIEWED" type="xs:boolean" />
-      <xs:element minOccurs="0" name="LAST_NAME" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="LOC" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="OTHERPHONE" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="POS_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="lOCAL" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ContactList" nillable="true" type="tns:ContactList" />
-  <xs:complexType name="ArrayOfBirthdayList">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="BirthdayList" nillable="true" type="tns:BirthdayList" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfBirthdayList" nillable="true" type="tns:ArrayOfBirthdayList" />
-  <xs:complexType name="BirthdayList">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="BIRTHDAY" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="EmpID" type="xs:int" />
-      <xs:element minOccurs="0" name="FIRST_NAME" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FULL_NAME" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="IMAGE_PATH" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="LAST_NAME" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="BirthdayList" nillable="true" type="tns:BirthdayList" />
 </xs:schema>

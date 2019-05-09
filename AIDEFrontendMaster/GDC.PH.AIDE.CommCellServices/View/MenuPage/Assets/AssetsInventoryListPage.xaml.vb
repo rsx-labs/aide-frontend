@@ -23,6 +23,7 @@ Public Class AssetsInventoryListPage
 
     Private _AideService As ServiceReference1.AideServiceClient
     Dim lstAssets As Assets()
+    Dim show As Boolean = True
 
     Private Enum PagingMode
         _First = 1
@@ -38,11 +39,12 @@ Public Class AssetsInventoryListPage
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
     Dim pagingRecordPerPage As Integer = 10
+
 #End Region
 
 #Region "CONSTRUCTOR"
 
-    Public Sub New(_frame As Frame, _profile As Profile, addframe As Frame, menugrid As Grid, submenuframe As Frame)
+    Public Sub New(_frame As Frame, _profile As Profile, addframe As Frame, menugrid As Grid, submenuframe As Frame, page As String)
 
         ' This call is required by the designer.
         InitializeComponent()
@@ -55,6 +57,14 @@ Public Class AssetsInventoryListPage
         Me._submenuframe = submenuframe
         SetUnApprovedtTabVisible()
         SetData()
+        If page = "Personal" Then
+            SR.SelectedIndex = 0
+        ElseIf page = "Update" Then
+            SR.SelectedIndex = 1
+        ElseIf page = "Approval" Then
+            SR.SelectedIndex = 2
+        End If
+
     End Sub
 #End Region
 
@@ -66,7 +76,7 @@ Public Class AssetsInventoryListPage
             Dim exists As Boolean = Directory.Exists(path)
 
             If Not exists Then Directory.CreateDirectory(path)
-
+            show = False
             lv_assetInventoryList.SelectAllCells()
             lv_assetInventoryList.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader
             ApplicationCommands.Copy.Execute(Nothing, lv_assetInventoryList)
@@ -77,7 +87,7 @@ Public Class AssetsInventoryListPage
             file1.WriteLine(result.Replace(","c, " "c))
             file1.Close()
             MessageBox.Show("Exporting DataGrid data to Excel file created.xls")
-
+            show = True
             'frame.Navigate(New AssetsInventoryListPage(frame, profile, _addframe, _menugrid, _submenuframe))
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "AIDE")
@@ -144,7 +154,7 @@ Public Class AssetsInventoryListPage
                 _menugrid.Opacity = 0.3
                 _submenuframe.IsEnabled = False
                 _submenuframe.Opacity = 0.3
-                _addframe.Margin = New Thickness(280, 0, 280, 0)
+                _addframe.Margin = New Thickness(150, 50, 150, 50)
                 _addframe.Visibility = Visibility.Visible
             End If
         End If
@@ -153,38 +163,38 @@ Public Class AssetsInventoryListPage
 
     Private Sub lv_assetInventoryList_MouseDoubleClick(sender As Object, e As SelectionChangedEventArgs) Handles lv_assetInventoryList.SelectionChanged
         e.Handled = True
-        If lv_assetInventoryList.SelectedIndex <> -1 Then
+        If show = True Then
+            If lv_assetInventoryList.SelectedIndex <> -1 Then
+                If lv_assetInventoryList.SelectedItem IsNot Nothing Then
+                    If CType(lv_assetInventoryList.SelectedItem, AssetsModel).STATUS <> 1 And CType(lv_assetInventoryList.SelectedItem, AssetsModel).EMP_ID <> profile.Emp_ID And profile.Permission <> "Manager" Then
+                        Exit Sub
+                    Else
+                        Dim assetsModel As New AssetsModel
 
-            If lv_assetInventoryList.SelectedItem IsNot Nothing Then
-                If CType(lv_assetInventoryList.SelectedItem, AssetsModel).STATUS <> 1 And CType(lv_assetInventoryList.SelectedItem, AssetsModel).EMP_ID <> profile.Emp_ID And profile.Permission <> "Manager" Then
-                    Exit Sub
-                Else
-                    Dim assetsModel As New AssetsModel
-
-                    assetsModel.ASSET_ID = CType(lv_assetInventoryList.SelectedItem, AssetsModel).ASSET_ID
-                    assetsModel.EMP_ID = CType(lv_assetInventoryList.SelectedItem, AssetsModel).EMP_ID
-                    assetsModel.ASSET_DESC = CType(lv_assetInventoryList.SelectedItem, AssetsModel).ASSET_DESC
-                    assetsModel.MANUFACTURER = CType(lv_assetInventoryList.SelectedItem, AssetsModel).MANUFACTURER
-                    assetsModel.MODEL_NO = CType(lv_assetInventoryList.SelectedItem, AssetsModel).MODEL_NO
-                    assetsModel.SERIAL_NO = CType(lv_assetInventoryList.SelectedItem, AssetsModel).SERIAL_NO
-                    assetsModel.ASSET_TAG = CType(lv_assetInventoryList.SelectedItem, AssetsModel).ASSET_TAG
-                    assetsModel.DATE_ASSIGNED = CType(lv_assetInventoryList.SelectedItem, AssetsModel).DATE_ASSIGNED
-                    assetsModel.STATUS = CType(lv_assetInventoryList.SelectedItem, AssetsModel).STATUS
-                    assetsModel.OTHER_INFO = CType(lv_assetInventoryList.SelectedItem, AssetsModel).OTHER_INFO
-                    assetsModel.FULL_NAME = CType(lv_assetInventoryList.SelectedItem, AssetsModel).FULL_NAME
-                    _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Update", _addframe, _menugrid, _submenuframe))
-                    frame.IsEnabled = False
-                    frame.Opacity = 0.3
-                    _menugrid.IsEnabled = False
-                    _menugrid.Opacity = 0.3
-                    _submenuframe.IsEnabled = False
-                    _submenuframe.Opacity = 0.3
-                    _addframe.Margin = New Thickness(280, 0, 280, 0)
-                    _addframe.Visibility = Visibility.Visible
+                        assetsModel.ASSET_ID = CType(lv_assetInventoryList.SelectedItem, AssetsModel).ASSET_ID
+                        assetsModel.EMP_ID = CType(lv_assetInventoryList.SelectedItem, AssetsModel).EMP_ID
+                        assetsModel.ASSET_DESC = CType(lv_assetInventoryList.SelectedItem, AssetsModel).ASSET_DESC
+                        assetsModel.MANUFACTURER = CType(lv_assetInventoryList.SelectedItem, AssetsModel).MANUFACTURER
+                        assetsModel.MODEL_NO = CType(lv_assetInventoryList.SelectedItem, AssetsModel).MODEL_NO
+                        assetsModel.SERIAL_NO = CType(lv_assetInventoryList.SelectedItem, AssetsModel).SERIAL_NO
+                        assetsModel.ASSET_TAG = CType(lv_assetInventoryList.SelectedItem, AssetsModel).ASSET_TAG
+                        assetsModel.DATE_ASSIGNED = CType(lv_assetInventoryList.SelectedItem, AssetsModel).DATE_ASSIGNED
+                        assetsModel.STATUS = CType(lv_assetInventoryList.SelectedItem, AssetsModel).STATUS
+                        assetsModel.OTHER_INFO = CType(lv_assetInventoryList.SelectedItem, AssetsModel).OTHER_INFO
+                        assetsModel.FULL_NAME = CType(lv_assetInventoryList.SelectedItem, AssetsModel).FULL_NAME
+                        _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Update", _addframe, _menugrid, _submenuframe))
+                        frame.IsEnabled = False
+                        frame.Opacity = 0.3
+                        _menugrid.IsEnabled = False
+                        _menugrid.Opacity = 0.3
+                        _submenuframe.IsEnabled = False
+                        _submenuframe.Opacity = 0.3
+                        _addframe.Margin = New Thickness(150, 50, 150, 50)
+                        _addframe.Visibility = Visibility.Visible
+                    End If
                 End If
             End If
         End If
-
     End Sub
 
     Private Sub lv_assetInventoryListUnapproved_MouseDoubleClick(sender As Object, e As SelectionChangedEventArgs) Handles lv_assetInventoryListUnapproved.SelectionChanged
@@ -212,7 +222,7 @@ Public Class AssetsInventoryListPage
                 _menugrid.Opacity = 0.3
                 _submenuframe.IsEnabled = False
                 _submenuframe.Opacity = 0.3
-                _addframe.Margin = New Thickness(280, 0, 280, 0)
+                _addframe.Margin = New Thickness(150, 50, 150, 50)
                 _addframe.Visibility = Visibility.Visible
                 'frame.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Approval"))
             End If
@@ -455,4 +465,5 @@ Public Class AssetsInventoryListPage
 
     End Sub
 #End Region
+
 End Class

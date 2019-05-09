@@ -183,11 +183,12 @@ Class SkillsMatrixManagerPage
                     dict.Add("Employee ID", iSkills.Emp_ID)
                     dict.Add("Employee Name", iSkills.Emp_Name)
                     dict.Add(iSkills.Skill_Descr, iSkills.Prof_level.ToString)
+
                 End If
                 emp_id = iSkills.Emp_ID
-
                 ''END PROBLEM
             Next
+
             it.Add(dict)
             Dim table As DataTable = New DataTable
             table = ToDataTable(it)  ' Convert stored data in dictionary to datable
@@ -460,17 +461,14 @@ Class SkillsMatrixManagerPage
         End Try
     End Sub
 
+    'Private Sub dgSkillList_AutoGeneratingColumn(sender As Object, e As DataGridAutoGeneratingColumnEventArgs) Handles dgSkillList.AutoGeneratingColumn
+    '    Dim tbHeader As TextBlock = New TextBlock()
 
-    Private Sub dgSkillList_AutoGeneratingColumn(sender As Object, e As DataGridAutoGeneratingColumnEventArgs) Handles dgSkillList.AutoGeneratingColumn
-        Dim tbHeader As TextBlock = New TextBlock()
+    '    tbHeader.TextWrapping = TextWrapping.WrapWithOverflow
+    '    tbHeader.Text = e.Column.Header.ToString()
 
-        tbHeader.TextWrapping = TextWrapping.WrapWithOverflow
-        tbHeader.Text = e.Column.Header.ToString()
-
-        e.Column.Header = tbHeader
-    End Sub
-
-   
+    '    e.Column.Header = tbHeader
+    'End Sub
 
     Private Sub dgSkillList_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles dgSkillList.MouseDoubleClick
         InitializeService()
@@ -553,11 +551,11 @@ Class SkillsMatrixManagerPage
             dialog.PrintTicket.PageOrientation = PageOrientation.Landscape
             Dim pageSize As Size = New Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight)
 
-            dgSkillList.Measure(pageSize)
+            spGrid.Measure(pageSize)
 
-            dgSkillList.Arrange(New Rect(5, 5, pageSize.Width, pageSize.Height))
+            spGrid.Arrange(New Rect(5, 5, pageSize.Width, pageSize.Height))
 
-            dialog.PrintVisual(dgSkillList, "Print Skills Matrix")
+            dialog.PrintVisual(spGrid, "Print Skills Matrix")
 
         End If
     End Sub

@@ -57,7 +57,7 @@ Public Class AssetsInventoryAddPage
         Me.profile = _profile
         Me.assetsModel = _assetsModel
         Me.fromPage = _fromPage
-        tbSuccessForm.Text = "UPDATE ASSIGNED ASSET"
+        tbSuccessForm.Text = "Update Assigned Assets"
         Me.pageDefinition = "Update"
         LoadData()
         AssignEvents()
@@ -102,7 +102,7 @@ Public Class AssetsInventoryAddPage
                     If InitializeService() Then
                         client.UpdateAssetsInventory(assets)
                         ClearFields()
-                        mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
+                        mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
                         mainFrame.IsEnabled = True
                         mainFrame.Opacity = 1
                         _menugrid.IsEnabled = True
@@ -156,15 +156,15 @@ Public Class AssetsInventoryAddPage
     'End Sub
 
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
-        mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
+        mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         _menugrid.IsEnabled = True
         _menugrid.Opacity = 1
         _submenuframe.IsEnabled = True
         _submenuframe.Opacity = 1
-
         _addframe.Visibility = Visibility.Hidden
+
     End Sub
 
     Private Sub btnDisapprove_Click(sender As Object, e As RoutedEventArgs) Handles btnDisapprove.Click
@@ -210,7 +210,7 @@ Public Class AssetsInventoryAddPage
                 If InitializeService() Then
                     client.UpdateAssetsInventoryCancel(assets)
                     ClearFields()
-                    mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
+                    mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
                     mainFrame.IsEnabled = True
                     mainFrame.Opacity = 1
                     _menugrid.IsEnabled = True
@@ -281,7 +281,7 @@ Public Class AssetsInventoryAddPage
             If InitializeService() Then
                 client.UpdateAssetsInventoryApproval(assets)
                 ClearFields()
-                mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
+                mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
                 mainFrame.IsEnabled = True
                 mainFrame.Opacity = 1
                 _menugrid.IsEnabled = True
@@ -355,9 +355,12 @@ Public Class AssetsInventoryAddPage
         cbStatus.Tag = assetsModel.STATUS
         cbStatus.SelectedIndex = assetsModel.STATUS - 1
         cbAssetID.SelectedValue = assetsModel.ASSET_ID
-        cbNickname.SelectedValue = assetsModel.EMP_ID
+        cbNickname.Visibility = Windows.Visibility.Collapsed
+        txtAssignedTo.Visibility = Windows.Visibility.Visible
+        txtAssignedTo.Text = assetsModel.FULL_NAME
         txtComments.Text = assetsModel.COMMENTS
         dateInput.Text = assetsModel.DATE_PURCHASED
+
     End Sub
 
     Public Function InitializeService() As Boolean

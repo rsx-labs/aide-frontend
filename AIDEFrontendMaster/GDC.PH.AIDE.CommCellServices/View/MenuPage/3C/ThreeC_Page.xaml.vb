@@ -243,7 +243,7 @@ Public Class ThreeC_Page
                 _submenuframe.IsEnabled = False
                 _submenuframe.Opacity = 0.3
                 _addframe.Visibility = Visibility.Visible
-                _addframe.Margin = New Thickness(100, 50, 100, 50)
+                _addframe.Margin = New Thickness(50, 50, 50, 50)
             End If
         End If
         LoadConcernList(0, 10)
@@ -259,7 +259,7 @@ Public Class ThreeC_Page
         _menugrid.Opacity = 0.3
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(280, 80, 280, 80)
+        _addframe.Margin = New Thickness(200, 50, 200, 50)
         _addframe.Visibility = Visibility.Visible
     End Sub
 

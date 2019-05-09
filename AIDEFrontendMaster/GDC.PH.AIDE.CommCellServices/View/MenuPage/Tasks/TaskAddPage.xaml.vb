@@ -12,6 +12,7 @@ Class TaskAddPage
     Private _addframe As Frame
     Private _menugrid As Grid
     Private _submenuframe As Frame
+    Private _empID As Integer
     'Public taskList As New TasksModel
 
 #Region "Provider Declaration"
@@ -31,13 +32,14 @@ Class TaskAddPage
     Dim tasks As New Tasks
     Dim client As AideServiceClient
 
-    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, empID As Integer)
         InitializeComponent()
         frame = _frame
         email = _email
         Me._addframe = _addframe
         Me._menugrid = _menugrid
         Me._submenuframe = _submenuframe
+        Me._empID = empID
         mainWindow = _mainWindow
         btnUpdate.Visibility = Windows.Visibility.Collapsed
         dpStartDate.DisplayDate = Date.Now
@@ -58,6 +60,7 @@ Class TaskAddPage
         Me.DataContext = tasksViewModel
         GetDataContext(Me.DataContext)
         LoadControlsForUpdate()
+        txtTitle.Text = "Update Task"
     End Sub
 
 #Region "Common Methods"
@@ -99,16 +102,16 @@ Class TaskAddPage
 
     Private Sub LoadControlsForUpdate()
         txtIncID.IsReadOnly = True
-        dpStartDate.SelectedDate = tasks.DateStarted
         btnCreate.Visibility = Windows.Visibility.Collapsed
-        Project.Visibility = Windows.Visibility.Hidden
-        cboProject.Visibility = Windows.Visibility.Hidden
-        Rework.Visibility = Windows.Visibility.Hidden
-        cbRework.Visibility = Windows.Visibility.Hidden
-        Remarks.Visibility = Windows.Visibility.Hidden
-        txtRemarks.Visibility = Windows.Visibility.Hidden
-        Category.Visibility = Windows.Visibility.Hidden
-        cbCategory.Visibility = Windows.Visibility.Hidden
+        'Project.Visibility = Windows.Visibility.Hidden
+        cboProject.IsEnabled = False
+        'Rework.Visibility = Windows.Visibility.Hidden
+        cbRework.IsEnabled = False
+        'Remarks.Visibility = Windows.Visibility.Hidden
+        'txtRemarks.IsEnabled = False
+
+        'Category.Visibility = Windows.Visibility.Hidden
+        cbCategory.IsEnabled = False
     End Sub
 
     Private Sub LoadData()
@@ -193,7 +196,7 @@ Class TaskAddPage
 
         ' Load Items For Projects
         Try
-            Dim lstProjects As Project() = client.GetProjectList()
+            Dim lstProjects As Project() = client.GetProjectList(_empID)
             Dim listProjects As New ObservableCollection(Of ProjectModel)
 
             For Each objProjects As Project In lstProjects
@@ -233,56 +236,54 @@ Class TaskAddPage
     Private Function GetDataContext(obj As TasksViewModel) As Boolean
         Try
             tasks.TaskID = obj.NewTasks.TaskId
-                tasks.EmpID = obj.NewTasks.EmpId
-                tasks.IncidentID = obj.NewTasks.IncId
+            tasks.EmpID = obj.NewTasks.EmpId
+            tasks.IncidentID = obj.NewTasks.IncId
 
-                'tasks.DateCreated = Date.Now.ToShortDateString
-                If Not obj.NewTasks.DateCreated.Equals(Nothing) Then
-                    tasks.DateCreated = obj.NewTasks.DateCreated
-                Else
-                    tasks.DateCreated = Date.Now.ToShortDateString
-                End If
+            If Not obj.NewTasks.TargetDate.Equals(String.Empty) Then
+                tasks.TargetDate = obj.NewTasks.TargetDate
+            End If
 
-                If Not obj.NewTasks.TargetDate.Equals(String.Empty) Then
-                    tasks.TargetDate = obj.NewTasks.TargetDate
-                End If
+            'tasks.DateCreated = Date.Now.ToShortDateString
+            If Not obj.NewTasks.DateCreated.Equals(Nothing) Then
+                tasks.DateCreated = obj.NewTasks.DateCreated
+            Else
+                tasks.DateCreated = Date.Now.ToShortDateString
+            End If
 
-                If Not obj.NewTasks.CompltdDate.Equals(String.Empty) Then
-                    tasks.CompletedDate = obj.NewTasks.CompltdDate
-                End If
+            If Not obj.NewTasks.CompltdDate.Equals(String.Empty) Then
+                tasks.CompletedDate = obj.NewTasks.CompltdDate
+            End If
 
-                'tasks.DateCreated = Date.Now.ToShortDateString
-                If Not obj.NewTasks.DateCreated.Equals(String.Empty) Then
-                    tasks.DateStarted = obj.NewTasks.DateCreated
-                Else
-                    tasks.DateCreated = Date.Now.ToShortDateString
-                End If
-                tasks.Status = obj.NewTasks.Status
+            If Not obj.NewTasks.DateStarted.Equals(String.Empty) Then
+                tasks.DateStarted = obj.NewTasks.DateStarted
+            End If
 
-                If Not obj.NewTasks.EffortEst.Equals(String.Empty) Then
-                    tasks.EffortEst = obj.NewTasks.EffortEst
-                End If
+            tasks.Status = obj.NewTasks.Status
 
-                If Not obj.NewTasks.ActEffortEstWk.Equals(String.Empty) Then
-                    tasks.EffortEstWk = obj.NewTasks.ActEffortEstWk
-                End If
+            If Not obj.NewTasks.EffortEst.Equals(String.Empty) Then
+                tasks.EffortEst = obj.NewTasks.EffortEst
+            End If
 
-                If Not obj.NewTasks.ActEffortEst.Equals(String.Empty) Then
-                    tasks.ActualEffortEst = obj.NewTasks.ActEffortEst
-                End If
+            If Not obj.NewTasks.ActEffortEstWk.Equals(String.Empty) Then
+                tasks.EffortEstWk = obj.NewTasks.ActEffortEstWk
+            End If
 
-                tasks.TaskType = obj.NewTasks.TaskType
-                tasks.ProjectID = cboProject.SelectedValue
-                tasks.ProjectCode = cboProject.SelectedValue
-                tasks.Rework = obj.NewTasks.Rework
-                tasks.Phase = obj.NewTasks.Phase
-                tasks.TaskDescr = obj.NewTasks.TaskDescr
-                tasks.IncidentDescr = obj.NewTasks.IncDescr
-                tasks.Remarks = obj.NewTasks.Remarks
-                tasks.Others1 = obj.NewTasks.Others1
-                tasks.Others2 = obj.NewTasks.Others2
-                tasks.Others3 = obj.NewTasks.Others3
-                Return True
+            If Not obj.NewTasks.ActEffortEst.Equals(String.Empty) Then
+                tasks.ActualEffortEst = obj.NewTasks.ActEffortEst
+            End If
+
+            tasks.TaskType = obj.NewTasks.TaskType
+            tasks.ProjectID = cboProject.SelectedValue
+            tasks.ProjectCode = cboProject.SelectedValue
+            tasks.Rework = obj.NewTasks.Rework
+            tasks.Phase = obj.NewTasks.Phase
+            tasks.TaskDescr = obj.NewTasks.TaskDescr
+            tasks.IncidentDescr = obj.NewTasks.IncDescr
+            tasks.Remarks = obj.NewTasks.Remarks
+            tasks.Others1 = obj.NewTasks.Others1
+            tasks.Others2 = obj.NewTasks.Others2
+            tasks.Others3 = obj.NewTasks.Others3
+            Return True
         Catch ex As Exception
             MsgBox("Invalid Input!", MsgBoxStyle.Critical, "AIDE")
             Return False
@@ -312,11 +313,11 @@ Class TaskAddPage
     End Sub
 
     Private Function FindMissingFields(obj As TasksViewModel) As Boolean
-        If txtIncID.Text = String.Empty And
-           txtIncDescr.Text = String.Empty And
-           cbPhase.Text = String.Empty And
-           cbCategory.Text = String.Empty And
-            cboProject.Text = String.Empty And
+        If txtIncID.Text = String.Empty Or
+           txtIncDescr.Text = String.Empty Or
+           cbPhase.Text = String.Empty Or
+           cbCategory.Text = String.Empty Or
+            cboProject.Text = String.Empty Or
             cbStatus.Text = String.Empty Then
             MsgBox("Please Fill All Required Fields", MsgBoxStyle.Exclamation, "FAILED")
             Return True
@@ -330,6 +331,41 @@ Class TaskAddPage
     '        dpCompltdDate.DisplayDateStart = tasksViewModel.NewTasks.DateStarted
     '    End If
     'End Sub
+    Private Sub DatePicker_Loaded(ByVal sender As Object, ByVal e As RoutedEventArgs)
+        Dim datePicker As DatePicker = CType(sender, DatePicker)
+        If (Not (datePicker) Is Nothing) Then
+            Dim datePickerTextBox As System.Windows.Controls.Primitives.DatePickerTextBox = FindVisualChild(Of System.Windows.Controls.Primitives.DatePickerTextBox)(datePicker)
+            If (Not (datePickerTextBox) Is Nothing) Then
+                Dim watermark As ContentControl = CType(datePickerTextBox.Template.FindName("PART_Watermark", datePickerTextBox), ContentControl)
+                If (Not (watermark) Is Nothing) Then
+                    watermark.Content = String.Empty
+                    'or set it some value here...
+                End If
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Function FindVisualChild(Of T)(ByVal depencencyObject As DependencyObject) As T
+        If (Not (depencencyObject) Is Nothing) Then
+            Dim i As Integer = 0
+            Do While (i < VisualTreeHelper.GetChildrenCount(depencencyObject))
+                Dim child As DependencyObject = VisualTreeHelper.GetChild(depencencyObject, i)
+                Dim result As T
+                FindVisualChild(Of T)(child)
+                If (Not (result) Is Nothing) Then
+                    Return result
+                End If
+
+                i = (i + 1)
+            Loop
+
+        End If
+
+        Return Nothing
+    End Function
 
 #End Region
 
@@ -346,14 +382,25 @@ Class TaskAddPage
     End Sub
 
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
-        frame.Navigate(New TaskAdminPage(frame, mainWindow, txtEmpID.Text, email, _addframe, _menugrid, _submenuframe))
-        frame.IsEnabled = True
-        frame.Opacity = 1
-        _menugrid.IsEnabled = True
-        _menugrid.Opacity = 1
-        _submenuframe.IsEnabled = True
-        _submenuframe.Opacity = 1
-        _addframe.Visibility = Visibility.Hidden
+        If txtTitle.Text = "Update Task" Then
+            frame.Navigate(New TaskListPage(frame, mainWindow, txtEmpID.Text, email, _addframe, _menugrid, _submenuframe))
+            frame.IsEnabled = True
+            frame.Opacity = 1
+            _menugrid.IsEnabled = True
+            _menugrid.Opacity = 1
+            _submenuframe.IsEnabled = True
+            _submenuframe.Opacity = 1
+            _addframe.Visibility = Visibility.Hidden
+        Else
+            frame.Navigate(New TaskAdminPage(frame, mainWindow, txtEmpID.Text, email, _addframe, _menugrid, _submenuframe))
+            frame.IsEnabled = True
+            frame.Opacity = 1
+            _menugrid.IsEnabled = True
+            _menugrid.Opacity = 1
+            _submenuframe.IsEnabled = True
+            _submenuframe.Opacity = 1
+            _addframe.Visibility = Visibility.Hidden
+        End If
     End Sub
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
@@ -386,26 +433,21 @@ Class TaskAddPage
 
     Private Sub btnUpdate_Click(sender As Object, e As RoutedEventArgs) Handles btnUpdate.Click
         Try
-            If cbStatus.Text = "Completed" And txtEffortEst.Text = String.Empty And
-                txtActualEffortEst.Text = String.Empty And txtActualEfforEstWk.Text = String.Empty Then
-                MsgBox("Please Fill Effort Estimate, Actual Effort, and Weekly Effort Fields", MsgBoxStyle.Exclamation, "FAILED")
-            Else
-                Dim result As Integer = MsgBox("Are you sure you want to Update?", MsgBoxStyle.YesNo, "AIDE")
-                If result = vbYes Then
-                    If Me.InitializeService Then
-                        If GetDataContext(Me.DataContext) Then
-                            client.UpdateTask(tasks)
-                            MsgBox("Successfully Updated", MsgBoxStyle.Information, "AIDE")
-                            ClearValues()
-                            frame.Navigate(New TaskAdminPage(frame, mainWindow, txtEmpID.Text, email, _addframe, _menugrid, _submenuframe))
-                            frame.IsEnabled = True
-                            frame.Opacity = 1
-                            _menugrid.IsEnabled = True
-                            _menugrid.Opacity = 1
-                            _submenuframe.IsEnabled = True
-                            _submenuframe.Opacity = 1
-                            _addframe.Visibility = Visibility.Hidden
-                        End If
+            Dim result As Integer = MsgBox("Are you sure you want to Update?", MsgBoxStyle.YesNo, "AIDE")
+            If result = vbYes Then
+                If Me.InitializeService Then
+                    If GetDataContext(Me.DataContext) Then
+                        client.UpdateTask(tasks)
+                        MsgBox("Successfully Updated", MsgBoxStyle.Information, "AIDE")
+                        ClearValues()
+                        frame.Navigate(New TaskListPage(frame, mainWindow, txtEmpID.Text, email, _addframe, _menugrid, _submenuframe))
+                        frame.IsEnabled = True
+                        frame.Opacity = 1
+                        _menugrid.IsEnabled = True
+                        _menugrid.Opacity = 1
+                        _submenuframe.IsEnabled = True
+                        _submenuframe.Opacity = 1
+                        _addframe.Visibility = Visibility.Hidden
                     End If
                 End If
             End If
@@ -416,10 +458,6 @@ Class TaskAddPage
 
     Private Sub dpTargetDate_CalendarOpened(sender As Object, e As RoutedEventArgs) Handles dpTargetDate.CalendarOpened
         dpTargetDate.DisplayDateStart = dpStartDate.SelectedDate
-    End Sub
-
-    Private Sub dpCompltdDate_CalendarOpened(sender As Object, e As RoutedEventArgs) Handles dpCompltdDate.CalendarOpened
-        dpCompltdDate.DisplayDateStart = dpTargetDate.SelectedDate
     End Sub
 
 #End Region

@@ -240,7 +240,7 @@ Class HomeActionListsPage
                     _menugrid.Opacity = 0.3
                     _submenuframe.IsEnabled = False
                     _submenuframe.Opacity = 0.3
-                    _addframe.Margin = New Thickness(280, 30, 280, 30)
+                    _addframe.Margin = New Thickness(200, 30, 200, 30)
                     _addframe.Visibility = Visibility.Visible
                 End If
 
@@ -282,7 +282,7 @@ Class HomeActionListsPage
         _menugrid.Opacity = 0.3
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(280, 50, 280, 50)
+        _addframe.Margin = New Thickness(200, 50, 200, 50)
         _addframe.Visibility = Visibility.Visible
     End Sub
 

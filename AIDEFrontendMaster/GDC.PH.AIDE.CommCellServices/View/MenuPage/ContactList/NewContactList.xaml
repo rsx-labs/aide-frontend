@@ -7,6 +7,39 @@
       Height="auto" Width="auto"
       Title="NewContactList">
     <Page.Resources>
+        <Style x:Key="RoundCornerUpdate2" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="15" Background="#FF16ACE4">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          TextElement.FontWeight="Bold">
+                                </ContentPresenter>
+                            </Border>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FF16ACE4"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FF75D0F1"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="RoundCorner" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -477,13 +510,36 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <LinearGradientBrush x:Key="GradientDesign" MappingMode="RelativeToBoundingBox">
+            <!--<RadialGradientBrush.RelativeTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="1"/>
+                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                        <RotateTransform CenterY="0.5" CenterX="0.5" Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </RadialGradientBrush.RelativeTransform>-->
+            <GradientStop Color="#FFA0FFFF" Offset="0.0"/>
+            <GradientStop Color="#FFFDA299" Offset="1.0"/>
 
+        </LinearGradientBrush>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="DimGray"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
     </Page.Resources>
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="10*"/>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height=".5*" />
+                <RowDefinition Height="6*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -492,116 +548,205 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Viewbox HorizontalAlignment="Left">
-                        <TextBlock Padding="10,0,0,0" Text="Update Contacts" Margin="5" Foreground="DimGray"/>
+                        <TextBlock Text="Update Contacts" Margin="5" Foreground="DimGray"/>
 
                     </Viewbox>
                 </Grid>
                 <Grid Grid.Column="1">
-                    <Viewbox Margin="15">
+                    <Viewbox Margin="10" HorizontalAlignment="Right">
                         <Button x:Name="btnCCancel" Style="{DynamicResource ButtonBack}" >
 
                         </Button>
                     </Viewbox>
                 </Grid>
             </Grid>
+            <Grid Grid.Row="1" Background="Gray">
+                <Viewbox>
+                    <TextBlock Foreground="White" Margin="10" Text="Please complete all commendation fields"  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Viewbox>
+            </Grid>
+            <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}">
+                <Grid Margin="10,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
-            <Grid Grid.Row="1" Background="AliceBlue">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height=".5*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height=".4*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height=".4*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height=".4*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height=".4*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height=".4*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height=".4*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height=".4*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height=".4*"/>
-                    <RowDefinition Height="1.2*"/>
-                    <RowDefinition Height=".5*"/>
-                </Grid.RowDefinitions>
+                                <TextBox x:Name="txtCEmpID" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="False" Text="{Binding Path=EMP_ID}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                            </Border>
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter employee ID" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtCEmpID}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
-                <Grid Grid.Row="1">
-                    <TextBox x:Name="txtCEmpID" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" Margin="70,10,70,0" IsEnabled="False" Text="{Binding Path=EMP_ID}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                </Grid>
-                <Grid Grid.Row="2">
-                    <Viewbox>
-                        <TextBlock Text="(Employee ID)" Margin="10,0,10,0" TextWrapping="Wrap" Foreground="DimGray"/>
-                    </Viewbox>
-                </Grid>
-                <Grid Grid.Row="3">
-                    <TextBox x:Name="txtCEmail" Template="{DynamicResource TextBoxBaseControlTemplate}" IsEnabled="False" Text="{Binding Path=EMAIL_ADDRESS}" Margin="70,10,70,0" HorizontalContentAlignment="Center"/>
-                </Grid>
-                <Grid Grid.Row="4">
-                    <Viewbox>
-                        <TextBlock Text="(Work Email Address)" Margin="10,0,10,0" TextWrapping="Wrap" Foreground="DimGray"/>
-                    </Viewbox>
-                </Grid>
-                <Grid Grid.Row="5">
-                    <TextBox x:Name="txtCEmail2" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=EMAIL_ADDRESS2}" Margin="70,10,70,0" HorizontalContentAlignment="Center"/>
-                </Grid>
-                <Grid Grid.Row="6">
-                    <Viewbox>
-                        <TextBlock Text="(Personal Email Address)" Margin="10,0,10,0" TextWrapping="Wrap" Foreground="DimGray"/>
-                    </Viewbox>
-                </Grid>
-                <Grid Grid.Row="7">
-                    <TextBox  x:Name="txtCLocation" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=LOCATION}" TextWrapping="Wrap" Margin="70,10,70,0" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                </Grid>
-                <Grid Grid.Row="8">
-                    <Viewbox>
-                        <TextBlock Text="(Location)" Margin="10,0,10,0" TextWrapping="Wrap" Foreground="DimGray"/>
-                    </Viewbox>
-                </Grid>
-                <Grid Grid.Row="9">
-                    <TextBox x:Name="txtCLocal" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=LOCAL}" PreviewTextInput="NumberValidationTextBox" Margin="70,10,70,0" HorizontalContentAlignment="Center"/>
-                </Grid>
-                <Grid Grid.Row="10">
-                    <Viewbox>
-                        <TextBlock Text="(Extension)" Margin="10,0,10,0" TextWrapping="Wrap" Foreground="DimGray"/>
-                    </Viewbox>
-                </Grid>
-                <Grid Grid.Row="11">
-                    <TextBox x:Name="txtCCelNo" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=CEL_NO}" PreviewTextInput="NumberValidationTextBox" Margin="70,10,70,0" HorizontalContentAlignment="Center"/>
-                </Grid>
-                <Grid Grid.Row="12">
-                    <Viewbox>
-                        <TextBlock Text="(Work Mobile)" Margin="10,0,10,0" TextWrapping="Wrap" Foreground="DimGray"/>
-                    </Viewbox>
-                </Grid>
-                <Grid Grid.Row="13">
-                    <TextBox x:Name="txtCHome" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=HOMEPHONE}" PreviewTextInput="NumberValidationTextBox" Margin="70,10,70,0" HorizontalContentAlignment="Center"/>
-                </Grid>
-                <Grid Grid.Row="14">
-                    <Viewbox>
-                        <TextBlock Text="(Home Phone)" Margin="10,0,10,0" TextWrapping="Wrap" Foreground="DimGray"/>
-                    </Viewbox>
-                </Grid>
-                <Grid Grid.Row="15">
-                    <TextBox x:Name="txtCOther" Template="{DynamicResource TextBoxBaseControlTemplate}" PreviewTextInput="NumberValidationTextBox" Text="{Binding Path=OTHER_PHONE}" Margin="70,10,70,0" HorizontalContentAlignment="Center"/>
-                </Grid>
-                <Grid Grid.Row="16">
-                    <Viewbox>
-                        <TextBlock Text="(Other Phone)" Margin="10,0,10,0" TextWrapping="Wrap" Foreground="DimGray"/>
-                    </Viewbox>
-                </Grid>
+                                <TextBox x:Name="txtCEmail" Template="{DynamicResource TextBoxBaseControlTemplate}" IsEnabled="False" Text="{Binding Path=EMAIL_ADDRESS}" HorizontalContentAlignment="Center"/>
+                            </Border>
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter work email" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtCEmail}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
-                <Grid Grid.Row="17">
-                    <Button Style="{DynamicResource RoundCorner}" x:Name="btnCUpdate" Margin="70,10,70,10">
-                        <Viewbox>
-                            <TextBlock Text="Update" TextWrapping="Wrap" Margin="5"/>
-                        </Viewbox>
-                    </Button>
-                </Grid>
+                                <TextBox x:Name="txtCEmail2" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=EMAIL_ADDRESS2}" HorizontalContentAlignment="Center"/>
+                            </Border>
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter personal email" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtCEmail2}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="3">
+                            <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+
+                                <TextBox  x:Name="txtCLocation" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=LOCATION}" TextWrapping="Wrap" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                            </Border>
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter work location" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtCLocation}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="4">
+                            <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+
+                                <TextBox x:Name="txtCLocal" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=LOCAL}" PreviewTextInput="NumberValidationTextBox" HorizontalContentAlignment="Center"/>
+                            </Border>
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter extension" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtCLocal}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Grid>
+                    
+                    <Grid Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+
+                                <TextBox x:Name="txtCCelNo" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=CEL_NO}" PreviewTextInput="NumberValidationTextBox" HorizontalContentAlignment="Center"/>
+                            </Border>
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter work mobile" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtCCelNo}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+
+                                <TextBox x:Name="txtCHome" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=HOMEPHONE}" PreviewTextInput="NumberValidationTextBox" HorizontalContentAlignment="Center"/>
+                            </Border>
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter work mobile" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtCHome}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+
+                                <TextBox x:Name="txtCOther" Template="{DynamicResource TextBoxBaseControlTemplate}" PreviewTextInput="NumberValidationTextBox" Text="{Binding Path=OTHER_PHONE}" HorizontalContentAlignment="Center"/>
+                            </Border>
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter other phone" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtCOther}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                        <Grid Grid.Row="3">
+                            <Button Style="{DynamicResource RoundCornerUpdate2}" x:Name="btnCUpdate" Margin="5,5,0,5">
+                                <Viewbox>
+                                    <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
+                                </Viewbox>
+                            </Button>
+                        </Grid>
+                        <Grid Grid.Row="4"></Grid>
+                    </Grid>
+                    
 
             </Grid>
+        </Grid>
         </Grid>
     </Border>
 </Page>

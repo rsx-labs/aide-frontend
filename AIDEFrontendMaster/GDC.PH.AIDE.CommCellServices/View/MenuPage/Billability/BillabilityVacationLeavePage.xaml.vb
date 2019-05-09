@@ -8,6 +8,8 @@ Imports System.Windows.Xps.Packaging
 Imports System.Windows.Xps
 Imports System.Printing
 Imports System.Drawing.Printing
+Imports LiveCharts
+Imports LiveCharts.Wpf
 
 Public Class BillabilityVacationLeavePage
     Implements IAideServiceCallback
@@ -22,7 +24,9 @@ Public Class BillabilityVacationLeavePage
     Dim month As Integer = Date.Now.Month
     Dim setStatus As Integer
     Dim displayStatus As String = String.Empty
+    Dim displayFiscalYear As Integer = 3
     Dim status As Integer
+    Dim vlStatus As Integer = 4
     Dim img As String
     Dim displayMonth As String
     Dim checkStatus As Integer
@@ -40,10 +44,75 @@ Public Class BillabilityVacationLeavePage
         month = Date.Now.Month
         year = Date.Now.Year
         SetTitle()
-        LoadDataVLYearly()
+        'LoadDataVLYearly()
+        LoadStack()
         'LoadAllCategory()
     End Sub
 
+    Public Property SeriesCollection As SeriesCollection
+    Public Property Labels As String()
+    Public Property Formatter As Func(Of Object, Object)
+
+    Private Sub LoadStack()
+        Try
+            InitializeService()
+            _ResourceDBProvider._splist.Clear()
+
+            Dim lstresource = client.GetResourcePlanner(profile.Email_Address, vlStatus, displayFiscalYear)
+            Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
+            Dim resourceListVM As New ResourcePlannerViewModel()
+            Dim UsedVL As New ChartValues(Of Double)()
+            Dim HalfBalance As New ChartValues(Of Double)()
+            Dim TotalBalance As New ChartValues(Of Double)()
+
+            For Each objResource As ResourcePlanner In lstresource
+                _ResourceDBProvider.SetAllEmpRPList(objResource)
+            Next
+
+            Dim employee(lstresource.Length) As String
+            Dim usedLeaves(lstresource.Length) As String
+            Dim i As Integer = 0
+
+            For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
+                UsedVL.Add(iResource.UsedVL)
+                HalfBalance.Add(iResource.HalfBalance)
+                TotalBalance.Add(iResource.TotalBalance)
+                employee(i) = iResource.Emp_Name
+                i += 1
+            Next
+
+            SeriesCollection = New SeriesCollection From {
+                New StackedColumnSeries With {
+                    .Values = UsedVL,
+                    .StackMode = StackMode.Values,
+                    .DataLabels = True,
+                    .LabelsPosition = BarLabelPosition.Perpendicular,
+                    .Title = "Used VL"
+                },
+                New StackedColumnSeries With {
+                    .Values = HalfBalance,
+                    .StackMode = StackMode.Values,
+                    .DataLabels = True,
+                    .LabelsPosition = BarLabelPosition.Perpendicular,
+                    .Title = "Half Balance"
+                },
+                New StackedColumnSeries With {
+                    .Values = TotalBalance,
+                    .StackMode = StackMode.Values,
+                    .DataLabels = True,
+                    .LabelsPosition = BarLabelPosition.Perpendicular,
+            .Title = "Balance",
+                    .Fill = Brushes.Gray
+                }
+            }
+            
+            Labels = employee
+            Formatter = Function(value) value
+            DataContext = Me
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
 
 #Region "Private Methods"
 
@@ -60,43 +129,18 @@ Public Class BillabilityVacationLeavePage
         Return bInitialize
     End Function
 
-    Public Sub LoadDataVLYearly()
-        Try
-            InitializeService()
-            _ResourceDBProvider._splist.Clear()
-            Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, 4, 3)
-            Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
-            Dim resourceListVM As New ResourcePlannerViewModel()
-
-            For Each objResource As ResourcePlanner In lstresource
-                _ResourceDBProvider.SetAllEmpRPList(objResource)
-            Next
-
-            For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
-                resourcelist.Add(New ResourcePlannerModel(iResource))
-
-            Next
-            resourceListVM.ResourceListLeaveCredits = Nothing
-            resourceListVM.ResourceListLeaveCredits = resourcelist
-            VLYChartSeries.ItemsSource = resourcelist
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-    End Sub
-
     Private Sub SetTitle()
 
         Dim nextYear As Integer = year + 1
         Dim prevYear As Integer = year - 1
 
         If Date.Now.Month >= 4 Then
-            yearlyVL.Title = yearlyVL.Title + " " + year.ToString + "-" + nextYear.ToString
+            lblYear.Content = lblYear.Content + " " + year.ToString + "-" + nextYear.ToString
         Else
-            yearlyVL.Title = yearlyVL.Title + " " + prevYear.ToString + "-" + year.ToString
+            lblYear.Content = lblYear.Content + " " + prevYear.ToString + "-" + year.ToString
         End If
     End Sub
 #End Region
-
 
 #Region "ICallback Functions"
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
@@ -119,4 +163,5 @@ Public Class BillabilityVacationLeavePage
 
     End Sub
 #End Region
+
 End Class

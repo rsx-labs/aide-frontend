@@ -596,14 +596,24 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-
+        <LinearGradientBrush x:Key="GradientDesign" MappingMode="RelativeToBoundingBox">
+            <!--<RadialGradientBrush.RelativeTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="1"/>
+                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                        <RotateTransform CenterY="0.5" CenterX="0.5" Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </RadialGradientBrush.RelativeTransform>-->
+            <GradientStop Color="White" Offset="0.0"/>
+            <GradientStop Color="#FF472A24" Offset="1.0"/>
+        </LinearGradientBrush>
     </Page.Resources>
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="11.5*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="12.5*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="White">
                 <Grid.ColumnDefinitions>
@@ -639,16 +649,38 @@
             </Grid>
 
             <Grid Grid.Row="1" Background="White" >
-                <Grid Margin="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                <Grid Margin="0">
                     
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="4*"/>
+                   
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Frame x:Name="dashboardframeAnnouncement" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                        </Frame>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5*"/>
+                            <RowDefinition Height="5*"/>
+
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Frame x:Name="dashboardframeBday" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                            </Frame>
+                        </Grid>
+                        <Grid Grid.Row="2">
+
+                            <Frame x:Name="dashboardframeBday2" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                            </Frame>
+                        </Grid>
+                    </Grid>
+
+                    <Frame x:Name="dashboardframeBday3" Visibility="Hidden" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                    </Frame>
+
                     <!--Commendation-->
                     <!--<Grid Grid.Column="1" Grid.Row="0" Margin="5">
                         <Border BorderBrush="DimGray" BorderThickness="1"/>

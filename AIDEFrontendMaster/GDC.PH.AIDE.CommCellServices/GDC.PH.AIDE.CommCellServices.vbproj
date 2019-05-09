@@ -13,6 +13,27 @@
     <MyType>Custom</MyType>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>\\10.158.47.92\DEV files\AIDE\Installer Versions\Test\WPF\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Unc</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <TargetCulture>en</TargetCulture>
+    <ProductName>AIDE Comcell</ProductName>
+    <PublisherName>RS - DEV</PublisherName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -55,7 +76,26 @@
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>0CE34FAEE1365B0A7F294B355130CA20D7180B33</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>GDC.PH.AIDE.CommCellServices_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LiveCharts">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Outlook, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -79,9 +119,9 @@
     <Reference Include="System.ServiceModel">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Windows.Controls.DataVisualization.Toolkit.4.0.0.0\lib\net40-Client\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=3.5.40128.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Controls.Input.Toolkit">
       <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
@@ -137,6 +177,7 @@
     </ApplicationDefinition>
     <Compile Include="BindingProxy.vb" />
     <Compile Include="DataProviderService\ActionListDBProvider.vb" />
+    <Compile Include="DataProviderService\AnnouncementDBProvider.vb" />
     <Compile Include="DataProviderService\AssetsDBProvider.vb" />
     <Compile Include="DataProviderService\AttendanceListDBProvider.vb" />
     <Compile Include="DataProviderService\BillabilityDBProvider.vb" />
@@ -161,6 +202,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Model\ActionModel.vb" />
+    <Compile Include="Model\AnnouncementModel.vb" />
     <Compile Include="Model\AssetsModel.vb" />
     <Compile Include="Model\AttendanceModel.vb" />
     <Compile Include="Model\BillabilityModel.vb" />
@@ -186,6 +228,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ActionListViewModel.vb" />
+    <Compile Include="ViewModel\AnnouncementListViewModel.vb" />
     <Compile Include="ViewModel\AssetsViewModel.vb" />
     <Compile Include="ViewModel\AttendanceListViewModel.vb" />
     <Compile Include="ViewModel\BillabilityViewModel.vb" />
@@ -203,6 +246,12 @@
     <Compile Include="ViewModel\TasksSpViewModel.vb" />
     <Compile Include="ViewModel\TasksViewModel.vb" />
     <Compile Include="ViewModel\ViewProjectViewModel.vb" />
+    <Compile Include="View\Charts\DoughnutChart.xaml.vb">
+      <DependentUpon>DoughnutChart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\3CDashboard\3CDashboard.xaml.vb">
+      <DependentUpon>3CDashboard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MenuPage\3C\ThreeC_InsertPage.xaml.vb">
       <DependentUpon>ThreeC_InsertPage.xaml</DependentUpon>
     </Compile>
@@ -220,6 +269,12 @@
     </Compile>
     <Compile Include="View\MenuPage\ActionList\UpdateActionListPage.xaml.vb">
       <DependentUpon>UpdateActionListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\AnnouncementDashboard\AnnouncementDashboard.xaml.vb">
+      <DependentUpon>AnnouncementDashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\AnnouncementDashboard\AnnouncementDashboardAddPage.xaml.vb">
+      <DependentUpon>AnnouncementDashboardAddPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\Assets\AssetsAddPage.xaml.vb">
       <DependentUpon>AssetsAddPage.xaml</DependentUpon>
@@ -257,6 +312,9 @@
     <Compile Include="View\MenuPage\Billability\BillablesPage.xaml.vb">
       <DependentUpon>BillablesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MenuPage\Birthday Dashboard\BirthdayDashboard.xaml.vb">
+      <DependentUpon>BirthdayDashboard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MenuPage\Birthday\BirthdayPage.xaml.vb">
       <DependentUpon>BirthdayPage.xaml</DependentUpon>
     </Compile>
@@ -268,6 +326,9 @@
     </Compile>
     <Compile Include="View\MenuPage\Commendations\CommendationListPage.xaml.vb">
       <DependentUpon>CommendationListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Commendations\CommendationViewPage.xaml.vb">
+      <DependentUpon>CommendationViewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\ContactList\ContactListPage.xaml.vb">
       <DependentUpon>ContactListPage.xaml</DependentUpon>
@@ -335,6 +396,9 @@
     <Compile Include="View\SubMenuPage\ImproveSubMenuPage.xaml.vb">
       <DependentUpon>ImproveSubMenuPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SubMenuPage\OtherSubMenuPage.xaml.vb">
+      <DependentUpon>OtherSubMenuPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SubMenuPage\ProjectSubMenuPage.xaml.vb">
       <DependentUpon>ProjectSubMenuPage.xaml</DependentUpon>
     </Compile>
@@ -350,6 +414,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Charts\DoughnutChart.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\3CDashboard\3CDashboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\MenuPage\3C\ThreeC_InsertPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -371,6 +443,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MenuPage\ActionList\UpdateActionListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\AnnouncementDashboard\AnnouncementDashboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\AnnouncementDashboard\AnnouncementDashboardAddPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -422,6 +502,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\MenuPage\Birthday Dashboard\BirthdayDashboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\MenuPage\Birthday\BirthdayPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -437,6 +521,10 @@
     <Page Include="View\MenuPage\Commendations\CommendationListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\Commendations\CommendationViewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MenuPage\ContactList\ContactListPage.xaml">
       <SubType>Designer</SubType>
@@ -526,6 +614,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\SubMenuPage\OtherSubMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\SubMenuPage\ProjectSubMenuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -573,6 +665,7 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
+    <None Include="GDC.PH.AIDE.CommCellServices_TemporaryKey.pfx" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -591,6 +684,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ServiceReference1\UI_AIDE_CommCellServices.ServiceReference1.Action.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceReference1\UI_AIDE_CommCellServices.ServiceReference1.Announcements.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceReference1\UI_AIDE_CommCellServices.ServiceReference1.Assets.datasource">
@@ -997,6 +1093,50 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ServiceReference1\AIDEService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\addnewdb.png" />
+    <Resource Include="Assets\Button\addnewdbclick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\OtherIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icon\AideVengers.png" />
+    <Resource Include="Assets\Icon\Balloons.jpg" />
+    <Resource Include="Assets\Icon\bday.png" />
+    <Resource Include="Assets\Icon\bdaybg.jpg" />
+    <Resource Include="Assets\Icon\cake.png" />
+    <Resource Include="Assets\Icon\favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icon\happybirthdaybanner.png" />
+    <Resource Include="Assets\Icon\happybirthdaygreet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icon\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Menu\AnnouncementIcon.png" />
+    <Resource Include="Assets\Menu\OtherIcon.png" />
+    <Resource Include="Assets\Menu\SabaIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

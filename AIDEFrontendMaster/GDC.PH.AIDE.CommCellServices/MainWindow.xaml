@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <!-- This is where the header goes -->
-        <Grid Grid.Row="0" >
+        <Grid Grid.Row="0">
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                     <LinearGradientBrush.RelativeTransform>
@@ -34,73 +34,35 @@
                 </LinearGradientBrush>
             </Grid.Background>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="18*"/>
-                <ColumnDefinition Width="64*"/>
-                <ColumnDefinition Width="18*"/>
+                <ColumnDefinition Width="90*"/>
+                <ColumnDefinition Width="10*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="3*"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Viewbox>
+                        <Image Source="Assets\Icon\AideVengers.png" Margin="13"/>
+                    </Viewbox>
+                    <Viewbox HorizontalAlignment="Left" Margin="2,7">
+                        <TextBlock TextWrapping="Wrap" Margin="2" Text="Adaptive Intelligent Dashboard for Employees" Foreground="WhiteSmoke"/>
+                    </Viewbox>
+                </StackPanel>
+                
+            </Grid>
 
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Viewbox HorizontalAlignment="Center">
-                        <Image Source="Assets/Logo/AIDE_Logo4.png" Margin="2"/>
-                    </Viewbox>
-                </Grid>
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0" >
-                        <Viewbox HorizontalAlignment="Left">
-                            <TextBlock TextWrapping="Wrap" Margin="0" Text="A I D e" Foreground="White" FontStyle="Italic" />
+            <Grid Grid.Column="1" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal">
+                    <Button Background="Transparent" Margin="2" Name="MinimizeBtn" Click="MinimizeBtn_Click" BorderThickness="0" >
+                        <Viewbox>
+                            <TextBlock Margin="0" TextWrapping="Wrap" Text="__" Foreground="White"/>
                         </Viewbox>
-                    </Grid>
-                    <Grid Grid.Row="1" >
-                        <Viewbox HorizontalAlignment="Left">
-                            <TextBlock TextWrapping="Wrap" Margin="2" Text="Adaptive Intelligent Dashboard for Employees" Foreground="WhiteSmoke"/>
+                    </Button>
+                    <Button Background="Transparent" Margin="2" Name="ExitBtn"  Click="ExitBtn_Click">
+                        <Viewbox>
+                            <TextBlock Style="{DynamicResource CloseButton}" Margin="0" TextWrapping="Wrap" Text="X" Foreground="White"/>
                         </Viewbox>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="1.2*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Viewbox>
-                        <TextBlock Name="TimeTxt" TextWrapping="Wrap" Margin="3,2,3,0" Foreground="White" Text="{Binding Now}"/>
-                    </Viewbox>
-                </Grid>
-                <Grid Grid.Row="1">
-                    <Viewbox>
-                        <TextBlock Name="DateTxt" TextWrapping="Wrap" Margin="10,2,10,2" Foreground="WhiteSmoke"/>
-                    </Viewbox>
-                </Grid>
-            </Grid>
-            <Grid Grid.Column="2" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="4" Margin="5,10,2,10" Name="MinimizeBtn" Style="{DynamicResource RoundCorner}" Click="MinimizeBtn_Click" >
-                    <Viewbox>
-                        <TextBlock Margin="5" TextWrapping="Wrap" Text="__" Foreground="White"/>
-                    </Viewbox>
-                </Button>
-                <Button Grid.Column="5" Margin="2,10,5,10" Name="ExitBtn" Style="{DynamicResource RoundCorner}" Click="ExitBtn_Click">
-                    <Viewbox>
-                        <TextBlock Margin="5" TextWrapping="Wrap" Text="X" Foreground="White"/>
-                    </Viewbox>
-                </Button>
+                    </Button>
+                </StackPanel>
+                
             </Grid>
         </Grid>
 
@@ -259,17 +221,17 @@
                                     </Grid>
                                 </Grid>
                             </Button>
-                            <Button Name="BirthdayBtn" Click="BirthdayBtn_Click" Margin="2" Grid.Column="2" Style="{DynamicResource RoundCorner}"  >
+                            <Button Name="OtherBtn" Click="OtherBtn_Click" Margin="2" Grid.Column="4" Style="{DynamicResource RoundCorner}"  >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="30*"/>
                                         <ColumnDefinition Width="70*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0">
-                                        <Image Margin="0,10,10,10" Source="Assets/Menu/BirthdayIcon.png"/>
+                                        <Image Margin="0,10,10,10" Source="Assets/Menu/OtherIcon.png"/>
                                     </Grid>
                                     <Grid Grid.Column="1" VerticalAlignment="Center">
-                                        <TextBlock Foreground="White" Text="Birthdays"></TextBlock>
+                                        <TextBlock Foreground="White" Text="Others"></TextBlock>
                                     </Grid>
                                 </Grid>
                             </Button>
@@ -287,7 +249,7 @@
                                     </Grid>
                                 </Grid>
                             </Button>
-                            <Button Name="AssetsBtn" Click="AssetsBtn_Click" Margin="2" Grid.Column="4" Style="{DynamicResource RoundCorner}"  >
+                            <Button Name="AssetsBtn" Click="AssetsBtn_Click" Margin="2" Grid.Column="2" Style="{DynamicResource RoundCorner}"  >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="30*"/>
@@ -317,11 +279,51 @@
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="2" Margin="0,5,0,0" Background="#FF4B4B4B"></Grid>
+        <Grid Grid.Row="2" Margin="0" Background="#FF4B4B4B" VerticalAlignment="Center">
+            <!--<Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>-->
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="white">
+                <Viewbox>
+                    <TextBlock FontWeight="Bold" Name="TimeTxt" TextWrapping="Wrap" Margin="5" Foreground="DarkSlateGray" Text="{Binding Now}"/>
+                </Viewbox>
+                <Rectangle Fill="Black" Width="1" Margin="2,10,2,10"/>
+                <Viewbox HorizontalAlignment="Left">
+                    <TextBlock FontStyle="Italic" Name="DateTxt" TextWrapping="Wrap" Margin="10" Foreground="DimGray"/>
+                </Viewbox>
+            </StackPanel>
+            
+            <!--<Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="1.2*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Viewbox>
+                            <TextBlock Name="TimeTxt" TextWrapping="Wrap" Margin="3,2,3,0" Foreground="White" Text="{Binding Now}"/>
+                        </Viewbox>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Viewbox>
+                            <TextBlock Name="DateTxt" TextWrapping="Wrap" Margin="10,2,10,2" Foreground="WhiteSmoke"/>
+                        </Viewbox>
+                    </Grid>-->
+
+            
+        </Grid>
 
 
     </Grid>
     <Window.Resources>
+        <Style x:Key="CloseButton"  TargetType="TextBlock">
+            <Setter Property= "Foreground" Value="Blue"/>
+            <Style.Triggers>
+                <Trigger Property ="IsMouseOver" Value="True">
+                    <Setter Property= "Foreground" Value="Red"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Key="RoundCorner" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -360,8 +362,51 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
+        <Style x:Key="ButtonAdd" TargetType="{x:Type Button}">
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Name="buttonImage"
+                               Height="Auto"
+                               HorizontalAlignment="Right"
+                               Margin="1"
+                               Source="\Assets\Button\addnew.png"
+                               Stretch="Fill"
+                               VerticalAlignment="Stretch"
+                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                            <Image.Effect>
+                                <DropShadowEffect  Direction="290" Opacity="0.6" ShadowDepth="1" Color="Black"/>
+                            </Image.Effect>
+                        </Image>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonImage"
+                                        Property="Source"
+                                        Value="\Assets\Button\addnewclick.png"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+        
     </Window.Resources>
     <Window.Background>
-        <ImageBrush ImageSource="Assets/FujitsuBG.jpg" Stretch="Fill"/>
+        
+        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+            <LinearGradientBrush.RelativeTransform>
+                <TransformGroup>
+                    <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="1"/>
+                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                    <RotateTransform CenterY="0.5" CenterX="0.5" Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </LinearGradientBrush.RelativeTransform>
+            <GradientStop Color="#FFFFF5D3" Offset="1.0"/>       
+        </LinearGradientBrush>
+        <!--<ImageBrush ImageSource="Assets/FujitsuBG.jpg" Stretch="Fill"/>-->
     </Window.Background>
 </Window>

@@ -8,6 +8,246 @@
 
       Title="LessonLearntUpdatePage">
     <Page.Resources>
+        <Style x:Key="RoundCornerUpdate" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="15" Background="#FF16ACE4">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          TextElement.FontWeight="Bold">
+                                </ContentPresenter>
+                            </Border>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FF16ACE4"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FF75D0F1"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <LinearGradientBrush x:Key="GradientDesign" MappingMode="RelativeToBoundingBox">
+            <!--<RadialGradientBrush.RelativeTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="1"/>
+                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                        <RotateTransform CenterY="0.5" CenterX="0.5" Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </RadialGradientBrush.RelativeTransform>-->
+            <GradientStop Color="#FFA0FFFF" Offset="0.0"/>
+            <GradientStop Color="#FFFDA299" Offset="1.0"/>
+
+        </LinearGradientBrush>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="DimGray"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Border
+                  x:Name="Border" 
+                  Grid.ColumnSpan="2"
+                  CornerRadius="15"
+                  Background="White"
+                  BorderBrush="Gainsboro"
+                  BorderThickness="3" />
+                <Border                   
+                    Grid.Column="0"
+                  CornerRadius="0" 
+                  Margin="1" 
+                   IsEnabled="False"
+                  Background="Transparent" 
+                  BorderBrush="Gainsboro"
+                  BorderThickness="0,0,1,0" />
+                <Path 
+                  x:Name="Arrow"
+                  Grid.Column="1"     
+                  Fill="DimGray"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"
+                />
+
+
+            </Grid>
+            <!--<ControlTemplate.Triggers>
+            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="#808080" />
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="#E0E0E0" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="#AAAAAA" />
+                <Setter Property="Foreground" Value="#888888"/>
+                <Setter TargetName="Arrow" Property="Fill" Value="#888888" />
+            </Trigger>
+        </ControlTemplate.Triggers>-->
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
+            <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}"/>
+        </ControlTemplate>
+
+        <Style x:Key="StyleComboBox" TargetType="{x:Type ComboBox}">
+
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="MinHeight" Value="20"/>
+            <Setter Property="Foreground" Value="DimGray"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+                        <Grid>
+                            <ToggleButton 
+                            Name="ToggleButton" 
+                            Template="{StaticResource ComboBoxToggleButton}" 
+                            Grid.Column="2" 
+                            Focusable="false"
+                            IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                            ClickMode="Press">
+                            </ToggleButton>
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                            Margin="5"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center" />
+
+                            <TextBox x:Name="PART_EditableTextBox"
+                            Style="{x:Null}" 
+                            Template="{StaticResource ComboBoxTextBox}" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Margin="0"
+                            Focusable="True" 
+                                     FontSize="12"
+                            Background="Transparent"
+                            Foreground="DimGray"
+                            Visibility="Visible"
+                            IsReadOnly="{TemplateBinding IsReadOnly}"/>
+
+                            <Popup 
+                            Name="Popup"
+                            Placement="Bottom"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            AllowsTransparency="True" 
+                            Focusable="False"
+                            PopupAnimation="Slide">
+
+                                <Grid Name="DropDown"
+                              SnapsToDevicePixels="True"                
+                              MinWidth="{TemplateBinding ActualWidth}"
+                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border 
+                                x:Name="DropDownBorder"
+                                Background="#FF3F3F3F"
+
+                                BorderThickness="1"
+                                BorderBrush="#888888"/>
+                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </Trigger>
+                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                                <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0"/>
+                                <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsEditable"  Value="true">
+                                <Setter Property="IsTabStop" Value="false"/>
+                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+
+            </Style.Triggers>
+        </Style>
+        <!-- SimpleStyles: ComboBoxItem -->
+        <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                        <Border Name="Border"
+                              Padding="2"
+                              SnapsToDevicePixels="true">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#FF4F4F4F"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="styleComboTextBox" TargetType="{x:Type ComboBox}">
+            <Setter Property="Background" Value="#FFA9ADAF"></Setter>
+            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="IsEnabled" Value="True"></Setter>
+            <Setter Property="IsReadOnly" Value="False"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="Margin" Value="0,10"></Setter>
+
+
+        </Style>
         <SolidColorBrush x:Key="ComboBoxNormalBorderBrush" Color="#e3e9ef" />
         <SolidColorBrush x:Key="ComboBoxNormalBackgroundBrush" Color="#fff" />
         <SolidColorBrush x:Key="ComboBoxDisabledForegroundBrush" Color="#888" />
@@ -628,8 +868,9 @@
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="10*"/>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height=".5*" />
+                <RowDefinition Height="6*" />
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
@@ -639,12 +880,12 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Viewbox HorizontalAlignment="Left">
-                        <TextBlock Padding="10,0,0,0" Text="Update Lesson's Learnt" Margin="5" Foreground="DimGray"/>
+                        <TextBlock Text="Update Lesson's Learnt" Margin="5" Foreground="DimGray"/>
 
                     </Viewbox>
                 </Grid>
                 <Grid Grid.Column="1">
-                    <Viewbox Margin="15">
+                    <Viewbox Margin="10" HorizontalAlignment="Right">
                         <Button x:Name="btnBack" Click="btnBack_Click" Style="{DynamicResource ButtonBack}">
 
                         </Button>
@@ -653,94 +894,117 @@
                 </Grid>
 
             </Grid>
+            <Grid Grid.Row="1" Background="Gray">
+                <Viewbox>
+                    <TextBlock Foreground="White" Margin="10" Text="Please fill up all required field."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Viewbox>
+            </Grid>
 
-            <Grid Grid.Row="1" Background="AliceBlue">
+            <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}">
+                <Grid Margin="10,5">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="8*"/>
-                    <RowDefinition Height=".5*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Border Margin="70,10,70,0" CornerRadius="5" BorderThickness="3,3,3,3">
-                        <Border.BorderBrush>
-                            <DrawingBrush Viewport="0,0,10,10" ViewportUnits="Absolute" TileMode="Tile">
-                                <DrawingBrush.Drawing>
-                                    <DrawingGroup>
-                                        <GeometryDrawing Brush="DimGray">
-                                            <GeometryDrawing.Geometry>
-                                                <GeometryGroup>
-                                                    <RectangleGeometry Rect="0,0,50,50"/>
-                                                    <RectangleGeometry Rect="50,50,50,50"/>
-
-                                                    <RectangleGeometry Rect="50,50,50,50"/>
-                                                </GeometryGroup>
-                                            </GeometryDrawing.Geometry>
-                                        </GeometryDrawing>
-                                    </DrawingGroup>
-                                </DrawingBrush.Drawing>
-                            </DrawingBrush>
-                        </Border.BorderBrush>
-                        <Viewbox>
-                            <TextBlock TextWrapping="Wrap" Name="Lesson_Reference" Margin="10" 
-                                   Text="{Binding lessonLearntViewModel.SelectedLessonLearnt.ReferenceNo, Mode=TwoWay}"/>
-                        </Viewbox>
-                    </Border>
-                </Grid>
-                <Grid Grid.Row="1" Margin="70,0">
-
-                    <Grid.RowDefinitions>
-
                         <RowDefinition Height="2*"/>
-                        <RowDefinition Height=".4*"/>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height=".4*"/>
                         <RowDefinition Height="1*"/>
-                        <RowDefinition Height=".4*"/>
-                        <RowDefinition Height="1.2*"/>
-                    </Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>                 
+                </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <TextBox Name="Problem_Encountered" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" Margin="0,10,0,0" 
-                             Text="{Binding lessonLearntViewModel.SelectedLessonLearnt.Problem, Mode=TwoWay}" 
-                             VerticalContentAlignment="Center"  HorizontalContentAlignment="Center"/>
+                        <Border Margin="0,5" CornerRadius="15" BorderThickness="3,3,3,3">
+                            <Border.BorderBrush>
+                                <DrawingBrush Viewport="0,0,10,10" ViewportUnits="Absolute" TileMode="Tile">
+                                    <DrawingBrush.Drawing>
+                                        <DrawingGroup>
+                                            <GeometryDrawing Brush="DimGray">
+                                                <GeometryDrawing.Geometry>
+                                                    <GeometryGroup>
+                                                        <RectangleGeometry Rect="0,0,50,50"/>
+                                                        <RectangleGeometry Rect="50,50,50,50"/>
+
+                                                        <RectangleGeometry Rect="50,50,50,50"/>
+                                                    </GeometryGroup>
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingGroup>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Border.BorderBrush>
+                            <Viewbox>
+                                <TextBlock Foreground="White" TextWrapping="Wrap" Name="Lesson_Reference" Margin="10" 
+                                   Text="{Binding lessonLearntViewModel.SelectedLessonLearnt.ReferenceNo, Mode=TwoWay}"/>
+                            </Viewbox>
+                        </Border>
                     </Grid>
                     <Grid Grid.Row="1">
-                        <Viewbox>
-                            <TextBlock Text="(Problem Encountered)" Margin="10,0,10,0" TextWrapping="Wrap" Foreground="DimGray"/>
-                        </Viewbox>
+                        <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+
+                            <TextBox Name="Problem_Encountered" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" 
+                             Text="{Binding lessonLearntViewModel.SelectedLessonLearnt.Problem, Mode=TwoWay}" 
+                             VerticalContentAlignment="Center"  HorizontalContentAlignment="Center"/>
+                        </Border>
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter problem encountered" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=Problem_Encountered}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </Grid>
                     <Grid Grid.Row="2">
-                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Name="Resolution" Margin="0,10,0,0" 
+                        <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+
+                            <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Name="Resolution" 
                              Text="{Binding lessonLearntViewModel.SelectedLessonLearnt.Resolution, Mode=TwoWay}" 
                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                        </Border>
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter resolution" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=Resolution}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </Grid>
                     <Grid Grid.Row="3">
-                        <Viewbox>
-                            <TextBlock Text="(Resolution)" Margin="10,0,10,0" TextWrapping="Wrap" Foreground="DimGray"/>
-                        </Viewbox>
-                    </Grid>
-                    <Grid Grid.Row="4">
-                        <ComboBox Name="Action_No" Margin="0,10,0,0" 
+                        
+                        <ComboBox Name="Action_No" Margin="0,5" Style="{DynamicResource StyleComboBox}" 
                                 ItemsSource="{Binding Path=actionViewModel.objectActionSet}" 
                               DisplayMemberPath="REF_NO" 
                               Text="{Binding lessonLearntViewModel.SelectedLessonLearnt.ActionNo, Mode=TwoWay}"/>
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select action no." VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=Action_No}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </Grid>
-                    <Grid Grid.Row="5">
-                        <Viewbox>
-                            <TextBlock Text="(Action No)" Margin="10,0,10,0" TextWrapping="Wrap" Foreground="DimGray"/>
-                        </Viewbox>
-                    </Grid>
-
-                    <Grid Grid.Row="6">
-                        <Button Style="{DynamicResource RoundCorner}" x:Name="btnUpdate" Click="btnUpdate_Click" Margin="0,10,0,10">
+                    <Grid Grid.Row="4">
+                        <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnUpdate" Click="btnUpdate_Click" Margin="0,5">
                             <Viewbox>
-                                <TextBlock Text="Update" TextWrapping="Wrap" Margin="5"/>
+                                <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
                             </Viewbox>
                         </Button>
                     </Grid>
-
-                </Grid>
+                
 
             </Grid>
+        </Grid>
         </Grid>
     </Border>
 </Page>

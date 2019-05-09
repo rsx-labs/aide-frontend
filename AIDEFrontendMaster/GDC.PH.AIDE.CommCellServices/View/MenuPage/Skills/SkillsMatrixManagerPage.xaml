@@ -549,7 +549,7 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Height" Value="Auto"/>
             <Setter Property="Background" Value="#FF4DB6AC"/>
-            <Setter Property="Width" Value="100"/>
+            <Setter Property="Width" Value="Auto"/>
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -663,8 +663,9 @@
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition Width="0.25*"/>
+                                <ColumnDefinition Width="0.5*"/>
+                                <ColumnDefinition Width="0.25*"/>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <Viewbox>
@@ -673,31 +674,29 @@
                                 </Viewbox>
                             </Grid>
                             <Grid Grid.Column="1" HorizontalAlignment="Stretch">
-
-                                <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtSearch" TextWrapping="Wrap" Margin="0,17,0,17" Width="auto" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-
+                                <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtSearch" PreviewTextInput="NumberValidationTextBox" TextWrapping="Wrap" Margin="0,17,0,17" Width="auto" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                            </Grid>
+                            
+                            <Grid Grid.Column="2">
+                                <Button x:Name="btnSearch" Width="60" Height="35" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource RoundCorner}" HorizontalContentAlignment="Center">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Search"></TextBlock>
+                                </Button>
                             </Grid>
                         </Grid>
 
                         <Grid Grid.Column="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50*"/>
-                                <ColumnDefinition Width="15*"/>
-                                <ColumnDefinition Width="35*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="1">
-                                <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint" Content="Print" HorizontalAlignment="Right"  Margin="22,16" VerticalAlignment="Center" >
-
-                                </Button>
-                            </Grid>
-                            <Grid Grid.Column="2">
-                                <Viewbox Margin="10,15">
-                                    <Button Style="{DynamicResource RoundCorner}" x:Name="btnViewEmp" Width="auto" Height="auto" >
-                                        <Viewbox>
-                                            <TextBlock Text="View All Employee" Foreground="White" Margin="6" Padding="5,0"/>
-                                        </Viewbox>
+                            <Grid>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                    <Label Name="lblResult" FontWeight="Bold" Foreground="Red" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
+                                    <Button x:Name="btnPrint"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7" Style="{DynamicResource ButtonPrint}" HorizontalContentAlignment="Center">
+                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Print"></TextBlock>
                                     </Button>
-                                </Viewbox>
+                                    <Button x:Name="btnViewEmp" Width="140" Height="35"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Style="{DynamicResource RoundCorner}" HorizontalContentAlignment="Center">
+                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="View All Employee"></TextBlock>
+                                    </Button>
+                                </StackPanel>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -1071,9 +1070,7 @@
                                             </Viewbox>
                                         </Grid>
                                         <Grid Grid.Column="1">
-
                                             <RadioButton x:Name="rbProfLvl4" GroupName="Prof" IsEnabled="False" Content="Subject Matter Expert" FontSize="11" VerticalAlignment="Center"/>
-
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -1082,17 +1079,21 @@
 
                     </Grid>
                 </Grid>
-                <Grid Grid.Row="3" Background="White">
-                    <DataGrid x:Name="dgSkillList" Margin="0,0,0,20" 
-                                         BorderBrush="Transparent"                
-                                         HorizontalAlignment="Stretch"
-                                         VerticalAlignment="Stretch"
-                                         HorizontalGridLinesBrush="DimGray"
-                                         VerticalGridLinesBrush="DimGray"     
-                                         IsReadOnly="True">
+                <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Center">
+                    <StackPanel Name="spGrid"  Background="White" HorizontalAlignment="Center">
+                        <DataGrid x:Name="dgSkillList" 
+                                  Margin="0,0,0,20" 
+                                  BorderBrush="Transparent" 
+                                  HorizontalGridLinesBrush="DimGray"
+                                  VerticalGridLinesBrush="DimGray"     
+                                  IsReadOnly="True">
 
-                    </DataGrid>
-                </Grid>
+                        </DataGrid>
+                        
+                        
+                    </StackPanel>
+                </ScrollViewer>
+                
 
 
             </Grid>

@@ -7,11 +7,13 @@ Imports System.Windows.Threading
 Imports System.Runtime.InteropServices
 Imports Outlook = Microsoft.Office.Interop.Outlook
 Imports System.Reflection
+Imports System.Diagnostics.Eventing.Reader
 
 Class MainWindow
     Implements IAideServiceCallback
 
-    Public email As String = "c.lim@ph.fujitsu.com"
+#Region "Fields"
+    Public email As String
     Private departmentID As Integer
     Private empID As Integer
     Private permission As Integer
@@ -20,6 +22,9 @@ Class MainWindow
     Dim profileViewModel As New ProfileViewModel
     Dim profile As Profile
     Dim aideClientService As AideServiceClient
+    Dim eventStartUpId As Long = 12
+    Dim eventLogInId As Long = 4624
+#End Region
 
 #Region "Property declarations"
     Private _EmailAddress As String
@@ -100,11 +105,13 @@ Class MainWindow
         InitializeComponent()
         InitializeService()
         getTime()
-        'CheckOutlook()
+        CheckOutlook()
         MsgBox("Welcome " & email, MsgBoxStyle.Information, "AIDE")
         SetEmployeeData()
-        'attendance()
+        attendance()
         LoadSideBar()
+        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
+        SubMenuFrame.Navigate(New BlankSubMenu())
     End Sub
 
     Public Sub New(_email As String)
@@ -116,6 +123,8 @@ Class MainWindow
         SetEmployeeData()
         attendance()
         LoadSideBar()
+        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
+        SubMenuFrame.Navigate(New BlankSubMenu())
     End Sub
 #End Region
 
@@ -140,7 +149,7 @@ Class MainWindow
 
     Public Sub LoadSideBar()
         AttendanceFrame.Navigate(New AttendanceDashBoard(PagesFrame, profile))
-        CommendationFrame.Navigate(New CommendationDashBoard(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame))
+        CommendationFrame.Navigate(New CommendationDashBoard(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, profile.Email_Address, profile))
     End Sub
 
     Public Function InitializeService() As Boolean
@@ -191,7 +200,7 @@ Class MainWindow
         End Try
     End Sub
 
-     Private Sub SetEmployeeData()
+    Private Sub SetEmployeeData()
         Try
             'email = "a.batongbacal@ph.fujitsu.com"
             If email <> String.Empty Then
@@ -209,15 +218,32 @@ Class MainWindow
 
     Public Sub attendance()
         Try
+            'Get Login Time
+            'Dim dateToday As Date = DateTime.Now.ToString("MM/dd/yyyy")
+            'Dim logName As EventLog = New EventLog()
+            'logName.Log = "System"
+            'Dim entries = logName.Entries.Cast(Of EventLogEntry)().Where(Function(x) x.InstanceId = eventStartUpId And x.TimeWritten.Date = dateToday).[Select](Function(x) New With {x.MachineName, x.Site, x.Source, x.TimeWritten, x.InstanceId}).ToList()
 
-            Dim empID As New AttendanceSummary
-            empID.EmployeeID = EmployeeID
+            'If entries.Count = 0 Then
+            '    logName.Log = "Security"
+            '    entries = logName.Entries.Cast(Of EventLogEntry)().Where(Function(x) x.InstanceId = eventLogInId And x.TimeWritten.Date = dateToday).[Select](Function(x) New With {x.MachineName, x.Site, x.Source, x.TimeWritten, x.InstanceId}).ToList()
+            'End If
 
-            If empID.EmployeeID = 0 Then 'Service time-out needs to be handled on the service or else always restart it when it time's out
+            'Dim timeIn As String = entries.First().TimeWritten.ToString
+            'Dim attendanceSummarry As New AttendanceSummary
+            'attendanceSummarry.EmployeeID = EmployeeID
+            'attendanceSummarry.TimeIn = timeIn
+
+            Dim timeIn As String = DateTime.Now.ToString
+            Dim attendanceSummarry As New AttendanceSummary
+            attendanceSummarry.EmployeeID = EmployeeID
+            attendanceSummarry.TimeIn = timeIn
+
+            If attendanceSummarry.EmployeeID = 0 Then 'Service time-out needs to be handled on the service or else always restart it when it time's out
                 MsgBox("Service Time-Out! Attendance will not be Recorded!" + Environment.NewLine + "Application will Automatically Close.", MsgBoxStyle.Critical, "AIDE")
                 Environment.Exit(0)
             Else
-                aideClientService.InsertAttendance(empID)
+                aideClientService.InsertAttendance(attendanceSummarry)
             End If
 
         Catch ex As Exception
@@ -267,7 +293,6 @@ Class MainWindow
 #Region "Button/Events"
 
     Private Sub ImprovementBtn_Click(sender As Object, e As RoutedEventArgs) Handles ImprovementBtn.Click
-
         LoadSideBar()
         PagesFrame.Navigate(New ThreeC_Page(email, PagesFrame, AddFrame, MenuGrid, SubMenuFrame))
         SubMenuFrame.Navigate(New ImproveSubMenuPage(PagesFrame, email, profile, AddFrame, MenuGrid, SubMenuFrame))
@@ -275,7 +300,7 @@ Class MainWindow
 
     Private Sub HomeBtn_Click(sender As Object, e As RoutedEventArgs) Handles HomeBtn.Click
         LoadSideBar()
-        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame))
+        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
         SubMenuFrame.Navigate(New BlankSubMenu())
     End Sub
 
@@ -306,8 +331,8 @@ Class MainWindow
     End Sub
 
     Private Sub ProjectBtn_Click(sender As Object, e As RoutedEventArgs)
-        PagesFrame.Navigate(New CreateProjectPage(PagesFrame, profile.Emp_ID, profile.Permission))
-        SubMenuFrame.Navigate(New ProjectSubMenuPage(PagesFrame, profile.Emp_ID, profile.Permission, email, AddFrame, MenuGrid, SubMenuFrame))
+        PagesFrame.Navigate(New CreateProjectPage(PagesFrame, profile.Emp_ID))
+        SubMenuFrame.Navigate(New ProjectSubMenuPage(PagesFrame, profile.Emp_ID, email, AddFrame, MenuGrid, SubMenuFrame))
         LoadSideBar()
         'PagesFrame.Navigate(New ViewProjectUI(PagesFrame))
         'SubMenuFrame.Navigate(New BlankSubMenu())
@@ -332,9 +357,7 @@ Class MainWindow
     End Sub
 
     Private Sub BirthdayBtn_Click(sender As Object, e As RoutedEventArgs)
-        PagesFrame.Navigate(New BirthdayPage(PagesFrame, email))
-        SubMenuFrame.Navigate(New BlankSubMenu())
-        LoadSideBar()
+
     End Sub
 
     Private Sub AssetsBtn_Click(sender As Object, e As RoutedEventArgs)
@@ -350,6 +373,12 @@ Class MainWindow
     End Sub
     Private Sub MinimizeBtn_Click(sender As Object, e As RoutedEventArgs)
         Me.WindowState = Windows.WindowState.Minimized
+    End Sub
+
+    Private Sub OtherBtn_Click(sender As Object, e As RoutedEventArgs)
+        PagesFrame.Navigate(New BirthdayPage(PagesFrame, email))
+        SubMenuFrame.Navigate(New OtherSubMenuPage(PagesFrame, email))
+        LoadSideBar()
     End Sub
 #End Region
 

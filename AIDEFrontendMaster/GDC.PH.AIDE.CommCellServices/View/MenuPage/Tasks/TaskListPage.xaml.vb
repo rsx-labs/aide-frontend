@@ -90,11 +90,19 @@ Public Class TaskListPage
                 taskList.ActEffortEst = CType(lv_taskList.SelectedItem, TasksModel).ActEffortEst
                 rawPhase = tasksListDBProvider.SetPhaseDesc(CType(lv_taskList.SelectedItem, TasksModel).Phase)
                 rawStatus = tasksListDBProvider.SetStatusDesc(CType(lv_taskList.SelectedItem, TasksModel).Status)
+                taskList.ProjId = CType(lv_taskList.SelectedItem, TasksModel).ProjId
+                taskList.Remarks = CType(lv_taskList.SelectedItem, TasksModel).Remarks
+                taskList.Rework = CType(lv_taskList.SelectedItem, TasksModel).Rework
+                taskList.TaskType = CType(lv_taskList.SelectedItem, TasksModel).TaskType
                 taskList.Phase = rawPhase
                 taskList.Status = rawStatus
 
                 _addframe.Navigate(New TaskAddPage(mainFrame, mainWindow, taskList, email, _addframe, _menugrid, _submenuframe))
                 _addframe.Margin = New Thickness(100, 50, 100, 50)
+                _addframe.IsEnabled = True
+                _addframe.Visibility = Visibility.Visible
+                mainFrame.IsEnabled = False
+                mainFrame.Opacity = 0.3
             End If
         End If
     End Sub

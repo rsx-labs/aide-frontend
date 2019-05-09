@@ -8,6 +8,8 @@ Imports System.Windows.Xps.Packaging
 Imports System.Windows.Xps
 Imports System.Printing
 Imports System.Drawing.Printing
+Imports LiveCharts
+Imports LiveCharts.Wpf
 
 Public Class BillabilityPage
     Implements IAideServiceCallback
@@ -24,6 +26,9 @@ Public Class BillabilityPage
     Dim displayStatus As String = String.Empty
     Dim status As Integer
     Dim img As String
+    Dim slStatus As Integer = 3
+    Dim vlStatus As Integer = 4
+    Dim displayData As Integer = 2
     Dim displayMonth As String
     Dim checkStatus As Integer
     Dim count As Integer
@@ -39,10 +44,13 @@ Public Class BillabilityPage
 
         month = Date.Now.Month
         year = Date.Now.Year
-        monthlySL.Title = monthlySL.Title + " " + MonthName(month)
-        monthlyVL.Title = monthlyVL.Title + " " + MonthName(month)
-        LoadDataSLMonthly()
-        LoadDataVLMonthly()
+        lblMonthVL.Content = lblMonthVL.Content + " " + MonthName(month)
+        lblYear.Content = lblYear.Content + " " + MonthName(month)
+        'LoadDataSLMonthly()
+        'LoadDataVLMonthly()
+
+        LoadStackSL()
+        LoadStackVL()
         'LoadAllCategory()
     End Sub
 
@@ -62,52 +70,148 @@ Public Class BillabilityPage
         Return bInitialize
     End Function
 
-    Public Sub LoadDataSLMonthly()
+    Public Property SeriesCollection As SeriesCollection
+    Public Property Labels As String()
+    Public Property Formatter As Func(Of Object, Object)
+
+    Public Property SeriesCollectionVL As SeriesCollection
+    Public Property LabelsVL As String()
+    Public Property FormatterVL As Func(Of Object, Object)
+
+    Private Sub LoadStackSL()
         Try
             InitializeService()
             _ResourceDBProvider._splist.Clear()
-            Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, 3, 2)
+
+            Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, slStatus, displayData)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
             Dim resourceListVM As New ResourcePlannerViewModel()
+            Dim UsedSL As New ChartValues(Of Double)()
+            Dim TotalBalance As New ChartValues(Of Double)()
 
             For Each objResource As ResourcePlanner In lstresource
                 _ResourceDBProvider.SetAllEmpRPList(objResource)
             Next
 
-            For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
-                resourcelist.Add(New ResourcePlannerModel(iResource))
+            Dim employee(lstresource.Length) As String
+            Dim usedLeaves(lstresource.Length) As String
+            Dim i As Integer = 0
 
+            For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
+                UsedSL.Add(iResource.UsedVL)
+                employee(i) = iResource.Emp_Name
+                i += 1
             Next
-            resourceListVM.ResourceListLeaveCredits = Nothing
-            resourceListVM.ResourceListLeaveCredits = resourcelist
-            SLMChartSeries.ItemsSource = resourcelist
+
+            SeriesCollection = New SeriesCollection From {
+                New StackedColumnSeries With {
+                    .Values = UsedSL,
+                    .StackMode = StackMode.Values,
+                    .Fill = Brushes.Red,
+                    .DataLabels = True,
+                    .LabelsPosition = BarLabelPosition.Perpendicular,
+                    .Title = "Used SL"
+                }
+            }
+
+            Labels = employee
+            Formatter = Function(value) value
+            DataContext = Me
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
 
-    Public Sub LoadDataVLMonthly()
+    Private Sub LoadStackVL()
         Try
             InitializeService()
             _ResourceDBProvider._splist.Clear()
-            Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, 4, 2)
+
+            Dim lstresource = client.GetResourcePlanner(profile.Email_Address, vlStatus, displayData)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
             Dim resourceListVM As New ResourcePlannerViewModel()
+            Dim UsedVL As New ChartValues(Of Double)()
+            Dim HalfBalance As New ChartValues(Of Double)()
+            Dim TotalBalance As New ChartValues(Of Double)()
 
             For Each objResource As ResourcePlanner In lstresource
                 _ResourceDBProvider.SetAllEmpRPList(objResource)
             Next
 
-            For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
-                resourcelist.Add(New ResourcePlannerModel(iResource))
+            Dim employee(lstresource.Length) As String
+            Dim usedLeaves(lstresource.Length) As String
+            Dim i As Integer = 0
 
+            For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
+                UsedVL.Add(iResource.UsedVL)
+                employee(i) = iResource.Emp_Name
+                i += 1
             Next
-            resourceListVM.ResourceListLeaveCredits = Nothing
-            resourceListVM.ResourceListLeaveCredits = resourcelist
-            VLMChartSeries.ItemsSource = resourcelist
+
+            SeriesCollectionVL = New SeriesCollection From {
+                New StackedColumnSeries With {
+                    .Values = UsedVL,
+                    .StackMode = StackMode.Values,
+                    .DataLabels = True,
+                    .LabelsPosition = BarLabelPosition.Perpendicular,
+                    .Title = "Used VL"
+                }
+            }
+
+            LabelsVL = employee
+            FormatterVL = Function(value) value
+            DataContext = Me
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
+    End Sub
+
+    Public Sub LoadDataSLMonthly()
+        'Try
+        '    InitializeService()
+        '    _ResourceDBProvider._splist.Clear()
+        '    Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, 3, 2)
+        '    Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
+        '    Dim resourceListVM As New ResourcePlannerViewModel()
+
+        '    For Each objResource As ResourcePlanner In lstresource
+        '        _ResourceDBProvider.SetAllEmpRPList(objResource)
+        '    Next
+
+        '    For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
+        '        resourcelist.Add(New ResourcePlannerModel(iResource))
+
+        '    Next
+        '    resourceListVM.ResourceListLeaveCredits = Nothing
+        '    resourceListVM.ResourceListLeaveCredits = resourcelist
+        '    SLMChartSeries.ItemsSource = resourcelist
+        'Catch ex As Exception
+        '    MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        'End Try
+    End Sub
+
+    Public Sub LoadDataVLMonthly()
+        'Try
+        '    InitializeService()
+        '    _ResourceDBProvider._splist.Clear()
+        '    Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, 4, 2)
+        '    Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
+        '    Dim resourceListVM As New ResourcePlannerViewModel()
+
+        '    For Each objResource As ResourcePlanner In lstresource
+        '        _ResourceDBProvider.SetAllEmpRPList(objResource)
+        '    Next
+
+        '    For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
+        '        resourcelist.Add(New ResourcePlannerModel(iResource))
+
+        '    Next
+        '    resourceListVM.ResourceListLeaveCredits = Nothing
+        '    resourceListVM.ResourceListLeaveCredits = resourcelist
+        '    VLMChartSeries.ItemsSource = resourcelist
+        'Catch ex As Exception
+        '    MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        'End Try
     End Sub
 #End Region
 

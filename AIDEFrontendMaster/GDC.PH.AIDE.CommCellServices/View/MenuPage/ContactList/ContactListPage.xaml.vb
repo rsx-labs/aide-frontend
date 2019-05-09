@@ -97,7 +97,7 @@ Public Class ContactListPage
                     _submenuframe.IsEnabled = False
                     _submenuframe.Opacity = 0.3
                     _addframe.Visibility = Visibility.Visible
-                    _addframe.Margin = New Thickness(280, 0, 280, 0)
+                    _addframe.Margin = New Thickness(150, 100, 150, 100)
                 Else
                     Exit Sub
                 End If
@@ -109,11 +109,14 @@ Public Class ContactListPage
         Dim dialog As PrintDialog = New PrintDialog()
 
         If CBool(dialog.ShowDialog().GetValueOrDefault()) Then
+            dv_contacts.Visibility = Windows.Visibility.Visible
             Dim pageSize As Size = New Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight)
-            lv_contacts.Measure(pageSize)
-            lv_contacts.Arrange(New Rect(5, 5, pageSize.Width, pageSize.Height))
-            dialog.PrintVisual(lv_contacts, "Print Contacts")
+            dv_contacts.Measure(pageSize)
+            dv_contacts.Arrange(New Rect(5, 5, pageSize.Width, pageSize.Height))
+            dialog.PrintVisual(dv_contacts, "Print Contacts")
         End If
+
+        dv_contacts.Visibility = Windows.Visibility.Hidden
 
     End Sub
 #End Region
@@ -149,7 +152,37 @@ Public Class ContactListPage
             Next
 
             contactListVM.ContactList = lstContactsList
-            Me.DataContext = contactListVM
+
+            lv_contacts.ItemsSource = lstContactsList
+
+            'Me.DataContext = contactListVM
+            LoadDataForPrint()
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Public Sub LoadDataForPrint()
+        Try
+            Dim lstContactsList As New ObservableCollection(Of ContactListModel)
+            Dim contactListDBProvider As New ContactListDBProvider
+            Dim contactListVM As New ContactListViewModel()
+
+            Dim objContacts As New ContactList()
+
+            For i As Integer = 0 To lstContacts.Length - 1
+                objContacts = lstContacts(i)
+                contactListDBProvider.SetMyContactList(objContacts)
+            Next
+
+            For Each rawUser As MyContactList In contactListDBProvider.GetMyContactList()
+                lstContactsList.Add(New ContactListModel(rawUser))
+            Next
+
+            contactListVM.ContactListForPrint = lstContactsList
+
+            dv_contacts.ItemsSource = lstContactsList
+
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -312,4 +345,5 @@ Public Class ContactListPage
     Private Sub btnPrev_Click1(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
         SetPaging(CInt(PagingMode._Previous))
     End Sub
+
 End Class

@@ -1,10 +1,13 @@
 ﻿Imports System.ComponentModel
+Imports LiveCharts
+
 Public Class ResourcePlannerModel
     Implements INotifyPropertyChanged
 
     Private _empID As Integer
     Private _EmpName As String
     Private _status As Double
+    Private _usedVL As ChartValues(Of Double)
     Private _desc As String
     Private _EmpImage As String
     Private _dateEntry As DateTime
@@ -79,6 +82,16 @@ Public Class ResourcePlannerModel
         Set(value As DateTime)
             _dateEntry = value
             NotifyPropertyChanged("DATE_ENTRY")
+        End Set
+    End Property
+
+    Public Property UsedVL As ChartValues(Of Double)
+        Get
+            Return _usedVL
+        End Get
+        Set(value As ChartValues(Of Double))
+            _usedVL = value
+            NotifyPropertyChanged("UsedVL")
         End Set
     End Property
 

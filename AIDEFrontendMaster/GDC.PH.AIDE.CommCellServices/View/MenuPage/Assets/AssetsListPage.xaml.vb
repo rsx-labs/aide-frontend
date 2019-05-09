@@ -68,7 +68,7 @@ Public Class AssetsListPage
         _menugrid.Opacity = 0.3
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(280, 0, 280, 0)
+        _addframe.Margin = New Thickness(150, 80, 150, 80)
         _addframe.Visibility = Visibility.Visible
     End Sub
 
@@ -123,7 +123,7 @@ Public Class AssetsListPage
                 _menugrid.Opacity = 0.3
                 _submenuframe.IsEnabled = False
                 _submenuframe.Opacity = 0.3
-                _addframe.Margin = New Thickness(280, 0, 280, 0)
+                _addframe.Margin = New Thickness(150, 80, 150, 80)
                 _addframe.Visibility = Visibility.Visible
             End If
         End If

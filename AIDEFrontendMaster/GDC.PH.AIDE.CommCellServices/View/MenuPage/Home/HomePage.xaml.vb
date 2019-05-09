@@ -28,7 +28,8 @@ Class HomePage
     Private month As Integer = Date.Now.Month
     Private displayMonth As String
     Private MANAGER As String = "Manager"
-
+    Private email As String
+    Private profile As New Profile
     Dim lstBirthdayMonth As BirthdayList()
     Dim lstCommendation As Commendations()
     Dim birthdayListVM As New BirthdayListViewModel()
@@ -45,7 +46,7 @@ Class HomePage
 
 #Region "Constructor"
 
-    Public Sub New(mainFrame As Frame, _position As String, _empID As Integer, _addFrame As Frame, _menuGrid As Grid, _subMenuFrame As Frame)
+    Public Sub New(mainFrame As Frame, _position As String, _empID As Integer, _addFrame As Frame, _menuGrid As Grid, _subMenuFrame As Frame, _email As String, _profile As Profile)
 
         InitializeComponent()
         Me.position = _position
@@ -54,9 +55,12 @@ Class HomePage
         Me._addframe = _addFrame
         Me._menugrid = _menuGrid
         Me._submenuframe = _subMenuFrame
+        Me.email = _email
+        profile = _profile
         'SetButtonCreateVisible()
         'SetData()
         Me.DataContext = commendationVM
+        LoadAllDashBoard()
     End Sub
 
 #End Region
@@ -107,6 +111,17 @@ Class HomePage
 #End Region
 
 #Region "Functions"
+
+    Public Sub LoadAllDashBoard()
+        dashboardframeBday.Navigate(New BirthdayDashboard(email))
+        dashboardframeBday2.Navigate(New _3CDashboard(email, mainFrame, _addframe, _menugrid, _submenuframe, profile))
+        dashboardframeAnnouncement.Navigate(New AnnouncementDashboard(mainFrame, empID, _addframe, _menugrid, _submenuframe, email, profile))
+        'dashboardframeBday3.Navigate(New BirthdayDashboard(email))
+    End Sub
+
+    Public Sub AutoPlay()
+
+    End Sub
 
     'Public Sub SetData()
     '    Try

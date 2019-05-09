@@ -8,7 +8,338 @@
       Height="Auto" Width="Auto"
       Title="TaskAddPage">
     <Page.Resources>
+        <Style TargetType="ContentControl">
+            <Style.Triggers>
+                <Trigger Property="Name" Value="PART_Watermark">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="styleDatePickerfrom" TargetType="{x:Type DatePicker}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DatePicker}">
+                        <Grid x:Name="PART_Root">
+                            <Grid.ColumnDefinitions>
 
+                                <ColumnDefinition Width="5*" />
+
+                            </Grid.ColumnDefinitions>
+
+                            <DatePickerTextBox x:Name="PART_TextBox"
+                                       BorderBrush="Transparent"
+                                       Text=""
+                                       TextAlignment="Center"
+                                       FontSize="12"
+                                       HorizontalContentAlignment="Stretch"
+                                       Padding="{TemplateBinding Padding}"
+                                       VerticalContentAlignment="Stretch"
+                                       Visibility="Visible"
+                                       VerticalAlignment="Center"
+                                               HorizontalAlignment="Stretch"
+                                       Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="0" Foreground="DimGray">
+                            </DatePickerTextBox>
+
+                            <Viewbox HorizontalAlignment="Right">
+
+                                <Button x:Name="PART_Button" VerticalAlignment="Stretch" Margin="5" >
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="OverridesDefaultStyle" Value="True"></Setter>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Image Name="buttonImage"
+                               Height="Auto"
+                               
+                               Margin="0"
+                               Source="..\..\..\Assets\Button\Calendar.png"
+                               Stretch="Fill"
+                               VerticalAlignment="Stretch"
+                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                                                            <Image.Effect>
+                                                                <DropShadowEffect  Direction="290" Opacity=".6" ShadowDepth="1" Color="LightGray" BlurRadius="1"/>
+                                                            </Image.Effect>
+                                                        </Image>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="buttonImage"
+                                        Property="Source"
+                                        Value="..\..\..\Assets\Button\CalendarClick.png"></Setter>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Viewbox>
+
+
+                            <Popup x:Name="PART_Popup" StaysOpen="False" AllowsTransparency="True" />
+                        </Grid>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="styleDatePickerto" TargetType="{x:Type DatePicker}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DatePicker}">
+                        <Grid x:Name="PART_Root">
+                            <Grid.ColumnDefinitions>
+
+                                <ColumnDefinition Width="5*" />
+
+                            </Grid.ColumnDefinitions>
+
+                            <DatePickerTextBox x:Name="PART_TextBox"
+                                       BorderBrush="Transparent"
+                                       TextAlignment="Center"
+                                       HorizontalContentAlignment="Stretch"
+                                       Padding="{TemplateBinding Padding}"
+                                       VerticalContentAlignment="Center"
+                                       Visibility="Visible"
+                                               FontSize="12"
+                                       Text="" VerticalAlignment="Center"
+                                             
+                                               HorizontalAlignment="Stretch"
+                                       Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="0" Foreground="Gray">
+                            </DatePickerTextBox>
+
+                            <Viewbox HorizontalAlignment="Right">
+
+                                <Button x:Name="PART_Button" VerticalAlignment="Stretch" Margin="5">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="OverridesDefaultStyle" Value="True"></Setter>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Image Name="buttonImage"
+                               Height="Auto"
+                               
+                               Margin="0"
+                               Source="..\..\..\Assets\Button\Calendar.png"
+                               Stretch="Fill"
+                               VerticalAlignment="Stretch"
+                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                                                            <Image.Effect>
+                                                                <DropShadowEffect  Direction="290" Opacity=".6" ShadowDepth="1" Color="LightGray" BlurRadius="1"/>
+                                                            </Image.Effect>
+                                                        </Image>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="buttonImage"
+                                        Property="Source"
+                                        Value="..\..\..\Assets\Button\CalendarClick.png"></Setter>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </Viewbox>
+
+
+                            <Popup x:Name="PART_Popup" StaysOpen="False" AllowsTransparency="True" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="styleDatePickerTextBox" TargetType="{x:Type DatePickerTextBox}">
+            <Setter Property="Background" Value="#FFA9ADAF"></Setter>
+            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="IsEnabled" Value="True"></Setter>
+            <Setter Property="IsReadOnly" Value="True"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+
+            
+            
+
+
+        </Style>
+
+
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Border
+                  x:Name="Border" 
+                  Grid.ColumnSpan="2"
+                  CornerRadius="15"
+                  Background="White"
+                  BorderBrush="Gainsboro"
+                  BorderThickness="3" />
+                <Border                   
+                    Grid.Column="0"
+                  CornerRadius="0" 
+                  Margin="1" 
+                   IsEnabled="False"
+                  Background="Transparent" 
+                  BorderBrush="Gainsboro"
+                  BorderThickness="0,0,1,0" />
+                <Path 
+                  x:Name="Arrow"
+                  Grid.Column="1"     
+                  Fill="DimGray"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"
+                />
+
+
+            </Grid>
+            <!--<ControlTemplate.Triggers>
+            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="#808080" />
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="#E0E0E0" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="#AAAAAA" />
+                <Setter Property="Foreground" Value="#888888"/>
+                <Setter TargetName="Arrow" Property="Fill" Value="#888888" />
+            </Trigger>
+        </ControlTemplate.Triggers>-->
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
+            <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}"/>
+        </ControlTemplate>
+        
+        <Style x:Key="StyleComboBox" TargetType="{x:Type ComboBox}">
+
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="MinHeight" Value="20"/>
+            <Setter Property="Foreground" Value="DimGray"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+                        <Grid>
+                            <ToggleButton 
+                            Name="ToggleButton" 
+                            Template="{StaticResource ComboBoxToggleButton}" 
+                            Grid.Column="2" 
+                            Focusable="false"
+                            IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                            ClickMode="Press">
+                            </ToggleButton>
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                            Margin="5"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center" />
+
+                            <TextBox x:Name="PART_EditableTextBox"
+                            Style="{x:Null}" 
+                            Template="{StaticResource ComboBoxTextBox}" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Margin="0"
+                            Focusable="True" 
+                                     FontSize="12"
+                            Background="Transparent"
+                            Foreground="DimGray"
+                            Visibility="Visible"
+                            IsReadOnly="{TemplateBinding IsReadOnly}"/>
+
+                            <Popup 
+                            Name="Popup"
+                            Placement="Bottom"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            AllowsTransparency="True" 
+                            Focusable="False"
+                            PopupAnimation="Slide">
+
+                                <Grid Name="DropDown"
+                              SnapsToDevicePixels="True"                
+                              MinWidth="{TemplateBinding ActualWidth}"
+                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border 
+                                x:Name="DropDownBorder"
+                                Background="#FF3F3F3F"
+
+                                BorderThickness="1"
+                                BorderBrush="#888888"/>
+                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </Trigger>
+                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                                <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0"/>
+                                <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsEditable"  Value="true">
+                                <Setter Property="IsTabStop" Value="false"/>
+                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+
+            </Style.Triggers>
+        </Style>
+        <!-- SimpleStyles: ComboBoxItem -->
+        <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                        <Border Name="Border"
+                              Padding="2"
+                              SnapsToDevicePixels="true">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#FF4F4F4F"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <SolidColorBrush x:Key="ComboBoxNormalBorderBrush" Color="#e3e9ef" />
         <SolidColorBrush x:Key="ComboBoxNormalBackgroundBrush" Color="#fff" />
         <SolidColorBrush x:Key="ComboBoxDisabledForegroundBrush" Color="#888" />
@@ -131,7 +462,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="4" Background="#FF02CB5D">
+                            <Border x:Name="border" CornerRadius="15" Background="#FF02CB5D">
                                 <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           TextElement.FontWeight="Bold">
@@ -164,7 +495,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="4" Background="DimGray">
+                            <Border x:Name="border" CornerRadius="15" Background="#FF16ACE4">
                                 <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           TextElement.FontWeight="Bold">
@@ -174,10 +505,10 @@
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="dimgray"/>
+                                <Setter Property="Background" TargetName="border" Value="#FF16ACE4"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="#FF817F7F"/>
+                                <Setter Property="Background" TargetName="border" Value="#FF75D0F1"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
@@ -189,153 +520,6 @@
             </Setter>
         </Style>
 
-        <Style x:Key="styleDatePickerfrom" TargetType="{x:Type DatePicker}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type DatePicker}">
-                        <Grid x:Name="PART_Root">
-                            <Grid.ColumnDefinitions>
-
-                                <ColumnDefinition Width="5*" />
-
-                            </Grid.ColumnDefinitions>
-
-                            <DatePickerTextBox x:Name="PART_TextBox"
-                                       BorderBrush="#FF4E4E50"
-                                              
-                                       TextAlignment="Center"
-                                       HorizontalContentAlignment="Stretch"
-                                       Padding="{TemplateBinding Padding}"
-                                       VerticalContentAlignment="Center"
-                                       Visibility="Visible"
-                                       
-                                               HorizontalAlignment="Stretch"
-                                       Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="0.5" Foreground="#FF1D1D1D">
-                            </DatePickerTextBox>
-                            <Viewbox HorizontalAlignment="Right">
-
-                                <Button x:Name="PART_Button" VerticalAlignment="Stretch" >
-                                    <Button.Style>
-                                        <Style TargetType="{x:Type Button}">
-                                            <Setter Property="OverridesDefaultStyle" Value="True"></Setter>
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type Button}">
-                                                        <Image Name="buttonImage"
-                               Height="Auto"
-                               
-                               Margin="0,10,0,15"
-                               Source="..\..\..\Assets\Button\Calendar.png"
-                               Stretch="Fill"
-                               VerticalAlignment="Stretch"
-                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
-                                                            <Image.Effect>
-                                                                <DropShadowEffect  Direction="290" Opacity=".6" ShadowDepth="1" Color="LightGray" BlurRadius="1"/>
-                                                            </Image.Effect>
-                                                        </Image>
-                                                        <ControlTemplate.Triggers>
-                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\CalendarClick.png"></Setter>
-                                                            </Trigger>
-                                                        </ControlTemplate.Triggers>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
-                            </Viewbox>
-
-                            <TextBlock Text="from" Foreground="#FFFF7D00" VerticalAlignment="Stretch" Margin="0,10" HorizontalAlignment="left"  Background="#FF4E4E50" Padding="5" />
-                            <TextBlock Foreground="White" Text="from"  VerticalAlignment="Center" Margin="0,10" HorizontalAlignment="left"  Background="#FF4E4E50" Padding="5,0" />
-
-                            <Popup x:Name="PART_Popup" StaysOpen="False" AllowsTransparency="True" />
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="styleDatePickerto" TargetType="{x:Type DatePicker}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type DatePicker}">
-                        <Grid x:Name="PART_Root">
-                            <Grid.ColumnDefinitions>
-
-                                <ColumnDefinition Width="5*" />
-
-                            </Grid.ColumnDefinitions>
-
-                            <DatePickerTextBox x:Name="PART_TextBox"
-                                       BorderBrush="#FF4E4E50"
-                                       TextAlignment="Center"
-                                       HorizontalContentAlignment="Stretch"
-                                       Padding="{TemplateBinding Padding}"
-                                       VerticalContentAlignment="Center"
-                                       Visibility="Visible"
-                                       
-                                               HorizontalAlignment="Stretch"
-                                       Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="0.5" Foreground="#FF1D1D1D">
-                            </DatePickerTextBox>
-                            <Viewbox HorizontalAlignment="Right">
-
-                                <Button x:Name="PART_Button" VerticalAlignment="Stretch" >
-                                    <Button.Style>
-                                        <Style TargetType="{x:Type Button}">
-                                            <Setter Property="OverridesDefaultStyle" Value="True"></Setter>
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type Button}">
-                                                        <Image Name="buttonImage"
-                               Height="Auto"
-                               
-                               Margin="0,10,0,15"
-                               Source="..\..\..\Assets\Button\Calendar.png"
-                               Stretch="Fill"
-                               VerticalAlignment="Stretch"
-                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
-                                                            <Image.Effect>
-                                                                <DropShadowEffect  Direction="290" Opacity=".6" ShadowDepth="1" Color="LightGray" BlurRadius="1"/>
-                                                            </Image.Effect>
-                                                        </Image>
-                                                        <ControlTemplate.Triggers>
-                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\CalendarClick.png"></Setter>
-                                                            </Trigger>
-                                                        </ControlTemplate.Triggers>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
-                            </Viewbox>
-                            <TextBlock Text="to     " Foreground="#FFFF7D00" VerticalAlignment="Stretch" Margin="0,10" HorizontalAlignment="left"  Background="#FF4E4E50" Padding="5" />
-                            <TextBlock Foreground="White" Text="to     "  VerticalAlignment="Center" Margin="0,10" HorizontalAlignment="left"  Background="#FF4E4E50" Padding="5,0" >
-
-                            </TextBlock>
-
-                            <Popup x:Name="PART_Popup" StaysOpen="False" AllowsTransparency="True" />
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="styleDatePickerTextBox" TargetType="{x:Type DatePickerTextBox}">
-            <Setter Property="Background" Value="#FFA9ADAF"></Setter>
-            <Setter Property="BorderBrush" Value="Transparent"></Setter>
-            <Setter Property="BorderThickness" Value="0"></Setter>
-            <Setter Property="IsEnabled" Value="True"></Setter>
-            <Setter Property="IsReadOnly" Value="False"></Setter>
-            <Setter Property="Foreground" Value="White"></Setter>
-            <Setter Property="Margin" Value="0,10"></Setter>
-
-
-        </Style>
         <Style x:Key="ButtonAdd" TargetType="{x:Type Button}">
 
             <Setter Property="Template">
@@ -546,6 +730,16 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="DimGray"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
         <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="5" />
             <Setter Property="TextWrapping" Value="Wrap"/>
@@ -626,13 +820,27 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <LinearGradientBrush x:Key="GradientDesign" MappingMode="RelativeToBoundingBox">
+            <!--<RadialGradientBrush.RelativeTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="1"/>
+                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                        <RotateTransform CenterY="0.5" CenterX="0.5" Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </RadialGradientBrush.RelativeTransform>-->
+            <GradientStop Color="#FFA0FFFF" Offset="0.0"/>
+            <GradientStop Color="#FFFDA299" Offset="1.0"/>
+
+        </LinearGradientBrush>
 
     </Page.Resources>
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*" />
-                <RowDefinition Height="12.5*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height=".5*" />
+                <RowDefinition Height="9*" />
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
@@ -644,13 +852,12 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Viewbox HorizontalAlignment="Left">
-                        <TextBlock Padding="10,0,0,0" Text="Add Task" Margin="5" Foreground="DimGray"/>
-
+                        <TextBlock Padding="0" x:Name="txtTitle" Text="Add Task" Margin="5" Foreground="DimGray"/>
                     </Viewbox>
 
                 </Grid>
                 <Grid Grid.Column="1">
-                    <Viewbox Margin="15">
+                    <Viewbox HorizontalAlignment="Right" Margin="10">
                         <Button x:Name="btnBack" Style="{StaticResource ButtonBack}"/>
                     </Viewbox>
 
@@ -661,237 +868,365 @@
 
             </Grid>
 
-            <Grid Grid.Row="1" Background="AliceBlue">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" Margin="30,0,10,0">
-                    <Grid.ColumnDefinitions>                    
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="5*"/>   
+            <Grid Grid.Row="1" Background="Gray">
+                <Viewbox>
+                    <TextBlock Foreground="White" Margin="10" Text="Please fill up all required field."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Viewbox>
+            </Grid>
+
+            <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}" Margin="0">
+                <Grid Margin="10,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height=".2*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
 
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="1">
-                            <Label Foreground="DimGray"  Content="Employee ID" VerticalAlignment="Center" />
-                            <Label Foreground="DimGray"  Content="Task ID" Visibility="Hidden" VerticalAlignment="Center"/>
-                        </Grid>
-                        <Grid Grid.Row="2">
-                            <Label Foreground="DimGray" Content="Incident ID *" VerticalAlignment="Center"/>
-                        </Grid>
-                        <Grid Grid.Row="3">
-                            <Label Foreground="DimGray" Content="Incident Description *" VerticalAlignment="Center"/>
-                        </Grid>
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
-                        <Grid Grid.Row="5">
-                            <Label Foreground="DimGray" Content="Effort Estimate (hrs)" x:Name="EffortEstimate" VerticalAlignment="Center"/>
-                        </Grid>
-                        <Grid Grid.Row="6">
-                            <Label Foreground="DimGray" Content="Actual Effort (hrs)" x:Name="ActualEffort" VerticalAlignment="Center"/>
-                        </Grid>
-                        <Grid Grid.Row="7">
-                            <Label Foreground="DimGray" Content="Weekly Effort (hrs)" x:Name="WeeklyEffort" VerticalAlignment="Center"/>
-                        </Grid>
-                        <Grid Grid.Row="8">
-                            <Label Foreground="DimGray" Content="Phase *" x:Name="Phase"  VerticalAlignment="Center"/>
-                        </Grid>
-                        <Grid Grid.Row="9">
-                            <Label Foreground="DimGray" Content="Remarks" x:Name="Remarks" VerticalAlignment="Center"/>
-                        </Grid>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height=".2*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <Grid Grid.Row="1">
-                            <TextBox IsReadOnly="True" Template="{DynamicResource TextBoxBaseControlTemplate}"
-                                 Margin="0,10"
+                                    <TextBox IsReadOnly="True" 
                                  x:Name="txtEmpID"
-                                 Text="{Binding NewTasks.EmpId, Mode=TwoWay}"/>
-                            <TextBox  Margin="0,10" IsReadOnly="True" Template="{DynamicResource TextBoxBaseControlTemplate}"
-                                 Visibility="Hidden"
+                                 Text="{Binding NewTasks.EmpId, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}"/>
+                                </Border>
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter Employee ID" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtEmpID}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBox  Margin="0,10" IsReadOnly="True" Template="{DynamicResource TextBoxBaseControlTemplate}"
+                                 Visibility="hidden"
                                  Text="{Binding NewTasks.TaskId, Mode=TwoWay}" 
                                  x:Name="txtTaskID"/>
-                        </Grid>
-                        <Grid Grid.Row="2">
-                            <TextBox  Margin="0,10" Text="{Binding NewTasks.IncId, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}"
-                                 x:Name="txtIncID"/>
-                        </Grid>
-                        <Grid Grid.Row="3">
-                            <TextBox  Margin="0,10" Text="{Binding NewTasks.IncDescr, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}"
-                                 x:Name="txtIncDescr"/>
-                        </Grid>
-                        <Grid Grid.Row="5">
-                            <TextBox  Margin="0,10" Text="{Binding NewTasks.EffortEst, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtEffortEst"/>
-                        </Grid>
-                        <Grid Grid.Row="6">
-                            <TextBox  Margin="0,10" Text="{Binding NewTasks.ActEffortEst, Mode=TwoWay}"
-                                 Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEffortEst"/>
-                        </Grid>
-                        <Grid Grid.Row="7">
-                            <TextBox  Margin="0,10" Text="{Binding NewTasks.ActEffortEstWk, Mode=TwoWay}"
-                                 Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEfforEstWk"/>
-                        </Grid>
+                                <!--<Label Foreground="DimGray"  Content="Employee ID" VerticalAlignment="Center" />
+                                <Label Foreground="DimGray"  Content="Task ID" Visibility="Hidden" VerticalAlignment="Center"/>-->
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
-                        <Grid Grid.Row="8">
-                            <ComboBox SelectedValue="{Binding NewTasks.Phase, Mode=TwoWay}"
+                                    <TextBox Text="{Binding NewTasks.IncId, Mode=TwoWay}"
+                                 x:Name="txtIncID" Template="{DynamicResource TextBoxBaseControlTemplate}"/>
+                                </Border>
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter Incident ID*" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtIncID}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <!--<Label Foreground="DimGray" Content="Incident ID *" VerticalAlignment="Center"/>-->
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+
+                                    <TextBox Text="{Binding NewTasks.IncDescr, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}"
+                                 x:Name="txtIncDescr"/>
+                                </Border>
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter Incident Description*" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtIncDescr}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                </Grid>
+
+                            <Grid Grid.Row="3">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+
+                                    <TextBox  Text="{Binding NewTasks.EffortEst, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtEffortEst"/>
+                                </Border>
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter Estimate Effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtEffortEst}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                </Grid>
+                            <Grid Grid.Row="4">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+
+                                    <TextBox Text="{Binding NewTasks.ActEffortEst, Mode=TwoWay}"
+                                 Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEffortEst"/>
+                                </Border>
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter Actual Effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtActualEffortEst}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                </Grid>
+                            <Grid Grid.Row="5">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+
+                                    <TextBox Text="{Binding NewTasks.ActEffortEstWk, Mode=TwoWay}"
+                                 Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEfforEstWk"/>
+                                </Border>
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter Weekly Effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtActualEfforEstWk}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                </Grid>
+                            <Grid Grid.Row="6">
+                                <ComboBox SelectedValue="{Binding NewTasks.Phase, Mode=TwoWay}"
                                   ItemsSource="{Binding Path=PhaseStatusList}" 
                                   DisplayMemberPath="Value" 
                                   SelectedValuePath="Key"
-                                   Margin="0,10"
+                                   Margin="0,5,5,5"
+                                          Style="{DynamicResource StyleComboBox}"
                                  x:Name="cbPhase"/>
-                        </Grid>
-                        <Grid Grid.Row="9">
-                            <TextBox Margin="0,10" Text="{Binding NewTasks.Remarks, Mode=TwoWay}"
-                                 Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtRemarks"/>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid Grid.Column="1" Margin="10,0,30,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="5*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height=".2*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="1">
-                            <Label Foreground="DimGray" Content="Category *" x:Name="Category" VerticalAlignment="Center" />
-                        </Grid>
-                        <Grid Grid.Row="2">
-                            <Label Foreground="DimGray" Content="Project Name *" x:Name="Project" VerticalAlignment="Center" />
-                        </Grid>
-                        <Grid Grid.Row="3">
-                            <Label  Foreground="DimGray" Content="Rework" x:Name="Rework" VerticalAlignment="Center"/>
-                        </Grid>
-                        <Grid Grid.Row="5">
-                            <Label Foreground="DimGray" Content="Status *" VerticalAlignment="Center"/>
-                        </Grid>
-                        <Grid Grid.Row="6">
-                            <Label Foreground="DimGray" Content="Start Date *" VerticalAlignment="Center"/>
-                        </Grid>
-                        <Grid Grid.Row="7">
-                            <Label Foreground="DimGray" Content="Target Date" VerticalAlignment="Center"/>
-                        </Grid>
-                        <Grid Grid.Row="8">
-                            <Label Foreground="DimGray" Content="Completed Date" VerticalAlignment="Center"/>
-                        </Grid>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height=".2*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Phase*" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbPhase}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="7">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
-                        <Grid Grid.Row="1">
-                            <ComboBox SelectedValue="{Binding NewTasks.TaskType, Mode=TwoWay}"
+                                    <TextBox Text="{Binding NewTasks.Remarks, Mode=TwoWay}"
+                                 Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtRemarks"/>
+                                </Border>
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter Remarks" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtRemarks}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                </Grid>
+                        </Grid>
+
+                    </Grid>
+                    <Grid Grid.Column="2" Margin="0">
+                        
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <ComboBox SelectedValue="{Binding NewTasks.TaskType, Mode=TwoWay}"
                                   ItemsSource="{Binding Path=CategoryStatusList}" 
                                   DisplayMemberPath="Value"
                                   SelectedValuePath="Key"
-                                  Margin="0,10"
-                                  x:Name="cbCategory"/>
-                        </Grid>
-                        <Grid Grid.Row="2">
-                            <ComboBox Name="cboProject"
+                                  Margin="5,5,0,5"
+                                  x:Name="cbCategory" Style="{DynamicResource StyleComboBox}"/>
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a category*" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbCategory}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <ComboBox x:Name="cboProject"
                                   SelectedValue="{Binding NewTasks.ProjId, Mode=TwoWay}"
                                   ItemsSource="{Binding Path=ProjectList}" 
                                   DisplayMemberPath="ProjectName"
                                   SelectedValuePath="ProjectID"
-                                  Margin="0,10"/>
-                        </Grid>
-                        <Grid Grid.Row="3">
-                            <ComboBox SelectedValue="{Binding NewTasks.Rework, Mode=TwoWay}"
+                                  Margin="5,5,0,5" Style="{DynamicResource StyleComboBox}"/>
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a project*" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cboProject}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <ComboBox SelectedValue="{Binding NewTasks.Rework, Mode=TwoWay}"
                                   ItemsSource="{Binding Path=ReworkStatusList}" 
                                   DisplayMemberPath="Value" 
                                   SelectedValuePath="Key"
-                                  Margin="0,10"
+                                  Margin="5,5,0,5" Style="{DynamicResource StyleComboBox}"
                                   x:Name="cbRework"/>
-                        </Grid>
-                        <Grid Grid.Row="5">
-                            <ComboBox  SelectedValue="{Binding NewTasks.Status, Mode=TwoWay}"
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Is this a rework?" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbRework}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <ComboBox  SelectedValue="{Binding NewTasks.Status, Mode=TwoWay}"
                                    ItemsSource="{Binding Path=TaskStatusList}" 
                                    DisplayMemberPath="Value"
                                    SelectedValuePath="Key"
-                                   Margin="0,10"
-                                 x:Name="cbStatus"/>
-                        </Grid>
-                        <Grid Grid.Row="6">
-                            <DatePicker  Margin="0,10" SelectedDate="{x:Static sys:DateTime.Now}"
-                                    Name="dpStartDate" IsEnabled="False">
-                                <DatePicker.Resources>
-                                    <Style TargetType="Button">
-                                        <Setter Property="VerticalAlignment" Value="Top"/>
-                                    </Style>
-                                </DatePicker.Resources>
-                            </DatePicker>
-                        </Grid>
-                        <Grid Grid.Row="7">
-                            <DatePicker  Margin="0,10" SelectedDate="{Binding NewTasks.TargetDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Name="dpTargetDate">
-                                <DatePicker.Resources>
-                                    <Style TargetType="Button">
-                                        <Setter Property="VerticalAlignment" Value="Top"/>
-                                    </Style>
-                                </DatePicker.Resources>
-                            </DatePicker>
-                        </Grid>
-                        <Grid Grid.Row="8">
-                            <DatePicker  Margin="0,10" SelectedDate="{Binding NewTasks.CompltdDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Name="dpCompltdDate">
-                                <DatePicker.Resources>
-                                    <Style TargetType="Button">
-                                        <Setter Property="VerticalAlignment" Value="Top"/>
-                                    </Style>
-                                </DatePicker.Resources>
-                            </DatePicker>
-                        </Grid>
-                        <Grid Grid.Row="9">
-                            
-                                <Button x:Name="btnCreate" Margin="0,10" HorizontalContentAlignment="Stretch" Style="{DynamicResource RoundCorner}" Content="Create" />
-                            <Button x:Name="btnUpdate"  Margin="0,10" Style="{DynamicResource RoundCornerUpdate}" Content="Update"/>
-                                
-                            
+                                 x:Name="cbStatus" Margin="5,5,0,5" Style="{DynamicResource StyleComboBox}"/>
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a status*" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbStatus}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="4">
+                                <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+
+                                    <DatePicker Loaded="DatePicker_Loaded" Text="12" Margin="2" SelectedDate="{Binding NewTasks.DateStarted, Mode=TwoWay}"
+                                    Name="dpStartDate" IsEnabled="True" Style="{DynamicResource styleDatePickerfrom}">
+
+                                    </DatePicker>
+                                </Border>
+                                <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select start date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=dpStartDate}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="5">
+                                <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+
+                                    <DatePicker Loaded="DatePicker_Loaded" Text="12" Margin="2" SelectedDate="{Binding NewTasks.TargetDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    x:Name="dpTargetDate" Style="{DynamicResource styleDatePickerfrom}">
+
+                                    </DatePicker>
+                                </Border>
+                                <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select target date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=dpTargetDate}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="6">
+                                <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+
+                                    <DatePicker Loaded="DatePicker_Loaded" Text="12" Margin="2" SelectedDate="{Binding NewTasks.CompltdDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    Name="dpCompltdDate" Style="{DynamicResource styleDatePickerfrom}">
+
+                                    </DatePicker>
+                                </Border>
+                                <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select completed date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=dpCompltdDate}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="7">
+                                <Button x:Name="btnCreate" Margin="5,5,0,5" HorizontalContentAlignment="Stretch" Style="{DynamicResource RoundCorner}" >
+                                    <Viewbox>
+                                        <TextBlock Text="CREATE" FontSize="14" TextWrapping="Wrap" Margin="5"/>
+                                    </Viewbox>
+                                </Button>
+                                <Button x:Name="btnUpdate"  Margin="5,5,0,5" Style="{DynamicResource RoundCornerUpdate}">
+                                    <Viewbox>
+                                        <TextBlock Text="UPDATE" FontSize="14" TextWrapping="Wrap" Margin="5"/>
+                                    </Viewbox>
+                                </Button>
+
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>

@@ -18,6 +18,16 @@ Public Class TasksSpViewModel
         End Set
     End Property
 
+    Public Property TasksSpListForPrint As ObservableCollection(Of TasksSpModel)
+        Get
+            Return _tasksSpList
+        End Get
+        Set(value As ObservableCollection(Of TasksSpModel))
+            _tasksSpList = value
+            NotifyPropertyChanged("TasksSpListForPrint")
+        End Set
+    End Property
+
 #Region "PropertyChange"
 
     Public Event PropertyChanged(sender As Object, e As PropertyChangedEventArgs) Implements INotifyPropertyChanged.PropertyChanged

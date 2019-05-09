@@ -29,6 +29,16 @@ Public Class ContactListViewModel
         End Set
     End Property
 
+    Public Property ContactListForPrint As ObservableCollection(Of ContactListModel)
+        Get
+            Return _contactList
+        End Get
+        Set(value As ObservableCollection(Of ContactListModel))
+            _contactList = value
+            NotifyPropertyChanged("ContactListForPrint")
+        End Set
+    End Property
+
     Private Sub NotifyPropertyChanged(ByVal propertyName As String)
         RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
     End Sub

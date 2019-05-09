@@ -48,8 +48,8 @@ Public Class MyEmployeeList
     Public Property Name As String
     Public Property Nickname As String
     Public Property EmpID As Integer
-    Public Property DateStarted As Date = Date.Now
-    Public Property DateFinished As Date = Date.Now
+    Public Property DateStarted As Date = Date.Now.ToShortDateString
+    Public Property DateFinished As Date = Date.Now.ToShortDateString
 End Class
 
 ''' <summary>
@@ -60,6 +60,6 @@ Public Class MyEmployee
 
     Public Property Name() As String
     Public Property EmployeeID() As String
-    Public Property DateStarted() As Date = Date.Now
-    Public Property DateFinished() As Date = Date.Now
+    Public Property DateStarted() As Date = Date.Now.ToShortDateString
+    Public Property DateFinished() As Date = Date.Now.ToShortDateString
 End Class

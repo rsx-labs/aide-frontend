@@ -41,7 +41,7 @@ Class TaskAdminPage
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 5
+    Dim pagingRecordPerPage As Integer = 10
 
     Private Enum PagingMode
         _First = 1
@@ -121,6 +121,13 @@ Class TaskAdminPage
         lblWednesday.Content = wednesday
         lblThursday.Content = thursday
         lblFriday.Content = friday
+
+        ' Label for Print
+        lblMonday2.Content = monday
+        lblTuesday2.Content = tuesday
+        lblWednesday2.Content = wednesday
+        lblThursday2.Content = thursday
+        lblFriday2.Content = friday
     End Sub
 
     Private Sub LoadEmployeeTaskAll()
@@ -152,9 +159,37 @@ Class TaskAdminPage
                 lstMyTasks.Add(New TasksSpModel(iTasks))
             Next
 
-            taskSpViewModel.TasksSpList = lstMyTasks
+            'taskSpViewModel.TasksSpList = lstMyTasks
+            dgTask.ItemsSource = lstMyTasks
 
-            Me.DataContext = taskSpViewModel
+            'Me.DataContext = taskSpViewModel
+            LoadDataForPrint()
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Private Sub LoadDataForPrint()
+        Try
+
+            Dim lstMyTasks As New ObservableCollection(Of TasksSpModel)
+            Dim taskDBProvider As New TaskDBProvider
+            Dim taskSpViewModel As New TasksSpViewModel
+
+            Dim objTask As New TaskSummary()
+
+            For i As Integer = 0 To lstTasks.Length - 1
+                objTask = lstTasks(i)
+                taskDBProvider.SetTasksSpList(objTask)
+            Next
+
+            For Each iTasks As MyTasksSp In taskDBProvider.GetTasksSp()
+                lstMyTasks.Add(New TasksSpModel(iTasks))
+            Next
+
+            'taskSpViewModel.TasksSpList = lstMyTasks
+            dgTaskForPrint.ItemsSource = lstMyTasks
+
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -277,7 +312,7 @@ Class TaskAdminPage
 #Region "Buttons"
 
     Private Sub btnCreateTask_Click(sender As Object, e As RoutedEventArgs) Handles btnCreateTask.Click
-        _addframe.Navigate(New TaskAddPage(frame, mainWindow, email, _addframe, _menugrid, _submenuframe))
+        _addframe.Navigate(New TaskAddPage(frame, mainWindow, email, _addframe, _menugrid, _submenuframe, empID))
         frame.IsEnabled = False
         frame.Opacity = 0.3
         _menugrid.IsEnabled = False
@@ -285,31 +320,34 @@ Class TaskAdminPage
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
         _addframe.Visibility = Visibility.Visible
-        _addframe.Margin = New Thickness(100, 50, 100, 50)
+        _addframe.Margin = New Thickness(150, 30, 150, 30)
     End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As RoutedEventArgs) Handles btnPrint.Click
         Dim dialog As PrintDialog = New PrintDialog()
         If CBool(dialog.ShowDialog().GetValueOrDefault()) Then
+            TaskForPrint.Visibility = Windows.Visibility.Visible
             dialog.PrintTicket.PageOrientation = PageOrientation.Landscape
 
             Dim pageSize As Size = New Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight)
-            Task.Measure(pageSize)
-            Task.Arrange(New Rect(5, 5, pageSize.Width, pageSize.Height))
-            dialog.PrintVisual(Task, "Print Task")
+            TaskForPrint.Measure(pageSize)
+            TaskForPrint.Arrange(New Rect(5, 5, pageSize.Width, pageSize.Height))
+            dialog.PrintVisual(TaskForPrint, "Print Task")
         End If
+
+        TaskForPrint.Visibility = Windows.Visibility.Hidden
     End Sub
 
     Private Sub btnViewAll_Click(sender As Object, e As RoutedEventArgs) Handles btnViewAll.Click
-        _addframe.Navigate(New TaskListPage(frame, mainWindow, empID, email, _addframe, _menugrid, _submenuframe))
-        frame.IsEnabled = False
-        frame.Opacity = 0.3
+        frame.Navigate(New TaskListPage(frame, mainWindow, empID, email, _addframe, _menugrid, _submenuframe))
+        'frame.IsEnabled = False
+        'frame.Opacity = 0.3
         _menugrid.IsEnabled = False
         _menugrid.Opacity = 0.3
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
-        _addframe.Visibility = Visibility.Visible
-        _addframe.Margin = New Thickness(0, 0, 0, 0)
+        '_addframe.Visibility = Visibility.Visible
+        '_addframe.Margin = New Thickness(0, 0, 0, 0)
     End Sub
 
 #End Region

@@ -375,6 +375,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="styleDatePickerTextBox" TargetType="{x:Type DatePickerTextBox}">
             <Setter Property="Background" Value="#FFA9ADAF"></Setter>
             <Setter Property="BorderBrush" Value="Transparent"></Setter>
@@ -383,11 +384,9 @@
             <Setter Property="IsReadOnly" Value="False"></Setter>
             <Setter Property="Foreground" Value="White"></Setter>
             <Setter Property="Margin" Value="0,10"></Setter>
-
-
         </Style>
+        
         <Style x:Key="ButtonAdd" TargetType="{x:Type Button}">
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -414,10 +413,9 @@
 
                 </Setter.Value>
             </Setter>
-
         </Style>
+        
         <Style x:Key="ButtonSearch" TargetType="{x:Type Button}">
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -444,8 +442,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="ButtonPrint" TargetType="{x:Type Button}">
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -472,8 +470,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="ButtonPageNext" TargetType="{x:Type Button}">
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -500,8 +498,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="ButtonPageBack" TargetType="{x:Type Button}">
-
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -528,6 +526,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style TargetType="{x:Type DataGrid}">
             <Setter Property="HeadersVisibility" Value="Column"/>
             <Setter Property="GridLinesVisibility" Value="All"/>
@@ -536,9 +535,12 @@
             <Setter Property="HorizontalGridLinesBrush" Value="White"/>
             <Setter Property="CanUserAddRows" Value="False"/>
             <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="CanUserReorderColumns" Value="False"/>
+            <Setter Property="CanUserResizeRows" Value="False"/>
+            <Setter Property="CanUserSortColumns" Value="False"/>
         </Style>
+        
         <Style TargetType="{x:Type DataGridCell}">
-
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>
         </Style>
         <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -561,7 +563,6 @@
                     </TransformGroup>
                 </Setter.Value>
             </Setter>
-
         </Style>
         <Style TargetType="{x:Type DataGridRow}">
             <Setter Property="Background" Value="white" />
@@ -1146,16 +1147,16 @@
                 </Border>
             </Grid>-->
 
-            <Grid Grid.Row="2" Background="White" >
-                <DataGrid x:Name="dgSkill" Margin="0,0,0,20" 
-                                         BorderBrush="Transparent"                
-                                         HorizontalAlignment="Stretch"
-                                         VerticalAlignment="Stretch"
-                                         HorizontalGridLinesBrush="DimGray"
-                                         VerticalGridLinesBrush="DimGray"                                    
-                                         IsReadOnly="True">
+            <StackPanel Grid.Row="2" Background="White" HorizontalAlignment="Center" Width="Auto" >
+                <DataGrid x:Name="dgSkill" 
+                          Margin="0,0,0,20"
+                          BorderBrush="Transparent"
+                          HorizontalGridLinesBrush="DimGray"
+                          VerticalGridLinesBrush="DimGray"   
+                          IsReadOnly="True"
+                          AutoGenerateColumns="True">
                 </DataGrid>
-            </Grid>
+            </StackPanel>
         </Grid>
     </Border>
 </Page>

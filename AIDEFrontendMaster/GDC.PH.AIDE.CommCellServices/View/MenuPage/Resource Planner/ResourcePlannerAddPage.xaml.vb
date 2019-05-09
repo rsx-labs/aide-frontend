@@ -269,6 +269,42 @@ Class ResourcePlannerAddPage
             GridLine.Visibility = Windows.Visibility.Collapsed
         End If
     End Sub
+
+    Private Sub DatePicker_Loaded(ByVal sender As Object, ByVal e As RoutedEventArgs)
+        Dim datePicker As DatePicker = CType(sender, DatePicker)
+        If (Not (datePicker) Is Nothing) Then
+            Dim datePickerTextBox As System.Windows.Controls.Primitives.DatePickerTextBox = FindVisualChild(Of System.Windows.Controls.Primitives.DatePickerTextBox)(datePicker)
+            If (Not (datePickerTextBox) Is Nothing) Then
+                Dim watermark As ContentControl = CType(datePickerTextBox.Template.FindName("PART_Watermark", datePickerTextBox), ContentControl)
+                If (Not (watermark) Is Nothing) Then
+                    watermark.Content = String.Empty
+                    'or set it some value here...
+                End If
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Function FindVisualChild(Of T)(ByVal depencencyObject As DependencyObject) As T
+        If (Not (depencencyObject) Is Nothing) Then
+            Dim i As Integer = 0
+            Do While (i < VisualTreeHelper.GetChildrenCount(depencencyObject))
+                Dim child As DependencyObject = VisualTreeHelper.GetChild(depencencyObject, i)
+                Dim result As T
+                FindVisualChild(Of T)(child)
+                If (Not (result) Is Nothing) Then
+                    Return result
+                End If
+
+                i = (i + 1)
+            Loop
+
+        End If
+
+        Return Nothing
+    End Function
 #End Region
 
 #Region "ICallBack Functions"

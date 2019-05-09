@@ -477,11 +477,12 @@
                     </Viewbox>
                 </Grid>
             </Grid>
+
             <Grid Grid.Row="1">
-           
+
                 <DataGrid x:Name="lv_contacts" ItemsSource="{Binding ContactList}" 
                                           CanUserAddRows="False" AutoGenerateColumns="False" CanUserResizeColumns="False"
-                                          BorderBrush="Transparent" IsReadOnly="True">
+                                          BorderBrush="Transparent" IsReadOnly="True" Visibility="Visible" >
                     <DataGrid.Resources>
                         <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="#CCFFD8D8" />
                     </DataGrid.Resources>
@@ -506,7 +507,32 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
+                <DataGrid x:Name="dv_contacts" ItemsSource="{Binding ContactListForPrint}" 
+                                          CanUserAddRows="False" AutoGenerateColumns="False" CanUserResizeColumns="False"
+                                          BorderBrush="Transparent" IsReadOnly="True" Visibility="Hidden" >
+                    <DataGrid.Resources>
+                        <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="#CCFFD8D8" />
+                    </DataGrid.Resources>
 
+                    <DataGrid.Columns>
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Name" Width="200" Binding="{Binding FULL_NAME}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Role" Width="100" Binding="{Binding DESCR}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Location" Width="100" Binding="{Binding LOCATION}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Email Address" Width="210" Binding="{Binding EMAIL_ADDRESS}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Extension" Width="75" Binding="{Binding LOCAL}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Work Mobile" Width="100" Binding="{Binding CEL_NO}"  />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Home Phone" Width="100" Binding="{Binding HOMEPHONE}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Other Phone" Width="100" Binding="{Binding OTHER_PHONE}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Reviewed" Width="110" Binding="{Binding DT_REVIEWED, StringFormat=d}" />
+                        <DataGridTemplateColumn Header="Reviewed" Width="75" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <CheckBox Name="chkDiscontinue" IsChecked="{Binding Path=IsREVIEWED}" IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
@@ -514,8 +540,8 @@
                     <ColumnDefinition Width=".8*"/>
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
-                
-          
+
+
 
 
                 <Grid Grid.Column="1">
@@ -548,7 +574,7 @@
 
 
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0"></Grid>
+                    <Grid Grid.Column="0"/>
                     <Grid Grid.Column="1">
                         <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" >
 

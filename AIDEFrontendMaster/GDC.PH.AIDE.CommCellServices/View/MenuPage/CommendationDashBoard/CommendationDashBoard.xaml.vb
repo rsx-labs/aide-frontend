@@ -18,6 +18,8 @@ Class CommendationDashBoard
     Private _addframe As Frame
     Private _menugrid As Grid
     Private _submenuframe As Frame
+    Private email As String
+    Private profile As Profile
     Private isEmpty As Boolean
     Private position As String
     Private empID As Integer
@@ -41,7 +43,7 @@ Class CommendationDashBoard
 
 #Region "Constructor"
 
-    Public Sub New(mainFrame As Frame, _position As String, _empID As Integer, _addFrame As Frame, _menuGrid As Grid, _subMenuFrame As Frame)
+    Public Sub New(mainFrame As Frame, _position As String, _empID As Integer, _addFrame As Frame, _menuGrid As Grid, _subMenuFrame As Frame, _email As String, _profile As Profile)
 
         InitializeComponent()
         Me.position = _position
@@ -50,6 +52,8 @@ Class CommendationDashBoard
         Me._addframe = _addFrame
         Me._menugrid = _menuGrid
         Me._submenuframe = _subMenuFrame
+        Me.email = _email
+        Me.profile = _profile
         SetButtonCreateVisible()
         SetData()
         Me.DataContext = commendationVM
@@ -112,36 +116,6 @@ Class CommendationDashBoard
     End Function
 #End Region
 
-    Private Sub CommendationLV_MouseDoubleClick(sender As Object, e As SelectionChangedEventArgs) Handles CommendationLV.SelectionChanged
-        'mainFrame.Navigate(New NewSuccessRegister(lv_successRegisterOwn, mainFrame))
-        e.Handled = True
-        If CommendationLV.SelectedIndex <> -1 Then
-            Dim commmendationList As New CommendationModel
-            If CommendationLV.SelectedItem IsNot Nothing Then
-                For Each _comm As CommendationModel In commendationVM.CommendationList
-                    If CType(CommendationLV.SelectedItem, CommendationModel).CommendID = _comm.CommendID Then
-                        commmendationList.CommendID = _comm.CommendID
-                        commmendationList.Dept_ID = _comm.Dept_ID
-                        commmendationList.DateSent = _comm.DateSent
-                        commmendationList.Employees = _comm.Employees
-                        commmendationList.Project = _comm.Project
-                        commmendationList.Reason = _comm.Reason
-                        commmendationList.SentBy = _comm.SentBy
-                    End If
-                Next
-                _addframe.Navigate(New CommendationAddPage(commmendationList, mainFrame, position, empID, _addframe, _menugrid, _submenuframe))
-                mainFrame.IsEnabled = False
-                mainFrame.Opacity = 0.3
-                _menugrid.IsEnabled = False
-                _menugrid.Opacity = 0.3
-                _submenuframe.IsEnabled = False
-                _submenuframe.Opacity = 0.3
-                _addframe.Margin = New Thickness(280, 0, 280, 0)
-                _addframe.Visibility = Visibility.Visible
-            End If
-        End If
-    End Sub
-
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
         _addframe.Navigate(New CommendationAddPage(mainFrame, position, empID, _addframe, _menugrid, _submenuframe))
         mainFrame.IsEnabled = False
@@ -150,7 +124,7 @@ Class CommendationDashBoard
         _menugrid.Opacity = 0.3
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(280, 0, 280, 0)
+        _addframe.Margin = New Thickness(150, 100, 150, 100)
         _addframe.Visibility = Visibility.Visible
     End Sub
 
@@ -173,5 +147,34 @@ Class CommendationDashBoard
 
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
         Throw New NotImplementedException()
+    End Sub
+
+    Private Sub CommendationLV_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
+        e.Handled = True
+        If CommendationLV.SelectedIndex <> -1 Then
+            Dim commmendationList As New CommendationModel
+            If CommendationLV.SelectedItem IsNot Nothing Then
+                For Each _comm As CommendationModel In commendationVM.CommendationList
+                    If CType(CommendationLV.SelectedItem, CommendationModel).CommendID = _comm.CommendID Then
+                        commmendationList.CommendID = _comm.CommendID
+                        commmendationList.Dept_ID = _comm.Dept_ID
+                        commmendationList.DateSent = _comm.DateSent
+                        commmendationList.Employees = _comm.Employees
+                        commmendationList.Project = _comm.Project
+                        commmendationList.Reason = _comm.Reason
+                        commmendationList.SentBy = _comm.SentBy
+                    End If
+                Next
+                _addframe.Navigate(New CommendationViewPage(commmendationList, mainFrame, position, empID, _addframe, _menugrid, _submenuframe))
+                mainFrame.IsEnabled = False
+                mainFrame.Opacity = 0.3
+                _menugrid.IsEnabled = False
+                _menugrid.Opacity = 0.3
+                _submenuframe.IsEnabled = False
+                _submenuframe.Opacity = 0.3
+                _addframe.Margin = New Thickness(150, 100, 150, 100)
+                _addframe.Visibility = Visibility.Visible
+            End If
+        End If
     End Sub
 End Class

@@ -12,6 +12,7 @@ Public Class BirthdayListViewModel
 
     Public _birthdayList As New ObservableCollection(Of BirthdayListModel)
     Public _birthdayListMonth As New ObservableCollection(Of BirthdayListModel)
+    Public _birthdayListToday As New ObservableCollection(Of BirthdayListModel)
     'Private _NicknameDBProvider As ObservableCollection(Of MyNickname)
     Private client As AideServiceClient
 
@@ -37,6 +38,16 @@ Public Class BirthdayListViewModel
         Set(value As ObservableCollection(Of BirthdayListModel))
             _birthdayListMonth = value
             NotifyPropertyChanged("BirthdayListMonth")
+        End Set
+    End Property
+
+    Public Property BirthdayListDay As ObservableCollection(Of BirthdayListModel)
+        Get
+            Return _birthdayListToday
+        End Get
+        Set(value As ObservableCollection(Of BirthdayListModel))
+            _birthdayListToday = value
+            NotifyPropertyChanged("BirthdayListDay")
         End Set
     End Property
 

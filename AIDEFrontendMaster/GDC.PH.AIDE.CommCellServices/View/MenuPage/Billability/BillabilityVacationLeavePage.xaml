@@ -3,46 +3,66 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:my="clr-namespace:MindFusion.Charting.Wpf;assembly=MindFusion.Charting.Wpf"
       xmlns:dv="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
       xmlns:dvc="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Vacation Leave">
+    
+    <Page.Resources>
+        <LinearGradientBrush Opacity=".5" x:Key="GradientDesign" MappingMode="RelativeToBoundingBox">
+            <!--<RadialGradientBrush.RelativeTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="1"/>
+                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                        <RotateTransform CenterY="0.5" CenterX="0.5" Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </RadialGradientBrush.RelativeTransform>-->
+            <GradientStop Color="#FFFFD1FF" Offset="0.0"/>
+            <GradientStop Color="#FFC4FFF4" Offset="1.0"/>
+        </LinearGradientBrush>
+    </Page.Resources>
+    
     <Grid>
-
-        <Grid Grid.Column="1" Grid.Row="1" Margin="2">
-            <dvc:Chart Name="yearlyVL" 
-                   Title="Vacation Leave For Fiscal Year" 
-                   Background="LightBlue">
-                <dvc:Chart.Series>
-                    <dvc:ColumnSeries Title="Vacation Leave"
-                               Name="VLYChartSeries"
-                               ItemsSource="{Binding ResourcePlannerViewModel.ResourceListVLYearLy}"
-                               IndependentValueBinding="{Binding EmpName}"
-                               DependentValueBinding="{Binding Status}">
-                        <dvc:ColumnSeries.IndependentAxis>
-                            <dvc:CategoryAxis Orientation="X">
-                                <dvc:CategoryAxis.AxisLabelStyle>
-                                    <Style TargetType="dvc:AxisLabel">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="dvc:AxisLabel">
-                                                    <TextBlock Text="{TemplateBinding FormattedContent}" Margin="5">
-                                                        <TextBlock.LayoutTransform>
-                                                            <RotateTransform Angle="-90" CenterX = "40" CenterY = "30"/>
-                                                        </TextBlock.LayoutTransform>
-                                                    </TextBlock>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </dvc:CategoryAxis.AxisLabelStyle>
-                            </dvc:CategoryAxis>
-                        </dvc:ColumnSeries.IndependentAxis>
-                    </dvc:ColumnSeries>
-
-                </dvc:Chart.Series>
-            </dvc:Chart>
+        <Grid Margin="2" Background="White" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.1*" />
+                <RowDefinition Height="0.9*" />
+            </Grid.RowDefinitions>
+            
+            <Grid Grid.Row="0">
+                <Label Name="lblYear"
+                       Content="Vacation Leave For Fiscal Year"
+                       HorizontalContentAlignment="Center"
+                       FontSize="15"
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <lvc:CartesianChart x:Name="chartVL"
+                                    Series="{Binding SeriesCollection}"
+                                    LegendLocation="Right"
+                                    Background="{DynamicResource GradientDesign}">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Labels="{Binding Labels}"
+                                  ShowLabels="True" 
+                                  Foreground="Black">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator Step="1" StrokeThickness="0" />
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Usage"
+                                  Foreground="Black"
+                                  LabelFormatter="{Binding Formatter}">
+                        </lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+            </Grid>
         </Grid>
     </Grid>
 </Page>

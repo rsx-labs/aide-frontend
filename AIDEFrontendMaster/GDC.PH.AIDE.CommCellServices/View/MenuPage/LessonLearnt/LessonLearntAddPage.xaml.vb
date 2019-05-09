@@ -222,7 +222,7 @@ Class LessonLearntAddPage
     Private Sub ClearValues()
         lessonLearntModel.Problem = ""
         lessonLearntModel.Resolution = ""
-        lessonLearntModel.ActionNo = Nothing
+        lessonLearntModel.ActionNo = ""
 
         CreateReferenceNo()
     End Sub

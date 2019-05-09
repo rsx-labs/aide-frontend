@@ -35,7 +35,7 @@ Class NewSuccessRegister
         btnSRDelete.Visibility = System.Windows.Visibility.Hidden
         comboRaisedBy.Visibility = System.Windows.Visibility.Visible
         txtRaisedBy.Visibility = System.Windows.Visibility.Hidden
-        tbSuccessForm.Text = "CREATE SUCCESS REGISTER"
+        tbSuccessForm.Text = "Create Success Register"
         AssignEvents()
         PopulateComboBox()
     End Sub
@@ -50,7 +50,7 @@ Class NewSuccessRegister
         Me._addframe = _addframe
         Me._menugrid = _menugrid
         Me._submenuframe = _submenuframe
-        tbSuccessForm.Text = "UPDATE SUCCESS REGISTER"
+        tbSuccessForm.Text = "Update Success Register"
         LoadData()
         AssignEvents()
         PopulateComboBox()
@@ -278,6 +278,7 @@ Class NewSuccessRegister
         txtSRWhosInvolve.Text = successRegister.WhosInvolve
         txtSRAdditional.Text = successRegister.AdditionalInformation
         dateInput.Text = successRegister.DateInput
+        comboRaisedTBlock.Visibility = Windows.Visibility.Hidden
     End Sub
 
     ''' <summary>

@@ -23,7 +23,7 @@ Class CommendationAddPage
 #End Region
 
 #Region "Constructor"
-
+    'Add Commendation
     Public Sub New(_mainFrame As Frame, _position As String, _empID As Integer, _addFrame As Frame, _menuGrid As Grid, _subMenuFrame As Frame)
 
         InitializeComponent()
@@ -34,14 +34,15 @@ Class CommendationAddPage
         Me._submenuframe = _subMenuFrame
         Me.position = _position
         btnCommendationCreate.Visibility = System.Windows.Visibility.Visible
-        tbSuccessForm.Text = "CREATE COMMENDATION"
+        tbSuccessForm.Text = "Create Commendation"
         txtCommendationID.Visibility = Windows.Visibility.Hidden
-        lblCommID.Visibility = Windows.Visibility.Hidden
+        'lblCommID.Visibility = Windows.Visibility.Hidden
         'AssignEvents()
         LoadAllProjectName()
         'PopulateComboBox()
     End Sub
 
+    '
     Public Sub New(_commendation As CommendationModel, mainFrame As Frame,
                    _position As String, _empID As Integer, _addFrame As Frame, _menuGrid As Grid, _subMenuFrame As Frame)
 
@@ -95,7 +96,7 @@ Class CommendationAddPage
                 comm.DATE_SENT = dateInput.SelectedDate
                 comm.DEPT_ID = empID
                 client.InsertCommendations(comm)
-                mainFrame.Navigate(New HomePage(mainFrame, position, empID, _addframe, _menugrid, _submenuframe))
+                'mainFrame.Navigate(New HomePage(mainFrame, position, empID, _addframe, _menugrid, _submenuframe, _))
                 mainFrame.IsEnabled = True
                 mainFrame.Opacity = 1
                 _menugrid.IsEnabled = True
@@ -125,7 +126,7 @@ Class CommendationAddPage
 
 #Region "Functions"
     Public Sub AssignEvents()
-        tbSuccessForm.Text = "VIEW COMMNEDATION"
+        tbSuccessForm.Text = "View Commendation"
         txtCommendationID.Text = commendationModel.CommendID
         txtCommendationID.IsReadOnly = True
         txtCommendationEmployees.Text = commendationModel.Employees
@@ -136,11 +137,15 @@ Class CommendationAddPage
         txtCommendationReason.IsReadOnly = True
         dateInput.SelectedDate = commendationModel.DateSent
         dateInput.IsEnabled = False
-        txtProject.Text = commendationModel.Project
-        txtProject.Visibility = Windows.Visibility.Visible
+        'txtProject.Text = commendationModel.Project
+        'txtProject.Visibility = Windows.Visibility.Visible
         comboProject.Visibility = Windows.Visibility.Hidden
         comboAddEmployee.IsEnabled = False
         btnCommendationAddEmployee.IsEnabled = False
+        'comboxProjName.Visibility = Windows.Visibility.Collapsed
+        comboAddEmployee.Visibility = Windows.Visibility.Collapsed
+        btnCommendationAddEmployee.Visibility = Windows.Visibility.Collapsed
+        txtemployeeWM.Visibility = Windows.Visibility.Collapsed
     End Sub
 
     Public Function InitializeService() As Boolean
@@ -195,7 +200,7 @@ Class CommendationAddPage
                 Dim _GetAllConcernDBProvider As New ProjectDBProvider
                 Dim _projectViewModel As New ProjectViewModel
 
-                Dim lstConcern As Project() = client.GetAllListOfProject()
+                Dim lstConcern As Project() = client.GetAllListOfProject(empID)
                 Dim lstConcernList As New ObservableCollection(Of ProjectModel)
 
 

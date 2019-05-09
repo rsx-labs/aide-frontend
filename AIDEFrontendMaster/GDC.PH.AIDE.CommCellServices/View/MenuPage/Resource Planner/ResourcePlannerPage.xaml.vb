@@ -371,6 +371,11 @@ Class ResourcePlannerPage
 #End Region
 
 #Region "Button/Event"
+    Private Sub cbDisplayMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbDisplayMonth.SelectionChanged
+        month = cbDisplayMonth.SelectedValue
+        LoadAllEmpResourcePlanner()
+    End Sub
+
     Private Sub cbFilterCategory_DropDownClosed(sender As Object, e As EventArgs) Handles cbFilterCategory.DropDownClosed
         SetMonths()
     End Sub
@@ -398,21 +403,21 @@ Class ResourcePlannerPage
         _menugrid.Opacity = 0.3
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(250, 100, 250, 100)
+        _addframe.Margin = New Thickness(150, 80, 150, 80)
         _addframe.Visibility = Visibility.Visible
     End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As RoutedEventArgs) Handles btnPrint.Click
         Dim dialog As New System.Windows.Controls.PrintDialog
         If CBool(dialog.ShowDialog().GetValueOrDefault()) Then
-            dialog.PrintTicket.PageOrientation = PageOrientation.Portrait
-            dialog.PrintVisual(dgLeaveCredits, "Print Leave Credits")
+            dialog.PrintTicket.PageOrientation = PageOrientation.Landscape
+
+            Dim pageSize As Size = New Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight)
+            dgResourcePlanner.Measure(pageSize)
+            dgResourcePlanner.Arrange(New Rect(5, 5, pageSize.Width, pageSize.Height))
+            dialog.PrintVisual(dgResourcePlanner, "Print Leave Credits")
         End If
     End Sub
 #End Region
 
-    Private Sub cbDisplayMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbDisplayMonth.SelectionChanged
-        month = cbDisplayMonth.SelectedValue
-        LoadAllEmpResourcePlanner()
-    End Sub
 End Class
