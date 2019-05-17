@@ -276,7 +276,7 @@ Class ResourcePlannerPage
         Try
             InitializeService()
             _ResourceDBProvider._splist.Clear()
-            Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, cbFilterCategory.SelectedValue, displayOption)
+            Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, cbFilterCategory.SelectedValue, displayOption, year)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
             Dim resourceListVM As New ResourcePlannerViewModel()
 
