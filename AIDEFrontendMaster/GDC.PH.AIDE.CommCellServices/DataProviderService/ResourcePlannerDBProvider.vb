@@ -79,6 +79,19 @@ Public Class ResourcePlannerDBProvider
         Return _splist
     End Function
 
+    Public Sub SetNonBillableList(ByVal resourceLst As ResourcePlanner)
+        Dim _Resourceobj As myResourceList = New myResourceList With {.Emp_ID = resourceLst.EmpID,
+                                                             .Emp_Name = resourceLst.NAME,
+                                                             .holidayHours = resourceLst.holidayHours,
+                                                             .vlHours = resourceLst.vlHours,
+                                                             .slHours = resourceLst.slHours}
+        _splist.Add(_Resourceobj)
+    End Sub
+
+    Public Function GetNonBillableList()
+        Return _splist
+    End Function
+
 End Class
 
 
@@ -92,4 +105,7 @@ Public Class myResourceList
     Public Desc As String
     Public Emp_Image As String
     Public Date_Entry As Date
+    Public holidayHours As Double
+    Public vlHours As Double
+    Public slHours As Double
 End Class
