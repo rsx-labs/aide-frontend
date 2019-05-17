@@ -913,6 +913,18 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
+                                <TextBlock x:Name="txtlabelEmpID" Width="120" TextAlignment="Center" Margin="5" Text="Employee ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtEmpID}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                                 <TextBox  Margin="0,10" IsReadOnly="True" Template="{DynamicResource TextBoxBaseControlTemplate}"
                                  Visibility="hidden"
                                  Text="{Binding NewTasks.TaskId, Mode=TwoWay}" 
@@ -938,6 +950,18 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
+                                <TextBlock x:Name="txtlabelIncident" Width="120" TextAlignment="Center" Margin="5" Text="Incident ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtIncID}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                                 <!--<Label Foreground="DimGray" Content="Incident ID *" VerticalAlignment="Center"/>-->
                             </Grid>
                             <Grid Grid.Row="2">
@@ -953,6 +977,18 @@
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Text, ElementName=txtIncDescr}" Value="">
                                                     <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock x:Name="txtlabelDesc" Width="120" TextAlignment="Center" Margin="5" Text="Description" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtIncDescr}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -977,6 +1013,18 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
+                                <TextBlock x:Name="txtlabelestimated" Width="120" TextAlignment="Center" Margin="5" Text="Estimated Effort" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtEffortEst}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                                 </Grid>
                             <Grid Grid.Row="4">
                                 <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
@@ -996,7 +1044,19 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                </Grid>
+                                <TextBlock x:Name="txtlabelactual" Width="120" TextAlignment="Center" Margin="5" Text="Actual Effort" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtActualEffortEst}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
                             <Grid Grid.Row="5">
                                 <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
@@ -1010,6 +1070,18 @@
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Text, ElementName=txtActualEfforEstWk}" Value="">
                                                     <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock x:Name="txtlabelWeekly" Width="120" TextAlignment="Center" Margin="5" Text="Weekly Effort" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtActualEfforEstWk}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -1036,6 +1108,18 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
+                                <TextBlock x:Name="txtlabelPhase" Width="120" TextAlignment="Center" Margin="5" Text="Phase" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbPhase}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </Grid>
                             <Grid Grid.Row="7">
                                 <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
@@ -1055,7 +1139,19 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                </Grid>
+                                <TextBlock x:Name="txtlabelRemarks" Width="120" TextAlignment="Center" Margin="5" Text="Remarks" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtRemarks}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
                         </Grid>
 
                     </Grid>
@@ -1091,6 +1187,18 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
+                                <TextBlock x:Name="txtlabelCategory" Width="120" TextAlignment="Center" Margin="5" Text="Category" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbCategory}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <ComboBox x:Name="cboProject"
@@ -1106,6 +1214,18 @@
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Text, ElementName=cboProject}" Value="">
                                                     <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock x:Name="txtlabelProject" Width="120" TextAlignment="Center" Margin="5" Text="Project" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cboProject}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -1131,6 +1251,18 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
+                                <TextBlock x:Name="txtlabelRework" Width="120" TextAlignment="Center" Margin="5" Text="Rework" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbRework}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </Grid>
                             <Grid Grid.Row="3">
                                 <ComboBox  SelectedValue="{Binding NewTasks.Status, Mode=TwoWay}"
@@ -1145,6 +1277,18 @@
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Text, ElementName=cbStatus}" Value="">
                                                     <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock x:Name="txtlabelStatus" Width="120" TextAlignment="Center" Margin="5" Text="Status" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbStatus}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -1171,6 +1315,18 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
+                                <TextBlock x:Name="txtlabelStartDate" Width="120" TextAlignment="Center" Margin="5" Text="Date Started" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=dpStartDate}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </Grid>
                             <Grid Grid.Row="5">
                                 <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
@@ -1192,6 +1348,18 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
+                                <TextBlock x:Name="txtlabelTargetDate" Width="120" TextAlignment="Center" Margin="5" Text="Target Date" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=dpTargetDate}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </Grid>
                             <Grid Grid.Row="6">
                                 <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
@@ -1208,6 +1376,18 @@
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Text, ElementName=dpCompltdDate}" Value="">
                                                     <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock x:Name="txtlabelCompletedDate" Width="120" TextAlignment="Center" Margin="5" Text="Date Completed" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=dpCompltdDate}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>

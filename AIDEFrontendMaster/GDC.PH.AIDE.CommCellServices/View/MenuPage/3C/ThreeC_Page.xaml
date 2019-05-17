@@ -524,8 +524,8 @@
             <Setter Property="HeadersVisibility" Value="Column"/>
             <Setter Property="GridLinesVisibility" Value="All"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="VerticalGridLinesBrush" Value="White"/>
-            <Setter Property="HorizontalGridLinesBrush" Value="White"/>
+            <Setter Property="VerticalGridLinesBrush" Value="Gainsboro"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="Gainsboro"/>
             <Setter Property="CanUserAddRows" Value="False"/>
             <Setter Property="CanUserDeleteRows" Value="False"/>
         </Style>
@@ -534,30 +534,20 @@
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>
         </Style>
         <Style TargetType="{x:Type DataGridColumnHeader}">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="DimGray"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Height" Value="40"/>
-            <Setter Property="Background" Value="#FF4DB6AC"/>
-            
-            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+            <Setter Property="Background" Value="Transparent"/>
+
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderBrush" Value="Gainsboro"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="5"/>
         </Style>
         <Style TargetType="{x:Type DataGridRow}">
-            <Setter Property="Background" Value="white" />
-            <Setter Property="Foreground" Value="#FF303030"/>
+            <Setter Property="Foreground" Value="Gray"/>
 
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver"
-                           Value="True">
-                    <Setter Property="Background"
-                               Value="LightGray" />
-                    
-                </Trigger>
-            </Style.Triggers>
         </Style>
         <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="5" />
@@ -789,24 +779,25 @@
             </Grid>
 
             <Grid Grid.Row="2" Background="White">
+                <Border Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
 
-                <DataGrid x:Name="ThreeC_DataGridView" ItemsSource="{Binding ConcernList}"
+                    <DataGrid Background="Transparent" x:Name="ThreeC_DataGridView" ItemsSource="{Binding ConcernList}"
                           SelectedItem="{Binding SelectedConcern}" IsReadOnly="True" 
                           Height="auto" Width="auto" 
                           AutoGenerateColumns="False" BorderBrush="Transparent">
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}" Binding="{Binding REF_ID}" Header="Ref. No." Width="1.5*" />
-                        <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding CONCERN}" Header="Concern" Width="2*"/>
-                        <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding CAUSE }" Header="Cause" Width="2*"></DataGridTextColumn>
-                        <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding COUNTERMEASURE}" Header="Countermeasure" Width="2*"></DataGridTextColumn>
-                        <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding EMP_ID}" Header="Owner" Width="1*"></DataGridTextColumn>
-                        <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding ACT_REFERENCE}" Header="Action Ref." Width="1.5*"></DataGridTextColumn>
-                        <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding DUE_DATE, StringFormat=\{0:dd-MM-yyyy \}}" Header="Due Date" Width="1.2*"></DataGridTextColumn>
-                        <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding STATUS}" Header="Status" Width="1*"></DataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-
+                        <DataGrid.Columns>
+                            <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}" Binding="{Binding REF_ID}" Header="Ref. No." Width="1.5*" />
+                            <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding CONCERN}" Header="Concern" Width="2*"/>
+                            <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding CAUSE }" Header="Cause" Width="2*"></DataGridTextColumn>
+                            <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding COUNTERMEASURE}" Header="Countermeasure" Width="2*"></DataGridTextColumn>
+                            <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding EMP_ID}" Header="Owner" Width="1*"></DataGridTextColumn>
+                            <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding ACT_REFERENCE}" Header="Action Ref." Width="1.5*"></DataGridTextColumn>
+                            <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding DUE_DATE, StringFormat=\{0:dd-MM-yyyy \}}" Header="Due Date" Width="1.2*"></DataGridTextColumn>
+                            <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding STATUS}" Header="Status" Width="1*"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
 
             </Grid>
             <Grid Grid.Row="3" Background="White">

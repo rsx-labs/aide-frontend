@@ -57,7 +57,7 @@ Public Class AssetsListPage
 
 #Region "EVENTS"
     Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
-        SetDataForSearch(txtSearch.Text)
+
     End Sub
 
     Private Sub btnAdd_Click(sender As Object, e As RoutedEventArgs) Handles btnAdd.Click
@@ -335,4 +335,7 @@ Public Class AssetsListPage
     End Sub
 #End Region
 
+    Private Sub txtSearch_TextChanged_1(sender As Object, e As TextChangedEventArgs)
+        SetDataForSearch(txtSearch.Text)
+    End Sub
 End Class

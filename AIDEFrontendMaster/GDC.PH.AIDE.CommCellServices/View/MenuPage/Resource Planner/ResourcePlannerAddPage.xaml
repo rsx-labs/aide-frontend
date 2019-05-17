@@ -1156,7 +1156,20 @@
 
                                 
                             </TextBox>
+                            
                         </Border>
+                        <TextBlock x:Name="txtlabelReason" Width="120" TextAlignment="Center" Margin="5,10,5,5" Text="Employee ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=txtEmpID}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </Grid>
                     <Grid Grid.Row="1">
                         <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbCategory" Margin="5,5,10,5" ItemsSource="{Binding CategoryList}" SelectedValue="{Binding Path=Status}"
@@ -1173,7 +1186,18 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-
+                        <TextBlock x:Name="txtlabelLeaveType" Width="120" TextAlignment="Center" Margin="5" Text="Leave Type" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbCategory}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </Grid>
                     <Grid Grid.Row="2">
 
@@ -1194,7 +1218,18 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-
+                        <TextBlock x:Name="txtlabelDuration" Width="120" TextAlignment="Center" Margin="5" Text="Duration" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbCategoryLeave}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </Grid>
                     <Grid Grid.Row="3">
                         <Border Margin="5,5,10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
@@ -1213,8 +1248,19 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        
-                        
+                        <TextBlock x:Name="txtlabelStart" Width="120" TextAlignment="Center" Margin="5" Text="Date Started" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=dtpFrom}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
                     </Grid>
                     <Grid Grid.Row="4">
                         <Border Margin="5,5,10,5"  Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
@@ -1232,7 +1278,18 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        
+                        <TextBlock x:Name="txtlabelEnd" Width="120" TextAlignment="Center" Margin="5" Text="End Date" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=dtpTo}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </Grid>
                     <Grid Grid.Row="5">
                         <Button Style="{DynamicResource RoundCorner}" Margin="5,5,10,10" x:Name="btnCreateLeave"  >

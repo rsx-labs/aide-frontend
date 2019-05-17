@@ -377,7 +377,7 @@ Class MainWindow
 
     Private Sub OtherBtn_Click(sender As Object, e As RoutedEventArgs)
         PagesFrame.Navigate(New BirthdayPage(PagesFrame, email))
-        SubMenuFrame.Navigate(New OtherSubMenuPage(PagesFrame, email))
+        SubMenuFrame.Navigate(New OtherSubMenuPage(PagesFrame, email, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame))
         LoadSideBar()
     End Sub
 #End Region

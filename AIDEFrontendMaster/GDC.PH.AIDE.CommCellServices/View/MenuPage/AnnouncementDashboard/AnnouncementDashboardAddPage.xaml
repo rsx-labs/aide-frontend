@@ -877,7 +877,7 @@
                         <TextBox Background="Transparent" x:Name="txtTitle" TextWrapping="Wrap" FontSize="12" MaxLines="255" BorderThickness="0"
                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding TITLE, Mode=TwoWay}"/>
                     </Border>
-                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Announcement Title ID" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Announcement Title" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -889,7 +889,19 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                </Grid>
+                        <TextBlock x:Name="txtlabelTitle" Width="120" TextAlignment="Center" Margin="5" Text="Title" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=txtTitle}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
                 <Grid Grid.Row="1">
                     <Border Margin="5,10,10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
@@ -902,7 +914,7 @@
                         </RichTextBox>
 
                     </Border>
-                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Write commendation reason" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Write announcement message" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -914,7 +926,19 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                </Grid>
+                        <TextBlock x:Name="txtlabelMessage" Width="120" TextAlignment="Center" Margin="5" Text="Message" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=runname}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
                 <Grid Grid.Row="2">
                     <Button Style="{DynamicResource RoundCorner}" x:Name="btnAnnouncementCreate" Margin="5,5,10,10" HorizontalAlignment="Stretch" Click="btnAnnouncementCreate_Click">
                         <Viewbox>

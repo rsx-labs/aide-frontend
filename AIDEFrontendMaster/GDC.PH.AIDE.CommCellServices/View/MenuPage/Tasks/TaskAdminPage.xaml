@@ -82,9 +82,9 @@
                                Stretch="Fill"
                                VerticalAlignment="Stretch"
                                Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
-                            <Image.Effect>
-                                <DropShadowEffect  Direction="290" Opacity="0.6" ShadowDepth="1" Color="Black"/>
-                            </Image.Effect>
+                            <!--<Image.Effect>
+                                <DropShadowEffect  Direction="270" Opacity="0.6" ShadowDepth=".5" Color="Gray"/>
+                            </Image.Effect>-->
                         </Image>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -418,7 +418,7 @@
 
                 </Grid>
                 <Grid Grid.Column="1">
-                    <Viewbox Margin="15">
+                    <Viewbox Margin="10">
                         <Button x:Name="btnCreateTask" Style="{DynamicResource ButtonAdd}">
 
                         </Button>

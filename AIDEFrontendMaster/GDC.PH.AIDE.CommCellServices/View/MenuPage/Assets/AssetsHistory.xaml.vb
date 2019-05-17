@@ -52,7 +52,7 @@ Public Class AssetsHistory
 
 #Region "EVENTS"
     Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
-        SetDataForSearch(txtSearch.Text)
+
     End Sub
 
     'Private Sub lv_assetList_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles lv_assetList.LoadingRow
@@ -287,4 +287,7 @@ Public Class AssetsHistory
     End Sub
 #End Region
 
+    Private Sub txtSearch_TextChanged_1(sender As Object, e As TextChangedEventArgs)
+        SetDataForSearch(txtSearch.Text)
+    End Sub
 End Class

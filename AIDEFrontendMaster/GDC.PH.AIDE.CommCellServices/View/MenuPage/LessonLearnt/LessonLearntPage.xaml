@@ -531,8 +531,8 @@
             <Setter Property="HeadersVisibility" Value="Column"/>
             <Setter Property="GridLinesVisibility" Value="All"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="VerticalGridLinesBrush" Value="White"/>
-            <Setter Property="HorizontalGridLinesBrush" Value="White"/>
+            <Setter Property="VerticalGridLinesBrush" Value="Gainsboro"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="Gainsboro"/>
             <Setter Property="CanUserAddRows" Value="False"/>
             <Setter Property="CanUserDeleteRows" Value="False"/>
         </Style>
@@ -541,30 +541,20 @@
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>
         </Style>
         <Style TargetType="{x:Type DataGridColumnHeader}">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="DimGray"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Height" Value="40"/>
-            <Setter Property="Background" Value="#FF4DB6AC"/>
+            <Setter Property="Background" Value="Transparent"/>
 
-            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderBrush" Value="Gainsboro"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="5"/>
         </Style>
         <Style TargetType="{x:Type DataGridRow}">
-            <Setter Property="Background" Value="white" />
-            <Setter Property="Foreground" Value="#FF303030"/>
+            <Setter Property="Foreground" Value="Gray"/>
 
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver"
-                           Value="True">
-                    <Setter Property="Background"
-                               Value="LightGray" />
-
-                </Trigger>
-            </Style.Triggers>
         </Style>
         <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="5" />
@@ -697,18 +687,20 @@
 
             </Grid>
             <Grid Grid.Row="2" Background="White">
-                <DataGrid x:Name="dgLessonLearnt" ItemsSource="{Binding LessonLearntList}"  
+                <Border Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+                    <DataGrid Background="Transparent" x:Name="dgLessonLearnt" ItemsSource="{Binding LessonLearntList}"  
                       AutoGenerateColumns="False" BorderBrush="Transparent" 
                       IsReadOnly="True">
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Reference No." Width="15*" Binding="{Binding ReferenceNo}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Raised By" Width="12*" Binding="{Binding Nickname}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Problem Encountered" Width="33*" Binding="{Binding Problem}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Resolution" Width="32*" Binding="{Binding Resolution}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Action No." Width="15*" Binding="{Binding ActionNo}" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Reference No." Width="15*" Binding="{Binding ReferenceNo}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Raised By" Width="12*" Binding="{Binding Nickname}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Problem Encountered" Width="33*" Binding="{Binding Problem}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Resolution" Width="32*" Binding="{Binding Resolution}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Action No." Width="15*" Binding="{Binding ActionNo}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
             </Grid>
 
 

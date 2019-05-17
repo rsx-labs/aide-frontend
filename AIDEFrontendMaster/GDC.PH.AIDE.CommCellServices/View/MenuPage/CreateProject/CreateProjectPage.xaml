@@ -300,6 +300,189 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="DimGray"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Border
+                  x:Name="Border" 
+                  Grid.ColumnSpan="2"
+                  CornerRadius="15"
+                  Background="White"
+                  BorderBrush="Gainsboro"
+                  BorderThickness="3" />
+                <Border                   
+                    Grid.Column="0"
+                  CornerRadius="0" 
+                  Margin="1" 
+                   IsEnabled="False"
+                  Background="Transparent" 
+                  BorderBrush="Gainsboro"
+                  BorderThickness="0,0,1,0" />
+                <Path 
+                  x:Name="Arrow"
+                  Grid.Column="1"     
+                  Fill="DimGray"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"
+                />
+
+
+            </Grid>
+            <!--<ControlTemplate.Triggers>
+            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="#808080" />
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="#E0E0E0" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="#AAAAAA" />
+                <Setter Property="Foreground" Value="#888888"/>
+                <Setter TargetName="Arrow" Property="Fill" Value="#888888" />
+            </Trigger>
+        </ControlTemplate.Triggers>-->
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
+            <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}"/>
+        </ControlTemplate>
+
+        <Style x:Key="StyleComboBox" TargetType="{x:Type ComboBox}">
+
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="MinHeight" Value="20"/>
+            <Setter Property="Foreground" Value="DimGray"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+                        <Grid>
+                            <ToggleButton 
+                            Name="ToggleButton" 
+                            Template="{StaticResource ComboBoxToggleButton}" 
+                            Grid.Column="2" 
+                            Focusable="false"
+                            IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                            ClickMode="Press">
+                            </ToggleButton>
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                            Margin="5"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center" />
+
+                            <TextBox x:Name="PART_EditableTextBox"
+                            Style="{x:Null}" 
+                            Template="{StaticResource ComboBoxTextBox}" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Margin="0"
+                            Focusable="True" 
+                                     FontSize="12"
+                            Background="Transparent"
+                            Foreground="DimGray"
+                            Visibility="Visible"
+                            IsReadOnly="{TemplateBinding IsReadOnly}"/>
+
+                            <Popup 
+                            Name="Popup"
+                            Placement="Bottom"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            AllowsTransparency="True" 
+                            Focusable="False"
+                            PopupAnimation="Slide">
+
+                                <Grid Name="DropDown"
+                              SnapsToDevicePixels="True"                
+                              MinWidth="{TemplateBinding ActualWidth}"
+                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border 
+                                x:Name="DropDownBorder"
+                                Background="#FF3F3F3F"
+
+                                BorderThickness="1"
+                                BorderBrush="#888888"/>
+                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </Trigger>
+                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                                <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0"/>
+                                <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsEditable"  Value="true">
+                                <Setter Property="IsTabStop" Value="false"/>
+                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+
+            </Style.Triggers>
+        </Style>
+        <!-- SimpleStyles: ComboBoxItem -->
+        <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                        <Border Name="Border"
+                              Padding="2"
+                              SnapsToDevicePixels="true">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#FF4F4F4F"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="RoundCornerAdd" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -309,7 +492,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="4" Background="#FF02CB5D">
+                            <Border x:Name="border" CornerRadius="15" Background="#FF02CB5D">
                                 <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           TextElement.FontWeight="Bold">
@@ -342,7 +525,40 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="4" Background="DimGray">
+                            <Border x:Name="border" CornerRadius="15" Background="#FF16ACE4">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          TextElement.FontWeight="Bold">
+                                </ContentPresenter>
+                            </Border>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FF16ACE4"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FF75D0F1"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="RoundCornerClear" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="15" Background="DimGray">
                                 <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           TextElement.FontWeight="Bold">
@@ -401,8 +617,8 @@
         </Style>
         <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
             <Border Background="{TemplateBinding Background}" 
-                x:Name="Bd" BorderBrush="#FFA4A4A4"
-                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4">
+                x:Name="Bd" BorderBrush="Gainsboro"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
                 <ScrollViewer x:Name="PART_ContentHost"/>
             </Border>
 
@@ -711,8 +927,8 @@
             <Setter Property="HeadersVisibility" Value="Column"/>
             <Setter Property="GridLinesVisibility" Value="All"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="VerticalGridLinesBrush" Value="White"/>
-            <Setter Property="HorizontalGridLinesBrush" Value="White"/>
+            <Setter Property="VerticalGridLinesBrush" Value="Gainsboro"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="Gainsboro"/>
             <Setter Property="CanUserAddRows" Value="False"/>
             <Setter Property="CanUserDeleteRows" Value="False"/>
         </Style>
@@ -721,30 +937,20 @@
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>
         </Style>
         <Style TargetType="{x:Type DataGridColumnHeader}">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="DimGray"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Height" Value="40"/>
-            <Setter Property="Background" Value="#FF4DB6AC"/>
+            <Setter Property="Background" Value="Transparent"/>
 
-            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="BorderBrush" Value="White"/>
-            <Setter Property="HorizontalContentAlignment" Value="left"/>
+            <Setter Property="BorderBrush" Value="Gainsboro"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="5"/>
         </Style>
         <Style TargetType="{x:Type DataGridRow}">
-            <Setter Property="Background" Value="white" />
-            <Setter Property="Foreground" Value="#FF303030"/>
+            <Setter Property="Foreground" Value="Gray"/>
 
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver"
-                           Value="True">
-                    <Setter Property="Background"
-                               Value="LightGray" />
-
-                </Trigger>
-            </Style.Triggers>
         </Style>
         <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="5" />
@@ -824,20 +1030,34 @@
                     <ColumnDefinition Width="6*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="4*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <Viewbox>
-                            <TextBlock TextWrapping="Wrap" Text="Search" Margin="0,18,0,18" 
-                                   Foreground="DimGray" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        </Viewbox>
-                    </Grid>
+
                     <Grid Grid.Column="1" HorizontalAlignment="Stretch">
-
-                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtSearch" TextWrapping="Wrap" Margin="0,17,0,17" TextChanged="txtSearch_TextChanged" Width="auto" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="181*"/>
+                                <ColumnDefinition Width="26*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox MaxLength="30" Background="White" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="DimGray" FontSize="12" Margin="10" BorderThickness="3" Name="txtSearch" TextWrapping="Wrap" TextChanged="txtSearch_TextChanged" Width="auto" Grid.ColumnSpan="2" />
+                            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                                <Viewbox Margin="15,15,0,15">
+                                    <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png">
+                                    </Image>
+                                </Viewbox>
+                                <TextBlock TextWrapping="WrapWithOverflow" IsHitTestVisible="False" Text="Search project" VerticalAlignment="Center" HorizontalAlignment="left" Margin="5,0,0,0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtSearch}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                        
                     </Grid>
                 </Grid>
 
@@ -846,10 +1066,10 @@
             </Grid>
             <Grid Grid.Row="2" Background="White">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="1.2*"/>
+                    <RowDefinition Height="2.8*"/>
                 </Grid.RowDefinitions>
-                <Border CornerRadius="5" Margin="5" BorderBrush="Gainsboro" BorderThickness="1">
+                <Border CornerRadius="15" Margin="5" BorderBrush="Gainsboro" BorderThickness="1">
                 <Grid Grid.Row="0" Margin="5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -859,56 +1079,85 @@
 
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width=".5*"/>
-                                <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width=".5*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width=".5*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                <ColumnDefinition Width=".5*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1.5*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="0">
-                      
-                                        <TextBlock Text="(Project ID)" Margin="5" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="DimGray"/>
-                           
 
-                                </Grid>
-                                <Grid Grid.Column="1">
+
                                     
                                         <Label Visibility="Hidden" x:Name="lblProjIdValidation" Margin="10,15,10,0" Foreground="Red"/>
-                                    
-                                    <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtProjID"  Margin="0,5" Text="{Binding ACTION_MESSAGE, Mode=TwoWay}" MaxLines="255" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                                </Grid>
-                            </Grid>
-                            <Grid Grid.Column="3">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1.5*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="0">
-                                   
+                                        <Border Margin="5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
-                                        <TextBlock Text="(Project Name)" Margin="5" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="DimGray"/>
+                                            <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Name="txtProjID" TextWrapping="Wrap" Text="{Binding ACTION_MESSAGE, Mode=TwoWay}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12"/>
+                                        </Border>
+                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter project ID" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=txtProjID}" Value="">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                        <TextBlock x:Name="txtlabelProjectID" Width="120" TextAlignment="Center" Margin="5" Text="Project ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=txtProjID}" Value="">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
                                    
-                                </Grid>
-                                <Grid Grid.Column="1">
-                                    <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtProjName" Margin="0,5,0,5" Text="{Binding ACTION_MESSAGE, Mode=TwoWay}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                                </Grid>
                             </Grid>
-                            <Grid Grid.Column="5">
+                            <Grid Grid.Column="1">
+                                    <Border Margin="5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+
+                                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Name="txtProjName" TextWrapping="Wrap" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12"/>
+                                    </Border>
+                                    <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter project name" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=txtProjName}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock x:Name="txtlabelProjectName" Width="120" TextAlignment="Center" Margin="5" Text="Project Name" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=txtProjName}" Value="">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    
+                            </Grid>
+                            <Grid Grid.Column="2">
                                 <Button Style="{DynamicResource RoundCornerAdd}" x:Name="btnCreate" Margin="5" >
                                     <Viewbox>
-                                        <TextBlock Text="Create"  TextWrapping="Wrap" Margin="5"/>
+                                        <TextBlock Text="CREATE"  TextWrapping="Wrap" Margin="5"/>
                                     </Viewbox>
                                 </Button>
                                 <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnUpdate" Margin="5" Visibility="Hidden">
                                     <Viewbox>
-                                        <TextBlock Text="Update"  TextWrapping="Wrap" Margin="5"/>
+                                        <TextBlock Text="UPDATE"  TextWrapping="Wrap" Margin="5"/>
                                     </Viewbox>
                                 </Button>
                             </Grid>
@@ -921,52 +1170,82 @@
                     <Grid Grid.Row="1">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width=".5*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width=".5*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width=".5*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width=".5*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    
                                 </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1.5*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+
                                 <Grid Grid.Column="0">
-                                 
-                                        <TextBlock Text="(Category)" VerticalAlignment="Center" Margin="5" TextWrapping="Wrap" Foreground="DimGray"/>
-                                 
-                                </Grid>
-                                <Grid Grid.Column="1">
-                                    <ComboBox VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="cbCategory" Margin="0,5,0,5">
+                                    <ComboBox Style="{DynamicResource StyleComboBox}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="cbCategory" Margin="5">
                                         <ComboBoxItem Content="Project"/>
                                         <ComboBoxItem Content="Task"/>
                                     </ComboBox>
-                                </Grid>
+                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select Category" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=cbCategory}" Value="">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                        <TextBlock x:Name="txtlabelCategory" Width="120" TextAlignment="Center" Margin="5" Text="Selected Category" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=cbCategory}" Value="">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
                             </Grid>
-                            <Grid Grid.Column="3">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1.5*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="0">
-                                    
-                                        <TextBlock VerticalAlignment="Center" Text="(Billability)" Margin="5" TextWrapping="Wrap" Foreground="DimGray"/>
-                                 
-                                </Grid>
+                            <Grid Grid.Column="1">
+
                                 <Grid Grid.Column="1">
-                                    <ComboBox VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="cbBillability" Margin="0,5,0,5">
+                                    <ComboBox Style="{DynamicResource StyleComboBox}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="cbBillability" Margin="5">
                                         <ComboBoxItem Content="Internal"/>
                                         <ComboBoxItem Content="External"/>
                                     </ComboBox>
-                                </Grid>
+                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select billability" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=cbBillability}" Value="">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                        <TextBlock x:Name="txtlabelBillability" Width="120" TextAlignment="Center" Margin="5" Text="Selected Billability" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Text, ElementName=cbBillability}" Value="">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+
+                                    </Grid>
                             </Grid>
-                            <Grid Grid.Column="5">
+                            <Grid Grid.Column="2">
                                 <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnNewProject" Margin="5">
                                     <Viewbox>
-                                        <TextBlock Text="Clear" TextWrapping="Wrap" Margin="5"/>
+                                        <TextBlock Text="CLEAR" TextWrapping="Wrap" Margin="5"/>
                                     </Viewbox>
                                 </Button>
                             </Grid>
@@ -977,14 +1256,17 @@
                 </Grid>
                 </Border>
                 <Grid Grid.Row="1">
-                    <DataGrid  x:Name="dgProjectList" ItemsSource="{Binding ProjectList}" BorderBrush="Transparent" Margin="0,10,0,0" AutoGenerateColumns="False" IsReadOnly="True">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Project ID" Binding="{Binding ProjectID}" Width="1*"/>
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Project Name" Binding="{Binding ProjectName}" Width="2*"/>
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Category" Binding="{Binding Category}" Width="1*"/>
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Billability" Binding="{Binding Billability}" Width="1*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <Border Margin="10,10,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+
+                        <DataGrid Background="Transparent" x:Name="dgProjectList" ItemsSource="{Binding ProjectList}" BorderBrush="Transparent" AutoGenerateColumns="False" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Project ID" Binding="{Binding ProjectID}" Width="1*"/>
+                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Project Name" Binding="{Binding ProjectName}" Width="2*"/>
+                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Category" Binding="{Binding Category}" Width="1*"/>
+                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Billability" Binding="{Binding Billability}" Width="1*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
                 </Grid>
             </Grid>
             <Grid Grid.Row="3">

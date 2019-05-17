@@ -348,60 +348,37 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <Style TargetType="{x:Type DataGrid}">
             <Setter Property="HeadersVisibility" Value="Column"/>
             <Setter Property="GridLinesVisibility" Value="All"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="VerticalGridLinesBrush" Value="White"/>
-            <Setter Property="HorizontalGridLinesBrush" Value="White"/>
+            <Setter Property="VerticalGridLinesBrush" Value="Gainsboro"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="Gainsboro"/>
             <Setter Property="CanUserAddRows" Value="False"/>
             <Setter Property="CanUserDeleteRows" Value="False"/>
-            <Setter Property="CanUserResizeColumns" Value="False"/>
-            <Setter Property="CanUserReorderColumns" Value="False"/>
-            <Setter Property="CanUserSortColumns" Value="False"/>
-            <Setter Property="CanUserResizeRows" Value="False"/>
         </Style>
-        
         <Style TargetType="{x:Type DataGridCell}">
+
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>
-            <Setter Property="TextBlock.TextWrapping" Value="WrapWithOverflow"/>
         </Style>
-        
         <Style TargetType="{x:Type DataGridColumnHeader}">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="DimGray"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="Background" Value="#FF4DB6AC"/>
-            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Background" Value="Transparent"/>
+
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderBrush" Value="Gainsboro"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="5"/>
-            <Setter Property="ContentTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <TextBlock x:Name="TextBlock" TextWrapping="Wrap" Text="{Binding}" />
-                        <DataTemplate.Triggers>
-                            <DataTrigger Binding="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridColumnHeader}}}" Value="Center">
-                                <Setter TargetName="TextBlock" Property="TextAlignment" Value="Center"/>
-                            </DataTrigger>
-                        </DataTemplate.Triggers>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter> 
         </Style>
-        
         <Style TargetType="{x:Type DataGridRow}">
-            <Setter Property="Background" Value="white" />
-            <Setter Property="Foreground" Value="#FF303030"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="LightGray" />
-                </Trigger>
-            </Style.Triggers>
+            <Setter Property="Foreground" Value="Gray"/>
+
         </Style>
-        
+
         <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="5" />
             <Setter Property="TextWrapping" Value="WrapWithOverflow"/>
@@ -536,35 +513,36 @@
                     <TextBlock  FontSize="15" Name="lbl_noOT2" Visibility="Collapsed" 
                                 Foreground="Red" VerticalAlignment="Center">T A S K</TextBlock>
                 </StackPanel>
-
-                <DataGrid x:Name="lv_taskList" 
+                <Border Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+                    <DataGrid x:Name="lv_taskList" 
+                          Background="Transparent"
                           ItemsSource="{Binding TaskList}" 
                           CanUserAddRows="False" 
-                          AutoGenerateColumns="False"
-                          Margin="0,0,0,10" 
+                          AutoGenerateColumns="False" 
                           BorderBrush="Transparent" 
                           IsReadOnly="True"
                           HorizontalAlignment="Stretch" >
-                    <DataGrid.Resources>
-                        <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="Red" Opacity="0.5" />
-                    </DataGrid.Resources>
-                    
-                    <DataGrid.Columns>
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Task ID" Width="80" Binding="{Binding TaskId}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee ID" Width="90" Binding="{Binding EmpId}" Visibility="Collapsed"/>
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Incident ID" Width="85" Binding="{Binding IncId}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Description" Width="200" Binding="{Binding IncDescr}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Created Date" Width="90" Binding="{Binding DateCreated, StringFormat='MM-dd-yyyy'}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Started Date" Width="90" Binding="{Binding DateStarted, StringFormat='MM-dd-yyyy'}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Target Date" Width="90" Binding="{Binding TargetDate, StringFormat='MM-dd-yyyy'}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Completed Date" Width="90" Binding="{Binding CompltdDate, StringFormat='MM-dd-yyyy'}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Effort Estimate" Width="90" Binding="{Binding EffortEst}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Actual Effort for the Week" Width="100" Binding="{Binding ActEffortEstWk}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Actual Effort (hrs)" Width="88" Binding="{Binding ActEffortEst}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Phase" Width="100" Binding="{Binding Phase}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="100" Binding="{Binding Status}" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                        <DataGrid.Resources>
+                            <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="Red" Opacity="0.5" />
+                        </DataGrid.Resources>
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Task ID" Width="80" Binding="{Binding TaskId}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee ID" Width="90" Binding="{Binding EmpId}" Visibility="Collapsed"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Incident ID" Width="85" Binding="{Binding IncId}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Description" Width="200" Binding="{Binding IncDescr}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Created Date" Width="90" Binding="{Binding DateCreated, StringFormat='MM-dd-yyyy'}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Started Date" Width="90" Binding="{Binding DateStarted, StringFormat='MM-dd-yyyy'}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Target Date" Width="90" Binding="{Binding TargetDate, StringFormat='MM-dd-yyyy'}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Completed Date" Width="90" Binding="{Binding CompltdDate, StringFormat='MM-dd-yyyy'}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Effort Estimate" Width="90" Binding="{Binding EffortEst}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Actual Effort for the Week" Width="100" Binding="{Binding ActEffortEstWk}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Actual Effort (hrs)" Width="88" Binding="{Binding ActEffortEst}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Phase" Width="100" Binding="{Binding Phase}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="100" Binding="{Binding Status}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Border>
             </Grid>
             
             <Grid Grid.Row="2" Background="White">

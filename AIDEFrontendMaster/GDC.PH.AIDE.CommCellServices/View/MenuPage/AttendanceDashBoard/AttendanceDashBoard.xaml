@@ -118,9 +118,11 @@
                                                             <TextBlock FontWeight="Bold" Margin="5,2" Text="{Binding EmpName}" HorizontalAlignment="Left" FontSize="12" VerticalAlignment="Bottom" Foreground="#FF227BA4" TextWrapping="WrapWithOverflow" />
                                                         </Grid>
                                                         <Grid Grid.Row="1">
+                                                            
                                                             <StackPanel Orientation="Horizontal">
                                                                 <TextBlock Foreground="DimGray" Margin="5,2" Text="{Binding EMP_ID}" HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />
                                                                 <TextBlock Foreground="DimGray" Margin="5,2" Text="{Binding DATE_ENTRY, StringFormat='hh:mm tt'}"  HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />
+                                                               
                                                             </StackPanel>
                                                         </Grid>
 
@@ -168,9 +170,10 @@
                                     <Image Source="..\..\..\Assets\Attendance\present.png" Margin="5"/>
                                 </Viewbox>
 
+                                <Viewbox Margin="5">
                                 <TextBlock Text="Is Present" VerticalAlignment="Center" FontSize="10"/>
+                                </Viewbox>
 
-                              
 
                             </StackPanel>
                         </Grid>
@@ -179,9 +182,9 @@
                                 <Viewbox>
                                     <Image Source="..\..\..\Assets\Attendance\sick.png" Margin="5"/>
                                 </Viewbox>
-
+                                <Viewbox Margin="5">
                                 <TextBlock Text="On Sick Leave" VerticalAlignment="Center" FontSize="10"/>
-
+                                </Viewbox>
                             </StackPanel>
                         </Grid>
                        
@@ -196,9 +199,9 @@
                                                                <Viewbox>
                                     <Image Source="..\..\..\Assets\Attendance\vacation.png" Margin="5"/>
                                 </Viewbox>
-
-                                <TextBlock VerticalAlignment="Center" Text="On Vacation/Other Leave" FontSize="10"/>
-
+                                <Viewbox Margin="5">
+                                    <TextBlock TextWrapping="WrapWithOverflow" VerticalAlignment="Center" Text="On Vacation/Other" FontSize="10"/>
+                                </Viewbox>
 
 
                             </StackPanel>

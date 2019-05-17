@@ -110,6 +110,7 @@ Public Class ContactListPage
 
         If CBool(dialog.ShowDialog().GetValueOrDefault()) Then
             dv_contacts.Visibility = Windows.Visibility.Visible
+            printBorder.Visibility = Windows.Visibility.Visible
             Dim pageSize As Size = New Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight)
             dv_contacts.Measure(pageSize)
             dv_contacts.Arrange(New Rect(5, 5, pageSize.Width, pageSize.Height))
@@ -117,7 +118,7 @@ Public Class ContactListPage
         End If
 
         dv_contacts.Visibility = Windows.Visibility.Hidden
-
+        printBorder.Visibility = Windows.Visibility.Hidden
     End Sub
 #End Region
 

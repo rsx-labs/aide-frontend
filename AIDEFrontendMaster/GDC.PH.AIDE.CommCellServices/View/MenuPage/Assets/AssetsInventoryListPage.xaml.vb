@@ -109,12 +109,7 @@ Public Class AssetsInventoryListPage
     End Sub
 
     Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
-        If txtSearch.Text = String.Empty Then
-            SetData()
-        Else
-            SetDataForSearch(txtSearch.Text)
-        End If
-        e.Handled = True
+        
     End Sub
 
     Private Sub lv_assetInventoryListOwn_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles lv_assetInventoryListOwn.LoadingRow
@@ -466,4 +461,12 @@ Public Class AssetsInventoryListPage
     End Sub
 #End Region
 
+    Private Sub txtSearch_TextChanged_1(sender As Object, e As TextChangedEventArgs)
+        If txtSearch.Text = String.Empty Then
+            SetData()
+        Else
+            SetDataForSearch(txtSearch.Text)
+        End If
+        e.Handled = True
+    End Sub
 End Class

@@ -932,6 +932,18 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
+                        <TextBlock x:Name="txtlabelActionMessage" Width="120" TextAlignment="Center" Margin="5" Text="Message" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=Act_Message}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </Grid>
                     <Grid Grid.Row="2">
                         <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
@@ -945,6 +957,18 @@
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=Act_AssignedAll}" Value="">
                                             <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock x:Name="txtlabelAssignee" Width="120" TextAlignment="Center" Margin="5" Text="Assigned Employee" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=Act_AssignedAll}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -974,6 +998,18 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
+                            <TextBlock x:Name="txtlabelSelectedAssignee" Width="120" TextAlignment="Center" Margin="5" Text="Selected Employee" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=Act_AssigneeCB}" Value="">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </Grid>
                         <Grid Grid.Column="1">
                             <Viewbox Margin="2.5,5,2.5,5" >
@@ -998,6 +1034,18 @@
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=Act_DueDate}" Value="">
                                             <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock x:Name="txtlabelDueDate" Width="120" TextAlignment="Center" Margin="5" Text="Due Date" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=Act_DueDate}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>

@@ -7,10 +7,189 @@
       Height="auto" Width="auto"
       Title="AssetsInventoryListPage">
     <Page.Resources>
+        <!-- Scroll -->
+        <SolidColorBrush x:Key="StandardBorderBrush" Color="#888" />
+        <SolidColorBrush x:Key="StandardBackgroundBrush" Color="Black" />
+        <SolidColorBrush x:Key="HoverBorderBrush" Color="#DDD" />
+        <SolidColorBrush x:Key="SelectedBackgroundBrush" Color="Gray" />
+        <SolidColorBrush x:Key="SelectedForegroundBrush" Color="White" />
+        <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
+        <SolidColorBrush x:Key="GlyphBrush" Color="#444" />
+        <SolidColorBrush x:Key="NormalBrush" Color="#888" />
+        <SolidColorBrush x:Key="NormalBorderBrush" Color="#888" />
+        <SolidColorBrush x:Key="HorizontalNormalBrush" Color="#FF686868" />
+        <SolidColorBrush x:Key="HorizontalNormalBorderBrush" Color="#888" />
+
+        <LinearGradientBrush x:Key="ListBoxBackgroundBrush" StartPoint="0,0" EndPoint="1,0.001">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="White" Offset="0.0" />
+                    <GradientStop Color="White" Offset="0.6" />
+                    <GradientStop Color="#DDDDDD" Offset="1.2"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="StandardBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#FFF" Offset="0.0"/>
+                    <GradientStop Color="#CCC" Offset="1.0"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="PressedBrush" StartPoint="0,0" EndPoint="0,1">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#BBB" Offset="0.0"/>
+                    <GradientStop Color="#EEE" Offset="0.1"/>
+                    <GradientStop Color="#EEE" Offset="0.9"/>
+                    <GradientStop Color="#FFF" Offset="1.0"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <Style x:Key="ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Visibility" Value="Hidden"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Border Name="Border" Margin="1" CornerRadius="2" Background="{StaticResource NormalBrush}" BorderBrush="{StaticResource NormalBorderBrush}" BorderThickness="1">
+                            <Path HorizontalAlignment="Center" VerticalAlignment="Center" Fill="{StaticResource GlyphBrush}" Data="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource PressedBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ScrollBarPageButton" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Visibility" Value="Hidden"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Border Background="Black" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border CornerRadius="4" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0"  Width="8" Margin="8,0,-2,0"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition MaxHeight="0"/>
+                    <RowDefinition Height="0.00001*"/>
+                    <RowDefinition MaxHeight="0"/>
+                </Grid.RowDefinitions>
+                <Border Grid.RowSpan="3" CornerRadius="2" Background="Transparent" />
+                <RepeatButton Grid.Row="0" Style="{StaticResource ScrollBarLineButton}" Height="18" Command="ScrollBar.LineUpCommand" Content="M 0 4 L 8 4 L 4 0 Z" />
+                <Track Name="PART_Track" Grid.Row="1" IsDirectionReversed="true">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageUpCommand" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb Style="{StaticResource ScrollBarThumb}" Margin="1,0,1,0" Background="{StaticResource HorizontalNormalBrush}" BorderBrush="{StaticResource HorizontalNormalBorderBrush}" />
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageDownCommand" />
+                    </Track.IncreaseRepeatButton>
+                </Track>
+                <RepeatButton Grid.Row="3" Style="{StaticResource ScrollBarLineButton}" Height="18" Command="ScrollBar.LineDownCommand" Content="M 0 0 L 4 4 L 8 0 Z"/>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition MaxWidth="18"/>
+                    <ColumnDefinition Width="0.00001*"/>
+                    <ColumnDefinition MaxWidth="18"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.ColumnSpan="3" CornerRadius="2" Background="#F0F0F0"/>
+                <RepeatButton Grid.Column="0"  Style="{StaticResource ScrollBarLineButton}" Width="18" Command="ScrollBar.LineLeftCommand" Content="M 4 0 L 4 8 L 0 4 Z" />
+                <Track Name="PART_Track" Grid.Column="1" IsDirectionReversed="False">
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageLeftCommand" />
+                    </Track.DecreaseRepeatButton>
+                    <Track.Thumb>
+                        <Thumb Style="{StaticResource ScrollBarThumb}" Margin="0,1,0,1" Background="{StaticResource NormalBrush}" BorderBrush="{StaticResource NormalBorderBrush}" />
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageRightCommand" />
+                    </Track.IncreaseRepeatButton>
+                </Track>
+                <RepeatButton Grid.Column="3" Style="{StaticResource ScrollBarLineButton}" Width="18" Command="ScrollBar.LineRightCommand" Content="M 0 0 L 4 4 L 0 8 Z"/>
+            </Grid>
+        </ControlTemplate>
+        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Horizontal">
+                    <Setter Property="Width" Value="Auto"/>
+                    <Setter Property="Height" Value="18" />
+                    <Setter Property="Template" Value="{StaticResource HorizontalScrollBar}" />
+                </Trigger>
+                <Trigger Property="Orientation" Value="Vertical">
+                    <Setter Property="Width" Value="18"/>
+                    <Setter Property="Height" Value="Auto" />
+                    <Setter Property="Template" Value="{StaticResource VerticalScrollBar}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="FavsScrollViewer" TargetType="{x:Type ScrollViewer}">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <ScrollContentPresenter Grid.Column="1"/>
+                            <ScrollBar Name="PART_VerticalScrollBar" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                            <ScrollBar Name="PART_HorizontalScrollBar" Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Value="{TemplateBinding HorizontalOffset}" Maximum="{TemplateBinding ScrollableWidth}" ViewportSize="{TemplateBinding ViewportWidth}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- end of scroll -->
         <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
             <Border Background="{TemplateBinding Background}" 
-                x:Name="Bd" BorderBrush="#FFA4A4A4"
-                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4">
+                x:Name="Bd" BorderBrush="Gainsboro"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="15">
                 <ScrollViewer x:Name="PART_ContentHost"/>
             </Border>
 
@@ -394,58 +573,37 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <Style TargetType="{x:Type DataGrid}">
             <Setter Property="HeadersVisibility" Value="Column"/>
             <Setter Property="GridLinesVisibility" Value="All"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="VerticalGridLinesBrush" Value="White"/>
-            <Setter Property="HorizontalGridLinesBrush" Value="White"/>
+            <Setter Property="VerticalGridLinesBrush" Value="Gainsboro"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="Gainsboro"/>
             <Setter Property="CanUserAddRows" Value="False"/>
             <Setter Property="CanUserDeleteRows" Value="False"/>
         </Style>
-        
         <Style TargetType="{x:Type DataGridCell}">
+
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>
         </Style>
-        
         <Style TargetType="{x:Type DataGridColumnHeader}">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="DimGray"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="Background" Value="#FF4DB6AC"/>
-            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Background" Value="Transparent"/>
+
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderBrush" Value="Gainsboro"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="5"/>
-            <Setter Property="ContentTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <TextBlock x:Name="TextBlock" TextWrapping="Wrap" Text="{Binding}" />
-                        <DataTemplate.Triggers>
-                            <DataTrigger Binding="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridColumnHeader}}}" Value="Center">
-                                <Setter TargetName="TextBlock" Property="TextAlignment" Value="Center"/>
-                            </DataTrigger>
-                        </DataTemplate.Triggers>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
         </Style>
-        
         <Style TargetType="{x:Type DataGridRow}">
-            <Setter Property="Background" Value="white" />
-            <Setter Property="Foreground" Value="#FF303030"/>
-            
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver"
-                         Value="True">
-                    <Setter Property="Background"
-                            Value="LightGray" />
-                </Trigger>
-            </Style.Triggers>
+            <Setter Property="Foreground" Value="Gray"/>
+
         </Style>
-        
+
         <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="5" />
             <Setter Property="TextWrapping" Value="Wrap"/>
@@ -522,26 +680,43 @@
             
             <Grid Grid.Row="1" Background="#FFFBFBFB">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.4*"/>
-                    <ColumnDefinition Width="0.6*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <Grid Grid.Column="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="4*"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Grid Grid.Column="0">
-                        <Viewbox>
-                            <TextBlock TextWrapping="Wrap" Text="Search" Margin="0,18,0,18" 
-                                   Foreground="DimGray" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        </Viewbox>
+                    <Grid Grid.Column="0" HorizontalAlignment="Stretch">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="181*"/>
+                                <ColumnDefinition Width="26*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox MaxLength="30" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="DimGray" FontSize="12" Margin="10" BorderThickness="3" Name="txtSearch" TextWrapping="Wrap" TextChanged="txtSearch_TextChanged_1" Width="auto" Grid.ColumnSpan="2" />
+                            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                                <Viewbox Margin="15,15,0,15">
+                                    <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png">
+                                    </Image>
+                                </Viewbox>
+                                <TextBlock TextWrapping="WrapWithOverflow" IsHitTestVisible="False" Text="Search asset" VerticalAlignment="Center" HorizontalAlignment="left" Margin="5,0,0,0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtSearch}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Grid>
+                        <!--<TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Name="SearchTextBox" TextWrapping="Wrap" Margin="0,17,0,17" TextChanged="SearchTextBox_TextChanged" Width="auto" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>-->
+
                     </Grid>
-                    
-                    <Grid Grid.Column="1" HorizontalAlignment="Stretch">
-                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtSearch" TextWrapping="Wrap" Margin="0,17,0,17" TextChanged="txtSearch_TextChanged" Width="auto" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    </Grid>
+
                 </Grid>
             </Grid>
             
@@ -549,7 +724,7 @@
                 <TabControl x:Name="SR" Margin="0,10,0,0" BorderBrush="DimGray" BorderThickness="0" >
                     <TabItem x:Name="Own"
                          Foreground="White" Width="150" HorizontalContentAlignment="center" 
-                         Height="30" BorderThickness="0" Margin="0" >
+                         Height="30" >
                         <TabItem.Header>
                             <Viewbox HorizontalAlignment="Left">
                                 <TextBlock TextWrapping="Wrap" Padding="10,0,0,0" Text="My Asset" Margin="10" Foreground="White" FontSize="20"/>
@@ -563,45 +738,46 @@
                             </Grid.RowDefinitions>
                             
                             <Grid Grid.Row="0">
-                                <WrapPanel HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Top">
-                                    <Grid Grid.Row="0" Margin="0">
-                                        <Grid Grid.Row="0">
-                                            <DataGrid x:Name="lv_assetInventoryListOwn" 
+                                <WrapPanel HorizontalAlignment="Center" Grid.Row="0">
+                                    <Grid Grid.Row="0">
+                                            <Border Margin="0,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+                                                <DataGrid Background="Transparent" x:Name="lv_assetInventoryListOwn" 
                                                       ItemsSource="{Binding AssetInventoryList}" 
-                                                      CanUserAddRows="False" 
-                                                      AutoGenerateColumns="False" 
-                                                      CanUserResizeColumns="False"
-                                                      CanUserReorderColumns="False" 
-                                                      CanUserSortColumns="False"
-                                                      BorderBrush="Transparent" 
-                                                      IsReadOnly="True">
-                                                <DataGrid.Resources>
-                                                    <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="Red" Opacity="0.5" />
-                                                </DataGrid.Resources>
+                          CanUserAddRows="False" 
+                                              AutoGenerateColumns="False" 
+                                              CanUserResizeColumns="False"
+                                              CanUserReorderColumns="False" 
+                                              CanUserSortColumns="False"
+                                              BorderBrush="Transparent" 
+                                              IsReadOnly="True">
+                                                    <DataGrid.Resources>
+                                                        <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="Red" Opacity="0.5" />
+                                                    </DataGrid.Resources>
 
-                                                <DataGrid.Columns>
-                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset ID" Width="75" Binding="{Binding ASSET_ID}" />
-                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee ID" Width="100" Binding="{Binding EMP_ID}" Visibility="Collapsed"/>
-                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee" Width="150" Binding="{Binding FULL_NAME}" Visibility="Collapsed"/>
-                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Department" Width="100" Binding="{Binding DEPARTMENT}" Visibility="Collapsed"/>
-                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Description" Width="135" Binding="{Binding ASSET_DESC}" />
-                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Manufacturer" Width="100" Binding="{Binding MANUFACTURER}" />
-                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Model No." Width="135" Binding="{Binding MODEL_NO}" />
-                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Serial No." Width="110" Binding="{Binding SERIAL_NO}" />
-                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Tag" Width="100" Binding="{Binding ASSET_TAG}" />
-                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Assigned" Width="105" Binding="{Binding DATE_ASSIGNED, StringFormat=d}" />
-                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="90" Binding="{Binding STATUS_DESCR}" />
-                                                    <DataGridTemplateColumn Header="APPROVED" Width="90" >
-                                                        <DataGridTemplateColumn.CellTemplate>
-                                                            <DataTemplate >
-                                                                <CheckBox Name="chkDiscontinue" IsChecked="{Binding Path=ISAPPROVED}" IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                            </DataTemplate>
-                                                        </DataGridTemplateColumn.CellTemplate>
-                                                    </DataGridTemplateColumn>
-                                                </DataGrid.Columns>
-                                            </DataGrid>
+                                                    <DataGrid.Columns>
+                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset ID" Width="75" Binding="{Binding ASSET_ID}" />
+                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee ID" Width="100" Binding="{Binding EMP_ID}" Visibility="Collapsed"/>
+                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee" Width="150" Binding="{Binding FULL_NAME}" Visibility="Collapsed"/>
+                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Department" Width="100" Binding="{Binding DEPARTMENT}" Visibility="Collapsed"/>
+                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Description" Width="135" Binding="{Binding ASSET_DESC}" />
+                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Manufacturer" Width="100" Binding="{Binding MANUFACTURER}" />
+                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Model No." Width="135" Binding="{Binding MODEL_NO}" />
+                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Serial No." Width="110" Binding="{Binding SERIAL_NO}" />
+                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Tag" Width="100" Binding="{Binding ASSET_TAG}" />
+                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Assigned" Width="105" Binding="{Binding DATE_ASSIGNED, StringFormat=d}" />
+                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="90" Binding="{Binding STATUS_DESCR}" />
+                                                        <DataGridTemplateColumn Header="APPROVED" Width="90" >
+                                                            <DataGridTemplateColumn.CellTemplate>
+                                                                <DataTemplate >
+                                                                    <CheckBox Name="chkDiscontinue" IsChecked="{Binding Path=ISAPPROVED}" IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                </DataTemplate>
+                                                            </DataGridTemplateColumn.CellTemplate>
+                                                        </DataGridTemplateColumn>
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
+                                            </Border>
                                         </Grid>
-                                    </Grid>
+
                                 </WrapPanel>
                             </Grid>
 
@@ -704,7 +880,9 @@
 
                             <Grid Grid.Row ="0">
                                 <WrapPanel HorizontalAlignment="Center" Grid.Row="0">
-                                    <DataGrid x:Name="lv_assetInventoryList" 
+                                    <Border Margin="0,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+                                        <DataGrid x:Name="lv_assetInventoryList" 
+                                              Background="Transparent"
                                               ItemsSource="{Binding AssetInventoryList}" 
                                               CanUserAddRows="False" 
                                               AutoGenerateColumns="False" 
@@ -713,25 +891,26 @@
                                               CanUserSortColumns="False"
                                               BorderBrush="Transparent" 
                                               IsReadOnly="True">
-                                        <DataGrid.Resources>
-                                            <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="Red" Opacity="0.5" />
-                                        </DataGrid.Resources>
+                                            <DataGrid.Resources>
+                                                <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="Red" Opacity="0.5" />
+                                            </DataGrid.Resources>
 
-                                        <DataGrid.Columns>
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset ID" Width="75" Binding="{Binding ASSET_ID}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee ID" Width="100" Binding="{Binding EMP_ID}" Visibility="Collapsed"/>
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Assigned To" Width="150" Binding="{Binding FULL_NAME}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Department" Width="100" Binding="{Binding DEPARTMENT}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Description" Width="130" Binding="{Binding ASSET_DESC}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Manufacturer" Width="100" Binding="{Binding MANUFACTURER}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Model No." Width="100" Binding="{Binding MODEL_NO}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Serial No." Width="100" Binding="{Binding SERIAL_NO}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Tag" Width="100" Binding="{Binding ASSET_TAG}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Purchased" Width="85" Binding="{Binding DATE_DESCR}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Assigned" Width="105" Binding="{Binding DATE_ASSIGNED, StringFormat=d}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="90" Binding="{Binding STATUS_DESCR}" />
-                                        </DataGrid.Columns>
-                                    </DataGrid>
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset ID" Width="75" Binding="{Binding ASSET_ID}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee ID" Width="100" Binding="{Binding EMP_ID}" Visibility="Collapsed"/>
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Assigned To" Width="150" Binding="{Binding FULL_NAME}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Department" Width="100" Binding="{Binding DEPARTMENT}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Description" Width="130" Binding="{Binding ASSET_DESC}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Manufacturer" Width="100" Binding="{Binding MANUFACTURER}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Model No." Width="100" Binding="{Binding MODEL_NO}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Serial No." Width="100" Binding="{Binding SERIAL_NO}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Tag" Width="100" Binding="{Binding ASSET_TAG}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Purchased" Width="85" Binding="{Binding DATE_DESCR}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Assigned" Width="105" Binding="{Binding DATE_ASSIGNED, StringFormat=d}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="90" Binding="{Binding STATUS_DESCR}" />
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Border>
                                 </WrapPanel>
                             </Grid>
                             
@@ -813,9 +992,11 @@
                                         <Grid Margin="0">
                                             <Label x:Name="lblPagingInfo3" />
                                         </Grid>
-                                        
-                                        <DataGrid x:Name="lv_assetInventoryListUnapproved" 
-                                                  ItemsSource="{Binding AssetInventoryList}" 
+                                        <Border Margin="0,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+
+                                            <DataGrid x:Name="lv_assetInventoryListUnapproved" 
+                                                  Background="Transparent"
+                                                      ItemsSource="{Binding AssetInventoryList}" 
                                                   CanUserAddRows="False" 
                                                   AutoGenerateColumns="False" 
                                                   CanUserResizeColumns="False"
@@ -823,24 +1004,25 @@
                                                   CanUserSortColumns="False"
                                                   BorderBrush="Transparent" 
                                                   IsReadOnly="True">
-                                            <DataGrid.Resources>
-                                                <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="Red" Opacity="0.5" />
-                                            </DataGrid.Resources>
+                                                <DataGrid.Resources>
+                                                    <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="Red" Opacity="0.5" />
+                                                </DataGrid.Resources>
 
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset ID" Width="75" Binding="{Binding ASSET_ID}" />
-                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee ID" Width="100" Binding="{Binding EMP_ID}" Visibility="Collapsed"/>
-                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Assigned To" Width="150" Binding="{Binding FULL_NAME}" />
-                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Department" Width="100" Binding="{Binding DEPARTMENT}" />
-                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Description" Width="130" Binding="{Binding ASSET_DESC}" />
-                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Manufacturer" Width="100" Binding="{Binding MANUFACTURER}" />
-                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Model No." Width="100" Binding="{Binding MODEL_NO}" />
-                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Serial No." Width="100" Binding="{Binding SERIAL_NO}" />
-                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Tag" Width="100" Binding="{Binding ASSET_TAG}" />
-                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Assigned" Width="105" Binding="{Binding DATE_ASSIGNED, StringFormat=d}" />
-                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="90" Binding="{Binding STATUS_DESCR}" />
-                                            </DataGrid.Columns>
-                                        </DataGrid>
+                                                <DataGrid.Columns>
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset ID" Width="75" Binding="{Binding ASSET_ID}" />
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee ID" Width="100" Binding="{Binding EMP_ID}" Visibility="Collapsed"/>
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Assigned To" Width="150" Binding="{Binding FULL_NAME}" />
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Department" Width="100" Binding="{Binding DEPARTMENT}" />
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Description" Width="130" Binding="{Binding ASSET_DESC}" />
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Manufacturer" Width="100" Binding="{Binding MANUFACTURER}" />
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Model No." Width="100" Binding="{Binding MODEL_NO}" />
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Serial No." Width="100" Binding="{Binding SERIAL_NO}" />
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Tag" Width="100" Binding="{Binding ASSET_TAG}" />
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Assigned" Width="105" Binding="{Binding DATE_ASSIGNED, StringFormat=d}" />
+                                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="90" Binding="{Binding STATUS_DESCR}" />
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </Border>
                                     </Grid>
                                 </Grid>
                             </WrapPanel>

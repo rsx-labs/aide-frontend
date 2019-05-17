@@ -464,45 +464,38 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <Style TargetType="{x:Type DataGrid}">
             <Setter Property="HeadersVisibility" Value="Column"/>
             <Setter Property="GridLinesVisibility" Value="All"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="VerticalGridLinesBrush" Value="White"/>
-            <Setter Property="HorizontalGridLinesBrush" Value="White"/>
+            <Setter Property="VerticalGridLinesBrush" Value="Gainsboro"/>
+            <Setter Property="HorizontalGridLinesBrush" Value="Gainsboro"/>
             <Setter Property="CanUserAddRows" Value="False"/>
             <Setter Property="CanUserDeleteRows" Value="False"/>
         </Style>
-        
         <Style TargetType="{x:Type DataGridCell}">
+
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>
         </Style>
-        
         <Style TargetType="{x:Type DataGridColumnHeader}">
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="DimGray"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Height" Value="40"/>
-            <Setter Property="Background" Value="#FF4DB6AC"/>
-            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+            <Setter Property="Background" Value="Transparent"/>
+
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderBrush" Value="Gainsboro"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="5"/>
         </Style>
-        
         <Style TargetType="{x:Type DataGridRow}">
-            <Setter Property="Background" Value="white" />
-            <Setter Property="Foreground" Value="#FF303030"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver"
-                         Value="True">
-                    <Setter Property="Background"
-                            Value="LightGray" />
-                </Trigger>
-            </Style.Triggers>
+            <Setter Property="Foreground" Value="Gray"/>
+
         </Style>
-        
+
+
         <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="5" />
             <Setter Property="TextWrapping" Value="Wrap"/>
@@ -639,8 +632,10 @@
                             </Grid>
                             
                             <Grid Grid.Row="1" HorizontalAlignment="Stretch">
-                                <DataGrid x:Name="lv_birthdayMonth" 
-                                          ItemsSource="{Binding BirthdayListMonth}" 
+                                <Border Margin="0,5,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+                                    <DataGrid x:Name="lv_birthdayMonth" 
+                                          Background="Transparent"
+                                              ItemsSource="{Binding BirthdayListMonth}" 
                                           CanUserAddRows="False" 
                                           AutoGenerateColumns="False" 
                                           Width="Auto" 
@@ -650,52 +645,55 @@
                                           IsReadOnly="True" 
                                           HeadersVisibility="None" 
                                           Grid.ColumnSpan="2">
-                                    <DataGrid.Resources>
-                                        <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="#FF6A6969"/>
-                                    </DataGrid.Resources>
-                                    
-                                    <DataGrid.Columns>
-                                        <DataGridTemplateColumn Width="0.25*">
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <StackPanel>
-                                                        <Image Name="imagePath" Source="{Binding IMAGE_PATH}"  Stretch="Fill" Width="100" Height="100">
-                                                            <Image.Clip>
-                                                                <EllipseGeometry Center="50,50" RadiusX="45" RadiusY="45" />
-                                                            </Image.Clip>
-                                                        </Image>
-                                                    </StackPanel>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Width="0.3*" Binding="{Binding FULL_NAME}" />
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Width="0.45*" Binding="{Binding BIRTHDAY}" />
-                                    </DataGrid.Columns>
-                                </DataGrid>
+                                        <DataGrid.Resources>
+                                            <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="#FF6A6969"/>
+                                        </DataGrid.Resources>
+
+                                        <DataGrid.Columns>
+                                            <DataGridTemplateColumn Width="0.25*">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel>
+                                                            <Image Name="imagePath" Source="{Binding IMAGE_PATH}"  Stretch="Fill" Width="100" Height="100">
+                                                                <Image.Clip>
+                                                                    <EllipseGeometry Center="50,50" RadiusX="45" RadiusY="45" />
+                                                                </Image.Clip>
+                                                            </Image>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Width="0.3*" Binding="{Binding FULL_NAME}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Width="0.45*" Binding="{Binding BIRTHDAY}" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Border>
                             </Grid>
                         </Grid>
                     </Grid>
                     
                     <Grid Grid.Column="1">
-                        <DataGrid BorderBrush="Gainsboro" 
-                                  BorderThickness="1" 
+                        <Border Margin="15,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+                            <DataGrid BorderBrush="Transparent" 
+                                  BorderThickness="0" 
                                   x:Name="lv_birthdayYear" 
                                   ItemsSource="{Binding BirthdayList}" 
                                   CanUserAddRows="False" 
                                   AutoGenerateColumns="False" 
                                   Width="Auto" 
                                   CanUserResizeColumns="False"
-                                  Margin="15,0,0,10" 
+                                   Background="Transparent"
                                   IsReadOnly="True">
-                            <DataGrid.Resources>
-                                <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="Red" Opacity="0.5" />
-                            </DataGrid.Resources>
+                                <DataGrid.Resources>
+                                    <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="Red" Opacity="0.5" />
+                                </DataGrid.Resources>
 
-                            <DataGrid.Columns>
-                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Name" Width="2*" Binding="{Binding FULL_NAME}" />
-                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Birthday" Width="2*" Binding="{Binding BIRTHDAY}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Name" Width="2*" Binding="{Binding FULL_NAME}" />
+                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Birthday" Width="2*" Binding="{Binding BIRTHDAY}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
                     </Grid>
                 </Grid>
             </Grid>

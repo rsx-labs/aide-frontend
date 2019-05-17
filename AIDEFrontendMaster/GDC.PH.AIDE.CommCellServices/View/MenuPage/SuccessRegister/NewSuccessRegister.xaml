@@ -953,13 +953,13 @@
                             <RowDefinition Height="1*"/>
 
                         </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
-                            <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                        <Grid Grid.Row="4">
+                            <Border Visibility="Hidden" Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
-                                <TextBox BorderThickness="0" x:Name="txtSRID" IsEnabled="False" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" MaxLines="255" 
+                                <TextBox Visibility="Hidden" BorderThickness="0" x:Name="txtSRID" IsEnabled="False" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" MaxLines="255" 
                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Success ID" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock Visibility="Hidden" FontSize="12" IsHitTestVisible="False" Text="Success ID" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -971,8 +971,9 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
+                            
                         </Grid>
-                        <Grid Grid.Row="1">
+                        <Grid Grid.Row="0">
                             <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
                                 <DatePicker Style="{DynamicResource styleDatePickerfrom}" x:Name="dateInput" Text="12" Margin="2" BorderBrush="Transparent"/>
@@ -989,8 +990,20 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
+                            <TextBlock x:Name="txtlabelDate" Width="120" TextAlignment="Center" Margin="5" Text="Date Created" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=dateInput}" Value="">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </Grid>
-                        <Grid Grid.Row="2">
+                        <Grid Grid.Row="1">
                             
                             <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
@@ -1012,9 +1025,32 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-
+                            <TextBlock x:Name="txtlabelraisedbycb" Width="120" TextAlignment="Center" Margin="5" Text="Raised by" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=comboRaisedBy}" Value="">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock x:Name="txtlabelraisedtxt" Width="120" TextAlignment="Center" Margin="5" Text="Raised by" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtRaisedBy}" Value="">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </Grid>
-                        <Grid Grid.Row="3">
+                        <Grid Grid.Row="2">
                             <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
                                 <TextBox x:Name="txtSRDetails" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
@@ -1031,8 +1067,20 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
+                            <TextBlock x:Name="txtlabeldetails" Width="120" TextAlignment="Center" Margin="5" Text="Success Details" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtSRDetails}" Value="">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </Grid>
-                        <Grid Grid.Row="4">
+                        <Grid Grid.Row="3">
                             <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
                                 <TextBox x:Name="txtSRWhosInvolve" Template="{DynamicResource TextBoxBaseControlTemplate}" IsEnabled="False" HorizontalContentAlignment="Center"/>
@@ -1049,7 +1097,18 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            
+                            <TextBlock x:Name="txtlabelInvolve" Width="120" TextAlignment="Center" Margin="5" Text="Involved Employee" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtSRWhosInvolve}" Value="">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </Grid>
                         <Grid Grid.Row="5">
                             
@@ -1087,6 +1146,18 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
+                                <TextBlock x:Name="txtlabelselectedInvolve" Width="120" TextAlignment="Center" Margin="5" Text="Employee Selected" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=comboAddEmployee}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </Grid>
                             <Grid Grid.Column="1">
                                 <Viewbox Margin="2.5,5,2.5,5" >
@@ -1111,6 +1182,18 @@
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, ElementName=txtSRAdditional}" Value="">
                                                 <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock x:Name="txtlabelAdditionalInfo" Width="120" TextAlignment="Center" Margin="5" Text="Additional Info" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtSRAdditional}" Value="">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
