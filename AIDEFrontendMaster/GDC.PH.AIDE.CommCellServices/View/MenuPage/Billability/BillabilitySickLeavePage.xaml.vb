@@ -22,18 +22,10 @@ Public Class BillabilitySickLeavePage
     Private profile As Profile
 
     Dim month As Integer = Date.Now.Month
-    Dim setStatus As Integer
-    Dim displayStatus As String = String.Empty
-    Dim status As Integer
-    Dim slStatus As Integer = 3
     Dim displayFiscalYear As Integer = 3
-    Dim img As String
-    Dim displayMonth As String
-    Dim checkStatus As Integer
-    Dim count As Integer
+    Dim slStatus As Integer = 3
     Dim year As Integer
     Dim day As Integer
-    Dim displayOption As Integer = 1 'Weekly is the Default Display Options
 #End Region
 
     Public Sub New(_profile As Profile, mFrame As Frame)
@@ -43,12 +35,10 @@ Public Class BillabilitySickLeavePage
 
         month = Date.Now.Month
         year = Date.Now.Year
-        SetTitle()
-        LoadStack()
-        'LoadDataSLYearly()
-        'LoadAllCategory()
-    End Sub
 
+        LoadYears()
+        LoadData()
+    End Sub
 
 #Region "Private Methods"
 
@@ -65,20 +55,46 @@ Public Class BillabilitySickLeavePage
         Return bInitialize
     End Function
 
-    Public Property SeriesCollection As SeriesCollection
-    Public Property Labels As String()
-    Public Property Formatter As Func(Of Object, Object)
+    Private Sub SetTitle()
+        Dim nextYear As Integer = year + 1
+        Dim prevYear As Integer = year - 1
 
-    Private Sub LoadStack()
+        If Date.Now.Month >= 4 Then
+            lblYear.Content = "Sick Leave For Fiscal Year " + year.ToString + "-" + nextYear.ToString
+        Else
+            lblYear.Content = "Sick Leave For Fiscal Year " + year.ToString + "-" + nextYear.ToString
+        End If
+    End Sub
+
+    Public Sub LoadYears()
+        Try
+            cbYear.DisplayMemberPath = "Text"
+            cbYear.SelectedValuePath = "Value"
+            For i As Integer = 2019 To DateTime.Today.Year
+                Dim nextYear As Integer = i + 1
+                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
+            Next
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub LoadData()
+        LoadDataSLYearly()
+        SetTitle()
+    End Sub
+
+    Private Sub LoadDataSLYearly()
         Try
             InitializeService()
             _ResourceDBProvider._splist.Clear()
 
-            Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, slStatus, displayFiscalYear)
+            Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, slStatus, displayFiscalYear, year)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
             Dim resourceListVM As New ResourcePlannerViewModel()
             Dim UsedSL As New ChartValues(Of Double)()
             Dim TotalBalance As New ChartValues(Of Double)()
+            Dim SeriesCollection As SeriesCollection
 
             For Each objResource As ResourcePlanner In lstresource
                 _ResourceDBProvider.SetAllEmpRPList(objResource)
@@ -114,48 +130,24 @@ Public Class BillabilitySickLeavePage
                 }
             }
 
-            Labels = employee
-            Formatter = Function(value) value
-            DataContext = Me
+            chartSL.Series = SeriesCollection
+            chartSL.AxisX.First().Labels = employee
+            chartSL.AxisY.First().LabelFormatter = Function(value) value
+
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
-    Public Sub LoadDataSLYearly()
-        'Try
-        '    InitializeService()
-        '    _ResourceDBProvider._splist.Clear()
-        '    Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, 3, 3)
-        '    Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
-        '    Dim resourceListVM As New ResourcePlannerViewModel()
 
-        '    For Each objResource As ResourcePlanner In lstresource
-        '        _ResourceDBProvider.SetAllEmpRPList(objResource)
-        '    Next
+#End Region
 
-        '    For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
-        '        resourcelist.Add(New ResourcePlannerModel(iResource))
+#Region "Private Functions"
 
-        '    Next
-        '    resourceListVM.ResourceListLeaveCredits = Nothing
-        '    resourceListVM.ResourceListLeaveCredits = resourcelist
-        '    SLYChartSeries.ItemsSource = resourcelist
-        'Catch ex As Exception
-        '    MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        'End Try
+    Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
+        year = cbYear.SelectedValue
+        LoadData()
     End Sub
 
-    Private Sub SetTitle()
-
-        Dim nextYear As Integer = year + 1
-        Dim prevYear As Integer = year - 1
-
-        If Date.Now.Month >= 4 Then
-            lblYear.Content = lblYear.Content + " " + year.ToString + "-" + nextYear.ToString
-        Else
-            lblYear.Content = lblYear.Content + " " + year.ToString + "-" + nextYear.ToString
-        End If
-    End Sub
 #End Region
 
 #Region "ICallback Functions"
@@ -179,4 +171,5 @@ Public Class BillabilitySickLeavePage
 
     End Sub
 #End Region
+
 End Class

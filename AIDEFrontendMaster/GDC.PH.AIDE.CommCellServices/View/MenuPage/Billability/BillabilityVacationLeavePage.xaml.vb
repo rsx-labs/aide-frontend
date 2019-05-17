@@ -22,18 +22,10 @@ Public Class BillabilityVacationLeavePage
     Private profile As Profile
 
     Dim month As Integer = Date.Now.Month
-    Dim setStatus As Integer
-    Dim displayStatus As String = String.Empty
     Dim displayFiscalYear As Integer = 3
-    Dim status As Integer
     Dim vlStatus As Integer = 4
-    Dim img As String
-    Dim displayMonth As String
-    Dim checkStatus As Integer
-    Dim count As Integer
     Dim year As Integer
     Dim day As Integer
-    Dim displayOption As Integer = 1 'Weekly is the Default Display Options
 #End Region
 
     Public Sub New(_profile As Profile, mFrame As Frame)
@@ -43,27 +35,68 @@ Public Class BillabilityVacationLeavePage
 
         month = Date.Now.Month
         year = Date.Now.Year
-        SetTitle()
-        'LoadDataVLYearly()
-        LoadStack()
-        'LoadAllCategory()
+
+        LoadYears()
+        LoadData()
     End Sub
 
-    Public Property SeriesCollection As SeriesCollection
-    Public Property Labels As String()
-    Public Property Formatter As Func(Of Object, Object)
+#Region "Private Methods"
 
-    Private Sub LoadStack()
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            client = New AideServiceClient(Context)
+            client.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            client.Abort()
+        End Try
+        Return bInitialize
+    End Function
+
+    Private Sub SetTitle()
+
+        Dim nextYear As Integer = year + 1
+        Dim prevYear As Integer = year - 1
+
+        If Date.Now.Month >= 4 Then
+            lblYear.Content = "Vacation Leave For Fiscal Year " + year.ToString + "-" + nextYear.ToString
+        Else
+            lblYear.Content = "Vacation Leave For Fiscal Year " + prevYear.ToString + "-" + year.ToString
+        End If
+    End Sub
+
+    Public Sub LoadYears()
+        Try
+            cbYear.DisplayMemberPath = "Text"
+            cbYear.SelectedValuePath = "Value"
+            For i As Integer = 2019 To DateTime.Today.Year
+                Dim nextYear As Integer = i + 1
+                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
+            Next
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub LoadData()
+        LoadDataVLYearly()
+        SetTitle()
+    End Sub
+
+    Private Sub LoadDataVLYearly()
         Try
             InitializeService()
             _ResourceDBProvider._splist.Clear()
 
-            Dim lstresource = client.GetResourcePlanner(profile.Email_Address, vlStatus, displayFiscalYear)
+            Dim lstresource = client.GetResourcePlanner(profile.Email_Address, vlStatus, displayFiscalYear, year)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
             Dim resourceListVM As New ResourcePlannerViewModel()
             Dim UsedVL As New ChartValues(Of Double)()
             Dim HalfBalance As New ChartValues(Of Double)()
             Dim TotalBalance As New ChartValues(Of Double)()
+            Dim SeriesCollection As SeriesCollection
 
             For Each objResource As ResourcePlanner In lstresource
                 _ResourceDBProvider.SetAllEmpRPList(objResource)
@@ -101,45 +134,28 @@ Public Class BillabilityVacationLeavePage
                     .StackMode = StackMode.Values,
                     .DataLabels = True,
                     .LabelsPosition = BarLabelPosition.Perpendicular,
-            .Title = "Balance",
+                    .Title = "Balance",
                     .Fill = Brushes.Gray
                 }
             }
-            
-            Labels = employee
-            Formatter = Function(value) value
-            DataContext = Me
+
+            chartVL.Series = SeriesCollection
+            chartVL.AxisX.First().Labels = employee
+            chartVL.AxisY.First().LabelFormatter = Function(value) value
+
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
+#End Region
 
-#Region "Private Methods"
+#Region "Private Functions"
 
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(Context)
-            client.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            client.Abort()
-        End Try
-        Return bInitialize
-    End Function
-
-    Private Sub SetTitle()
-
-        Dim nextYear As Integer = year + 1
-        Dim prevYear As Integer = year - 1
-
-        If Date.Now.Month >= 4 Then
-            lblYear.Content = lblYear.Content + " " + year.ToString + "-" + nextYear.ToString
-        Else
-            lblYear.Content = lblYear.Content + " " + prevYear.ToString + "-" + year.ToString
-        End If
+    Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
+        year = cbYear.SelectedValue
+        LoadData()
     End Sub
+
 #End Region
 
 #Region "ICallback Functions"

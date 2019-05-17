@@ -22,19 +22,8 @@ Public Class BillabilityPage
     Private profile As Profile
 
     Dim month As Integer = Date.Now.Month
-    Dim setStatus As Integer
-    Dim displayStatus As String = String.Empty
-    Dim status As Integer
-    Dim img As String
-    Dim slStatus As Integer = 3
-    Dim vlStatus As Integer = 4
-    Dim displayData As Integer = 2
-    Dim displayMonth As String
-    Dim checkStatus As Integer
-    Dim count As Integer
+    Dim displayData As Integer
     Dim year As Integer
-    Dim day As Integer
-    Dim displayOption As Integer = 1 'Weekly is the Default Display Options
 #End Region
 
     Public Sub New(_profile As Profile, mFrame As Frame)
@@ -44,16 +33,14 @@ Public Class BillabilityPage
 
         month = Date.Now.Month
         year = Date.Now.Year
-        lblMonthVL.Content = lblMonthVL.Content + " " + MonthName(month)
-        lblYear.Content = lblYear.Content + " " + MonthName(month)
-        'LoadDataSLMonthly()
-        'LoadDataVLMonthly()
 
-        LoadStackSL()
-        LoadStackVL()
-        'LoadAllCategory()
+        LoadMonth()
+        LoadYears()
+        LoadData()
+
+        cbMonth.SelectedValue = month
+        cbYear.SelectedValue = year
     End Sub
-
 
 #Region "Private Methods"
 
@@ -70,151 +57,188 @@ Public Class BillabilityPage
         Return bInitialize
     End Function
 
-    Public Property SeriesCollection As SeriesCollection
-    Public Property Labels As String()
-    Public Property Formatter As Func(Of Object, Object)
+    Public Sub LoadYears()
+        Try
+            For i As Integer = 2018 To DateTime.Today.Year
+                cbYear.Items.Add(i)
+            Next
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
 
-    Public Property SeriesCollectionVL As SeriesCollection
-    Public Property LabelsVL As String()
-    Public Property FormatterVL As Func(Of Object, Object)
+    Public Sub LoadMonth()
+        cbMonth.DisplayMemberPath = "Text"
+        cbMonth.SelectedValuePath = "Value"
+        cbMonth.Items.Add(New With {.Text = "January", .Value = 1})
+        cbMonth.Items.Add(New With {.Text = "February", .Value = 2})
+        cbMonth.Items.Add(New With {.Text = "March", .Value = 3})
+        cbMonth.Items.Add(New With {.Text = "April", .Value = 4})
+        cbMonth.Items.Add(New With {.Text = "May", .Value = 5})
+        cbMonth.Items.Add(New With {.Text = "June", .Value = 6})
+        cbMonth.Items.Add(New With {.Text = "July", .Value = 7})
+        cbMonth.Items.Add(New With {.Text = "August", .Value = 8})
+        cbMonth.Items.Add(New With {.Text = "September", .Value = 9})
+        cbMonth.Items.Add(New With {.Text = "October", .Value = 10})
+        cbMonth.Items.Add(New With {.Text = "November", .Value = 11})
+        cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
+    End Sub
 
-    Private Sub LoadStackSL()
+    Private Sub LoadData()
+        LoadNonBillMonthSummary()
+        LoadNonBillMonth()
+
+        lblNonBill.Content = "Non-Billable Hours for " + MonthName(month) + " " + year.ToString
+        lblSummary.Content = "Non-Billable Hours Summary for " + MonthName(month) + " " + year.ToString
+    End Sub
+
+    Private Sub LoadNonBillMonthSummary()
         Try
             InitializeService()
             _ResourceDBProvider._splist.Clear()
 
-            Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, slStatus, displayData)
+            displayData = 1 'Display data per Week
+
+            Dim lstResource = client.GetNonBillableHours(profile.Email_Address, displayData, month, year)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
             Dim resourceListVM As New ResourcePlannerViewModel()
-            Dim UsedSL As New ChartValues(Of Double)()
-            Dim TotalBalance As New ChartValues(Of Double)()
+            Dim holidayHours As New ChartValues(Of Double)()
+            Dim vlHours As New ChartValues(Of Double)()
+            Dim slHours As New ChartValues(Of Double)()
+            Dim SeriesCollection As SeriesCollection
 
-            For Each objResource As ResourcePlanner In lstresource
-                _ResourceDBProvider.SetAllEmpRPList(objResource)
+            For Each objResource As ResourcePlanner In lstResource
+                _ResourceDBProvider.SetNonBillableList(objResource)
             Next
 
-            Dim employee(lstresource.Length) As String
-            Dim usedLeaves(lstresource.Length) As String
+            Dim employee(lstResource.Length) As String
             Dim i As Integer = 0
 
-            For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
-                UsedSL.Add(iResource.UsedVL)
+            For Each iResource As myResourceList In _ResourceDBProvider.GetNonBillableList()
+                holidayHours.Add(iResource.holidayHours)
+                vlHours.Add(iResource.vlHours)
+                slHours.Add(iResource.slHours)
+                employee(i) = iResource.Emp_Name
+                i += 1
+            Next
+
+            SeriesCollection = New SeriesCollection From {
+                New ColumnSeries With {
+                    .Values = holidayHours,
+                    .DataLabels = True,
+                    .LabelsPosition = BarLabelPosition.Perpendicular,
+                    .Title = "Holiday",
+                    .Fill = Brushes.ForestGreen,
+                    .Foreground = Brushes.White
+                },
+                New ColumnSeries With {
+                    .Values = vlHours,
+                    .DataLabels = True,
+                    .LabelsPosition = BarLabelPosition.Perpendicular,
+                    .Title = "Vacation Leave",
+                    .Fill = Brushes.DodgerBlue,
+                    .Foreground = Brushes.White
+                },
+                New ColumnSeries With {
+                     .Values = slHours,
+                    .DataLabels = True,
+                    .LabelsPosition = BarLabelPosition.Perpendicular,
+                    .Title = "Sick Leave",
+                    .Fill = Brushes.Red,
+                    .Foreground = Brushes.White
+                }
+            }
+
+            chartMonthSummary.Series = SeriesCollection
+            chartMonthSummary.AxisX.First().Labels = employee
+            chartMonthSummary.AxisY.First().LabelFormatter = Function(value) value
+
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Private Sub LoadNonBillMonth()
+        Try
+            InitializeService()
+            _ResourceDBProvider._splist.Clear()
+            displayData = 2 'Display data per Month
+
+            Dim lstResource = client.GetNonBillableHours(profile.Email_Address, displayData, month, year)
+            Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
+            Dim resourceListVM As New ResourcePlannerViewModel()
+            Dim holidayHours As New ChartValues(Of Double)()
+            Dim vlHours As New ChartValues(Of Double)()
+            Dim slHours As New ChartValues(Of Double)()
+            Dim SeriesCollection As SeriesCollection
+
+            For Each objResource As ResourcePlanner In lstResource
+                _ResourceDBProvider.SetNonBillableList(objResource)
+            Next
+
+            Dim employee(lstResource.Length) As String
+            Dim i As Integer = 0
+
+            For Each iResource As myResourceList In _ResourceDBProvider.GetNonBillableList()
+                holidayHours.Add(iResource.holidayHours)
+                vlHours.Add(iResource.vlHours)
+                slHours.Add(iResource.slHours)
                 employee(i) = iResource.Emp_Name
                 i += 1
             Next
 
             SeriesCollection = New SeriesCollection From {
                 New StackedColumnSeries With {
-                    .Values = UsedSL,
+                    .Values = holidayHours,
                     .StackMode = StackMode.Values,
-                    .Fill = Brushes.Red,
                     .DataLabels = True,
                     .LabelsPosition = BarLabelPosition.Perpendicular,
-                    .Title = "Used SL"
-                }
-            }
-
-            Labels = employee
-            Formatter = Function(value) value
-            DataContext = Me
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-    End Sub
-
-    Private Sub LoadStackVL()
-        Try
-            InitializeService()
-            _ResourceDBProvider._splist.Clear()
-
-            Dim lstresource = client.GetResourcePlanner(profile.Email_Address, vlStatus, displayData)
-            Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
-            Dim resourceListVM As New ResourcePlannerViewModel()
-            Dim UsedVL As New ChartValues(Of Double)()
-            Dim HalfBalance As New ChartValues(Of Double)()
-            Dim TotalBalance As New ChartValues(Of Double)()
-
-            For Each objResource As ResourcePlanner In lstresource
-                _ResourceDBProvider.SetAllEmpRPList(objResource)
-            Next
-
-            Dim employee(lstresource.Length) As String
-            Dim usedLeaves(lstresource.Length) As String
-            Dim i As Integer = 0
-
-            For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
-                UsedVL.Add(iResource.UsedVL)
-                employee(i) = iResource.Emp_Name
-                i += 1
-            Next
-
-            SeriesCollectionVL = New SeriesCollection From {
+                    .Title = "Holiday",
+                    .Fill = Brushes.ForestGreen
+                },
                 New StackedColumnSeries With {
-                    .Values = UsedVL,
+                    .Values = vlHours,
                     .StackMode = StackMode.Values,
                     .DataLabels = True,
                     .LabelsPosition = BarLabelPosition.Perpendicular,
-                    .Title = "Used VL"
+                    .Title = "Vacation Leave",
+                    .Fill = Brushes.DodgerBlue
+                },
+                New StackedColumnSeries With {
+                    .Values = slHours,
+                    .StackMode = StackMode.Values,
+                    .DataLabels = True,
+                    .LabelsPosition = BarLabelPosition.Perpendicular,
+                    .Title = "Sick Leave",
+                    .Fill = Brushes.Red
                 }
             }
 
-            LabelsVL = employee
-            FormatterVL = Function(value) value
-            DataContext = Me
+            chartMonth.Series = SeriesCollection
+            chartMonth.AxisX.First().Labels = employee
+            chartMonth.AxisY.First().LabelFormatter = Function(value) value
+
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
 
-    Public Sub LoadDataSLMonthly()
-        'Try
-        '    InitializeService()
-        '    _ResourceDBProvider._splist.Clear()
-        '    Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, 3, 2)
-        '    Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
-        '    Dim resourceListVM As New ResourcePlannerViewModel()
-
-        '    For Each objResource As ResourcePlanner In lstresource
-        '        _ResourceDBProvider.SetAllEmpRPList(objResource)
-        '    Next
-
-        '    For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
-        '        resourcelist.Add(New ResourcePlannerModel(iResource))
-
-        '    Next
-        '    resourceListVM.ResourceListLeaveCredits = Nothing
-        '    resourceListVM.ResourceListLeaveCredits = resourcelist
-        '    SLMChartSeries.ItemsSource = resourcelist
-        'Catch ex As Exception
-        '    MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        'End Try
-    End Sub
-
-    Public Sub LoadDataVLMonthly()
-        'Try
-        '    InitializeService()
-        '    _ResourceDBProvider._splist.Clear()
-        '    Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, 4, 2)
-        '    Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
-        '    Dim resourceListVM As New ResourcePlannerViewModel()
-
-        '    For Each objResource As ResourcePlanner In lstresource
-        '        _ResourceDBProvider.SetAllEmpRPList(objResource)
-        '    Next
-
-        '    For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
-        '        resourcelist.Add(New ResourcePlannerModel(iResource))
-
-        '    Next
-        '    resourceListVM.ResourceListLeaveCredits = Nothing
-        '    resourceListVM.ResourceListLeaveCredits = resourcelist
-        '    VLMChartSeries.ItemsSource = resourcelist
-        'Catch ex As Exception
-        '    MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        'End Try
-    End Sub
 #End Region
 
+#Region "Private Functions"
+
+    Private Sub cbMonth_DropDownClosed(sender As Object, e As EventArgs) Handles cbMonth.DropDownClosed
+        month = cbMonth.SelectedValue
+        LoadData()
+    End Sub
+
+    Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
+        year = cbYear.SelectedValue
+        LoadData()
+    End Sub
+
+#End Region
+    
 
 #Region "ICallback Functions"
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
@@ -237,4 +261,5 @@ Public Class BillabilityPage
 
     End Sub
 #End Region
+
 End Class
