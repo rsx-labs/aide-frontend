@@ -144,8 +144,10 @@ Public Class BillabilitySickLeavePage
 #Region "Private Functions"
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
-        year = cbYear.SelectedValue
-        LoadData()
+        If Not cbYear.SelectedIndex = -1 Then
+            year = cbYear.SelectedValue
+            LoadData()
+        End If
     End Sub
 
 #End Region
