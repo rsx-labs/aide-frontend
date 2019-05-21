@@ -2,7 +2,6 @@
 Imports UI_AIDE_CommCellServices.ServiceReference1
 Public Class AttendanceListDBProvider
 
-
     Public _attlist As ObservableCollection(Of myAttendanceList)
 
     Sub New()

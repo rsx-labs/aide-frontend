@@ -67,7 +67,10 @@ Public Class ResourcePlannerDBProvider
         Dim _Resourceobj As myResourceList = New myResourceList With {.Emp_ID = resourceLst.EmpID,
                                                              .Emp_Name = resourceLst.NAME,
                                                              .Date_Entry = resourceLst.DateEntry,
-                                                             .Status = resourceLst.Status}
+                                                             .Status = resourceLst.Status,
+                                                             .UsedVL = resourceLst.Status,
+                                                             .TotalBalance = resourceLst.TotalBalance,
+                                                             .HalfBalance = resourceLst.HalfBalance}
         _splist.Add(_Resourceobj)
 
     End Sub
@@ -83,6 +86,9 @@ Public Class myResourceList
     Public Emp_ID As Integer
     Public Emp_Name As String
     Public Status As Double
+    Public UsedVL As Double
+    Public HalfBalance As Double
+    Public TotalBalance As Double
     Public Desc As String
     Public Emp_Image As String
     Public Date_Entry As Date
