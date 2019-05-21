@@ -25,6 +25,7 @@ Class HomeActionListsPage
     Private action_provider As New ActionListDBProvider
     Private EnableRowHeaderDoubleClick As Boolean = False
     Private lstAction As Action()
+    Private profiles As Profile
 #End Region
 
 #Region "Paging Declarations"
@@ -41,13 +42,14 @@ Class HomeActionListsPage
     End Enum
 #End Region
 
-    Public Sub New(_frame As Frame, email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_frame As Frame, email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _prof As Profile)
         Try
             Me._email = email
             Me._frame = _frame
             Me._addframe = _addframe
             Me._menugrid = _menugrid
             Me._submenuframe = _submenuframe
+            Me.profiles = _prof
             InitializeComponent()
             LoadActionList(_email)
         Catch ex As Exception
@@ -233,7 +235,7 @@ Class HomeActionListsPage
                 If Not _SelectedAction.Act_DateClosed = String.Empty Then
                     MsgBox("Selected action list has already been closed. Please select open action list.", vbOKOnly + vbInformation, "Action List")
                 Else
-                    _addframe.Navigate(New UpdateActionListPage(_frame, _SelectedAction, _email, _menugrid, _submenuframe, _addframe))
+                    _addframe.Navigate(New UpdateActionListPage(_frame, _SelectedAction, _email, _menugrid, _submenuframe, _addframe, Me.profiles))
                     _frame.IsEnabled = False
                     _frame.Opacity = 0.3
                     _menugrid.IsEnabled = False
@@ -275,7 +277,7 @@ Class HomeActionListsPage
     End Sub
 
     Private Sub AddActionListBtn_Click(sender As Object, e As RoutedEventArgs)
-        _addframe.Navigate(New InsertActionListPage(_frame, _email, _addframe, _menugrid, _submenuframe))
+        _addframe.Navigate(New InsertActionListPage(_frame, _email, _addframe, _menugrid, _submenuframe, Me.profiles))
         _frame.IsEnabled = False
         _frame.Opacity = 0.3
         _menugrid.IsEnabled = False

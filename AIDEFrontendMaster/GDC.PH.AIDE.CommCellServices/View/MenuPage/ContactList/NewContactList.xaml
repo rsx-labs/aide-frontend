@@ -835,9 +835,9 @@
                         </Grid>
                         <Grid Grid.Row="3">
                             <Button Style="{DynamicResource RoundCornerUpdate2}" x:Name="btnCUpdate" Margin="5,5,0,5">
-                                <Viewbox>
+                                
                                     <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
-                                </Viewbox>
+                              
                             </Button>
                         </Grid>
                         <Grid Grid.Row="4"></Grid>

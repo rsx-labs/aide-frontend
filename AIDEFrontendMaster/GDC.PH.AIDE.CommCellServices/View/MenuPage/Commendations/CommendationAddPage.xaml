@@ -1116,9 +1116,9 @@
                     </Grid>
                     <Grid Grid.Row="2">
                         <Button Style="{DynamicResource RoundCorner}" x:Name="btnCommendationCreate" Margin="5,5,10,10" HorizontalAlignment="Stretch">
-                            <Viewbox>
-                                <TextBlock Text="CREATE" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" FontSize="14"/>
-                            </Viewbox>
+                            
+                                <TextBlock Text="CREATE" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" />
+                            
                         </Button>
                         
                     </Grid>

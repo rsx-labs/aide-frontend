@@ -1071,9 +1071,9 @@ xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
                         </Grid>
                         <Grid Grid.Row="1" Margin="5,10,10,0">
                             <Button Style="{DynamicResource RoundCornerUpdate}" Name="UpdateCourseBtn" Click="UpdateCourseBtn_Click">
-                                <Viewbox>
+                                
                                     <TextBlock Text="SET COMPLETION DATE" TextWrapping="Wrap" Margin="5"/>
-                                </Viewbox>
+                                
                             </Button>
                         </Grid>
                         <Grid Grid.Row="2" Margin="5,10,10,0">

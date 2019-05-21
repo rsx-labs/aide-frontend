@@ -97,7 +97,7 @@ Public Class ContactListPage
                     _submenuframe.IsEnabled = False
                     _submenuframe.Opacity = 0.3
                     _addframe.Visibility = Visibility.Visible
-                    _addframe.Margin = New Thickness(280, 0, 280, 0)
+                    _addframe.Margin = New Thickness(150, 100, 150, 100)
                 Else
                     Exit Sub
                 End If
@@ -110,6 +110,7 @@ Public Class ContactListPage
 
         If CBool(dialog.ShowDialog().GetValueOrDefault()) Then
             dv_contacts.Visibility = Windows.Visibility.Visible
+            printBorders.Visibility = Windows.Visibility.Visible
             Dim pageSize As Size = New Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight)
             dv_contacts.Measure(pageSize)
             dv_contacts.Arrange(New Rect(5, 5, pageSize.Width, pageSize.Height))
@@ -117,7 +118,7 @@ Public Class ContactListPage
         End If
 
         dv_contacts.Visibility = Windows.Visibility.Hidden
-
+        printBorders.Visibility = Windows.Visibility.Hidden
     End Sub
 #End Region
 
@@ -346,11 +347,4 @@ Public Class ContactListPage
         SetPaging(CInt(PagingMode._Previous))
     End Sub
 
-    Private Sub btnPrintPreview_Click(sender As Object, e As RoutedEventArgs) Handles btnPrintPreview.Click
-        Dim x As New PrintDialog
-
-        Dim sz As New Size(x.PrintableAreaWidth, x.PrintableAreaHeight)
-
-
-    End Sub
 End Class

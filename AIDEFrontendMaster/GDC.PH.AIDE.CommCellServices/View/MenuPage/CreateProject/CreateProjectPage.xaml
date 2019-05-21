@@ -1151,14 +1151,14 @@
                             </Grid>
                             <Grid Grid.Column="2">
                                 <Button Style="{DynamicResource RoundCornerAdd}" x:Name="btnCreate" Margin="5" >
-                                    <Viewbox>
+                                  
                                         <TextBlock Text="CREATE"  TextWrapping="Wrap" Margin="5"/>
-                                    </Viewbox>
+                                    
                                 </Button>
                                 <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnUpdate" Margin="5" Visibility="Hidden">
-                                    <Viewbox>
+                                    
                                         <TextBlock Text="UPDATE"  TextWrapping="Wrap" Margin="5"/>
-                                    </Viewbox>
+                                   
                                 </Button>
                             </Grid>
 
@@ -1244,9 +1244,9 @@
                             </Grid>
                             <Grid Grid.Column="2">
                                 <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnNewProject" Margin="5">
-                                    <Viewbox>
+                                    
                                         <TextBlock Text="CLEAR" TextWrapping="Wrap" Margin="5"/>
-                                    </Viewbox>
+                                    
                                 </Button>
                             </Grid>
                         </Grid>

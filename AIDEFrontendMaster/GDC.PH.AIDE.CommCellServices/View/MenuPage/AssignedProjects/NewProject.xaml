@@ -1319,16 +1319,16 @@
                         </Grid>
                         <Grid Grid.Row="4">
                             <Button Style="{DynamicResource RoundCorner1 }" Command="{Binding CreateCommand}"  Margin="0,5,5,5" >
-                                <Viewbox>
+                               
                                     <TextBlock Text="CREATE" TextWrapping="Wrap" Margin="5"/>
-                                </Viewbox>
+                                
                             </Button>
                         </Grid>
                         <Grid Grid.Row="5">
                             <Button Style="{DynamicResource RoundCorner}" Command="{Binding ClearCommand}" IsEnabled="{Binding ClearMode}" Margin="0,5,5,5" >
-                                <Viewbox>
+                                
                                     <TextBlock Text="CLEAR" TextWrapping="Wrap" Margin="5"/>
-                                </Viewbox>
+                                
                             </Button>
                         </Grid>
                         

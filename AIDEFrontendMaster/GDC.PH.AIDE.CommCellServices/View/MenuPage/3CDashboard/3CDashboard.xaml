@@ -336,9 +336,9 @@ mc:Ignorable="d"
             <Grid Grid.Row="1">
                
                     <Button Style="{DynamicResource RoundCorner}" Click="btnthreeC" Margin="20,5" Width="auto" Height="auto" >
-                        <Viewbox>
+                        
                             <TextBlock Text="Manage 3C" Foreground="White" Margin="6" />
-                        </Viewbox>
+                        
                     </Button>
                 
             </Grid>

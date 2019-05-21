@@ -754,9 +754,9 @@
                 </Grid>
                 <Grid Grid.Column="3">
                     <Button Style="{DynamicResource RoundCorner}" Click="btnFilter" Margin="10" Width="auto" Height="auto" >
-                        <Viewbox>
+                        
                             <TextBlock Text="SEARCH" Foreground="White" Margin="6" Padding="5,0"/>
-                        </Viewbox>
+                        
                     </Button>
                 </Grid>
    

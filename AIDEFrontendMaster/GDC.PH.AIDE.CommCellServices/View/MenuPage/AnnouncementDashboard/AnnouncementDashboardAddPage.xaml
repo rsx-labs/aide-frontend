@@ -889,7 +889,7 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                        <TextBlock x:Name="txtlabelTitle" Width="120" TextAlignment="Center" Margin="5" Text="Title" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                        <TextBlock x:Name="txtlabelTitle" Width="120" TextAlignment="Center" Margin="10" Text="Title" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Visible"/>
@@ -926,7 +926,7 @@
                             </Style>
                         </TextBlock.Style>
                     </TextBlock>
-                        <TextBlock x:Name="txtlabelMessage" Width="120" TextAlignment="Center" Margin="5" Text="Message" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                        <TextBlock x:Name="txtlabelMessage" Width="120" TextAlignment="Center" Margin="10" Text="Message" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Visible"/>
@@ -941,9 +941,9 @@
                     </Grid>
                 <Grid Grid.Row="2">
                     <Button Style="{DynamicResource RoundCorner}" x:Name="btnAnnouncementCreate" Margin="5,5,10,10" HorizontalAlignment="Stretch" Click="btnAnnouncementCreate_Click">
-                        <Viewbox>
-                            <TextBlock Text="CREATE" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5" FontSize="14"/>
-                        </Viewbox>
+                        
+                            <TextBlock Text="CREATE" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                        
                     </Button>
                 </Grid>
                 

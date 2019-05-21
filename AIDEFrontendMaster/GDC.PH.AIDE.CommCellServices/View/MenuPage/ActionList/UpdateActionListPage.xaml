@@ -1035,12 +1035,12 @@
                         </Grid>
                         <Grid Grid.Column="1">
                             <Viewbox Margin="2.5,5,2.5,5" >
-                                <Button x:Name="btnAddEmployee" Style="{DynamicResource ButtonAdd}" />
+                                <Button x:Name="btnAddEmployee" Style="{DynamicResource ButtonAdd}" Click="btnAddEmployee_Click" />
                             </Viewbox>
                         </Grid>
                         <Grid Grid.Column="2">
                             <Viewbox Margin="2.5,5,0,5" >
-                                <Button x:Name="btnRemovedEmployee" Style="{DynamicResource ButtonRemove}" />
+                                <Button x:Name="btnRemovedEmployee" Style="{DynamicResource ButtonRemove}" Click="btnRemovedEmployee_Click_1" />
                             </Viewbox>
                         </Grid>
                     </Grid>
@@ -1106,9 +1106,9 @@
                     </Grid>
                     <Grid Grid.Row="6">
                         <Button Style="{DynamicResource RoundCornerUpdate}" Name="UpdateBtn" Margin="0,5" Click="UpdateBtn_Click">
-                            <Viewbox>
+                           
                                 <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
-                            </Viewbox>
+                            
                         </Button>
                     </Grid>
                     

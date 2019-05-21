@@ -100,28 +100,23 @@
                                                     <!--</Viewbox>-->
                                                 </Grid>
                                                 <Grid Grid.Column="1">
-
-                                                    <Grid>
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition Height="*"/>
-                                                            <RowDefinition Height="*"/>
-
-                                                        </Grid.RowDefinitions>
-                                                        <Grid Grid.Row="0">
-                                                           
-                                                            <TextBlock FontWeight="Bold" Margin="5,2" Text="{Binding EmpName}" HorizontalAlignment="Left" FontSize="12" VerticalAlignment="Bottom" Foreground="#FF227BA4" TextWrapping="WrapWithOverflow" />
-                                                        </Grid>
-                                                        <Grid Grid.Row="1">
-                                                            
-                                                            <StackPanel Orientation="Horizontal">
-                                                                <TextBlock Foreground="DimGray" Margin="5,2" Text="{Binding EMP_ID}" HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />
-                                                                <TextBlock Foreground="DimGray" Margin="5,2" Text="{Binding DATE_ENTRY, StringFormat='hh:mm tt'}"  HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />
-                                                               
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*"/>
+                                                                <RowDefinition Height="*"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid Grid.Row="0">
+                                                                <TextBlock FontWeight="Bold" Margin="5,2" Text="{Binding EmpName}" HorizontalAlignment="Left" FontSize="12" VerticalAlignment="Bottom" Foreground="#FF227BA4" TextWrapping="WrapWithOverflow" />
+                                                            </Grid>
+                                                            <Grid Grid.Row="1">
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <TextBlock Foreground="DimGray" Margin="5,2" Text="{Binding EMP_ID}" HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />
+                                                                    <TextBlock Foreground="DimGray" Margin="5,2" Text="{Binding DATE_ENTRY, StringFormat='hh:mm tt'}"  HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />
+                                                                    <TextBlock Text="{Binding Descr}" Foreground="RED" FontFamily="Bold" Margin="5,2" HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top"/>
                                                             </StackPanel>
+                                                            </Grid>
+
                                                         </Grid>
-
-                                                    </Grid>
-
                                                 </Grid>
                                                 <!--<Grid Grid.Column="2">
                                                     <Image VerticalAlignment="Top" HorizontalAlignment="Left" Source="{Binding DisplayStatus}" Width="20" Height="20" Margin="0,5,0,0"/>
@@ -159,9 +154,7 @@
                                     <Image Source="..\..\..\Assets\Attendance\present.png" Margin="5"/>
                                 </Viewbox>
 
-                                <Viewbox Margin="5">
                                 <TextBlock Text="Is Present" VerticalAlignment="Center" FontSize="10"/>
-                                </Viewbox>
 
                               
 
@@ -172,9 +165,9 @@
                                 <Viewbox>
                                     <Image Source="..\..\..\Assets\Attendance\sick.png" Margin="5"/>
                                 </Viewbox>
-                                <Viewbox Margin="5">
+
                                 <TextBlock Text="On Sick Leave" VerticalAlignment="Center" FontSize="10"/>
-                                </Viewbox>
+
                             </StackPanel>
                         </Grid>
                        

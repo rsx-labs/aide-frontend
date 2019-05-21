@@ -7,6 +7,8 @@ Imports System.Collections.ObjectModel
 Imports System.Windows.Xps.Packaging
 Imports System.Windows.Xps
 Imports System.Printing
+Imports System.ComponentModel
+
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class CommendationDashBoard
     Implements ServiceReference1.IAideServiceCallback
@@ -24,6 +26,7 @@ Class CommendationDashBoard
     Private position As String
     Private empID As Integer
     Private month As Integer = Date.Now.Month
+    Private year As Integer = Date.Now.Year
     Private displayMonth As String
     Private MANAGER As String = "Manager"
 
@@ -31,6 +34,7 @@ Class CommendationDashBoard
     Dim lstCommendation As Commendations()
     Dim birthdayListVM As New BirthdayListViewModel()
     Dim commendationVM As New CommendationViewModel()
+    Dim startYear As Integer = 2018 'Default Start Year
 
     Private Enum PagingMode
         _First = 1
@@ -57,6 +61,8 @@ Class CommendationDashBoard
         SetButtonCreateVisible()
         SetData()
         Me.DataContext = commendationVM
+        LoadMonth()
+        LoadYears()
     End Sub
 
 #End Region
@@ -82,8 +88,58 @@ Class CommendationDashBoard
         End Try
     End Sub
 
+    Public Sub LoadYears()
+        Try
+            For i As Integer = startYear To DateTime.Today.Year
+                cbYear.Items.Add(i)
+            Next
+
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Public Sub LoadMonth()
+        cbMonth.DisplayMemberPath = "Text"
+        cbMonth.SelectedValuePath = "Value"
+        cbMonth.Items.Add(New With {.Text = "January", .Value = 1})
+        cbMonth.Items.Add(New With {.Text = "February", .Value = 2})
+        cbMonth.Items.Add(New With {.Text = "March", .Value = 3})
+        cbMonth.Items.Add(New With {.Text = "April", .Value = 4})
+        cbMonth.Items.Add(New With {.Text = "May", .Value = 5})
+        cbMonth.Items.Add(New With {.Text = "June", .Value = 6})
+        cbMonth.Items.Add(New With {.Text = "July", .Value = 7})
+        cbMonth.Items.Add(New With {.Text = "August", .Value = 8})
+        cbMonth.Items.Add(New With {.Text = "September", .Value = 9})
+        cbMonth.Items.Add(New With {.Text = "October", .Value = 10})
+        cbMonth.Items.Add(New With {.Text = "November", .Value = 11})
+        cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
+    End Sub
+
     Public Sub LoadCommendations()
         Try
+            Dim lstCommendationList As New ObservableCollection(Of CommendationModel)
+            Dim commendationsDBProvider As New CommendationDBProvider
+
+            For Each objCommendation As Commendations In lstCommendation
+                commendationsDBProvider.SetMyCommendations(objCommendation)
+            Next
+
+            For Each rawUser As MyCommendations In commendationsDBProvider.GetMyCommendations()
+                lstCommendationList.Add(New CommendationModel(rawUser))
+            Next
+
+            commendationVM.CommendationList = lstCommendationList
+            CommendationLV.ItemsSource = commendationVM.CommendationList
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Public Sub LoadCommendationsBySearch()
+        Try
+            InitializeService()
+            lstCommendation = _AideService.GetCommendationsBySearch(empID, month, year)
             Dim lstCommendationList As New ObservableCollection(Of CommendationModel)
             Dim commendationsDBProvider As New CommendationDBProvider
 
@@ -176,5 +232,15 @@ Class CommendationDashBoard
                 _addframe.Visibility = Visibility.Visible
             End If
         End If
+    End Sub
+
+    Private Sub cbMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbMonth.SelectionChanged
+        month = cbMonth.SelectedValue
+        LoadCommendationsBySearch()
+    End Sub
+
+    Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
+        year = cbYear.SelectedValue
+        LoadCommendationsBySearch()
     End Sub
 End Class

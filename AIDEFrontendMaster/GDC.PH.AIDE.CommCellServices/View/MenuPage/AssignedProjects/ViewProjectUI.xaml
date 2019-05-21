@@ -17,7 +17,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="4" Background="#FF09A0C1">
+                            <Border x:Name="border" CornerRadius="15" Background="#FF09A0C1">
                                 <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           TextElement.FontWeight="Bold">
@@ -478,9 +478,9 @@
                     <Grid Grid.Column="2">
                         <Viewbox Margin="10,15">
                             <Button Style="{DynamicResource RoundCorner}" x:Name="btnAssign" Width="auto" Height="auto" >
-                                <Viewbox>
+                                
                                     <TextBlock Text="Assign" Foreground="White" Margin="6" Padding="5,0"/>
-                                </Viewbox>
+                                
                             </Button>
                         </Viewbox>
                     </Grid>

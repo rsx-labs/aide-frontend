@@ -22,14 +22,16 @@ Class UpdateActionListPage
     Private _addframe As Frame
     Private _submenuframe As Frame
     Private hold_Duedate As String
+    Private profiles As Profile
 #End Region
 
-    Public Sub New(f As Frame, act_ As Action, email As String, _menugrid As Grid, _submenuframe As Frame, _addframe As Frame)
+    Public Sub New(f As Frame, act_ As Action, email As String, _menugrid As Grid, _submenuframe As Frame, _addframe As Frame, _prof As Profile)
         Try
             Me._menugrid = _menugrid
             Me._email = email
             Me._submenuframe = _submenuframe
             Me._addframe = _addframe
+            Me.profiles = _prof
             _frame = f
             act_ion = act_
 
@@ -45,6 +47,7 @@ Class UpdateActionListPage
             End If
         End Try
     End Sub
+
 #Region "Main Function/Method"
 
     Public Function showUpdateItems()
@@ -52,7 +55,7 @@ Class UpdateActionListPage
             InitializeService()
             _actionModel.REF_NO = act_ion.Act_ID
             _actionModel.ACTION_MESSAGE = act_ion.Act_Message
-            _actionModel.EMP_ID = act_ion.Act_Assignee
+            _actionModel.EMP_ID = profiles.Emp_ID
             _actionModel.NICK_NAME = act_ion.Act_NickName
             _actionModel.DUE_DATE = act_ion.Act_DueDate
             _actionModel.DATE_CLOSED = act_ion.Act_DateClosed
@@ -69,20 +72,20 @@ Class UpdateActionListPage
     Public Function getDataUpdate(ByVal ActionModel As ActionModel)
         Try
             InitializeService()
-            If ActionModel.REF_NO = Nothing Or ActionModel.ACTION_MESSAGE = Nothing Or Act_AssigneeCB2.SelectedValue = Nothing Or ActionModel.DUE_DATE = Nothing Or ActionModel.DATE_CLOSED = Nothing Then
+            If ActionModel.REF_NO = Nothing Or ActionModel.ACTION_MESSAGE = Nothing Or Act_AssignedAll.Text = String.Empty Or ActionModel.DUE_DATE = Nothing Or ActionModel.DATE_CLOSED = Nothing Then
                 act_ion.Act_ID = ActionModel.REF_NO
                 act_ion.Act_Message = ActionModel.ACTION_MESSAGE
                 act_ion.Act_Assignee = Act_AssigneeCB2.SelectedValue
                 act_ion.Act_DueDate = ActionModel.DUE_DATE
                 act_ion.Act_DateClosed = ActionModel.DATE_CLOSED
-                act_ion.Act_NickName = String.Empty
+                act_ion.Act_NickName = Act_AssignedAll.Text
             Else
                 act_ion.Act_ID = ActionModel.REF_NO
                 act_ion.Act_Message = ActionModel.ACTION_MESSAGE
-                act_ion.Act_Assignee = Act_AssigneeCB2.SelectedValue
+                act_ion.Act_Assignee = ActionModel.EMP_ID
                 act_ion.Act_DueDate = ActionModel.DUE_DATE
                 act_ion.Act_DateClosed = ActionModel.DATE_CLOSED
-                act_ion.Act_NickName = String.Empty
+                act_ion.Act_NickName = Act_AssignedAll.Text
 
             End If
             Return act_ion
@@ -163,8 +166,8 @@ Class UpdateActionListPage
     Private Sub UpdateBtn_Click(sender As Object, e As RoutedEventArgs)
         Try
             InitializeService()
-            If _actionModel.REF_NO = Nothing Or _actionModel.ACTION_MESSAGE = Nothing Or Act_AssigneeCB2.SelectedValue = Nothing Or _actionModel.DUE_DATE = Nothing Or _actionModel.DATE_CLOSED = Nothing Then
-                If _actionModel.DATE_CLOSED = Nothing And _actionModel.ACTION_MESSAGE <> Nothing And _actionModel.DUE_DATE <> Nothing And Act_AssigneeCB2.SelectedValue <> Nothing Then
+            If _actionModel.REF_NO = Nothing Or _actionModel.ACTION_MESSAGE = Nothing Or Act_AssignedAll.Text = String.Empty Or _actionModel.DUE_DATE = Nothing Or _actionModel.DATE_CLOSED = Nothing Then
+                If _actionModel.DATE_CLOSED = Nothing And _actionModel.ACTION_MESSAGE <> Nothing And _actionModel.DUE_DATE <> Nothing And Act_AssignedAll.Text <> String.Empty Then
                     If MsgBox("Do you want to proceed without closing date?", MsgBoxStyle.Information + vbYesNo, "AIDE") = vbYes Then
                         aide.UpdateActionList(getDataUpdate(Me.DataContext()))
                         MsgBox("Successfully Updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
@@ -186,7 +189,7 @@ Class UpdateActionListPage
                 act_ion.Act_DueDate = Nothing
                 act_ion.Act_DateClosed = Nothing
 
-                _frame.Navigate(New HomeActionListsPage(_frame, _email, _addframe, _menugrid, _submenuframe))
+                _frame.Navigate(New HomeActionListsPage(_frame, _email, _addframe, _menugrid, _submenuframe, profiles))
                 _frame.IsEnabled = True
                 _frame.Opacity = 1
                 _menugrid.IsEnabled = True
@@ -203,7 +206,7 @@ Class UpdateActionListPage
     End Sub
 
     Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
-        _frame.Navigate(New HomeActionListsPage(_frame, _email, _addframe, _menugrid, _submenuframe))
+        _frame.Navigate(New HomeActionListsPage(_frame, _email, _addframe, _menugrid, _submenuframe, profiles))
         _frame.IsEnabled = True
         _frame.Opacity = 1
         _menugrid.IsEnabled = True
@@ -243,6 +246,8 @@ Class UpdateActionListPage
         e.Handled = True
         If Act_AssignedAll.Text = String.Empty Then
             MsgBox("Textbox is Empty", MsgBoxStyle.Exclamation, "AIDE")
+        ElseIf Act_AssigneeCB2.Text = String.Empty Then
+            MsgBox("Please select an employee", MsgBoxStyle.Exclamation, "AIDE")
         Else
             Dim txtBox As String = Act_AssignedAll.Text
             Dim cbBox As String = String.Empty
@@ -270,4 +275,49 @@ Class UpdateActionListPage
     End Sub
 #End Region
 
+    Private Sub btnAddEmployee_Click(sender As Object, e As RoutedEventArgs)
+        e.Handled = True
+        If Act_AssignedAll.Text = String.Empty Then
+            Act_AssignedAll.Text += Act_AssigneeCB2.Text
+        Else
+            Dim txtBox As String = Act_AssignedAll.Text
+            Dim cbBox As String = Act_AssigneeCB2.Text
+            Dim ifYes As Integer = txtBox.IndexOf(cbBox)
+            If ifYes = -1 Then
+                Act_AssignedAll.Text += ", " + Act_AssigneeCB2.Text
+            Else
+                MsgBox("Cannot Allow Duplicate Entry!", MsgBoxStyle.Exclamation, "AIDE")
+            End If
+        End If
+    End Sub
+
+    Private Sub btnRemovedEmployee_Click_1(sender As Object, e As RoutedEventArgs)
+        e.Handled = True
+        If Act_AssignedAll.Text = String.Empty Then
+            MsgBox("Textbox is Empty", MsgBoxStyle.Exclamation, "AIDE")
+        Else
+            Dim txtBox As String = Act_AssignedAll.Text
+            Dim cbBox As String = String.Empty
+            Dim ifYes As Integer = txtBox.IndexOf(Act_AssigneeCB2.Text)
+
+            If ifYes <> -1 Then
+                If ifYes <> 0 Then
+                    cbBox = ", " & Act_AssigneeCB2.Text
+                    Dim ifYesAgain As Integer = txtBox.IndexOf(cbBox)
+                    Act_AssignedAll.Text = Act_AssignedAll.Text.Remove(ifYesAgain, cbBox.Length)
+                Else
+                    cbBox = Act_AssigneeCB2.Text & ", "
+
+                    If txtBox.Length <> Act_AssigneeCB2.Text.Length Then
+                        cbBox = Act_AssignedAll.Text & ", "
+                    Else
+                        cbBox = Act_AssignedAll.Text
+                    End If
+                    Act_AssignedAll.Text = txtBox.Remove(ifYes, cbBox.Length)
+                End If
+            Else
+                MsgBox("Entry already removed", MsgBoxStyle.Exclamation, "AIDE")
+            End If
+        End If
+    End Sub
 End Class

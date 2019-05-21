@@ -67,7 +67,10 @@ Public Class AttendanceDashBoard
                 For Each rawUser As myAttendanceList In aemployeeListDBProvider.GetAllEmpRPList()
                     setStatus = rawUser.Status
                     SetCategory(rawUser)
-                    SetCategoryDisplay(rawUser)
+                    If setStatus = 11 Then
+                        SetCategoryDisplay(rawUser)
+                    End If
+
                     lstAEmployeeList.Add(New AttendanceModel(rawUser))
                 Next
 
@@ -139,13 +142,15 @@ Public Class AttendanceDashBoard
             rawUser_.Desc = "(H) Emergency Leave"
         ElseIf setStatus = 10 Then
             rawUser_.Desc = "Other Leaves"
+        ElseIf setStatus = 11 Then
+            rawUser_.Desc = "(Late)"
         End If
     End Sub
 
     Public Sub SetCategory(rawUser_ As myAttendanceList)
         If setStatus = 1 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\onsite.png"
-        ElseIf setStatus = 2 Then
+        ElseIf setStatus = 2 Or setStatus = 11 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\present.png"
         ElseIf setStatus = 3 Or setStatus = 5 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\sick.png"
