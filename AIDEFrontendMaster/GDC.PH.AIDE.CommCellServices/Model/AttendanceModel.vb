@@ -22,7 +22,6 @@ Public Class AttendanceModel
         Me._EmpImage = rawAttendanceList.Emp_Image
         Me._dateEntry = rawAttendanceList.Date_Entry
         Me._displayStatus = rawAttendanceList.Display_Status
-
     End Sub
 
     Public Property EMP_ID As Integer
@@ -103,10 +102,8 @@ Public Class AttendanceModel
             _displayStatus = "Absent"
         ElseIf _status = 2 Then
             _displayStatus = "Present"
-
         ElseIf _status = 3 Then
             _displayStatus = "Sick Leave"
-
         ElseIf _status = 4 Then
             _displayStatus = "Vacation Leave"
         End If
