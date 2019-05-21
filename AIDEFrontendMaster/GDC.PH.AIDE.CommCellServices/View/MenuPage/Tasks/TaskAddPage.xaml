@@ -1401,9 +1401,9 @@
                                     </Viewbox>
                                 </Button>
                                 <Button x:Name="btnUpdate"  Margin="5,5,0,5" Style="{DynamicResource RoundCornerUpdate}">
-                                    <Viewbox>
-                                        <TextBlock Text="UPDATE" FontSize="14" TextWrapping="Wrap" Margin="5"/>
-                                    </Viewbox>
+                                    
+                                        <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
+                                    
                                 </Button>
 
                             </Grid>
