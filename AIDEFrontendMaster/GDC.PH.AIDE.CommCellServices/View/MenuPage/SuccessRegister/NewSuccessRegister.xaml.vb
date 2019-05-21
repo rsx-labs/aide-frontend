@@ -79,7 +79,7 @@ Class NewSuccessRegister
                 SuccessRegisters.AdditionalInformation = txtSRAdditional.Text
                 client.UpdateSuccessRegisterByEmpID(SuccessRegisters)
                 ClearFields()
-                _addframe.Navigate(New SuccessRegisterPage(mainFrame, email, _addframe, _menugrid, _submenuframe))
+                mainFrame.Navigate(New SuccessRegisterPage(mainFrame, email, _addframe, _menugrid, _submenuframe))
                 mainFrame.IsEnabled = True
                 mainFrame.Opacity = 1
                 _menugrid.IsEnabled = True
@@ -114,7 +114,7 @@ Class NewSuccessRegister
                 If result = 1 Then
                     client.CreateNewSuccessRegister(SuccessRegisters)
                     ClearFields()
-                    _addframe.Navigate(New SuccessRegisterPage(mainFrame, email, _addframe, _menugrid, _submenuframe))
+                    mainFrame.Navigate(New SuccessRegisterPage(mainFrame, email, _addframe, _menugrid, _submenuframe))
                     mainFrame.IsEnabled = True
                     mainFrame.Opacity = 1
                     _menugrid.IsEnabled = True
@@ -133,7 +133,7 @@ Class NewSuccessRegister
     End Sub
 
     Private Sub btnSRCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnSRCancel.Click
-        _addframe.Navigate(New SuccessRegisterPage(mainFrame, email, _addframe, _menugrid, _submenuframe))
+        mainFrame.Navigate(New SuccessRegisterPage(mainFrame, email, _addframe, _menugrid, _submenuframe))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         _menugrid.IsEnabled = True
@@ -357,4 +357,5 @@ Class NewSuccessRegister
 
     End Sub
 #End Region
+
 End Class

@@ -1207,16 +1207,16 @@
                                 </Viewbox>
                             </Button>
                             <Button Style="{DynamicResource RoundCornerAdd}" x:Name="btnSRCreate" Margin="5,5,0,5" >
-                                <Viewbox>
-                                    <TextBlock Text="CREATE" TextWrapping="Wrap" FontSize="14" Margin="5"/>
-                                </Viewbox>
+                                
+                                    <TextBlock Text="CREATE" TextWrapping="Wrap" Margin="5"/>
+                               
                             </Button>
                         </Grid>
                         <Grid Grid.Row="3">
                             <Button Style="{DynamicResource RoundCorner}" x:Name="btnSRDelete" Margin="5,5,0,5" >
-                                <Viewbox>
-                                    <TextBlock Text="DELETE" FontSize="14" TextWrapping="Wrap" Margin="5"/>
-                                </Viewbox>
+                                
+                                    <TextBlock Text="DELETE" TextWrapping="Wrap" Margin="5"/>
+                                
                             </Button>
                         </Grid>
                         <Grid Grid.Row="4"></Grid>

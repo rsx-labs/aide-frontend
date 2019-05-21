@@ -570,6 +570,7 @@
             <Setter Property="HorizontalGridLinesBrush" Value="Gainsboro"/>
             <Setter Property="CanUserAddRows" Value="False"/>
             <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="IsReadOnly" Value="True" />
         </Style>
         <Style TargetType="{x:Type DataGridCell}">
 
