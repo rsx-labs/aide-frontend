@@ -234,6 +234,7 @@
       <xs:element minOccurs="0" name="Other_Phone" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Permission" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Position" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShiftStatus" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Ws_EMP_ID" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
@@ -338,6 +339,9 @@
       <xs:element minOccurs="0" name="UsedLeaves" type="xs:double" />
       <xs:element minOccurs="0" name="dateFrom" type="xs:dateTime" />
       <xs:element minOccurs="0" name="dateTo" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="holidayHours" type="xs:double" />
+      <xs:element minOccurs="0" name="slHours" type="xs:double" />
+      <xs:element minOccurs="0" name="vlHours" type="xs:double" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ResourcePlanner" nillable="true" type="tns:ResourcePlanner" />
@@ -362,6 +366,38 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfAnnouncements" nillable="true" type="tns:ArrayOfAnnouncements" />
+  <xs:complexType name="ArrayOfLate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Late" nillable="true" type="tns:Late" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLate" nillable="true" type="tns:ArrayOfLate" />
+  <xs:complexType name="Late">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FIRST_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MONTH" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NUMBER_OF_LATE" type="xs:int" />
+      <xs:element minOccurs="0" name="STATUS" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Late" nillable="true" type="tns:Late" />
+  <xs:complexType name="ArrayOfSabaLearning">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SabaLearning" nillable="true" type="tns:SabaLearning" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSabaLearning" nillable="true" type="tns:ArrayOfSabaLearning" />
+  <xs:complexType name="SabaLearning">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DATE_COMPLETED" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EMP_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="END_DATE" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IMAGE_PATH" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SABA_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="TITLE" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SabaLearning" nillable="true" type="tns:SabaLearning" />
   <xs:complexType name="Action">
     <xs:sequence>
       <xs:element minOccurs="0" name="Act_Assignee" type="xs:int" />
