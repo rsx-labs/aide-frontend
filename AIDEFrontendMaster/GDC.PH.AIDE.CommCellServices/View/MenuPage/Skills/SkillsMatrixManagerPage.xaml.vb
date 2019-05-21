@@ -174,6 +174,7 @@ Class SkillsMatrixManagerPage
                 '' Adding to dictionary every employees skills description and  skills proficiency
                 If iSkills.Emp_ID = emp_id Then
                     dict.Add(iSkills.Skill_Descr, iSkills.Prof_level.ToString)
+
                 End If
                 If emp_id <> iSkills.Emp_ID Then
                     If emp_id > 0 Then
@@ -186,6 +187,7 @@ Class SkillsMatrixManagerPage
 
                 End If
                 emp_id = iSkills.Emp_ID
+
                 ''END PROBLEM
             Next
 
@@ -459,6 +461,15 @@ Class SkillsMatrixManagerPage
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Employee Assist Tools")
         End Try
+    End Sub
+
+    Private Sub dgSkillList_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles dgSkillList.LoadingRow
+        'Dim RowDataContaxt As SkillsModel = TryCast(e.Row.DataContext, SkillsModel)
+        'If RowDataContaxt IsNot Nothing Then
+        'If RowDataContaxt.IsREVIEWED = False Then
+        'e.Row.Background = New BrushConverter().ConvertFrom("#CCFFD8D8")
+        'End If
+        'End If
     End Sub
 
     'Private Sub dgSkillList_AutoGeneratingColumn(sender As Object, e As DataGridAutoGeneratingColumnEventArgs) Handles dgSkillList.AutoGeneratingColumn
