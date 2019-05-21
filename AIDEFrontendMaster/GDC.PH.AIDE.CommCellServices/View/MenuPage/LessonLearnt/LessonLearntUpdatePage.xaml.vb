@@ -149,6 +149,14 @@ Class LessonLearntUpdatePage
                         If Me.InitializeService() Then
                             client.UpdateLessonLearntInfo(lessonLearnt)
                             MsgBox("Successfully Updated", MsgBoxStyle.Information, "AIDE")
+                            frame.Navigate(New LessonLearntPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
+                            frame.IsEnabled = True
+                            frame.Opacity = 1
+                            _menugrid.IsEnabled = True
+                            _menugrid.Opacity = 1
+                            _submenuframe.IsEnabled = True
+                            _submenuframe.Opacity = 1
+                            _addframe.Visibility = Visibility.Hidden
                         End If
                     Catch ex As Exception
                         MsgBox(ex.Message, MsgBoxStyle.Critical, "AIDE")
@@ -161,7 +169,7 @@ Class LessonLearntUpdatePage
     End Sub
 
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
-        _addframe.Navigate(New LessonLearntPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
+        frame.Navigate(New LessonLearntPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
         frame.IsEnabled = True
         frame.Opacity = 1
         _menugrid.IsEnabled = True

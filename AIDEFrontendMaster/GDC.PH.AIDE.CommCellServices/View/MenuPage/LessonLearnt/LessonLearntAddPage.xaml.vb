@@ -189,7 +189,7 @@ Class LessonLearntAddPage
                             client.CreateLessonLearnt(lessonLearnt)
                             MsgBox("Successfully Created", MsgBoxStyle.Information, "AIDE")
                             ClearValues()
-                            _addframe.Navigate(New LessonLearntPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
+                            frame.Navigate(New LessonLearntPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
                             frame.IsEnabled = True
                             frame.Opacity = 1
                             _menugrid.IsEnabled = True
@@ -209,7 +209,7 @@ Class LessonLearntAddPage
     End Sub
 
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
-        _addframe.Navigate(New LessonLearntPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
+        frame.Navigate(New LessonLearntPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
         frame.IsEnabled = True
         frame.Opacity = 1
         _menugrid.IsEnabled = True
