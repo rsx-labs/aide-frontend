@@ -138,6 +138,7 @@ Class MainWindow
             email = app.Session.CurrentUser.AddressEntry.GetExchangeUser.PrimarySmtpAddress
             'email = Application.ActiveExplorer.Session.CurrentUser.Address
             'email = app.Session.CurrentUser.Address
+            'email = app.Session.CurrentUser.Address
             Return True
         Catch ex As Exception
             '    CheckOutlook()
