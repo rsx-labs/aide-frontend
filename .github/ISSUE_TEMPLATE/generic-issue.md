@@ -12,5 +12,4 @@ A clear and concise description of what the issue is
 
 
 
-**Describe the  issue**
-Don not forget to add the appropriate tag.
+**Do not forget to add the appropriate tag.**
