@@ -1056,7 +1056,7 @@ xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelEndDate" Width="120" TextAlignment="Center" Margin="5" Text="Date Completed" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock x:Name="txtlabelEndDate" Width="120" TextAlignment="Center" Margin="10" Text="Date Completed" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1071,9 +1071,9 @@ xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
                         </Grid>
                         <Grid Grid.Row="1" Margin="5,10,10,0">
                             <Button Style="{DynamicResource RoundCornerUpdate}" Name="UpdateCourseBtn" Click="UpdateCourseBtn_Click">
-                                <Viewbox>
+                                
                                     <TextBlock Text="SET COMPLETION DATE" TextWrapping="Wrap" Margin="5"/>
-                                </Viewbox>
+                                
                             </Button>
                         </Grid>
                         <Grid Grid.Row="2" Margin="5,10,10,0">

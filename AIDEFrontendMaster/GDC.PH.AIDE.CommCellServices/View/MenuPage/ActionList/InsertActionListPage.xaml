@@ -1054,9 +1054,9 @@
                     </Grid>
                     <Grid Grid.Row="5">
                         <Button Style="{DynamicResource RoundCorner}" Name="AddBtn" Margin="0,5" Click="AddBtn_Click">
-                            <Viewbox>
-                                <TextBlock FontSize="14" Text="CREATE" TextWrapping="Wrap" Margin="5"/>
-                            </Viewbox>
+                            
+                                <TextBlock Text="CREATE" TextWrapping="Wrap" Margin="5"/>
+                            
                         </Button>
                     </Grid>
 

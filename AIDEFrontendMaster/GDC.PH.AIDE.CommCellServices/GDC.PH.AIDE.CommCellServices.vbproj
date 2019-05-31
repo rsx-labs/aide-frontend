@@ -170,6 +170,7 @@
     <Compile Include="DataProviderService\AttendanceListDBProvider.vb" />
     <Compile Include="DataProviderService\BillabilityDBProvider.vb" />
     <Compile Include="DataProviderService\BirthdayListDBProvider.vb" />
+    <Compile Include="DataProviderService\ComcellClockDBProvider.vb" />
     <Compile Include="DataProviderService\CommendationDBProvider.vb" />
     <Compile Include="DataProviderService\ConcernDBProvider.vb" />
     <Compile Include="DataProviderService\ContactListDBProvider.vb" />
@@ -179,6 +180,7 @@
     <Compile Include="DataProviderService\ProfileDBProvider.vb" />
     <Compile Include="DataProviderService\ProjectDBProvider.vb" />
     <Compile Include="DataProviderService\ResourcePlannerDBProvider.vb" />
+    <Compile Include="DataProviderService\SabaLearningDBProvider.vb" />
     <Compile Include="DataProviderService\SkillsDBProvider.vb" />
     <Compile Include="DataProviderService\SuccessRegisterDBProvider.vb" />
     <Compile Include="DataProviderService\TaskDBProvider.vb" />
@@ -195,6 +197,7 @@
     <Compile Include="Model\AttendanceModel.vb" />
     <Compile Include="Model\BillabilityModel.vb" />
     <Compile Include="Model\BirthdayListModel.vb" />
+    <Compile Include="Model\ComcellClockModel.vb" />
     <Compile Include="Model\CommendationModel.vb" />
     <Compile Include="Model\ConcernModel.vb" />
     <Compile Include="Model\ContactListModel.vb" />
@@ -204,6 +207,7 @@
     <Compile Include="Model\ProfileModel.vb" />
     <Compile Include="Model\ProjectModel.vb" />
     <Compile Include="Model\ResourcePlannerModel.vb" />
+    <Compile Include="Model\SabaLearningModel.vb" />
     <Compile Include="Model\SkillsModel.vb" />
     <Compile Include="Model\SuccessRegisterModel.vb" />
     <Compile Include="Model\TasksModel.vb" />
@@ -221,6 +225,7 @@
     <Compile Include="ViewModel\AttendanceListViewModel.vb" />
     <Compile Include="ViewModel\BillabilityViewModel.vb" />
     <Compile Include="ViewModel\BirthdayListViewModel.vb" />
+    <Compile Include="ViewModel\ComcellClockViewModel.vb" />
     <Compile Include="ViewModel\CommendationViewModel.vb" />
     <Compile Include="ViewModel\ConcernViewModel.vb" />
     <Compile Include="ViewModel\ContactListViewModel.vb" />
@@ -229,6 +234,7 @@
     <Compile Include="ViewModel\ProfileViewModel.vb" />
     <Compile Include="ViewModel\ProjectViewModel.vb" />
     <Compile Include="ViewModel\ResourcePlannerViewModel.vb" />
+    <Compile Include="ViewModel\SabaLearningViewModel.vb" />
     <Compile Include="ViewModel\SkillsViewModel.vb" />
     <Compile Include="ViewModel\SuccessRegisterViewModel.vb" />
     <Compile Include="ViewModel\TasksSpViewModel.vb" />
@@ -306,6 +312,15 @@
     <Compile Include="View\MenuPage\Birthday\BirthdayPage.xaml.vb">
       <DependentUpon>BirthdayPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MenuPage\ComcellClock\ComcellClockAddPage.xaml.vb">
+      <DependentUpon>ComcellClockAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ComcellClock\ComcellClockPage.xaml.vb">
+      <DependentUpon>ComcellClockPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ComcellClock\ComcellClockWindow.xaml.vb">
+      <DependentUpon>ComcellClockWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MenuPage\CommendationDashBoard\CommendationDashBoard.xaml.vb">
       <DependentUpon>CommendationDashBoard.xaml</DependentUpon>
     </Compile>
@@ -344,6 +359,18 @@
     </Compile>
     <Compile Include="View\MenuPage\Resource Planner\ResourcePlannerPage.xaml.vb">
       <DependentUpon>ResourcePlannerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\SABA\SabaLearningAddPage.xaml.vb">
+      <DependentUpon>SabaLearningAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\SABA\SabaLearningMainPage.xaml.vb">
+      <DependentUpon>SabaLearningMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\SABA\SabaLearningUpdatePage.xaml.vb">
+      <DependentUpon>SabaLearningUpdatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\SABA\SabaLearningViewPage.xaml.vb">
+      <DependentUpon>SabaLearningViewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\Skills\SkillsMatrixManagerPage.xaml.vb">
       <DependentUpon>SkillsMatrixManagerPage.xaml</DependentUpon>
@@ -498,6 +525,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\MenuPage\ComcellClock\ComcellClockAddPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\ComcellClock\ComcellClockPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\ComcellClock\ComcellClockWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\MenuPage\CommendationDashBoard\CommendationDashBoard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -547,6 +586,22 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MenuPage\Resource Planner\ResourcePlannerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\SABA\SabaLearningAddPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\SABA\SabaLearningMainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\SABA\SabaLearningUpdatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\SABA\SabaLearningViewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -719,6 +774,9 @@
     <None Include="Service References\ServiceReference1\UI_AIDE_CommCellServices.ServiceReference1.Employee.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ServiceReference1\UI_AIDE_CommCellServices.ServiceReference1.Late.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceReference1\UI_AIDE_CommCellServices.ServiceReference1.LessonLearnt.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -741,6 +799,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceReference1\UI_AIDE_CommCellServices.ServiceReference1.ResourcePlanner.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceReference1\UI_AIDE_CommCellServices.ServiceReference1.SabaLearning.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ServiceReference1\UI_AIDE_CommCellServices.ServiceReference1.Skills.datasource">

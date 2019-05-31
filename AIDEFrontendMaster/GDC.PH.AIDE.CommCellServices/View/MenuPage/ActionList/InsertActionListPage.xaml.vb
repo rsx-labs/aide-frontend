@@ -19,15 +19,17 @@ Class InsertActionListPage
     Private _addframe As Frame
     Private _menugrid As Grid
     Private _submenuframe As Frame
+    Private profiles As Profile
 #End Region
 
-    Public Sub New(F As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(F As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _prof As Profile)
         Try
             __email = _email
             Me._frame = _frame
             Me._addframe = _addframe
             Me._menugrid = _menugrid
             Me._submenuframe = _submenuframe
+            Me.profiles = _prof
             _frame = F
             InitializeComponent()
             PopulateComboBox()
@@ -169,7 +171,7 @@ Class InsertActionListPage
                 act_ion.Act_DueDate = Nothing
                 act_ion.Act_DateClosed = Nothing
 
-                _frame.Navigate(New HomeActionListsPage(_frame, __email, _addframe, _menugrid, _submenuframe))
+                _frame.Navigate(New HomeActionListsPage(_frame, __email, _addframe, _menugrid, _submenuframe, profiles))
                 _frame.IsEnabled = True
                 _frame.Opacity = 1
                 _menugrid.IsEnabled = True
@@ -188,7 +190,7 @@ Class InsertActionListPage
     End Sub
 
     Private Sub backbtn_Click(sender As Object, e As RoutedEventArgs)
-        _frame.Navigate(New HomeActionListsPage(_frame, __email, _addframe, _menugrid, _submenuframe))
+        _frame.Navigate(New HomeActionListsPage(_frame, __email, _addframe, _menugrid, _submenuframe, profiles))
         _frame.IsEnabled = True
         _frame.Opacity = 1
         _menugrid.IsEnabled = True

@@ -213,6 +213,15 @@ Public Class AssetsAddPage
         btnCreate.Visibility = System.Windows.Visibility.Collapsed
         btnUpdate.Visibility = System.Windows.Visibility.Visible
         btnDelete.Visibility = System.Windows.Visibility.Collapsed
+        cbAssetType.Visibility = Windows.Visibility.Hidden
+        cbAssetWaterMark.Visibility = Windows.Visibility.Hidden
+        txtlabelAssetType.Visibility = Windows.Visibility.Hidden
+        cbAssetManufacturer.Visibility = Windows.Visibility.Hidden
+        cbassetmanufacturerwatermark.Visibility = Windows.Visibility.Hidden
+        txtlabelManufacturer.Visibility = Windows.Visibility.Hidden
+        cbNickname.Visibility = Windows.Visibility.Hidden
+        cbNickNameWaterMark.Visibility = Windows.Visibility.Hidden
+        txtlabelAssignedto.Visibility = Windows.Visibility.Hidden
         cbNickname.IsEnabled = False
         txtID.Text = assetsModel.ASSET_ID
         txtCreatedBy.Text = assetsModel.EMP_ID

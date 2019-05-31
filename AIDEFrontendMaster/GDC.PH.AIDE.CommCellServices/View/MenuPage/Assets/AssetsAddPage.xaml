@@ -1004,7 +1004,7 @@
                         <Grid Grid.Row="2">
                             <ComboBox x:Name="cbAssetType" IsReadOnly="True" VerticalContentAlignment="Center" Margin="0,5,5,5"
                           SelectedValuePath="ASSET_ID" Style="{DynamicResource StyleComboBox}" DisplayMemberPath="ASSET_DESC" ItemsSource="{Binding AssetTypeList}"/>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select an asset" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock x:Name="cbAssetWaterMark" FontSize="12" IsHitTestVisible="False" Text="Select an asset" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1032,7 +1032,7 @@
                         <Grid Grid.Row="3">
                             <ComboBox x:Name="cbAssetManufacturer" Style="{DynamicResource StyleComboBox}" Margin="0,5,5,5" IsReadOnly="True" VerticalContentAlignment="Center"
                           SelectedValuePath="ASSET_ID" DisplayMemberPath="MANUFACTURER" ItemsSource="{Binding AssetManufacturerList}"/>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select manufacturer" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock x:Name="cbassetmanufacturerwatermark" FontSize="12" IsHitTestVisible="False" Text="Select manufacturer" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1160,7 +1160,7 @@
                         <Grid Grid.Row="2">
                             <ComboBox x:Name="cbNickname" Margin="5,5,0,5" IsReadOnly="True" Style="{DynamicResource StyleComboBox}" VerticalContentAlignment="Center"
                           SelectedValuePath="Emp_ID" DisplayMemberPath="Nick_Name" ItemsSource="{Binding NicknameList}"/>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Whom to assign?" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock x:Name="cbNickNameWaterMark" FontSize="12" IsHitTestVisible="False" Text="Whom to assign?" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1217,22 +1217,22 @@
                         </Grid>
                         <Grid Grid.Row="4">
                             <Button Style="{DynamicResource RoundCornerUpdate2}" x:Name="btnUpdate" Margin="5,5,0,5" >
-                                <Viewbox>
+                                
                                     <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
-                                </Viewbox>
+                                
                             </Button>
                             <Button Style="{DynamicResource RoundCorner}" x:Name="btnCreate" Margin="5,5,0,5" >
-                                <Viewbox>
+                                
                                     <TextBlock Text="CREATE" TextWrapping="Wrap" Margin="5"/>
-                                </Viewbox>
+                                
                             </Button>
                            
                         </Grid>
                         <Grid Grid.Row="5">
                             <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnDelete" Margin="5,5,0,5" >
-                                <Viewbox>
+                                
                                     <TextBlock Text="DELETE" TextWrapping="Wrap" Margin="5"/>
-                                </Viewbox>
+                                
                             </Button>
                         </Grid>
                     </Grid>

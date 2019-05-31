@@ -17,7 +17,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="4" Background="#FF09A0C1">
+                            <Border x:Name="border" CornerRadius="15" Background="#FF09A0C1">
                                 <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           TextElement.FontWeight="Bold">
@@ -478,9 +478,9 @@
                     <Grid Grid.Column="2">
                         <Viewbox Margin="10,15">
                             <Button Style="{DynamicResource RoundCorner}" x:Name="btnAssign" Width="auto" Height="auto" >
-                                <Viewbox>
+                                
                                     <TextBlock Text="Assign" Foreground="White" Margin="6" Padding="5,0"/>
-                                </Viewbox>
+                                
                             </Button>
                         </Viewbox>
                     </Grid>
@@ -491,7 +491,7 @@
                 <Border Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
 
                     <DataGrid Background="Transparent" x:Name="EmployeeListGrid" ItemsSource="{Binding ProjectList}" 
-                      Width="auto" BorderBrush="Transparent" IsEnabled="True" AutoGenerateColumns="False" >
+                      Width="auto" BorderBrush="Transparent" IsEnabled="True" AutoGenerateColumns="False" CanUserResizeColumns="False" >
                         <DataGrid.Columns>
                             <!--<DataGridTextColumn Header="Status" Width="1*" Binding="{Binding Name}" IsReadOnly="True"/>-->
                             <DataGridTextColumn Header="Name" Width="3*" Binding="{Binding Position}" IsReadOnly="True"/>

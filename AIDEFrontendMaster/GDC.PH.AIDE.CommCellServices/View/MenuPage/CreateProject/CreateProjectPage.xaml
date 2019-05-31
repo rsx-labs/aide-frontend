@@ -1151,14 +1151,14 @@
                             </Grid>
                             <Grid Grid.Column="2">
                                 <Button Style="{DynamicResource RoundCornerAdd}" x:Name="btnCreate" Margin="5" >
-                                    <Viewbox>
+                                  
                                         <TextBlock Text="CREATE"  TextWrapping="Wrap" Margin="5"/>
-                                    </Viewbox>
+                                    
                                 </Button>
                                 <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnUpdate" Margin="5" Visibility="Hidden">
-                                    <Viewbox>
+                                    
                                         <TextBlock Text="UPDATE"  TextWrapping="Wrap" Margin="5"/>
-                                    </Viewbox>
+                                   
                                 </Button>
                             </Grid>
 
@@ -1244,9 +1244,9 @@
                             </Grid>
                             <Grid Grid.Column="2">
                                 <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnNewProject" Margin="5">
-                                    <Viewbox>
+                                    
                                         <TextBlock Text="CLEAR" TextWrapping="Wrap" Margin="5"/>
-                                    </Viewbox>
+                                    
                                 </Button>
                             </Grid>
                         </Grid>
@@ -1258,7 +1258,7 @@
                 <Grid Grid.Row="1">
                     <Border Margin="10,10,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
 
-                        <DataGrid Background="Transparent" x:Name="dgProjectList" ItemsSource="{Binding ProjectList}" BorderBrush="Transparent" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid Background="Transparent" x:Name="dgProjectList" ItemsSource="{Binding ProjectList}" BorderBrush="Transparent" AutoGenerateColumns="False" IsReadOnly="True" CanUserResizeColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Project ID" Binding="{Binding ProjectID}" Width="1*"/>
                                 <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Project Name" Binding="{Binding ProjectName}" Width="2*"/>

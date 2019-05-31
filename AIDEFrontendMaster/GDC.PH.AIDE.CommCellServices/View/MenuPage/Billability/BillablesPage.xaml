@@ -21,32 +21,38 @@
     </Page.Resources>
 
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
-        <Grid Margin="5">
+        <Grid Margin="5" >
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*" />
+                <RowDefinition Height="1.3*" />
                 <RowDefinition Height="12.5*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10*"/>
                     <ColumnDefinition Width="1*"/>
+
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="12*"/>
+
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
-                            <Image Source="..\..\..\Assets\Button\BillabilityLogo.png" />
+                        <Viewbox HorizontalAlignment="Center" Margin="0,3,0,5">
+                            <Image Source="..\..\..\Assets\Button\BillableLogo.png" />
                         </Viewbox>
+
                     </Grid>
+
                     <Grid Grid.Column="1">
                         <Viewbox HorizontalAlignment="Left">
                             <TextBlock TextWrapping="Wrap" Padding="0" Text="Billable Hours" Margin="0,7,0,7" Foreground="DimGray"/>
                         </Viewbox>
                     </Grid>
+
                 </Grid>
             </Grid>
             <Grid Grid.Row="1">

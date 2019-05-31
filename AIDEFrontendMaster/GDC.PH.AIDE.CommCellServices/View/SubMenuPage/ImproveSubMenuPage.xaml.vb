@@ -23,7 +23,7 @@ Class ImproveSubMenuPage
     End Sub
 
     Private Sub ActionlistBtn_Click(sender As Object, e As RoutedEventArgs)
-        _MainFrame.Navigate(New HomeActionListsPage(_MainFrame, _email, _addframe, _menugrid, _submenuframe))
+        _MainFrame.Navigate(New HomeActionListsPage(_MainFrame, _email, _addframe, _menugrid, _submenuframe, Me.profile))
     End Sub
 
     Private Sub LessonLearntBtn_Click(sender As Object, e As RoutedEventArgs)

@@ -259,8 +259,165 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
+            <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}"/>
+        </ControlTemplate>
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Border
+                  x:Name="Border" 
+                  Grid.ColumnSpan="2"
+                  CornerRadius="15"
+                  Background="White"
+                  BorderBrush="Gainsboro"
+                  BorderThickness="3" />
+                <Border                   
+                    Grid.Column="0"
+                  CornerRadius="0" 
+                  Margin="1" 
+                   IsEnabled="False"
+                  Background="Transparent" 
+                  BorderBrush="Gainsboro"
+                  BorderThickness="0,0,1,0" />
+                <Path 
+                  x:Name="Arrow"
+                  Grid.Column="1"     
+                  Fill="DimGray"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"
+                />
+            </Grid>
+        </ControlTemplate>
+
+        <Style TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                        <Border Name="Border"
+                              Padding="2"
+                              SnapsToDevicePixels="true">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#FF4F4F4F"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="StyleComboBox" TargetType="{x:Type ComboBox}">
+
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="MinHeight" Value="20"/>
+            <Setter Property="Foreground" Value="DimGray"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+                        <Grid>
+                            <ToggleButton 
+                            Name="ToggleButton" 
+                            Template="{StaticResource ComboBoxToggleButton}" 
+                            Grid.Column="2" 
+                            Focusable="false"
+                            IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                            ClickMode="Press">
+                            </ToggleButton>
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                            Margin="5"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center" />
+
+                            <TextBox x:Name="PART_EditableTextBox"
+                            Style="{x:Null}" 
+                            Template="{StaticResource ComboBoxTextBox}" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center" 
+                            Margin="0"
+                            Focusable="True" 
+                                     FontSize="12"
+                            Background="Transparent"
+                            Foreground="DimGray"
+                            Visibility="Visible"
+                            IsReadOnly="{TemplateBinding IsReadOnly}"/>
+
+                            <Popup 
+                            Name="Popup"
+                            Placement="Bottom"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            AllowsTransparency="True" 
+                            Focusable="False"
+                            PopupAnimation="Slide">
+
+                                <Grid Name="DropDown"
+                              SnapsToDevicePixels="True"                
+                              MinWidth="{TemplateBinding ActualWidth}"
+                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                    <Border 
+                                x:Name="DropDownBorder"
+                                Background="#FF3F3F3F"
+
+                                BorderThickness="1"
+                                BorderBrush="#888888"/>
+                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </Trigger>
+                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                                <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0"/>
+                                <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsEditable"  Value="true">
+                                <Setter Property="IsTabStop" Value="false"/>
+                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+
+            </Style.Triggers>
+        </Style>
+
     </Page.Resources>
-    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15,0,0,15">
+    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15,0,0,0">
         <Grid>
             <!--<Grid.Effect>
         <DropShadowEffect Color="#FFD6D6D6" Direction="240" Opacity="0.5" ShadowDepth="5"/>
@@ -268,10 +425,11 @@
 
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="5*"/>
-                    <RowDefinition Height="7.5*" />
-                    <RowDefinition Height="77.5*" />
-                    <RowDefinition Height="10*" />
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1.5*" />
+                    <RowDefinition Height="10.5*" />
+       
+                    
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
 
@@ -293,51 +451,50 @@
                                 </Button>
                             </Viewbox>
                         </Grid>
-                        
-
-                        
                     </Grid>
-
-
-
                 </Grid>
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" Background="#FFFBFBFB">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="181*"/>
-                            <ColumnDefinition Width="26*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox MaxLength="30" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="DimGray" FontSize="12" Margin="10" BorderThickness="3" x:Name="txtSearch" Grid.ColumnSpan="2" />
-                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                            <Viewbox Margin="15,15,0,15">
-                                <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png">
-                                    <!--<Image.Style>
-                                        <Style TargetType="{x:Type Image}">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=txtSearch}" Value="">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Image.Style>-->
-                                </Image>
-                            </Viewbox>
-                         
-                                <TextBlock TextWrapping="WrapWithOverflow" IsHitTestVisible="False" Text="Search...." VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        
+                        
+                            <Grid Grid.Column="0">
+                                <ComboBox MinWidth="70" Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Margin="10,10,5,10"/>
+                            
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Month" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=txtSearch}" Value="">
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
                                                     <Setter Property="Visibility" Value="Visible"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
+                            
+                        </Grid>
+                            <Grid Grid.Column="1">
+                                <ComboBox MinWidth="70" Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="5,10,10,10"/>
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
                  
-                        </StackPanel>
+                     
 
                     </Grid>
 
@@ -371,8 +528,8 @@
                                                     
                                                 </Grid>
                                                 <Grid Grid.Column="1">
-                                                    
-                                                    <TextBlock TextWrapping="WrapWithOverflow" FontSize="12" Text="{Binding DateSent, StringFormat=MM/dd/yyyy}" TextAlignment="Right" VerticalAlignment="Center" Foreground="Teal" />
+
+                                                    <TextBlock TextWrapping="WrapWithOverflow" FontSize="12" Text="{Binding DateSent, StringFormat=MM/dd/yyyy}" TextAlignment="Right" VerticalAlignment="Center" Foreground="Gray" FontStyle="Italic" />
 
                                                 </Grid>
 
@@ -401,7 +558,7 @@
                                             </Grid>
                                             <Grid Grid.Row="2" Margin="0,5,0,0">
 
-                                                <TextBlock FontWeight="Normal" FontSize="10"  TextWrapping="WrapWithOverflow" Foreground="DimGray" Text="{Binding Reason}" TextAlignment="Justify"  VerticalAlignment="Center" />
+                                                <TextBlock Height="30" FontWeight="Normal" FontSize="10"  TextWrapping="Wrap" Foreground="DimGray" Text="{Binding Reason}" TextTrimming="WordEllipsis" TextAlignment="Justify"  VerticalAlignment="Center" />
 
                                             </Grid>
                                           

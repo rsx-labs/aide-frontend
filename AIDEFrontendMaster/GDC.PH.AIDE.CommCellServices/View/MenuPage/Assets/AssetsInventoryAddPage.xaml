@@ -1103,12 +1103,17 @@
                             </TextBlock>
                         </Grid>
                         <Grid Grid.Row="5">
-                            <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                            <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnApprove" Margin="5,5,0,5" >
+                                
+                                    <TextBlock Text="APPROVE" TextWrapping="Wrap" Margin="5"/>
+                                
+                            </Button>
+                            <Border Visibility="Hidden" Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
-                                <TextBox x:Name="txtID" IsReadOnly="True" TextWrapping="Wrap" Template="{DynamicResource TextBoxBaseControlTemplate}"
+                                <TextBox Visibility="Hidden" x:Name="txtID" IsReadOnly="True" TextWrapping="Wrap" Template="{DynamicResource TextBoxBaseControlTemplate}"
                              MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter asset ID" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock Visibility="Hidden" FontSize="12" IsHitTestVisible="False" Text="Enter asset ID" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1121,7 +1126,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelAssetID" Width="120" TextAlignment="Center" Margin="5" Text="Asset ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock Visibility="Hidden" x:Name="txtlabelAssetID" Width="120" TextAlignment="Center" Margin="5" Text="Asset ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1319,18 +1324,18 @@
                             
                         </Grid>
                         <Grid Grid.Row="5">
-                            <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnApprove" Margin="5,5,0,5" >
-                                <Viewbox>
-                                    <TextBlock Text="APPROVE" TextWrapping="Wrap" Margin="5"/>
-                                </Viewbox>
+                            <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnDisapprove" Margin="5,5,0,5" >
+                                
+                                    <TextBlock Text="DISAPPROVE" TextWrapping="Wrap" Margin="5"/>
+                                
                             </Button>
                            
 
                             
                             <Button Style="{DynamicResource RoundCornerUpdate2}" x:Name="btnUpdate" Margin="5,5,0,5" >
-                                <Viewbox>
+                                
                                     <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
-                                </Viewbox>
+                                
                             </Button>
 
                             
@@ -1338,15 +1343,11 @@
                         </Grid>
                         <Grid Grid.Row="6">
                             <Button Visibility="Hidden" Style="{DynamicResource RoundCornerUpdate}" x:Name="btnCancel" Margin="5,5,0,5" >
-                                <Viewbox>
+                                
                                     <TextBlock Text="CANCEL" TextWrapping="Wrap" Margin="5"/>
-                                </Viewbox>
+                                
                             </Button>
-                            <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnDisapprove" Margin="5,5,0,5" >
-                                <Viewbox>
-                                    <TextBlock Text="DISAPPROVE" TextWrapping="Wrap" Margin="5"/>
-                                </Viewbox>
-                            </Button>
+                            
                         </Grid>
 
                     </Grid>

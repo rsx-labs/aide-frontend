@@ -754,9 +754,9 @@
                 </Grid>
                 <Grid Grid.Column="3">
                     <Button Style="{DynamicResource RoundCorner}" Click="btnFilter" Margin="10" Width="auto" Height="auto" >
-                        <Viewbox>
+                        
                             <TextBlock Text="SEARCH" Foreground="White" Margin="6" Padding="5,0"/>
-                        </Viewbox>
+                        
                     </Button>
                 </Grid>
    
@@ -784,7 +784,7 @@
                     <DataGrid Background="Transparent" x:Name="ThreeC_DataGridView" ItemsSource="{Binding ConcernList}"
                           SelectedItem="{Binding SelectedConcern}" IsReadOnly="True" 
                           Height="auto" Width="auto" 
-                          AutoGenerateColumns="False" BorderBrush="Transparent">
+                          AutoGenerateColumns="False" BorderBrush="Transparent" CanUserResizeColumns="False">
 
                         <DataGrid.Columns>
                             <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}" Binding="{Binding REF_ID}" Header="Ref. No." Width="1.5*" />

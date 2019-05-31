@@ -262,7 +262,7 @@ Public Class SuccessRegisterPage
                     Exit Select
             End Select
 
-            DisplayPagingInfo()
+            'DisplayPagingInfo()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try

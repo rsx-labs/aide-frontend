@@ -679,7 +679,7 @@
                     <DataGrid Background="Transparent" AutoGenerateColumns="False" x:Name="ActionLV" 
                       Width="auto" BorderBrush="Transparent" 
                       ItemsSource="{Binding objectActionSet}" 
-                      MouseDoubleClick="ActionLV_MouseDoubleClick">
+                      MouseDoubleClick="ActionLV_MouseDoubleClick" CanUserResizeColumns="False" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Reference No." Width="1*" Binding="{Binding REF_NO,Mode=TwoWay}" IsReadOnly="True"/>
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Action Message"  Width="3*" Binding="{Binding ACTION_MESSAGE,Mode=TwoWay}" IsReadOnly="True"/>

@@ -570,6 +570,7 @@
             <Setter Property="HorizontalGridLinesBrush" Value="Gainsboro"/>
             <Setter Property="CanUserAddRows" Value="False"/>
             <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="IsReadOnly" Value="True" />
         </Style>
         <Style TargetType="{x:Type DataGridCell}">
 
@@ -735,14 +736,14 @@
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row ="0">
-                                <WrapPanel HorizontalAlignment="Stretch" Grid.Row="0">
+                                <!--<WrapPanel HorizontalAlignment="Stretch" Grid.Row="0">-->
                                     <Grid Grid.Row="0" Margin="0">
                                         <Grid Grid.Row="0">
-                                            <Border Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+                                        <Border Margin="0,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
                                                 <DataGrid x:Name="lv_successRegisterOwn"
                                                   ItemsSource="{Binding SuccessRegisterList}" 
-                                                  CanUserAddRows="False" AutoGenerateColumns="False"
-                                                  Width="auto" BorderBrush="Transparent" Background="Transparent">
+                                                  AutoGenerateColumns="False"
+                                                  Width="auto" BorderBrush="Transparent" Background="Transparent" CanUserResizeColumns="False">
                                                     <DataGrid.Columns>
                                                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="ID" Width="5*" Binding="{Binding SuccessID}" />
                                                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Created" Width="15*" Binding="{Binding DateInput, StringFormat=MM/dd/yyyy}" />
@@ -755,7 +756,7 @@
                                             </Border>
                                         </Grid>
                                     </Grid>
-                                </WrapPanel>
+                                <!--</WrapPanel>-->
                             </Grid>
                             <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
@@ -889,13 +890,13 @@
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row ="0">
-                                <WrapPanel HorizontalAlignment="Center" Grid.Row="0">
+                                <!--<WrapPanel HorizontalAlignment="Center" Grid.Row="0">-->
                                     <Grid Grid.Row="0" Margin="0">
                                         <Grid Grid.Row="0">
-                                            <Border Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+                                        <Border Margin="0,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
                                                 <DataGrid Background="Transparent" x:Name="lv_successRegisterAll" 
                                                   ItemsSource="{Binding SuccessRegisterList}" 
-                                                  CanUserAddRows="False" AutoGenerateColumns="False"
+                                                  CanUserResizeColumns="False" AutoGenerateColumns="False"
                                                   Width="auto" BorderBrush="Transparent">
                                                     <DataGrid.Columns>
                                                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="ID" Width="5*" Binding="{Binding SuccessID}" />
@@ -909,7 +910,7 @@
                                             </Border>
                                         </Grid>
                                     </Grid>
-                                </WrapPanel>
+                                <!--</WrapPanel>-->
                             </Grid>
                             <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>

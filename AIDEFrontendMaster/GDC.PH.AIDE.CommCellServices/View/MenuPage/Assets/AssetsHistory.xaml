@@ -664,11 +664,11 @@
                 <Border Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
                     <DataGrid Background="Transparent" x:Name="lv_assetList" 
                           ItemsSource="{Binding AssetHistoryList}"
-                          CanUserAddRows="False" 
+                          
                           AutoGenerateColumns="False" 
                           CanUserResizeColumns="False"
-                          CanUserReorderColumns="False" 
-                          CanUserSortColumns="False"
+                          
+                         
                           BorderBrush="Transparent" 
                           IsReadOnly="True">
                         <DataGrid.Resources>

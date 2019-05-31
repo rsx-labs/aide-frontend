@@ -644,7 +644,8 @@
                                           BorderBrush="Transparent" 
                                           IsReadOnly="True" 
                                           HeadersVisibility="None" 
-                                          Grid.ColumnSpan="2">
+                                          Grid.ColumnSpan="2"
+                                              CanUserReorderColumns="False">
                                         <DataGrid.Resources>
                                             <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="#FF6A6969"/>
                                         </DataGrid.Resources>
@@ -680,6 +681,8 @@
                                   ItemsSource="{Binding BirthdayList}" 
                                   CanUserAddRows="False" 
                                   AutoGenerateColumns="False" 
+                                      CanUserReorderColumns="False"
+                                    CanUserSortColumns="False"
                                   Width="Auto" 
                                   CanUserResizeColumns="False"
                                    Background="Transparent"

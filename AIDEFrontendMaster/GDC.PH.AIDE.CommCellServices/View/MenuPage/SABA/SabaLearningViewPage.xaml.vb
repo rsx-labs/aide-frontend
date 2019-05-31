@@ -297,7 +297,7 @@ Class SabaLearningViewPage
     End Sub
 
     Private Sub btnCCancel_Click(sender As Object, e As RoutedEventArgs)
-        mainframe.Navigate(New SabaLearningMainPage(mainframe, sabacoursemodel.EMP_ID, addframe, menugrid, submenuframe))
+        mainframe.Navigate(New SabaLearningMainPage(mainframe, empID, addframe, menugrid, submenuframe))
         mainframe.IsEnabled = True
         mainframe.Opacity = 1
         menugrid.IsEnabled = True

@@ -318,17 +318,17 @@ Public Class AssetsInventoryAddPage
             btnUpdate.Visibility = Windows.Visibility.Visible
             btnApprove.Visibility = Windows.Visibility.Collapsed
             btnDisapprove.Visibility = Windows.Visibility.Collapsed
-            btnCancel.Visibility = Windows.Visibility.Collapsed
+            'btnCancel.Visibility = Windows.Visibility.Collapsed
 
         ElseIf fromPage = "Approval" Then
             btnUpdate.Visibility = Windows.Visibility.Collapsed
             btnApprove.Visibility = Windows.Visibility.Visible
             btnDisapprove.Visibility = Windows.Visibility.Visible
-            btnCancel.Visibility = Windows.Visibility.Visible
+            'btnCancel.Visibility = Windows.Visibility.Visible
         Else
             If profile.Permission = "Manager" Then
                 btnUpdate.Visibility = Windows.Visibility.Visible
-                btnCancel.Visibility = Windows.Visibility.Collapsed
+                'btnCancel.Visibility = Windows.Visibility.Collapsed
                 btnDisapprove.Visibility = Windows.Visibility.Collapsed
                 btnApprove.Visibility = Windows.Visibility.Collapsed
             Else
@@ -336,7 +336,7 @@ Public Class AssetsInventoryAddPage
                     btnApprove.Visibility = Windows.Visibility.Collapsed
                     btnUpdate.Visibility = Windows.Visibility.Visible
 
-                btnCancel.Visibility = Windows.Visibility.Collapsed
+                'btnCancel.Visibility = Windows.Visibility.Collapsed
             End If
         End If
 

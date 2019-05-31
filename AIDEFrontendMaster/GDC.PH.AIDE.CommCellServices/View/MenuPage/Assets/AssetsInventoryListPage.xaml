@@ -737,17 +737,17 @@
                                 <RowDefinition Height="0.1*"/>
                             </Grid.RowDefinitions>
                             
-                            <Grid Grid.Row="0">
-                                <WrapPanel HorizontalAlignment="Center" Grid.Row="0">
-                                    <Grid Grid.Row="0">
-                                            <Border Margin="0,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+                            <Grid Grid.Row="0" Margin="0">
+                                
+                                    
+                                    <Border Margin="0,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
                                                 <DataGrid Background="Transparent" x:Name="lv_assetInventoryListOwn" 
                                                       ItemsSource="{Binding AssetInventoryList}" 
-                          CanUserAddRows="False" 
+                          
                                               AutoGenerateColumns="False" 
                                               CanUserResizeColumns="False"
-                                              CanUserReorderColumns="False" 
-                                              CanUserSortColumns="False"
+                                              
+                                              
                                               BorderBrush="Transparent" 
                                               IsReadOnly="True">
                                                     <DataGrid.Resources>
@@ -766,7 +766,7 @@
                                                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Tag" Width="100" Binding="{Binding ASSET_TAG}" />
                                                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Assigned" Width="105" Binding="{Binding DATE_ASSIGNED, StringFormat=d}" />
                                                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="90" Binding="{Binding STATUS_DESCR}" />
-                                                        <DataGridTemplateColumn Header="APPROVED" Width="90" >
+                                                        <DataGridTemplateColumn Header="Approved" Width="90" >
                                                             <DataGridTemplateColumn.CellTemplate>
                                                                 <DataTemplate >
                                                                     <CheckBox Name="chkDiscontinue" IsChecked="{Binding Path=ISAPPROVED}" IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -776,9 +776,8 @@
                                                     </DataGrid.Columns>
                                                 </DataGrid>
                                             </Border>
-                                        </Grid>
+                                       
 
-                                </WrapPanel>
                             </Grid>
 
                             <Grid Grid.Row="1">
@@ -879,16 +878,15 @@
                             </Grid.RowDefinitions>
 
                             <Grid Grid.Row ="0">
-                                <WrapPanel HorizontalAlignment="Center" Grid.Row="0">
-                                    <Border Margin="0,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+
+                                <Border Margin="0,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
                                         <DataGrid x:Name="lv_assetInventoryList" 
                                               Background="Transparent"
                                               ItemsSource="{Binding AssetInventoryList}" 
-                                              CanUserAddRows="False" 
+                                              
                                               AutoGenerateColumns="False" 
                                               CanUserResizeColumns="False"
-                                              CanUserReorderColumns="False" 
-                                              CanUserSortColumns="False"
+                                              
                                               BorderBrush="Transparent" 
                                               IsReadOnly="True">
                                             <DataGrid.Resources>
@@ -905,13 +903,13 @@
                                                 <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Model No." Width="100" Binding="{Binding MODEL_NO}" />
                                                 <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Serial No." Width="100" Binding="{Binding SERIAL_NO}" />
                                                 <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Tag" Width="100" Binding="{Binding ASSET_TAG}" />
-                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Purchased" Width="85" Binding="{Binding DATE_DESCR}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Purchased" Width="110" Binding="{Binding DATE_DESCR}" />
                                                 <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Assigned" Width="105" Binding="{Binding DATE_ASSIGNED, StringFormat=d}" />
                                                 <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="90" Binding="{Binding STATUS_DESCR}" />
                                             </DataGrid.Columns>
                                         </DataGrid>
                                     </Border>
-                                </WrapPanel>
+                                
                             </Grid>
                             
                             <Grid Grid.Row="1">
@@ -986,7 +984,7 @@
                         </TabItem.Header>
                         
                         <Grid>
-                            <WrapPanel HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Top">
+
                                 <Grid Grid.Row="0" Margin="0">
                                     <Grid Grid.Row="0">
                                         <Grid Margin="0">
@@ -997,11 +995,10 @@
                                             <DataGrid x:Name="lv_assetInventoryListUnapproved" 
                                                   Background="Transparent"
                                                       ItemsSource="{Binding AssetInventoryList}" 
-                                                  CanUserAddRows="False" 
+                                                  
                                                   AutoGenerateColumns="False" 
                                                   CanUserResizeColumns="False"
-                                                  CanUserReorderColumns="False" 
-                                                  CanUserSortColumns="False"
+                                                  
                                                   BorderBrush="Transparent" 
                                                   IsReadOnly="True">
                                                 <DataGrid.Resources>
@@ -1025,7 +1022,7 @@
                                         </Border>
                                     </Grid>
                                 </Grid>
-                            </WrapPanel>
+                
                         </Grid>
                     </TabItem>
                 </TabControl>

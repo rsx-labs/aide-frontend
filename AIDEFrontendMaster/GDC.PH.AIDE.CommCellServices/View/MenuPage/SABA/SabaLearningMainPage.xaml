@@ -708,7 +708,7 @@
                 <Border Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
 
                     <DataGrid Background="Transparent" AutoGenerateColumns="False" x:Name="SabaLearningLV" 
-                      Width="auto" BorderBrush="Transparent" 
+                      Width="auto" BorderBrush="Transparent" CanUserResizeColumns="False"
                       ItemsSource="{Binding ObjectSabaLearningSet}" 
                       MouseDoubleClick="SabaLearningLV_MouseDoubleClick">
                         <DataGrid.Columns>

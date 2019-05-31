@@ -150,6 +150,7 @@ Class MainWindow
     Public Sub LoadSideBar()
         AttendanceFrame.Navigate(New AttendanceDashBoard(PagesFrame, profile))
         CommendationFrame.Navigate(New CommendationDashBoard(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, profile.Email_Address, profile))
+        ComcellClockFrame.Navigate(New ComcellClockPage(profile.Emp_ID, ComcellClockFrame, Me, profile.Position))
     End Sub
 
     Public Function InitializeService() As Boolean
