@@ -52,6 +52,7 @@ Public Class ProfileDBProvider
         _MyProfile.DtReviewed = _profile.Dt_Reviewed
         _MyProfile.Permission = _profile.Permission
         _MyProfile.CivilStatus = _profile.CivilStatus
+        _MyProfile.ShiftStatus = _profile.ShiftStatus
 
     End Sub
 
@@ -86,6 +87,7 @@ Public Class MyProfile
     Property DtReviewed As DateTime
     Property Permission As String
     Property CivilStatus As String
+    Property ShiftStatus As String
 
 End Class
 

@@ -31,8 +31,7 @@ Class ThreeC_InsertPage
         Me._menugrid = _menugrid
         Me._submenuframe = _submenuframe
         setDate()
-        Dim ss As New ConcernModel
-        Me.DataContext = ss
+
         Me._frame = _frame
         
         GetGeneRatedRefNo()
@@ -93,9 +92,9 @@ Class ThreeC_InsertPage
     Private Function InsertCreated3cs(ByVal obj As ConcernViewModel)
         Dim ss As New Concern
         If obj.SelectedConcern.CONCERN = "" Or obj.SelectedConcern.CAUSE = "" Or obj.SelectedConcern.COUNTERMEASURE = "" Then
-            MsgBox("Fields Cannot Be null", MsgBoxStyle.Exclamation)
+            MsgBox("Fields Cannot Be null", MsgBoxStyle.Exclamation, "AIDE")
         ElseIf dtDate.SelectedDate.ToString() = String.Empty Then
-            MsgBox("Please select Due Date before creating concern.", MsgBoxStyle.Exclamation)
+            MsgBox("Please select Due Date before creating concern.", MsgBoxStyle.Exclamation, "AIDE")
         Else
 
             ss.Cause = obj.SelectedConcern.CAUSE
@@ -103,23 +102,9 @@ Class ThreeC_InsertPage
             ss.CounterMeasure = obj.SelectedConcern.COUNTERMEASURE
             ss.Due_Date = obj.SelectedConcern.DUE_DATE
 
-            If MsgBox("Successfully Created 3C. Do you want to add another concern?", MsgBoxStyle.YesNo) = vbYes Then
+            MsgBox("Successfully Created 3C!", MsgBoxStyle.Information, "AIDE")
 
-                txtConcern.Clear()
-                txtCAUSE.Clear()
-                txtCounterMeasure.Clear()
-                GetGeneRatedRefNo()
-            Else
-                _frame.Navigate(New ThreeC_Page(email, _frame, _addframe, _menugrid, _submenuframe))
-                _frame.IsEnabled = True
-                _frame.Opacity = 1
-                _menugrid.IsEnabled = True
-                _menugrid.Opacity = 1
-                _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
-
-                _addframe.Visibility = Visibility.Hidden
-            End If
+            
         End If
         Return ss
     End Function
@@ -197,6 +182,16 @@ Class ThreeC_InsertPage
         GetGeneRatedRefNo()
         setDate()
         _AIDEClientService.Close()
+
+        _frame.Navigate(New ThreeC_Page(email, _frame, _addframe, _menugrid, _submenuframe))
+        _frame.IsEnabled = True
+        _frame.Opacity = 1
+        _menugrid.IsEnabled = True
+        _menugrid.Opacity = 1
+        _submenuframe.IsEnabled = True
+        _submenuframe.Opacity = 1
+
+        _addframe.Visibility = Visibility.Hidden
     End Sub
 #End Region
    

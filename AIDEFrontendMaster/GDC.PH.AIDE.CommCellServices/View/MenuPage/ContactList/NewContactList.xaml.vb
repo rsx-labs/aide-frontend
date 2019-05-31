@@ -3,7 +3,7 @@ Imports System.Collections.ObjectModel
 Imports System.Diagnostics
 Imports System.ServiceModel
 Imports System.Text.RegularExpressions
-
+Imports System.Configuration
 ''' <summary>
 ''' By Christian Lois Valondo
 ''' </summary>
@@ -11,6 +11,7 @@ Imports System.Text.RegularExpressions
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class NewContactList
     Implements ServiceReference1.IAideServiceCallback
+
 #Region "Fields"
 
     Private mainFrame As Frame
@@ -20,6 +21,11 @@ Class NewContactList
     Private _menugrid As Grid
     Private _addframe As Frame
     Private _submenuframe As Frame
+
+    Dim locationEco As String = ConfigurationManager.AppSettings("locationEco")
+    Dim locationNet As String = ConfigurationManager.AppSettings("locationNet")
+    Dim locationDurham As String = ConfigurationManager.AppSettings("locationDurham")
+    Dim locationWfh As String = ConfigurationManager.AppSettings("locationWfh")
 
 #End Region
 
@@ -37,6 +43,7 @@ Class NewContactList
         Me.DataContext = contacts
         AssignEvents()
         textLimits()
+        SetLocationCB()
     End Sub
 
 #End Region
@@ -47,13 +54,13 @@ Class NewContactList
         Try
             e.Handled = True
             Dim contactList As New ContactList
-            If txtCCelNo.Text = String.Empty AndAlso txtCLocation.Text = String.Empty Then
+            If txtCCelNo.Text = String.Empty AndAlso cbLocation.Text = String.Empty Then
                 MsgBox("Please Fill Up all the Fields", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 contactList.EmpID = txtCEmpID.Text
                 contactList.EMADDRESS = txtCEmail.Text
                 contactList.EMADDRESS2 = txtCEmail2.Text
-                contactList.LOC = txtCLocation.Text
+                contactList.LOC = cbLocation.Text
                 contactList.lOCAL = txtCLocal.Text
                 contactList.CELL_NO = txtCCelNo.Text
                 contactList.HOUSEPHONE = txtCHome.Text
@@ -105,6 +112,15 @@ Class NewContactList
         txtCOther.MaxLength = 15
     End Sub
 
+    Public Sub SetLocationCB()
+        cbLocation.DisplayMemberPath = "Text"
+        cbLocation.SelectedValuePath = "Value"
+        cbLocation.Items.Add(New With {.Text = locationEco, .Value = locationEco})
+        cbLocation.Items.Add(New With {.Text = locationNet, .Value = locationNet})
+        cbLocation.Items.Add(New With {.Text = locationDurham, .Value = locationDurham})
+        cbLocation.Items.Add(New With {.Text = locationWfh, .Value = locationWfh})
+    End Sub
+
     Private Sub NumberValidationTextBox(ByVal sender As Object, ByVal e As TextCompositionEventArgs)
         Dim regex As Regex = New Regex("[^0-9]+")
         e.Handled = regex.IsMatch(e.Text)
@@ -122,7 +138,7 @@ Class NewContactList
         txtCEmail2.Clear()
         txtCHome.Clear()
         txtCLocal.Clear()
-        txtCLocation.Clear()
+        cbLocation.Text = String.Empty
     End Sub
 
     Private Sub LoadData()
@@ -133,7 +149,7 @@ Class NewContactList
         txtCOther.Text = contacts.OTHER_PHONE
         txtCEmpID.Text = contacts.EMP_ID
         txtCLocal.Text = contacts.LOCAL
-        txtCLocation.Text = contacts.LOCATION
+        cbLocation.Text = contacts.LOCATION
     End Sub
 
     Public Function InitializeService() As Boolean

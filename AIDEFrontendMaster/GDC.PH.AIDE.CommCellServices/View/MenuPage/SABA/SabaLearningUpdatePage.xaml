@@ -952,9 +952,9 @@
                     </Grid>
                     <Grid Grid.Row="2">
                         <Button Style="{DynamicResource RoundCornerUpdate}" Name="UpdateBtn" Margin="0,5" Click="UpdateBtn_Click">
-                            <Viewbox>
-                                <TextBlock FontSize="14" Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
-                            </Viewbox>
+                            
+                                <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
+                            
                         </Button>
                     </Grid>
                     <Grid Grid.Row="3">

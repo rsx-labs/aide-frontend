@@ -648,7 +648,7 @@
 
             <Grid Grid.Row="1">
                 <Border Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
-                    <DataGrid Background="Transparent" x:Name="lv_contacts" ItemsSource="{Binding ContactList}" 
+                    <DataGrid FrozenColumnCount ="1" Background="Transparent" x:Name="lv_contacts" ItemsSource="{Binding ContactList}" 
                                           CanUserAddRows="False" AutoGenerateColumns="False" CanUserResizeColumns="False"
                                           BorderBrush="Transparent" IsReadOnly="True" Visibility="Visible" HorizontalAlignment="Left" >
                         <DataGrid.Resources>

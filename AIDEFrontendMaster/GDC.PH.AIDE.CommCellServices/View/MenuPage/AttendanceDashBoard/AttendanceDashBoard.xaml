@@ -33,18 +33,7 @@
                         <TextBox MaxLength="30" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="DimGray" FontSize="12" Margin="10" BorderThickness="3" x:Name="txtSearch" Grid.ColumnSpan="2" />
                         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
                             <Viewbox Margin="15,15,0,15">
-                                <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png">
-                                    <!--<Image.Style>
-                                        <Style TargetType="{x:Type Image}">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=txtSearch}" Value="">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Image.Style>-->
-                                </Image>
+                                <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png"/>
                             </Viewbox>
                             <TextBlock IsHitTestVisible="False" Text="Search Employee..." VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                 <TextBlock.Style>
@@ -61,16 +50,10 @@
                         </StackPanel>
 
                     </Grid>
-
-
-
-
-
-
                     <!--<TextBox Name="txtSearch" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="DimGray" FontSize="12" Margin="2,10,2,10" BorderThickness="1">
 
                         </TextBox>-->
-
+                    
 
                 </Grid>
                 <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}">
@@ -134,18 +117,13 @@
                                                     <TextBlock Foreground="DimGray" Text="{Binding Descr}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" FontSize="9" VerticalAlignment="Bottom" />
                                                 </Grid>-->
                                             </Grid>
-                                            
-
-
                                         </Grid>
-
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
                         </ListView.ItemTemplate>
-
                     </ListView>
-
+                    
 
                 </Grid>
                 <Grid Grid.Row="3">
@@ -174,6 +152,7 @@
                                 <TextBlock Text="Is Present" VerticalAlignment="Center" FontSize="10"/>
                                 </Viewbox>
 
+                              
 
                             </StackPanel>
                         </Grid>

@@ -801,12 +801,12 @@
                                         
                                         <Grid Grid.Column="0">
                                             <Viewbox>
-                                                <Label HorizontalAlignment="Left" Background="White" BorderBrush="DimGray" BorderThickness="1" Margin="5"></Label>
+                                                <Label x:Name="boxUnassigned" Visibility="Collapsed" HorizontalAlignment="Left" Background="White" BorderBrush="DimGray" BorderThickness="1" Margin="5"></Label>
                                             </Viewbox>
                                         </Grid>
                                         <Grid Grid.Column="1">
                                             <Viewbox HorizontalAlignment="Left">
-                                                <Label Foreground="DimGray" Content="Unassigned Assets" VerticalAlignment="Center"/>
+                                                <Label x:Name="lblUnassigned" Visibility="Collapsed" Foreground="DimGray" Content="Unassigned Assets" VerticalAlignment="Center"/>
                                             </Viewbox>
                                         </Grid>
                                     </Grid>
@@ -819,12 +819,12 @@
                                         
                                         <Grid Grid.Column="0">
                                             <Viewbox>
-                                                <Label HorizontalAlignment="Left" Background="#CCFFD8D8" BorderBrush="DimGray" BorderThickness="1" Margin="5"></Label>
+                                                <Label x:Name="boxPersonal" Visibility="Collapsed" HorizontalAlignment="Left" Background="#CCFFD8D8" BorderBrush="DimGray" BorderThickness="1" Margin="5"></Label>
                                             </Viewbox>
                                         </Grid>
                                         <Grid Grid.Column="1">
                                             <Viewbox HorizontalAlignment="Left">
-                                                <Label Foreground="DimGray" Content="Personal Assets" VerticalAlignment="Center"/>
+                                                <Label x:Name="lblPersonal" Visibility="Collapsed" Foreground="DimGray" Content="Personal Assets" VerticalAlignment="Center"/>
                                             </Viewbox>
                                         </Grid>
                                     </Grid>

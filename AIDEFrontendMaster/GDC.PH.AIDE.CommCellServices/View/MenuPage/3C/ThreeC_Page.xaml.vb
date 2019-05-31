@@ -42,7 +42,7 @@ Public Class ThreeC_Page
         Me._addframe = _addframe
         Me._menugrid = _menugrid
         Me._submenuframe = _submenuframe
-        Me.DataContext = clear
+
 
         LoadConcernList(offsetVal, nextVal)
     End Sub
@@ -74,7 +74,6 @@ Public Class ThreeC_Page
             Me.DataContext = _concernViewModel
 
             max = lstConcern.Count
-
         Catch ex As SystemException
 
             MsgBox(ex.Message)

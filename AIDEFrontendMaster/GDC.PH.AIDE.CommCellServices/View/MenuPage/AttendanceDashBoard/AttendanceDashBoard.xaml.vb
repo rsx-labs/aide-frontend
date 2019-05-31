@@ -12,8 +12,6 @@ Imports System.Printing
 Public Class AttendanceDashBoard
     Implements ServiceReference1.IAideServiceCallback
 
-
-
 #Region "Declarations"
     Private _AideService As ServiceReference1.AideServiceClient
     Private mainFrame As New Frame
@@ -39,10 +37,7 @@ Public Class AttendanceDashBoard
 
 #End Region
 
-
 #Region "Functions"
-
-
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
         Try
@@ -73,8 +68,6 @@ Public Class AttendanceDashBoard
                     SetCategory(rawUser)
                     SetCategoryDisplay(rawUser)
                     lstAEmployeeList.Add(New AttendanceModel(rawUser))
-
-
                 Next
 
                 AttendanceListVM.EmployeeListAttendance = lstAEmployeeList
@@ -104,8 +97,6 @@ Public Class AttendanceDashBoard
                     SetCategory(rawUser)
                     SetCategoryDisplay(rawUser)
                     lstAEmployeeList.Add(New AttendanceModel(rawUser))
-
-
                 Next
 
                 AttendanceListVM.EmployeeListAttendance = lstAEmployeeList
@@ -147,21 +138,23 @@ Public Class AttendanceDashBoard
             rawUser_.Desc = "(H) Emergency Leave"
         ElseIf setStatus = 10 Then
             rawUser_.Desc = "Other Leaves"
+        ElseIf setStatus = 11 Then
+            rawUser_.Desc = "(L) Present"
         End If
     End Sub
 
     Public Sub SetCategory(rawUser_ As myAttendanceList)
         If setStatus = 1 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\onsite.png"
-        ElseIf setStatus = 2 Then
+        ElseIf setStatus = 2 Or setStatus = 11 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\present.png"
         ElseIf setStatus = 3 Or setStatus = 5 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\sick.png"
-            'displayStatus = Colors.Red.ToString()
         ElseIf setStatus = 4 Or setStatus = 6 Or setStatus = 8 Or setStatus = 9 Or setStatus = 10 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\vacation.png"
         End If
     End Sub
+
 #End Region
 #Region "ICallBack Function"
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
@@ -196,4 +189,6 @@ Public Class AttendanceDashBoard
             SetDataForSearch()
         End If
     End Sub
+
+
 End Class

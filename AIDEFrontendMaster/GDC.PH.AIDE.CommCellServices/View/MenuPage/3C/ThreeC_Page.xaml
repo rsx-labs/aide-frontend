@@ -793,7 +793,7 @@
                             <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding COUNTERMEASURE}" Header="Countermeasure" Width="2*"></DataGridTextColumn>
                             <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding EMP_ID}" Header="Owner" Width="1*"></DataGridTextColumn>
                             <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding ACT_REFERENCE}" Header="Action Ref." Width="1.5*"></DataGridTextColumn>
-                            <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding DUE_DATE, StringFormat=\{0:dd-MM-yyyy \}}" Header="Due Date" Width="1.2*"></DataGridTextColumn>
+                            <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding DUE_DATE, StringFormat=MM/dd/yyyy}" Header="Due Date" Width="1.2*"></DataGridTextColumn>
                             <DataGridTextColumn  ElementStyle="{StaticResource ColumnElementStyle}"  Binding="{Binding STATUS}" Header="Status" Width="1*"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>

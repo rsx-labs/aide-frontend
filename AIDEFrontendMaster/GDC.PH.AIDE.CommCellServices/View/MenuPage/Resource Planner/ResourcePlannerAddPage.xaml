@@ -1293,9 +1293,9 @@
                     </Grid>
                     <Grid Grid.Row="5">
                         <Button Style="{DynamicResource RoundCorner}" Margin="5,5,10,10" x:Name="btnCreateLeave"  >
-                            <Viewbox>
-                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="CREATE" TextWrapping="Wrap" Margin="5" FontSize="14"/>
-                            </Viewbox>
+                            
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="CREATE" TextWrapping="Wrap" Margin="5"/>
+                            
                         </Button>
                     </Grid>
 

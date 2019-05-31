@@ -39,7 +39,11 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+<<<<<<< HEAD
              
+=======
+    
+>>>>>>> aa4d15abd03d3c0fd1c4abcecfe2cd3be9b79c9b
                     <Viewbox HorizontalAlignment="Left" Margin="10,7">
                         <TextBlock TextWrapping="Wrap" Margin="2" Text="Adaptive Intelligent Dashboard for Employees" Foreground="WhiteSmoke"/>
                     </Viewbox>

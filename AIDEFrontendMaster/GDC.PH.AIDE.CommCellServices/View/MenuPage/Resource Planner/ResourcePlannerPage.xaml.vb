@@ -47,12 +47,9 @@ Class ResourcePlannerPage
 
         month = Date.Now.Month
         year = Date.Now.Year
-        txtEmpID.Text = profile.Emp_ID
-        SetMonths()
+        MonthLabel.Text = SetMonths() + " " + year.ToString()
         LoadMonth()
-        LoadCategory()
         LoadAllEmpResourcePlanner()
-        'LoadAllCategory()
     End Sub
 
     Public Function InitializeService() As Boolean
@@ -108,72 +105,97 @@ Class ResourcePlannerPage
         cbDisplayMonth.Items.Add(New With {.Text = "December", .Value = 12})
     End Sub
 
-    Public Sub LoadCategory()
-        Try
-            InitializeService()
-            Dim lstresource As ResourcePlanner() = client.GetStatusResourcePlanner()
-            Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
+    'Public Sub LoadCategory()
+    '    Try
+    '        InitializeService()
+    '        Dim lstresource As ResourcePlanner() = client.GetStatusResourcePlanner()
+    '        Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
 
-            For Each objResource As ResourcePlanner In lstresource
-                _ResourceDBProvider.SetCategoryList(objResource)
-            Next
+    '        For Each objResource As ResourcePlanner In lstresource
+    '            _ResourceDBProvider.SetCategoryList(objResource)
+    '        Next
 
-            For Each iResource As myResourceList In _ResourceDBProvider.GetCategoryList()
-                resourcelist.Add(New ResourcePlannerModel(iResource))
-            Next
-            _ResourceViewModel.CategoryList = resourcelist
-            cbFilterCategory.DataContext = _ResourceViewModel
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-    End Sub
+    '        For Each iResource As myResourceList In _ResourceDBProvider.GetCategoryList()
+    '            resourcelist.Add(New ResourcePlannerModel(iResource))
+    '        Next
+    '        _ResourceViewModel.CategoryList = resourcelist
+    '        cbFilterCategory.DataContext = _ResourceViewModel
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+    '    End Try
+    'End Sub
 
     'Loades All Status
-    Public Sub LoadAllCategory()
-        Try
-            InitializeService()
-            Dim lstresource As ResourcePlanner() = client.GetAllStatusResourcePlanner()
-            Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
+    'Public Sub LoadAllCategory()
+    '    Try
+    '        InitializeService()
+    '        Dim lstresource As ResourcePlanner() = client.GetAllStatusResourcePlanner()
+    '        Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
 
-            For Each objResource As ResourcePlanner In lstresource
-                _ResourceDBProvider.SetAllCategoryList(objResource)
-            Next
+    '        For Each objResource As ResourcePlanner In lstresource
+    '            _ResourceDBProvider.SetAllCategoryList(objResource)
+    '        Next
 
-            For Each iResource As myResourceList In _ResourceDBProvider.GetAllCategoryList()
-                resourcelist.Add(New ResourcePlannerModel(iResource))
-            Next
-            _ResourceViewModel.FilterCategoryList = resourcelist
-            cbFilterCategory.DataContext = _ResourceViewModel
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-    End Sub
+    '        For Each iResource As myResourceList In _ResourceDBProvider.GetAllCategoryList()
+    '            resourcelist.Add(New ResourcePlannerModel(iResource))
+    '        Next
+    '        _ResourceViewModel.FilterCategoryList = resourcelist
+    '        cbFilterCategory.DataContext = _ResourceViewModel
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+    '    End Try
+    'End Sub
 
     Public Sub SetCategory()
         If setStatus = 1 Then
-            displayStatus = "Onsite"
+            displayStatus = "O"
         ElseIf setStatus = 2 Then
-            displayStatus = "Present"
+            displayStatus = "P"
         ElseIf setStatus = 3 Then
-            displayStatus = "Sick Leave"
+            displayStatus = "SL"
         ElseIf setStatus = 4 Then
-            displayStatus = "Vacation Leave"
+            displayStatus = "VL"
         ElseIf setStatus = 5 Then
-            displayStatus = "(H) Sick Leave"
+            displayStatus = "HSL"
         ElseIf setStatus = 6 Then
-            displayStatus = "(H) Vacation Leave"
+            displayStatus = "HVL"
         ElseIf setStatus = 7 Then
-            displayStatus = "Holiday"
+            displayStatus = "H"
         ElseIf setStatus = 8 Then
-            displayStatus = "Emergency Leave"
+            displayStatus = "EL"
         ElseIf setStatus = 9 Then
-            displayStatus = "(H) Emergency Leave"
+            displayStatus = "HEL"
         ElseIf setStatus = 10 Then
-            displayStatus = "Other Leaves"
+            displayStatus = "OL"
+        ElseIf setStatus = 11 Then
+            displayStatus = "PL"
         Else
             displayStatus = ""
         End If
     End Sub
+
+    Public Function setDayOfWeekAbbr(dayfull As String)
+        Dim abbrDay As String = String.Empty
+
+        Select Case dayfull
+            Case "Monday"
+                abbrDay = "MON"
+            Case "Tuesday"
+                abbrDay = "TUE"
+            Case "Wednesday"
+                abbrDay = "WED"
+            Case "Thursday"
+                abbrDay = "THU"
+            Case "Friday"
+                abbrDay = "FRI"
+            Case "Saturday"
+                abbrDay = "SAT"
+            Case "Sunday"
+                abbrDay = "SUN"
+        End Select
+
+        Return abbrDay
+    End Function
 
     'Public Sub LoadEmpResourcePlanner()
     '    Try
@@ -214,6 +236,7 @@ Class ResourcePlannerPage
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
 
             Dim emp_id As Integer
+            Dim abbrDay As String = String.Empty
             Dim it As New List(Of Dictionary(Of String, String))()
             Dim dict As New Dictionary(Of String, String)()
 
@@ -229,6 +252,7 @@ Class ResourcePlannerPage
 
                 setStatus = iResource.Status
                 SetCategory()
+
                 If emp_id <> iResource.Emp_ID Then
                     If emp_id > 0 Then
                         it.Add(dict)
@@ -237,25 +261,31 @@ Class ResourcePlannerPage
                     dateFirst = Date.Parse(dateFirstSTR)
                     dict = New Dictionary(Of String, String)()
                     dict.Add("Employee Name", iResource.Emp_Name)
+
                     While iResource.Date_Entry.ToString("yyyy-MM-dd") > dateFirst
                         If dateFirst.DayOfWeek <> DayOfWeek.Saturday And dateFirst.DayOfWeek <> DayOfWeek.Sunday Then
-                            dict.Add(dateFirst.ToLongDateString.Substring(0, dateFirst.ToLongDateString.Length - 6), "")
+                            abbrDay = setDayOfWeekAbbr(dateFirst.DayOfWeek.ToString())
+                            dict.Add(dateFirst.Day.ToString() + Environment.NewLine + abbrDay, "")
                         End If
                         dateFirst = DateAdd(DateInterval.Day, 1, dateFirst)
                     End While
-                    dict.Add(iResource.Date_Entry.ToLongDateString.Substring(0, iResource.Date_Entry.ToLongDateString.Length - 6), displayStatus)
+                    abbrDay = setDayOfWeekAbbr(iResource.Date_Entry.DayOfWeek.ToString())
+                    dict.Add(iResource.Date_Entry.Day.ToString() + Environment.NewLine + abbrDay, displayStatus)
                 End If
                 If emp_id = iResource.Emp_ID Then
-                    If dict.ContainsKey(dateFirst.ToLongDateString.Substring(0, dateFirst.ToLongDateString.Length - 6)) Then
+                    abbrDay = setDayOfWeekAbbr(dateFirst.DayOfWeek.ToString())
+                    If dict.ContainsKey(dateFirst.Day.ToString() + Environment.NewLine + abbrDay) Then
                         dateFirst = DateAdd(DateInterval.Day, 1, dateFirst)
                     End If
                     While iResource.Date_Entry.ToString("yyyy-MM-dd") <> dateFirst
                         If dateFirst.DayOfWeek <> DayOfWeek.Saturday And dateFirst.DayOfWeek <> DayOfWeek.Sunday Then
-                            dict.Add(dateFirst.ToLongDateString.Substring(0, dateFirst.ToLongDateString.Length - 6), "")
+                            abbrDay = setDayOfWeekAbbr(dateFirst.DayOfWeek.ToString())
+                            dict.Add(dateFirst.Day.ToString() + Environment.NewLine + abbrDay, "")
                         End If
                         dateFirst = DateAdd(DateInterval.Day, 1, dateFirst)
                     End While
-                    dict.Add(iResource.Date_Entry.ToLongDateString.Substring(0, iResource.Date_Entry.ToLongDateString.Length - 6), displayStatus)
+                    abbrDay = setDayOfWeekAbbr(iResource.Date_Entry.DayOfWeek.ToString())
+                    dict.Add(iResource.Date_Entry.Day.ToString() + Environment.NewLine + abbrDay, displayStatus)
                 End If
                 emp_id = iResource.Emp_ID
             Next
@@ -272,29 +302,29 @@ Class ResourcePlannerPage
     End Sub
 
     'Apply in cbFilterSelectionChanged
-    Public Sub LoadAllEmpResourcePlannerByStatus()
-        Try
-            InitializeService()
-            _ResourceDBProvider._splist.Clear()
-            Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, cbFilterCategory.SelectedValue, displayOption, year)
-            Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
-            Dim resourceListVM As New ResourcePlannerViewModel()
+    'Public Sub LoadAllEmpResourcePlannerByStatus()
+    '    Try
+    '        InitializeService()
+    '        _ResourceDBProvider._splist.Clear()
+    '        Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, cbFilterCategory.SelectedValue, displayOption)
+    '        Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
+    '        Dim resourceListVM As New ResourcePlannerViewModel()
 
-            For Each objResource As ResourcePlanner In lstresource
-                _ResourceDBProvider.SetAllEmpRPList(objResource)
-            Next
+    '        For Each objResource As ResourcePlanner In lstresource
+    '            _ResourceDBProvider.SetAllEmpRPList(objResource)
+    '        Next
 
-            For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
-                resourcelist.Add(New ResourcePlannerModel(iResource))
+    '        For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
+    '            resourcelist.Add(New ResourcePlannerModel(iResource))
 
-            Next
-            resourceListVM.ResourceListLeaveCredits = resourcelist
-            dgLeaveCredits.ItemsSource = resourcelist
+    '        Next
+    '        resourceListVM.ResourceListLeaveCredits = resourcelist
+    '        dgLeaveCredits.ItemsSource = resourcelist
 
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-    End Sub
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+    '    End Try
+    'End Sub
 
     Private Function ToDataTable(list As List(Of Dictionary(Of String, String))) As DataTable
         Dim result As New DataTable()
@@ -334,7 +364,8 @@ Class ResourcePlannerPage
     '    LoadAllEmpResourcePlanner()
     'End Sub
 
-    Public Sub SetMonths()
+    Public Function SetMonths()
+
         Select Case month
             Case "1"
                 displayMonth = "January"
@@ -361,7 +392,8 @@ Class ResourcePlannerPage
             Case "12"
                 displayMonth = "December"
         End Select
-    End Sub
+        Return displayMonth
+    End Function
 
     'Private Sub btnViewAll_Click(sender As Object, e As RoutedEventArgs) Handles btnViewAll.Click
     '    txtDisplayMonth.Text = String.Empty
@@ -373,27 +405,28 @@ Class ResourcePlannerPage
 #Region "Button/Event"
     Private Sub cbDisplayMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbDisplayMonth.SelectionChanged
         month = cbDisplayMonth.SelectedValue
+        MonthLabel.Text = SetMonths() + " " + year.ToString()
         LoadAllEmpResourcePlanner()
     End Sub
 
-    Private Sub cbFilterCategory_DropDownClosed(sender As Object, e As EventArgs) Handles cbFilterCategory.DropDownClosed
-        SetMonths()
-    End Sub
+    'Private Sub cbFilterCategory_DropDownClosed(sender As Object, e As EventArgs) Handles cbFilterCategory.DropDownClosed
+    '    SetMonths()
+    'End Sub
 
-    Private Sub cbFilterDisplay_DropDownClosed(sender As Object, e As EventArgs) Handles cbFilterDsiplay.DropDownClosed
-        'GetDisplayOptions()
-        Dim _displayOption As String = cbFilterDsiplay.Text
-        Select Case _displayOption
-            Case "Monthly"
-                displayOption = 2
-            Case "Fiscal Year"
-                displayOption = 3
-            Case Else
-                displayOption = 1
-        End Select
+    'Private Sub cbFilterDisplay_DropDownClosed(sender As Object, e As EventArgs) Handles cbFilterDsiplay.DropDownClosed
+    '    'GetDisplayOptions()
+    '    Dim _displayOption As String = cbFilterDsiplay.Text
+    '    Select Case _displayOption
+    '        Case "Monthly"
+    '            displayOption = 2
+    '        Case "Fiscal Year"
+    '            displayOption = 3
+    '        Case Else
+    '            displayOption = 1
+    '    End Select
 
-        LoadAllEmpResourcePlannerByStatus()
-    End Sub
+    '    LoadAllEmpResourcePlannerByStatus()
+    'End Sub
 
     Private Sub btnCreateLeave_Click(sender As Object, e As RoutedEventArgs) Handles btnCreateLeave.Click
         _addframe.Navigate(New ResourcePlannerAddPage(profile, mainFrame, _addframe, _menugrid, _submenuframe))

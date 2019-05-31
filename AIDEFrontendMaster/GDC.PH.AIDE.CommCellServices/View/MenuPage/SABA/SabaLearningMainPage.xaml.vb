@@ -23,7 +23,7 @@ Class SabaLearningMainPage
     Dim lstSabaLearning As SabaLearning()
     Dim SabaLearningListVM As New SabaLearningViewModel()
 
- 
+
 
 #End Region
 
@@ -43,16 +43,21 @@ Class SabaLearningMainPage
 
 #Region "Constructor"
 
-    Public Sub New(_mainframe As Frame, _empID As Integer, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_mainframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
 
         InitializeComponent()
-        Me.empID = _empID
+        Me.empID = _profile.Emp_ID
         Me.mainframe = _mainframe
         Me.addframe = _addframe
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
         SetData()
         Me.DataContext = SabaLearningListVM
+        Me.profile = _profile
+        If _profile.Permission = "Manager" Then
+            btnCreate.Visibility = Windows.Visibility.Visible
+        End If
+
     End Sub
 
 #End Region
@@ -233,7 +238,7 @@ Class SabaLearningMainPage
 
 
 
-                addframe.Navigate(New SabaLearningViewPage(sabalearning, mainframe, addframe, menugrid, submenuframe, empID))
+                addframe.Navigate(New SabaLearningViewPage(sabalearning, mainframe, addframe, menugrid, submenuframe, profile))
                 mainframe.IsEnabled = False
                 mainframe.Opacity = 0.3
                 menugrid.IsEnabled = False
@@ -247,7 +252,7 @@ Class SabaLearningMainPage
     End Sub
 
     Private Sub btnCreate_Click_1(sender As Object, e As RoutedEventArgs)
-        addframe.Navigate(New SabaLearningAddPage(empID, mainframe, addframe, menugrid, submenuframe))
+        addframe.Navigate(New SabaLearningAddPage(profile, mainframe, addframe, menugrid, submenuframe))
         mainframe.IsEnabled = False
         mainframe.Opacity = 0.3
         menugrid.IsEnabled = False

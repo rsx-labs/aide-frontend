@@ -176,6 +176,15 @@ Class UpdateActionListPage
                         act_ion.Act_Assignee = Nothing
                         act_ion.Act_DueDate = Nothing
                         act_ion.Act_DateClosed = Nothing
+
+                        _frame.Navigate(New HomeActionListsPage(_frame, _email, _addframe, _menugrid, _submenuframe, profiles))
+                        _frame.IsEnabled = True
+                        _frame.Opacity = 1
+                        _menugrid.IsEnabled = True
+                        _menugrid.Opacity = 1
+                        _submenuframe.IsEnabled = True
+                        _submenuframe.Opacity = 1
+                        _addframe.Visibility = Visibility.Hidden
                     End If
                 Else
                     MsgBox("Please fill up all fields!", vbOKOnly + MsgBoxStyle.Information, "AIDE")

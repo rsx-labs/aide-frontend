@@ -69,8 +69,8 @@ Public Class TaskListPage
     Private Sub lv_taskList_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles lv_taskList.MouseDoubleClick
         e.Handled = True
 
-        Dim rawStatus As Integer
-        Dim rawPhase As Integer
+        Dim rawStatus As String
+        Dim rawPhase As String
         Dim tasksListDBProvider As New TaskDBProvider
 
         If lv_taskList.SelectedIndex <> -1 Then

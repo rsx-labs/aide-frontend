@@ -170,6 +170,8 @@ Class ResourcePlannerPage
             displayStatus = "(H) Emergency Leave"
         ElseIf setStatus = 10 Then
             displayStatus = "Other Leaves"
+        ElseIf setStatus = 11 Then
+            displayStatus = "(L) Present"
         Else
             displayStatus = ""
         End If
@@ -403,7 +405,7 @@ Class ResourcePlannerPage
         _menugrid.Opacity = 0.3
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(250, 100, 250, 100)
+        _addframe.Margin = New Thickness(150, 80, 150, 80)
         _addframe.Visibility = Visibility.Visible
     End Sub
 
