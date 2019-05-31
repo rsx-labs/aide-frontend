@@ -43,7 +43,21 @@
                 </Grid>
             </Grid>
         </Button>
-        <!--<Button Name="Late" Grid.Column="2" Margin="2" Style="{DynamicResource RoundCorner}" Click="Late_Click" >
+        <Button Name="Comcell" Grid.Column="2" Margin="2" Style="{DynamicResource RoundCorner}" Click="Comcell_Click" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="70*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/Comcell.png"/>
+                </Grid>
+                <Grid Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Foreground="White" Text="Comcell Meeting"></TextBlock>
+                </Grid>
+            </Grid>
+        </Button>
+        <Button Visibility="Collapsed" Name="Late" Grid.Column="3" Margin="2" Style="{DynamicResource RoundCorner}" Click="Late_Click" >
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="30*"/>
@@ -56,7 +70,7 @@
                     <TextBlock Foreground="White" Text="Late Tracking"></TextBlock>
                 </Grid>
             </Grid>
-        </Button>-->
+        </Button>
     </Grid>
     <Page.Resources>
         <Style x:Key="RoundCorner" TargetType="{x:Type Button}">

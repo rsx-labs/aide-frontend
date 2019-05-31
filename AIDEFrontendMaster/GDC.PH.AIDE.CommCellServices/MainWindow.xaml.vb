@@ -1,19 +1,20 @@
 ﻿Imports UI_AIDE_CommCellServices.ServiceReference1
 Imports System.Collections.ObjectModel
 Imports System.ServiceModel
-Imports System
 Imports System.Windows
 Imports System.Windows.Threading
 Imports System.Runtime.InteropServices
 Imports Outlook = Microsoft.Office.Interop.Outlook
 Imports System.Reflection
 Imports System.Diagnostics.Eventing.Reader
+Imports System.Security
+Imports System.Configuration
 
 Class MainWindow
     Implements IAideServiceCallback
 
 #Region "Fields"
-    Public email As String
+    Public email As String = "c.lim@ph.fujitsu.com"
     Private departmentID As Integer
     Private empID As Integer
     Private permission As Integer
@@ -22,8 +23,8 @@ Class MainWindow
     Dim profileViewModel As New ProfileViewModel
     Dim profile As Profile
     Dim aideClientService As AideServiceClient
-    Dim eventStartUpId As Long = 12
-    Dim eventLogInId As Long = 4624
+    Dim eventStartUpId As String = ConfigurationManager.AppSettings("eventStartUpId")
+    Dim eventLogInId As String = ConfigurationManager.AppSettings("eventLogInId")
 #End Region
 
 #Region "Property declarations"
@@ -99,16 +100,15 @@ Class MainWindow
 
 #End Region
 
-
 #Region "Constructors"
     Public Sub New()
         InitializeComponent()
         InitializeService()
         getTime()
-        CheckOutlook()
+        'CheckOutlook()
         MsgBox("Welcome " & email, MsgBoxStyle.Information, "AIDE")
         SetEmployeeData()
-        attendance()
+        'attendance()
         LoadSideBar()
         PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
         SubMenuFrame.Navigate(New BlankSubMenu())
@@ -137,7 +137,6 @@ Class MainWindow
             app = System.Runtime.InteropServices.Marshal.GetActiveObject("Outlook.Application")
             email = app.Session.CurrentUser.AddressEntry.GetExchangeUser.PrimarySmtpAddress
             'email = Application.ActiveExplorer.Session.CurrentUser.Address
-            'email = app.Session.CurrentUser.Address
             'email = app.Session.CurrentUser.Address
             Return True
         Catch ex As Exception
@@ -203,7 +202,6 @@ Class MainWindow
 
     Private Sub SetEmployeeData()
         Try
-            'email = "a.batongbacal@ph.fujitsu.com"
             If email <> String.Empty Then
                 If Me.SignOn Then
                     IsSignedOn = True
@@ -217,28 +215,48 @@ Class MainWindow
         End Try
     End Sub
 
+    Public Sub sendEmail()
+        Dim OutlookMessage As outlook.MailItem
+        Dim AppOutlook As New outlook.Application
+        Try
+            OutlookMessage = AppOutlook.CreateItem(outlook.OlItemType.olMailItem)
+            Dim Recipents As outlook.Recipients = OutlookMessage.Recipients
+            Recipents.Add("jhunellbarcenas@gmail.com")
+            OutlookMessage.Subject = "Sending through Outlook"
+            OutlookMessage.Body = "Testing outlook Mail"
+            OutlookMessage.BodyFormat = outlook.OlBodyFormat.olFormatHTML
+            OutlookMessage.Send()
+        Catch ex As Exception
+            MessageBox.Show("Mail could not be sent") 'if you dont want this message, simply delete this line 
+        Finally
+            OutlookMessage = Nothing
+            AppOutlook = Nothing
+        End Try
+    End Sub
+
     Public Sub attendance()
         Try
             'Get Login Time
-            'Dim dateToday As Date = DateTime.Now.ToString("MM/dd/yyyy")
-            'Dim logName As EventLog = New EventLog()
-            'logName.Log = "System"
-            'Dim entries = logName.Entries.Cast(Of EventLogEntry)().Where(Function(x) x.InstanceId = eventStartUpId And x.TimeWritten.Date = dateToday).[Select](Function(x) New With {x.MachineName, x.Site, x.Source, x.TimeWritten, x.InstanceId}).ToList()
+            Dim dateToday As Date = DateTime.Now.ToString("MM/dd/yyyy")
+            Dim logName As EventLog = New EventLog()
+            logName.Log = "System"
+            Dim entries = logName.Entries.Cast(Of EventLogEntry)().Where(Function(x) x.InstanceId = CLng(eventStartUpId) And x.TimeWritten.Date = dateToday).[Select](Function(x) New With {x.MachineName, x.Site, x.Source, x.TimeWritten, x.InstanceId}).ToList()
 
-            'If entries.Count = 0 Then
-            '    logName.Log = "Security"
-            '    entries = logName.Entries.Cast(Of EventLogEntry)().Where(Function(x) x.InstanceId = eventLogInId And x.TimeWritten.Date = dateToday).[Select](Function(x) New With {x.MachineName, x.Site, x.Source, x.TimeWritten, x.InstanceId}).ToList()
-            'End If
+            If entries.Count = 0 Then
+                logName.Source = "Microsoft Windows security auditing."
+                logName.Log = "Security"
+                entries = logName.Entries.Cast(Of EventLogEntry)().Where(Function(x) x.InstanceId = CLng(eventLogInId) And x.TimeWritten.Date = dateToday).[Select](Function(x) New With {x.MachineName, x.Site, x.Source, x.TimeWritten, x.InstanceId}).ToList()
+            End If
 
-            'Dim timeIn As String = entries.First().TimeWritten.ToString
-            'Dim attendanceSummarry As New AttendanceSummary
-            'attendanceSummarry.EmployeeID = EmployeeID
-            'attendanceSummarry.TimeIn = timeIn
-
-            Dim timeIn As String = DateTime.Now.ToString
+            Dim timeIn As String = entries.First().TimeWritten.ToString
             Dim attendanceSummarry As New AttendanceSummary
             attendanceSummarry.EmployeeID = EmployeeID
             attendanceSummarry.TimeIn = timeIn
+
+            'Dim timeIn As String = DateTime.Now.ToString
+            'Dim attendanceSummarry As New AttendanceSummary
+            'attendanceSummarry.EmployeeID = EmployeeID
+            'attendanceSummarry.TimeIn = timeIn
 
             If attendanceSummarry.EmployeeID = 0 Then 'Service time-out needs to be handled on the service or else always restart it when it time's out
                 MsgBox("Service Time-Out! Attendance will not be Recorded!" + Environment.NewLine + "Application will Automatically Close.", MsgBoxStyle.Critical, "AIDE")
@@ -378,7 +396,7 @@ Class MainWindow
 
     Private Sub OtherBtn_Click(sender As Object, e As RoutedEventArgs)
         PagesFrame.Navigate(New BirthdayPage(PagesFrame, email))
-        SubMenuFrame.Navigate(New OtherSubMenuPage(PagesFrame, email, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame))
+        SubMenuFrame.Navigate(New OtherSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
         LoadSideBar()
     End Sub
 #End Region

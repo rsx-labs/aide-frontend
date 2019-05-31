@@ -5,7 +5,7 @@ Imports System.Diagnostics
 Imports System.ServiceModel
 Imports System.Collections.ObjectModel
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
-Class SabaLearningMainPage
+Class ComcellMainPage
     Implements ServiceReference1.IAideServiceCallback
 
 
@@ -19,9 +19,11 @@ Class SabaLearningMainPage
     Private submenuframe As Frame
     Private email As String
     Private profile As Profile
+    Private year As Integer
+    Private nextYear As Integer
 
-    Dim lstSabaLearning As SabaLearning()
-    Dim SabaLearningListVM As New SabaLearningViewModel()
+    Dim lstComcell As Comcell()
+    Dim ComcellVM As New ComcellViewModel()
 
 
 
@@ -31,7 +33,7 @@ Class SabaLearningMainPage
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 10
+    Dim pagingRecordPerPage As Integer = 12
 
     Private Enum PagingMode
         _First = 1
@@ -51,13 +53,16 @@ Class SabaLearningMainPage
         Me.addframe = _addframe
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
-        SetData()
-        Me.DataContext = SabaLearningListVM
+        Me.DataContext = ComcellVM
         Me.profile = _profile
-        If _profile.Permission = "Manager" Then
+
+        If profile.Permission = "Manager" Then
             btnCreate.Visibility = Windows.Visibility.Visible
         End If
 
+        year = Date.Now.Year
+        SetData()
+        LoadYears()
     End Sub
 
 #End Region
@@ -80,8 +85,7 @@ Class SabaLearningMainPage
     Public Sub SetData()
         Try
             If InitializeService() Then
-                lstSabaLearning = _AideService.GetAllSabaCourses(empID)
-                'LoadSabaCourses()
+                lstComcell = _AideService.GetComcellMeeting(empID, year)
                 SetPaging(PagingMode._First)
             End If
         Catch ex As Exception
@@ -89,33 +93,46 @@ Class SabaLearningMainPage
         End Try
     End Sub
 
-
-    Public Sub LoadSabaCourses()
+    Public Sub LoadComcell()
         Try
-            Dim lstSabaLearningList As New ObservableCollection(Of SabaLearningModel)
-            Dim sabalearningDBProvider As New SabaLearningDBProvider
-            Dim objSabaLearning As New SabaLearning
+            Dim lstComcellList As New ObservableCollection(Of ComcellModel)
+            Dim ComcellDBProvider As New ComcellDBProvider
+            Dim objComcell As New Comcell
 
 
             For i As Integer = startRowIndex To lastRowIndex
-                objSabaLearning = lstSabaLearning(i)
-                sabalearningDBProvider._setlistofitems(objSabaLearning)
+                objComcell = lstComcell(i)
+                ComcellDBProvider.SetMyComcell(objComcell)
             Next
 
-            For Each rawUser As mySabaLearningSet In sabalearningDBProvider._getobjSabaLearning()
-                lstSabaLearningList.Add(New SabaLearningModel(rawUser))
+            For Each rawUser As MyComcell In ComcellDBProvider.GetMyComcell()
+                lstComcellList.Add(New ComcellModel(rawUser))
             Next
 
-            SabaLearningListVM.ObjectSabaLearningSet = lstSabaLearningList
-            'SabaLearningLV.ItemsSource = SabaLearningListVM.ObjectSabaLearningSet
-            Me.DataContext = SabaLearningListVM
+            ComcellVM.ComcellList = lstComcellList
+
+            Me.DataContext = ComcellVM
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
+
+    Public Sub LoadYears()
+        Try
+            cbYear.DisplayMemberPath = "Text"
+            cbYear.SelectedValuePath = "Value"
+            For i As Integer = 2019 To DateTime.Today.Year
+                nextYear = i + 1
+                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
+            Next
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
     Private Sub SetPaging(mode As Integer)
         Try
-            Dim totalRecords As Integer = lstSabaLearning.Length
+            Dim totalRecords As Integer = lstComcell.Length
 
             Select Case mode
                 Case CInt(PagingMode._Next)
@@ -136,7 +153,7 @@ Class SabaLearningMainPage
                         lastRowIndex = totalRecords - 1
                     End If
                     ' Bind data to the Data Grid
-                    LoadSabaCourses()
+                    LoadComcell()
                     Exit Select
                 Case CInt(PagingMode._Previous)
                     ' Set the Previous Page if the page index is greater than 1
@@ -145,7 +162,7 @@ Class SabaLearningMainPage
 
                         startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
                         lastRowIndex = (pagingPageIndex * pagingRecordPerPage) - 1
-                        LoadSabaCourses()
+                        LoadComcell()
                     End If
                     Exit Select
                 Case CInt(PagingMode._First)
@@ -158,7 +175,7 @@ Class SabaLearningMainPage
 
                         If Not totalRecords = 0 Then
                             lastRowIndex = totalRecords - 1
-                            LoadSabaCourses()
+                            LoadComcell()
                         Else
                             lastRowIndex = 0
                             Me.DataContext = Nothing
@@ -167,7 +184,7 @@ Class SabaLearningMainPage
                     End If
                     Exit Select
                 Case CInt(PagingMode._Last)
-                    pagingPageIndex = (lstSabaLearning.Length / pagingRecordPerPage)
+                    pagingPageIndex = (lstComcell.Length / pagingRecordPerPage)
                     SetPaging(CInt(PagingMode._Next))
                     Exit Select
             End Select
@@ -177,9 +194,53 @@ Class SabaLearningMainPage
         End Try
 
     End Sub
+
 #End Region
 
+#Region "Events"
+    Private Sub ComcellLV_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
+        e.Handled = True
+        If ComcellLV.SelectedIndex <> -1 Then
+            If ComcellLV.SelectedItem IsNot Nothing Then
+                Dim comcell As New ComcellModel
+                comcell.MONTH = CType(ComcellLV.SelectedItem, ComcellModel).MONTH
+                comcell.FACILITATOR = CType(ComcellLV.SelectedItem, ComcellModel).FACILITATOR
+                comcell.MINUTES_TAKER = CType(ComcellLV.SelectedItem, ComcellModel).MINUTES_TAKER
+                comcell.COMCELL_ID = CType(ComcellLV.SelectedItem, ComcellModel).COMCELL_ID
+                comcell.FY_START = CType(ComcellLV.SelectedItem, ComcellModel).FY_START
 
+                addframe.Navigate(New ComcellAddPage(profile, mainframe, addframe, menugrid, submenuframe, comcell))
+                mainframe.IsEnabled = False
+                mainframe.Opacity = 0.3
+                menugrid.IsEnabled = False
+                menugrid.Opacity = 0.3
+                submenuframe.IsEnabled = False
+                submenuframe.Opacity = 0.3
+                addframe.Visibility = Visibility.Visible
+                addframe.Margin = New Thickness(150, 60, 150, 60)
+            End If
+        End If
+    End Sub
+
+    Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
+        addframe.Navigate(New ComcellAddPage(profile, mainframe, addframe, menugrid, submenuframe))
+        mainframe.IsEnabled = False
+        mainframe.Opacity = 0.3
+        menugrid.IsEnabled = False
+        menugrid.Opacity = 0.3
+        submenuframe.IsEnabled = False
+        submenuframe.Opacity = 0.3
+        addframe.Visibility = Visibility.Visible
+        addframe.Margin = New Thickness(200, 100, 200, 100)
+    End Sub
+
+    Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
+        year = cbYear.SelectedValue
+        SetData()
+    End Sub
+#End Region
+
+#Region "INotify Methods"
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
     End Sub
@@ -199,67 +260,6 @@ Class SabaLearningMainPage
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
 
     End Sub
-
-    Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
-
-    End Sub
-
-    Public Sub LoadSabaCourseByTitle(ByVal title As String)
-        Try
-            If InitializeService() Then
-                lstSabaLearning = _AideService.GetAllSabaCourseByTitle(title, empID)
-                'LoadSabaCourses()
-                SetPaging(PagingMode._First)
-            End If
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
-    End Sub
-
-    Private Sub SearchTextBox_TextChanged(sender As Object, e As TextChangedEventArgs)
-        If SearchTextBox.Text = String.Empty Then
-            SetData()
-        Else
-            LoadSabaCourseByTitle(SearchTextBox.Text)
-        End If
-    End Sub
-
-    Private Sub SabaLearningLV_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
-        e.Handled = True
-        If SabaLearningLV.SelectedIndex <> -1 Then
-            If SabaLearningLV.SelectedItem IsNot Nothing Then
-                Dim sabalearning As New SabaLearningModel
-                sabalearning.SABA_ID = CType(SabaLearningLV.SelectedItem, SabaLearningModel).SABA_ID
-                sabalearning.EMP_ID = CType(SabaLearningLV.SelectedItem, SabaLearningModel).EMP_ID
-                sabalearning.TITLE = CType(SabaLearningLV.SelectedItem, SabaLearningModel).TITLE
-                sabalearning.END_DATE = CType(SabaLearningLV.SelectedItem, SabaLearningModel).END_DATE
-                sabalearning.DATE_COMPLETED = CType(SabaLearningLV.SelectedItem, SabaLearningModel).DATE_COMPLETED
-                sabalearning.IMAGE_PATH = CType(SabaLearningLV.SelectedItem, SabaLearningModel).IMAGE_PATH
-
-
-
-                addframe.Navigate(New SabaLearningViewPage(sabalearning, mainframe, addframe, menugrid, submenuframe, profile))
-                mainframe.IsEnabled = False
-                mainframe.Opacity = 0.3
-                menugrid.IsEnabled = False
-                menugrid.Opacity = 0.3
-                submenuframe.IsEnabled = False
-                submenuframe.Opacity = 0.3
-                addframe.Visibility = Visibility.Visible
-                addframe.Margin = New Thickness(150, 60, 150, 60)
-            End If
-        End If
-    End Sub
-
-    Private Sub btnCreate_Click_1(sender As Object, e As RoutedEventArgs)
-        addframe.Navigate(New SabaLearningAddPage(profile, mainframe, addframe, menugrid, submenuframe))
-        mainframe.IsEnabled = False
-        mainframe.Opacity = 0.3
-        menugrid.IsEnabled = False
-        menugrid.Opacity = 0.3
-        submenuframe.IsEnabled = False
-        submenuframe.Opacity = 0.3
-        addframe.Visibility = Visibility.Visible
-        addframe.Margin = New Thickness(200, 100, 200, 100)
-    End Sub
+#End Region
+    
 End Class

@@ -60,6 +60,10 @@ Public Class AssetsListPage
 
     End Sub
 
+    Private Sub txtSearch_TextChanged_1(sender As Object, e As TextChangedEventArgs)
+        SetDataForSearch(txtSearch.Text)
+    End Sub
+
     Private Sub btnAdd_Click(sender As Object, e As RoutedEventArgs) Handles btnAdd.Click
         _addframe.Navigate(New AssetsAddPage(frame, profile, _addframe, _menugrid, _submenuframe))
         frame.IsEnabled = False
@@ -335,7 +339,4 @@ Public Class AssetsListPage
     End Sub
 #End Region
 
-    Private Sub txtSearch_TextChanged_1(sender As Object, e As TextChangedEventArgs)
-        SetDataForSearch(txtSearch.Text)
-    End Sub
 End Class

@@ -75,7 +75,7 @@ Class UpdateActionListPage
             If ActionModel.REF_NO = Nothing Or ActionModel.ACTION_MESSAGE = Nothing Or Act_AssignedAll.Text = String.Empty Or ActionModel.DUE_DATE = Nothing Or ActionModel.DATE_CLOSED = Nothing Then
                 act_ion.Act_ID = ActionModel.REF_NO
                 act_ion.Act_Message = ActionModel.ACTION_MESSAGE
-                act_ion.Act_Assignee = Act_AssigneeCB2.SelectedValue
+                act_ion.Act_Assignee = ActionModel.EMP_ID
                 act_ion.Act_DueDate = ActionModel.DUE_DATE
                 act_ion.Act_DateClosed = ActionModel.DATE_CLOSED
                 act_ion.Act_NickName = Act_AssignedAll.Text
@@ -176,6 +176,15 @@ Class UpdateActionListPage
                         act_ion.Act_Assignee = Nothing
                         act_ion.Act_DueDate = Nothing
                         act_ion.Act_DateClosed = Nothing
+
+                        _frame.Navigate(New HomeActionListsPage(_frame, _email, _addframe, _menugrid, _submenuframe, profiles))
+                        _frame.IsEnabled = True
+                        _frame.Opacity = 1
+                        _menugrid.IsEnabled = True
+                        _menugrid.Opacity = 1
+                        _submenuframe.IsEnabled = True
+                        _submenuframe.Opacity = 1
+                        _addframe.Visibility = Visibility.Hidden
                     End If
                 Else
                     MsgBox("Please fill up all fields!", vbOKOnly + MsgBoxStyle.Information, "AIDE")

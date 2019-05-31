@@ -95,7 +95,7 @@ Class CommendationViewPage
         txtProject.Visibility = Windows.Visibility.Visible
         comboProject.Visibility = Windows.Visibility.Hidden
         comboxProjName.Visibility = Windows.Visibility.Collapsed
-
+        txtBlockMsg.Visibility = Windows.Visibility.Collapsed
 
 
     End Sub

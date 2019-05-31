@@ -39,10 +39,8 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                    <Viewbox>
-                        <Image Source="Assets\Icon\AideVengers.png" Margin="13"/>
-                    </Viewbox>
-                    <Viewbox HorizontalAlignment="Left" Margin="2,7">
+    
+                    <Viewbox HorizontalAlignment="Left" Margin="10,7">
                         <TextBlock TextWrapping="Wrap" Margin="2" Text="Adaptive Intelligent Dashboard for Employees" Foreground="WhiteSmoke"/>
                     </Viewbox>
                 </StackPanel>

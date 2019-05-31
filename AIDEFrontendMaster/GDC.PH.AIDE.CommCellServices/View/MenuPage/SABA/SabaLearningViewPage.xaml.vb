@@ -44,7 +44,7 @@ Class SabaLearningViewPage
 
 #Region "Constructor"
 
-    Public Sub New(_sabacoursemodel As SabaLearningModel, _mainframe As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _empID As Integer)
+    Public Sub New(_sabacoursemodel As SabaLearningModel, _mainframe As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
 
         InitializeComponent()
         Me.sabacoursemodel = _sabacoursemodel
@@ -52,14 +52,15 @@ Class SabaLearningViewPage
         Me.addframe = _addframe
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
-        Me.empID = _empID
+        Me.profile = _profile
+        Me.empID = _profile.Emp_ID
         SetData()
         Me.DataContext = SabaLearningListVM
         Me.courseTitle.Text = sabacoursemodel.TITLE
         Me.saba_id = sabacoursemodel.SABA_ID
         LoadPieChartData()
         CheckCourseUpdated()
-        BindModel(_sabacoursemodel, _empID)
+        BindModel(_sabacoursemodel, _profile.Emp_ID)
     End Sub
 
 #End Region
@@ -256,7 +257,7 @@ Class SabaLearningViewPage
             _AideService.UpdateSabaXref(getDataUpdate(SabaLearningListVM.SabaLearningVMModel))
             If SabaLearning.DATE_COMPLETED = Nothing Then
                 MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
-                addframe.Navigate(New SabaLearningViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, empID))
+                addframe.Navigate(New SabaLearningViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, profile))
             Else
                 MsgBox("Successfully Added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
@@ -264,7 +265,7 @@ Class SabaLearningViewPage
                 SabaLearning.SABA_ID = Nothing
                 SabaLearning.EMP_ID = Nothing
 
-                addframe.Navigate(New SabaLearningViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, empID))
+                addframe.Navigate(New SabaLearningViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, profile))
 
                 'mainframe.Navigate(New SabaLearningMainPage(mainframe, empID, addframe, menugrid, submenuframe))
                 'mainframe.IsEnabled = True
@@ -285,7 +286,7 @@ Class SabaLearningViewPage
     End Sub
 
     Private Sub UpdateEndDateBtn_Click(sender As Object, e As RoutedEventArgs)
-        addframe.Navigate(New SabaLearningUpdatePage(mainframe, addframe, menugrid, submenuframe, sabacoursemodel))
+        addframe.Navigate(New SabaLearningUpdatePage(mainframe, addframe, menugrid, submenuframe, sabacoursemodel, profile))
         mainframe.IsEnabled = False
         mainframe.Opacity = 0.3
         menugrid.IsEnabled = False
@@ -297,7 +298,7 @@ Class SabaLearningViewPage
     End Sub
 
     Private Sub btnCCancel_Click(sender As Object, e As RoutedEventArgs)
-        mainframe.Navigate(New SabaLearningMainPage(mainframe, sabacoursemodel.EMP_ID, addframe, menugrid, submenuframe))
+        mainframe.Navigate(New SabaLearningMainPage(mainframe, profile, addframe, menugrid, submenuframe))
         mainframe.IsEnabled = True
         mainframe.Opacity = 1
         menugrid.IsEnabled = True

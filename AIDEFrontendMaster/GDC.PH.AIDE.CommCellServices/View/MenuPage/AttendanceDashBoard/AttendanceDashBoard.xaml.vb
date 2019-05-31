@@ -37,7 +37,6 @@ Public Class AttendanceDashBoard
 
 #End Region
 
-
 #Region "Functions"
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
@@ -139,17 +138,18 @@ Public Class AttendanceDashBoard
             rawUser_.Desc = "(H) Emergency Leave"
         ElseIf setStatus = 10 Then
             rawUser_.Desc = "Other Leaves"
+        ElseIf setStatus = 11 Then
+            rawUser_.Desc = "(L) Present"
         End If
     End Sub
 
     Public Sub SetCategory(rawUser_ As myAttendanceList)
         If setStatus = 1 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\onsite.png"
-        ElseIf setStatus = 2 Then
+        ElseIf setStatus = 2 Or setStatus = 11 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\present.png"
         ElseIf setStatus = 3 Or setStatus = 5 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\sick.png"
-            'displayStatus = Colors.Red.ToString()
         ElseIf setStatus = 4 Or setStatus = 6 Or setStatus = 8 Or setStatus = 9 Or setStatus = 10 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\vacation.png"
         End If

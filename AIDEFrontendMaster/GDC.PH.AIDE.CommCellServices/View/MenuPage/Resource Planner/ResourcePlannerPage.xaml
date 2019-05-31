@@ -1000,12 +1000,12 @@
                     </Grid>
                 </Border>-->
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
+                <Grid Grid.Column="3">
                     <ComboBox Name="cbDisplayMonth" Margin="10" Style="{DynamicResource StyleComboBox}" />
                     <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a month" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                         <TextBlock.Style>
@@ -1020,11 +1020,12 @@
                         </TextBlock.Style>
                     </TextBlock>
                 </Grid>
-                
-                
-                
-                
+
+                <Grid Grid.Column="0">
+                    <TextBlock x:Name="MonthLabel" FontSize="16" Foreground="DimGray" FontWeight="Bold" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                </Grid>
             </Grid>
+            
             <Grid Grid.Row="2">
                 <Grid>
 
@@ -1080,18 +1081,103 @@
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="176*"/>
-                    <ColumnDefinition Width="47*"/>
-                    <ColumnDefinition Width="61*"/>
-                    <ColumnDefinition Width="115*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="60*"/>
                 </Grid.ColumnDefinitions>
 
+                <Grid Grid.Column="0" Margin="10,5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
 
+
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Viewbox Margin="2" HorizontalAlignment="Left">
+                                <TextBlock Text="O - Onsite" Foreground="DimGray"/>
+                            </Viewbox>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Viewbox Margin="2" HorizontalAlignment="Left">
+                                <TextBlock Text="P - Present" Foreground="DimGray"/>
+                            </Viewbox>
+                        </Grid>
+                        <Grid Grid.Column="2">
+                            <Viewbox Margin="2" HorizontalAlignment="Left">
+                                <TextBlock Text="SL - Sick Leave" Foreground="DimGray"/>
+                            </Viewbox>
+                        </Grid>
+                        <Grid Grid.Column="3">
+                            <Viewbox Margin="2" HorizontalAlignment="Left">
+                                <TextBlock Text="VL - Vacation Leave" Foreground="DimGray"/>
+                            </Viewbox>
+                        </Grid>
+                        <Grid Grid.Column="4">
+                            <Viewbox Margin="2" HorizontalAlignment="Left">
+                                <TextBlock Text="HSL - Half SL" Foreground="DimGray"/>
+                            </Viewbox>
+                        </Grid>
+                        <Grid Grid.Column="5">
+                            <Viewbox Margin="2" HorizontalAlignment="Left">
+                                <TextBlock Text="PL - Present (Late)" Foreground="DimGray"/>
+                            </Viewbox>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <Viewbox Margin="2" HorizontalAlignment="Left">
+                                <TextBlock Text="HVL - Half VL" Foreground="DimGray"/>
+                            </Viewbox>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Viewbox Margin="2" HorizontalAlignment="Left">
+                                <TextBlock Text="H - Holiday" Foreground="DimGray"/>
+                            </Viewbox>
+                        </Grid>
+                        <Grid Grid.Column="2">
+                            <Viewbox Margin="2" HorizontalAlignment="Left">
+                                <TextBlock Text="EL - Emergency Leave" Foreground="DimGray"/>
+                            </Viewbox>
+                        </Grid>
+                        <Grid Grid.Column="3">
+                            <Viewbox Margin="2" HorizontalAlignment="Left">
+                                <TextBlock Text="HEL - Half EL" Foreground="DimGray"/>
+                            </Viewbox>
+                        </Grid>
+                        <Grid Grid.Column="4">
+                            <Viewbox Margin="2" HorizontalAlignment="Left">
+                                <TextBlock Text="OL - Other Leave" Foreground="DimGray"/>
+                            </Viewbox>
+                        </Grid>
+                    </Grid>
+
+                </Grid>
 
 
                 <Grid Grid.Column="2" Grid.ColumnSpan="2" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width=".3*"/>
 
 

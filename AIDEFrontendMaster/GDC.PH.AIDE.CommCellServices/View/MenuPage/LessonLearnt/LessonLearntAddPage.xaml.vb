@@ -181,7 +181,7 @@ Class LessonLearntAddPage
             If lessonLearnt.Problem.Trim = String.Empty Or lessonLearnt.Resolution.Trim = String.Empty Then
                 MsgBox("Please Enter All Required Fields", MsgBoxStyle.Exclamation, "AIDE")
             Else
-                Dim result As Integer = MsgBox("Are you sure?", MsgBoxStyle.YesNo, "AIDE")
+                Dim result As Integer = MsgBox("Are you sure you want to save?", MsgBoxStyle.YesNo, "AIDE")
 
                 If result = vbYes Then
                     Try

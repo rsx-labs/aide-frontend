@@ -90,10 +90,12 @@ Class CommendationDashBoard
 
     Public Sub LoadYears()
         Try
-            For i As Integer = startYear To DateTime.Today.Year
-                cbYear.Items.Add(i)
+            cbYear.DisplayMemberPath = "Text"
+            cbYear.SelectedValuePath = "Value"
+            For i As Integer = 2019 To DateTime.Today.Year
+                Dim nextYear As Integer = i + 1
+                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
             Next
-
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try

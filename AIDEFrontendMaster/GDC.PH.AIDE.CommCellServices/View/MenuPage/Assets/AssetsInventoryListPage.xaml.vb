@@ -69,6 +69,14 @@ Public Class AssetsInventoryListPage
 #End Region
 
 #Region "EVENTS"
+    Private Sub txtSearch_TextChanged_1(sender As Object, e As TextChangedEventArgs)
+        If txtSearch.Text = String.Empty Then
+            SetData()
+        Else
+            SetDataForSearch(txtSearch.Text)
+        End If
+        e.Handled = True
+    End Sub
 
     Private Sub btnExport_Click(sender As Object, e As RoutedEventArgs) Handles btnExport.Click
         Try
@@ -109,16 +117,20 @@ Public Class AssetsInventoryListPage
     End Sub
 
     Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
-        
+
     End Sub
 
     Private Sub lv_assetInventoryListOwn_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles lv_assetInventoryListOwn.LoadingRow
         Dim RowDataContaxt As AssetsModel = TryCast(e.Row.DataContext, AssetsModel)
 
         If RowDataContaxt IsNot Nothing Then
-            If RowDataContaxt.EMP_ID = profile.Emp_ID And RowDataContaxt.STATUS = 2 And RowDataContaxt.APPROVAL = 1 Then
+            If RowDataContaxt.EMP_ID = profile.Emp_ID And RowDataContaxt.STATUS = 2 And RowDataContaxt.APPROVAL = 1 And profile.Permission = "Manager" Then
                 e.Row.Background = New BrushConverter().ConvertFrom("#CCFFD8D8")
                 e.Row.Foreground = New SolidColorBrush(Colors.Black)
+                boxPersonal.Visibility = Windows.Visibility.Visible
+                lblPersonal.Visibility = Windows.Visibility.Visible
+                boxUnassigned.Visibility = Windows.Visibility.Visible
+                lblUnassigned.Visibility = Windows.Visibility.Visible
             End If
         End If
     End Sub
@@ -139,7 +151,7 @@ Public Class AssetsInventoryListPage
                 assetsModel.ASSET_TAG = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).ASSET_TAG
                 assetsModel.DATE_ASSIGNED = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).DATE_ASSIGNED
                 assetsModel.STATUS = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).STATUS
-                assetsModel.OTHER_INFO = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).OTHER_INFO
+                assetsModel.COMMENTS = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).COMMENTS
                 assetsModel.FULL_NAME = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).FULL_NAME
                 assetsModel.ISAPPROVED = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).ISAPPROVED
                 _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Personal", _addframe, _menugrid, _submenuframe))
@@ -224,7 +236,6 @@ Public Class AssetsInventoryListPage
         End If
 
     End Sub
-
     Private Sub btnPrint_Click(sender As Object, e As RoutedEventArgs) Handles btnPrint.Click
         Dim dialog As PrintDialog = New PrintDialog()
         If lv_assetInventoryList.HasItems Then
@@ -461,12 +472,4 @@ Public Class AssetsInventoryListPage
     End Sub
 #End Region
 
-    Private Sub txtSearch_TextChanged_1(sender As Object, e As TextChangedEventArgs)
-        If txtSearch.Text = String.Empty Then
-            SetData()
-        Else
-            SetDataForSearch(txtSearch.Text)
-        End If
-        e.Handled = True
-    End Sub
 End Class

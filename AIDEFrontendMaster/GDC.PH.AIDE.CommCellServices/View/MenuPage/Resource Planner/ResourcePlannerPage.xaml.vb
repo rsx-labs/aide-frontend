@@ -47,12 +47,9 @@ Class ResourcePlannerPage
 
         month = Date.Now.Month
         year = Date.Now.Year
-        'txtEmpID.Text = profile.Emp_ID
-        SetMonths()
+        MonthLabel.Text = SetMonths() + " " + year.ToString()
         LoadMonth()
-        'LoadCategory()
         LoadAllEmpResourcePlanner()
-        'LoadAllCategory()
     End Sub
 
     Public Function InitializeService() As Boolean
@@ -170,6 +167,8 @@ Class ResourcePlannerPage
             displayStatus = "HEL"
         ElseIf setStatus = 10 Then
             displayStatus = "OL"
+        ElseIf setStatus = 11 Then
+            displayStatus = "PL"
         Else
             displayStatus = ""
         End If
@@ -365,7 +364,8 @@ Class ResourcePlannerPage
     '    LoadAllEmpResourcePlanner()
     'End Sub
 
-    Public Sub SetMonths()
+    Public Function SetMonths()
+
         Select Case month
             Case "1"
                 displayMonth = "January"
@@ -392,7 +392,8 @@ Class ResourcePlannerPage
             Case "12"
                 displayMonth = "December"
         End Select
-    End Sub
+        Return displayMonth
+    End Function
 
     'Private Sub btnViewAll_Click(sender As Object, e As RoutedEventArgs) Handles btnViewAll.Click
     '    txtDisplayMonth.Text = String.Empty
@@ -404,6 +405,7 @@ Class ResourcePlannerPage
 #Region "Button/Event"
     Private Sub cbDisplayMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbDisplayMonth.SelectionChanged
         month = cbDisplayMonth.SelectedValue
+        MonthLabel.Text = SetMonths() + " " + year.ToString()
         LoadAllEmpResourcePlanner()
     End Sub
 
