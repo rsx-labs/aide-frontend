@@ -43,7 +43,7 @@
             <DropShadowEffect  Direction="0" Opacity="0.6" ShadowDepth="1" Color="Black" BlurRadius="20"/>
         </Border.Effect>
         <Grid>
-            
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="5*"/>

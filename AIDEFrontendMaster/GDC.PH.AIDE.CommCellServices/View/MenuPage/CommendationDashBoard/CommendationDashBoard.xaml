@@ -460,41 +460,28 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         
-<<<<<<< HEAD
                         
                             <Grid Grid.Column="0">
-                                <ComboBox MinWidth="70" Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Margin="10,10,5,10"/>
-                            
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Month" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
-=======
-                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                            <Grid Grid.Column="0">
-                                <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Margin="10,5,5,5"/>
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Month" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
->>>>>>> aa4d15abd03d3c0fd1c4abcecfe2cd3be9b79c9b
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-<<<<<<< HEAD
-                            
+                            <ComboBox MinWidth="70" Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Margin="10,10,5,10"/>
+
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Month" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
                         </Grid>
+                            <Grid Grid.Column="1">
                             <Grid Grid.Column="1">
                                 <ComboBox MinWidth="70" Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="5,10,10,10"/>
                                 <TextBlock FontSize="12" IsHitTestVisible="False" Text="Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
-=======
-                            </Grid>
-                            <Grid Grid.Column="1">
-                                <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="5,5,10,5"/>
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Fiscal Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
->>>>>>> aa4d15abd03d3c0fd1c4abcecfe2cd3be9b79c9b
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -507,6 +494,7 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                             </Grid>
+                        </Grid>
                  
                      
 

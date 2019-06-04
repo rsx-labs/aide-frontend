@@ -80,8 +80,7 @@
     <Reference Include="LiveCharts">
       <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
     </Reference>
-    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="LiveCharts.Wpf">
       <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Outlook, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
@@ -92,6 +91,7 @@
     <Reference Include="ReachFramework">
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <Private>True</Private>
     </Reference>
@@ -107,9 +107,8 @@
     <Reference Include="System.ServiceModel">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=3.5.40128.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\System.Windows.Controls.DataVisualization.Toolkit.4.0.0.0\lib\net40-Client\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit">
+      <HintPath>..\..\..\..\Users\Admin\Documents\AIDE Latest Source version 2.1_v2\GDC.PH.AIDE.CommCellServices\GDC.PH.AIDE.CommCellServices\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Controls.Input.Toolkit">
       <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
@@ -154,6 +153,9 @@
     <Reference Include="System.Net.Http">
       <Private>True</Private>
     </Reference>
+    <Reference Include="WpfAnimatedGif">
+      <HintPath>..\packages\WpfAnimatedGif.1.4.18\lib\net\WpfAnimatedGif.dll</HintPath>
+    </Reference>
     <Reference Include="WPFToolkit">
       <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\WPFToolkit.dll</HintPath>
     </Reference>
@@ -171,11 +173,13 @@
     <Compile Include="DataProviderService\BillabilityDBProvider.vb" />
     <Compile Include="DataProviderService\BirthdayListDBProvider.vb" />
     <Compile Include="DataProviderService\ComcellClockDBProvider.vb" />
+    <Compile Include="DataProviderService\ComcellDBProvider.vb" />
     <Compile Include="DataProviderService\CommendationDBProvider.vb" />
     <Compile Include="DataProviderService\ConcernDBProvider.vb" />
     <Compile Include="DataProviderService\ContactListDBProvider.vb" />
     <Compile Include="DataProviderService\EmployeeListProvider.vb" />
     <Compile Include="DataProviderService\EmployeeProvider1.vb" />
+    <Compile Include="DataProviderService\LateDBProvider.vb" />
     <Compile Include="DataProviderService\LessonLearntDBProvider.vb" />
     <Compile Include="DataProviderService\ProfileDBProvider.vb" />
     <Compile Include="DataProviderService\ProjectDBProvider.vb" />
@@ -199,11 +203,13 @@
     <Compile Include="Model\BillabilityModel.vb" />
     <Compile Include="Model\BirthdayListModel.vb" />
     <Compile Include="Model\ComcellClockModel.vb" />
+    <Compile Include="Model\ComcellModel.vb" />
     <Compile Include="Model\CommendationModel.vb" />
     <Compile Include="Model\ConcernModel.vb" />
     <Compile Include="Model\ContactListModel.vb" />
     <Compile Include="Model\EmployeeListModel.vb" />
     <Compile Include="Model\EmployeeModel.vb" />
+    <Compile Include="Model\LateModel.vb" />
     <Compile Include="Model\LessonLearntModel.vb" />
     <Compile Include="Model\ProfileModel.vb" />
     <Compile Include="Model\ProjectModel.vb" />
@@ -228,6 +234,8 @@
     <Compile Include="ViewModel\AttendanceListViewModel.vb" />
     <Compile Include="ViewModel\BillabilityViewModel.vb" />
     <Compile Include="ViewModel\BirthdayListViewModel.vb" />
+    <Compile Include="ViewModel\ComcellClockViewModel.vb" />
+    <Compile Include="ViewModel\ComcellViewModel.vb" />
     <Compile Include="ViewModel\LateViewModel.vb" />
     <Compile Include="ViewModel\CommendationViewModel.vb" />
     <Compile Include="ViewModel\ConcernViewModel.vb" />
@@ -316,6 +324,21 @@
     </Compile>
     <Compile Include="View\MenuPage\Birthday\BirthdayPage.xaml.vb">
       <DependentUpon>BirthdayPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ComcellClock\ComcellClockAddPage.xaml.vb">
+      <DependentUpon>ComcellClockAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ComcellClock\ComcellClockPage.xaml.vb">
+      <DependentUpon>ComcellClockPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ComcellClock\ComcellClockWindow.xaml.vb">
+      <DependentUpon>ComcellClockWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Comcell\ComcellAddPage.xaml.vb">
+      <DependentUpon>ComcellAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Comcell\ComcellMainPage.xaml.vb">
+      <DependentUpon>ComcellMainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\CommendationDashBoard\CommendationDashBoard.xaml.vb">
       <DependentUpon>CommendationDashBoard.xaml</DependentUpon>
@@ -532,6 +555,26 @@
     <Page Include="View\MenuPage\Birthday\BirthdayPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\ComcellClock\ComcellClockAddPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\ComcellClock\ComcellClockPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\ComcellClock\ComcellClockWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Comcell\ComcellAddPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Comcell\ComcellMainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MenuPage\CommendationDashBoard\CommendationDashBoard.xaml">
       <SubType>Designer</SubType>
@@ -847,6 +890,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\Animation\T3py.gif" />
     <Resource Include="Assets\Attendance\AbsentIcon.png" />
     <Resource Include="Assets\Attendance\OnSiteIcon.png" />
     <Resource Include="Assets\Attendance\PresentIcon.png" />
@@ -1207,6 +1251,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\ServiceReference1\AIDEService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\ClockBG.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

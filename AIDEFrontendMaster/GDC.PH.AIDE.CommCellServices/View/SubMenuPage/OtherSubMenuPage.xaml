@@ -1,101 +1,4 @@
-<<<<<<< HEAD
-﻿<Page x:Class="OtherSubMenuPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" 
-
-      Title="OtherSubMenuPage">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-        </Grid.ColumnDefinitions>
-
-        <Button Name="Birthday" Margin="2" Grid.Column="0" Style="{DynamicResource RoundCorner}" Click="Birthday_Click">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="70*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/BirthdayIcon.png"/>
-                </Grid>
-                <Grid Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Foreground="White" Text="Birthday"></TextBlock>
-                </Grid>
-            </Grid>
-        </Button>
-        <Button Name="Learning" Margin="2" Grid.Column="1" Style="{DynamicResource RoundCorner}" Click="Learning_Click" >
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="70*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/SabaIcon.png"/>
-                </Grid>
-                <Grid Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Foreground="White" Text="SABA Learning"></TextBlock>
-                </Grid>
-            </Grid>
-        </Button>
-        <!--<Button Name="Late" Grid.Column="2" Margin="2" Style="{DynamicResource RoundCorner}" Click="Late_Click" >
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="70*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/clock.png"/>
-                </Grid>
-                <Grid Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Foreground="White" Text="Late Tracking"></TextBlock>
-                </Grid>
-            </Grid>
-        </Button>-->
-    </Grid>
-    <Page.Resources>
-        <Style x:Key="RoundCorner" TargetType="{x:Type Button}">
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="1"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="4" Background="#FF09A0C1">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          TextElement.FontWeight="Bold">
-                                </ContentPresenter>
-                            </Border>
-
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="#FF005895"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="#FF09C2EA"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
-                            </Trigger>
-
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Page.Resources>
-</Page>
-=======
-﻿<Page x:Class="OtherSubMenuPage"
+<Page x:Class="OtherSubMenuPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -204,4 +107,103 @@
         </Style>
     </Page.Resources>
 </Page>
->>>>>>> aa4d15abd03d3c0fd1c4abcecfe2cd3be9b79c9b
+<!-->>>>>>> aa4d15abd03d3c0fd1c4abcecfe2cd3be9b79c9b-->
+<!--<<<<<<< HEAD
+﻿<Page x:Class="OtherSubMenuPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+
+      Title="OtherSubMenuPage">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="20*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Name="Birthday" Margin="2" Grid.Column="0" Style="{DynamicResource RoundCorner}" Click="Birthday_Click">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="70*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/BirthdayIcon.png"/>
+                </Grid>
+                <Grid Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Foreground="White" Text="Birthday"></TextBlock>
+                </Grid>
+            </Grid>
+        </Button>
+        <Button Name="Learning" Margin="2" Grid.Column="1" Style="{DynamicResource RoundCorner}" Click="Learning_Click" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="70*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/SabaIcon.png"/>
+                </Grid>
+                <Grid Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Foreground="White" Text="SABA Learning"></TextBlock>
+                </Grid>
+            </Grid>
+        </Button>
+        -->
+<!--<Button Name="Late" Grid.Column="2" Margin="2" Style="{DynamicResource RoundCorner}" Click="Late_Click" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="70*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/clock.png"/>
+                </Grid>
+                <Grid Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Foreground="White" Text="Late Tracking"></TextBlock>
+                </Grid>
+            </Grid>
+        </Button>-->
+<!--
+    </Grid>
+    <Page.Resources>
+        <Style x:Key="RoundCorner" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="4" Background="#FF09A0C1">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          TextElement.FontWeight="Bold">
+                                </ContentPresenter>
+                            </Border>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FF005895"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FF09C2EA"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+</Page>
+=======-->
