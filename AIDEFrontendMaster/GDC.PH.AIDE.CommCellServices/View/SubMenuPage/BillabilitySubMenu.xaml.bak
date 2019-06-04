@@ -6,6 +6,80 @@
       mc:Ignorable="d" 
       Height="auto" Width="auto"
       Title="BillabilitySubMenu">
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="20*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Name="Billables" Margin="2" Grid.Column="0" Style="{DynamicResource RoundCorner}" Click="Billables_Click">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="70*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/BillabilityIcon.png"/>
+                </Grid>
+                <Grid Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Foreground="White" Text="Billable Hours"></TextBlock>
+                </Grid>
+            </Grid>
+        </Button>
+
+
+        <Button Name="NonBillables" Margin="2" Grid.Column="1" Style="{DynamicResource RoundCorner}" Click="NonBillables_Click">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="70*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/BillabilityIcon.png"/>
+                </Grid>
+                <Grid Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Foreground="White" Text="Non-Billable Hours"></TextBlock>
+                </Grid>
+            </Grid>
+        </Button>
+
+
+        <Button Name="SickLeave" Grid.Column="2" Margin="2" Style="{DynamicResource RoundCorner}" Click="SickLeave_Click" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="70*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/BillabilityIconSL.png"/>
+                </Grid>
+                <Grid Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Foreground="White" Text="Sick Leave"></TextBlock>
+                </Grid>
+            </Grid>
+        </Button>
+
+
+        <Button Name="VacationLeave" Margin="2" Grid.Column="3" Style="{DynamicResource RoundCorner}" Click="VacationLeave_Click" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="70*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/BillabilityIconVL.png"/>
+                </Grid>
+                <Grid Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Foreground="White" Text="Vacation Leave"></TextBlock>
+                </Grid>
+            </Grid>
+        </Button>
+
+    </Grid>
+
     <Page.Resources>
         <Style x:Key="RoundCorner" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -40,89 +114,4 @@
             </Setter>
         </Style>
     </Page.Resources>
-    
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-        </Grid.ColumnDefinitions>
-
-        <Button Name="Billables" Margin="2" Grid.Column="0" Style="{DynamicResource RoundCorner}" Click="Billables_Click">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="70*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/BillabilityIcon.png"/>
-                </Grid>
-                <Grid Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Foreground="White" Text="Billable Hours"></TextBlock>
-                </Grid>
-            </Grid>
-        </Button>
-
-        <Button Name="NonBillables" Margin="2" Grid.Column="1" Style="{DynamicResource RoundCorner}" Click="NonBillables_Click">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="70*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/BillabilityIcon.png"/>
-                </Grid>
-                <Grid Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Foreground="White" Text="Non-Billable Hours"></TextBlock>
-                </Grid>
-            </Grid>
-        </Button>
-
-        <Button Name="SickLeave" Grid.Column="2" Margin="2" Style="{DynamicResource RoundCorner}" Click="SickLeave_Click" >
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="70*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/BillabilityIconSL.png"/>
-                </Grid>
-                <Grid Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Foreground="White" Text="Sick Leave"></TextBlock>
-                </Grid>
-            </Grid>
-        </Button>
-
-        <Button Name="VacationLeave" Margin="2" Grid.Column="3" Style="{DynamicResource RoundCorner}" Click="VacationLeave_Click" >
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="70*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/BillabilityIconVL.png"/>
-                </Grid>
-                <Grid Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Foreground="White" Text="Vacation Leave"></TextBlock>
-                </Grid>
-            </Grid>
-        </Button>
-
-        <Button Name="Weekly" Margin="2" Grid.Column="4" Style="{DynamicResource RoundCorner}" Click="Weekly_Click" >
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*"/>
-                    <ColumnDefinition Width="70*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/SabaIcon.png"/>
-                </Grid>
-                <Grid Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Foreground="White" Text="Weekly Report"/>
-                </Grid>
-            </Grid>
-        </Button>
-    </Grid>
 </Page>

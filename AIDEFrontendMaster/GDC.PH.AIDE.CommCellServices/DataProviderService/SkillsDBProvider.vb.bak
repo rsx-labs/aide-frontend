@@ -44,7 +44,7 @@ Public Class SkillsDBProvider
         _splist.Add(_skillobj)
     End Sub
 
-    Public Function GetSkillProf()
+    Public Function getSkillprof()
         Return _splist
     End Function
 

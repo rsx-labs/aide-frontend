@@ -228,7 +228,7 @@
     <Compile Include="ViewModel\AttendanceListViewModel.vb" />
     <Compile Include="ViewModel\BillabilityViewModel.vb" />
     <Compile Include="ViewModel\BirthdayListViewModel.vb" />
-    <Compile Include="ViewModel\LateViewModel.vb" />
+    <Compile Include="ViewModel\ComcellClockViewModel.vb" />
     <Compile Include="ViewModel\CommendationViewModel.vb" />
     <Compile Include="ViewModel\ConcernViewModel.vb" />
     <Compile Include="ViewModel\ContactListViewModel.vb" />
@@ -317,6 +317,15 @@
     <Compile Include="View\MenuPage\Birthday\BirthdayPage.xaml.vb">
       <DependentUpon>BirthdayPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MenuPage\ComcellClock\ComcellClockAddPage.xaml.vb">
+      <DependentUpon>ComcellClockAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ComcellClock\ComcellClockPage.xaml.vb">
+      <DependentUpon>ComcellClockPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ComcellClock\ComcellClockWindow.xaml.vb">
+      <DependentUpon>ComcellClockWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MenuPage\CommendationDashBoard\CommendationDashBoard.xaml.vb">
       <DependentUpon>CommendationDashBoard.xaml</DependentUpon>
     </Compile>
@@ -340,9 +349,6 @@
     </Compile>
     <Compile Include="View\MenuPage\Home\HomePage.xaml.vb">
       <DependentUpon>HomePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\MenuPage\Late\LatePage.xaml.vb">
-      <DependentUpon>LatePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\LessonLearnt\LessonLearntAddPage.xaml.vb">
       <DependentUpon>LessonLearntAddPage.xaml</DependentUpon>
@@ -533,6 +539,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\MenuPage\ComcellClock\ComcellClockAddPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\ComcellClock\ComcellClockPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\ComcellClock\ComcellClockWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\MenuPage\CommendationDashBoard\CommendationDashBoard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -562,10 +580,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MenuPage\Home\HomePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\MenuPage\Late\LatePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1159,6 +1173,9 @@
     <Resource Include="Assets\Button\BillabilityLogo.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\ServiceReference1\AIDEService.disco" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Assets\Button\addnewdb.png" />
     <Resource Include="Assets\Button\addnewdbclick.png" />
   </ItemGroup>
@@ -1201,12 +1218,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Menu\clock.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ServiceReference1\AIDEService.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -8,8 +8,6 @@ Imports System.Windows.Xps.Packaging
 Imports System.Windows.Xps
 Imports System.Printing
 Imports System.Drawing.Printing
-Imports LiveCharts
-Imports LiveCharts.Wpf
 
 Public Class BillablesPage
     Implements IAideServiceCallback
@@ -22,11 +20,20 @@ Public Class BillablesPage
     Private profile As Profile
 
     Dim month As Integer = Date.Now.Month
+    Dim setStatus As Integer
+    Dim displayStatus As String = String.Empty
+    Dim status As Integer
+    Dim img As String
+    Dim displayMonth As String
+    Dim checkStatus As Integer
+    Dim count As Integer
     Dim year As Integer
+    Dim day As Integer
     Dim displayOption As Integer = 1 'Weekly is the Default Display Options
 
     Dim totalMonthly As Integer
     Dim totalWeekly As Integer
+
 #End Region
 
     Public Sub New(_profile As Profile, mFrame As Frame)
@@ -36,12 +43,13 @@ Public Class BillablesPage
 
         month = Date.Now.Month
         year = Date.Now.Year
-        LoadDataWeekly()
         LoadDataMonthly()
+        LoadDataWeekly()
+        'LoadAllCategory()
     End Sub
 
 
-#Region "Sub Procedures"
+#Region "Private Methods"
 
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
@@ -65,39 +73,27 @@ Public Class BillablesPage
 
             InitializeService()
             _ResourceDBProvider._splist.Clear()
-
-            Dim lstresource As ResourcePlanner() = client.GetBillableHoursByWeek(profile.Emp_ID, Date.Now)
+            Dim lstresource As ResourcePlanner() = client.GetBillableHoursByWeek(profile.Emp_ID)
+            Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
+            Dim billableListVM As New BillabilityViewModel()
 
             For Each objResource As ResourcePlanner In lstresource
                 _ResourceDBProvider.SetAllEmpRPList(objResource)
             Next
 
-            Dim labelPoint As Func(Of ChartPoint, String) = Function(chartPoint) String.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
-            Dim cht_y_values As ChartValues(Of Double) = New ChartValues(Of Double)()
-            Dim series As SeriesCollection = New SeriesCollection()
-
             For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
-                totalMonthly = totalMonthly + iResource.Status
-
-                If iResource.Emp_Name = "Breaktime" Or iResource.Emp_Name = "Sick Leave" Or iResource.Emp_Name = "Vacation Leave" Or iResource.Emp_Name = "Holiday" Or iResource.Emp_Name = "FAI-Admin" Or iResource.Emp_Name = "WS-Training" Then
+                resourcelist.Add(New ResourcePlannerModel(iResource))
+                totalWeekly = totalWeekly + iResource.Status
+                If iResource.Emp_Name = "Breaktime" Or iResource.Emp_Name = "Sick Leave" Or iResource.Emp_Name = "Vacation Leave" Or iResource.Emp_Name = "Holiday" Or iResource.Emp_Name = "FAI-Admin" Or iResource.Emp_Name = "WS-Training" Or iResource.Emp_Name = "IBP" Then
                     nonBillable = nonBillable + iResource.Status
                 Else
                     billable = billable + iResource.Status
                 End If
-
-                Dim ps As PieSeries = New PieSeries With {
-                    .Title = iResource.Emp_Name,
-                    .Values = New ChartValues(Of Double) From {
-                        Double.Parse(iResource.Status)
-                    },
-                    .DataLabels = True,
-                    .LabelPoint = labelPoint
-                }
-                series.Add(ps)
             Next
-
-            pieChartWeekly.Series = series
-
+            billableListVM.BillabilityWeek = Nothing
+            billableListVM.BillabilityWeek = resourcelist
+            BWChartSeries.ItemsSource = resourcelist
+            
             percentBillable = (billable / totalWeekly) * 100
             percentNonBillable = (nonBillable / totalWeekly) * 100
 
@@ -118,38 +114,26 @@ Public Class BillablesPage
 
             InitializeService()
             _ResourceDBProvider._splist.Clear()
+            Dim lstresource As ResourcePlanner() = client.GetBillableHoursByMonth(profile.Emp_ID)
+            Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
+            Dim billableListVM As New BillabilityViewModel()
 
-            Dim lstresource As ResourcePlanner() = client.GetBillableHoursByMonth(profile.Emp_ID, month, year)
-           
             For Each objResource As ResourcePlanner In lstresource
                 _ResourceDBProvider.SetAllEmpRPList(objResource)
             Next
 
-            Dim labelPoint As Func(Of ChartPoint, String) = Function(chartPoint) String.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
-            Dim cht_y_values As ChartValues(Of Double) = New ChartValues(Of Double)()
-            Dim series As SeriesCollection = New SeriesCollection()
-
             For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
+                resourcelist.Add(New ResourcePlannerModel(iResource))
                 totalMonthly = totalMonthly + iResource.Status
-
-                If iResource.Emp_Name = "Breaktime" Or iResource.Emp_Name = "Sick Leave" Or iResource.Emp_Name = "Vacation Leave" Or iResource.Emp_Name = "Holiday" Or iResource.Emp_Name = "FAI-Admin" Or iResource.Emp_Name = "WS-Training" Then
+                If iResource.Emp_Name = "Breaktime" Or iResource.Emp_Name = "Sick Leave" Or iResource.Emp_Name = "Vacation Leave" Or iResource.Emp_Name = "Holiday" Or iResource.Emp_Name = "FAI-Admin" Or iResource.Emp_Name = "WS-Training" Or iResource.Emp_Name = "IBP" Then
                     nonBillable = nonBillable + iResource.Status
                 Else
                     billable = billable + iResource.Status
                 End If
-
-                Dim ps As PieSeries = New PieSeries With {
-                    .Title = iResource.Emp_Name,
-                    .Values = New ChartValues(Of Double) From {
-                        Double.Parse(iResource.Status)
-                    },
-                    .DataLabels = True,
-                    .LabelPoint = labelPoint
-                }
-                series.Add(ps)
             Next
-
-            pieChartMonth.Series = series
+            billableListVM.BillabilityMonth = Nothing
+            billableListVM.BillabilityMonth = resourcelist
+            BMChartSeries.ItemsSource = resourcelist
 
             percentBillable = (billable / totalMonthly) * 100
             percentNonBillable = (nonBillable / totalMonthly) * 100
@@ -162,6 +146,7 @@ Public Class BillablesPage
         End Try
     End Sub
 #End Region
+
 
 #Region "ICallback Functions"
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
@@ -184,5 +169,4 @@ Public Class BillablesPage
 
     End Sub
 #End Region
-
 End Class

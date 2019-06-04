@@ -60,7 +60,7 @@ Public Class SkillsModel
         End Get
         Set(value As String)
             _skillDescr = value
-            NotifyPropertyChanged("Skill_Descr")
+            NotifyPropertyChanged("DESCR")
         End Set
     End Property
 

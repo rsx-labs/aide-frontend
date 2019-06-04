@@ -5,7 +5,6 @@ Public Class SkillsViewModel
     Implements INotifyPropertyChanged
 
     Private _skill As New ObservableCollection(Of SkillsModel)
-    Private _empSkill As New ObservableCollection(Of SkillsModel)
     Private _empDetails As New ObservableCollection(Of SkillsModel)
 
     Public Property SkillList As ObservableCollection(Of SkillsModel)
@@ -18,16 +17,6 @@ Public Class SkillsViewModel
         End Set
     End Property
 
-    Public Property EmpSkillList As ObservableCollection(Of SkillsModel)
-        Get
-            Return _empSkill
-        End Get
-        Set(value As ObservableCollection(Of SkillsModel))
-            _empSkill = value
-            NotifyPropertyChanged("EmpSkillList")
-        End Set
-    End Property
-
     Public Property EmpDetails As ObservableCollection(Of SkillsModel)
         Get
             Return _empDetails
@@ -37,7 +26,6 @@ Public Class SkillsViewModel
             NotifyPropertyChanged("EmpDetails")
         End Set
     End Property
-
     Private Sub NotifyPropertyChanged(ByVal propertyName As String)
         RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
     End Sub
