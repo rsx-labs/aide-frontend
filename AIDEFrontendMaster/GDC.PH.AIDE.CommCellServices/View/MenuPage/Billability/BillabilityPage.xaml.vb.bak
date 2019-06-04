@@ -239,6 +239,7 @@ Public Class BillabilityPage
 
 #End Region
     
+
 #Region "ICallback Functions"
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 

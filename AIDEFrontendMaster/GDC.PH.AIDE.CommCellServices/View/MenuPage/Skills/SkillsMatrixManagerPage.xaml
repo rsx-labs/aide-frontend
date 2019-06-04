@@ -676,7 +676,7 @@
                             <Grid Grid.Column="1" HorizontalAlignment="Stretch">
                                 <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtSearch" PreviewTextInput="NumberValidationTextBox" TextWrapping="Wrap" Margin="0,17,0,17" Width="auto" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Grid>
-                            
+
                             <Grid Grid.Column="2">
                                 <Button x:Name="btnSearch" Width="60" Height="35" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource RoundCorner}" HorizontalContentAlignment="Center">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Search"></TextBlock>
@@ -1082,18 +1082,18 @@
                 <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Center">
                     <StackPanel Name="spGrid"  Background="White" HorizontalAlignment="Center">
                         <DataGrid x:Name="dgSkillList" 
-                                  Margin="0,0,0,20" 
+                                  Margin="0,0,0,20"  
                                   BorderBrush="Transparent" 
                                   HorizontalGridLinesBrush="DimGray"
                                   VerticalGridLinesBrush="DimGray"     
                                   IsReadOnly="True">
 
                         </DataGrid>
-                        
-                        
+
+
                     </StackPanel>
                 </ScrollViewer>
-                
+
 
 
             </Grid>

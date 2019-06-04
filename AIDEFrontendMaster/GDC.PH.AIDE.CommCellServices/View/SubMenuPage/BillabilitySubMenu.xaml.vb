@@ -1,28 +1,39 @@
 ﻿Imports UI_AIDE_CommCellServices.ServiceReference1
 
 Class BillabilitySubMenu
-    Private _pFrame As New Frame
-    Private _profile As New Profile
+    Private pFrame As New Frame
+    Private profile As New Profile
+    Private addframe As Frame
+    Private menugrid As Grid
+    Private submenuframe As Frame
 
-    Public Sub New(pFrame As Frame, __profile As Profile)
-        _pFrame = pFrame
-        _profile = __profile
+    Public Sub New(_pFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+        pFrame = _pFrame
+        profile = _profile
+        addframe = _addframe
+        menugrid = _menugrid
+        submenuframe = _submenuframe
         InitializeComponent()
     End Sub
 
     Private Sub NonBillables_Click(sender As Object, e As RoutedEventArgs)
-        _pFrame.Navigate(New BillabilityPage(_profile, _pFrame))
+        pFrame.Navigate(New BillabilityPage(profile, pFrame))
     End Sub
 
     Private Sub VacationLeave_Click(sender As Object, e As RoutedEventArgs)
-        _pFrame.Navigate(New BillabilityVacationLeavePage(_profile, _pFrame))
+        pFrame.Navigate(New BillabilityVacationLeavePage(profile, pFrame))
     End Sub
 
     Private Sub SickLeave_Click(sender As Object, e As RoutedEventArgs)
-        _pFrame.Navigate(New BillabilitySickLeavePage(_profile, _pFrame))
+        pFrame.Navigate(New BillabilitySickLeavePage(profile, pFrame))
     End Sub
 
     Private Sub Billables_Click(sender As Object, e As RoutedEventArgs)
-        _pFrame.Navigate(New BillablesPage(_profile, _pFrame))
+        pFrame.Navigate(New BillablesPage(profile, pFrame))
     End Sub
+
+    Private Sub Weekly_Click(sender As Object, e As RoutedEventArgs)
+        pFrame.Navigate(New WeeklyReportPage(pFrame, profile.Emp_ID, profile.Email_Address, addframe, menugrid, submenuframe))
+    End Sub
+
 End Class

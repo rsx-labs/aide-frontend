@@ -209,8 +209,7 @@ Class MainWindow
                     SaveProfile(profile)
                 End If
             Else
-                MsgBox("Please login to Outlook", MsgBoxStyle.Critical, "AIDE")
-                Environment.Exit(0)
+                SetEmployeeData()
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
@@ -342,8 +341,12 @@ Class MainWindow
 
         LoadSideBar()
 
-        PagesFrame.Navigate(New SkillsMatrixManagerPage(empID, email, IsManagerSignedOn))
-
+        If IsManagerSignedOn Then
+            PagesFrame.Navigate(New SkillsMatrixManagerPage(empID))
+        Else
+            PagesFrame.Navigate(New SkillsMatrixPage(empID))
+        End If
+        'PagesFrame.Navigate(New ContactListPage(PagesFrame, email))
         SubMenuFrame.Navigate(New BlankSubMenu())
     End Sub
 
@@ -356,9 +359,12 @@ Class MainWindow
     End Sub
 
     Private Sub TaskBtn_Click(sender As Object, e As RoutedEventArgs)
+        'email = profile.Email_Address
+
         PagesFrame.Navigate(New TaskAdminPage(PagesFrame, Me, profile.Emp_ID, email, AddFrame, MenuGrid, SubMenuFrame))
         SubMenuFrame.Navigate(New BlankSubMenu())
         LoadSideBar()
+        'End If
     End Sub
 
     Private Sub AttendanceBtn_Click(sender As Object, e As RoutedEventArgs)
@@ -382,7 +388,7 @@ Class MainWindow
 
     Private Sub BillabilityBtn_Click(sender As Object, e As RoutedEventArgs)
         PagesFrame.Navigate(New BillablesPage(profile, PagesFrame))
-        SubMenuFrame.Navigate(New BillabilitySubMenu(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
+        SubMenuFrame.Navigate(New BillabilitySubMenu(PagesFrame, profile))
         LoadSideBar()
     End Sub
     Private Sub MinimizeBtn_Click(sender As Object, e As RoutedEventArgs)
