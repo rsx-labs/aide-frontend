@@ -796,6 +796,12 @@
     <None Include="Service References\ServiceReference1\UI_AIDE_CommCellServices.ServiceReference1.BirthdayList.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ServiceReference1\UI_AIDE_CommCellServices.ServiceReference1.Comcell.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ServiceReference1\UI_AIDE_CommCellServices.ServiceReference1.ComcellClock.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceReference1\UI_AIDE_CommCellServices.ServiceReference1.Commendations.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -1254,6 +1260,22 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Button\ClockBG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Menu\clockBG.png" />
+    <Resource Include="Assets\Menu\Comcell.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\BillableLogo.png" />
+    <Resource Include="Assets\Button\ContactLogo.png" />
+    <Resource Include="Assets\Button\DashboardLogo.png" />
+    <Resource Include="Assets\Button\NonBillabilityLogo.png" />
+    <Resource Include="Assets\Button\NonBillableLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\ResourceLogo.png" />
+    <Resource Include="Assets\Button\SickLogo.png" />
+    <Resource Include="Assets\Button\VacationLogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

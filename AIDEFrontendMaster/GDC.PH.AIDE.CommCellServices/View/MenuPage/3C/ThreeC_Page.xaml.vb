@@ -474,9 +474,11 @@ Public Class ThreeC_Page
     End Sub
 
     Private Sub dtpFrom_CalendarClosed(sender As Object, e As RoutedEventArgs) Handles dtpFrom.CalendarClosed
-        dtpTo.DisplayDateStart = dtpFrom.Text
-        dtpTo.DisplayDateEnd = Date.MaxValue
-        dtpTo.IsEnabled = True
+        If dtpFrom.Text IsNot String.Empty Then
+            dtpTo.DisplayDateStart = dtpFrom.Text
+            dtpTo.DisplayDateEnd = Date.MaxValue
+            dtpTo.IsEnabled = True
+        End If
     End Sub
 
 #End Region
