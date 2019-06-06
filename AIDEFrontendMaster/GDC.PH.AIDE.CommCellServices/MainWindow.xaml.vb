@@ -14,7 +14,7 @@ Class MainWindow
     Implements IAideServiceCallback
 
 #Region "Fields"
-    Public email As String = "c.lim@ph.fujitsu.com"
+    Public email As String = "j.sanchez@ph.fujitsu.com"
     Private departmentID As Integer
     Private empID As Integer
     Private permission As Integer

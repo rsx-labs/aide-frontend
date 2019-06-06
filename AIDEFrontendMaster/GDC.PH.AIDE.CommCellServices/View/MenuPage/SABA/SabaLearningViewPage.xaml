@@ -854,7 +854,7 @@ xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         </Style>
         <Style TargetType="{x:Type DataGridRow}">
             <Setter Property="Background" Value="white" />
-            <Setter Property="Foreground" Value="#FF303030"/>
+            <Setter Property="Foreground" Value="White"/>
 
 
             <Style.Triggers>

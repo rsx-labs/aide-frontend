@@ -21,9 +21,10 @@ Class SabaLearningMainPage
     Private profile As Profile
 
     Dim lstSabaLearning As SabaLearning()
+    Dim lstSabaLearning2 As SabaLearning()
     Dim SabaLearningListVM As New SabaLearningViewModel()
 
-
+ 
 
 #End Region
 
@@ -43,21 +44,16 @@ Class SabaLearningMainPage
 
 #Region "Constructor"
 
-    Public Sub New(_mainframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_mainframe As Frame, _empID As Integer, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
 
         InitializeComponent()
-        Me.empID = _profile.Emp_ID
+        Me.empID = _empID
         Me.mainframe = _mainframe
         Me.addframe = _addframe
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
         SetData()
         Me.DataContext = SabaLearningListVM
-        Me.profile = _profile
-        If _profile.Permission = "Manager" Then
-            btnCreate.Visibility = Windows.Visibility.Visible
-        End If
-
     End Sub
 
 #End Region
@@ -95,11 +91,13 @@ Class SabaLearningMainPage
             Dim lstSabaLearningList As New ObservableCollection(Of SabaLearningModel)
             Dim sabalearningDBProvider As New SabaLearningDBProvider
             Dim objSabaLearning As New SabaLearning
-
+            Dim percentFinished As String
 
             For i As Integer = startRowIndex To lastRowIndex
+
                 objSabaLearning = lstSabaLearning(i)
-                sabalearningDBProvider._setlistofitems(objSabaLearning)
+                percentFinished = SetData2(objSabaLearning.SABA_ID)
+                sabalearningDBProvider._setlistofitems(objSabaLearning, percentFinished)
             Next
 
             For Each rawUser As mySabaLearningSet In sabalearningDBProvider._getobjSabaLearning()
@@ -238,7 +236,7 @@ Class SabaLearningMainPage
 
 
 
-                addframe.Navigate(New SabaLearningViewPage(sabalearning, mainframe, addframe, menugrid, submenuframe, profile))
+                addframe.Navigate(New SabaLearningViewPage(sabalearning, mainframe, addframe, menugrid, submenuframe, empID))
                 mainframe.IsEnabled = False
                 mainframe.Opacity = 0.3
                 menugrid.IsEnabled = False
@@ -252,7 +250,7 @@ Class SabaLearningMainPage
     End Sub
 
     Private Sub btnCreate_Click_1(sender As Object, e As RoutedEventArgs)
-        addframe.Navigate(New SabaLearningAddPage(profile, mainframe, addframe, menugrid, submenuframe))
+        addframe.Navigate(New SabaLearningAddPage(empID, mainframe, addframe, menugrid, submenuframe))
         mainframe.IsEnabled = False
         mainframe.Opacity = 0.3
         menugrid.IsEnabled = False
@@ -262,4 +260,34 @@ Class SabaLearningMainPage
         addframe.Visibility = Visibility.Visible
         addframe.Margin = New Thickness(200, 100, 200, 100)
     End Sub
+
+    Private Function SetData2(sabaid As Integer) As String
+        Try
+            Dim Completed As Integer
+
+            If InitializeService() Then
+                lstSabaLearning2 = _AideService.GetAllSabaXref(empID, sabaid)
+                Completed = checkCompleted(lstSabaLearning2)
+            End If
+            Return Completed.ToString() + "%"
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            Return String.Empty
+        End Try
+
+    End Function
+
+    Private Function checkCompleted(sabalist As SabaLearning()) As Integer
+
+        For Each sabaitem As SabaLearning In sabalist
+            If Not sabaitem.DATE_COMPLETED = String.Empty Then
+                checkCompleted += 1
+            End If
+        Next
+
+        checkCompleted = (checkCompleted / sabalist.Count) * 100
+
+        Return checkCompleted
+    End Function
+
 End Class

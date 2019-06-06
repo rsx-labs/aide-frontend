@@ -44,7 +44,7 @@ Class SabaLearningViewPage
 
 #Region "Constructor"
 
-    Public Sub New(_sabacoursemodel As SabaLearningModel, _mainframe As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
+    Public Sub New(_sabacoursemodel As SabaLearningModel, _mainframe As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _empID As Integer)
 
         InitializeComponent()
         Me.sabacoursemodel = _sabacoursemodel
@@ -52,15 +52,14 @@ Class SabaLearningViewPage
         Me.addframe = _addframe
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
-        Me.profile = _profile
-        Me.empID = _profile.Emp_ID
+        Me.empID = _empID
         SetData()
         Me.DataContext = SabaLearningListVM
         Me.courseTitle.Text = sabacoursemodel.TITLE
         Me.saba_id = sabacoursemodel.SABA_ID
         LoadPieChartData()
         CheckCourseUpdated()
-        BindModel(_sabacoursemodel, _profile.Emp_ID)
+        BindModel(_sabacoursemodel, _empID)
     End Sub
 
 #End Region
@@ -132,7 +131,7 @@ Class SabaLearningViewPage
 
             For Each objsaba As SabaLearning In lstSabaLearning
                 If Not objsaba.DATE_COMPLETED = String.Empty Then
-                    sabalearningDBProvider._setlistofitems(objsaba)
+                    sabalearningDBProvider._setlistofitems(objsaba, String.Empty)
                     saba_completed += 1
                     If objsaba.EMP_ID = empID Then
                         isUpdated = True
@@ -161,7 +160,7 @@ Class SabaLearningViewPage
 
             For Each objsaba As SabaLearning In lstSabaLearning
                 If objsaba.DATE_COMPLETED = String.Empty Then
-                    sabalearningDBProvider._setlistofitems(objsaba)
+                    sabalearningDBProvider._setlistofitems(objsaba, String.Empty)
                     saba_not_completed += 1
                 End If
             Next
@@ -257,7 +256,7 @@ Class SabaLearningViewPage
             _AideService.UpdateSabaXref(getDataUpdate(SabaLearningListVM.SabaLearningVMModel))
             If SabaLearning.DATE_COMPLETED = Nothing Then
                 MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
-                addframe.Navigate(New SabaLearningViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, profile))
+                addframe.Navigate(New SabaLearningViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, empID))
             Else
                 MsgBox("Successfully Added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
@@ -265,7 +264,7 @@ Class SabaLearningViewPage
                 SabaLearning.SABA_ID = Nothing
                 SabaLearning.EMP_ID = Nothing
 
-                addframe.Navigate(New SabaLearningViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, profile))
+                addframe.Navigate(New SabaLearningViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, empID))
 
                 'mainframe.Navigate(New SabaLearningMainPage(mainframe, empID, addframe, menugrid, submenuframe))
                 'mainframe.IsEnabled = True
@@ -286,7 +285,7 @@ Class SabaLearningViewPage
     End Sub
 
     Private Sub UpdateEndDateBtn_Click(sender As Object, e As RoutedEventArgs)
-        addframe.Navigate(New SabaLearningUpdatePage(mainframe, addframe, menugrid, submenuframe, sabacoursemodel, profile))
+        addframe.Navigate(New SabaLearningUpdatePage(mainframe, addframe, menugrid, submenuframe, sabacoursemodel))
         mainframe.IsEnabled = False
         mainframe.Opacity = 0.3
         menugrid.IsEnabled = False
@@ -298,7 +297,7 @@ Class SabaLearningViewPage
     End Sub
 
     Private Sub btnCCancel_Click(sender As Object, e As RoutedEventArgs)
-        mainframe.Navigate(New SabaLearningMainPage(mainframe, profile, addframe, menugrid, submenuframe))
+        mainframe.Navigate(New SabaLearningMainPage(mainframe, empID, addframe, menugrid, submenuframe))
         mainframe.IsEnabled = True
         mainframe.Opacity = 1
         menugrid.IsEnabled = True

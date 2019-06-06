@@ -6,6 +6,7 @@ Public Class SabaLearningModel
     Private _enddate As Date
     Private _datecompleted As String
     Private _imagepath As String
+    Private _completionrate As String
 
     Public Sub New()
 
@@ -17,6 +18,7 @@ Public Class SabaLearningModel
         Me._enddate = _iSabaLearningSet._enddate
         Me._datecompleted = _iSabaLearningSet._datecompleted
         Me._imagepath = _iSabaLearningSet._imagepath
+        Me._completionrate = _iSabaLearningSet._completepercent
     End Sub
 
     Public Property SABA_ID As Integer
@@ -76,6 +78,16 @@ Public Class SabaLearningModel
         Set(value As String)
             Me._imagepath = value
             OnPropertyChanged("IMAGE_PATH")
+        End Set
+    End Property
+
+    Public Property COMPLETION_RATE As String
+        Get
+            Return Me._completionrate
+        End Get
+        Set(value As String)
+            Me._completionrate = value
+            OnPropertyChanged("COMPLETION_RATE")
         End Set
     End Property
 

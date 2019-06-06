@@ -11,22 +11,23 @@ Class SabaLearningAddPage
     Private aide As AideServiceClient
     Private sabalearning As New SabaLearning
     Private _sabaModel As New SabaLearningModel()
+    Private _email As String
     Private _addframe As Frame
     Private _menugrid As Grid
     Private _submenuframe As Frame
-    Private profile As Profile
+    Private _empID As Integer
 #End Region
 
-    Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame)
+    Public Sub New(empID As Integer, mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame)
         Try
             Me._frame = mainframe
             Me._addframe = addframe
             Me._menugrid = menugrid
             Me._submenuframe = submenuframe
-            Me.profile = _profile
+            Me._empID = empID
             InitializeComponent()
             Dim _sabalearningModel As New SabaLearningModel
-            _sabalearningModel.EMP_ID = _profile.Emp_ID
+            _sabalearningModel.EMP_ID = empID
             Me.DataContext = _sabalearningModel
 
 
@@ -104,7 +105,7 @@ Class SabaLearningAddPage
                 sabalearning.END_DATE = Nothing
                 sabalearning.EMP_ID = Nothing
 
-                _frame.Navigate(New SabaLearningMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
+                _frame.Navigate(New SabaLearningMainPage(_frame, _empID, _addframe, _menugrid, _submenuframe))
                 _frame.IsEnabled = True
                 _frame.Opacity = 1
                 _menugrid.IsEnabled = True
@@ -123,7 +124,7 @@ Class SabaLearningAddPage
     End Sub
 
     Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
-        _frame.Navigate(New SabaLearningMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
+        _frame.Navigate(New SabaLearningMainPage(_frame, _empID, _addframe, _menugrid, _submenuframe))
         _frame.IsEnabled = True
         _frame.Opacity = 1
         _menugrid.IsEnabled = True
