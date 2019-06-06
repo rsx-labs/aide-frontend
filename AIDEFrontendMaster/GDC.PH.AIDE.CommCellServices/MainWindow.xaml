@@ -39,6 +39,7 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+             
                     <Viewbox HorizontalAlignment="Left" Margin="10,7">
                         <TextBlock TextWrapping="Wrap" Margin="2" Text="Adaptive Intelligent Dashboard for Employees" Foreground="WhiteSmoke"/>
                     </Viewbox>
@@ -271,8 +272,8 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="4*"/>
+                        <RowDefinition Height="2.5*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Frame x:Name="CommendationFrame" Margin="5,5,0,5" NavigationUIVisibility="Hidden" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>

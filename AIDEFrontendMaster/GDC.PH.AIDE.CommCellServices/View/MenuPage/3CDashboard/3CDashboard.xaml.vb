@@ -55,6 +55,7 @@ Class _3CDashboard
         profile = _profile
         CalculateConcernList(offsetVal, nextVal)
         LoadPieChartData()
+
         'UpdateAllOnClick()
 
 
@@ -114,18 +115,16 @@ Class _3CDashboard
                     Case Is < Date.Today()
                         If objConcern.Status = "OPEN" Then
                             PastdueDate += 1
-                        Else
-                            CompletedDate += 1
                         End If
-
                     Case Date.Today()
                         If objConcern.Status = "OPEN" Then
                             DuetodayDate += 1
-                        Else
+                        End If
+                    Case Is > Date.Today()
+                        If objConcern.Status = "OPEN" Then
                             CompletedDate += 1
                         End If
-                    Case Else
-                        CompletedDate += 1
+
                 End Select
             Next
 
@@ -139,6 +138,20 @@ Class _3CDashboard
             _AIDEClientService.Abort()
 
         End Try
+    End Sub
+
+    Public Sub CheckData()
+        If PastdueDate = 0 AndAlso DuetodayDate = 0 AndAlso CompletedDate = 0 Then
+            NoConcernLbl.Visibility = Windows.Visibility.Visible
+            NoConcernImg.Visibility = Windows.Visibility.Visible
+            Chart.Visibility = Windows.Visibility.Hidden
+            Chart.ChartLegend.Visibility = Windows.Visibility.Hidden
+        Else
+            NoConcernImg.Visibility = Windows.Visibility.Hidden
+            NoConcernLbl.Visibility = Windows.Visibility.Hidden
+            Chart.Visibility = Windows.Visibility.Visible
+            Chart.ChartLegend.Visibility = Windows.Visibility.Visible
+        End If
     End Sub
 
     Private Sub LoadPieChartData()
@@ -166,6 +179,7 @@ Class _3CDashboard
         }
     }
         DataContext = Me
+        CheckData()
     End Sub
 
     Public Property SeriesCollection As SeriesCollection

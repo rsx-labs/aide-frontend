@@ -319,6 +319,8 @@ mc:Ignorable="d"
 
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="1">
+                    
+
                     <lvc:PieChart x:Name="Chart" Series="{Binding SeriesCollection}" 
                       LegendLocation="Right" InnerRadius="50" Margin="10">
 
@@ -330,6 +332,11 @@ mc:Ignorable="d"
                     </lvc:PieChart.DataTooltip>
 
                     </lvc:PieChart>
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image x:Name="NoConcernImg" Source="..\..\..\Assets\Menu\TaskComplete2.png" MinHeight="70" Height="100" MinWidth="70" Width="100" />
+                        <TextBlock x:Name="NoConcernLbl" Foreground="DimGray" Text="All Concerns are closed." FontSize="14" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    
                 </Grid>
 
             </Grid>
