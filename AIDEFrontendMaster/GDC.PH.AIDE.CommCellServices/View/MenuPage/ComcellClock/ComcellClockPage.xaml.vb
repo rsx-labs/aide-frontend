@@ -3,6 +3,8 @@ Imports System.ServiceModel
 Imports System.Windows.Threading
 Imports System.Windows.Media.Animation
 Imports System.Media
+Imports System.Collections.ObjectModel
+Imports System.Globalization
 
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class ComcellClockPage
@@ -17,11 +19,17 @@ Class ComcellClockPage
     Private _window As Window
     Private alarmActive As Boolean
     Private pos As String
+    Private lstComcell() As Comcell
+    Private year As Integer
+    Private monthToday As Integer
+    Private ComcellVM As New ComcellViewModel
 #End Region
 
 #Region "Constructor"
     Public Sub New(empID As Integer, com_cellFrame As Frame, winx As Window, _pos As String)
         InitializeComponent()
+        year = Date.Now.Year
+        monthToday = Date.Now.Month
         DataContext = comcellClockVM
         Me.comcellFrame = com_cellFrame
         Me.emp_ID = empID
@@ -33,6 +41,7 @@ Class ComcellClockPage
         setclock()
         getTime()
         refreshClock()
+        SetData2()
     End Sub
 #End Region
 
@@ -181,6 +190,40 @@ Class ComcellClockPage
                                                                                                                  comcellFrame.Navigate(New ComcellClockPage(emp_ID, comcellFrame, _window, pos))
                                                                                                              End Function, Me.Dispatcher)
     End Sub
+
+    Public Sub SetData2()
+        Try
+            If InitializeService() Then
+                lstComcell = aide.GetComcellMeeting(emp_ID, year)
+                loadComcell()
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub loadComcell()
+        Dim ComcellToday As New ComcellModel
+        Dim ComcellDBProvider As New ComcellDBProvider
+
+        For Each comcellItem As Comcell In lstComcell
+            If DateTime.ParseExact(comcellItem.MONTH, "MMMM", CultureInfo.CurrentCulture).Month = monthToday Then
+                ComcellDBProvider.SetMyComcellItem(comcellItem)
+                Exit For
+            End If
+        Next
+
+        If Not ComcellDBProvider.GetMyComcellItem.COMCELL_ID = 0 Then
+            ComcellToday = New ComcellModel(ComcellDBProvider.GetMyComcellItem)
+            ComcellVM.ComcellItem = ComcellToday
+            Facilitator.Text = ComcellVM.ComcellItem.FACILITATOR.ToUpper()
+            MinutesTaker.Text = ComcellVM.ComcellItem.MINUTES_TAKER.ToUpper()
+        End If
+
+
+    End Sub
+
+
 
     'Private Sub StopBtn_Click(sender As Object, e As RoutedEventArgs)
     '    GridAlarm.Tag = String.Empty

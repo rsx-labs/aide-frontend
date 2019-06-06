@@ -7,15 +7,22 @@ Imports System.Collections.ObjectModel
 ''' <remarks></remarks>
 Public Class ComcellDBProvider
     Private _comcellList As ObservableCollection(Of MyComcell)
+    Private _comcellItem As MyComcell
     Private client As AideServiceClient
 
     Public Sub New()
         _comcellList = New ObservableCollection(Of MyComcell)
+        _comcellItem = New MyComcell
     End Sub
 
     Public Function GetMyComcell() As ObservableCollection(Of MyComcell)
         Return _comcellList
     End Function
+
+    Public Function GetMyComcellItem() As MyComcell
+        Return _comcellItem
+    End Function
+
 
     Public Sub SetMyComcell(ByVal _comcell As Comcell)
         Dim _comcellObject As MyComcell = New MyComcell With {
@@ -30,6 +37,17 @@ Public Class ComcellDBProvider
 
         _comcellList.Add(_comcellObject)
     End Sub
+
+    Public Sub SetMyComcellItem(ByVal _comcell As Comcell)
+        _comcellItem.COMCELL_ID = _comcell.COMCELL_ID
+        _comcellItem.EMP_ID = _comcell.EMP_ID
+        _comcellItem.MONTH = _comcell.MONTH
+        _comcellItem.FACILITATOR = _comcell.FACILITATOR
+        _comcellItem.MINUTES_TAKER = _comcell.MINUTES_TAKER
+        _comcellItem.FY_START = _comcell.FY_START
+        _comcellItem.FY_END = _comcell.FY_END
+    End Sub
+
 
 End Class
 

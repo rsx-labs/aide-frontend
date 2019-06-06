@@ -300,8 +300,8 @@
 
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="6*"/>
+                <RowDefinition Height="1.1*"/>
+                <RowDefinition Height="7.5*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -341,7 +341,86 @@
                 </Grid>
 
 
-                <Grid Grid.Column="1" x:Name="GridAlarm" Background="#FFD8D8D8">
+                <Grid Grid.Column="1" x:Name="GridAlarm" Background="White">
+                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="6*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Background="#FF727272">
+                        
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" >
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock x:Name="Facilitator" Foreground="White" Text="" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="( Facilitator )" FontStyle="Italic" FontSize="9" Foreground="Gainsboro" HorizontalAlignment="Center" Background="Transparent" VerticalAlignment="Bottom"/>
+                            </StackPanel>
+
+                        </Grid>
+                        <Rectangle Stroke="Transparent" Grid.ColumnSpan="2" Width="2" Height="auto" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+                        <Grid Grid.Column="1">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock x:Name="MinutesTaker" Foreground="White" Text="" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                                <TextBlock Text="( Minutes Taker )" FontStyle="Italic" FontSize="9" Foreground="Gainsboro" HorizontalAlignment="Center" Background="Transparent" VerticalAlignment="Bottom"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    
+                    <Grid Grid.Row="1">
+                        <Image Source="..\..\..\Assets\Button\ClockBG.png"></Image>
+                        <Grid  Margin="30">
+
+                            <Grid Name="RectMinute"
+            Width="5" Background="Transparent" Height="150" MinHeight="75" MinWidth="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Grid.LayoutTransform>
+                                    <RotateTransform Angle="{Binding objectComcellClockSet.CLOCK_MINUTE}"/>
+                                </Grid.LayoutTransform>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" Background="DimGray">
+
+
+                                </Grid>
+                                <Grid Grid.Row="1" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="3*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Background="DimGray"/>
+                                </Grid>
+
+                            </Grid>
+
+                            <Grid Name="RectHour"
+            Width="7" Height="75" MinHeight="40" MinWidth="5" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Grid.LayoutTransform>
+                                    <RotateTransform Angle="{Binding objectComcellClockSet.CLOCK_HOUR}"/>
+                                </Grid.LayoutTransform>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" Background="SteelBlue"/>
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Background="SteelBlue"/>
+                                </Grid>
+                            </Grid>
+                            <Ellipse Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center" Height="10" Width="10" Stroke="DimGray"/>
+                            <!--<Button Visibility="Hidden" Style="{DynamicResource RoundCornerUpdate}" x:Name="StopBtn" Height="30" Width="150" Content="Accept Meeting" Click="StopBtn_Click" >
+                            
+                        </Button>-->
+                        </Grid>
+                    </Grid>
                     <!--<Grid.Style>
                         <Style TargetType="Grid">
                             <Style.Triggers>
@@ -360,57 +439,8 @@
                             </Style.Triggers>
                         </Style>
                     </Grid.Style>-->
-                    <Image Source="..\..\..\Assets\Button\ClockBG.png"></Image>
-                    <Grid  Margin="30">
+           
 
-                        <Grid Name="RectMinute"
-            Width="5" Background="Transparent" Height="150" MinHeight="75" MinWidth="3" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Grid.LayoutTransform>
-                                <RotateTransform Angle="{Binding objectComcellClockSet.CLOCK_MINUTE}"/>
-                            </Grid.LayoutTransform>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" Background="DimGray">
-
-
-                            </Grid>
-                            <Grid Grid.Row="1" >
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="3*"/>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0" Background="DimGray"/>
-                            </Grid>
-
-                        </Grid>
-
-                        <Grid Name="RectHour"
-            Width="7" Height="75" MinHeight="40" MinWidth="5" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Grid.LayoutTransform>
-                                <RotateTransform Angle="{Binding objectComcellClockSet.CLOCK_HOUR}"/>
-                            </Grid.LayoutTransform>
-                           
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" Background="SteelBlue"/>
-                            <Grid Grid.Row="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0" Background="SteelBlue"/>
-                            </Grid>
-                        </Grid>
-                        <Ellipse Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center" Height="10" Width="10" Stroke="DimGray"/>
-                        <!--<Button Visibility="Hidden" Style="{DynamicResource RoundCornerUpdate}" x:Name="StopBtn" Height="30" Width="150" Content="Accept Meeting" Click="StopBtn_Click" >
-                            
-                        </Button>-->
-
-                    </Grid>
                 </Grid>
                 
             </Grid>
