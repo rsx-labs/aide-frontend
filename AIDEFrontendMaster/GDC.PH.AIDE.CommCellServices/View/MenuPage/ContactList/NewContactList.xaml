@@ -6,708 +6,7 @@
       mc:Ignorable="d" 
       Height="auto" Width="auto"
       Title="NewContactList">
-    <Page.Resources>
-        <Style x:Key="RoundCornerUpdate2" TargetType="{x:Type Button}">
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="1"/>
-            <Setter Property="Foreground" Value="White"></Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="15" Background="#FF16ACE4">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          TextElement.FontWeight="Bold">
-                                </ContentPresenter>
-                            </Border>
-
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="#FF16ACE4"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="#FF75D0F1"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
-                            </Trigger>
-
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="RoundCorner" TargetType="{x:Type Button}">
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="1"/>
-            <Setter Property="Foreground" Value="White"></Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="4" Background="DimGray">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          TextElement.FontWeight="Bold">
-                                </ContentPresenter>
-                            </Border>
-
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="dimgray"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="#FF817F7F"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
-                            </Trigger>
-
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="styleDatePickerfrom" TargetType="{x:Type DatePicker}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type DatePicker}">
-                        <Grid x:Name="PART_Root">
-                            <Grid.ColumnDefinitions>
-
-                                <ColumnDefinition Width="5*" />
-
-                            </Grid.ColumnDefinitions>
-
-                            <DatePickerTextBox x:Name="PART_TextBox"
-                                       BorderBrush="#FF4E4E50"
-                                              
-                                       TextAlignment="Center"
-                                       HorizontalContentAlignment="Stretch"
-                                       Padding="{TemplateBinding Padding}"
-                                       VerticalContentAlignment="Center"
-                                       Visibility="Visible"
-                                       
-                                               HorizontalAlignment="Stretch"
-                                       Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="0.5" Foreground="#FF1D1D1D">
-                            </DatePickerTextBox>
-                            <Viewbox HorizontalAlignment="Right">
-
-                                <Button x:Name="PART_Button" VerticalAlignment="Stretch" >
-                                    <Button.Style>
-                                        <Style TargetType="{x:Type Button}">
-                                            <Setter Property="OverridesDefaultStyle" Value="True"></Setter>
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type Button}">
-                                                        <Image Name="buttonImage"
-                               Height="Auto"
-                               
-                               Margin="0,10,0,15"
-                               Source="..\..\..\Assets\Button\Calendar.png"
-                               Stretch="Fill"
-                               VerticalAlignment="Stretch"
-                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
-                                                            <Image.Effect>
-                                                                <DropShadowEffect  Direction="290" Opacity=".6" ShadowDepth="1" Color="LightGray" BlurRadius="1"/>
-                                                            </Image.Effect>
-                                                        </Image>
-                                                        <ControlTemplate.Triggers>
-                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\CalendarClick.png"></Setter>
-                                                            </Trigger>
-                                                        </ControlTemplate.Triggers>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
-                            </Viewbox>
-
-                            <TextBlock Text="from" Foreground="#FFFF7D00" VerticalAlignment="Stretch" Margin="0,10" HorizontalAlignment="left"  Background="#FF4E4E50" Padding="5" />
-                            <TextBlock Foreground="White" Text="from"  VerticalAlignment="Center" Margin="0,10" HorizontalAlignment="left"  Background="#FF4E4E50" Padding="5,0" />
-
-                            <Popup x:Name="PART_Popup" StaysOpen="False" AllowsTransparency="True" />
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="styleDatePickerto" TargetType="{x:Type DatePicker}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type DatePicker}">
-                        <Grid x:Name="PART_Root">
-                            <Grid.ColumnDefinitions>
-
-                                <ColumnDefinition Width="5*" />
-
-                            </Grid.ColumnDefinitions>
-
-                            <DatePickerTextBox x:Name="PART_TextBox"
-                                       BorderBrush="#FF4E4E50"
-                                       TextAlignment="Center"
-                                       HorizontalContentAlignment="Stretch"
-                                       Padding="{TemplateBinding Padding}"
-                                       VerticalContentAlignment="Center"
-                                       Visibility="Visible"
-                                       
-                                               HorizontalAlignment="Stretch"
-                                       Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="0.5" Foreground="#FF1D1D1D">
-                            </DatePickerTextBox>
-                            <Viewbox HorizontalAlignment="Right">
-
-                                <Button x:Name="PART_Button" VerticalAlignment="Stretch" >
-                                    <Button.Style>
-                                        <Style TargetType="{x:Type Button}">
-                                            <Setter Property="OverridesDefaultStyle" Value="True"></Setter>
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type Button}">
-                                                        <Image Name="buttonImage"
-                               Height="Auto"
-                               
-                               Margin="0,10,0,15"
-                               Source="..\..\..\Assets\Button\Calendar.png"
-                               Stretch="Fill"
-                               VerticalAlignment="Stretch"
-                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
-                                                            <Image.Effect>
-                                                                <DropShadowEffect  Direction="290" Opacity=".6" ShadowDepth="1" Color="LightGray" BlurRadius="1"/>
-                                                            </Image.Effect>
-                                                        </Image>
-                                                        <ControlTemplate.Triggers>
-                                                            <Trigger Property="IsMouseOver" Value="True">
-                                                                <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\CalendarClick.png"></Setter>
-                                                            </Trigger>
-                                                        </ControlTemplate.Triggers>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
-                            </Viewbox>
-                            <TextBlock Text="to     " Foreground="#FFFF7D00" VerticalAlignment="Stretch" Margin="0,10" HorizontalAlignment="left"  Background="#FF4E4E50" Padding="5" />
-                            <TextBlock Foreground="White" Text="to     "  VerticalAlignment="Center" Margin="0,10" HorizontalAlignment="left"  Background="#FF4E4E50" Padding="5,0" >
-
-                            </TextBlock>
-
-                            <Popup x:Name="PART_Popup" StaysOpen="False" AllowsTransparency="True" />
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="styleDatePickerTextBox" TargetType="{x:Type DatePickerTextBox}">
-            <Setter Property="Background" Value="#FFA9ADAF"></Setter>
-            <Setter Property="BorderBrush" Value="Transparent"></Setter>
-            <Setter Property="BorderThickness" Value="0"></Setter>
-            <Setter Property="IsEnabled" Value="True"></Setter>
-            <Setter Property="IsReadOnly" Value="False"></Setter>
-            <Setter Property="Foreground" Value="White"></Setter>
-            <Setter Property="Margin" Value="0,10"></Setter>
-
-
-        </Style>
-        <Style x:Key="ButtonAdd" TargetType="{x:Type Button}">
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Image Name="buttonImage"
-                               Height="Auto"
-                               HorizontalAlignment="Right"
-                               Margin="1"
-                               Source="..\..\..\Assets\Button\addnew.png"
-                               Stretch="Fill"
-                               VerticalAlignment="Stretch"
-                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
-                            <Image.Effect>
-                                <DropShadowEffect  Direction="290" Opacity="0.6" ShadowDepth="1" Color="Black"/>
-                            </Image.Effect>
-                        </Image>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\addnewclick.png"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-
-                </Setter.Value>
-            </Setter>
-
-        </Style>
-        <Style x:Key="ButtonBack" TargetType="{x:Type Button}">
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Image Name="buttonImage"
-                               Height="Auto"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               
-                               Source="..\..\..\Assets\Button\closebtn.png"
-                               Stretch="Fill">
-                            <Image.Effect>
-                                <DropShadowEffect  Direction="290" Opacity="0.6" ShadowDepth="1" Color="Black"/>
-                            </Image.Effect>
-                        </Image>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\closebtnhover.png"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-
-                </Setter.Value>
-            </Setter>
-
-        </Style>
-        <Style x:Key="ButtonSearch" TargetType="{x:Type Button}">
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Image Name="buttonImage"
-                               Height="Auto"
-                               HorizontalAlignment="Right"
-                               Margin="1"
-                               Source="..\..\..\Assets\Button\search.png"
-                               Stretch="Fill"
-                               VerticalAlignment="Stretch"
-                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
-                            <Image.Effect>
-                                <DropShadowEffect  Direction="290" Opacity="0.9" ShadowDepth="2" Color="LightGray"/>
-                            </Image.Effect>
-                        </Image>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\searchclick.png"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ButtonPrint" TargetType="{x:Type Button}">
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Image Name="buttonImage"
-                               Height="Auto"
-                               HorizontalAlignment="Right"
-                               Margin="1"
-                               Source="..\..\..\Assets\Button\Print.png"
-                               Stretch="Fill"
-                               VerticalAlignment="Stretch"
-                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
-                            <Image.Effect>
-                                <DropShadowEffect  Direction="290" Opacity="0.9" ShadowDepth="2" Color="LightGray"/>
-                            </Image.Effect>
-                        </Image>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\PrintClick.png"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ButtonPageNext" TargetType="{x:Type Button}">
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Image Name="buttonImage"
-                               Height="Auto"
-                               HorizontalAlignment="Right"
-                               Margin="1"
-                               Source="..\..\..\Assets\Button\next.png"
-                               Stretch="Fill"
-                               VerticalAlignment="Stretch"
-                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
-                            <Image.Effect>
-                                <DropShadowEffect  Direction="290" Opacity="0.6" ShadowDepth="1" Color="LightGray"/>
-                            </Image.Effect>
-                        </Image>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\nextclick.png"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ButtonPageBack" TargetType="{x:Type Button}">
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Image Name="buttonImage"
-                               Height="Auto"
-                               HorizontalAlignment="Right"
-                               Margin="1"
-                               Source="..\..\..\Assets\Button\back.png"
-                               Stretch="Fill"
-                               VerticalAlignment="Stretch"
-                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
-                            <Image.Effect>
-                                <DropShadowEffect  Direction="290" Opacity="0.6" ShadowDepth="1" Color="LightGray"/>
-                            </Image.Effect>
-                        </Image>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\backclick.png"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="{x:Type DataGrid}">
-            <Setter Property="HeadersVisibility" Value="Column"/>
-            <Setter Property="GridLinesVisibility" Value="All"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="VerticalGridLinesBrush" Value="White"/>
-            <Setter Property="HorizontalGridLinesBrush" Value="White"/>
-            <Setter Property="CanUserAddRows" Value="False"/>
-            <Setter Property="CanUserDeleteRows" Value="False"/>
-        </Style>
-        <Style TargetType="{x:Type DataGridCell}">
-
-            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
-        </Style>
-        <Style TargetType="{x:Type DataGridColumnHeader}">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="Background" Value="#FF4DB6AC"/>
-
-            <Setter Property="BorderThickness" Value="0,0,1,0"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="BorderBrush" Value="White"/>
-            <Setter Property="HorizontalContentAlignment" Value="left"/>
-            <Setter Property="Padding" Value="5"/>
-        </Style>
-        <Style TargetType="{x:Type DataGridRow}">
-            <Setter Property="Background" Value="white" />
-            <Setter Property="Foreground" Value="#FF303030"/>
-
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver"
-                           Value="True">
-                    <Setter Property="Background"
-                               Value="LightGray" />
-
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-        </Style>
-        <Style x:Key="buttonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="SteelBlue" />
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Width" Value="auto" />
-            <Setter Property="Height" Value="auto" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="Transparent">
-                            <ContentPresenter />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-
-                    <Setter Property="Background" Value="DimGray" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="TextboxStyle" TargetType="TextBox">
-            <Setter Property="Background" Value="Gainsboro"/>
-
-        </Style>
-        <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
-            <Border Background="{TemplateBinding Background}" 
-                x:Name="Bd" BorderBrush="#FFA4A4A4"
-                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4">
-                <ScrollViewer x:Name="PART_ContentHost"/>
-            </Border>
-
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
-                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                </Trigger>
-                <Trigger Property="Width" Value="Auto">
-                    <Setter Property="MinWidth" Value="100"/>
-                </Trigger>
-                <Trigger Property="Height" Value="Auto">
-                    <Setter Property="MinHeight" Value="20"/>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-        <Style x:Key="PagebuttonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="SteelBlue"/>
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Width" Value="auto" />
-            <Setter Property="Height" Value="auto" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="Transparent">
-                            <ContentPresenter />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-
-                    <Setter Property="Background" Value="Gainsboro" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <LinearGradientBrush x:Key="GradientDesign" MappingMode="RelativeToBoundingBox">
-            <!--<RadialGradientBrush.RelativeTransform>
-                    <TransformGroup>
-                        <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="1"/>
-                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
-                        <RotateTransform CenterY="0.5" CenterX="0.5" Angle="90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </RadialGradientBrush.RelativeTransform>-->
-            <GradientStop Color="#FFA0FFFF" Offset="0.0"/>
-            <GradientStop Color="#FFFDA299" Offset="1.0"/>
-
-        </LinearGradientBrush>
-        <Style TargetType="TextBox">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="TextAlignment" Value="Center"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Foreground" Value="DimGray"/>
-            <Setter Property="FontSize" Value="12"/>
-        </Style>
-
-        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
-                <Border
-                  x:Name="Border" 
-                  Grid.ColumnSpan="2"
-                  CornerRadius="15"
-                  Background="White"
-                  BorderBrush="Gainsboro"
-                  BorderThickness="3" />
-                <Border                   
-                    Grid.Column="0"
-                  CornerRadius="0" 
-                  Margin="1" 
-                   IsEnabled="False"
-                  Background="Transparent" 
-                  BorderBrush="Gainsboro"
-                  BorderThickness="0,0,1,0" />
-                <Path 
-                  x:Name="Arrow"
-                  Grid.Column="1"     
-                  Fill="DimGray"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center"
-                  Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"
-                />
-
-
-            </Grid>
-            <!--<ControlTemplate.Triggers>
-            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="#808080" />
-            </Trigger>
-            <Trigger Property="ToggleButton.IsChecked" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="#E0E0E0" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
-                <Setter TargetName="Border" Property="BorderBrush" Value="#AAAAAA" />
-                <Setter Property="Foreground" Value="#888888"/>
-                <Setter TargetName="Arrow" Property="Fill" Value="#888888" />
-            </Trigger>
-        </ControlTemplate.Triggers>-->
-        </ControlTemplate>
-
-        <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
-            <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}"/>
-        </ControlTemplate>
-
-        <Style x:Key="StyleComboBox" TargetType="{x:Type ComboBox}">
-
-            <Setter Property="SnapsToDevicePixels" Value="true"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-            <Setter Property="MinWidth" Value="120"/>
-            <Setter Property="MinHeight" Value="20"/>
-            <Setter Property="Foreground" Value="DimGray"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ComboBox}">
-                        <Grid>
-                            <ToggleButton 
-                            Name="ToggleButton" 
-                            Template="{StaticResource ComboBoxToggleButton}" 
-                            Grid.Column="2" 
-                            Focusable="false"
-                            IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
-                            ClickMode="Press">
-                            </ToggleButton>
-                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}"
-                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                            Margin="5"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center" />
-
-                            <TextBox x:Name="PART_EditableTextBox"
-                            Style="{x:Null}" 
-                            Template="{StaticResource ComboBoxTextBox}" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Center" 
-                            Margin="0"
-                            Focusable="True" 
-                            FontSize="12"
-                            Background="Transparent"
-                            Foreground="DimGray"
-                            Visibility="Visible"
-                            IsReadOnly="{TemplateBinding IsReadOnly}"/>
-
-                            <Popup 
-                            Name="Popup"
-                            Placement="Bottom"
-                            IsOpen="{TemplateBinding IsDropDownOpen}"
-                            AllowsTransparency="True" 
-                            Focusable="False"
-                            PopupAnimation="Slide">
-
-                                <Grid Name="DropDown"
-                              SnapsToDevicePixels="True"                
-                              MinWidth="{TemplateBinding ActualWidth}"
-                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
-                                    <Border 
-                                x:Name="DropDownBorder"
-                                Background="#FF3F3F3F"
-
-                                BorderThickness="1"
-                                BorderBrush="#888888"/>
-                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
-                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
-                                    </ScrollViewer>
-                                </Grid>
-                            </Popup>
-                        </Grid>
-
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="HasItems" Value="false">
-                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="#888888"/>
-                            </Trigger>
-                            <Trigger Property="IsGrouping" Value="true">
-                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
-                            </Trigger>
-                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
-                                <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0"/>
-                                <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
-                            </Trigger>
-                            <Trigger Property="IsEditable"  Value="true">
-                                <Setter Property="IsTabStop" Value="false"/>
-                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
-                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
-                            </Trigger>
-
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-
-            </Style.Triggers>
-        </Style>
-        <!-- SimpleStyles: ComboBoxItem -->
-        <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
-            <Setter Property="SnapsToDevicePixels" Value="true"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
-                        <Border Name="Border"
-                              Padding="2"
-                              SnapsToDevicePixels="true">
-                            <ContentPresenter />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsHighlighted" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="#FF4F4F4F"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="#888888"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        
-    </Page.Resources>
+    
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
@@ -715,30 +14,32 @@
                 <RowDefinition Height=".5*" />
                 <RowDefinition Height="6*" />
             </Grid.RowDefinitions>
+            
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
+                
                 <Grid Grid.Column="0">
                     <Viewbox HorizontalAlignment="Left">
                         <TextBlock Text="Update Contacts" Margin="5" Foreground="DimGray"/>
-
                     </Viewbox>
                 </Grid>
+                
                 <Grid Grid.Column="1">
                     <Viewbox Margin="10" HorizontalAlignment="Right">
-                        <Button x:Name="btnCCancel" Style="{DynamicResource ButtonBack}" >
-
-                        </Button>
+                        <Button x:Name="btnCCancel" Style="{StaticResource ButtonBack}" />
                     </Viewbox>
                 </Grid>
             </Grid>
+            
             <Grid Grid.Row="1" Background="Gray">
                 <Viewbox>
                     <TextBlock Foreground="White" Margin="10" Text="Please complete all commendation fields"  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Viewbox>
             </Grid>
+            
             <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}">
                 <Grid Margin="10,5">
                     <Grid.ColumnDefinitions>
@@ -746,6 +47,7 @@
                         <ColumnDefinition Width="5"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
+                    
                     <Grid Grid.Column="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -754,11 +56,12 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
+                        
                         <Grid Grid.Row="0">
                             <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-
                                 <TextBox x:Name="txtCEmpID" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="False" Text="{Binding Path=EMP_ID}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
+                            
                             <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter employee ID" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -769,9 +72,9 @@
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
-                                    
                                 </TextBlock.Style>
                             </TextBlock>
+                            
                             <TextBlock x:Name="txtlabelEmpID" Width="120" TextAlignment="Center" Margin="5" Text="Employee ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -785,11 +88,12 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </Grid>
+                        
                         <Grid Grid.Row="1">
                             <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-
                                 <TextBox x:Name="txtCEmail" Template="{DynamicResource TextBoxBaseControlTemplate}" IsEnabled="False" Text="{Binding Path=EMAIL_ADDRESS}" HorizontalContentAlignment="Center"/>
                             </Border>
+                            
                             <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter work email" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -802,6 +106,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
+                            
                             <TextBlock x:Name="txtlabelWorkEmail" Width="120" TextAlignment="Center" Margin="5" Text="Work Email" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -815,11 +120,12 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </Grid>
+                        
                         <Grid Grid.Row="2">
                             <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-
                                 <TextBox x:Name="txtCEmail2" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=EMAIL_ADDRESS2}" HorizontalContentAlignment="Center"/>
                             </Border>
+                            
                             <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter personal email" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -832,6 +138,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
+                            
                             <TextBlock x:Name="txtlabelPersonalEmail" Width="120" TextAlignment="Center" Margin="5" Text="Personal Email" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -845,12 +152,14 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </Grid>
+                        
                         <Grid Grid.Row="3">
                             <!--<Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                                 
                                 <TextBox  x:Name="txtCLocation" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=LOCATION}" TextWrapping="Wrap" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>-->
                             <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbLocation" Margin="0,5,5,5"/>
+                            
                             <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter work location" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -863,6 +172,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
+                            
                             <TextBlock x:Name="txtlabelWorkLocation" Width="120" TextAlignment="Center" Margin="5" Text="Work Location" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -876,11 +186,12 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </Grid>
+                        
                         <Grid Grid.Row="4">
                             <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-
                                 <TextBox x:Name="txtCLocal" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=LOCAL}" PreviewTextInput="NumberValidationTextBox" HorizontalContentAlignment="Center"/>
                             </Border>
+                            
                             <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter local extension" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -895,18 +206,17 @@
                             </TextBlock>
 
                             <TextBlock x:Name="txtlabelExtension" Width="120" TextAlignment="Center" Margin="5" Text="Local Extension" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=txtCLocal}" Value="">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtCLocal}" Value="">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </Grid>
                     </Grid>
                     
@@ -918,11 +228,12 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
+                        
                         <Grid Grid.Row="0">
                             <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                
-                                    <TextBox x:Name="txtCCelNo" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=CEL_NO}" PreviewTextInput="NumberValidationTextBox" HorizontalContentAlignment="Center"/>
+                                <TextBox x:Name="txtCCelNo" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=CEL_NO}" PreviewTextInput="NumberValidationTextBox" HorizontalContentAlignment="Center"/>
                             </Border>
+                            
                             <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter home mobile" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -935,6 +246,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
+                            
                             <TextBlock x:Name="txtlabel" Width="120" TextAlignment="Center" Margin="5" Text="Home Mobile" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -948,11 +260,12 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </Grid>
+                        
                         <Grid Grid.Row="1">
                             <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-
                                 <TextBox x:Name="txtCHome" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=HOMEPHONE}" PreviewTextInput="NumberValidationTextBox" HorizontalContentAlignment="Center"/>
                             </Border>
+                            
                             <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter work mobile" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -965,6 +278,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
+                            
                             <TextBlock x:Name="txtlabelWorkMobile" Width="120" TextAlignment="Center" Margin="5" Text="Work Mobile" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -978,11 +292,12 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </Grid>
+                        
                         <Grid Grid.Row="2">
                             <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-
                                 <TextBox x:Name="txtCOther" Template="{DynamicResource TextBoxBaseControlTemplate}" PreviewTextInput="NumberValidationTextBox" Text="{Binding Path=OTHER_PHONE}" HorizontalContentAlignment="Center"/>
                             </Border>
+                            
                             <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter other phone" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -995,6 +310,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
+                            
                             <TextBlock x:Name="txtlabelOtherPhone" Width="120" TextAlignment="Center" Margin="5" Text="Other Phone" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -1008,19 +324,17 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </Grid>
+                        
                         <Grid Grid.Row="3">
-                            <Button Style="{DynamicResource RoundCornerUpdate2}" x:Name="btnCUpdate" Margin="5,5,0,5">
-                                
-                                    <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
-                              
+                            <Button Style="{StaticResource RoundCornerUpdate}" x:Name="btnCUpdate" Margin="5,5,0,5">
+                                <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
                             </Button>
                         </Grid>
-                        <Grid Grid.Row="4"></Grid>
+                        
+                        <Grid Grid.Row="4"/>
                     </Grid>
-                    
-
+                </Grid>
             </Grid>
-        </Grid>
         </Grid>
     </Border>
 </Page>

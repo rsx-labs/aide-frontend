@@ -3,7 +3,6 @@ Imports System.Reflection
 Imports System.IO
 Imports System.ServiceModel
 
-
 ''' <summary>
 ''' GIANN CARLO CAMILO AND CHRISTIAN VALONDO
 ''' </summary>
@@ -11,7 +10,7 @@ Imports System.ServiceModel
 Class ThreeC_InsertPage
     Implements ServiceReference1.IAideServiceCallback
 
-
+#Region "Fields"
     Public _AIDEClientService As ServiceReference1.AideServiceClient
     Private email As String
     Private _objConcern As New Concern
@@ -20,6 +19,9 @@ Class ThreeC_InsertPage
     Private _menugrid As Grid
     Private _submenuframe As Frame
 
+    Dim concern As New Concern
+#End Region
+   
     Public Sub New(email As String, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
 
         ' This call is required by the designer.
@@ -88,25 +90,21 @@ Class ThreeC_InsertPage
 
         End Try
     End Sub
-    'Insert/Create new 3cs
-    Private Function InsertCreated3cs(ByVal obj As ConcernViewModel)
-        Dim ss As New Concern
+    
+    Private Function ValidateFields(ByVal obj As ConcernViewModel)
         If obj.SelectedConcern.CONCERN = "" Or obj.SelectedConcern.CAUSE = "" Or obj.SelectedConcern.COUNTERMEASURE = "" Then
             MsgBox("Fields Cannot Be null", MsgBoxStyle.Exclamation, "AIDE")
+            Return False
         ElseIf dtDate.SelectedDate.ToString() = String.Empty Then
             MsgBox("Please select Due Date before creating concern.", MsgBoxStyle.Exclamation, "AIDE")
+            Return False
         Else
-
-            ss.Cause = obj.SelectedConcern.CAUSE
-            ss.Concerns = obj.SelectedConcern.CONCERN
-            ss.CounterMeasure = obj.SelectedConcern.COUNTERMEASURE
-            ss.Due_Date = obj.SelectedConcern.DUE_DATE
-
-            MsgBox("Successfully Created 3C!", MsgBoxStyle.Information, "AIDE")
-
-            
+            concern.Cause = obj.SelectedConcern.CAUSE
+            concern.Concerns = obj.SelectedConcern.CONCERN
+            concern.CounterMeasure = obj.SelectedConcern.COUNTERMEASURE
+            concern.Due_Date = obj.SelectedConcern.DUE_DATE
+            Return True
         End If
-        Return ss
     End Function
 
     'Set DateTime Now in DatePicker
@@ -115,7 +113,16 @@ Class ThreeC_InsertPage
         ob.SelectedConcern.DUE_DATE = DateTime.Now
     End Sub
 
-
+    Private Sub ExitPage()
+        _frame.Navigate(New ThreeC_Page(email, _frame, _addframe, _menugrid, _submenuframe))
+        _frame.IsEnabled = True
+        _frame.Opacity = 1
+        _menugrid.IsEnabled = True
+        _menugrid.Opacity = 1
+        _submenuframe.IsEnabled = True
+        _submenuframe.Opacity = 1
+        _addframe.Visibility = Visibility.Hidden
+    End Sub
 
 #End Region
 
@@ -141,58 +148,40 @@ Class ThreeC_InsertPage
     End Sub
 
 #End Region
-   
+
 #Region "Buttons/Events"
     Private Sub btnBackClick(sender As Object, e As RoutedEventArgs)
         If txtConcern.Text <> "" OrElse txtCAUSE.Text.ToString <> "" OrElse txtCounterMeasure.Text.ToString <> "" Then
-
             If MsgBox("Are you sure you want to navigate to 3c's Home Page?", MsgBoxStyle.YesNo, "AIDE") = vbYes Then
-
-                _frame.Navigate(New ThreeC_Page(email, _frame, _addframe, _menugrid, _submenuframe))
-                _frame.IsEnabled = True
-                _frame.Opacity = 1
-                _menugrid.IsEnabled = True
-                _menugrid.Opacity = 1
-                _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
-                _addframe.Visibility = Visibility.Hidden
+                ExitPage()
             Else
                 Return
             End If
         Else
-            _frame.Navigate(New ThreeC_Page(email, _frame, _addframe, _menugrid, _submenuframe))
-            _frame.IsEnabled = True
-            _frame.Opacity = 1
-            _menugrid.IsEnabled = True
-            _menugrid.Opacity = 1
-            _submenuframe.IsEnabled = True
-            _submenuframe.Opacity = 1
-            _addframe.Visibility = Visibility.Hidden
+            ExitPage()
         End If
     End Sub
 
     Private Sub btnCreate3C(sender As Object, e As RoutedEventArgs)
         InitializeService()
-        _AIDEClientService.InsertIntoConcern(InsertCreated3cs(Me.DataContext()), email)
-        'MsgBox("Successfully Created New 3CS", MsgBoxStyle.Information)
-        txtRefNo.Text = String.Empty
-        txtConcern.Clear()
-        txtCAUSE.Clear()
-        txtCounterMeasure.Clear()
-        GetGeneRatedRefNo()
-        setDate()
-        _AIDEClientService.Close()
+        Dim isValidate As Boolean
+        isValidate = ValidateFields(Me.DataContext())
 
-        _frame.Navigate(New ThreeC_Page(email, _frame, _addframe, _menugrid, _submenuframe))
-        _frame.IsEnabled = True
-        _frame.Opacity = 1
-        _menugrid.IsEnabled = True
-        _menugrid.Opacity = 1
-        _submenuframe.IsEnabled = True
-        _submenuframe.Opacity = 1
+        If isValidate Then
+            _AIDEClientService.InsertIntoConcern(concern, email)
+            MsgBox("Successfully Created 3C!", MsgBoxStyle.Information, "AIDE")
 
-        _addframe.Visibility = Visibility.Hidden
+            txtRefNo.Text = String.Empty
+            txtConcern.Clear()
+            txtCAUSE.Clear()
+            txtCounterMeasure.Clear()
+            GetGeneRatedRefNo()
+            setDate()
+            _AIDEClientService.Close()
+            ExitPage()
+        End If
     End Sub
+
 #End Region
-   
+
 End Class
