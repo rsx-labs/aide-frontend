@@ -10,6 +10,9 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
+# Bak files
+*.bak
+
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
