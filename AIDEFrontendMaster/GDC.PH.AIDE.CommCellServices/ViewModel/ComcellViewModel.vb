@@ -12,6 +12,7 @@ Public Class ComcellViewModel
     Implements INotifyPropertyChanged
 
     Public _comcellList As New ObservableCollection(Of ComcellModel)
+    Public _comcellItem As New ComcellModel
     Private client As AideServiceClient
 
     Sub New()
@@ -24,6 +25,16 @@ Public Class ComcellViewModel
         Set(value As ObservableCollection(Of ComcellModel))
             _comcellList = value
             NotifyPropertyChanged("ComcellList")
+        End Set
+    End Property
+
+    Public Property ComcellItem As ComcellModel
+        Get
+            Return _comcellItem
+        End Get
+        Set(value As ComcellModel)
+            _comcellItem = value
+            NotifyPropertyChanged("ComcellItem")
         End Set
     End Property
 
