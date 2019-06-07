@@ -48,7 +48,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="15" Background="#FF16ACE4">
+                            <Border x:Name="border" CornerRadius="10" Background="#FF16ACE4">
                                 <ContentPresenter HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
                                                   TextElement.FontWeight="Bold">
@@ -72,6 +72,39 @@
             </Setter>
         </Style>
 
+        <Style x:Key="RoundCornerDelete" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Foreground" Value="White"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="10" Background="#FFE42F2F">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  TextElement.FontWeight="Bold">
+                                </ContentPresenter>
+                            </Border>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FFE42F2F"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FFF16767"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
         <Style x:Key="RoundCornerCreate" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -81,7 +114,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="15" Background="#FF02CB5D">
+                            <Border x:Name="border" CornerRadius="10" Background="#FF02CB5D">
                                 <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           TextElement.FontWeight="Bold">
@@ -394,7 +427,7 @@
                             <DatePickerTextBox x:Name="PART_TextBox"
                                                BorderBrush="Transparent"
                                                TextAlignment="Center"
-                                               FontSize="12"
+                                               FontSize="10"
                                                HorizontalContentAlignment="Stretch"
                                                Padding="{TemplateBinding Padding}"
                                                VerticalContentAlignment="Center"
@@ -460,7 +493,7 @@
                                                Padding="{TemplateBinding Padding}"
                                                VerticalContentAlignment="Center"
                                                Visibility="Visible"
-                                               FontSize="12"
+                                               FontSize="10"
                                                HorizontalAlignment="Stretch"
                                                Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="0.5" Foreground="DimGray">
                             </DatePickerTextBox>
@@ -615,7 +648,7 @@
                 </Grid.ColumnDefinitions>
                 <Border x:Name="Border" 
                         Grid.ColumnSpan="2"
-                        CornerRadius="15"
+                        CornerRadius="10"
                         Background="White"
                         BorderBrush="Gainsboro"
                         BorderThickness="3" />
@@ -655,7 +688,7 @@
                             <ToggleButton Name="ToggleButton" 
                                           Template="{StaticResource ComboBoxToggleButton}" 
                                           Grid.Column="2" 
-                                          Focusable="false"
+                                          Focusable="False"
                                           IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
                                           ClickMode="Press">
                             </ToggleButton>
@@ -703,10 +736,10 @@
                         </Grid>
 
                         <ControlTemplate.Triggers>
-                            <Trigger Property="HasItems" Value="false">
+                            <Trigger Property="HasItems" Value="False">
                                 <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
                             </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
+                            <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Foreground" Value="#888888"/>
                             </Trigger>
                             <Trigger Property="IsGrouping" Value="true">
@@ -716,8 +749,8 @@
                                 <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0"/>
                                 <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
                             </Trigger>
-                            <Trigger Property="IsEditable"  Value="true">
-                                <Setter Property="IsTabStop" Value="false"/>
+                            <Trigger Property="IsEditable"  Value="True">
+                                <Setter Property="IsTabStop" Value="False"/>
                                 <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
                                 <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
                             </Trigger>
@@ -763,6 +796,9 @@
             <Setter Property="HorizontalGridLinesBrush" Value="Gainsboro"/>
             <Setter Property="CanUserAddRows" Value="False"/>
             <Setter Property="CanUserDeleteRows" Value="False"/>
+            <Setter Property="CanUserReorderColumns" Value="False" />
+            <Setter Property="CanUserResizeColumns" Value="False" />
+            <Setter Property="CanUserSortColumns" Value="False" />
         </Style>
         
         <Style TargetType="{x:Type DataGridCell}">
@@ -772,17 +808,36 @@
         <Style TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="Foreground" Value="DimGray"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Height" Value="40"/>
+            <Setter Property="Height" Value="50"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0,0,1,1"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="BorderBrush" Value="Gainsboro"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="5"/>
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock x:Name="TextBlock" TextWrapping="Wrap" Text="{Binding}" />
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridColumnHeader}}}" Value="Center">
+                                <Setter TargetName="TextBlock" Property="TextAlignment" Value="Center"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         
         <Style TargetType="{x:Type DataGridRow}">
             <Setter Property="Foreground" Value="Gray"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"
+                         Value="True">
+                    <Setter Property="Background"
+                            Value="#FFECDEDE" />
+                </Trigger>
+            </Style.Triggers>
             <!--<Style.Triggers>
                 <Trigger Property="ItemsControl.AlternationIndex" Value="0">
                     <Setter Property="Background" Value="#19f39611"></Setter>
@@ -804,10 +859,10 @@
         <!-- ListView Styles -->
         <Style TargetType="{x:Type ListViewItem}">
             <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="true">
+                <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#FF8B8B8B" />
                 </Trigger>
-                <Trigger Property="IsSelected" Value="true">
+                <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Background" Value="DimGray" />
                 </Trigger>
             </Style.Triggers>
@@ -860,8 +915,8 @@
         <Style x:Key="ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
             <Setter Property="Visibility" Value="Hidden"/>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Focusable" Value="False"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RepeatButton}">
@@ -869,10 +924,10 @@
                             <Path HorizontalAlignment="Center" VerticalAlignment="Center" Fill="{StaticResource GlyphBrush}" Data="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" />
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsPressed" Value="true">
+                            <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="Border" Property="Background" Value="{StaticResource PressedBrush}" />
                             </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
+                            <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
@@ -882,11 +937,11 @@
         </Style>
         
         <Style x:Key="ScrollBarPageButton" TargetType="{x:Type RepeatButton}">
-            <Setter Property="Visibility" Value="Hidden"/>
-            <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="IsTabStop" Value="false"/>
-            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="Visibility" Value="Hidden" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="Focusable" Value="False" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RepeatButton}">
@@ -898,9 +953,9 @@
 
         <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="IsTabStop" Value="false"/>
-            <Setter Property="Focusable" Value="false"/>
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="Focusable" Value="False"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Thumb}">
