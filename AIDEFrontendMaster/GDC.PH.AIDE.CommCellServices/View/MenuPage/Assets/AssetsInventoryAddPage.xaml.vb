@@ -17,7 +17,7 @@ Public Class AssetsInventoryAddPage
     Private _addframe As Frame
     Private _menugrid As Grid
     Private _submenuframe As Frame
-
+    Private dsplyByDiv As Integer = 1
     Private pageDefinition As String
 
     Dim lstAssets As Assets()
@@ -435,7 +435,7 @@ Public Class AssetsInventoryAddPage
     End Sub
 
     Public Sub ListOfAllUser()
-        lstNickname = client.ViewNicknameByDeptID(profile.Email_Address)
+        lstNickname = client.ViewNicknameByDeptID(profile.Email_Address, dsplyByDiv)
         Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
         Dim successRegisterDBProvider As New SuccessRegisterDBProvider
 
