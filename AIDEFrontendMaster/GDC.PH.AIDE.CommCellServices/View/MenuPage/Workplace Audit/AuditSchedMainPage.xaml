@@ -1,10 +1,10 @@
-﻿<Page x:Class="ComcellMainPage"
+﻿<Page x:Class="AuditSchedMainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      Title="ComcellMainPage">
+      Title="AuditSchedMainPage">
     <Page.Resources>
         <Style TargetType="{x:Type DataGridRow}">
             <Setter Property="Foreground" Value="Gray"/>
@@ -825,7 +825,7 @@
 
                     <Grid Grid.Column="1">
                         <Viewbox HorizontalAlignment="Left">
-                            <TextBlock TextWrapping="Wrap" Padding="0" Text="Comcell Meeting" Margin="0,7,0,7" Foreground="DimGray"/>
+                            <TextBlock TextWrapping="Wrap" Padding="0" Text="Workplace Audit Schedule" Margin="0,7,0,7" Foreground="DimGray"/>
                         </Viewbox>
                     </Grid>
 
@@ -845,52 +845,48 @@
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <Grid Grid.Column="0" HorizontalAlignment="Stretch">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="181*"/>
-                                    <ColumnDefinition Width="26*"/>
-                                </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="lblYear" FontSize="16" Foreground="DimGray" FontWeight="Bold" VerticalAlignment="Center" Margin="15,0,0,0"/>
+                    </Grid>
+                    <Grid Grid.Column="3">
+                        <ComboBox Grid.ColumnSpan="1" Style="{DynamicResource StyleComboBox}" MinWidth="140" Height="30" x:Name="cbYear" Margin="10"/>
+                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                            <Viewbox Margin="15,15,0,15">
+                                <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png"/>
+                            </Viewbox>
 
-                                <ComboBox Grid.ColumnSpan="1" Style="{DynamicResource StyleComboBox}" MinWidth="140" Height="30" x:Name="cbYear" Margin="10"/>
-                                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                                    <Viewbox Margin="15,15,0,15">
-                                        <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png"/>
-                                    </Viewbox>
-                                    
-                                    <TextBlock Margin="8,0,5,0" FontSize="11" IsHitTestVisible="False" Text="Select Fiscal Year" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="DarkGray">
-                                        <TextBlock.Style>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=cbYear}" Value="">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </StackPanel>
-                            </Grid>
-                        </Grid>
+                            <TextBlock Margin="8,0,5,0" FontSize="11" IsHitTestVisible="False" Text="Select Fiscal Year" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=cbYear}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid Grid.Row="2" Background="#FFFBFBFB">
                 <Border Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
-
-                    <DataGrid Background="Transparent" AutoGenerateColumns="False" x:Name="ComcellLV" 
+                    <DataGrid Background="Transparent" AutoGenerateColumns="False" x:Name="AuditSchedLV" 
                       Width="auto" BorderBrush="Transparent" 
-                      ItemsSource="{Binding ComcellList}" 
-                      MouseDoubleClick="ComcellLV_MouseDoubleClick">
+                      ItemsSource="{Binding AuditSchedList}" 
+                      MouseDoubleClick="AuditSched_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Month Of" Width="8*" Binding="{Binding MONTH,Mode=TwoWay}" IsReadOnly="True"/>
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Facilitator"  Width="2*" Binding="{Binding FACILITATOR,Mode=TwoWay}" IsReadOnly="True"/>
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Minutes Taker" Width="8*" Binding="{Binding MINUTES_TAKER,Mode=TwoWay}" IsReadOnly="True"/>
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Comcell ID" Visibility="Collapsed" Width="8*" Binding="{Binding COMCELL_ID,Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="FY WEEK #" Width="5*" Binding="{Binding FY_WEEK,Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Period Start"  Width="8*" Binding="{Binding PERIOD_START,Mode=TwoWay,StringFormat=MM/dd/yyyy}" IsReadOnly="True"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Period End" Width="8*" Binding="{Binding PERIOD_END,Mode=TwoWay,StringFormat=MM/dd/yyyy}" IsReadOnly="True"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Daily" Width="8*" Binding="{Binding DAILY,Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Weekly" Width="8*" Binding="{Binding WEEKLY,Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Monthly" Width="8*" Binding="{Binding MONTHLY,Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Audit Sched ID" Visibility="Collapsed" Width="8*" Binding="{Binding AUDIT_SCHED_ID,Mode=TwoWay}" IsReadOnly="True"/>
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="FY_START" Visibility="Collapsed" Width="8*" Binding="{Binding FY_START,Mode=TwoWay}" IsReadOnly="True"/>
                         </DataGrid.Columns>
                     </DataGrid>

@@ -1130,7 +1130,7 @@
                         </Grid>
                         <Grid Grid.Column="5">
                             <Viewbox Margin="2" HorizontalAlignment="Left">
-                                <TextBlock Text="PL - Present (Late)" Foreground="DimGray"/>
+                                <TextBlock Text="L - Late" Foreground="DimGray"/>
                             </Viewbox>
                         </Grid>
                     </Grid>

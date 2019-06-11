@@ -74,7 +74,7 @@
                               ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"/>
                             <TextBox Name="PART_EditableTextBox" Margin="3, 3, 23, 3"                     
                      IsReadOnly="{TemplateBinding IsReadOnly}"
-                     Visibility="Hidden" Background="Transparent"
+                     Visibility="Hidden" Background="Black"
                      HorizontalAlignment="Left" VerticalAlignment="Center"
                      Focusable="True" >
                                 <TextBox.Template>
@@ -667,7 +667,7 @@
                                 <ColumnDefinition Width="0.5*"/>
                                 <ColumnDefinition Width="0.25*"/>
                             </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0">
+                            <!--<Grid Grid.Column="0">
                                 <Viewbox>
                                     <TextBlock TextWrapping="Wrap" Text="Search" Margin="0,18,0,18" 
                                    Foreground="DimGray" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -681,7 +681,7 @@
                                 <Button x:Name="btnSearch" Width="60" Height="35" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource RoundCorner}" HorizontalContentAlignment="Center">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Search"></TextBlock>
                                 </Button>
-                            </Grid>
+                            </Grid>-->
                         </Grid>
 
                         <Grid Grid.Column="1">
@@ -973,6 +973,7 @@
                                     <ComboBox x:Name="cbProjectList" Margin="0,5"  
                                           ItemsSource="{Binding Path=SkillList}" 
                                           SelectedValue="{Binding Path=Skill_ID}"
+                                          Style="{DynamicResource StyleComboBox}"
                                           DisplayMemberPath="Skill_Descr" SelectedValuePath="Skill_ID" IsEnabled="False"/>
                                 </Grid>
 

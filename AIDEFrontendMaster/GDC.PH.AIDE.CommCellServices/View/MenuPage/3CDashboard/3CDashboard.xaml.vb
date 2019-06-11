@@ -171,7 +171,7 @@ Class _3CDashboard
             .DataLabels = True, .Fill = New BrushConverter().ConvertFromString("#FFFDD652")
         },
         New PieSeries With {
-            .Title = "Open/Close",
+            .Title = "Open",
             .Values = New ChartValues(Of ObservableValue) From {
                 New ObservableValue(CompletedDate)
             },

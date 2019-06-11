@@ -40,7 +40,6 @@ Public Class BillablesPage
         LoadDataMonthly()
     End Sub
 
-
 #Region "Sub Procedures"
 
     Public Function InitializeService() As Boolean
@@ -77,7 +76,7 @@ Public Class BillablesPage
             Dim series As SeriesCollection = New SeriesCollection()
 
             For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
-                totalMonthly = totalMonthly + iResource.Status
+                totalWeekly = totalWeekly + iResource.Status
 
                 If iResource.Emp_Name = "Breaktime" Or iResource.Emp_Name = "Sick Leave" Or iResource.Emp_Name = "Vacation Leave" Or iResource.Emp_Name = "Holiday" Or iResource.Emp_Name = "FAI-Admin" Or iResource.Emp_Name = "WS-Training" Then
                     nonBillable = nonBillable + iResource.Status

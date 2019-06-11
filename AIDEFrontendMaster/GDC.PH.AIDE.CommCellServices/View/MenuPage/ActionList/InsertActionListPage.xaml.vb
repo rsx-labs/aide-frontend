@@ -20,6 +20,7 @@ Class InsertActionListPage
     Private _menugrid As Grid
     Private _submenuframe As Frame
     Private profiles As Profile
+    Private dsplyByDiv As Integer = 1
 #End Region
 
     Public Sub New(F As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _prof As Profile)
@@ -71,7 +72,7 @@ Class InsertActionListPage
     Public Sub PopulateComboBox()
         Try
             If InitializeService() Then
-                Dim lstNickname As Nickname() = aide.ViewNicknameByDeptID(__email)
+                Dim lstNickname As Nickname() = aide.ViewNicknameByDeptID(__email, dsplyByDiv)
                 Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
                 Dim successRegisterDBProvider As New SuccessRegisterDBProvider
                 Dim nicknameVM As New NicknameViewModel()

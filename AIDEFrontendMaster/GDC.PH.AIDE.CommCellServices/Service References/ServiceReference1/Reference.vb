@@ -1752,7 +1752,7 @@ Namespace ServiceReference1
         Private PhaseField As Short
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private ProjectIDField As Short
+        Private ProjectIDField As Integer
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private ReferenceIDField As String
@@ -1942,7 +1942,7 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property ProjectID() As Short
+        Public Property ProjectID() As Integer
             Get
                 Return Me.ProjectIDField
             End Get
@@ -2041,6 +2041,213 @@ Namespace ServiceReference1
                 If (Me.WeekRangeIDField.Equals(value) <> true) Then
                     Me.WeekRangeIDField = value
                     Me.RaisePropertyChanged("WeekRangeID")
+                End If
+            End Set
+        End Property
+        
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        
+        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
+            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
+            If (Not (propertyChanged) Is Nothing) Then
+                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
+            End If
+        End Sub
+    End Class
+    
+    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="AuditSched", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
+     System.SerializableAttribute()>  _
+    Partial Public Class AuditSched
+        Inherits Object
+        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+        
+        <System.NonSerializedAttribute()>  _
+        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private AUDIT_SCHED_IDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private DAILYField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private EMP_IDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FY_ENDField As Date
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FY_STARTField As Date
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FY_WEEKField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private MONTHLYField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private PERIOD_ENDField As Date
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private PERIOD_STARTField As Date
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private WEEKLYField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private YEARField As Integer
+        
+        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
+        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
+            Get
+                Return Me.extensionDataField
+            End Get
+            Set
+                Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property AUDIT_SCHED_ID() As Integer
+            Get
+                Return Me.AUDIT_SCHED_IDField
+            End Get
+            Set
+                If (Me.AUDIT_SCHED_IDField.Equals(value) <> true) Then
+                    Me.AUDIT_SCHED_IDField = value
+                    Me.RaisePropertyChanged("AUDIT_SCHED_ID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property DAILY() As String
+            Get
+                Return Me.DAILYField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.DAILYField, value) <> true) Then
+                    Me.DAILYField = value
+                    Me.RaisePropertyChanged("DAILY")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property EMP_ID() As Integer
+            Get
+                Return Me.EMP_IDField
+            End Get
+            Set
+                If (Me.EMP_IDField.Equals(value) <> true) Then
+                    Me.EMP_IDField = value
+                    Me.RaisePropertyChanged("EMP_ID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FY_END() As Date
+            Get
+                Return Me.FY_ENDField
+            End Get
+            Set
+                If (Me.FY_ENDField.Equals(value) <> true) Then
+                    Me.FY_ENDField = value
+                    Me.RaisePropertyChanged("FY_END")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FY_START() As Date
+            Get
+                Return Me.FY_STARTField
+            End Get
+            Set
+                If (Me.FY_STARTField.Equals(value) <> true) Then
+                    Me.FY_STARTField = value
+                    Me.RaisePropertyChanged("FY_START")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FY_WEEK() As Integer
+            Get
+                Return Me.FY_WEEKField
+            End Get
+            Set
+                If (Me.FY_WEEKField.Equals(value) <> true) Then
+                    Me.FY_WEEKField = value
+                    Me.RaisePropertyChanged("FY_WEEK")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property MONTHLY() As String
+            Get
+                Return Me.MONTHLYField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.MONTHLYField, value) <> true) Then
+                    Me.MONTHLYField = value
+                    Me.RaisePropertyChanged("MONTHLY")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property PERIOD_END() As Date
+            Get
+                Return Me.PERIOD_ENDField
+            End Get
+            Set
+                If (Me.PERIOD_ENDField.Equals(value) <> true) Then
+                    Me.PERIOD_ENDField = value
+                    Me.RaisePropertyChanged("PERIOD_END")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property PERIOD_START() As Date
+            Get
+                Return Me.PERIOD_STARTField
+            End Get
+            Set
+                If (Me.PERIOD_STARTField.Equals(value) <> true) Then
+                    Me.PERIOD_STARTField = value
+                    Me.RaisePropertyChanged("PERIOD_START")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property WEEKLY() As String
+            Get
+                Return Me.WEEKLYField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.WEEKLYField, value) <> true) Then
+                    Me.WEEKLYField = value
+                    Me.RaisePropertyChanged("WEEKLY")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property YEAR() As Integer
+            Get
+                Return Me.YEARField
+            End Get
+            Set
+                If (Me.YEARField.Equals(value) <> true) Then
+                    Me.YEARField = value
+                    Me.RaisePropertyChanged("YEAR")
                 End If
             End Set
         End Property
@@ -7162,6 +7369,24 @@ Namespace ServiceReference1
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeeklyReportsByWeekRangeID", ReplyAction:="http://tempuri.org/IAideService/GetWeeklyReportsByWeekRangeIDResponse")>  _
         Function GetWeeklyReportsByWeekRangeIDAsync(ByVal weekRangeID As Integer, ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeeklyReport())
         
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertAuditSched")>  _
+        Sub InsertAuditSched(ByVal auditSched As ServiceReference1.AuditSched)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertAuditSched")>  _
+        Function InsertAuditSchedAsync(ByVal auditSched As ServiceReference1.AuditSched) As System.Threading.Tasks.Task
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAuditSched", ReplyAction:="http://tempuri.org/IAideService/GetAuditSchedResponse")>  _
+        Function GetAuditSched(ByVal empID As Integer, ByVal year As Integer) As ServiceReference1.AuditSched()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAuditSched", ReplyAction:="http://tempuri.org/IAideService/GetAuditSchedResponse")>  _
+        Function GetAuditSchedAsync(ByVal empID As Integer, ByVal year As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.AuditSched())
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateAuditSched")>  _
+        Sub UpdateAuditSched(ByVal auditSched As ServiceReference1.AuditSched)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateAuditSched")>  _
+        Function UpdateAuditSchedAsync(ByVal auditSched As ServiceReference1.AuditSched) As System.Threading.Tasks.Task
+        
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/CreateNewSuccessRegister")>  _
         Sub CreateNewSuccessRegister(ByVal success As ServiceReference1.SuccessRegister)
         
@@ -7187,10 +7412,10 @@ Namespace ServiceReference1
         Function ViewSuccessRegisterAllAsync(ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.SuccessRegister())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/ViewNicknameByDeptID", ReplyAction:="http://tempuri.org/IAideService/ViewNicknameByDeptIDResponse")>  _
-        Function ViewNicknameByDeptID(ByVal email As String) As ServiceReference1.Nickname()
+        Function ViewNicknameByDeptID(ByVal email As String, ByVal toDisplay As Integer) As ServiceReference1.Nickname()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/ViewNicknameByDeptID", ReplyAction:="http://tempuri.org/IAideService/ViewNicknameByDeptIDResponse")>  _
-        Function ViewNicknameByDeptIDAsync(ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.Nickname())
+        Function ViewNicknameByDeptIDAsync(ByVal email As String, ByVal toDisplay As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Nickname())
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateSuccessRegisterByEmpID")>  _
         Sub UpdateSuccessRegisterByEmpID(ByVal success As ServiceReference1.SuccessRegister)
@@ -7965,6 +8190,8 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeeklyReport())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeeklyReport)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AuditSched)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AuditSched())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Nickname())),  _
@@ -8061,6 +8288,30 @@ Namespace ServiceReference1
             Return MyBase.Channel.GetWeeklyReportsByWeekRangeIDAsync(weekRangeID, empID)
         End Function
         
+        Public Sub InsertAuditSched(ByVal auditSched As ServiceReference1.AuditSched) Implements ServiceReference1.IAideService.InsertAuditSched
+            MyBase.Channel.InsertAuditSched(auditSched)
+        End Sub
+        
+        Public Function InsertAuditSchedAsync(ByVal auditSched As ServiceReference1.AuditSched) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.InsertAuditSchedAsync
+            Return MyBase.Channel.InsertAuditSchedAsync(auditSched)
+        End Function
+        
+        Public Function GetAuditSched(ByVal empID As Integer, ByVal year As Integer) As ServiceReference1.AuditSched() Implements ServiceReference1.IAideService.GetAuditSched
+            Return MyBase.Channel.GetAuditSched(empID, year)
+        End Function
+        
+        Public Function GetAuditSchedAsync(ByVal empID As Integer, ByVal year As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.AuditSched()) Implements ServiceReference1.IAideService.GetAuditSchedAsync
+            Return MyBase.Channel.GetAuditSchedAsync(empID, year)
+        End Function
+        
+        Public Sub UpdateAuditSched(ByVal auditSched As ServiceReference1.AuditSched) Implements ServiceReference1.IAideService.UpdateAuditSched
+            MyBase.Channel.UpdateAuditSched(auditSched)
+        End Sub
+        
+        Public Function UpdateAuditSchedAsync(ByVal auditSched As ServiceReference1.AuditSched) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateAuditSchedAsync
+            Return MyBase.Channel.UpdateAuditSchedAsync(auditSched)
+        End Function
+        
         Public Sub CreateNewSuccessRegister(ByVal success As ServiceReference1.SuccessRegister) Implements ServiceReference1.IAideService.CreateNewSuccessRegister
             MyBase.Channel.CreateNewSuccessRegister(success)
         End Sub
@@ -8093,12 +8344,12 @@ Namespace ServiceReference1
             Return MyBase.Channel.ViewSuccessRegisterAllAsync(email)
         End Function
         
-        Public Function ViewNicknameByDeptID(ByVal email As String) As ServiceReference1.Nickname() Implements ServiceReference1.IAideService.ViewNicknameByDeptID
-            Return MyBase.Channel.ViewNicknameByDeptID(email)
+        Public Function ViewNicknameByDeptID(ByVal email As String, ByVal toDisplay As Integer) As ServiceReference1.Nickname() Implements ServiceReference1.IAideService.ViewNicknameByDeptID
+            Return MyBase.Channel.ViewNicknameByDeptID(email, toDisplay)
         End Function
         
-        Public Function ViewNicknameByDeptIDAsync(ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.Nickname()) Implements ServiceReference1.IAideService.ViewNicknameByDeptIDAsync
-            Return MyBase.Channel.ViewNicknameByDeptIDAsync(email)
+        Public Function ViewNicknameByDeptIDAsync(ByVal email As String, ByVal toDisplay As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Nickname()) Implements ServiceReference1.IAideService.ViewNicknameByDeptIDAsync
+            Return MyBase.Channel.ViewNicknameByDeptIDAsync(email, toDisplay)
         End Function
         
         Public Sub UpdateSuccessRegisterByEmpID(ByVal success As ServiceReference1.SuccessRegister) Implements ServiceReference1.IAideService.UpdateSuccessRegisterByEmpID
