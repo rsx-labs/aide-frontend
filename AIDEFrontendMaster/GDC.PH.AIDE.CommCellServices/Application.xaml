@@ -198,7 +198,28 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
+        <Style x:Key="ButtonExport" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Name="buttonImage"
+                               Height="32"
+                               HorizontalAlignment="Right"
+                               Margin="1"
+                               Source="Assets\Button\export.png"
+                               Stretch="Fill"
+                               VerticalAlignment="Stretch"
+                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                            <Image.Effect>
+                                <DropShadowEffect  Direction="290" Opacity="0.9" ShadowDepth="2" Color="LightGray"/>
+                            </Image.Effect>
+                        </Image>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="ButtonPageNext" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -544,7 +565,7 @@
             <Setter Property="BorderBrush" Value="Transparent"></Setter>
             <Setter Property="BorderThickness" Value="0"></Setter>
             <Setter Property="IsEnabled" Value="True"></Setter>
-            <Setter Property="IsReadOnly" Value="True"></Setter>
+            <Setter Property="IsReadOnly" Value="False"></Setter>
             <Setter Property="Foreground" Value="White"></Setter>
         </Style>
 
@@ -959,7 +980,21 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Thumb}">
-                        <Border CornerRadius="4" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0"  Width="8" Margin="8,0,-2,0"/>
+                        <Border CornerRadius="4" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Width="8" Margin="8,0,-2,0"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ScrollBarHorizontalThumb" TargetType="{x:Type Thumb}">
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border CornerRadius="4" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" Width="Auto"/>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -991,25 +1026,19 @@
         
         <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition MaxWidth="18"/>
-                    <ColumnDefinition Width="0.00001*"/>
-                    <ColumnDefinition MaxWidth="18"/>
-                </Grid.ColumnDefinitions>
-                <Border Grid.ColumnSpan="3" CornerRadius="2" Background="#F0F0F0"/>
-                <RepeatButton Grid.Column="0"  Style="{StaticResource ScrollBarLineButton}" Width="18" Command="ScrollBar.LineLeftCommand" Content="M 4 0 L 4 8 L 0 4 Z" />
-                <Track Name="PART_Track" Grid.Column="1" IsDirectionReversed="False">
-                    <Track.DecreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageLeftCommand" />
-                    </Track.DecreaseRepeatButton>
-                    <Track.Thumb>
-                        <Thumb Style="{StaticResource ScrollBarThumb}" Margin="0,1,0,1" Background="{StaticResource NormalBrush}" BorderBrush="{StaticResource NormalBorderBrush}" />
-                    </Track.Thumb>
-                    <Track.IncreaseRepeatButton>
-                        <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageRightCommand" />
-                    </Track.IncreaseRepeatButton>
-                </Track>
-                <RepeatButton Grid.Column="3" Style="{StaticResource ScrollBarLineButton}" Width="18" Command="ScrollBar.LineRightCommand" Content="M 0 0 L 4 4 L 0 8 Z"/>
+                <Border CornerRadius="2" Background="#F0F0F0">
+                    <Track Name="PART_Track" IsDirectionReversed="False">
+                        <Track.DecreaseRepeatButton>
+                            <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageLeftCommand" />
+                        </Track.DecreaseRepeatButton>
+                        <Track.Thumb>
+                            <Thumb Style="{StaticResource ScrollBarHorizontalThumb}" Background="{StaticResource NormalBrush}" BorderBrush="{StaticResource NormalBorderBrush}" />
+                        </Track.Thumb>
+                        <Track.IncreaseRepeatButton>
+                            <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageRightCommand" />
+                        </Track.IncreaseRepeatButton>
+                    </Track>
+                </Border>
             </Grid>
         </ControlTemplate>
         
@@ -1066,7 +1095,41 @@
             <GradientStop Color="#FFA0FFFF" Offset="0.0"/>
             <GradientStop Color="#FFFDA299" Offset="1.0"/>
         </LinearGradientBrush>
-        
+
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border>
+                            <Grid>
+                                <Grid>
+                                    <Border x:Name="border" 
+                                            CornerRadius="10,10,0,0"
+                                            Background="LightGray"/>
+                                </Grid>
+                                <ContentPresenter ContentSource="Header"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#FF4DB6AC" />
+                            </Trigger>
+                            <Trigger Property="IsSelected"
+                                     Value="True">
+                                <Setter TargetName="border"
+                                        Property="Background"
+                                        Value="#FF4DB6AC" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
     
 </Application>
