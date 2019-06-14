@@ -117,7 +117,7 @@
                                 <lvc:DefaultLegend BulletSize="15" FontSize="12" />
                             </lvc:PieChart.ChartLegend>
                             <lvc:PieChart.DataTooltip>
-                                <lvc:DefaultTooltip BulletSize="15" />
+                                <lvc:DefaultTooltip BulletSize="15" SelectionMode="OnlySender" />
                             </lvc:PieChart.DataTooltip>
                         </lvc:PieChart>
                     </Grid>
@@ -142,7 +142,7 @@
                                 <lvc:DefaultLegend BulletSize="12" FontSize="12" />
                             </lvc:PieChart.ChartLegend>
                             <lvc:PieChart.DataTooltip>
-                                <lvc:DefaultTooltip BulletSize="12" />
+                                <lvc:DefaultTooltip BulletSize="12" SelectionMode="OnlySender" />
                             </lvc:PieChart.DataTooltip>
                         </lvc:PieChart>
                     </Grid>

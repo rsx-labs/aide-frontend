@@ -472,9 +472,64 @@ Class WeeklyReportUpdatePage
         End If
     End Sub
 
+    Private Sub txtRefID_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtRefID.TextChanged
+        If txtRefID.Text IsNot String.Empty Then
+            If Not txtIncidentType.Text.Contains("*") Then
+                txtIncidentType.Text = "Incident Type *"
+            End If
+
+            If Not txtTargetDate.Text.Contains("*") Then
+                txtTargetDate.Text = "Target Date *"
+            End If
+
+            If Not txtEffort.Text.Contains("*") Then
+                txtEffort.Text = "Estimate Effort(hrs) *"
+            End If
+        Else
+            txtIncidentType.Text = "Incident Type"
+            txtTargetDate.Text = "Target Date"
+            txtEffort.Text = "Estimate Effort(hrs)"
+        End If
+    End Sub
+
+    Private Sub dpCompletedDate_SelectedDateChanged(sender As Object, e As SelectionChangedEventArgs) Handles dpCompletedDate.SelectedDateChanged
+        If dpCompletedDate.Text IsNot String.Empty Then
+            If Not txtStartDate.Text.Contains("*") Then
+                txtStartDate.Text = "Select Start Date *"
+            End If
+        Else
+            txtStartDate.Text = "Select Start Date"
+        End If
+    End Sub
+
+    Private Sub cbIncidentType_DropDownClosed(sender As Object, e As EventArgs) Handles cbIncidentType.DropDownClosed
+        If cbIncidentType.Text IsNot String.Empty Then
+            If Not txtPhase.Text.Contains("*") Then
+                txtPhase.Text = "Phase *"
+            End If
+        Else
+            txtPhase.Text = "Phase"
+        End If
+    End Sub
+
+    Private Sub cbStatus_DropDownClosed(sender As Object, e As EventArgs) Handles cbStatus.DropDownClosed
+        If cbStatus.Text = "Completed" Then
+            If Not txtDateCompleted.Text.Contains("*") Then
+                txtDateCompleted.Text = "Select Completed Date *"
+            End If
+        Else
+            txtDateCompleted.Text = "Select Completed Date"
+        End If
+    End Sub
+
     Private Sub NumberValidationTextBox(ByVal sender As Object, ByVal e As TextCompositionEventArgs)
-        Dim regex As Regex = New Regex("[^0-9]+")
-        e.Handled = regex.IsMatch(e.Text)
+        Dim regex = New Regex("^[0-9]*(?:\.[0-9]*)?$")
+
+        If regex.IsMatch(e.Text) AndAlso Not (e.Text = "." AndAlso (CType(sender, TextBox)).Text.Contains(e.Text)) Then
+            e.Handled = False
+        Else
+            e.Handled = True
+        End If
     End Sub
 #End Region
 
