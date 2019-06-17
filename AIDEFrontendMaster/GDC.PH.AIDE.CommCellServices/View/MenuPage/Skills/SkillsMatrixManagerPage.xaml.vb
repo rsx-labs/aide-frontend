@@ -418,46 +418,46 @@ Class SkillsMatrixManagerPage
 
 #Region "Events"
 
-    Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
-        DisableControls()
-        Try
-            InitializeService()
-            If txtSearch.Text = String.Empty Then
-                LoadProfile()
-                ClearSelection()
-            ElseIf txtSearch.Text = " " Then
-                MsgBox("Please Input Numbers Only!", MsgBoxStyle.Critical, "Employee Assist Tools")
-                txtSearch.Text = String.Empty
-            Else
-                Dim lstProfile As Profile = client.GetProfileInformation(txtSearch.Text)
-                If Not IsNothing(lstProfile) Or txtSearch.Text = 0 Then
-                        Dim profileList As New ObservableCollection(Of ProfileModel)
-                        _ProfileDBProvider = New ProfileDBProvider
-                        _ProfileViewModel = New ProfileViewModel
-                        _ProfileDBProvider.SetMyProfile(lstProfile)
+    'Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
+    '    DisableControls()
+    '    Try
+    '        InitializeService()
+    '        If txtSearch.Text = String.Empty Then
+    '            LoadProfile()
+    '            ClearSelection()
+    '        ElseIf txtSearch.Text = " " Then
+    '            MsgBox("Please Input Numbers Only!", MsgBoxStyle.Critical, "Employee Assist Tools")
+    '            txtSearch.Text = String.Empty
+    '        Else
+    '            Dim lstProfile As Profile = client.GetProfileInformation(txtSearch.Text)
+    '            If Not IsNothing(lstProfile) Or txtSearch.Text = 0 Then
+    '                    Dim profileList As New ObservableCollection(Of ProfileModel)
+    '                    _ProfileDBProvider = New ProfileDBProvider
+    '                    _ProfileViewModel = New ProfileViewModel
+    '                    _ProfileDBProvider.SetMyProfile(lstProfile)
 
-                        Dim iProfile As MyProfile = _ProfileDBProvider.GetMyProfile()
-                        profileList.Add(New ProfileModel(iProfile))
+    '                    Dim iProfile As MyProfile = _ProfileDBProvider.GetMyProfile()
+    '                    profileList.Add(New ProfileModel(iProfile))
 
-                        _ProfileViewModel.UsersList = profileList
+    '                    _ProfileViewModel.UsersList = profileList
 
-                        Me.DataContext = _ProfileViewModel.UsersList(0)
-                        EnableControls()
-                        _SkillDBProvider._splist.Clear()
-                        LoadSkillsProf()
-                        ClearSelection()
-                Else
-                    ClearFields()
-                    dgSkillList.ItemsSource = Nothing
-                End If
-            End If
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-    End Sub
+    '                    Me.DataContext = _ProfileViewModel.UsersList(0)
+    '                    EnableControls()
+    '                    _SkillDBProvider._splist.Clear()
+    '                    LoadSkillsProf()
+    '                    ClearSelection()
+    '            Else
+    '                ClearFields()
+    '                dgSkillList.ItemsSource = Nothing
+    '            End If
+    '        End If
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+    '    End Try
+    'End Sub
 
     Private Sub btnEditMySkill_Click(sender As Object, e As RoutedEventArgs) Handles btnEditMySkill.Click
-        txtSearch.Text = Nothing
+        'txtSearch.Text = Nothing
         bClick = True
         _SkillDBProvider._splist.Clear()
         LoadSkillsProf()
@@ -562,7 +562,7 @@ Class SkillsMatrixManagerPage
 
         DisableControls()
         bClick = False
-        txtSearch.Text = String.Empty
+        'txtSearch.Text = String.Empty
         btnPrint.Visibility = Windows.Visibility.Visible
     End Sub
 

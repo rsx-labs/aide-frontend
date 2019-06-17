@@ -13,7 +13,6 @@ Imports System.Windows
 Class ResourcePlannerPage
     Implements IAideServiceCallback
 
-
 #Region "Fields"
     Private client As AideServiceClient
     Private _ResourceDBProvider As New ResourcePlannerDBProvider
@@ -22,6 +21,7 @@ Class ResourcePlannerPage
     Private _addframe As Frame
     Private _menugrid As Grid
     Private _submenuframe As Frame
+    Private attendanceFrame As Frame
     Private profile As Profile
 
     Dim month As Integer = Date.Now.Month
@@ -37,12 +37,13 @@ Class ResourcePlannerPage
     Dim displayOption As Integer = 1 'Weekly is the Default Display Options
 #End Region
 
-    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _attendanceFrame As Frame)
         Me.profile = _profile
         Me.mainFrame = mFrame
         Me._addframe = _addframe
         Me._menugrid = _menugrid
         Me._submenuframe = _submenuframe
+        Me.attendanceFrame = _attendanceFrame
         Me.InitializeComponent()
 
         month = Date.Now.Month
@@ -429,7 +430,7 @@ Class ResourcePlannerPage
     'End Sub
 
     Private Sub btnCreateLeave_Click(sender As Object, e As RoutedEventArgs) Handles btnCreateLeave.Click
-        _addframe.Navigate(New ResourcePlannerAddPage(profile, mainFrame, _addframe, _menugrid, _submenuframe))
+        _addframe.Navigate(New ResourcePlannerAddPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
         mainFrame.IsEnabled = False
         mainFrame.Opacity = 0.3
         _menugrid.IsEnabled = False

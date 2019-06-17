@@ -17,6 +17,7 @@ Class ResourcePlannerAddPage
     Private _addframe As Frame
     Private _menugrid As Grid
     Private _submenuframe As Frame
+    Private attendanceFrame As Frame
     Private profile As Profile
     Private mainwindows As MainWindow
 
@@ -37,12 +38,13 @@ Class ResourcePlannerAddPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _attendanceFrame As Frame)
         Me.profile = _profile
         Me.mainFrame = mFrame
         Me._addframe = _addframe
         Me._menugrid = _menugrid
         Me._submenuframe = _submenuframe
+        Me.attendanceFrame = _attendanceFrame
         Me.InitializeComponent()
         LoadData()
         LoadCategory()
@@ -90,7 +92,8 @@ Class ResourcePlannerAddPage
                     If ans = MsgBoxResult.Yes Then
                         InsertResourcePlanner()
                         dtpTo.IsEnabled = True
-                        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe))
+                        attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
+                        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
                         mainFrame.IsEnabled = True
                         mainFrame.Opacity = 1
                         _menugrid.IsEnabled = True
@@ -117,7 +120,7 @@ Class ResourcePlannerAddPage
     End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCancel.Click
-        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe))
+        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         _menugrid.IsEnabled = True
@@ -308,7 +311,6 @@ Class ResourcePlannerAddPage
 #End Region
 
 #Region "ICallBack Functions"
-
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
     End Sub
@@ -329,4 +331,5 @@ Class ResourcePlannerAddPage
 
     End Sub
 #End Region
+
 End Class

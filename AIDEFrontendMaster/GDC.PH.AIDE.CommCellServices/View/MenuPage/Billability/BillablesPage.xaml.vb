@@ -77,7 +77,7 @@ Public Class BillablesPage
             Dim series As SeriesCollection = New SeriesCollection()
 
             For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
-                totalMonthly = totalMonthly + iResource.Status
+                totalWeekly = totalWeekly + iResource.Status
 
                 If iResource.Emp_Name = "Breaktime" Or iResource.Emp_Name = "Sick Leave" Or iResource.Emp_Name = "Vacation Leave" Or iResource.Emp_Name = "Holiday" Or iResource.Emp_Name = "FAI-Admin" Or iResource.Emp_Name = "WS-Training" Then
                     nonBillable = nonBillable + iResource.Status
@@ -90,7 +90,7 @@ Public Class BillablesPage
                     .Values = New ChartValues(Of Double) From {
                         Double.Parse(iResource.Status)
                     },
-                    .DataLabels = True,
+                    .DataLabels = False,
                     .LabelPoint = labelPoint
                 }
                 series.Add(ps)
@@ -143,7 +143,7 @@ Public Class BillablesPage
                     .Values = New ChartValues(Of Double) From {
                         Double.Parse(iResource.Status)
                     },
-                    .DataLabels = True,
+                    .DataLabels = False,
                     .LabelPoint = labelPoint
                 }
                 series.Add(ps)

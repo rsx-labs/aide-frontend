@@ -306,7 +306,7 @@ Public Class WeeklyReportModel
     Public Property EffortEst As String
         Get
             If _effortEst = Nothing Then
-                Return String.Empty
+                Return "0"
             Else
                 Return _effortEst.ToString
             End If
@@ -324,7 +324,7 @@ Public Class WeeklyReportModel
     Public Property ActualEffort As String
         Get
             If _actualEffort = Nothing Then
-                Return String.Empty
+                Return "0"
             Else
                 Return _actualEffort.ToString
             End If
@@ -342,7 +342,7 @@ Public Class WeeklyReportModel
     Public Property ActualEffortWk As String
         Get
             If _actualEffortWk = Nothing Then
-                Return String.Empty
+                Return "0"
             Else
                 Return _actualEffortWk.ToString
             End If

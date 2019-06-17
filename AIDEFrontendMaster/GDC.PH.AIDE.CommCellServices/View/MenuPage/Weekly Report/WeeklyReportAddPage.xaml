@@ -317,7 +317,7 @@
                                 <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}"
                                          x:Name="txtComments" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
                             </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Comments *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Comments" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
