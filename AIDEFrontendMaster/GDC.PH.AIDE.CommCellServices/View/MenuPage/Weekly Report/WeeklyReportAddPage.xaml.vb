@@ -595,7 +595,7 @@ Class WeeklyReportAddPage
             Return False
         End If
 
-        If txtEffortEst.Text Is String.Empty And txtRefID IsNot String.Empty Then
+        If txtEffortEst.Text Is String.Empty And txtRefID.Text IsNot String.Empty Then
             MsgBox("Please enter Effort Estimate", MsgBoxStyle.Critical, "AIDE")
             txtEffortEst.Focus()
             Return False

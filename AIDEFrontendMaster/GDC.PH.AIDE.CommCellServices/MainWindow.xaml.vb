@@ -339,7 +339,7 @@ Class MainWindow
 
     Private Sub EmployeesBtn_Click(sender As Object, e As RoutedEventArgs)
         LoadSideBar()
-        PagesFrame.Navigate(New ContactListPage(PagesFrame, email, AddFrame, MenuGrid, SubMenuFrame))
+        PagesFrame.Navigate(New ContactListPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame))
         SubMenuFrame.Navigate(New BlankSubMenu())
     End Sub
 
@@ -371,7 +371,7 @@ Class MainWindow
         email = profile.Email_Address
         empID = profile.Emp_ID
 
-        PagesFrame.Navigate(New ResourcePlannerPage(profile, PagesFrame, AddFrame, MenuGrid, SubMenuFrame))
+        PagesFrame.Navigate(New ResourcePlannerPage(profile, PagesFrame, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame))
         SubMenuFrame.Navigate(New BlankSubMenu())
         LoadSideBar()
     End Sub

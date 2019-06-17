@@ -225,6 +225,7 @@
     <Compile Include="Model\ViewProjectModel.vb" />
     <Compile Include="Model\WeeklyReportModel.vb" />
     <Compile Include="Model\WeekRangeModel.vb" />
+    <Compile Include="PaginatedObservableCollection.vb" />
     <Compile Include="RelayCommand.vb" />
     <Compile Include="Service References\ServiceReference1\Reference.vb">
       <AutoGen>True</AutoGen>

@@ -18,23 +18,17 @@ Public Class AttendanceDashBoard
     Dim AttendanceListVM As New AttendanceListViewModel
     Dim setStatus As Integer
     Dim profile As Profile
-
 #End Region
 
-
 #Region "Constructor"
-
     Public Sub New(mainFrame As Frame, _profile As Profile)
-
         InitializeComponent()
         Me.mainFrame = mainFrame
         Me.profile = _profile
         SetData()
         Me.DataContext = AttendanceListVM
         LoadDataForHeader()
-
     End Sub
-
 #End Region
 
 #Region "Functions"
@@ -158,6 +152,18 @@ Public Class AttendanceDashBoard
     End Sub
 
 #End Region
+
+#Region "Events"
+    Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
+        If txtSearch.Text = String.Empty Then
+            SetData()
+        Else
+            SetDataForSearch()
+        End If
+    End Sub
+
+#End Region
+
 #Region "ICallBack Function"
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
         If message <> String.Empty Then
@@ -183,14 +189,5 @@ Public Class AttendanceDashBoard
 
     End Sub
 #End Region
-
-    Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
-        If txtSearch.Text = String.Empty Then
-            SetData()
-        Else
-            SetDataForSearch()
-        End If
-    End Sub
-
 
 End Class

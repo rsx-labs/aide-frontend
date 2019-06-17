@@ -18,9 +18,11 @@ Class NewContactList
     Private client As ServiceReference1.AideServiceClient
     Private contacts As New ContactListModel
     Private email As String
-    Private _menugrid As Grid
-    Private _addframe As Frame
-    Private _submenuframe As Frame
+    Private menugrid As Grid
+    Private addframe As Frame
+    Private submenuframe As Frame
+    Private attendanceFrame As Frame
+    Private profile As Profile
 
     Dim locationEco As String = ConfigurationManager.AppSettings("locationEco")
     Dim locationNet As String = ConfigurationManager.AppSettings("locationNet")
@@ -31,14 +33,16 @@ Class NewContactList
 
 #Region "Constructor"
 
-    Public Sub New(_contacts As ContactListModel, mainFrame As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_contacts As ContactListModel, _mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _attendanceFrame As Frame)
 
         InitializeComponent()
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
-        Me._addframe = _addframe
-        Me.mainFrame = mainFrame
-        Me.email = _email
+        Me.menugrid = _menugrid
+        Me.submenuframe = _submenuframe
+        Me.addframe = _addframe
+        Me.mainFrame = _mainFrame
+        Me.attendanceFrame = _attendanceFrame
+        Me.email = _profile.Email_Address
+        Me.profile = _profile
         Me.contacts = _contacts
         Me.DataContext = contacts
         AssignEvents()
@@ -72,14 +76,15 @@ Class NewContactList
                     If InitializeService() Then
                         client.UpdateContactListByEmpID(contactList)
                         ClearFields()
-                        mainFrame.Navigate(New ContactListPage(mainFrame, email, _addframe, _menugrid, _submenuframe))
+                        attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
+                        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
                         mainFrame.IsEnabled = True
                         mainFrame.Opacity = 1
-                        _menugrid.IsEnabled = True
-                        _menugrid.Opacity = 1
-                        _submenuframe.IsEnabled = True
-                        _submenuframe.Opacity = 1
-                        _addframe.Visibility = Visibility.Hidden
+                        menugrid.IsEnabled = True
+                        menugrid.Opacity = 1
+                        submenuframe.IsEnabled = True
+                        submenuframe.Opacity = 1
+                        addframe.Visibility = Visibility.Hidden
                     End If
                 Else
                     Exit Sub
@@ -91,14 +96,14 @@ Class NewContactList
     End Sub
 
     Private Sub btnCCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCCancel.Click
-        mainFrame.Navigate(New ContactListPage(mainFrame, email, _addframe, _menugrid, _submenuframe))
+        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
-        _menugrid.IsEnabled = True
-        _menugrid.Opacity = 1
-        _submenuframe.IsEnabled = True
-        _submenuframe.Opacity = 1
-        _addframe.Visibility = Visibility.Hidden
+        menugrid.IsEnabled = True
+        menugrid.Opacity = 1
+        submenuframe.IsEnabled = True
+        submenuframe.Opacity = 1
+        addframe.Visibility = Visibility.Hidden
     End Sub
 
 #End Region
@@ -192,4 +197,5 @@ Class NewContactList
 
     End Sub
 #End Region
+
 End Class

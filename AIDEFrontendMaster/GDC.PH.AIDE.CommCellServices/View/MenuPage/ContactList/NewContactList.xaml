@@ -158,7 +158,7 @@
                                 
                                 <TextBox  x:Name="txtCLocation" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=LOCATION}" TextWrapping="Wrap" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>-->
-                            <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbLocation" Margin="0,5,5,5"/>
+                            <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbLocation" Text="{Binding Path=LOCATION}" Margin="0,5,5,5"/>
                             
                             <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter work location" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                 <TextBlock.Style>

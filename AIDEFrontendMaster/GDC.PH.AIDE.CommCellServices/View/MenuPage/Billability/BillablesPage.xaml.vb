@@ -89,7 +89,7 @@ Public Class BillablesPage
                     .Values = New ChartValues(Of Double) From {
                         Double.Parse(iResource.Status)
                     },
-                    .DataLabels = True,
+                    .DataLabels = False,
                     .LabelPoint = labelPoint
                 }
                 series.Add(ps)
@@ -142,7 +142,7 @@ Public Class BillablesPage
                     .Values = New ChartValues(Of Double) From {
                         Double.Parse(iResource.Status)
                     },
-                    .DataLabels = True,
+                    .DataLabels = False,
                     .LabelPoint = labelPoint
                 }
                 series.Add(ps)
