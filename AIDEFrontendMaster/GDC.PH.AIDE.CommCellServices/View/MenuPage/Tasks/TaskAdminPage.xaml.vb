@@ -41,7 +41,7 @@ Class TaskAdminPage
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 10
+    Dim pagingRecordPerPage As Integer = 5
 
     Private Enum PagingMode
         _First = 1

@@ -191,6 +191,7 @@
     <Compile Include="DataProviderService\TaskDBProvider.vb" />
     <Compile Include="DataProviderService\ViewProjectProvider.vb" />
     <Compile Include="DataProviderService\WeeklyReportDBProvider.vb" />
+    <Compile Include="DataProviderService\WorkplaceAuditDBProvider.vb" />
     <Compile Include="ElementHosts\ProfileElementHost.Designer.vb">
       <DependentUpon>ProfileElementHost.vb</DependentUpon>
     </Compile>
@@ -205,7 +206,6 @@
     <Compile Include="Model\BillabilityModel.vb" />
     <Compile Include="Model\BirthdayListModel.vb" />
     <Compile Include="Model\ComcellClockModel.vb" />
-    <Compile Include="Model\DailyModel.vb" />
     <Compile Include="Model\ComcellModel.vb" />
     <Compile Include="Model\CommendationModel.vb" />
     <Compile Include="Model\ConcernModel.vb" />
@@ -225,6 +225,7 @@
     <Compile Include="Model\ViewProjectModel.vb" />
     <Compile Include="Model\WeeklyReportModel.vb" />
     <Compile Include="Model\WeekRangeModel.vb" />
+    <Compile Include="Model\WorkplaceAuditModel.vb" />
     <Compile Include="PaginatedObservableCollection.vb" />
     <Compile Include="RelayCommand.vb" />
     <Compile Include="Service References\ServiceReference1\Reference.vb">
@@ -240,7 +241,6 @@
     <Compile Include="ViewModel\BillabilityViewModel.vb" />
     <Compile Include="ViewModel\BirthdayListViewModel.vb" />
     <Compile Include="ViewModel\ComcellClockViewModel.vb" />
-    <Compile Include="ViewModel\DailyViewModel.vb" />
     <Compile Include="ViewModel\ComcellViewModel.vb" />
     <Compile Include="ViewModel\LateViewModel.vb" />
     <Compile Include="ViewModel\CommendationViewModel.vb" />
@@ -259,6 +259,7 @@
     <Compile Include="ViewModel\ViewProjectViewModel.vb" />
     <Compile Include="ViewModel\WeeklyReportViewModel.vb" />
     <Compile Include="ViewModel\WeekRangeViewModel.vb" />
+    <Compile Include="ViewModel\WorkplaceAuditViewModel.vb" />
     <Compile Include="View\Charts\DoughnutChart.xaml.vb">
       <DependentUpon>DoughnutChart.xaml</DependentUpon>
     </Compile>

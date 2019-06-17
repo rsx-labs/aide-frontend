@@ -5,24 +5,25 @@ Imports UI_AIDE_CommCellServices.ServiceReference1
 Imports UI_AIDE_CommCellServices
 
 ''' <summary>
-''' By Aevan Camille Batongbacal
+''' By Jhunell Barcenas
 ''' </summary>
 ''' <remarks></remarks>
-Public Class DailyViewModel
+Public Class WorkplaceAuditViewModel
     Implements INotifyPropertyChanged
 
-   Private _dmvm As ObservableCollection(Of DailyModel)
+    Private _dmvm As ObservableCollection(Of WorkplaceAuditModel)
 
-    Private Sub New()
-        _dmvm = New ObservableCollection(Of DailyModel)
+    Public Sub New()
+        _dmvm = New ObservableCollection(Of WorkplaceAuditModel)
     End Sub
 
-    Public Property DMVM As ObservableCollection(Of DailyModel)
+    Public Property DMVM As ObservableCollection(Of WorkplaceAuditModel)
         Get
             Return _dmvm
         End Get
-        Set(value As ObservableCollection(Of DailyModel))
+        Set(value As ObservableCollection(Of WorkplaceAuditModel))
             _dmvm = value
+            NotifyPropertyChanged("DMVM")
         End Set
     End Property
 

@@ -10,6 +10,7 @@ Imports System.Windows
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class SabaLearningUpdatePage
     Implements ServiceReference1.IAideServiceCallback
+
 #Region "Page Declaration"
     Public _frame As Frame
     Private aide As AideServiceClient
@@ -22,14 +23,17 @@ Class SabaLearningUpdatePage
     Private _empID As Integer
     Private _saba_id As Integer
     Private ss As String
+    Private profile As Profile
 #End Region
-    Public Sub New(mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame, sabamodel As SabaLearningModel)
+
+    Public Sub New(mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame, sabamodel As SabaLearningModel, _profile As Profile)
         Try
             Me._frame = mainframe
             Me._addframe = addframe
             Me._menugrid = menugrid
             Me._submenuframe = submenuframe
             Me._sabaModel = sabamodel
+            Me.profile = _profile
             InitializeComponent()
             Me.DataContext = Me._sabaModel
             SetDueDate()
@@ -81,7 +85,7 @@ Class SabaLearningUpdatePage
 
 
     Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
-        _frame.Navigate(New SabaLearningMainPage(_frame, _sabaModel.EMP_ID, _addframe, _menugrid, _submenuframe))
+        _frame.Navigate(New SabaLearningMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
         _frame.IsEnabled = True
         _frame.Opacity = 1
         _menugrid.IsEnabled = True
@@ -127,7 +131,7 @@ Class SabaLearningUpdatePage
                 sabalearning.EMP_ID = Nothing
                 sabalearning.SABA_ID = Nothing
 
-                _frame.Navigate(New SabaLearningMainPage(_frame, _sabaModel.EMP_ID, _addframe, _menugrid, _submenuframe))
+                _frame.Navigate(New SabaLearningMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
                 _frame.IsEnabled = True
                 _frame.Opacity = 1
                 _menugrid.IsEnabled = True

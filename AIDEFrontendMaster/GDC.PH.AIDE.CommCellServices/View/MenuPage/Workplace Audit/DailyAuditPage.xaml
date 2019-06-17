@@ -1085,19 +1085,19 @@
                     <Label x:Name="lblDept" Style="{StaticResource DateLabel4}" Content="RETAIL SERVICES"/>
                 </Grid>
 
-                <Grid Grid.Column="1" Grid.Row="0" Background="#FF70E6B6">
+                <Grid Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Background="#FF70E6B6">
                     <Label Content="PERIOD" Style="{StaticResource DateLabel3}"/>
                 </Grid>
-                <Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
+                <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
                     <Label x:Name="lblPeriod" Style="{StaticResource DateLabel4}"/>
                 </Grid>
 
-                <Grid Grid.Column="2" Grid.Row="0" Background="#FF70E6B6">
-                    <Label Content="OWNER" Style="{StaticResource DateLabel3}"/>
+                <!--<Grid Grid.Column="2" Grid.Row="0" Background="#FF70E6B6">
+                    
                 </Grid>
                 <Grid Grid.Column="2" Grid.Row="1" Grid.RowSpan="2">
-                    <Label x:Name="lblOwner" Style="{StaticResource DateLabel4}"/>
-                </Grid>
+                    
+                </Grid>-->
 
                 <Grid Grid.Column="3" Grid.Row="0" Background="Gainsboro">
                     <Label FontSize="9" Content="DAY" Foreground="White" Style="{StaticResource DateLabel}" Background="#FFEABE48"/>
@@ -1165,56 +1165,72 @@
                 </Grid>
                 
                 <Grid Grid.Row="3" Grid.ColumnSpan="9">
-                    <DataGrid Background="white" x:Name="DailyDataGrid" AutoGenerateColumns="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="DAILY CHECKS (for the current day)" Binding="{Binding MESSAGE,Mode=TwoWay}" FontWeight="Bold" Width="60*" IsReadOnly="True"/>
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="" Width="15*" Binding="{Binding EMPLOYEE,Mode=TwoWay}" IsReadOnly="True"/>
-                            <!-- Monday Checkbox -->
-                            <DataGridTemplateColumn x:Name="MondayCB" Width="5*" IsReadOnly="False">
-                                <DataGridTemplateColumn.CellTemplate >
-                                    <DataTemplate>
-                                        <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource checkboxdesign}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                          <!-- Tuesday Checkbox -->
-                            <DataGridTemplateColumn x:Name="TuesdayCB" Width="5*" IsReadOnly="False">
-                                <DataGridTemplateColumn.CellTemplate >
-                                    <DataTemplate>
-                                        <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource checkboxdesign}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <!-- Wednesday Checkbox -->
-                            <DataGridTemplateColumn x:Name="WednesdayCB" Width="5*" IsReadOnly="False">
-                                <DataGridTemplateColumn.CellTemplate >
-                                    <DataTemplate>
-                                        <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource checkboxdesign}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                              <!-- Thursday Checkbox -->
-                            <DataGridTemplateColumn x:Name="ThursdayCB" Width="5*" IsReadOnly="False">
-                                <DataGridTemplateColumn.CellTemplate >
-                                    <DataTemplate>
-                                        <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource checkboxdesign}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75*"/>
+                        <ColumnDefinition Width="25*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <DataGrid Background="white" 
+                                  x:Name="DailyDataGridQuestion" 
+                                  AutoGenerateColumns="False"
+                                  ItemsSource="{Binding DMVM}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="DAILY CHECKS (for the current day)" Binding="{Binding AUDIT_QUESTIONS}" FontWeight="Bold" Width="60*" IsReadOnly="True"/>
+                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="OWNER" Width="15*" Binding="{Binding OWNER}" IsReadOnly="True"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <DataGrid Background="white" x:Name="DailyDataGridCB" AutoGenerateColumns="False">
+                            <DataGrid.Columns>                 
+                                <!-- Monday Checkbox -->
+                                <DataGridTemplateColumn x:Name="MondayCB" Width="5*" IsReadOnly="False">
+                                    <DataGridTemplateColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource checkboxdesign}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <!-- Tuesday Checkbox -->
+                                <DataGridTemplateColumn x:Name="TuesdayCB" Width="5*" IsReadOnly="False">
+                                    <DataGridTemplateColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource checkboxdesign}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <!-- Wednesday Checkbox -->
+                                <DataGridTemplateColumn x:Name="WednesdayCB" Width="5*" IsReadOnly="False">
+                                    <DataGridTemplateColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource checkboxdesign}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <!-- Thursday Checkbox -->
+                                <DataGridTemplateColumn x:Name="ThursdayCB" Width="5*" IsReadOnly="False">
+                                    <DataGridTemplateColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource checkboxdesign}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
 
-                            <!-- Friday Checkbox -->
-                            <!--<DataGridCheckBoxColumn x:Name="FridayCB" IsReadOnly="False" Width="5*">
+                                <!-- Friday Checkbox -->
+                                <!--<DataGridCheckBoxColumn x:Name="FridayCB" IsReadOnly="False" Width="5*">
                                 
                             </DataGridCheckBoxColumn>-->
-                            <DataGridTemplateColumn x:Name="FridayCB" Width="5*" IsReadOnly="False">
-                                <DataGridTemplateColumn.CellTemplate >
-                                    <DataTemplate>
-                                        <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource checkboxdesign}"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                                <DataGridTemplateColumn x:Name="FridayCB" Width="5*" IsReadOnly="False">
+                                    <DataGridTemplateColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource checkboxdesign}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                    
                 </Grid>
             </Grid>
            

@@ -23,8 +23,7 @@ Class DailyAuditPage
     Private profile As Profile
     Private year As Integer
     Private nextYear As Integer
-    Private dmvm As DailyViewModel
-
+    Private questionGroup As String = "Daily"
 #End Region
 
 #Region "Paging Declarations"
@@ -51,9 +50,8 @@ Class DailyAuditPage
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
         Me.profile = _profile
-        Me.DataContext = dmvm
-        addinfo()
-        year = Date.Now.Year
+        Me.year = Date.Now.Year
+        SetData()
         SetDates()
         LoadYears()
         EnableTodayColumn()
@@ -111,7 +109,7 @@ Class DailyAuditPage
         lblWednesday.Content = wednesday.ToString("MM/dd")
         lblThursday.Content = thursday.ToString("MM/dd")
         lblFriday.Content = friday.ToString("MM/dd")
-        'lblDept.Content = profile.Department
+        lblDept.Content = profile.Department
     End Sub
 
     Private Sub EnableTodayColumn()
@@ -127,39 +125,47 @@ Class DailyAuditPage
         End Select
     End Sub
 
-    Private Sub addinfo()
+    Private Sub SetData()
+        Try
+            If InitializeService() Then
+                Dim lstWorkplaceAudit As WorkplaceAudit() = _AideService.GetAuditQuestions(empID, questionGroup)
+                Dim lstWorkplaceAuditList As New ObservableCollection(Of WorkplaceAuditModel)
+                Dim workplaceAuditDBProvider As New WorkplaceAuditDBProvider
+                Dim WorkplaceAuditVM As New WorkplaceAuditViewModel()
 
-        Dim lstdailymodel As New ObservableCollection(Of DailyModel)
-        Dim dailymodel As New DailyModel
+                For Each objLessonLearnt As WorkplaceAudit In lstWorkplaceAudit
+                    workplaceAuditDBProvider.SetMyWorkplaceAudit(objLessonLearnt)
+                Next
 
+                For Each rawUser As MyWorkplaceAudit In workplaceAuditDBProvider.GetMyWorkplaceAudit()
+                    lstWorkplaceAuditList.Add(New WorkplaceAuditModel(rawUser))
+                Next
 
-        dailymodel.EMPLOYEE = "Daily Auditor"
-        dailymodel.MESSAGE = "Has the attendance of the team been checked?"
-        lstdailymodel.Add(dailymodel)
-
-        'dmvm.DMVM = lstdailymodel
-        DailyDataGrid.ItemsSource = lstdailymodel
-
-        'DataContext = dmvm.DMVM
+                WorkplaceAuditVM.DMVM = lstWorkplaceAuditList
+                Me.DataContext = WorkplaceAuditVM
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 
 #End Region
 
 #Region "Events"
-    Private Sub AuditSched_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
+    Private Sub WorkplaceAudit_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
         'e.Handled = True
-        'If AuditSchedLV.SelectedIndex <> -1 Then
-        '    If AuditSchedLV.SelectedItem IsNot Nothing Then
-        '        Dim auditSched As New AuditSchedModel
-        '        auditSched.PERIOD_START = CType(AuditSchedLV.SelectedItem, AuditSchedModel).PERIOD_START
-        '        auditSched.PERIOD_END = CType(AuditSchedLV.SelectedItem, AuditSchedModel).PERIOD_END
-        '        auditSched.DAILY = CType(AuditSchedLV.SelectedItem, AuditSchedModel).DAILY
-        '        auditSched.WEEKLY = CType(AuditSchedLV.SelectedItem, AuditSchedModel).WEEKLY
-        '        auditSched.MONTHLY = CType(AuditSchedLV.SelectedItem, AuditSchedModel).MONTHLY
-        '        auditSched.AUDIT_SCHED_ID = CType(AuditSchedLV.SelectedItem, AuditSchedModel).AUDIT_SCHED_ID
-        '        auditSched.FY_START = CType(AuditSchedLV.SelectedItem, AuditSchedModel).FY_START
+        'If WorkplaceAuditLV.SelectedIndex <> -1 Then
+        '    If WorkplaceAuditLV.SelectedItem IsNot Nothing Then
+        '        Dim WorkplaceAudit As New WorkplaceAuditModel
+        '        WorkplaceAudit.PERIOD_START = CType(WorkplaceAuditLV.SelectedItem, WorkplaceAuditModel).PERIOD_START
+        '        WorkplaceAudit.PERIOD_END = CType(WorkplaceAuditLV.SelectedItem, WorkplaceAuditModel).PERIOD_END
+        '        WorkplaceAudit.DAILY = CType(WorkplaceAuditLV.SelectedItem, WorkplaceAuditModel).DAILY
+        '        WorkplaceAudit.WEEKLY = CType(WorkplaceAuditLV.SelectedItem, WorkplaceAuditModel).WEEKLY
+        '        WorkplaceAudit.MONTHLY = CType(WorkplaceAuditLV.SelectedItem, WorkplaceAuditModel).MONTHLY
+        '        WorkplaceAudit.AUDIT_SCHED_ID = CType(WorkplaceAuditLV.SelectedItem, WorkplaceAuditModel).AUDIT_SCHED_ID
+        '        WorkplaceAudit.FY_START = CType(WorkplaceAuditLV.SelectedItem, WorkplaceAuditModel).FY_START
 
-        '        addframe.Navigate(New AuditSchedAddPage(profile, mainframe, addframe, menugrid, submenuframe, auditSched))
+        '        addframe.Navigate(New WorkplaceAuditAddPage(profile, mainframe, addframe, menugrid, submenuframe, WorkplaceAudit))
         '        mainframe.IsEnabled = False
         '        mainframe.Opacity = 0.3
         '        menugrid.IsEnabled = False
@@ -173,7 +179,7 @@ Class DailyAuditPage
     End Sub
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
-        'addframe.Navigate(New AuditSchedAddPage(profile, mainframe, addframe, menugrid, submenuframe))
+        'addframe.Navigate(New WorkplaceAuditAddPage(profile, mainframe, addframe, menugrid, submenuframe))
         'mainframe.IsEnabled = False
         'mainframe.Opacity = 0.3
         'menugrid.IsEnabled = False

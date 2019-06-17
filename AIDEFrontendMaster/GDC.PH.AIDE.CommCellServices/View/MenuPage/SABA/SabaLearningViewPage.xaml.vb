@@ -34,7 +34,6 @@ Class SabaLearningViewPage
     Public Property SeriesCollection As SeriesCollection
     Private chartlst As New List(Of Integer)
 
-
     Dim lstSabaLearning As SabaLearning()
     Dim SabaLearningListVM As New SabaLearningViewModel()
     Dim SabaLearning As New SabaLearning
@@ -44,7 +43,7 @@ Class SabaLearningViewPage
 
 #Region "Constructor"
 
-    Public Sub New(_sabacoursemodel As SabaLearningModel, _mainframe As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _empID As Integer)
+    Public Sub New(_sabacoursemodel As SabaLearningModel, _mainframe As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
 
         InitializeComponent()
         Me.sabacoursemodel = _sabacoursemodel
@@ -52,19 +51,20 @@ Class SabaLearningViewPage
         Me.addframe = _addframe
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
-        Me.empID = _empID
+        Me.profile = _profile
         SetData()
         Me.DataContext = SabaLearningListVM
         Me.courseTitle.Text = sabacoursemodel.TITLE
         Me.saba_id = sabacoursemodel.SABA_ID
+        Me.empID = profile.Emp_ID
         LoadPieChartData()
         CheckCourseUpdated()
-        BindModel(_sabacoursemodel, _empID)
+        BindModel(_sabacoursemodel, profile.Emp_ID)
     End Sub
 
 #End Region
 
-#Region "Functions"
+#Region "Functions/Methods"
 
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
@@ -151,6 +151,7 @@ Class SabaLearningViewPage
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
+
     Public Sub LoadSabaCoursesNot()
         Try
             Dim lstSabaLearningList As New ObservableCollection(Of SabaLearningModel)
@@ -176,32 +177,6 @@ Class SabaLearningViewPage
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
-    End Sub
-    
-#End Region
-
-    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
-
-    End Sub
-
-    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
-
-    End Sub
-
-    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
-
-    End Sub
-
-    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
-
-    End Sub
-
-    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
-
-    End Sub
-
-    Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
-
     End Sub
 
     Private Sub LoadPieChartData()
@@ -248,6 +223,12 @@ Class SabaLearningViewPage
         'Next
         DataContext = Me
     End Sub
+#End Region
+
+#Region "Events"
+    Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
+
+    End Sub
 
     Private Sub UpdateCourseBtn_Click(sender As Object, e As RoutedEventArgs)
         Try
@@ -256,7 +237,7 @@ Class SabaLearningViewPage
             _AideService.UpdateSabaXref(getDataUpdate(SabaLearningListVM.SabaLearningVMModel))
             If SabaLearning.DATE_COMPLETED = Nothing Then
                 MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
-                addframe.Navigate(New SabaLearningViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, empID))
+                addframe.Navigate(New SabaLearningViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, profile))
             Else
                 MsgBox("Successfully Added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
@@ -264,7 +245,7 @@ Class SabaLearningViewPage
                 SabaLearning.SABA_ID = Nothing
                 SabaLearning.EMP_ID = Nothing
 
-                addframe.Navigate(New SabaLearningViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, empID))
+                addframe.Navigate(New SabaLearningViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, profile))
 
                 'mainframe.Navigate(New SabaLearningMainPage(mainframe, empID, addframe, menugrid, submenuframe))
                 'mainframe.IsEnabled = True
@@ -285,7 +266,7 @@ Class SabaLearningViewPage
     End Sub
 
     Private Sub UpdateEndDateBtn_Click(sender As Object, e As RoutedEventArgs)
-        addframe.Navigate(New SabaLearningUpdatePage(mainframe, addframe, menugrid, submenuframe, sabacoursemodel))
+        addframe.Navigate(New SabaLearningUpdatePage(mainframe, addframe, menugrid, submenuframe, sabacoursemodel, profile))
         mainframe.IsEnabled = False
         mainframe.Opacity = 0.3
         menugrid.IsEnabled = False
@@ -297,7 +278,7 @@ Class SabaLearningViewPage
     End Sub
 
     Private Sub btnCCancel_Click(sender As Object, e As RoutedEventArgs)
-        mainframe.Navigate(New SabaLearningMainPage(mainframe, empID, addframe, menugrid, submenuframe))
+        mainframe.Navigate(New SabaLearningMainPage(mainframe, profile, addframe, menugrid, submenuframe))
         mainframe.IsEnabled = True
         mainframe.Opacity = 1
         menugrid.IsEnabled = True
@@ -307,4 +288,27 @@ Class SabaLearningViewPage
 
         addframe.Visibility = Visibility.Hidden
     End Sub
+#End Region
+
+#Region "INotify Methods"
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
+
+    End Sub
+
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
+
+    End Sub
+
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
+
+    End Sub
+
+    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
+
+    End Sub
+
+    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+
+    End Sub
+#End Region
 End Class

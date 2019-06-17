@@ -16,18 +16,20 @@ Class SabaLearningAddPage
     Private _menugrid As Grid
     Private _submenuframe As Frame
     Private _empID As Integer
+    Private profile As Profile
 #End Region
 
-    Public Sub New(empID As Integer, mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame)
+#Region "Constructor"
+    Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame)
         Try
             Me._frame = mainframe
             Me._addframe = addframe
             Me._menugrid = menugrid
             Me._submenuframe = submenuframe
-            Me._empID = empID
+            Me.profile = _profile
             InitializeComponent()
             Dim _sabalearningModel As New SabaLearningModel
-            _sabalearningModel.EMP_ID = empID
+            _sabalearningModel.EMP_ID = profile.Emp_ID
             Me.DataContext = _sabalearningModel
 
 
@@ -38,7 +40,9 @@ Class SabaLearningAddPage
             End If
         End Try
     End Sub
+#End Region
 
+#Region "Functions/Methods"
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
         Try
@@ -70,7 +74,55 @@ Class SabaLearningAddPage
             Return ex
         End Try
     End Function
+#End Region
 
+#Region "Events"
+    Private Sub AddBtn_Click(sender As Object, e As RoutedEventArgs)
+        Try
+            InitializeService()
+
+            aide.InsertSabaCourses(getDataInsert(Me.DataContext()))
+            If sabalearning.TITLE = Nothing Or sabalearning.END_DATE = Nothing Then
+                MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+            Else
+                MsgBox("Successfully Added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+
+                sabalearning.TITLE = Nothing
+                sabalearning.END_DATE = Nothing
+                sabalearning.EMP_ID = Nothing
+
+                _frame.Navigate(New SabaLearningMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
+                _frame.IsEnabled = True
+                _frame.Opacity = 1
+                _menugrid.IsEnabled = True
+                _menugrid.Opacity = 1
+                _submenuframe.IsEnabled = True
+                _submenuframe.Opacity = 1
+
+                _addframe.Visibility = Visibility.Hidden
+            End If
+        Catch ex As Exception
+            If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "AIDE") = vbYes Then
+                Environment.Exit(0)
+            Else
+            End If
+        End Try
+    End Sub
+
+    Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
+        _frame.Navigate(New SabaLearningMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
+        _frame.IsEnabled = True
+        _frame.Opacity = 1
+        _menugrid.IsEnabled = True
+        _menugrid.Opacity = 1
+        _submenuframe.IsEnabled = True
+        _submenuframe.Opacity = 1
+
+        _addframe.Visibility = Visibility.Hidden
+    End Sub
+#End Region
+
+#Region "INotify Methods"
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
     End Sub
@@ -90,48 +142,6 @@ Class SabaLearningAddPage
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
 
     End Sub
+#End Region
 
-    Private Sub AddBtn_Click(sender As Object, e As RoutedEventArgs)
-        Try
-            InitializeService()
-
-            aide.InsertSabaCourses(getDataInsert(Me.DataContext()))
-            If sabalearning.TITLE = Nothing Or sabalearning.END_DATE = Nothing Then
-                MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
-            Else
-                MsgBox("Successfully Added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
-
-                sabalearning.TITLE = Nothing
-                sabalearning.END_DATE = Nothing
-                sabalearning.EMP_ID = Nothing
-
-                _frame.Navigate(New SabaLearningMainPage(_frame, _empID, _addframe, _menugrid, _submenuframe))
-                _frame.IsEnabled = True
-                _frame.Opacity = 1
-                _menugrid.IsEnabled = True
-                _menugrid.Opacity = 1
-                _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
-
-                _addframe.Visibility = Visibility.Hidden
-            End If
-        Catch ex As Exception
-            If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "AIDE") = vbYes Then
-                Environment.Exit(0)
-            Else
-            End If
-        End Try
-    End Sub
-
-    Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
-        _frame.Navigate(New SabaLearningMainPage(_frame, _empID, _addframe, _menugrid, _submenuframe))
-        _frame.IsEnabled = True
-        _frame.Opacity = 1
-        _menugrid.IsEnabled = True
-        _menugrid.Opacity = 1
-        _submenuframe.IsEnabled = True
-        _submenuframe.Opacity = 1
-
-        _addframe.Visibility = Visibility.Hidden
-    End Sub
 End Class

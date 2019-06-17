@@ -28,7 +28,7 @@ Class OtherSubMenuPage
     End Sub
 
     Private Sub Learning_Click(sender As Object, e As RoutedEventArgs)
-        pageframe.Navigate(New SabaLearningMainPage(pageframe, profile.Emp_ID, addframe, menugrid, submenuframe))
+        pageframe.Navigate(New SabaLearningMainPage(pageframe, profile, addframe, menugrid, submenuframe))
     End Sub
 
     Private Sub Comcell_Click(sender As Object, e As RoutedEventArgs)

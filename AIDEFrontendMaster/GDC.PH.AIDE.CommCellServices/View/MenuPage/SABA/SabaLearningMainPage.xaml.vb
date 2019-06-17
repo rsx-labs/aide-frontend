@@ -12,7 +12,6 @@ Class SabaLearningMainPage
 #Region "Fields"
 
     Private _AideService As ServiceReference1.AideServiceClient
-    Private empID As Integer
     Private mainframe As Frame
     Private addframe As Frame
     Private menugrid As Grid
@@ -23,8 +22,6 @@ Class SabaLearningMainPage
     Dim lstSabaLearning As SabaLearning()
     Dim lstSabaLearning2 As SabaLearning()
     Dim SabaLearningListVM As New SabaLearningViewModel()
-
- 
 
 #End Region
 
@@ -44,21 +41,25 @@ Class SabaLearningMainPage
 
 #Region "Constructor"
 
-    Public Sub New(_mainframe As Frame, _empID As Integer, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_mainframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
 
         InitializeComponent()
-        Me.empID = _empID
+        Me.profile = _profile
         Me.mainframe = _mainframe
         Me.addframe = _addframe
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
         SetData()
         Me.DataContext = SabaLearningListVM
+
+        If profile.Permission <> "Manager" Then
+            btnCreate.Visibility = Windows.Visibility.Collapsed
+        End If
     End Sub
 
 #End Region
 
-#Region "Functions"
+#Region "Functions/Methods"
 
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
@@ -76,7 +77,7 @@ Class SabaLearningMainPage
     Public Sub SetData()
         Try
             If InitializeService() Then
-                lstSabaLearning = _AideService.GetAllSabaCourses(empID)
+                lstSabaLearning = _AideService.GetAllSabaCourses(profile.Emp_ID)
                 'LoadSabaCourses()
                 SetPaging(PagingMode._First)
             End If
@@ -84,7 +85,6 @@ Class SabaLearningMainPage
             MessageBox.Show(ex.Message)
         End Try
     End Sub
-
 
     Public Sub LoadSabaCourses()
         Try
@@ -111,6 +111,48 @@ Class SabaLearningMainPage
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
+
+    Public Sub LoadSabaCourseByTitle(ByVal title As String)
+        Try
+            If InitializeService() Then
+                lstSabaLearning = _AideService.GetAllSabaCourseByTitle(title, profile.Emp_ID)
+                'LoadSabaCourses()
+                SetPaging(PagingMode._First)
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Private Function SetData2(sabaid As Integer) As String
+        Try
+            Dim Completed As Integer
+
+            If InitializeService() Then
+                lstSabaLearning2 = _AideService.GetAllSabaXref(profile.Emp_ID, sabaid)
+                Completed = checkCompleted(lstSabaLearning2)
+            End If
+            Return Completed.ToString() + "%"
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+            Return String.Empty
+        End Try
+
+    End Function
+
+    Private Function checkCompleted(sabalist As SabaLearning()) As Integer
+
+        For Each sabaitem As SabaLearning In sabalist
+            If Not sabaitem.DATE_COMPLETED = String.Empty Then
+                checkCompleted += 1
+            End If
+        Next
+
+        checkCompleted = (checkCompleted / sabalist.Count) * 100
+
+        Return checkCompleted
+    End Function
+
     Private Sub SetPaging(mode As Integer)
         Try
             Dim totalRecords As Integer = lstSabaLearning.Length
@@ -175,45 +217,10 @@ Class SabaLearningMainPage
         End Try
 
     End Sub
+
 #End Region
 
-
-    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
-
-    End Sub
-
-    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
-
-    End Sub
-
-    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
-
-    End Sub
-
-    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
-
-    End Sub
-
-    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
-
-    End Sub
-
-    Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
-
-    End Sub
-
-    Public Sub LoadSabaCourseByTitle(ByVal title As String)
-        Try
-            If InitializeService() Then
-                lstSabaLearning = _AideService.GetAllSabaCourseByTitle(title, empID)
-                'LoadSabaCourses()
-                SetPaging(PagingMode._First)
-            End If
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
-    End Sub
-
+#Region "Events"
     Private Sub SearchTextBox_TextChanged(sender As Object, e As TextChangedEventArgs)
         If SearchTextBox.Text = String.Empty Then
             SetData()
@@ -236,7 +243,7 @@ Class SabaLearningMainPage
 
 
 
-                addframe.Navigate(New SabaLearningViewPage(sabalearning, mainframe, addframe, menugrid, submenuframe, empID))
+                addframe.Navigate(New SabaLearningViewPage(sabalearning, mainframe, addframe, menugrid, submenuframe, profile))
                 mainframe.IsEnabled = False
                 mainframe.Opacity = 0.3
                 menugrid.IsEnabled = False
@@ -250,7 +257,7 @@ Class SabaLearningMainPage
     End Sub
 
     Private Sub btnCreate_Click_1(sender As Object, e As RoutedEventArgs)
-        addframe.Navigate(New SabaLearningAddPage(empID, mainframe, addframe, menugrid, submenuframe))
+        addframe.Navigate(New SabaLearningAddPage(profile, mainframe, addframe, menugrid, submenuframe))
         mainframe.IsEnabled = False
         mainframe.Opacity = 0.3
         menugrid.IsEnabled = False
@@ -260,34 +267,27 @@ Class SabaLearningMainPage
         addframe.Visibility = Visibility.Visible
         addframe.Margin = New Thickness(200, 100, 200, 100)
     End Sub
+#End Region
 
-    Private Function SetData2(sabaid As Integer) As String
-        Try
-            Dim Completed As Integer
+#Region "INotify Methods"
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
-            If InitializeService() Then
-                lstSabaLearning2 = _AideService.GetAllSabaXref(empID, sabaid)
-                Completed = checkCompleted(lstSabaLearning2)
-            End If
-            Return Completed.ToString() + "%"
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-            Return String.Empty
-        End Try
+    End Sub
 
-    End Function
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
 
-    Private Function checkCompleted(sabalist As SabaLearning()) As Integer
+    End Sub
 
-        For Each sabaitem As SabaLearning In sabalist
-            If Not sabaitem.DATE_COMPLETED = String.Empty Then
-                checkCompleted += 1
-            End If
-        Next
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
 
-        checkCompleted = (checkCompleted / sabalist.Count) * 100
+    End Sub
 
-        Return checkCompleted
-    End Function
+    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
 
+    End Sub
+
+    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+
+    End Sub
+#End Region
 End Class
