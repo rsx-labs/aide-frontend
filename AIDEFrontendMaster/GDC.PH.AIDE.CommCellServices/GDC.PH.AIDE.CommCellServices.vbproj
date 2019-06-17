@@ -170,6 +170,7 @@
     <Compile Include="DataProviderService\AnnouncementDBProvider.vb" />
     <Compile Include="DataProviderService\AssetsDBProvider.vb" />
     <Compile Include="DataProviderService\AttendanceListDBProvider.vb" />
+    <Compile Include="DataProviderService\AuditSchedDBProvider.vb" />
     <Compile Include="DataProviderService\BillabilityDBProvider.vb" />
     <Compile Include="DataProviderService\BirthdayListDBProvider.vb" />
     <Compile Include="DataProviderService\ComcellClockDBProvider.vb" />
@@ -200,9 +201,11 @@
     <Compile Include="Model\AnnouncementModel.vb" />
     <Compile Include="Model\AssetsModel.vb" />
     <Compile Include="Model\AttendanceModel.vb" />
+    <Compile Include="Model\AuditSchedModel.vb" />
     <Compile Include="Model\BillabilityModel.vb" />
     <Compile Include="Model\BirthdayListModel.vb" />
     <Compile Include="Model\ComcellClockModel.vb" />
+    <Compile Include="Model\DailyModel.vb" />
     <Compile Include="Model\ComcellModel.vb" />
     <Compile Include="Model\CommendationModel.vb" />
     <Compile Include="Model\ConcernModel.vb" />
@@ -233,9 +236,11 @@
     <Compile Include="ViewModel\AnnouncementListViewModel.vb" />
     <Compile Include="ViewModel\AssetsViewModel.vb" />
     <Compile Include="ViewModel\AttendanceListViewModel.vb" />
+    <Compile Include="ViewModel\AuditSchedViewModel.vb" />
     <Compile Include="ViewModel\BillabilityViewModel.vb" />
     <Compile Include="ViewModel\BirthdayListViewModel.vb" />
     <Compile Include="ViewModel\ComcellClockViewModel.vb" />
+    <Compile Include="ViewModel\DailyViewModel.vb" />
     <Compile Include="ViewModel\ComcellViewModel.vb" />
     <Compile Include="ViewModel\LateViewModel.vb" />
     <Compile Include="ViewModel\CommendationViewModel.vb" />
@@ -427,6 +432,18 @@
     </Compile>
     <Compile Include="View\MenuPage\Weekly Report\WeeklyReportUpdatePage.xaml.vb">
       <DependentUpon>WeeklyReportUpdatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Workplace Audit\AuditSchedAddPage.xaml.vb">
+      <DependentUpon>AuditSchedAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Workplace Audit\AuditSchedMainPage.xaml.vb">
+      <DependentUpon>AuditSchedMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Workplace Audit\AuditSchedSubMenuPage.xaml.vb">
+      <DependentUpon>AuditSchedSubMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Workplace Audit\DailyAuditPage.xaml.vb">
+      <DependentUpon>DailyAuditPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Notifications\Birthday\Birthday.xaml.vb">
       <DependentUpon>Birthday.xaml</DependentUpon>
@@ -692,6 +709,22 @@
     <Page Include="View\MenuPage\Weekly Report\WeeklyReportUpdatePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\Workplace Audit\AuditSchedAddPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Workplace Audit\AuditSchedMainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Workplace Audit\AuditSchedSubMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Workplace Audit\DailyAuditPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Notifications\Birthday\Birthday.xaml">
       <SubType>Designer</SubType>
@@ -1277,6 +1310,9 @@
     <Resource Include="Assets\Button\ResourceLogo.png" />
     <Resource Include="Assets\Button\SickLogo.png" />
     <Resource Include="Assets\Button\VacationLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Menu\TaskComplete2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

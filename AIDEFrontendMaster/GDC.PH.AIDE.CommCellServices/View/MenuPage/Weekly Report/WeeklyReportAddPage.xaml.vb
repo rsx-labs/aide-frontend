@@ -290,42 +290,47 @@ Class WeeklyReportAddPage
     End Sub
 
     Private Sub btnAdd_Click(sender As Object, e As RoutedEventArgs) Handles btnAdd.Click
-        Dim isValidate As Boolean
+        Try
+            Dim isValidate As Boolean
 
-        isValidate = ValidateFields(isValidate)
+            isValidate = ValidateFields(isValidate)
 
-        If isValidate Then
-            lstWeeklyReportsData.Add(New WeeklyReportModel With {
-                         .WeekRangeID = 1,
-                         .EmpID = empID,
-                         .ProjectID = cbProject.SelectedValue,
-                         .ProjectDesc = cbProject.Text,
-                         .Rework = cbRework.SelectedValue,
-                         .ReworkDesc = cbRework.Text,
-                         .RefID = txtRefID.Text,
-                         .Subject = txtSubject.Text,
-                         .Severity = cbSeverity.SelectedValue,
-                         .SeverityDesc = cbSeverity.Text,
-                         .IncidentType = cbIncidentType.SelectedValue,
-                         .IncidentDesc = cbIncidentType.Text,
-                         .Phase = cbPhase.SelectedValue,
-                         .PhaseDesc = cbPhase.Text,
-                         .Status = cbStatus.SelectedValue,
-                         .StatusDesc = cbStatus.Text,
-                         .DateStarted = dpStartDate.Text,
-                         .DateTarget = dpTargetDate.Text,
-                         .DateFinished = dpCompletedDate.Text,
-                         .DateCreated = Date.Now,
-                         .EffortEst = txtEffortEst.Text,
-                         .ActualEffort = txtActualEffort.Text,
-                         .ActualEffortWk = txtActualEffortWk.Text,
-                         .Comments = txtComments.Text,
-                         .InboundContacts = txtInboundContacts.Text})
+            If isValidate Then
+                lstWeeklyReportsData.Add(New WeeklyReportModel With {
+                             .WeekRangeID = 1,
+                             .EmpID = empID,
+                             .ProjectID = cbProject.SelectedValue,
+                             .ProjectDesc = cbProject.Text,
+                             .Rework = cbRework.SelectedValue,
+                             .ReworkDesc = cbRework.Text,
+                             .RefID = txtRefID.Text,
+                             .Subject = txtSubject.Text,
+                             .Severity = cbSeverity.SelectedValue,
+                             .SeverityDesc = cbSeverity.Text,
+                             .IncidentType = cbIncidentType.SelectedValue,
+                             .IncidentDesc = cbIncidentType.Text,
+                             .Phase = cbPhase.SelectedValue,
+                             .PhaseDesc = cbPhase.Text,
+                             .Status = cbStatus.SelectedValue,
+                             .StatusDesc = cbStatus.Text,
+                             .DateStarted = dpStartDate.Text,
+                             .DateTarget = dpTargetDate.Text,
+                             .DateFinished = dpCompletedDate.Text,
+                             .DateCreated = Date.Now,
+                             .EffortEst = txtEffortEst.Text,
+                             .ActualEffort = txtActualEffort.Text,
+                             .ActualEffortWk = txtActualEffortWk.Text,
+                             .Comments = txtComments.Text,
+                             .InboundContacts = txtInboundContacts.Text})
 
-            ClearFields()
-            dgWeeklyReport.SelectedIndex = -1
-            btnSubmit.IsEnabled = True
-        End If
+                ClearFields()
+                dgWeeklyReport.SelectedIndex = -1
+                btnSubmit.IsEnabled = True
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "AIDE")
+        End Try
+        
     End Sub
 
     Private Sub btnRemove_Click(sender As Object, e As RoutedEventArgs) Handles btnRemove.Click

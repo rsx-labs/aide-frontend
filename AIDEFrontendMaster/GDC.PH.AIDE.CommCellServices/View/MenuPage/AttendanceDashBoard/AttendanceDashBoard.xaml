@@ -105,7 +105,7 @@
                                                             <StackPanel Orientation="Horizontal">
                                                                 <TextBlock Foreground="DimGray" Margin="5,2" Text="{Binding EMP_ID}" HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />
                                                                 <TextBlock Foreground="DimGray" Margin="5,2" Text="{Binding DATE_ENTRY, StringFormat='hh:mm tt'}"  HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />
-                                                               
+                                                                <TextBlock Foreground="Red" Margin="5,2" Text="{Binding Descr}"  HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />  
                                                             </StackPanel>
                                                         </Grid>
 

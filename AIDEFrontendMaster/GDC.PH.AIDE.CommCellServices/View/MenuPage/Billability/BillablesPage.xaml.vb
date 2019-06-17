@@ -40,7 +40,6 @@ Public Class BillablesPage
         LoadDataMonthly()
     End Sub
 
-
 #Region "Sub Procedures"
 
     Public Function InitializeService() As Boolean

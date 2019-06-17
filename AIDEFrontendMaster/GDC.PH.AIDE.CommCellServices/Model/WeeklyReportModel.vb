@@ -14,7 +14,7 @@ Public Class WeeklyReportModel
 
     Private _wkRangeID As Integer
     Private _refID As String
-    Private _projID As Short
+    Private _projID As Integer
     Private _empID As Integer
 
     Private _subject As String
@@ -97,11 +97,11 @@ Public Class WeeklyReportModel
         End Set
     End Property
 
-    Public Property ProjectID As Short
+    Public Property ProjectID As Integer
         Get
             Return _projID
         End Get
-        Set(value As Short)
+        Set(value As Integer)
             _projID = value
             NotifyPropertyChanged("ProjectID")
         End Set

@@ -169,7 +169,7 @@ Class ResourcePlannerPage
         ElseIf setStatus = 10 Then
             displayStatus = "OL"
         ElseIf setStatus = 11 Then
-            displayStatus = "PL"
+            displayStatus = "L"
         Else
             displayStatus = ""
         End If

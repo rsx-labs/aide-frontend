@@ -12,16 +12,17 @@ Class ComcellClockAddPage
     Private comcellClockVM As New ComcellClockViewModel
     Private _window As Window
     Private pos As String
+    Private profile As Profile
 
 
-    Public Sub New(emp_id As Integer, com_cellframe As Frame, winx As Window, _pos As String)
+    Public Sub New(_profile As Profile, com_cellframe As Frame, winx As Window)
 
         ' This call is required by the designer.
         InitializeComponent()
-        Me.empID = emp_id
+        Me.profile = _profile
+        Me.empID = profile.Emp_ID
         Me.comcellFrame = com_cellframe
         Me._window = winx
-        Me.pos = _pos
         populateDayCB()
         DataContext = comcellClockVM
 
@@ -85,7 +86,7 @@ Class ComcellClockAddPage
                         _comcellclock.Emp_ID = clockVM.EMP_ID
                         aide.UpdateComcellClock(_comcellclock)
                         MsgBox("Successfully set new Comm. Cell clock", MsgBoxStyle.OkOnly, "AIDE")
-                        comcellFrame.Navigate(New ComcellClockPage(Me.empID, Me.comcellFrame, Me._window, Me.pos))
+                        comcellFrame.Navigate(New ComcellClockPage(profile, Me.comcellFrame, Me._window))
                     End If
                 Else
                     MsgBox("Please check time entry. Hours should not exceed 24. Minutes should not exceed 59.", MsgBoxStyle.OkOnly, "AIDE")
@@ -100,7 +101,7 @@ Class ComcellClockAddPage
 
 
     Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
-        comcellFrame.Navigate(New ComcellClockPage(Me.empID, Me.comcellFrame, _window, Me.pos))
+        comcellFrame.Navigate(New ComcellClockPage(profile, Me.comcellFrame, _window))
     End Sub
 
     Public Sub populateDayCB()

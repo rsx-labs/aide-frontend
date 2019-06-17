@@ -14,7 +14,7 @@ Class MainWindow
     Implements IAideServiceCallback
 
 #Region "Fields"
-    Public email As String = "c.lim@ph.fujitsu.com"
+    Public email As String '= "c.lim@ph.fujitsu.com"
     Private departmentID As Integer
     Private empID As Integer
     Private permission As Integer
@@ -105,10 +105,10 @@ Class MainWindow
         InitializeComponent()
         InitializeService()
         getTime()
-        'CheckOutlook()
+        CheckOutlook()
         MsgBox("Welcome " & email, MsgBoxStyle.Information, "AIDE")
         SetEmployeeData()
-        'attendance()
+        attendance()
         LoadSideBar()
         PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
         SubMenuFrame.Navigate(New BlankSubMenu())
@@ -150,7 +150,7 @@ Class MainWindow
     Public Sub LoadSideBar()
         AttendanceFrame.Navigate(New AttendanceDashBoard(PagesFrame, profile))
         CommendationFrame.Navigate(New CommendationDashBoard(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, profile.Email_Address, profile))
-        ComcellClockFrame.Navigate(New ComcellClockPage(profile.Emp_ID, ComcellClockFrame, Me, profile.Position))
+        ComcellClockFrame.Navigate(New ComcellClockPage(profile, ComcellClockFrame, Me))
     End Sub
 
     Public Function InitializeService() As Boolean
@@ -268,7 +268,7 @@ Class MainWindow
             End If
 
         Catch ex As Exception
-
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
 
@@ -318,6 +318,12 @@ Class MainWindow
         PagesFrame.Navigate(New ThreeC_Page(email, PagesFrame, AddFrame, MenuGrid, SubMenuFrame))
         SubMenuFrame.Navigate(New ImproveSubMenuPage(PagesFrame, email, profile, AddFrame, MenuGrid, SubMenuFrame))
     End Sub
+
+    'Private Sub WorkPlaceBtn_Click(sender As Object, e As RoutedEventArgs) Handles WorkPlaceBtn.Click
+    '    LoadSideBar()
+    '    PagesFrame.Navigate(New AuditSchedMainPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
+    '    SubMenuFrame.Navigate(New AuditSchedSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
+    'End Sub
 
     Private Sub HomeBtn_Click(sender As Object, e As RoutedEventArgs) Handles HomeBtn.Click
         LoadSideBar()

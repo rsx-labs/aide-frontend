@@ -117,6 +117,7 @@
                                 <ColumnDefinition Width="0.5*"/>
                                 <ColumnDefinition Width="0.25*"/>
                             </Grid.ColumnDefinitions>
+
                             
                             <Grid Grid.Column="0">
                                 <!--<Viewbox>

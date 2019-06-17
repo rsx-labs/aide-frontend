@@ -199,7 +199,7 @@
       <xs:element minOccurs="0" name="InboundContacts" type="xs:short" />
       <xs:element minOccurs="0" name="IncidentType" type="xs:short" />
       <xs:element minOccurs="0" name="Phase" type="xs:short" />
-      <xs:element minOccurs="0" name="ProjectID" type="xs:short" />
+      <xs:element minOccurs="0" name="ProjectID" type="xs:int" />
       <xs:element minOccurs="0" name="ReferenceID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Rework" type="xs:short" />
       <xs:element minOccurs="0" name="Severity" type="xs:short" />
@@ -210,6 +210,28 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="WeeklyReport" nillable="true" type="tns:WeeklyReport" />
+  <xs:complexType name="AuditSched">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AUDIT_SCHED_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="DAILY" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EMP_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="FY_END" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FY_START" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FY_WEEK" type="xs:int" />
+      <xs:element minOccurs="0" name="MONTHLY" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PERIOD_END" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PERIOD_START" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="WEEKLY" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="YEAR" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AuditSched" nillable="true" type="tns:AuditSched" />
+  <xs:complexType name="ArrayOfAuditSched">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AuditSched" nillable="true" type="tns:AuditSched" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAuditSched" nillable="true" type="tns:ArrayOfAuditSched" />
   <xs:complexType name="SuccessRegister">
     <xs:sequence>
       <xs:element minOccurs="0" name="AdditionalInformation" nillable="true" type="xs:string" />

@@ -16,6 +16,7 @@ Class NewSuccessRegister
     Private _addframe As Frame
     Private _menugrid As Grid
     Private _submenuframe As Frame
+    Private dsplyByDiv As Integer = 1
     'Private srmodel As SuccessRegisterModel
 
 #End Region
@@ -308,7 +309,7 @@ Class NewSuccessRegister
     Public Sub PopulateComboBox()
         Try
             If InitializeService() Then
-                Dim lstNickname As Nickname() = client.ViewNicknameByDeptID(email)
+                Dim lstNickname As Nickname() = client.ViewNicknameByDeptID(email, dsplyByDiv)
                 Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
                 Dim successRegisterDBProvider As New SuccessRegisterDBProvider
                 Dim nicknameVM As New NicknameViewModel()

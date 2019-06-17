@@ -60,7 +60,9 @@ Public Class AttendanceDashBoard
                 For Each rawUser As myAttendanceList In aemployeeListDBProvider.GetAllEmpRPList()
                     setStatus = rawUser.Status
                     SetCategory(rawUser)
-                    SetCategoryDisplay(rawUser)
+                    If rawUser.Status = 11 Then 'For Late
+                        SetCategoryDisplay(rawUser)
+                    End If
                     lstAEmployeeList.Add(New AttendanceModel(rawUser))
                 Next
 
@@ -133,7 +135,7 @@ Public Class AttendanceDashBoard
         ElseIf setStatus = 10 Then
             rawUser_.Desc = "Other Leaves"
         ElseIf setStatus = 11 Then
-            rawUser_.Desc = "(L) Present"
+            rawUser_.Desc = "(Late)"
         End If
     End Sub
 

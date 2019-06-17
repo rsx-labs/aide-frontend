@@ -712,7 +712,7 @@
                       ItemsSource="{Binding ObjectSabaLearningSet}" 
                       MouseDoubleClick="SabaLearningLV_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Course Title" Width="7*" Binding="{Binding TITLE,Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Title" Width="7*" Binding="{Binding TITLE,Mode=TwoWay}" IsReadOnly="True"/>
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Due Date"  Width="1.5*" Binding="{Binding END_DATE,Mode=TwoWay,StringFormat=MM/dd/yyyy}" IsReadOnly="True"/>
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="% Completed" Width="1.5*" Binding="{Binding COMPLETION_RATE,Mode=TwoWay}" IsReadOnly="True"/>
                         </DataGrid.Columns>

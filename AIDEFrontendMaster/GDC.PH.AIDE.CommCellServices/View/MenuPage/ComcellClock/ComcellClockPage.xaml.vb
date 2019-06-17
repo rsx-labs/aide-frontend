@@ -23,24 +23,24 @@ Class ComcellClockPage
     Private year As Integer
     Private monthToday As Integer
     Private ComcellVM As New ComcellViewModel
+    Private profile As Profile
 #End Region
 
 #Region "Constructor"
-    Public Sub New(empID As Integer, com_cellFrame As Frame, winx As Window, _pos As String)
+    Public Sub New(_profile As Profile, com_cellFrame As Frame, winx As Window)
         InitializeComponent()
         year = Date.Now.Year
         monthToday = Date.Now.Month
         DataContext = comcellClockVM
         Me.comcellFrame = com_cellFrame
-        Me.emp_ID = empID
+        Me.profile = _profile
+        Me.emp_ID = profile.Emp_ID
         Me._window = winx
-        Me.pos = _pos
         InitializeService()
-        ManagerAuth(pos)
         GetData()
         setclock()
         getTime()
-        refreshClock()
+        'refreshClock()
         SetData2()
     End Sub
 #End Region
@@ -108,8 +108,8 @@ Class ComcellClockPage
         End Try
     End Sub
 
-    Public Sub ManagerAuth(pos As String)
-        If pos = "Manager" Then
+    Public Sub ManagerAuth()
+        If profile.Permission = "Manager" Or profile.Nickname.ToUpper = Facilitator.Text Or profile.Nickname.ToUpper = MinutesTaker.Text Then
             btnCreate.Visibility = Windows.Visibility.Visible
         Else
             btnCreate.Visibility = Windows.Visibility.Hidden
@@ -159,7 +159,7 @@ Class ComcellClockPage
 
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
-        comcellFrame.Navigate(New ComcellClockAddPage(Me.emp_ID, Me.comcellFrame, _window, Me.pos))
+        comcellFrame.Navigate(New ComcellClockAddPage(profile, Me.comcellFrame, _window))
     End Sub
 
     Public Sub getTime()
@@ -187,7 +187,7 @@ Class ComcellClockPage
 
     Public Sub refreshClock()
         Dim timer As DispatcherTimer = New DispatcherTimer(New TimeSpan(0, 5, 0), DispatcherPriority.Normal, Function()
-                                                                                                                 comcellFrame.Navigate(New ComcellClockPage(emp_ID, comcellFrame, _window, pos))
+                                                                                                                 comcellFrame.Navigate(New ComcellClockPage(profile, comcellFrame, _window))
                                                                                                              End Function, Me.Dispatcher)
     End Sub
 
@@ -219,11 +219,9 @@ Class ComcellClockPage
             Facilitator.Text = ComcellVM.ComcellItem.FACILITATOR.ToUpper()
             MinutesTaker.Text = ComcellVM.ComcellItem.MINUTES_TAKER.ToUpper()
         End If
-
-
+        'load controls
+        ManagerAuth()
     End Sub
-
-
 
     'Private Sub StopBtn_Click(sender As Object, e As RoutedEventArgs)
     '    GridAlarm.Tag = String.Empty
