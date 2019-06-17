@@ -25,6 +25,7 @@ Class MainWindow
     Dim aideClientService As AideServiceClient
     Dim eventStartUpId As String = ConfigurationManager.AppSettings("eventStartUpId")
     Dim eventLogInId As String = ConfigurationManager.AppSettings("eventLogInId")
+    'Dim SendCodeVM As SendCodeViewModel
 #End Region
 
 #Region "Property declarations"
@@ -141,9 +142,16 @@ Class MainWindow
             Return True
         Catch ex As Exception
             '    CheckOutlook()
-            MsgBox("Please login to Outlook", MsgBoxStyle.Critical, "AIDE")
-            Environment.Exit(0)
-            Return Nothing
+            If MsgBox("Please login to Outlook", MsgBoxStyle.Critical + vbYesNo, "AIDE") = vbYes Then
+                Environment.Exit(0)
+                Return Nothing
+                'Else
+                '    Dim addwindow As New AddEmailWindow()
+                '    addwindow.ShowDialog()
+                '    email = addwindow.GetEmail
+
+                '    Return True
+            End If
         End Try
     End Function
 
@@ -326,9 +334,7 @@ Class MainWindow
     'End Sub
 
     Private Sub HomeBtn_Click(sender As Object, e As RoutedEventArgs) Handles HomeBtn.Click
-        LoadSideBar()
-        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
-        SubMenuFrame.Navigate(New BlankSubMenu())
+        
     End Sub
 
     Private Sub ExitBtn_Click(sender As Object, e As RoutedEventArgs)
@@ -402,4 +408,13 @@ Class MainWindow
     End Sub
 #End Region
 
+    Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
+
+    End Sub
+
+    Private Sub DashboardBtn_Click(sender As Object, e As RoutedEventArgs)
+        LoadSideBar()
+        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
+        SubMenuFrame.Navigate(New BlankSubMenu())
+    End Sub
 End Class

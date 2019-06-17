@@ -97,7 +97,7 @@ Public Class TaskListPage
                 taskList.Phase = rawPhase
                 taskList.Status = rawStatus
 
-                _addframe.Navigate(New TaskAddPage(mainFrame, mainWindow, taskList, email, _addframe, _menugrid, _submenuframe))
+                _addframe.Navigate(New TaskAddPage(mainFrame, mainWindow, taskList, email, _addframe, _menugrid, _submenuframe, Me.empID))
                 _addframe.Margin = New Thickness(100, 50, 100, 50)
                 _addframe.IsEnabled = True
                 _addframe.Visibility = Visibility.Visible

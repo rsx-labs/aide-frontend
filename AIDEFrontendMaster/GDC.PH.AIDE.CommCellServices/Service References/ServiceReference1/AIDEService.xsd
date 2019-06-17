@@ -232,26 +232,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfAuditSched" nillable="true" type="tns:ArrayOfAuditSched" />
-  <xs:complexType name="WorkplaceAudit">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="AUDIT_DAILY_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="AUDIT_QUESTIONS" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="AUDIT_QUESTIONS_GROUP" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="AUDIT_QUESTIONS_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="DT_CHECKED" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="EMP_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="FY_WEEK" type="xs:int" />
-      <xs:element minOccurs="0" name="OWNER" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="STATUS" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="WorkplaceAudit" nillable="true" type="tns:WorkplaceAudit" />
-  <xs:complexType name="ArrayOfWorkplaceAudit">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="WorkplaceAudit" nillable="true" type="tns:WorkplaceAudit" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfWorkplaceAudit" nillable="true" type="tns:ArrayOfWorkplaceAudit" />
   <xs:complexType name="SuccessRegister">
     <xs:sequence>
       <xs:element minOccurs="0" name="AdditionalInformation" nillable="true" type="xs:string" />

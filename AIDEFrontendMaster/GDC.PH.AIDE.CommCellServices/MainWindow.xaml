@@ -40,8 +40,10 @@
             <Grid Grid.Column="0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
              
-                    <Viewbox HorizontalAlignment="Left" Margin="10,7">
-                        <TextBlock TextWrapping="Wrap" Margin="2" Text="Adaptive Intelligent Dashboard for Employees" Foreground="WhiteSmoke"/>
+                    <Viewbox HorizontalAlignment="Left" >
+                        <Button x:Name="DashboardBtn" Click="DashboardBtn_Click" Style="{DynamicResource Flat}" Margin="10,7"  >
+                        <TextBlock TextWrapping="Wrap" Margin="0" Text="Adaptive Intelligent Dashboard for Employees" Foreground="WhiteSmoke"/>
+                        </Button>
                     </Viewbox>
                 </StackPanel>
                 
@@ -54,7 +56,7 @@
                             <TextBlock Margin="0" TextWrapping="Wrap" Text="__" Foreground="White"/>
                         </Viewbox>
                     </Button>
-                    <Button Background="Transparent" Margin="2" Name="ExitBtn"  Click="ExitBtn_Click">
+                    <Button Style="{DynamicResource DasbBoardBtn}" Background="Transparent" Margin="2" Name="ExitBtn"  Click="ExitBtn_Click" BorderThickness="0">
                         <Viewbox>
                             <TextBlock Style="{DynamicResource CloseButton}" Margin="0" TextWrapping="Wrap" Text="X" Foreground="White"/>
                         </Viewbox>
@@ -364,6 +366,77 @@
             </Setter>
         </Style>
 
+        <Style x:Key="Flat" TargetType="Button">
+            <Setter Property="Background" Value="{x:Null}" />
+            <Setter Property="BorderBrush" Value="{x:Null}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                            </Trigger>
+                            <Trigger Property="IsDefaulted" Value="true">
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                            </Trigger>
+                            <Trigger Property="ToggleButton.IsChecked" Value="true">
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{x:Null}" />
+                    <Setter Property="BorderBrush" Value="{x:Null}" />
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Setter Property="Cursor" Value="Hand"></Setter>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="FontWeight" Value="Normal" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DasbBoardBtn" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="4" Background="Transparent">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          TextElement.FontWeight="Bold">
+                                </ContentPresenter>
+                            </Border>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FF005895"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FF09C2EA"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
         <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="VerticalAlignment" Value="Center" />

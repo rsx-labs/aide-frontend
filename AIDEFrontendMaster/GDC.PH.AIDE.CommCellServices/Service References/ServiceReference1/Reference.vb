@@ -2264,181 +2264,6 @@ Namespace ServiceReference1
     
     <System.Diagnostics.DebuggerStepThroughAttribute(),  _
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
-     System.Runtime.Serialization.DataContractAttribute(Name:="WorkplaceAudit", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
-     System.SerializableAttribute()>  _
-    Partial Public Class WorkplaceAudit
-        Inherits Object
-        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
-        
-        <System.NonSerializedAttribute()>  _
-        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private AUDIT_DAILY_IDField As Integer
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private AUDIT_QUESTIONSField As String
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private AUDIT_QUESTIONS_GROUPField As String
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private AUDIT_QUESTIONS_IDField As Integer
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private DT_CHECKEDField As Date
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private EMP_IDField As Integer
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private FY_WEEKField As Integer
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private OWNERField As String
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private STATUSField As Integer
-        
-        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
-        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
-            Get
-                Return Me.extensionDataField
-            End Get
-            Set
-                Me.extensionDataField = value
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property AUDIT_DAILY_ID() As Integer
-            Get
-                Return Me.AUDIT_DAILY_IDField
-            End Get
-            Set
-                If (Me.AUDIT_DAILY_IDField.Equals(value) <> true) Then
-                    Me.AUDIT_DAILY_IDField = value
-                    Me.RaisePropertyChanged("AUDIT_DAILY_ID")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property AUDIT_QUESTIONS() As String
-            Get
-                Return Me.AUDIT_QUESTIONSField
-            End Get
-            Set
-                If (Object.ReferenceEquals(Me.AUDIT_QUESTIONSField, value) <> true) Then
-                    Me.AUDIT_QUESTIONSField = value
-                    Me.RaisePropertyChanged("AUDIT_QUESTIONS")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property AUDIT_QUESTIONS_GROUP() As String
-            Get
-                Return Me.AUDIT_QUESTIONS_GROUPField
-            End Get
-            Set
-                If (Object.ReferenceEquals(Me.AUDIT_QUESTIONS_GROUPField, value) <> true) Then
-                    Me.AUDIT_QUESTIONS_GROUPField = value
-                    Me.RaisePropertyChanged("AUDIT_QUESTIONS_GROUP")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property AUDIT_QUESTIONS_ID() As Integer
-            Get
-                Return Me.AUDIT_QUESTIONS_IDField
-            End Get
-            Set
-                If (Me.AUDIT_QUESTIONS_IDField.Equals(value) <> true) Then
-                    Me.AUDIT_QUESTIONS_IDField = value
-                    Me.RaisePropertyChanged("AUDIT_QUESTIONS_ID")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property DT_CHECKED() As Date
-            Get
-                Return Me.DT_CHECKEDField
-            End Get
-            Set
-                If (Me.DT_CHECKEDField.Equals(value) <> true) Then
-                    Me.DT_CHECKEDField = value
-                    Me.RaisePropertyChanged("DT_CHECKED")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property EMP_ID() As Integer
-            Get
-                Return Me.EMP_IDField
-            End Get
-            Set
-                If (Me.EMP_IDField.Equals(value) <> true) Then
-                    Me.EMP_IDField = value
-                    Me.RaisePropertyChanged("EMP_ID")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property FY_WEEK() As Integer
-            Get
-                Return Me.FY_WEEKField
-            End Get
-            Set
-                If (Me.FY_WEEKField.Equals(value) <> true) Then
-                    Me.FY_WEEKField = value
-                    Me.RaisePropertyChanged("FY_WEEK")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property OWNER() As String
-            Get
-                Return Me.OWNERField
-            End Get
-            Set
-                If (Object.ReferenceEquals(Me.OWNERField, value) <> true) Then
-                    Me.OWNERField = value
-                    Me.RaisePropertyChanged("OWNER")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property STATUS() As Integer
-            Get
-                Return Me.STATUSField
-            End Get
-            Set
-                If (Me.STATUSField.Equals(value) <> true) Then
-                    Me.STATUSField = value
-                    Me.RaisePropertyChanged("STATUS")
-                End If
-            End Set
-        End Property
-        
-        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-        
-        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
-            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
-            If (Not (propertyChanged) Is Nothing) Then
-                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
-            End If
-        End Sub
-    End Class
-    
-    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
-     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
      System.Runtime.Serialization.DataContractAttribute(Name:="SuccessRegister", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
      System.SerializableAttribute()>  _
     Partial Public Class SuccessRegister
@@ -7562,24 +7387,6 @@ Namespace ServiceReference1
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateAuditSched")>  _
         Function UpdateAuditSchedAsync(ByVal auditSched As ServiceReference1.AuditSched) As System.Threading.Tasks.Task
         
-        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertAuditDaily")>  _
-        Sub InsertAuditDaily(ByVal auditSched As ServiceReference1.WorkplaceAudit)
-        
-        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertAuditDaily")>  _
-        Function InsertAuditDailyAsync(ByVal auditSched As ServiceReference1.WorkplaceAudit) As System.Threading.Tasks.Task
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAuditDaily", ReplyAction:="http://tempuri.org/IAideService/GetAuditDailyResponse")>  _
-        Function GetAuditDaily(ByVal empID As Integer, ByVal parmDate As Date) As ServiceReference1.WorkplaceAudit()
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAuditDaily", ReplyAction:="http://tempuri.org/IAideService/GetAuditDailyResponse")>  _
-        Function GetAuditDailyAsync(ByVal empID As Integer, ByVal parmDate As Date) As System.Threading.Tasks.Task(Of ServiceReference1.WorkplaceAudit())
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAuditQuestions", ReplyAction:="http://tempuri.org/IAideService/GetAuditQuestionsResponse")>  _
-        Function GetAuditQuestions(ByVal empID As Integer, ByVal questionGroup As String) As ServiceReference1.WorkplaceAudit()
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAuditQuestions", ReplyAction:="http://tempuri.org/IAideService/GetAuditQuestionsResponse")>  _
-        Function GetAuditQuestionsAsync(ByVal empID As Integer, ByVal questionGroup As String) As System.Threading.Tasks.Task(Of ServiceReference1.WorkplaceAudit())
-        
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/CreateNewSuccessRegister")>  _
         Sub CreateNewSuccessRegister(ByVal success As ServiceReference1.SuccessRegister)
         
@@ -8385,8 +8192,6 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeeklyReport)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AuditSched)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AuditSched())),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WorkplaceAudit)),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WorkplaceAudit())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Nickname())),  _
@@ -8505,30 +8310,6 @@ Namespace ServiceReference1
         
         Public Function UpdateAuditSchedAsync(ByVal auditSched As ServiceReference1.AuditSched) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateAuditSchedAsync
             Return MyBase.Channel.UpdateAuditSchedAsync(auditSched)
-        End Function
-        
-        Public Sub InsertAuditDaily(ByVal auditSched As ServiceReference1.WorkplaceAudit) Implements ServiceReference1.IAideService.InsertAuditDaily
-            MyBase.Channel.InsertAuditDaily(auditSched)
-        End Sub
-        
-        Public Function InsertAuditDailyAsync(ByVal auditSched As ServiceReference1.WorkplaceAudit) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.InsertAuditDailyAsync
-            Return MyBase.Channel.InsertAuditDailyAsync(auditSched)
-        End Function
-        
-        Public Function GetAuditDaily(ByVal empID As Integer, ByVal parmDate As Date) As ServiceReference1.WorkplaceAudit() Implements ServiceReference1.IAideService.GetAuditDaily
-            Return MyBase.Channel.GetAuditDaily(empID, parmDate)
-        End Function
-        
-        Public Function GetAuditDailyAsync(ByVal empID As Integer, ByVal parmDate As Date) As System.Threading.Tasks.Task(Of ServiceReference1.WorkplaceAudit()) Implements ServiceReference1.IAideService.GetAuditDailyAsync
-            Return MyBase.Channel.GetAuditDailyAsync(empID, parmDate)
-        End Function
-        
-        Public Function GetAuditQuestions(ByVal empID As Integer, ByVal questionGroup As String) As ServiceReference1.WorkplaceAudit() Implements ServiceReference1.IAideService.GetAuditQuestions
-            Return MyBase.Channel.GetAuditQuestions(empID, questionGroup)
-        End Function
-        
-        Public Function GetAuditQuestionsAsync(ByVal empID As Integer, ByVal questionGroup As String) As System.Threading.Tasks.Task(Of ServiceReference1.WorkplaceAudit()) Implements ServiceReference1.IAideService.GetAuditQuestionsAsync
-            Return MyBase.Channel.GetAuditQuestionsAsync(empID, questionGroup)
         End Function
         
         Public Sub CreateNewSuccessRegister(ByVal success As ServiceReference1.SuccessRegister) Implements ServiceReference1.IAideService.CreateNewSuccessRegister

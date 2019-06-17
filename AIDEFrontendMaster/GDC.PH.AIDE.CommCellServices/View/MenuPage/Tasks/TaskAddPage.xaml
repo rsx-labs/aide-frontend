@@ -1206,6 +1206,7 @@
                                   ItemsSource="{Binding Path=ProjectList}" 
                                   DisplayMemberPath="ProjectName"
                                   SelectedValuePath="ProjectID"
+                                  IsEditable="True" IsReadOnly="True"        
                                   Margin="5,5,0,5" Style="{DynamicResource StyleComboBox}"/>
                                 <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a project*" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                     <TextBlock.Style>

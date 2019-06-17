@@ -13,6 +13,8 @@ Class TaskAddPage
     Private _menugrid As Grid
     Private _submenuframe As Frame
     Private _empID As Integer
+    Private _ProjectName As String
+    Private _ProjectID As Integer
     'Public taskList As New TasksModel
 
 #Region "Provider Declaration"
@@ -22,7 +24,7 @@ Class TaskAddPage
 
 #Region "View Model Declarations"
     Dim tasksViewModel As New TasksViewModel
-    Dim projectViewModel As New ProjectViewModel
+    Dim projectViewModel As New ProjectViewModel()
 #End Region
 
 #Region "Model Declaration"
@@ -46,7 +48,7 @@ Class TaskAddPage
         LoadData()
     End Sub
 
-    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _taskList As TasksModel, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _taskList As TasksModel, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, empID As Integer)
         InitializeComponent()
         frame = _frame
         mainWindow = _mainWindow
@@ -54,7 +56,9 @@ Class TaskAddPage
         Me._addframe = _addframe
         Me._menugrid = _menugrid
         Me._submenuframe = _submenuframe
+        Me._empID = empID
         btnCreate.Visibility = Windows.Visibility.Collapsed
+        _ProjectID = _taskList.ProjId
         LoadData()
         tasksViewModel.NewTasks = _taskList
         Me.DataContext = tasksViewModel
@@ -102,15 +106,16 @@ Class TaskAddPage
 
     Private Sub LoadControlsForUpdate()
         btnCreate.Visibility = Windows.Visibility.Collapsed
-        'Project.Visibility = Windows.Visibility.Hidden
-        cboProject.IsEnabled = False
-        'Rework.Visibility = Windows.Visibility.Hidden
-        cbRework.IsEnabled = False
-        'Remarks.Visibility = Windows.Visibility.Hidden
-        'txtRemarks.IsEnabled = False
+        cboProject.Text = _ProjectName
+        ''Project.Visibility = Windows.Visibility.Hidden
+        'cboProject.IsEnabled = True
+        ''Rework.Visibility = Windows.Visibility.Hidden
+        'cbRework.IsEnabled = T
+        ''Remarks.Visibility = Windows.Visibility.Hidden
+        ''txtRemarks.IsEnabled = False
 
-        'Category.Visibility = Windows.Visibility.Hidden
-        cbCategory.IsEnabled = False
+        ''Category.Visibility = Windows.Visibility.Hidden
+        'cbCategory.IsEnabled = False
     End Sub
 
     Private Sub LoadData()
@@ -199,10 +204,14 @@ Class TaskAddPage
             Dim listProjects As New ObservableCollection(Of ProjectModel)
 
             For Each objProjects As Project In lstProjects
-                projectDBProvider.SetProjectList(objProjects)
+
+                projectDBProvider.setProjectList(objProjects)
             Next
 
-            For Each myProjects As MyProjectList In projectDBProvider.getProjectList()
+            For Each myProjects As myProjectList In projectDBProvider.getProjectList()
+                If _ProjectID = myProjects.Project_ID Then
+                    _ProjectName = myProjects.Project_Name
+                End If
                 listProjects.Add(New ProjectModel(myProjects))
             Next
 
@@ -272,8 +281,14 @@ Class TaskAddPage
             End If
 
             tasks.TaskType = obj.NewTasks.TaskType
-            tasks.ProjectID = cboProject.SelectedValue
-            tasks.ProjectCode = cboProject.SelectedValue
+            If IsNothing(cboProject.SelectedValue) Then
+                tasks.ProjectID = obj.NewTasks.ProjId
+                tasks.ProjectCode = obj.NewTasks.ProjId
+            Else
+                tasks.ProjectID = cboProject.SelectedValue
+                tasks.ProjectCode = cboProject.SelectedValue
+            End If
+           
             tasks.Rework = obj.NewTasks.Rework
             tasks.Phase = obj.NewTasks.Phase
             tasks.TaskDescr = obj.NewTasks.TaskDescr
