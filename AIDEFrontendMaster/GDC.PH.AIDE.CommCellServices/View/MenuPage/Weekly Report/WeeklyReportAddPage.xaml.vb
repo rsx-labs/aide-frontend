@@ -98,9 +98,6 @@ Class WeeklyReportAddPage
 
     Private Sub GetPreviousData()
         InitializeService()
-        Dim xas As Date = lastWeekMonday
-        Dim x As Integer = 1
-        x += 1
         Try
             'Dim lstWeeklyReport As WeeklyReport() = AideServiceClient.GetWeeklyReportsNotCompleted(lastWeekMonday, empID)
             'For Each objWeeklyReport As WeeklyReport In lstWeeklyReport
