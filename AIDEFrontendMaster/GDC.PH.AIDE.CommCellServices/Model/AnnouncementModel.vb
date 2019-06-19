@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Public Class AnnouncementModel
+    Private _announcementid As Integer
     Private _empid As Integer
     Private _title As String
     Private _message As String
@@ -9,11 +10,22 @@ Public Class AnnouncementModel
     End Sub
 
     Public Sub New(ByVal _iAnnouncementSet As myAnnouncementSet)
+        Me._announcementid = _iAnnouncementSet._announcementID
         Me._empid = _iAnnouncementSet._empid
         Me.MESSAGE = _iAnnouncementSet._message
         Me.TITLE = _iAnnouncementSet._title
         Me.DATE_POSTED = _iAnnouncementSet._enddate
     End Sub
+
+    Public Property ANNOUNCEMENT_ID As Integer
+        Get
+            Return _announcementid
+        End Get
+        Set(value As Integer)
+            _announcementid = value
+            OnPropertyChanged("ANNOUNCEMENT_ID")
+        End Set
+    End Property
 
     Public Property EMP_ID As Integer
         Get

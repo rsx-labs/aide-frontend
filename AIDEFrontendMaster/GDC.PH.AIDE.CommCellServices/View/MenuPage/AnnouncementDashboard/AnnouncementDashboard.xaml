@@ -51,7 +51,7 @@
             </Grid>
             
             <Grid Grid.Row="1" Background="{DynamicResource GradientDesign}">
-                <ListView Background="Transparent"  Margin="5" ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" x:Name="AnnouncementLV" ItemsSource="{Binding ObjectAnnouncementSet}" Height="auto" Width="auto" BorderBrush="{x:Null}" SelectionMode="Single" Foreground="#FF07B9B1" TextOptions.TextFormattingMode="Display" AllowDrop="True" BorderThickness="0" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListView Background="Transparent"  Margin="5" ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" x:Name="AnnouncementLV" ItemsSource="{Binding ObjectAnnouncementSet}" Height="auto" Width="auto" BorderBrush="{x:Null}" SelectionMode="Single" Foreground="#FF07B9B1" TextOptions.TextFormattingMode="Display" AllowDrop="True" BorderThickness="0" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseDoubleClick="AnnouncementLV_MouseDoubleClick">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Border Background="white" BorderBrush="#FFF0F0F0" BorderThickness="3" CornerRadius="15" Margin="3">

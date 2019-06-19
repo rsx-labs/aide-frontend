@@ -224,4 +224,31 @@ Class AnnouncementDashboard
     Private Sub btnNext_Click_1(sender As Object, e As RoutedEventArgs)
         SetPaging(CInt(PagingMode._Next))
     End Sub
+
+    Private Sub AnnouncementLV_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
+        e.Handled = True
+        If AnnouncementLV.SelectedIndex <> -1 Then
+            Dim announcementList As New AnnouncementModel
+            If AnnouncementLV.SelectedItem IsNot Nothing Then
+                For Each _ann As AnnouncementModel In AnnouncementListVM.ObjectAnnouncementSet
+                    If CType(AnnouncementLV.SelectedItem, AnnouncementModel).ANNOUNCEMENT_ID = _ann.ANNOUNCEMENT_ID Then
+                        announcementList.ANNOUNCEMENT_ID = _ann.ANNOUNCEMENT_ID
+                        announcementList.EMP_ID = _ann.EMP_ID
+                        announcementList.TITLE = _ann.TITLE
+                        announcementList.MESSAGE = _ann.MESSAGE
+                        announcementList.DATE_POSTED = _ann.DATE_POSTED
+                    End If
+                Next
+                addframe.Navigate(New AnnouncementDashboardUpdatePage(mainframe, empID, addframe, menugrid, submenuframe, email, profile, announcementList))
+                mainframe.IsEnabled = False
+                mainframe.Opacity = 0.3
+                menugrid.IsEnabled = False
+                menugrid.Opacity = 0.3
+                submenuframe.IsEnabled = False
+                submenuframe.Opacity = 0.3
+                addframe.Margin = New Thickness(200, 100, 200, 100)
+                addframe.Visibility = Visibility.Visible
+            End If
+        End If
+    End Sub
 End Class

@@ -93,7 +93,7 @@
                     
                     <Grid Grid.Row="1">
                         <Border Margin="5,10,10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                            <RichTextBox Foreground="DimGray" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" x:Name="txtAnnouncementMessage">
+                            <RichTextBox Margin="10" Foreground="DimGray" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" x:Name="txtAnnouncementMessage">
                                 <FlowDocument>
                                     <Paragraph TextAlignment="Justify">
                                         <Run Foreground="DimGray" Name="runname"/>

@@ -1,2 +1,5 @@
 Please make sure to download nuget package below
 -WPF Animated GIF
+
+06/19/2019 Announcement Enhancement
+- Please run update and getannouncment SP

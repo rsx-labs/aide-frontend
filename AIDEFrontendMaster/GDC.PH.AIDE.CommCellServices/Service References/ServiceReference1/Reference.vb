@@ -1706,6 +1706,117 @@ Namespace ServiceReference1
     
     <System.Diagnostics.DebuggerStepThroughAttribute(),  _
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="WeekRange", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
+     System.SerializableAttribute()>  _
+    Partial Public Class WeekRange
+        Inherits Object
+        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+        
+        <System.NonSerializedAttribute()>  _
+        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private DateCreatedField As Date
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private DateRangeField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private EndWeekField As Date
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private StartWeekField As Date
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private WeekRangeIDField As Integer
+        
+        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
+        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
+            Get
+                Return Me.extensionDataField
+            End Get
+            Set
+                Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property DateCreated() As Date
+            Get
+                Return Me.DateCreatedField
+            End Get
+            Set
+                If (Me.DateCreatedField.Equals(value) <> true) Then
+                    Me.DateCreatedField = value
+                    Me.RaisePropertyChanged("DateCreated")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property DateRange() As String
+            Get
+                Return Me.DateRangeField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.DateRangeField, value) <> true) Then
+                    Me.DateRangeField = value
+                    Me.RaisePropertyChanged("DateRange")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property EndWeek() As Date
+            Get
+                Return Me.EndWeekField
+            End Get
+            Set
+                If (Me.EndWeekField.Equals(value) <> true) Then
+                    Me.EndWeekField = value
+                    Me.RaisePropertyChanged("EndWeek")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property StartWeek() As Date
+            Get
+                Return Me.StartWeekField
+            End Get
+            Set
+                If (Me.StartWeekField.Equals(value) <> true) Then
+                    Me.StartWeekField = value
+                    Me.RaisePropertyChanged("StartWeek")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property WeekRangeID() As Integer
+            Get
+                Return Me.WeekRangeIDField
+            End Get
+            Set
+                If (Me.WeekRangeIDField.Equals(value) <> true) Then
+                    Me.WeekRangeIDField = value
+                    Me.RaisePropertyChanged("WeekRangeID")
+                End If
+            End Set
+        End Property
+        
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        
+        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
+            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
+            If (Not (propertyChanged) Is Nothing) Then
+                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
+            End If
+        End Sub
+    End Class
+    
+    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
      System.Runtime.Serialization.DataContractAttribute(Name:="WeeklyReport", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
      System.SerializableAttribute()>  _
     Partial Public Class WeeklyReport
@@ -3962,6 +4073,9 @@ Namespace ServiceReference1
         Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ANNOUNCEMENT_IDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private EMP_IDField As Integer
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
@@ -3980,6 +4094,19 @@ Namespace ServiceReference1
             End Get
             Set
                 Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ANNOUNCEMENT_ID() As Integer
+            Get
+                Return Me.ANNOUNCEMENT_IDField
+            End Get
+            Set
+                If (Me.ANNOUNCEMENT_IDField.Equals(value) <> true) Then
+                    Me.ANNOUNCEMENT_IDField = value
+                    Me.RaisePropertyChanged("ANNOUNCEMENT_ID")
+                End If
             End Set
         End Property
         
@@ -4523,117 +4650,6 @@ Namespace ServiceReference1
                 If (Me.Emp_IDField.Equals(value) <> true) Then
                     Me.Emp_IDField = value
                     Me.RaisePropertyChanged("Emp_ID")
-                End If
-            End Set
-        End Property
-        
-        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-        
-        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
-            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
-            If (Not (propertyChanged) Is Nothing) Then
-                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
-            End If
-        End Sub
-    End Class
-    
-    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
-     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
-     System.Runtime.Serialization.DataContractAttribute(Name:="WeekRange", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
-     System.SerializableAttribute()>  _
-    Partial Public Class WeekRange
-        Inherits Object
-        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
-        
-        <System.NonSerializedAttribute()>  _
-        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private DateCreatedField As Date
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private DateRangeField As String
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private EndWeekField As Date
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private StartWeekField As Date
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private WeekRangeIDField As Integer
-        
-        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
-        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
-            Get
-                Return Me.extensionDataField
-            End Get
-            Set
-                Me.extensionDataField = value
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property DateCreated() As Date
-            Get
-                Return Me.DateCreatedField
-            End Get
-            Set
-                If (Me.DateCreatedField.Equals(value) <> true) Then
-                    Me.DateCreatedField = value
-                    Me.RaisePropertyChanged("DateCreated")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property DateRange() As String
-            Get
-                Return Me.DateRangeField
-            End Get
-            Set
-                If (Object.ReferenceEquals(Me.DateRangeField, value) <> true) Then
-                    Me.DateRangeField = value
-                    Me.RaisePropertyChanged("DateRange")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property EndWeek() As Date
-            Get
-                Return Me.EndWeekField
-            End Get
-            Set
-                If (Me.EndWeekField.Equals(value) <> true) Then
-                    Me.EndWeekField = value
-                    Me.RaisePropertyChanged("EndWeek")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property StartWeek() As Date
-            Get
-                Return Me.StartWeekField
-            End Get
-            Set
-                If (Me.StartWeekField.Equals(value) <> true) Then
-                    Me.StartWeekField = value
-                    Me.RaisePropertyChanged("StartWeek")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property WeekRangeID() As Integer
-            Get
-                Return Me.WeekRangeIDField
-            End Get
-            Set
-                If (Me.WeekRangeIDField.Equals(value) <> true) Then
-                    Me.WeekRangeIDField = value
-                    Me.RaisePropertyChanged("WeekRangeID")
                 End If
             End Set
         End Property
@@ -7363,6 +7379,12 @@ Namespace ServiceReference1
      System.ServiceModel.ServiceContractAttribute(ConfigurationName:="ServiceReference1.IAideService", CallbackContract:=GetType(ServiceReference1.IAideServiceCallback), SessionMode:=System.ServiceModel.SessionMode.Required)>  _
     Public Interface IAideService
         
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeeklyReportsByEmpID", ReplyAction:="http://tempuri.org/IAideService/GetWeeklyReportsByEmpIDResponse")>  _
+        Function GetWeeklyReportsByEmpID(ByVal empID As Integer) As ServiceReference1.WeekRange()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeeklyReportsByEmpID", ReplyAction:="http://tempuri.org/IAideService/GetWeeklyReportsByEmpIDResponse")>  _
+        Function GetWeeklyReportsByEmpIDAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeekRange())
+        
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeeklyReportsByWeekRangeID", ReplyAction:="http://tempuri.org/IAideService/GetWeeklyReportsByWeekRangeIDResponse")>  _
         Function GetWeeklyReportsByWeekRangeID(ByVal weekRangeID As Integer, ByVal empID As Integer) As ServiceReference1.WeeklyReport()
         
@@ -7669,6 +7691,12 @@ Namespace ServiceReference1
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAnnouncements", ReplyAction:="http://tempuri.org/IAideService/GetAnnouncementsResponse")>  _
         Function GetAnnouncementsAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Announcements())
         
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateAnnouncements")>  _
+        Sub UpdateAnnouncements(ByVal announcements As ServiceReference1.Announcements)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateAnnouncements")>  _
+        Function UpdateAnnouncementsAsync(ByVal announcements As ServiceReference1.Announcements) As System.Threading.Tasks.Task
+        
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetLate", ReplyAction:="http://tempuri.org/IAideService/GetLateResponse")>  _
         Function GetLate(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal toDisplay As Integer) As ServiceReference1.Late()
         
@@ -7764,12 +7792,6 @@ Namespace ServiceReference1
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeekRange", ReplyAction:="http://tempuri.org/IAideService/GetWeekRangeResponse")>  _
         Function GetWeekRangeAsync(ByVal currentDate As Date, ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeekRange())
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeeklyReportsByEmpID", ReplyAction:="http://tempuri.org/IAideService/GetWeeklyReportsByEmpIDResponse")>  _
-        Function GetWeeklyReportsByEmpID(ByVal empID As Integer) As ServiceReference1.WeekRange()
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeeklyReportsByEmpID", ReplyAction:="http://tempuri.org/IAideService/GetWeeklyReportsByEmpIDResponse")>  _
-        Function GetWeeklyReportsByEmpIDAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeekRange())
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertActionList")>  _
         Sub InsertActionList(ByVal _Action As ServiceReference1.Action)
@@ -8188,6 +8210,8 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.TaskSummary)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeekRange())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeekRange)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeeklyReport())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeeklyReport)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AuditSched)),  _
@@ -8216,8 +8240,6 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Comcell)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Comcell())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ComcellClock)),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeekRange)),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeekRange())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MyAttendance)),  _
@@ -8279,6 +8301,14 @@ Namespace ServiceReference1
         Public Sub New(ByVal callbackInstance As System.ServiceModel.InstanceContext, ByVal binding As System.ServiceModel.Channels.Binding, ByVal remoteAddress As System.ServiceModel.EndpointAddress)
             MyBase.New(callbackInstance, binding, remoteAddress)
         End Sub
+        
+        Public Function GetWeeklyReportsByEmpID(ByVal empID As Integer) As ServiceReference1.WeekRange() Implements ServiceReference1.IAideService.GetWeeklyReportsByEmpID
+            Return MyBase.Channel.GetWeeklyReportsByEmpID(empID)
+        End Function
+        
+        Public Function GetWeeklyReportsByEmpIDAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeekRange()) Implements ServiceReference1.IAideService.GetWeeklyReportsByEmpIDAsync
+            Return MyBase.Channel.GetWeeklyReportsByEmpIDAsync(empID)
+        End Function
         
         Public Function GetWeeklyReportsByWeekRangeID(ByVal weekRangeID As Integer, ByVal empID As Integer) As ServiceReference1.WeeklyReport() Implements ServiceReference1.IAideService.GetWeeklyReportsByWeekRangeID
             Return MyBase.Channel.GetWeeklyReportsByWeekRangeID(weekRangeID, empID)
@@ -8688,6 +8718,14 @@ Namespace ServiceReference1
             Return MyBase.Channel.GetAnnouncementsAsync(empID)
         End Function
         
+        Public Sub UpdateAnnouncements(ByVal announcements As ServiceReference1.Announcements) Implements ServiceReference1.IAideService.UpdateAnnouncements
+            MyBase.Channel.UpdateAnnouncements(announcements)
+        End Sub
+        
+        Public Function UpdateAnnouncementsAsync(ByVal announcements As ServiceReference1.Announcements) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateAnnouncementsAsync
+            Return MyBase.Channel.UpdateAnnouncementsAsync(announcements)
+        End Function
+        
         Public Function GetLate(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal toDisplay As Integer) As ServiceReference1.Late() Implements ServiceReference1.IAideService.GetLate
             Return MyBase.Channel.GetLate(empID, month, year, toDisplay)
         End Function
@@ -8814,14 +8852,6 @@ Namespace ServiceReference1
         
         Public Function GetWeekRangeAsync(ByVal currentDate As Date, ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeekRange()) Implements ServiceReference1.IAideService.GetWeekRangeAsync
             Return MyBase.Channel.GetWeekRangeAsync(currentDate, empID)
-        End Function
-        
-        Public Function GetWeeklyReportsByEmpID(ByVal empID As Integer) As ServiceReference1.WeekRange() Implements ServiceReference1.IAideService.GetWeeklyReportsByEmpID
-            Return MyBase.Channel.GetWeeklyReportsByEmpID(empID)
-        End Function
-        
-        Public Function GetWeeklyReportsByEmpIDAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeekRange()) Implements ServiceReference1.IAideService.GetWeeklyReportsByEmpIDAsync
-            Return MyBase.Channel.GetWeeklyReportsByEmpIDAsync(empID)
         End Function
         
         Public Sub InsertActionList(ByVal _Action As ServiceReference1.Action) Implements ServiceReference1.IAideService.InsertActionList

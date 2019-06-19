@@ -107,10 +107,11 @@ Class AnnouncementDashboardAddPage
         Try
             InitializeService()
 
-            aide.InsertAnnouncements(getDataInsert(Me.DataContext()))
+
             If _announce.TITLE = Nothing Or _announce.MESSAGE = Nothing Then
                 MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else
+                aide.InsertAnnouncements(getDataInsert(Me.DataContext()))
                 MsgBox("Successfully Added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 _announce.TITLE = Nothing
                 _announce.MESSAGE = Nothing

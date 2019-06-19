@@ -51,15 +51,11 @@
 
             <Grid Grid.Column="1" HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
-                    <Button Background="Transparent" Margin="2" Name="MinimizeBtn" Click="MinimizeBtn_Click" BorderThickness="0" >
-                        <Viewbox>
-                            <TextBlock Margin="0" TextWrapping="Wrap" Text="__" Foreground="White"/>
-                        </Viewbox>
+                    <Button Background="Transparent" Margin="10" Name="MinimizeBtn" Click="MinimizeBtn_Click" BorderThickness="0" Style="{DynamicResource ButtonMini}" >
+                        
                     </Button>
-                    <Button Style="{DynamicResource DasbBoardBtn}" Background="Transparent" Margin="2" Name="ExitBtn"  Click="ExitBtn_Click" BorderThickness="0">
-                        <Viewbox>
-                            <TextBlock Style="{DynamicResource CloseButton}" Margin="0" TextWrapping="Wrap" Text="X" Foreground="White"/>
-                        </Viewbox>
+                    <Button Style="{DynamicResource ButtonBack}" Background="Transparent" Margin="10" Name="ExitBtn"  Click="ExitBtn_Click" BorderThickness="0">
+                       
                     </Button>
                 </StackPanel>
                 
@@ -403,7 +399,65 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="ButtonBack" TargetType="{x:Type Button}">
 
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Name="buttonImage"
+                               Height="Auto"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               
+                               Source="\Assets\Button\closebtn.png"
+                               Stretch="Fill">
+                            <Image.Effect>
+                                <DropShadowEffect  Direction="290" Opacity="0.6" ShadowDepth="1" Color="Black"/>
+                            </Image.Effect>
+                        </Image>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonImage"
+                                        Property="Source"
+                                        Value="\Assets\Button\closebtnhover.png"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+        <Style x:Key="ButtonMini" TargetType="{x:Type Button}">
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Name="buttonImage"
+                               Height="Auto"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               
+                               Source="\Assets\Button\minimized.png"
+                               Stretch="Fill">
+                            <Image.Effect>
+                                <DropShadowEffect  Direction="290" Opacity="0.6" ShadowDepth="1" Color="Black"/>
+                            </Image.Effect>
+                        </Image>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonImage"
+                                        Property="Source"
+                                        Value="\Assets\Button\minimizedclick.png"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+
+        </Style>
         <Style x:Key="DasbBoardBtn" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>

@@ -6,6 +6,7 @@ Public Class AnnouncementListViewModel
     Implements INotifyPropertyChanged
 
     Private _objAnnouncementset As New ObservableCollection(Of AnnouncementModel)
+    Private _objAnnouncement As New AnnouncementModel
     Private myAnnouncementSet As New AnnouncementDBProvider
 
     Sub New()
@@ -21,6 +22,16 @@ Public Class AnnouncementListViewModel
         Set(value As ObservableCollection(Of AnnouncementModel))
             _objAnnouncementset = value
             NotifyPropertyChanged("ObjectAnnouncementSet")
+        End Set
+    End Property
+
+    Public Property ObjectAnnouncement As AnnouncementModel
+        Get
+            Return _objAnnouncement
+        End Get
+        Set(value As AnnouncementModel)
+            _objAnnouncement = value
+            NotifyPropertyChanged("ObjectAnnouncement")
         End Set
     End Property
 

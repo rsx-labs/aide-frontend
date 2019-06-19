@@ -287,6 +287,10 @@
     <Compile Include="View\MenuPage\AnnouncementDashboard\AnnouncementDashboardAddPage.xaml.vb">
       <DependentUpon>AnnouncementDashboardAddPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MenuPage\AnnouncementDashboard\AnnouncementDashboardUpdatePage.xaml.vb">
+      <DependentUpon>AnnouncementDashboardUpdatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\AnnouncementDashboard\RichTextBoxHelper.vb" />
     <Compile Include="View\MenuPage\Assets\AssetsAddPage.xaml.vb">
       <DependentUpon>AssetsAddPage.xaml</DependentUpon>
     </Compile>
@@ -503,6 +507,10 @@
     <Page Include="View\MenuPage\AnnouncementDashboard\AnnouncementDashboardAddPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\AnnouncementDashboard\AnnouncementDashboardUpdatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MenuPage\Assets\AssetsAddPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -991,6 +999,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Buttons\" />
+    <Folder Include="View\Extras\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\fujitsu.jpg" />
@@ -1283,6 +1292,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Menu\TaskComplete2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\minimized.png" />
+    <Resource Include="Assets\Button\minimizedclick.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -13,7 +13,8 @@ Public Class AnnouncementDBProvider
     End Function
 
     Public Function _setlistofitems(ByRef announce As Announcements)
-        Dim _myAnnouncementSet As New myAnnouncementSet With {._empid = announce.EMP_ID, _
+        Dim _myAnnouncementSet As New myAnnouncementSet With {._announcementID = announce.ANNOUNCEMENT_ID, _
+                                                ._empid = announce.EMP_ID, _
                                                   ._message = announce.MESSAGE, _
                                                   ._title = announce.TITLE, _
                                                   ._enddate = announce.END_DATE}
@@ -25,6 +26,7 @@ Public Class AnnouncementDBProvider
 End Class
 
 Public Class myAnnouncementSet
+    Property _announcementID As Integer
     Property _empid As Integer
     Property _message As String
     Property _title As String
