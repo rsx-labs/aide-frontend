@@ -14,7 +14,7 @@ Class MainWindow
     Implements IAideServiceCallback
 
 #Region "Fields"
-    Public email As String '= "j.sanchez@ph.fujitsu.com"
+    Public email As String = "c.lim@ph.fujitsu.com"
     Private departmentID As Integer
     Private empID As Integer
     Private permission As Integer
@@ -106,10 +106,10 @@ Class MainWindow
         InitializeComponent()
         InitializeService()
         getTime()
-        CheckOutlook()
+        'CheckOutlook()
         MsgBox("Welcome " & email, MsgBoxStyle.Information, "AIDE")
         SetEmployeeData()
-        attendance()
+        'attendance()
         LoadSideBar()
         PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
         SubMenuFrame.Navigate(New BlankSubMenu())
@@ -157,7 +157,7 @@ Class MainWindow
 
     Public Sub LoadSideBar()
         AttendanceFrame.Navigate(New AttendanceDashBoard(PagesFrame, profile))
-        CommendationFrame.Navigate(New CommendationDashBoard(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, profile.Email_Address, profile))
+        CommendationFrame.Navigate(New CommendationDashBoard(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, profile.Email_Address, profile, CommendationFrame))
         ComcellClockFrame.Navigate(New ComcellClockPage(profile, ComcellClockFrame, Me))
     End Sub
 

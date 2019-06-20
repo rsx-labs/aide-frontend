@@ -62,7 +62,7 @@ Public Class AssetsInventoryAddPage
         LoadData()
         AssignEvents()
         PopulateComboBoxAssetID()
-        ListOfManagers()
+        'ListOfManagers()
         ListOfAssetType()
         ListOfAssetManufacturer()
     End Sub
@@ -355,9 +355,9 @@ Public Class AssetsInventoryAddPage
         cbStatus.Tag = assetsModel.STATUS
         cbStatus.SelectedIndex = assetsModel.STATUS - 1
         cbAssetID.SelectedValue = assetsModel.ASSET_ID
-        cbNickname.Visibility = Windows.Visibility.Collapsed
-        txtAssignedTo.Visibility = Windows.Visibility.Visible
-        txtAssignedTo.Text = assetsModel.FULL_NAME
+        'cbNickname.Visibility = Windows.Visibility.Collapsed
+        'txtAssignedTo.Visibility = Windows.Visibility.Visible
+        cbNickname.Text = assetsModel.FULL_NAME
         txtComments.Text = assetsModel.COMMENTS
         dateInput.Text = assetsModel.DATE_PURCHASED
 
@@ -406,8 +406,16 @@ Public Class AssetsInventoryAddPage
                 Else ' Manager
                     If cbStatus.SelectedIndex = 1 Then ' Assigned
                         ListOfAllUser()
+                        'txtAssignedToBorder.Visibility = Windows.Visibility.Visible
+                        'txtAssignedTo.Visibility = Windows.Visibility.Visible
+                        'txtlabelAssignedto.Visibility = Windows.Visibility.Visible
+                        'cbNickname.Visibility = Windows.Visibility.Collapsed
                     Else ' Unassigned
                         ListOfManagers()
+                        'txtAssignedToBorder.Visibility = Windows.Visibility.Collapsed
+                        'txtAssignedTo.Visibility = Windows.Visibility.Collapsed
+                        'txtlabelAssignedto.Visibility = Windows.Visibility.Collapsed
+                        'cbNickname.Visibility = Windows.Visibility.Visible
                     End If
                 End If
             End If

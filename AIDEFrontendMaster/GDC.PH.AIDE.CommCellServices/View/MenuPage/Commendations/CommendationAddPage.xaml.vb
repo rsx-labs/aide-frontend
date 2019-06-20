@@ -18,13 +18,16 @@ Class CommendationAddPage
     Private empID As Integer
     Private position As String
     Private totalCount As Integer
+    Private email As String
+    Private commendFrame As Frame
+    Private profiles As Profile
     'Private srmodel As SuccessRegisterModel
 
 #End Region
 
 #Region "Constructor"
     'Add Commendation
-    Public Sub New(_mainFrame As Frame, _position As String, _empID As Integer, _addFrame As Frame, _menuGrid As Grid, _subMenuFrame As Frame)
+    Public Sub New(_mainFrame As Frame, _position As String, _empID As Integer, _addFrame As Frame, _menuGrid As Grid, _subMenuFrame As Frame, _email As String, _profile As Profile, _commendFrame As Frame)
 
         InitializeComponent()
         Me.empID = _empID
@@ -33,6 +36,9 @@ Class CommendationAddPage
         Me._menugrid = _menuGrid
         Me._submenuframe = _subMenuFrame
         Me.position = _position
+        Me.profiles = _profile
+        Me.commendFrame = _commendFrame
+        Me.email = _email
         btnCommendationCreate.Visibility = System.Windows.Visibility.Visible
         tbSuccessForm.Text = "Create Commendation"
         txtCommendationID.Visibility = Windows.Visibility.Hidden
@@ -97,6 +103,7 @@ Class CommendationAddPage
                 comm.DEPT_ID = empID
                 client.InsertCommendations(comm)
                 'mainFrame.Navigate(New HomePage(mainFrame, position, empID, _addframe, _menugrid, _submenuframe, _))
+                commendFrame.Navigate(New CommendationDashBoard(mainFrame, Me.position, Me.empID, _addframe, _menugrid, _submenuframe, Me.profiles.Email_Address, Me.profiles, commendFrame))
                 mainFrame.IsEnabled = True
                 mainFrame.Opacity = 1
                 _menugrid.IsEnabled = True
@@ -273,4 +280,16 @@ Class CommendationAddPage
 
     End Sub
 #End Region
+
+    Private Sub txtCommendationReason_TextChanged(sender As Object, e As TextChangedEventArgs)
+
+    End Sub
+
+    Private Sub txtCommendationReason_KeyDown(sender As Object, e As KeyEventArgs)
+        Dim textRange As New TextRange(txtCommendationReason.Document.ContentStart, txtCommendationReason.Document.ContentEnd)
+        If textRange.Text.Length >= 10 Then
+            e.Handled = False
+
+        End If
+    End Sub
 End Class

@@ -25,6 +25,7 @@ Class CommendationDashBoard
     Private isEmpty As Boolean
     Private position As String
     Private empID As Integer
+    Private commendFrame As Frame
     Private month As Integer = Date.Now.Month
     Private year As Integer = Date.Now.Year
     Private displayMonth As String
@@ -47,7 +48,8 @@ Class CommendationDashBoard
 
 #Region "Constructor"
 
-    Public Sub New(mainFrame As Frame, _position As String, _empID As Integer, _addFrame As Frame, _menuGrid As Grid, _subMenuFrame As Frame, _email As String, _profile As Profile)
+    Public Sub New(mainFrame As Frame, _position As String, _empID As Integer,
+                   _addFrame As Frame, _menuGrid As Grid, _subMenuFrame As Frame, _email As String, _profile As Profile, _commendFrame As Frame)
 
         InitializeComponent()
         Me.position = _position
@@ -56,6 +58,7 @@ Class CommendationDashBoard
         Me._addframe = _addFrame
         Me._menugrid = _menuGrid
         Me._submenuframe = _subMenuFrame
+        Me.commendFrame = _commendFrame
         Me.email = _email
         Me.profile = _profile
         SetButtonCreateVisible()
@@ -175,7 +178,7 @@ Class CommendationDashBoard
 #End Region
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
-        _addframe.Navigate(New CommendationAddPage(mainFrame, position, empID, _addframe, _menugrid, _submenuframe))
+        _addframe.Navigate(New CommendationAddPage(mainFrame, position, empID, _addframe, _menugrid, _submenuframe, Me.email, Me.profile, Me.commendFrame))
         mainFrame.IsEnabled = False
         mainFrame.Opacity = 0.3
         _menugrid.IsEnabled = False
@@ -223,7 +226,8 @@ Class CommendationDashBoard
                         commmendationList.SentBy = _comm.SentBy
                     End If
                 Next
-                _addframe.Navigate(New CommendationViewPage(commmendationList, mainFrame, position, empID, _addframe, _menugrid, _submenuframe))
+                '_addframe.Navigate(New CommendationViewPage(commmendationList, mainFrame, position, empID, _addframe, _menugrid, _submenuframe))
+                _addframe.Navigate(New CommendationUpdatePage(commmendationList, mainFrame, position, empID, _addframe, _menugrid, _submenuframe, Me.profile.Permission, Me.commendFrame, Me.profile))
                 mainFrame.IsEnabled = False
                 mainFrame.Opacity = 0.3
                 _menugrid.IsEnabled = False

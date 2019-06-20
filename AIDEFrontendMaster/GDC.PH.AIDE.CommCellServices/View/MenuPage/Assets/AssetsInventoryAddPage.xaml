@@ -1245,7 +1245,7 @@
                             </TextBlock>
                         </Grid>
                         <Grid Grid.Row="3">
-                            <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbNickname" Margin="5,5,0,5" IsReadOnly="True" VerticalContentAlignment="Center"
+                            <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbNickname" Margin="5,5,0,5" IsReadOnly="True" VerticalContentAlignment="Center" IsEditable="True"
                           SelectedValuePath="Emp_ID" DisplayMemberPath="Nick_Name" ItemsSource="{Binding NicknameList}"/>
                             <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select employee" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
@@ -1271,7 +1271,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                            <!--<Border x:Name="txtAssignedToBorder" Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
                                 <TextBox x:Name="txtAssignedTo" IsReadOnly="True" TextWrapping="Wrap" Template="{DynamicResource TextBoxBaseControlTemplate}"
                              MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Collapsed"/>
@@ -1288,7 +1288,7 @@
                                         </Style.Triggers>
                                     </Style>
                                 </TextBlock.Style>
-                            </TextBlock>
+                            </TextBlock>-->
 
                         </Grid>
                         <Grid Grid.Row="4">

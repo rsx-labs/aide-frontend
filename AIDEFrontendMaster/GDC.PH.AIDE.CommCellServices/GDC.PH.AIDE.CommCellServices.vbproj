@@ -357,6 +357,9 @@
     <Compile Include="View\MenuPage\Commendations\CommendationListPage.xaml.vb">
       <DependentUpon>CommendationListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MenuPage\Commendations\CommendationUpdatePage.xaml.vb">
+      <DependentUpon>CommendationUpdatePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MenuPage\Commendations\CommendationViewPage.xaml.vb">
       <DependentUpon>CommendationViewPage.xaml</DependentUpon>
     </Compile>
@@ -597,6 +600,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MenuPage\Commendations\CommendationListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\Commendations\CommendationUpdatePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

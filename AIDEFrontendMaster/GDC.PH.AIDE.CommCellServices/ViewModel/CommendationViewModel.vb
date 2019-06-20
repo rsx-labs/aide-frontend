@@ -10,11 +10,13 @@ Imports UI_AIDE_CommCellServices
 ''' <remarks></remarks>
 Public Class CommendationViewModel
     Implements INotifyPropertyChanged
-
-    Public _commendationList As New ObservableCollection(Of CommendationModel)
+    Public _commendationModel As CommendationModel
+    Public _commendationList As ObservableCollection(Of CommendationModel)
     Private client As AideServiceClient
 
     Sub New()
+        _commendationList = New ObservableCollection(Of CommendationModel)
+        _commendationModel = New CommendationModel
     End Sub
 
     Public Property CommendationList As ObservableCollection(Of CommendationModel)
@@ -24,6 +26,16 @@ Public Class CommendationViewModel
         Set(value As ObservableCollection(Of CommendationModel))
             _commendationList = value
             NotifyPropertyChanged("CommendationList")
+        End Set
+    End Property
+
+    Public Property Commendation_Model As CommendationModel
+        Get
+            Return _commendationModel
+        End Get
+        Set(value As CommendationModel)
+            _commendationModel = value
+            NotifyPropertyChanged("Commendation_Model")
         End Set
     End Property
 

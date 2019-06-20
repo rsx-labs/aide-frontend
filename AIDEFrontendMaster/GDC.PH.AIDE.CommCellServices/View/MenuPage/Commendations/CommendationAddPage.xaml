@@ -1050,7 +1050,7 @@
                     <Grid Grid.Row="0">
                         <Border Margin="5,10,10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
-                            <RichTextBox Margin="5,10" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" x:Name="txtCommendationReason">
+                            <RichTextBox KeyDown="txtCommendationReason_KeyDown" TextChanged="txtCommendationReason_TextChanged" Margin="5,10" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" x:Name="txtCommendationReason">
                                 <FlowDocument>
                                     <Paragraph>
                                         <Run Name="txtRunName" Text=""/>
