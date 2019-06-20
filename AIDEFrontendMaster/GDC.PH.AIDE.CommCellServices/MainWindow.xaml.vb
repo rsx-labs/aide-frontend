@@ -14,7 +14,7 @@ Class MainWindow
     Implements IAideServiceCallback
 
 #Region "Fields"
-    Public email As String = "c.lim@ph.fujitsu.com"
+    Public email As String = "r.collado@ph.fujitsu.com"
     Private departmentID As Integer
     Private empID As Integer
     Private permission As Integer
@@ -104,22 +104,22 @@ Class MainWindow
 #Region "Constructors"
     Public Sub New()
         InitializeComponent()
-        InitializeService()
-        getTime()
         CheckOutlook()
-        MsgBox("Welcome " & email, MsgBoxStyle.Information, "AIDE")
-        SetEmployeeData()
-        attendance()
-        LoadSideBar()
-        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
-        SubMenuFrame.Navigate(New BlankSubMenu())
+        LoadData()
     End Sub
 
     Public Sub New(_email As String)
         InitializeComponent()
+        email = _email
+        LoadData()
+    End Sub
+#End Region
+
+#Region "Common Methods"
+
+    Private Sub LoadData()
         InitializeService()
         getTime()
-        email = _email
         MsgBox("Welcome " & email, MsgBoxStyle.Information, "AIDE")
         SetEmployeeData()
         attendance()
@@ -127,9 +127,6 @@ Class MainWindow
         PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
         SubMenuFrame.Navigate(New BlankSubMenu())
     End Sub
-#End Region
-
-#Region "Common Methods"
 
     Public Function CheckOutlook() As Boolean
         Try

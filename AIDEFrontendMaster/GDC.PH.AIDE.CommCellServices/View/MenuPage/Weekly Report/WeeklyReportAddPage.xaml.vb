@@ -628,7 +628,7 @@ Class WeeklyReportAddPage
             Return False
         End If
 
-        If dpCompletedDate.Text IsNot String.Empty And txtRefID.Text = String.Empty And dpTargetDate.Text = String.Empty Then
+        If dpCompletedDate.Text IsNot String.Empty And txtRefID.Text IsNot String.Empty And dpTargetDate.Text = String.Empty Then
             MsgBox("Please enter Target Date", MsgBoxStyle.Critical, "AIDE")
             dpTargetDate.Focus()
             Return False
