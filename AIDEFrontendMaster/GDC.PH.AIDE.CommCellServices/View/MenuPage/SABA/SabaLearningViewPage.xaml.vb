@@ -52,11 +52,12 @@ Class SabaLearningViewPage
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
         Me.profile = _profile
+        Me.empID = profile.Emp_ID
         SetData()
         Me.DataContext = SabaLearningListVM
         Me.courseTitle.Text = sabacoursemodel.TITLE
         Me.saba_id = sabacoursemodel.SABA_ID
-        Me.empID = profile.Emp_ID
+
         LoadPieChartData()
         CheckCourseUpdated()
         BindModel(_sabacoursemodel, profile.Emp_ID)
