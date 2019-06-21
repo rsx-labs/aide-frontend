@@ -1184,10 +1184,7 @@
                             </TextBlock>
                         </Grid>
                         <Grid Grid.Row="1">
-                            <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbStatus" Margin="5,5,0,5" IsReadOnly="True" VerticalContentAlignment="Center">
-                                <ComboBoxItem Tag="1">Unassigned</ComboBoxItem>
-                                <ComboBoxItem Tag="2">Assigned</ComboBoxItem>
-                            </ComboBox>
+                            <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbStatus" Margin="5,5,0,5" IsReadOnly="True" VerticalContentAlignment="Center"/>
                             <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select asset status" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -1245,9 +1242,9 @@
                             </TextBlock>
                         </Grid>
                         <Grid Grid.Row="3">
-                            <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbNickname" Margin="5,5,0,5" IsReadOnly="True" VerticalContentAlignment="Center" IsEditable="True"
+                            <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbNickname" Margin="5,5,0,5" IsReadOnly="True" VerticalContentAlignment="Center"
                           SelectedValuePath="Emp_ID" DisplayMemberPath="Nick_Name" ItemsSource="{Binding NicknameList}"/>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select employee" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock x:Name="txtEmpName" FontSize="12" IsHitTestVisible="False" Text="Select employee" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1264,14 +1261,14 @@
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=cbNickname}" Value="">
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtEmpName}" Value="">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <!--<Border x:Name="txtAssignedToBorder" Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                            <!--<Border  Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
                                 <TextBox x:Name="txtAssignedTo" IsReadOnly="True" TextWrapping="Wrap" Template="{DynamicResource TextBoxBaseControlTemplate}"
                              MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Collapsed"/>

@@ -60,6 +60,7 @@ Public Class AssetsInventoryAddPage
         tbSuccessForm.Text = "Update Assigned Assets"
         Me.pageDefinition = "Update"
         LoadData()
+        LoadStatus()
         AssignEvents()
         PopulateComboBoxAssetID()
         'ListOfManagers()
@@ -82,13 +83,13 @@ Public Class AssetsInventoryAddPage
                 assets.EMP_ID = Integer.Parse(txtEmpID.Text)
                 assets.ASSET_ID = Integer.Parse(txtID.Text)
                 assets.DATE_ASSIGNED = Date.Parse(dateInput.SelectedDate)
-                assets.STATUS = cbStatus.SelectedIndex + 1
                 assets.COMMENTS = txtComments.Text
-                assets.ASSET_DESC = cbAssetType.Text
-                assets.MANUFACTURER = cbAssetManufacturer.Text
+                assets.ASSET_DESC = txtAssetType.Text
+                assets.MANUFACTURER = txtAssetManufacturer.Text
                 assets.MODEL_NO = txtModel.Text
                 assets.SERIAL_NO = txtSerial.Text
                 assets.ASSET_TAG = txtAssetTag.Text
+                assets.STATUS = cbStatus.SelectedValue
                 assets.ASSIGNED_TO = 999 'USED JUST TO BE NOT NULL
 
                 If profile.Permission = "Manager" AndAlso profile.Emp_ID = assets.EMP_ID Then
@@ -312,6 +313,13 @@ Public Class AssetsInventoryAddPage
         dateInput.Text = String.Empty
     End Sub
 
+    Public Sub LoadStatus()
+        cbStatus.DisplayMemberPath = "Text"
+        cbStatus.SelectedValuePath = "Value"
+        cbStatus.Items.Add(New With {.Text = "Unassigned", .Value = 1})
+        cbStatus.Items.Add(New With {.Text = "Assigned", .Value = 2})
+    End Sub
+
     Private Sub LoadData()
 
         If fromPage = "Update" Then
@@ -355,9 +363,7 @@ Public Class AssetsInventoryAddPage
         cbStatus.Tag = assetsModel.STATUS
         cbStatus.SelectedIndex = assetsModel.STATUS - 1
         cbAssetID.SelectedValue = assetsModel.ASSET_ID
-        'cbNickname.Visibility = Windows.Visibility.Collapsed
-        'txtAssignedTo.Visibility = Windows.Visibility.Visible
-        cbNickname.Text = assetsModel.FULL_NAME
+        txtEmpName.Text = assetsModel.FULL_NAME
         txtComments.Text = assetsModel.COMMENTS
         dateInput.Text = assetsModel.DATE_PURCHASED
 

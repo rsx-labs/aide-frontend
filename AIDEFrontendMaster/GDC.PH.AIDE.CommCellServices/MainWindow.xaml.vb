@@ -18,6 +18,7 @@ Class MainWindow
     Private departmentID As Integer
     Private empID As Integer
     Private permission As Integer
+    Private objMutex As System.Threading.Mutex
 
     Dim profileDBProvider As New ProfileDBProvider
     Dim profileViewModel As New ProfileViewModel
@@ -103,6 +104,7 @@ Class MainWindow
 
 #Region "Constructors"
     Public Sub New()
+        LoadOnce()
         InitializeComponent()
         InitializeService()
         getTime()
@@ -286,9 +288,23 @@ Class MainWindow
                                                                                                              End Function, Me.Dispatcher)
         DateTxt.Text = Date.Now.ToLongDateString
     End Sub
+
     Private Sub dispatcherTimer_Tick()
         TimeTxt.Text = Date.Now.ToShortTimeString
         DateTxt.Text = Date.Now.ToLongDateString
+    End Sub
+
+    Private Sub LoadOnce()
+        'Check to prevent running twice
+        objMutex = New System.Threading.Mutex(False, "AIDE")
+        If objMutex.WaitOne(0, False) = False Then
+            objMutex.Close()
+            objMutex = Nothing
+            Me.Focus()
+            Me.Topmost = True
+            MessageBox.Show("Another instance of AIDE is already running!")
+            End
+        End If
     End Sub
 
 #End Region
@@ -327,13 +343,17 @@ Class MainWindow
         SubMenuFrame.Navigate(New ImproveSubMenuPage(PagesFrame, email, profile, AddFrame, MenuGrid, SubMenuFrame))
     End Sub
 
-    'Private Sub WorkPlaceBtn_Click(sender As Object, e As RoutedEventArgs) Handles WorkPlaceBtn.Click
+    Private Sub WorkPlaceBtn_Click(sender As Object, e As RoutedEventArgs) Handles WorkPlaceBtn.Click
+        LoadSideBar()
+        PagesFrame.Navigate(New AuditSchedMainPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
+        SubMenuFrame.Navigate(New AuditSchedSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
+    End Sub
+
+    'Private Sub HomeBtn_Click(sender As Object, e As RoutedEventArgs) Handles HomeBtn.Click
     '    LoadSideBar()
-    '    PagesFrame.Navigate(New AuditSchedMainPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
-    '    SubMenuFrame.Navigate(New AuditSchedSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
+    '    PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
+    '    SubMenuFrame.Navigate(New BlankSubMenu())
     'End Sub
-
-
 
     Private Sub ExitBtn_Click(sender As Object, e As RoutedEventArgs)
         If MsgBox("Are you sure to quit?", vbInformation + MsgBoxStyle.YesNo, "AIDE") = vbYes Then

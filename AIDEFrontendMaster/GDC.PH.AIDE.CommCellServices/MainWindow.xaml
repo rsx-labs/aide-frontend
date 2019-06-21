@@ -110,7 +110,7 @@
                                 <ColumnDefinition Width="20*"/>
                                 <ColumnDefinition Width="20*"/>
                             </Grid.ColumnDefinitions>
-                            <Button Name="WorkplaceBtn" Margin="2" Grid.Column="0" Style="{DynamicResource RoundCorner}" >
+                            <Button Name="WorkPlaceBtn" Margin="2" Grid.Column="0" Style="{DynamicResource RoundCorner}" >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="30*"/>
