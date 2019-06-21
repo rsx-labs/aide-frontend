@@ -182,10 +182,12 @@
     <Compile Include="DataProviderService\EmployeeProvider1.vb" />
     <Compile Include="DataProviderService\LateDBProvider.vb" />
     <Compile Include="DataProviderService\LessonLearntDBProvider.vb" />
+    <Compile Include="DataProviderService\MailConfigDBProvider.vb" />
     <Compile Include="DataProviderService\ProfileDBProvider.vb" />
     <Compile Include="DataProviderService\ProjectDBProvider.vb" />
     <Compile Include="DataProviderService\ResourcePlannerDBProvider.vb" />
     <Compile Include="DataProviderService\SabaLearningDBProvider.vb" />
+    <Compile Include="DataProviderService\SendCodeDBProvider.vb" />
     <Compile Include="DataProviderService\SkillsDBProvider.vb" />
     <Compile Include="DataProviderService\SuccessRegisterDBProvider.vb" />
     <Compile Include="DataProviderService\TaskDBProvider.vb" />
@@ -213,10 +215,12 @@
     <Compile Include="Model\EmployeeModel.vb" />
     <Compile Include="Model\LateModel.vb" />
     <Compile Include="Model\LessonLearntModel.vb" />
+    <Compile Include="Model\MailConfigModel.vb" />
     <Compile Include="Model\ProfileModel.vb" />
     <Compile Include="Model\ProjectModel.vb" />
     <Compile Include="Model\ResourcePlannerModel.vb" />
     <Compile Include="Model\SabaLearningModel.vb" />
+    <Compile Include="Model\SendCodeModel.vb" />
     <Compile Include="Model\SkillsModel.vb" />
     <Compile Include="Model\SuccessRegisterModel.vb" />
     <Compile Include="Model\TasksModel.vb" />
@@ -246,10 +250,12 @@
     <Compile Include="ViewModel\ContactListViewModel.vb" />
     <Compile Include="ViewModel\EmployeeListViewModel.vb" />
     <Compile Include="ViewModel\LessonLearntViewModel.vb" />
+    <Compile Include="ViewModel\MailConfigViewModel.vb" />
     <Compile Include="ViewModel\ProfileViewModel.vb" />
     <Compile Include="ViewModel\ProjectViewModel.vb" />
     <Compile Include="ViewModel\ResourcePlannerViewModel.vb" />
     <Compile Include="ViewModel\SabaLearningViewModel.vb" />
+    <Compile Include="ViewModel\SendCodeViewModel.vb" />
     <Compile Include="ViewModel\SkillsViewModel.vb" />
     <Compile Include="ViewModel\SuccessRegisterViewModel.vb" />
     <Compile Include="ViewModel\TasksSpViewModel.vb" />
@@ -440,6 +446,15 @@
     </Compile>
     <Compile Include="View\Notifications\Birthday\Birthday.xaml.vb">
       <DependentUpon>Birthday.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Notifications\Email\AddEmailPage.xaml.vb">
+      <DependentUpon>AddEmailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Notifications\Email\AddEmailWindow.xaml.vb">
+      <DependentUpon>AddEmailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Notifications\Email\EmailCodeRequest.xaml.vb">
+      <DependentUpon>EmailCodeRequest.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SubMenuPage\AssetsSubMenuPage.xaml.vb">
       <DependentUpon>AssetsSubMenuPage.xaml</DependentUpon>
@@ -714,6 +729,18 @@
     <Page Include="View\Notifications\Birthday\Birthday.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Notifications\Email\AddEmailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Notifications\Email\AddEmailWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Notifications\Email\EmailCodeRequest.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\SubMenuPage\AssetsSubMenuPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -1303,6 +1330,9 @@
   <ItemGroup>
     <Resource Include="Assets\Button\minimized.png" />
     <Resource Include="Assets\Button\minimizedclick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Menu\Mail.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

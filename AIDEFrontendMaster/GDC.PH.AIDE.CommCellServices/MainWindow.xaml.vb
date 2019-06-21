@@ -14,7 +14,7 @@ Class MainWindow
     Implements IAideServiceCallback
 
 #Region "Fields"
-    Public email As String '= "j.sanchez@ph.fujitsu.com"
+    Public email As String '= "c.lim@ph.fujitsu.com"
     Private departmentID As Integer
     Private empID As Integer
     Private permission As Integer
@@ -145,12 +145,12 @@ Class MainWindow
             If MsgBox("Please login to Outlook", MsgBoxStyle.Critical + vbYesNo, "AIDE") = vbYes Then
                 Environment.Exit(0)
                 Return Nothing
-                'Else
-                '    Dim addwindow As New AddEmailWindow()
-                '    addwindow.ShowDialog()
-                '    email = addwindow.GetEmail
+            Else
+                Dim addwindow As New AddEmailWindow()
+                addwindow.ShowDialog()
+                email = addwindow.GetEmail
 
-                '    Return True
+                Return True
             End If
         End Try
     End Function
@@ -333,9 +333,7 @@ Class MainWindow
     '    SubMenuFrame.Navigate(New AuditSchedSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
     'End Sub
 
-    Private Sub HomeBtn_Click(sender As Object, e As RoutedEventArgs) Handles HomeBtn.Click
-        
-    End Sub
+
 
     Private Sub ExitBtn_Click(sender As Object, e As RoutedEventArgs)
         If MsgBox("Are you sure to quit?", vbInformation + MsgBoxStyle.YesNo, "AIDE") = vbYes Then

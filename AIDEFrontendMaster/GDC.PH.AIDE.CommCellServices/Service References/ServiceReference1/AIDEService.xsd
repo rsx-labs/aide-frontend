@@ -248,6 +248,29 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfAuditSched" nillable="true" type="tns:ArrayOfAuditSched" />
+  <xs:complexType name="SendCode">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Work_Email" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SendCode" nillable="true" type="tns:SendCode" />
+  <xs:complexType name="MailConfig">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Body" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnableSSL" type="xs:int" />
+      <xs:element minOccurs="0" name="Host" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PasswordExpiry" type="xs:int" />
+      <xs:element minOccurs="0" name="Port" type="xs:int" />
+      <xs:element minOccurs="0" name="SenderEmail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SenderPassword" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Timeout" type="xs:int" />
+      <xs:element minOccurs="0" name="UseDfltCredentials" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MailConfig" nillable="true" type="tns:MailConfig" />
   <xs:complexType name="SuccessRegister">
     <xs:sequence>
       <xs:element minOccurs="0" name="AdditionalInformation" nillable="true" type="xs:string" />

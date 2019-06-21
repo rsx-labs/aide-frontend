@@ -2375,6 +2375,276 @@ Namespace ServiceReference1
     
     <System.Diagnostics.DebuggerStepThroughAttribute(),  _
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="SendCode", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
+     System.SerializableAttribute()>  _
+    Partial Public Class SendCode
+        Inherits Object
+        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+        
+        <System.NonSerializedAttribute()>  _
+        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FNameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private LNameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private Work_EmailField As String
+        
+        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
+        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
+            Get
+                Return Me.extensionDataField
+            End Get
+            Set
+                Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FName() As String
+            Get
+                Return Me.FNameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FNameField, value) <> true) Then
+                    Me.FNameField = value
+                    Me.RaisePropertyChanged("FName")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property LName() As String
+            Get
+                Return Me.LNameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.LNameField, value) <> true) Then
+                    Me.LNameField = value
+                    Me.RaisePropertyChanged("LName")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Work_Email() As String
+            Get
+                Return Me.Work_EmailField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.Work_EmailField, value) <> true) Then
+                    Me.Work_EmailField = value
+                    Me.RaisePropertyChanged("Work_Email")
+                End If
+            End Set
+        End Property
+        
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        
+        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
+            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
+            If (Not (propertyChanged) Is Nothing) Then
+                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
+            End If
+        End Sub
+    End Class
+    
+    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="MailConfig", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
+     System.SerializableAttribute()>  _
+    Partial Public Class MailConfig
+        Inherits Object
+        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+        
+        <System.NonSerializedAttribute()>  _
+        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private BodyField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private EnableSSLField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private HostField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private PasswordExpiryField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private PortField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SenderEmailField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SenderPasswordField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SubjectField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private TimeoutField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private UseDfltCredentialsField As Integer
+        
+        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
+        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
+            Get
+                Return Me.extensionDataField
+            End Get
+            Set
+                Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Body() As String
+            Get
+                Return Me.BodyField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.BodyField, value) <> true) Then
+                    Me.BodyField = value
+                    Me.RaisePropertyChanged("Body")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property EnableSSL() As Integer
+            Get
+                Return Me.EnableSSLField
+            End Get
+            Set
+                If (Me.EnableSSLField.Equals(value) <> true) Then
+                    Me.EnableSSLField = value
+                    Me.RaisePropertyChanged("EnableSSL")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Host() As String
+            Get
+                Return Me.HostField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.HostField, value) <> true) Then
+                    Me.HostField = value
+                    Me.RaisePropertyChanged("Host")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property PasswordExpiry() As Integer
+            Get
+                Return Me.PasswordExpiryField
+            End Get
+            Set
+                If (Me.PasswordExpiryField.Equals(value) <> true) Then
+                    Me.PasswordExpiryField = value
+                    Me.RaisePropertyChanged("PasswordExpiry")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Port() As Integer
+            Get
+                Return Me.PortField
+            End Get
+            Set
+                If (Me.PortField.Equals(value) <> true) Then
+                    Me.PortField = value
+                    Me.RaisePropertyChanged("Port")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SenderEmail() As String
+            Get
+                Return Me.SenderEmailField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SenderEmailField, value) <> true) Then
+                    Me.SenderEmailField = value
+                    Me.RaisePropertyChanged("SenderEmail")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SenderPassword() As String
+            Get
+                Return Me.SenderPasswordField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SenderPasswordField, value) <> true) Then
+                    Me.SenderPasswordField = value
+                    Me.RaisePropertyChanged("SenderPassword")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Subject() As String
+            Get
+                Return Me.SubjectField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SubjectField, value) <> true) Then
+                    Me.SubjectField = value
+                    Me.RaisePropertyChanged("Subject")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Timeout() As Integer
+            Get
+                Return Me.TimeoutField
+            End Get
+            Set
+                If (Me.TimeoutField.Equals(value) <> true) Then
+                    Me.TimeoutField = value
+                    Me.RaisePropertyChanged("Timeout")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property UseDfltCredentials() As Integer
+            Get
+                Return Me.UseDfltCredentialsField
+            End Get
+            Set
+                If (Me.UseDfltCredentialsField.Equals(value) <> true) Then
+                    Me.UseDfltCredentialsField = value
+                    Me.RaisePropertyChanged("UseDfltCredentials")
+                End If
+            End Set
+        End Property
+        
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        
+        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
+            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
+            If (Not (propertyChanged) Is Nothing) Then
+                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
+            End If
+        End Sub
+    End Class
+    
+    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
      System.Runtime.Serialization.DataContractAttribute(Name:="SuccessRegister", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
      System.SerializableAttribute()>  _
     Partial Public Class SuccessRegister
@@ -7409,6 +7679,18 @@ Namespace ServiceReference1
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateAuditSched")>  _
         Function UpdateAuditSchedAsync(ByVal auditSched As ServiceReference1.AuditSched) As System.Threading.Tasks.Task
         
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWorkEmailbyEmail", ReplyAction:="http://tempuri.org/IAideService/GetWorkEmailbyEmailResponse")>  _
+        Function GetWorkEmailbyEmail(ByVal email As String) As ServiceReference1.SendCode
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWorkEmailbyEmail", ReplyAction:="http://tempuri.org/IAideService/GetWorkEmailbyEmailResponse")>  _
+        Function GetWorkEmailbyEmailAsync(ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.SendCode)
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetMailConfig", ReplyAction:="http://tempuri.org/IAideService/GetMailConfigResponse")>  _
+        Function GetMailConfig() As ServiceReference1.MailConfig
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetMailConfig", ReplyAction:="http://tempuri.org/IAideService/GetMailConfigResponse")>  _
+        Function GetMailConfigAsync() As System.Threading.Tasks.Task(Of ServiceReference1.MailConfig)
+        
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/CreateNewSuccessRegister")>  _
         Sub CreateNewSuccessRegister(ByVal success As ServiceReference1.SuccessRegister)
         
@@ -8216,6 +8498,8 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeeklyReport)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AuditSched)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AuditSched())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SendCode)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MailConfig)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Nickname())),  _
@@ -8340,6 +8624,22 @@ Namespace ServiceReference1
         
         Public Function UpdateAuditSchedAsync(ByVal auditSched As ServiceReference1.AuditSched) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateAuditSchedAsync
             Return MyBase.Channel.UpdateAuditSchedAsync(auditSched)
+        End Function
+        
+        Public Function GetWorkEmailbyEmail(ByVal email As String) As ServiceReference1.SendCode Implements ServiceReference1.IAideService.GetWorkEmailbyEmail
+            Return MyBase.Channel.GetWorkEmailbyEmail(email)
+        End Function
+        
+        Public Function GetWorkEmailbyEmailAsync(ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.SendCode) Implements ServiceReference1.IAideService.GetWorkEmailbyEmailAsync
+            Return MyBase.Channel.GetWorkEmailbyEmailAsync(email)
+        End Function
+        
+        Public Function GetMailConfig() As ServiceReference1.MailConfig Implements ServiceReference1.IAideService.GetMailConfig
+            Return MyBase.Channel.GetMailConfig
+        End Function
+        
+        Public Function GetMailConfigAsync() As System.Threading.Tasks.Task(Of ServiceReference1.MailConfig) Implements ServiceReference1.IAideService.GetMailConfigAsync
+            Return MyBase.Channel.GetMailConfigAsync
         End Function
         
         Public Sub CreateNewSuccessRegister(ByVal success As ServiceReference1.SuccessRegister) Implements ServiceReference1.IAideService.CreateNewSuccessRegister
