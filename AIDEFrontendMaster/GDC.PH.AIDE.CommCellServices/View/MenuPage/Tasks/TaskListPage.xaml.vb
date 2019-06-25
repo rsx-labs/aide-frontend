@@ -125,6 +125,23 @@ Public Class TaskListPage
     '        dialog.PrintVisual(lv_contacts, "My Canvas")
     '    End If
     'End Sub
+
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
+        SetPaging(CInt(PagingMode._Next))
+    End Sub
+
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
+        SetPaging(CInt(PagingMode._Previous))
+    End Sub
+
+    Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
+        SetPaging(CInt(PagingMode._First))
+    End Sub
+
+    Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
+        SetPaging(CInt(PagingMode._Last))
+    End Sub
+
 #End Region
 
 #Region "Functions"
@@ -281,22 +298,6 @@ Public Class TaskListPage
 
         btnPrev.IsEnabled = True
         btnNext.IsEnabled = True
-    End Sub
-
-    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Next))
-    End Sub
-
-    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Previous))
-    End Sub
-
-    Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._First))
-    End Sub
-
-    Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Last))
     End Sub
 #End Region
 

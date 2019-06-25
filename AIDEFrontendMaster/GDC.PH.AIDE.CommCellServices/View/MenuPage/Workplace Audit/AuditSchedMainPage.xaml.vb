@@ -33,7 +33,7 @@ Class AuditSchedMainPage
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 15
+    Dim pagingRecordPerPage As Integer = 10
 
     Private Enum PagingMode
         _First = 1
@@ -243,6 +243,13 @@ Class AuditSchedMainPage
         SetData()
     End Sub
 
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
+        SetPaging(CInt(PagingMode._Next))
+    End Sub
+
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
+        SetPaging(CInt(PagingMode._Previous))
+    End Sub
 #End Region
 
 #Region "INotify Methods"
@@ -267,4 +274,5 @@ Class AuditSchedMainPage
     End Sub
 #End Region
 
+    
 End Class

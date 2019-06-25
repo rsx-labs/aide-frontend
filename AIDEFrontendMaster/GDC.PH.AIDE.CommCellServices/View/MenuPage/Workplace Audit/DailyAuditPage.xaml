@@ -1038,7 +1038,7 @@
                     </Grid>
                     <Grid Grid.Column="3">
                         <ComboBox x:Name="cbYear" Margin="10" Style="{DynamicResource StyleComboBox}" />
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a day" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a week" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>

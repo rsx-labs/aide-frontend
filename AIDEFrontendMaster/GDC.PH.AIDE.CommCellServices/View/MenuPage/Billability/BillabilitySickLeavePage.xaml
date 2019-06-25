@@ -439,7 +439,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="5,10,10,10"/>
-                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Fiscal Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>
