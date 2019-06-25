@@ -60,10 +60,10 @@
                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Phase ID" Width="100" Binding="{Binding Phase}" Visibility="Hidden" />
                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="100" Binding="{Binding StatusDesc}"/>
                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status ID" Width="100" Binding="{Binding Status}"  Visibility="Hidden" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Started" Width="100" Binding="{Binding DateStarted}"/>
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Target Date" Width="100" Binding="{Binding DateTarget}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Finished" Width="100" Binding="{Binding DateFinished}" />
-                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Created" Width="100" Binding="{Binding DateCreated}" Visibility="Hidden" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Started" Width="100" Binding="{Binding DateStarted, StringFormat='MM-dd-yyyy'}"/>
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Target Date" Width="100" Binding="{Binding DateTarget, StringFormat='MM-dd-yyyy'}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Finished" Width="100" Binding="{Binding DateFinished, StringFormat='MM-dd-yyyy'}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Created" Width="100" Binding="{Binding DateCreated, StringFormat='MM-dd-yyyy'}" Visibility="Hidden" />
                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Effort Estimate (in Hrs)" Width="110" Binding="{Binding EffortEst}"/>
                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Actual Effort for the Week (in Hrs)" Width="120" Binding="{Binding ActualEffortWk}" />
                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Actual Effort (in Hrs)" Width="100" Binding="{Binding ActualEffort}" />

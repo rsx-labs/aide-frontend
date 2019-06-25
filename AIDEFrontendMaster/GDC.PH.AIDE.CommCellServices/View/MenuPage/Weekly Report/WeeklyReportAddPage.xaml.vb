@@ -390,7 +390,7 @@ Class WeeklyReportAddPage
         If lstWeeklyReportsData.Count > 0 Then
 
             Dim weeklyReport As New List(Of WeeklyReport)
-            Dim totalActualEffortWeek As Integer
+            Dim totalActualEffortWeek As Decimal
 
             Try
                 For Each reports In lstWeeklyReportsData

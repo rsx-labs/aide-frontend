@@ -26,7 +26,7 @@ Class MainWindow
     Dim aideClientService As AideServiceClient
     Dim eventStartUpId As String = ConfigurationManager.AppSettings("eventStartUpId")
     Dim eventLogInId As String = ConfigurationManager.AppSettings("eventLogInId")
-    'Dim SendCodeVM As SendCodeViewModel
+
 #End Region
 
 #Region "Property declarations"
