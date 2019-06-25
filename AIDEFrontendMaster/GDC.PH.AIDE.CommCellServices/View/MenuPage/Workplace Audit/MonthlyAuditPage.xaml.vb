@@ -1,14 +1,14 @@
 ﻿Imports System.ComponentModel
 Imports System.Collections.ObjectModel
-Class DailyAuditPage
+Class MonthlyAuditPage
 
-    Private lstQuestions() As String = {"1. Has the attendance of the team bee checked?", "2. Does the team attendance match the Daily Resource Planner in the Comm. Cell Board?", "3. Has corresponding tasks been assigned to all resources?", "4. Has the previous weekly audit been completed?"}
-    Private lstPeople() As String = {"Daily Auditor", "Daily Auditor", "Jeanette Cha", "Weekly Auditor"}
-    Private lstDates() As String = {"4/22", "4/23", "4/24", "4/25", "4/26"}
-    Private lstEmployee() As String = {"Celso", "Rose", "Weng", "Belle", "Gliff"}
-    Private lstMonths() As String = {"MON", "TUE", "WED", "THU", "FRI"}
-    Private lstNotes() As String = {"", "", "", "", ""}
-    Private dailyVMM As New dayVM
+    Private lstQuestions() As String = {"1. Has the Monthly KPI report been submitted?", "2. Has there been monthly staff meeting?", "3. Has the weekly audit been completed?"}
+    Private lstPeople() As String = {"Gigi", "Cha / Jeanette", "Weekly Auditor"}
+    Private lstDates() As String = {"2019", "2019", "2019", "2019", "2019", "2019"}
+    Private lstEmployee() As String = {"Christian", "Harvey", "Ciara", "Jester", "Erell", "Giann"}
+    Private lstMonths() As String = {"APR", "MAY", "JUN", "JUL", "AUG", "SEP"}
+    Private lstNotes() As String = {"Get everything you need to build and deploy your app on any platform. With state-of-the-art tools, the power of the cloud, training, and support, it's our most comprehensive free developer program ever. ", "", "", "", "", "Success! no discrepancies encounter on this month."}
+    Private dailyVMM As New monthlyVM
 
     Public Sub New()
 
@@ -22,16 +22,16 @@ Class DailyAuditPage
     End Sub
 
     Private Sub generateQuestions()
-        Dim questModel As New QuestionsDayModel
+        Dim questModel As New QuestionsMonthlyModel
         Dim x As Integer = 0
         For Each quest As String In lstQuestions
 
-            dailyVMM.QuestionDayList.Add(New QuestionsDayModel(quest, lstPeople(x)))
+            dailyVMM.QuestionMonthlyList.Add(New QuestionsMonthlyModel(quest, lstPeople(x)))
             x += 1
 
         Next
-        QuarterLVQuestions.ItemsSource = dailyVMM.QuestionDayList
-        DataContext = dailyVMM.QuestionDayList
+        QuarterLVQuestions.ItemsSource = dailyVMM.QuestionMonthlyList
+        DataContext = dailyVMM.QuestionMonthlyList
     End Sub
 
     Private Sub generatedata()
@@ -48,47 +48,47 @@ Class DailyAuditPage
         Dim y As Integer = 0
         For Each quest As String In lstDates
 
-            dailyVMM.Days.Add(New DayMod(lstMonths(y), quest, lstEmployee(y), lstNotes(y)))
+            dailyVMM.Monthly.Add(New MonthlyMod(lstMonths(y), quest, lstEmployee(y), lstNotes(y)))
             x += 1
             y += 1
         Next
-        QuarterLV.ItemsSource = dailyVMM.Days
-        DataContext = dailyVMM.Days
+        QuarterLV.ItemsSource = dailyVMM.Monthly
+        DataContext = dailyVMM.Monthly
     End Sub
 
 End Class
 
-Public Class dayVM
-    Private _dailyobjlst As ObservableCollection(Of DayMod)
-    Private QtnLst As ObservableCollection(Of QuestionsDayModel)
+Public Class monthlyVM
+    Private _dailyobjlst As ObservableCollection(Of MonthlyMod)
+    Private QtnLst As ObservableCollection(Of QuestionsMonthlyModel)
 
 
 
     Public Sub New()
-        _dailyobjlst = New ObservableCollection(Of DayMod)
-        QtnLst = New ObservableCollection(Of QuestionsDayModel)
+        _dailyobjlst = New ObservableCollection(Of MonthlyMod)
+        QtnLst = New ObservableCollection(Of QuestionsMonthlyModel)
     End Sub
 
-    Public Property Days As ObservableCollection(Of DayMod)
+    Public Property Monthly As ObservableCollection(Of MonthlyMod)
         Get
             Return _dailyobjlst
         End Get
-        Set(value As ObservableCollection(Of DayMod))
+        Set(value As ObservableCollection(Of MonthlyMod))
             _dailyobjlst = value
         End Set
     End Property
-    Public Property QuestionDayList As ObservableCollection(Of QuestionsDayModel)
+    Public Property QuestionMonthlyList As ObservableCollection(Of QuestionsMonthlyModel)
         Get
             Return QtnLst
         End Get
-        Set(value As ObservableCollection(Of QuestionsDayModel))
+        Set(value As ObservableCollection(Of QuestionsMonthlyModel))
             QtnLst = value
         End Set
     End Property
 End Class
 
-Public Class DayMod
-    Private _days As String
+Public Class MonthlyMod
+    Private _months As String
     Private _dates As String
     Private _empName As String
     Private _notes As String
@@ -98,8 +98,8 @@ Public Class DayMod
 
     End Sub
 
-    Public Sub New(dayss As String, datess As String, emp As String, note As String)
-        _days = dayss
+    Public Sub New(monthss As String, datess As String, emp As String, note As String)
+        _months = monthss
         _dates = datess
         _empName = emp
         If note = String.Empty Then
@@ -109,12 +109,12 @@ Public Class DayMod
         End If
 
     End Sub
-    Public Property Days As String
+    Public Property Months As String
         Get
-            Return _days
+            Return _months
         End Get
         Set(value As String)
-            _days = value
+            _months = value
         End Set
     End Property
     Public Property Dates As String
@@ -135,14 +135,14 @@ Public Class DayMod
     End Property
     Public Property Notes As String
         Get
-            Return "Note: " + _notes
+            Return "Notes : " + _notes
         End Get
         Set(value As String)
             _notes = value
         End Set
     End Property
 End Class
-Public Class QuestionsDayModel
+Public Class QuestionsMonthlyModel
     Private Qtn As String
     Private Ppl As String
     Public Sub New()
@@ -170,4 +170,3 @@ Public Class QuestionsDayModel
         End Set
     End Property
 End Class
-

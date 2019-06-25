@@ -193,6 +193,7 @@
     <Compile Include="DataProviderService\TaskDBProvider.vb" />
     <Compile Include="DataProviderService\ViewProjectProvider.vb" />
     <Compile Include="DataProviderService\WeeklyReportDBProvider.vb" />
+    <Compile Include="DataProviderService\WorkplaceAuditDBProvider.vb" />
     <Compile Include="ElementHosts\ProfileElementHost.Designer.vb">
       <DependentUpon>ProfileElementHost.vb</DependentUpon>
     </Compile>
@@ -228,6 +229,7 @@
     <Compile Include="Model\ViewProjectModel.vb" />
     <Compile Include="Model\WeeklyReportModel.vb" />
     <Compile Include="Model\WeekRangeModel.vb" />
+    <Compile Include="Model\WorkplaceAuditModel.vb" />
     <Compile Include="PaginatedObservableCollection.vb" />
     <Compile Include="RelayCommand.vb" />
     <Compile Include="Service References\ServiceReference1\Reference.vb">
@@ -263,6 +265,7 @@
     <Compile Include="ViewModel\ViewProjectViewModel.vb" />
     <Compile Include="ViewModel\WeeklyReportViewModel.vb" />
     <Compile Include="ViewModel\WeekRangeViewModel.vb" />
+    <Compile Include="ViewModel\WorkplaceAuditViewModel.vb" />
     <Compile Include="View\Charts\DoughnutChart.xaml.vb">
       <DependentUpon>DoughnutChart.xaml</DependentUpon>
     </Compile>
@@ -443,6 +446,27 @@
     </Compile>
     <Compile Include="View\MenuPage\Weekly Report\WeeklyReportUpdatePage.xaml.vb">
       <DependentUpon>WeeklyReportUpdatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Workplace Audit\AuditSchedAddPage.xaml.vb">
+      <DependentUpon>AuditSchedAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Workplace Audit\AuditSchedMainPage.xaml.vb">
+      <DependentUpon>AuditSchedMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Workplace Audit\AuditSchedSubMenuPage.xaml.vb">
+      <DependentUpon>AuditSchedSubMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Workplace Audit\DailyAuditPage.xaml.vb">
+      <DependentUpon>DailyAuditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Workplace Audit\WeeklyAuditPage.xaml.vb">
+      <DependentUpon>WeeklyAuditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Workplace Audit\MonthlyAuditPage.xaml.vb">
+      <DependentUpon>MonthlyAuditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Workplace Audit\QuarterlyAuditPage.xaml.vb">
+      <DependentUpon>QuarterlyAuditPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Notifications\Birthday\Birthday.xaml.vb">
       <DependentUpon>Birthday.xaml</DependentUpon>
@@ -723,6 +747,34 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MenuPage\Weekly Report\WeeklyReportUpdatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\Workplace Audit\AuditSchedAddPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Workplace Audit\AuditSchedMainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Workplace Audit\AuditSchedSubMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Workplace Audit\DailyAuditPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Workplace Audit\WeeklyAuditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\Workplace Audit\MonthlyAuditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\Workplace Audit\QuarterlyAuditPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1333,6 +1385,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Menu\Mail.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\checked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\Wrong.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
