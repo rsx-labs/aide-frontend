@@ -119,20 +119,24 @@ Class EmailCodeRequest
             Dim subject As String = mcVM.objectMailConfigSet.SUBJECT
             Dim body As String = mcVM.objectMailConfigSet.BODY + " " + codecombo.ToString()
 
-            Dim client As SmtpClient = New SmtpClient()
-            client.Port = mcVM.objectMailConfigSet.PORT
-            client.Host = mcVM.objectMailConfigSet.HOST
-            client.EnableSsl = CBool(mcVM.objectMailConfigSet.ENABLE_SSL)
-            client.Timeout = mcVM.objectMailConfigSet.TIMEOUT
-            client.DeliveryMethod = SmtpDeliveryMethod.Network
-            client.UseDefaultCredentials = CBool(mcVM.objectMailConfigSet.USE_DFLT_CREDENTIALS)
-            client.Credentials = New System.Net.NetworkCredential(sentFrom, mcVM.objectMailConfigSet.SENDER_PASSWORD)
+            MsgBox(mcVM.objectMailConfigSet.BODY + " " + codecombo.ToString(), MsgBoxStyle.Information, "AIDE")
 
-            Dim message As MailMessage = New MailMessage(sentTo, sentFrom, subject, body)
-            'message.BodyEncoding = UTF8Encoding.UTF8
-            'message.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
+            'Dim client As SmtpClient = New SmtpClient()
+            'client.Port = mcVM.objectMailConfigSet.PORT
+            'client.Host = mcVM.objectMailConfigSet.HOST
+            'client.EnableSsl = CBool(mcVM.objectMailConfigSet.ENABLE_SSL)
+            'client.Timeout = mcVM.objectMailConfigSet.TIMEOUT
+            'client.DeliveryMethod = SmtpDeliveryMethod.Network
+            'client.UseDefaultCredentials = CBool(mcVM.objectMailConfigSet.USE_DFLT_CREDENTIALS)
+            'client.Credentials = New System.Net.NetworkCredential(sentFrom, mcVM.objectMailConfigSet.SENDER_PASSWORD)
 
-            client.Send(message)
+            'Dim mail As MailMessage = New MailMessage()
+            'mail.From = New MailAddress(sentFrom)
+            'mail.To.Add(sentTo)
+            'mail.Subject = subject
+            'mail.Body = body
+
+            'client.Send(mail)
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try

@@ -14,7 +14,7 @@ Class MainWindow
     Implements IAideServiceCallback
 
 #Region "Fields"
-    Public email As String '= "c.lim@ph.fujitsu.com"
+    Public email As String
     Private departmentID As Integer
     Private empID As Integer
     Private permission As Integer
@@ -26,7 +26,9 @@ Class MainWindow
     Dim aideClientService As AideServiceClient
     Dim eventStartUpId As String = ConfigurationManager.AppSettings("eventStartUpId")
     Dim eventLogInId As String = ConfigurationManager.AppSettings("eventLogInId")
-
+    Dim enableOutlook As String = ConfigurationManager.AppSettings("enableOutlook")
+    Dim defaultEmail As String = ConfigurationManager.AppSettings("defaultEmail")
+    Dim machineOS As String = My.Computer.Info.OSFullName
 #End Region
 
 #Region "Property declarations"
@@ -108,10 +110,18 @@ Class MainWindow
         InitializeComponent()
         InitializeService()
         getTime()
-        CheckOutlook()
-        MsgBox("Welcome " & email, MsgBoxStyle.Information, "AIDE")
-        SetEmployeeData()
-        attendance()
+        If enableOutlook = "True" Then
+            CheckOutlook()
+            MsgBox("Welcome " & email, MsgBoxStyle.Information, "AIDE")
+            SetEmployeeData()
+            attendance()
+        Else
+            email = defaultEmail
+            MsgBox("Welcome " & email, MsgBoxStyle.Information, "AIDE")
+            SetEmployeeData()
+            attendance()
+        End If
+        
         LoadSideBar()
         PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
         SubMenuFrame.Navigate(New BlankSubMenu())
@@ -249,26 +259,25 @@ Class MainWindow
     Public Sub attendance()
         Try
             'Get Login Time
+            If machineOS.Contains("Windows 7") Then
+                eventStartUpId = "12"
+            End If
+
             Dim dateToday As Date = DateTime.Now.ToString("MM/dd/yyyy")
             Dim logName As EventLog = New EventLog()
             logName.Log = "System"
             Dim entries = logName.Entries.Cast(Of EventLogEntry)().Where(Function(x) x.InstanceId = CLng(eventStartUpId) And x.TimeWritten.Date = dateToday).[Select](Function(x) New With {x.MachineName, x.Site, x.Source, x.TimeWritten, x.InstanceId}).ToList()
+            Dim timeIn As String
 
             If entries.Count = 0 Then
-                logName.Source = "Microsoft Windows security auditing."
-                logName.Log = "Security"
-                entries = logName.Entries.Cast(Of EventLogEntry)().Where(Function(x) x.InstanceId = CLng(eventLogInId) And x.TimeWritten.Date = dateToday).[Select](Function(x) New With {x.MachineName, x.Site, x.Source, x.TimeWritten, x.InstanceId}).ToList()
+                timeIn = Date.Now
+            Else
+                timeIn = entries.First().TimeWritten.ToString
             End If
 
-            Dim timeIn As String = entries.First().TimeWritten.ToString
             Dim attendanceSummarry As New AttendanceSummary
             attendanceSummarry.EmployeeID = EmployeeID
             attendanceSummarry.TimeIn = timeIn
-
-            'Dim timeIn As String = DateTime.Now.ToString
-            'Dim attendanceSummarry As New AttendanceSummary
-            'attendanceSummarry.EmployeeID = EmployeeID
-            'attendanceSummarry.TimeIn = timeIn
 
             If attendanceSummarry.EmployeeID = 0 Then 'Service time-out needs to be handled on the service or else always restart it when it time's out
                 MsgBox("Service Time-Out! Attendance will not be Recorded!" + Environment.NewLine + "Application will Automatically Close.", MsgBoxStyle.Critical, "AIDE")
@@ -343,17 +352,17 @@ Class MainWindow
         SubMenuFrame.Navigate(New ImproveSubMenuPage(PagesFrame, email, profile, AddFrame, MenuGrid, SubMenuFrame))
     End Sub
 
-    Private Sub WorkPlaceBtn_Click(sender As Object, e As RoutedEventArgs) Handles WorkPlaceBtn.Click
-        LoadSideBar()
-        PagesFrame.Navigate(New AuditSchedMainPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
-        SubMenuFrame.Navigate(New AuditSchedSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
-    End Sub
-
-    'Private Sub HomeBtn_Click(sender As Object, e As RoutedEventArgs) Handles HomeBtn.Click
+    'Private Sub WorkPlaceBtn_Click(sender As Object, e As RoutedEventArgs) Handles WorkPlaceBtn.Click
     '    LoadSideBar()
-    '    PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
-    '    SubMenuFrame.Navigate(New BlankSubMenu())
+    '    PagesFrame.Navigate(New AuditSchedMainPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
+    '    SubMenuFrame.Navigate(New AuditSchedSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
     'End Sub
+
+    Private Sub HomeBtn_Click(sender As Object, e As RoutedEventArgs) Handles HomeBtn.Click
+        LoadSideBar()
+        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
+        SubMenuFrame.Navigate(New BlankSubMenu())
+    End Sub
 
     Private Sub ExitBtn_Click(sender As Object, e As RoutedEventArgs)
         If MsgBox("Are you sure to quit?", vbInformation + MsgBoxStyle.YesNo, "AIDE") = vbYes Then
