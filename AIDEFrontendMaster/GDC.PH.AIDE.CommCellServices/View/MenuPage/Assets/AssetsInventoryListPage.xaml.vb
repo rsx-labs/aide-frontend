@@ -8,12 +8,27 @@ Imports System.Windows.Xps.Packaging
 Imports System.Windows.Xps
 Imports System.Printing
 Imports System.Drawing.Printing
+Imports System.Data
 
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Public Class AssetsInventoryListPage
     Implements ServiceReference1.IAideServiceCallback
 
-#Region "FIELDS"
+#Region "Paging Declarations"
+    Private Enum PagingMode
+        _First = 1
+        _Next = 2
+        _Previous = 3
+        _Last = 4
+    End Enum
+
+    Dim startRowIndex As Integer
+    Dim lastRowIndex As Integer
+    Dim pagingPageIndex As Integer
+    Dim pagingRecordPerPage As Integer = 10
+#End Region
+
+#Region "Fields"
     Private frame As Frame
     Private profile As New Profile
     Private page As String
@@ -22,28 +37,13 @@ Public Class AssetsInventoryListPage
     Private _submenuframe As Frame
 
     Private _AideService As ServiceReference1.AideServiceClient
-    Dim lstAssets As Assets()
     Dim show As Boolean = True
-
-    Private Enum PagingMode
-        _First = 1
-        _Next = 2
-        _Previous = 3
-        _Last = 4
-    End Enum
-
+    Dim totalRecords As Integer
+    Dim lstAssets As Assets()
+    Dim paginatedCollection As PaginatedObservableCollection(Of AssetsModel) = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
 #End Region
 
-#Region "Paging Declarations"
-    Dim startRowIndex As Integer
-    Dim lastRowIndex As Integer
-    Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 10
-
-#End Region
-
-#Region "CONSTRUCTOR"
-
+#Region "Constructor"
     Public Sub New(_frame As Frame, _profile As Profile, addframe As Frame, menugrid As Grid, submenuframe As Frame, page As String)
 
         ' This call is required by the designer.
@@ -56,7 +56,7 @@ Public Class AssetsInventoryListPage
         Me._menugrid = menugrid
         Me._submenuframe = submenuframe
         SetUnApprovedtTabVisible()
-        SetData()
+
         If page = "Personal" Then
             SR.SelectedIndex = 0
         ElseIf page = "Update" Then
@@ -68,8 +68,234 @@ Public Class AssetsInventoryListPage
     End Sub
 #End Region
 
-#Region "EVENTS"
+#Region "Sub Procedures"
+
+    Public Sub SetUnApprovedtTabVisible()
+        If profile.Permission = "Manager" Then
+            Unapproved.Visibility = Windows.Visibility.Visible
+        End If
+    End Sub
+
+    Public Sub SetData()
+        Try
+            If InitializeService() Then
+                If SR.SelectedIndex = 0 Then
+                    lstAssets = _AideService.GetMyAssets(profile.Emp_ID)
+                    btnPrint.Visibility = Windows.Visibility.Hidden
+                ElseIf SR.SelectedIndex = 1 Then
+                    lstAssets = _AideService.GetAllAssetsInventoryByEmpID(profile.Emp_ID)
+                    btnPrint.Visibility = Windows.Visibility.Hidden
+                Else
+                    lstAssets = _AideService.GetAllAssetsInventoryUnApproved(profile.Emp_ID)
+                    btnPrint.Visibility = Windows.Visibility.Hidden
+                End If
+
+                LoadData()
+                totalRecords = lstAssets.Length
+
+                ' SetPaging(PagingMode._First)
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Public Sub LoadData()
+        Try
+            Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
+            Dim assetsDBProvider As New AssetsDBProvider
+            Dim assetsVM As New AssetsViewModel()
+
+            paginatedCollection = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
+
+            For Each objAssets As Assets In lstAssets
+                assetsDBProvider.SetAssetInventoryList(objAssets)
+            Next
+
+            For Each assets As MyAssets In assetsDBProvider.GetAssetInventoryList()
+                paginatedCollection.Add(New AssetsModel(assets))
+            Next
+
+            If SR.SelectedIndex = 0 Then
+                lv_assetInventoryListOwn.ItemsSource = paginatedCollection
+            ElseIf SR.SelectedIndex = 1 Then
+                lv_assetInventoryList.ItemsSource = paginatedCollection
+            Else
+                lv_assetInventoryListUnapproved.ItemsSource = paginatedCollection
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    'Public Sub LoadData()
+    '    Try
+    '        Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
+    '        Dim assetsDBProvider As New AssetsDBProvider
+    '        Dim assetsVM As New AssetsViewModel()
+
+    '        Dim objAssets As New Assets()
+
+    '        ' Set the MyLessonLearntList 
+    '        For i As Integer = startRowIndex To lastRowIndex
+    '            objAssets = lstAssets(i)
+    '            assetsDBProvider.SetAssetInventoryList(objAssets)
+    '        Next
+
+    '        For Each rawUser As MyAssets In assetsDBProvider.GetAssetInventoryList()
+    '            lstAssetsList.Add(New AssetsModel(rawUser))
+    '        Next
+
+    '        assetsVM.AssetInventoryList = lstAssetsList
+    '        Me.DataContext = assetsVM
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+    '    End Try
+    'End Sub
+
+    Public Sub SetDataForSearch(input As String)
+        Try
+            If InitializeService() Then
+                Dim assetsDBProvider As New AssetsDBProvider
+                'lstAssets = _AideService.GetAllAssetsInventoryBySearch(profile.Emp_ID, input, page)
+                'SetPaging(PagingMode._First)
+
+                paginatedCollection.Clear()
+                paginatedCollection.Collections.Clear()
+
+                Dim items = From i In lstAssets Where i.ASSET_DESC.ToLower.Contains(input.ToLower) Or i.MANUFACTURER.ToLower.Contains(input.ToLower) _
+                          Or i.MODEL_NO.ToLower.Contains(input.ToLower) Or i.SERIAL_NO.ToLower.Contains(input.ToLower) Or i.ASSET_TAG.ToLower.Contains(input.ToLower) _
+                          Or i.FULL_NAME.ToLower.Contains(input.ToLower)
+                Dim searchAssets = New ObservableCollection(Of Assets)(items)
+
+                For Each assets As Assets In searchAssets
+                    assetsDBProvider.SetAssetInventoryList(assets)
+                Next
+
+                For Each assets As MyAssets In assetsDBProvider.GetAssetInventoryList()
+                    paginatedCollection.Add(New AssetsModel(assets))
+                Next
+
+                totalRecords = searchAssets.Count
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            _AideService = New AideServiceClient(Context)
+            _AideService.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            _AideService.Abort()
+        End Try
+        Return bInitialize
+    End Function
+
+    Private Sub SetPaging(mode As Integer)
+        Try
+            Dim totalRecords As Integer = lstAssets.Length
+
+            Select Case mode
+                Case CInt(PagingMode._Next)
+                    ' Set the rows to be displayed if the total records is more than the (Record per Page * Page Index)
+                    If totalRecords > (pagingPageIndex * pagingRecordPerPage) Then
+
+                        ' Set the last row to be displayed if the total records is more than the (Record per Page * Page Index) + Record per Page
+                        If totalRecords >= ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) Then
+                            lastRowIndex = ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) - 1
+                        Else
+                            lastRowIndex = totalRecords - 1
+                        End If
+
+                        startRowIndex = pagingPageIndex * pagingRecordPerPage
+                        pagingPageIndex += 1
+                    Else
+                        startRowIndex = (pagingPageIndex - 1) * pagingRecordPerPage
+                        lastRowIndex = totalRecords - 1
+                    End If
+                    ' Bind data to the Data Grid
+                    LoadData()
+                    Exit Select
+                Case CInt(PagingMode._Previous)
+                    ' Set the Previous Page if the page index is greater than 1
+                    If pagingPageIndex > 1 Then
+                        pagingPageIndex -= 1
+
+                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
+                        lastRowIndex = (pagingPageIndex * pagingRecordPerPage) - 1
+                        LoadData()
+                    End If
+                    Exit Select
+                Case CInt(PagingMode._First)
+                    If totalRecords > pagingRecordPerPage Then
+                        pagingPageIndex = 2
+                        SetPaging(CInt(PagingMode._Previous))
+                    Else
+                        pagingPageIndex = 1
+                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
+
+                        If Not totalRecords = 0 Then
+                            lastRowIndex = totalRecords - 1
+                            LoadData()
+                        Else
+                            lastRowIndex = 0
+                            Me.DataContext = Nothing
+                        End If
+
+                    End If
+                    Exit Select
+                Case CInt(PagingMode._Last)
+                    pagingPageIndex = (lstAssets.Length / pagingRecordPerPage)
+                    SetPaging(CInt(PagingMode._Next))
+                    Exit Select
+            End Select
+
+            DisplayPagingInfo()
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Private Sub DisplayPagingInfo()
+        Dim pagingInfo As String
+
+        ' If there has no data found
+        If lstAssets.Length = 0 Then
+            pagingInfo = "No Results Found "
+            GUISettingsOff()
+        Else
+            pagingInfo = "Displaying " & startRowIndex + 1 & " to " & lastRowIndex + 1
+            GUISettingsOn()
+        End If
+
+        'lblPagingInfo2.Content = pagingInfo
+    End Sub
+
+    Private Sub GUISettingsOff()
+        lv_assetInventoryList.Visibility = Windows.Visibility.Hidden
+
+        btnPrev2.IsEnabled = False
+        btnNext2.IsEnabled = False
+    End Sub
+
+    Private Sub GUISettingsOn()
+        lv_assetInventoryList.Visibility = Windows.Visibility.Visible
+
+        btnPrev2.IsEnabled = True
+        btnNext2.IsEnabled = True
+    End Sub
+#End Region
+
+#Region "Events"
     Private Sub txtSearch_TextChanged_1(sender As Object, e As TextChangedEventArgs)
+        paginatedCollection.Clear()
+
         If txtSearch.Text = String.Empty Then
             SetData()
         Else
@@ -78,46 +304,47 @@ Public Class AssetsInventoryListPage
         e.Handled = True
     End Sub
 
-    Private Sub btnExport_Click(sender As Object, e As RoutedEventArgs) Handles btnExport.Click
-        Try
-            Dim path As String = "C:\Program Files (x86)\GDC PH\AIDE CommCell\Excel Files"
-            Dim exists As Boolean = Directory.Exists(path)
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
+        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+            paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
+        End If
+    End Sub
 
-            If Not exists Then Directory.CreateDirectory(path)
-            show = False
-            lv_assetInventoryList.SelectAllCells()
-            lv_assetInventoryList.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader
-            ApplicationCommands.Copy.Execute(Nothing, lv_assetInventoryList)
-            Dim resultat As String = CStr(Clipboard.GetData(DataFormats.CommaSeparatedValue))
-            Dim result As String = CStr(Clipboard.GetData(DataFormats.Text))
-            lv_assetInventoryList.UnselectAllCells()
-            Dim file1 As StreamWriter = New System.IO.StreamWriter("C:\Program Files (x86)\GDC PH\AIDE CommCell\Excel Files\Assets Inventory.xls")
-            file1.WriteLine(result.Replace(","c, " "c))
-            file1.Close()
-            MessageBox.Show("Exporting DataGrid data to Excel file created.xls")
-            show = True
-            'frame.Navigate(New AssetsInventoryListPage(frame, profile, _addframe, _menugrid, _submenuframe))
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "AIDE")
-        End Try
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
+        paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
+    End Sub
+
+    'Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
+    '    SetPaging(CInt(PagingMode._Next))
+    'End Sub
+
+    'Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
+    '    SetPaging(CInt(PagingMode._Previous))
+    'End Sub
+
+    Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
+        SetPaging(CInt(PagingMode._First))
+    End Sub
+
+    Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
+        SetPaging(CInt(PagingMode._Last))
     End Sub
 
     Private Sub SR_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles SR.SelectionChanged
         e.Handled = True
-        Me.DataContext = Nothing
-        SetData()
+        paginatedCollection.Clear()
+        txtSearch.Clear()
+
         If SR.SelectedIndex = 0 Then
             page = "Personal"
         ElseIf SR.SelectedIndex = 1 Then
-            btnPrint.Visibility = Windows.Visibility.Visible
             page = "All"
+            btnPrint.Visibility = Windows.Visibility.Visible
         Else
             page = "Approval"
         End If
-    End Sub
 
-    Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
-
+        SetData()
     End Sub
 
     Private Sub lv_assetInventoryListOwn_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles lv_assetInventoryListOwn.LoadingRow
@@ -234,8 +461,8 @@ Public Class AssetsInventoryListPage
                 'frame.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Approval"))
             End If
         End If
-
     End Sub
+
     Private Sub btnPrint_Click(sender As Object, e As RoutedEventArgs) Handles btnPrint.Click
         Dim dialog As PrintDialog = New PrintDialog()
         If lv_assetInventoryList.HasItems Then
@@ -251,199 +478,74 @@ Public Class AssetsInventoryListPage
             MsgBox("No Records Found!", MsgBoxStyle.Exclamation, "AIDE")
         End If
     End Sub
-#End Region
 
-#Region "PRIVATE FUNCTION"
+    Private Sub btnExport_Click(sender As Object, e As RoutedEventArgs) Handles btnExport.Click
+        'Dim exportExcel As ExportToExcel = New ExportToExcel
+        'Dim sheetName As String = "FAI HW Inventory"
+        'Dim path As String = "C:\Program Files (x86)\GDC PH\AIDE CommCell\ExcelFiles"
+        'Dim fileName As String = "\Hardware Inventory.xlsx"
+        'Dim dt As DataTable = ConvertToDataTable()
 
-    Public Sub SetUnApprovedtTabVisible()
-        If profile.Permission = "Manager" Then
-            Unapproved.Visibility = Windows.Visibility.Visible
-        End If
+        'exportExcel.WriteDataTableToExcel(dt, sheetName, path, fileName)
+        'Try
+        '    Dim path As String = "C:\Users\Admin\Documents\Excel Files"
+        '    Dim exists As Boolean = Directory.Exists(path)
+
+        '    If Not exists Then Directory.CreateDirectory(path)
+
+        '    show = False
+        '    lv_assetInventoryList.SelectAllCells()
+        '    lv_assetInventoryList.ClipboardCopyMode = DataGridClipboardCopyMode.IncludeHeader
+
+        '    ApplicationCommands.Copy.Execute(Nothing, lv_assetInventoryList)
+        '    Dim resultat As String = CStr(Clipboard.GetData(DataFormats.CommaSeparatedValue))
+        '    Dim result As String = CStr(Clipboard.GetData(DataFormats.Text))
+        '    lv_assetInventoryList.UnselectAllCells()
+        '    Dim file1 As StreamWriter = New System.IO.StreamWriter("C:\Program Files (x86)\GDC PH\AIDE CommCell\Excel Files\Assets Inventory.xls")
+        '    file1.WriteLine(result.Replace(","c, " "c))
+        '    file1.Close()
+        '    MessageBox.Show("Exporting DataGrid data to Excel file created.xls")
+        '    show = True
+        '    'frame.Navigate(New AssetsInventoryListPage(frame, profile, _addframe, _menugrid, _submenuframe))
+        'Catch ex As Exception
+        '    MsgBox(ex.Message, MsgBoxStyle.Critical, "AIDE")
+        'End Try
     End Sub
 
-    Public Sub SetData()
-        Try
-            If InitializeService() Then
-                If SR.SelectedIndex = 0 Then
-                    lstAssets = _AideService.GetMyAssets(profile.Emp_ID)
-                    btnPrint.Visibility = Windows.Visibility.Hidden
-                ElseIf SR.SelectedIndex = 1 Then
-                    lstAssets = _AideService.GetAllAssetsInventoryByEmpID(profile.Emp_ID)
-                    btnPrint.Visibility = Windows.Visibility.Hidden
-                Else
-                    lstAssets = _AideService.GetAllAssetsInventoryUnApproved(profile.Emp_ID)
-                    btnPrint.Visibility = Windows.Visibility.Hidden
-                End If
+    Private Function ConvertToDataTable()
+        Dim dataTable As New DataTable()
 
-                SetPaging(PagingMode._First)
-            End If
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
-    End Sub
+        dataTable.Columns.Add("Name of Employee")
+        dataTable.Columns.Add("Department")
+        dataTable.Columns.Add("Manufacturer")
+        dataTable.Columns.Add("Asset Type")
+        dataTable.Columns.Add("Model No")
+        dataTable.Columns.Add("Asset Tag")
+        dataTable.Columns.Add("Serial Number")
+        dataTable.Columns.Add("Date Assigned")
+        dataTable.Columns.Add("Date Purchased")
+        dataTable.Columns.Add("Comments and other additional information")
 
-    Public Sub LoadData()
-        Try
-            Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
-            Dim assetsDBProvider As New AssetsDBProvider
-            Dim assetsVM As New AssetsViewModel()
+        For Each asset In paginatedCollection.Collections
+            Dim newRow = dataTable.NewRow()
 
-            Dim objAssets As New Assets()
+            newRow("Name of Employee") = asset.FULL_NAME
+            newRow("Department") = asset.DEPARTMENT
+            newRow("Manufacturer") = asset.MANUFACTURER
+            newRow("Asset Type") = asset.ASSET_DESC
+            newRow("Model No") = asset.MODEL_NO
+            newRow("Asset Tag") = asset.ASSET_TAG
+            newRow("Serial Number") = asset.SERIAL_NO
+            newRow("Date Assigned") = asset.DATE_ASSIGNED
+            newRow("Date Purchased") = asset.DATE_PURCHASED
+            newRow("Comments and other additional information") = asset.COMMENTS
 
-            ' Set the MyLessonLearntList 
-            For i As Integer = startRowIndex To lastRowIndex
-                objAssets = lstAssets(i)
-                assetsDBProvider.SetAssetInventoryList(objAssets)
-            Next
+            dataTable.Rows.Add(newRow)
+        Next
 
-            For Each rawUser As MyAssets In assetsDBProvider.GetAssetInventoryList()
-                lstAssetsList.Add(New AssetsModel(rawUser))
-            Next
-
-            assetsVM.AssetInventoryList = lstAssetsList
-            Me.DataContext = assetsVM
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-    End Sub
-
-    Public Sub SetDataForSearch(input As String)
-        Try
-            If InitializeService() Then
-                lstAssets = _AideService.GetAllAssetsInventoryBySearch(profile.Emp_ID, input, page)
-                SetPaging(PagingMode._First)
-            End If
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
-    End Sub
-
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            'DisplayText("Opening client service...")
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            _AideService = New AideServiceClient(Context)
-            _AideService.Open()
-            bInitialize = True
-            'DisplayText("Service opened successfully...")
-            'Return True
-        Catch ex As SystemException
-            _AideService.Abort()
-        End Try
-        Return bInitialize
+        Return dataTable
     End Function
 
-    Private Sub SetPaging(mode As Integer)
-        Try
-            Dim totalRecords As Integer = lstAssets.Length
-
-            Select Case mode
-                Case CInt(PagingMode._Next)
-                    ' Set the rows to be displayed if the total records is more than the (Record per Page * Page Index)
-                    If totalRecords > (pagingPageIndex * pagingRecordPerPage) Then
-
-                        ' Set the last row to be displayed if the total records is more than the (Record per Page * Page Index) + Record per Page
-                        If totalRecords >= ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) Then
-                            lastRowIndex = ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) - 1
-                        Else
-                            lastRowIndex = totalRecords - 1
-                        End If
-
-                        startRowIndex = pagingPageIndex * pagingRecordPerPage
-                        pagingPageIndex += 1
-                    Else
-                        startRowIndex = (pagingPageIndex - 1) * pagingRecordPerPage
-                        lastRowIndex = totalRecords - 1
-                    End If
-                    ' Bind data to the Data Grid
-                    LoadData()
-                    Exit Select
-                Case CInt(PagingMode._Previous)
-                    ' Set the Previous Page if the page index is greater than 1
-                    If pagingPageIndex > 1 Then
-                        pagingPageIndex -= 1
-
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-                        lastRowIndex = (pagingPageIndex * pagingRecordPerPage) - 1
-                        LoadData()
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._First)
-                    If totalRecords > pagingRecordPerPage Then
-                        pagingPageIndex = 2
-                        SetPaging(CInt(PagingMode._Previous))
-                    Else
-                        pagingPageIndex = 1
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-
-                        If Not totalRecords = 0 Then
-                            lastRowIndex = totalRecords - 1
-                            LoadData()
-                        Else
-                            lastRowIndex = 0
-                            Me.DataContext = Nothing
-                        End If
-
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._Last)
-                    pagingPageIndex = (lstAssets.Length / pagingRecordPerPage)
-                    SetPaging(CInt(PagingMode._Next))
-                    Exit Select
-            End Select
-
-            DisplayPagingInfo()
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-    End Sub
-
-    Private Sub DisplayPagingInfo()
-        Dim pagingInfo As String
-
-        ' If there has no data found
-        If lstAssets.Length = 0 Then
-            pagingInfo = "No Results Found "
-            GUISettingsOff()
-        Else
-            pagingInfo = "Displaying " & startRowIndex + 1 & " to " & lastRowIndex + 1
-            GUISettingsOn()
-        End If
-
-        'lblPagingInfo2.Content = pagingInfo
-
-    End Sub
-
-    Private Sub GUISettingsOff()
-        lv_assetInventoryList.Visibility = Windows.Visibility.Hidden
- 
-        btnPrev2.IsEnabled = False
-        btnNext2.IsEnabled = False
-    End Sub
-
-    Private Sub GUISettingsOn()
-        lv_assetInventoryList.Visibility = Windows.Visibility.Visible
-
-        btnPrev2.IsEnabled = True
-        btnNext2.IsEnabled = True
-    End Sub
-
-    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Next))
-    End Sub
-
-    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Previous))
-    End Sub
-
-    Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._First))
-    End Sub
-
-    Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Last))
-    End Sub
 #End Region
 
 #Region "ICallBack Function"

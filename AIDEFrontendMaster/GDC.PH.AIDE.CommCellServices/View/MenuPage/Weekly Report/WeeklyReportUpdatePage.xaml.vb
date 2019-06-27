@@ -586,67 +586,67 @@ Class WeeklyReportUpdatePage
 
     Private Function ValidateFields(isValidate As Boolean)
         If cbProject.SelectedIndex = -1 Then
-            MsgBox("Please select a Project", MsgBoxStyle.Critical, "Employee Assist Tools")
+            MsgBox("Please select a Project", MsgBoxStyle.Critical, "AIDE")
             cbProject.Focus()
             Return False
         End If
 
         If txtSubject.Text Is String.Empty Then
-            MsgBox("Please enter a Description", MsgBoxStyle.Critical, "Employee Assist Tools")
+            MsgBox("Please enter a Description", MsgBoxStyle.Critical, "AIDE")
             txtSubject.Focus()
             Return False
         End If
 
         If txtRefID.Text IsNot String.Empty And cbIncidentType.SelectedIndex = -1 Then
-            MsgBox("Please select Incident Type", MsgBoxStyle.Critical, "Employee Assist Tools")
+            MsgBox("Please select Incident Type", MsgBoxStyle.Critical, "AIDE")
             cbIncidentType.Focus()
             Return False
         End If
 
         If Not cbIncidentType.SelectedIndex = -1 And cbPhase.SelectedIndex = -1 Then
-            MsgBox("Please select a Phase", MsgBoxStyle.Critical, "Employee Assist Tools")
+            MsgBox("Please select a Phase", MsgBoxStyle.Critical, "AIDE")
             cbPhase.Focus()
             Return False
         End If
 
         If cbStatus.SelectedIndex = -1 Then
-            MsgBox("Please select a Status", MsgBoxStyle.Critical, "Employee Assist Tools")
+            MsgBox("Please select a Status", MsgBoxStyle.Critical, "AIDE")
             cbStatus.Focus()
             Return False
         End If
 
         If dpCompletedDate.Text IsNot String.Empty And dpStartDate.Text = String.Empty Then
-            MsgBox("Please enter Date Started", MsgBoxStyle.Critical, "Employee Assist Tools")
+            MsgBox("Please enter Date Started", MsgBoxStyle.Critical, "AIDE")
             dpStartDate.Focus()
             Return False
         End If
 
-        If dpCompletedDate.Text IsNot String.Empty And dpTargetDate.Text = String.Empty Then
-            MsgBox("Please enter Target Date", MsgBoxStyle.Critical, "Employee Assist Tools")
+        If dpCompletedDate.Text IsNot String.Empty And txtRefID.Text IsNot String.Empty And dpTargetDate.Text = String.Empty Then
+            MsgBox("Please enter Target Date", MsgBoxStyle.Critical, "AIDE")
             dpTargetDate.Focus()
             Return False
         End If
 
         If cbStatus.Text = "Completed" And dpCompletedDate.Text Is String.Empty Then
-            MsgBox("Please enter Date Finished", MsgBoxStyle.Critical, "Employee Assist Tools")
+            MsgBox("Please enter Date Finished", MsgBoxStyle.Critical, "AIDE")
             dpCompletedDate.Focus()
             Return False
         End If
 
-        If txtEffortEst.Text Is String.Empty Then
-            MsgBox("Please enter Effort Estimate", MsgBoxStyle.Critical, "Employee Assist Tools")
+        If txtEffortEst.Text Is String.Empty And txtRefID.Text IsNot String.Empty Then
+            MsgBox("Please enter Effort Estimate", MsgBoxStyle.Critical, "AIDE")
             txtEffortEst.Focus()
             Return False
         End If
 
         If txtActualEffort.Text Is String.Empty Then
-            MsgBox("Please enter Actual Effort", MsgBoxStyle.Critical, "Employee Assist Tools")
+            MsgBox("Please enter Actual Effort", MsgBoxStyle.Critical, "AIDE")
             txtActualEffort.Focus()
             Return False
         End If
 
         If txtActualEffortWk.Text Is String.Empty Then
-            MsgBox("Please enter Actual Effort for the Week", MsgBoxStyle.Critical, "Employee Assist Tools")
+            MsgBox("Please enter Actual Effort for the Week", MsgBoxStyle.Critical, "AIDE")
             txtActualEffortWk.Focus()
             Return False
         End If

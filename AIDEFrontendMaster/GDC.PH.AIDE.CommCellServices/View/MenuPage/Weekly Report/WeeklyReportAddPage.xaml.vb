@@ -33,6 +33,7 @@ Class WeeklyReportAddPage
     Dim dateToday As Date = Date.Today
     Dim dayMonDiff As Integer = Today.DayOfWeek - DayOfWeek.Monday
     Dim monday As Date = Today.AddDays(-dayMonDiff)
+    Dim lastWeekMonday As Date = monday.AddDays(-7)
 #End Region
 
 #Region "Provider Declaration"
@@ -65,6 +66,7 @@ Class WeeklyReportAddPage
         dgWeeklyReport.ItemsSource = lstWeeklyReportsData
         GenerateWeekRange()
         LoadData()
+        GetPreviousData() ' Get last week data for the tasks that are not completed yet
     End Sub
 
     Private Function InitializeService() As Boolean
@@ -89,6 +91,49 @@ Class WeeklyReportAddPage
             Dim weekRange As New WeekRange
             weekRange.StartWeek = Date.Now
             AideServiceClient.CreateWeekRange(weekRange)
+        Catch ex As Exception
+            AideServiceClient.Abort()
+        End Try
+    End Sub
+
+    Private Sub GetPreviousData()
+        InitializeService()
+        Try
+            'Dim lstWeeklyReport As WeeklyReport() = AideServiceClient.GetWeeklyReportsNotCompleted(lastWeekMonday, empID)
+            'For Each objWeeklyReport As WeeklyReport In lstWeeklyReport
+            '    weeklyReportDBProvider.SetWeeklyReportList(objWeeklyReport)
+            'Next
+
+            'For Each weeklyReport As MyWeeklyReport In weeklyReportDBProvider.GetWeeklyReportList()
+            '    lstWeeklyReportsData.Add(New WeeklyReportModel With {
+            '                                .WeekID = weeklyReport.WeekID,
+            '                                .WeekRangeID = weeklyReport.WeekRangeID,
+            '                                .ProjectID = weeklyReport.ProjectID,
+            '                                .ProjectDesc = listProjects.Where(Function(x) x.ProjectID = weeklyReport.ProjectID).First().ProjectName,
+            '                                .Rework = weeklyReport.Rework,
+            '                                .ReworkDesc = getReworkValue(weeklyReport.Rework),
+            '                                .RefID = weeklyReport.RefID,
+            '                                .Subject = weeklyReport.Subject,
+            '                                .Severity = weeklyReport.Severity,
+            '                                .SeverityDesc = getSeverityValue(weeklyReport.Severity),
+            '                                .IncidentType = weeklyReport.IncType,
+            '                                .IncidentDesc = getIncidentValue(weeklyReport.IncType),
+            '                                .EmpID = weeklyReport.EmpID,
+            '                                .Phase = weeklyReport.Phase,
+            '                                .PhaseDesc = getPhaseValue(weeklyReport.Phase),
+            '                                .Status = weeklyReport.Status,
+            '                                .StatusDesc = getStatusValue(weeklyReport.Status),
+            '                                .DateStarted = weeklyReport.DateStarted,
+            '                                .DateTarget = weeklyReport.DateTarget,
+            '                                .DateFinished = weeklyReport.DateFinished,
+            '                                .DateCreated = weeklyReport.DateCreated,
+            '                                .EffortEst = weeklyReport.EffortEst,
+            '                                .ActualEffort = weeklyReport.ActEffort,
+            '                                .ActualEffortWk = weeklyReport.ActEffortWk,
+            '                                .Comments = weeklyReport.Comment,
+            '                                .InboundContacts = weeklyReport.InboundContacts
+            '                             })
+            'Next
         Catch ex As Exception
             AideServiceClient.Abort()
         End Try
@@ -583,7 +628,7 @@ Class WeeklyReportAddPage
             Return False
         End If
 
-        If dpCompletedDate.Text IsNot String.Empty And txtRefID.Text = String.Empty And dpTargetDate.Text = String.Empty Then
+        If dpCompletedDate.Text IsNot String.Empty And txtRefID.Text IsNot String.Empty And dpTargetDate.Text = String.Empty Then
             MsgBox("Please enter Target Date", MsgBoxStyle.Critical, "AIDE")
             dpTargetDate.Focus()
             Return False
