@@ -249,13 +249,12 @@ Class SkillsMatrixManagerPage
 
             ' Get Employee list
             For Each iEmployee As MyEmployeeList In _EmployeeListDBProvider.GetEmployeeList
-                level = ""
                 dateReviewed = ""
                 isDateReviewed = False
 
                 ' Get Skills List
                 For Each iSkill As mySkillList In _SkillDBProvider.GetSkillList
-
+                    level = ""
                     ' Get Skill Proficiency
                     For i As Integer = 0 To _SkillDBProvider._splist.Count - 1
                         If iEmployee.EmpID.ToString.Equals(_SkillDBProvider._splist(i).Emp_ID) Then
