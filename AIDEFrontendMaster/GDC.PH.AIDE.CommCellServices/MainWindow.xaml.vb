@@ -409,10 +409,6 @@ Class MainWindow
         LoadSideBar()
     End Sub
 
-    Private Sub BirthdayBtn_Click(sender As Object, e As RoutedEventArgs)
-
-    End Sub
-
     Private Sub AssetsBtn_Click(sender As Object, e As RoutedEventArgs)
         PagesFrame.Navigate(New AssetsListPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
         SubMenuFrame.Navigate(New AssetsSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
@@ -433,15 +429,12 @@ Class MainWindow
         SubMenuFrame.Navigate(New OtherSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
         LoadSideBar()
     End Sub
-#End Region
-
-    Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
-
-    End Sub
 
     Private Sub DashboardBtn_Click(sender As Object, e As RoutedEventArgs)
         LoadSideBar()
         PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
         SubMenuFrame.Navigate(New BlankSubMenu())
     End Sub
+#End Region
+
 End Class
