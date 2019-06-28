@@ -142,6 +142,7 @@ Public Class BillabilityVacationLeavePage
             chartVL.Series = SeriesCollection
             chartVL.AxisX.First().Labels = employee
             chartVL.AxisY.First().LabelFormatter = Function(value) value
+            chartVL.AxisX.First().LabelsRotation = 135
 
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
