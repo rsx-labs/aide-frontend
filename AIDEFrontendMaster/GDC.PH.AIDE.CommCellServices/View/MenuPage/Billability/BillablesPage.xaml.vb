@@ -89,13 +89,13 @@ Public Class BillablesPage
                     .Values = New ChartValues(Of Double) From {
                         Double.Parse(iResource.Status)
                     },
-                    .DataLabels = False,
-                    .LabelPoint = labelPoint
+                    .DataLabels = False
                 }
                 series.Add(ps)
             Next
 
             pieChartWeekly.Series = series
+
 
             percentBillable = (billable / totalWeekly) * 100
             percentNonBillable = (nonBillable / totalWeekly) * 100
@@ -142,8 +142,7 @@ Public Class BillablesPage
                     .Values = New ChartValues(Of Double) From {
                         Double.Parse(iResource.Status)
                     },
-                    .DataLabels = False,
-                    .LabelPoint = labelPoint
+                    .DataLabels = False
                 }
                 series.Add(ps)
             Next
