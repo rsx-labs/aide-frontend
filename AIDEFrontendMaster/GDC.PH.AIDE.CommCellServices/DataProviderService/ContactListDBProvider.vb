@@ -41,11 +41,12 @@ Public Class ContactListDBProvider
                 .lOCAL = _contact.lOCAL,
                 .LOC = _contact.LOC,
                 .DateReviewed = _contact.DateReviewed,
-                .POS_ID = _contact.POS_ID,
-                .DESCRIPTION = _contact.DESCRIPTION,
+                .POSITION = _contact.POSITION,
+                .MARITAL_STATUS = _contact.MARITAL_STATUS,
                 .FULL_NAME = _contact.FIRST_NAME + " " + _contact.LAST_NAME,
                 .IMAGE_PATH = _contact.IMAGE_PATH,
-                .IsREVIEWED = isReviewed
+                .IsREVIEWED = isReviewed,
+                .NICK_NAME = _contact.Nick_Name
                 }
         _contactList.Add(_contactsObject)
     End Sub
@@ -61,14 +62,15 @@ Public Class MyContactList
     Property HOUSEPHONE As String
     Property lOCAL As Integer
     Property LOC As String
-    Property DESCRIPTION As String
-    Property POS_ID As Integer
+    Property MARITAL_STATUS As String
+    Property POSITION As String
     Property OTHERPHONE As String
     Property FIRST_NAME As String
     Property LAST_NAME As String
     Property IsREVIEWED As Boolean
     Property FULL_NAME As String
     Property IMAGE_PATH As String
+    Property NICK_NAME As String
 End Class
 '''''''''''''''''''''''''''''''''
 '   AEVAN CAMILLE BATONGBACAL   '

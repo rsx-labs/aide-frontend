@@ -58,6 +58,11 @@ Public Class ContactListPage
         Me.submenuframe = _submenuframe
         Me.attendanceFrame = _attendanceFrame
         Me.profile = _profile
+
+        If profile.Permission = "Manager" Then
+            btnCreate.Visibility = Windows.Visibility.Visible
+        End If
+
         SetData()
         LoadData()
         'DisplayPagingInfo()
@@ -261,8 +266,9 @@ Public Class ContactListPage
                     contactList.CEL_NO = CType(lv_contacts.SelectedItem, ContactListModel).CEL_NO
                     contactList.HOMEPHONE = CType(lv_contacts.SelectedItem, ContactListModel).HOMEPHONE
                     contactList.OTHER_PHONE = CType(lv_contacts.SelectedItem, ContactListModel).OTHER_PHONE
+                    contactList.NICK_NAME = CType(lv_contacts.SelectedItem, ContactListModel).NICK_NAME
 
-                    addframe.Navigate(New NewContactList(contactList, mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+                    addframe.Navigate(New UpdateContactList(contactList, mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
                     mainFrame.IsEnabled = False
                     mainFrame.Opacity = 0.3
                     menugrid.IsEnabled = False
@@ -292,6 +298,18 @@ Public Class ContactListPage
 
         dv_contacts.Visibility = Windows.Visibility.Hidden
         printBorder.Visibility = Windows.Visibility.Hidden
+    End Sub
+
+    Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
+        addframe.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+        mainFrame.IsEnabled = False
+        mainFrame.Opacity = 0.3
+        menugrid.IsEnabled = False
+        menugrid.Opacity = 0.3
+        submenuframe.IsEnabled = False
+        submenuframe.Opacity = 0.3
+        addframe.Visibility = Visibility.Visible
+        addframe.Margin = New Thickness(200, 100, 200, 100)
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click

@@ -18,7 +18,8 @@
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="12*"/>
+                    <ColumnDefinition Width="11*"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 
                 <Grid Grid.Column="0">
@@ -30,6 +31,12 @@
                 <Grid Grid.Column="1">
                     <Viewbox HorizontalAlignment="Left">
                         <TextBlock TextWrapping="Wrap" Padding="0" Text="Contact Lists" Margin="0,7,0,7" Foreground="DimGray"/>
+                    </Viewbox>
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    <Viewbox Margin="10" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Button Click="btnCreate_Click" Visibility="Collapsed" Style="{DynamicResource ButtonAdd}" x:Name="btnCreate" BorderBrush="{x:Null}"/>
                     </Viewbox>
                 </Grid>
             </Grid>
@@ -53,6 +60,7 @@
 
                         <DataGrid.Columns>
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Name" Width="200" Binding="{Binding FULL_NAME}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Nick Name" Width="200" Binding="{Binding NICK_NAME}" />
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Role" Width="150" Binding="{Binding DESCR}" />
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Location" Width="100" Binding="{Binding LOCATION}" />
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Email Address" Width="210" Binding="{Binding EMAIL_ADDRESS}" />

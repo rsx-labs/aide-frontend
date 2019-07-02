@@ -11,7 +11,7 @@ Imports LiveCharts.Defaults
 Imports LiveCharts.Wpf
 
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
-Class SabaLearningViewPage
+Class TrackerViewPage
     Implements ServiceReference1.IAideServiceCallback
 
 
@@ -238,7 +238,7 @@ Class SabaLearningViewPage
             _AideService.UpdateSabaXref(getDataUpdate(SabaLearningListVM.SabaLearningVMModel))
             If SabaLearning.DATE_COMPLETED = Nothing Then
                 MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
-                addframe.Navigate(New SabaLearningViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, profile))
+                addframe.Navigate(New TrackerViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, profile))
             Else
                 MsgBox("Successfully Added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
@@ -246,7 +246,7 @@ Class SabaLearningViewPage
                 SabaLearning.SABA_ID = Nothing
                 SabaLearning.EMP_ID = Nothing
 
-                addframe.Navigate(New SabaLearningViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, profile))
+                addframe.Navigate(New TrackerViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, profile))
 
                 'mainframe.Navigate(New SabaLearningMainPage(mainframe, empID, addframe, menugrid, submenuframe))
                 'mainframe.IsEnabled = True
@@ -267,7 +267,7 @@ Class SabaLearningViewPage
     End Sub
 
     Private Sub UpdateEndDateBtn_Click(sender As Object, e As RoutedEventArgs)
-        addframe.Navigate(New SabaLearningUpdatePage(mainframe, addframe, menugrid, submenuframe, sabacoursemodel, profile))
+        addframe.Navigate(New TrackerUpdatePage(mainframe, addframe, menugrid, submenuframe, sabacoursemodel, profile))
         mainframe.IsEnabled = False
         mainframe.Opacity = 0.3
         menugrid.IsEnabled = False

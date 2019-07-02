@@ -1,0 +1,771 @@
+﻿<Page x:Class="UpdateContactList"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      Height="auto" Width="auto"
+      Title="NewContactList">
+    
+    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height=".5*" />
+                <RowDefinition Height="6*" />
+            </Grid.RowDefinitions>
+            
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid Grid.Column="0">
+                    <Viewbox HorizontalAlignment="Left">
+                        <TextBlock Text="Update Contacts" Margin="5" Foreground="DimGray"/>
+                    </Viewbox>
+                </Grid>
+                
+                <Grid Grid.Column="1">
+                    <Viewbox Margin="10" HorizontalAlignment="Right">
+                        <Button x:Name="btnCCancel" Style="{StaticResource ButtonBack}" />
+                    </Viewbox>
+                </Grid>
+            </Grid>
+            
+            <Grid Grid.Row="1" Background="Gray">
+                <Viewbox>
+                    <TextBlock Foreground="White" Margin="10" Text="Please complete all commendation fields"  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Viewbox>
+            </Grid>
+            
+            <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}">
+                <Grid Margin="10,5">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height ="1*"/>
+                        <RowDefinition Height ="1*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtCEmpID" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="False" Text="{Binding Path=EMP_ID}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter employee ID" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCEmpID}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelEmpID" Width="120" TextAlignment="Center" Margin="5" Text="Employee ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCEmpID}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtCFname" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="False" Text="{Binding Path=FIRST_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter first name" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCFname}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelFname" Width="120" TextAlignment="Center" Margin="5" Text="Employee ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCFname}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtCMname" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="False" Text="{Binding Path=FIRST_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter middle name" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCMname}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelMname" Width="120" TextAlignment="Center" Margin="5" Text="Employee ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCMname}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtCLname" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="False" Text="{Binding Path=FIRST_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter last name" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCLname}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelLname" Width="120" TextAlignment="Center" Margin="5" Text="Employee ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCLname}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="4">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtCBday" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="False" Text="{Binding Path=FIRST_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter date of birth" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCBday}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelBday" Width="120" TextAlignment="Center" Margin="5" Text="Employee ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCBday}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <ComboBox x:Name="cbPosition" IsReadOnly="True" VerticalContentAlignment="Center" Margin="0,5,5,5"
+                          SelectedValuePath="ASSET_ID" Style="{DynamicResource StyleComboBox}" DisplayMemberPath="ASSET_DESC" ItemsSource="{Binding AssetTypeList}"/>
+                                <TextBlock x:Name="cbAssetWaterMark" FontSize="12" IsHitTestVisible="False" Text="Select a position" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbPosition}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock x:Name="txtlabelAssetType" Width="120" TextAlignment="Center" Margin="5" Text="Position" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbPosition}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtCDateHired" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="False" Text="{Binding Path=FIRST_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter date hired" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCDateHired}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelDateHired" Width="120" TextAlignment="Center" Margin="5" Text="Date Hired" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCDateHired}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtCMaritalStatus" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="False" Text="{Binding Path=FIRST_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select marital status" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCMaritalStatus}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelMaritalStatus" Width="120" TextAlignment="Center" Margin="5" Text="Status" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCMaritalStatus}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtPermissionGroup" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="False" Text="{Binding Path=FIRST_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a permission group" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtPermissionGroup}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelPermissionGroup" Width="120" TextAlignment="Center" Margin="5" Text="Permission Group" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtPermissionGroup}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="4">
+                                <ComboBox x:Name="cbDept" IsReadOnly="True" VerticalContentAlignment="Center" Margin="0,5,5,5"
+                          SelectedValuePath="ASSET_ID" Style="{DynamicResource StyleComboBox}" DisplayMemberPath="ASSET_DESC" ItemsSource="{Binding AssetTypeList}"/>
+                                <TextBlock x:Name="txtDept" FontSize="12" IsHitTestVisible="False" Text="Select a department" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbDept}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock x:Name="txtlabelDept" Width="120" TextAlignment="Center" Margin="5" Text="Department" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbDept}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <ComboBox x:Name="cbDivision" IsReadOnly="True" VerticalContentAlignment="Center" Margin="0,5,5,5"
+                          SelectedValuePath="ASSET_ID" Style="{DynamicResource StyleComboBox}" DisplayMemberPath="ASSET_DESC" ItemsSource="{Binding AssetTypeList}"/>
+                                <TextBlock x:Name="txtDiv" FontSize="12" IsHitTestVisible="False" Text="Select a division" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbDivision}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock x:Name="txtlabelDiv" Width="120" TextAlignment="Center" Margin="5" Text="Division" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbDivision}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtCStatus" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="False" Text="{Binding Path=FIRST_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter status" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCStatus}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelStatus" Width="120" TextAlignment="Center" Margin="5" Text="Status" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCStatus}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtCShift" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="False" Text="{Binding Path=FIRST_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select shift" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCShift}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelShift" Width="120" TextAlignment="Center" Margin="5" Text="Status" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCShift}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            
+                            <Grid Grid.Row="1">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtCEmail" Template="{DynamicResource TextBoxBaseControlTemplate}" IsEnabled="False" Text="{Binding Path=EMAIL_ADDRESS}" HorizontalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter work email" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCEmail}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelWorkEmail" Width="120" TextAlignment="Center" Margin="5" Text="Work Email" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCEmail}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtCEmail2" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=EMAIL_ADDRESS2}" HorizontalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter personal email" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCEmail2}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelPersonalEmail" Width="120" TextAlignment="Center" Margin="5" Text="Personal Email" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCEmail2}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <!--<Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                
+                                <TextBox  x:Name="txtCLocation" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=LOCATION}" TextWrapping="Wrap" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                            </Border>-->
+                                <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbLocation" Text="{Binding Path=LOCATION}" Margin="0,5,5,5"/>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter work location" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbLocation}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelWorkLocation" Width="120" TextAlignment="Center" Margin="5" Text="Work Location" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCLocation}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="4">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtCLocal" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=LOCAL}" PreviewTextInput="NumberValidationTextBox" HorizontalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter local extension" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCLocal}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelExtension" Width="120" TextAlignment="Center" Margin="5" Text="Local Extension" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCLocal}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtCCelNo" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=CEL_NO}" PreviewTextInput="NumberValidationTextBox" HorizontalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter home mobile" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCCelNo}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabel" Width="120" TextAlignment="Center" Margin="5" Text="Home Mobile" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCCelNo}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtCHome" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=HOMEPHONE}" PreviewTextInput="NumberValidationTextBox" HorizontalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter work mobile" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCHome}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelWorkMobile" Width="120" TextAlignment="Center" Margin="5" Text="Work Mobile" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCHome}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtCOther" Template="{DynamicResource TextBoxBaseControlTemplate}" PreviewTextInput="NumberValidationTextBox" Text="{Binding Path=OTHER_PHONE}" HorizontalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter other phone" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCOther}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelOtherPhone" Width="120" TextAlignment="Center" Margin="5" Text="Other Phone" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCOther}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox x:Name="txtCNickName" Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding Path=NICK_NAME}" HorizontalContentAlignment="Center"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter nick name" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCNickName}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+
+                                <TextBlock x:Name="txtlabelNickname" Width="120" TextAlignment="Center" Margin="5" Text="Nick Name" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtCNickName}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            <Grid Grid.Row="4">
+                                <Button Style="{StaticResource RoundCornerUpdate}" x:Name="btnCUpdate" Margin="5,5,0,5">
+                                    <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Page>

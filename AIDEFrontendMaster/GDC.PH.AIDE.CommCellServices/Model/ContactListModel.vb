@@ -20,13 +20,14 @@ Public Class ContactListModel
     Private _hOMEPHONE As String
     Private _oTHER_PHONE As String
     Private _dT_REVIEWED As DateTime
-    Private _pos_ID As Integer
-    Private _descr As String
+    Private _pos_ID As String
+    Private _MARITAL_STATUS As String
     Private _full_name As String
     Private _first_name As String
     Private _last_name As String
     Private _isReviewed As Boolean
     Private _image_path As Object
+    Private _nick_name As String
 
 #End Region
 
@@ -35,7 +36,7 @@ Public Class ContactListModel
 
     Public Sub New(ByVal rawContactList As MyContactList)
         Me.CEL_NO = rawContactList.CELL_NO
-        Me.DESCR = rawContactList.DESCRIPTION
+        Me.MARITAL_STATUS = rawContactList.MARITAL_STATUS
         Me.DT_REVIEWED = rawContactList.DateReviewed
         Me.EMAIL_ADDRESS = rawContactList.EMADDRESS
         Me.EMAIL_ADDRESS2 = rawContactList.EMADDRESS2
@@ -44,12 +45,13 @@ Public Class ContactListModel
         Me.LOCAL = rawContactList.lOCAL
         Me.LOCATION = rawContactList.LOC
         Me.OTHER_PHONE = rawContactList.OTHERPHONE
-        Me.POS_ID = rawContactList.POS_ID
+        Me.POSITION = rawContactList.POSITION
         Me.FIRST_NAME = rawContactList.FIRST_NAME
         Me.LAST_NAME = rawContactList.LAST_NAME
         Me.FULL_NAME = rawContactList.FULL_NAME
         Me.IsREVIEWED = rawContactList.IsREVIEWED
         Me.IMAGE_PATH = rawContactList.IMAGE_PATH
+        Me.NICK_NAME = rawContactList.NICK_NAME
     End Sub
 
 #Region "Properties"
@@ -134,6 +136,16 @@ Public Class ContactListModel
         End Set
     End Property
 
+    Public Property NICK_NAME As String
+        Get
+            Return _nick_name
+        End Get
+        Set(value As String)
+            _nick_name = value
+            NotifyPropertyChanged("NICK_NAME")
+        End Set
+    End Property
+
     Public Property DT_REVIEWED As Date
         Get
             Return _dT_REVIEWED
@@ -154,23 +166,23 @@ Public Class ContactListModel
         End Set
     End Property
 
-    Public Property POS_ID As Integer
+    Public Property POSITION As String
         Get
             Return _pos_ID
         End Get
-        Set(value As Integer)
+        Set(value As String)
             _pos_ID = value
-            NotifyPropertyChanged("POS_ID")
+            NotifyPropertyChanged("POSITION")
         End Set
     End Property
 
-    Public Property DESCR As String
+    Public Property MARITAL_STATUS As String
         Get
-            Return _descr
+            Return _MARITAL_STATUS
         End Get
         Set(value As String)
-            _descr = value
-            NotifyPropertyChanged("DESCR")
+            _MARITAL_STATUS = value
+            NotifyPropertyChanged("MARITAL_STATUS")
         End Set
     End Property
 

@@ -9,7 +9,7 @@ Imports System.Configuration
 ''' </summary>
 ''' <remarks></remarks>
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
-Class NewContactList
+Class UpdateContactList
     Implements ServiceReference1.IAideServiceCallback
 
 #Region "Fields"
@@ -70,6 +70,7 @@ Class NewContactList
                 contactList.HOUSEPHONE = txtCHome.Text
                 contactList.OTHERPHONE = txtCOther.Text
                 contactList.DateReviewed = DateTime.Now.Date
+                contactList.Nick_Name = txtCNickName.Text
 
                 Dim result As Integer = MsgBox("Are you sure you want to continue?", MsgBoxStyle.OkCancel, "AIDE")
                 If result = 1 Then
@@ -155,6 +156,7 @@ Class NewContactList
         txtCEmpID.Text = contacts.EMP_ID
         txtCLocal.Text = contacts.LOCAL
         cbLocation.Text = contacts.LOCATION
+        txtCNickName.Text = contacts.NICK_NAME
     End Sub
 
     Public Function InitializeService() As Boolean

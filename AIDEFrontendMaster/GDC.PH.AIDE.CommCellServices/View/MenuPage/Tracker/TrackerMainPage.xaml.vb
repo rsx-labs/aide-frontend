@@ -243,7 +243,7 @@ Class SabaLearningMainPage
 
 
 
-                addframe.Navigate(New SabaLearningViewPage(sabalearning, mainframe, addframe, menugrid, submenuframe, profile))
+                addframe.Navigate(New TrackerViewPage(sabalearning, mainframe, addframe, menugrid, submenuframe, profile))
                 mainframe.IsEnabled = False
                 mainframe.Opacity = 0.3
                 menugrid.IsEnabled = False
@@ -257,7 +257,7 @@ Class SabaLearningMainPage
     End Sub
 
     Private Sub btnCreate_Click_1(sender As Object, e As RoutedEventArgs)
-        addframe.Navigate(New SabaLearningAddPage(profile, mainframe, addframe, menugrid, submenuframe))
+        addframe.Navigate(New TrackerAddPage(profile, mainframe, addframe, menugrid, submenuframe))
         mainframe.IsEnabled = False
         mainframe.Opacity = 0.3
         menugrid.IsEnabled = False
