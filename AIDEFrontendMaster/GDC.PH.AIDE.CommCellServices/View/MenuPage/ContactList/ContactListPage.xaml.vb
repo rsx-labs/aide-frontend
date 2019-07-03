@@ -301,7 +301,7 @@ Public Class ContactListPage
     End Sub
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
-        addframe.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+        addframe.Navigate(New InsertContactList())
         mainFrame.IsEnabled = False
         mainFrame.Opacity = 0.3
         menugrid.IsEnabled = False
@@ -309,7 +309,7 @@ Public Class ContactListPage
         submenuframe.IsEnabled = False
         submenuframe.Opacity = 0.3
         addframe.Visibility = Visibility.Visible
-        addframe.Margin = New Thickness(200, 100, 200, 100)
+        addframe.Margin = New Thickness(100, 80, 100, 80)
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click

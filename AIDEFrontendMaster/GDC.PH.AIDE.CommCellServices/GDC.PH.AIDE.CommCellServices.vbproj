@@ -375,8 +375,11 @@
     <Compile Include="View\MenuPage\ContactList\ContactListPage.xaml.vb">
       <DependentUpon>ContactListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MenuPage\ContactList\NewContactList.xaml.vb">
-      <DependentUpon>NewContactList.xaml</DependentUpon>
+    <Compile Include="View\MenuPage\ContactList\InsertContactList.xaml.vb">
+      <DependentUpon>InsertContactList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ContactList\UpdateContactList.xaml.vb">
+      <DependentUpon>UpdateContactList.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\CreateProject\CreateProjectPage.xaml.vb">
       <DependentUpon>CreateProjectPage.xaml</DependentUpon>
@@ -402,18 +405,6 @@
     <Compile Include="View\MenuPage\Resource Planner\ResourcePlannerPage.xaml.vb">
       <DependentUpon>ResourcePlannerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MenuPage\SABA\SabaLearningAddPage.xaml.vb">
-      <DependentUpon>SabaLearningAddPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\MenuPage\SABA\SabaLearningMainPage.xaml.vb">
-      <DependentUpon>SabaLearningMainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\MenuPage\SABA\SabaLearningUpdatePage.xaml.vb">
-      <DependentUpon>SabaLearningUpdatePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\MenuPage\SABA\SabaLearningViewPage.xaml.vb">
-      <DependentUpon>SabaLearningViewPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\MenuPage\Skills\SkillsMatrixManagerPage.xaml.vb">
       <DependentUpon>SkillsMatrixManagerPage.xaml</DependentUpon>
     </Compile>
@@ -437,6 +428,18 @@
     </Compile>
     <Compile Include="View\MenuPage\Tasks\TaskPage.xaml.vb">
       <DependentUpon>TaskPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Tracker\TrackerAddPage.xaml.vb">
+      <DependentUpon>TrackerAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Tracker\TrackerMainPage.xaml.vb">
+      <DependentUpon>TrackerMainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Tracker\TrackerUpdatePage.xaml.vb">
+      <DependentUpon>TrackerUpdatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Tracker\TrackerViewPage.xaml.vb">
+      <DependentUpon>TrackerViewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\Weekly Report\WeeklyReportAddPage.xaml.vb">
       <DependentUpon>WeeklyReportAddPage.xaml</DependentUpon>
@@ -654,9 +657,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MenuPage\ContactList\NewContactList.xaml">
+    <Page Include="View\MenuPage\ContactList\InsertContactList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\ContactList\UpdateContactList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MenuPage\CreateProject\CreateProjectPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -690,22 +697,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\MenuPage\SABA\SabaLearningAddPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\MenuPage\SABA\SabaLearningMainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\MenuPage\SABA\SabaLearningUpdatePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\MenuPage\SABA\SabaLearningViewPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="View\MenuPage\Skills\SkillsMatrixManagerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -735,6 +726,22 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MenuPage\Tasks\TaskPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Tracker\TrackerAddPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Tracker\TrackerMainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Tracker\TrackerUpdatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Tracker\TrackerViewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

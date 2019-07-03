@@ -2976,6 +2976,9 @@ Namespace ServiceReference1
         Private Emp_IDField As Integer
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private First_NameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private Nick_NameField As String
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
@@ -2997,6 +3000,19 @@ Namespace ServiceReference1
                 If (Me.Emp_IDField.Equals(value) <> true) Then
                     Me.Emp_IDField = value
                     Me.RaisePropertyChanged("Emp_ID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property First_Name() As String
+            Get
+                Return Me.First_NameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.First_NameField, value) <> true) Then
+                    Me.First_NameField = value
+                    Me.RaisePropertyChanged("First_Name")
                 End If
             End Set
         End Property
@@ -3451,10 +3467,19 @@ Namespace ServiceReference1
         Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private BIRTHDATEField As Date
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private CELL_NOField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private DESCRIPTIONField As String
+        Private DEPARTMENTField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private DIVISIONField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private DT_HIREDField As Date
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private DateReviewedField As Date
@@ -3490,10 +3515,28 @@ Namespace ServiceReference1
         Private LOCField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private MARITAL_STATUSField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private MIDDLE_NAMEField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private Nick_NameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private OTHERPHONEField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private POS_IDField As Integer
+        Private PERMISSION_GROUPField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private POSITIONField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SHIFTField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private STATUSField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private lOCALField As Integer
@@ -3505,6 +3548,19 @@ Namespace ServiceReference1
             End Get
             Set
                 Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property BIRTHDATE() As Date
+            Get
+                Return Me.BIRTHDATEField
+            End Get
+            Set
+                If (Me.BIRTHDATEField.Equals(value) <> true) Then
+                    Me.BIRTHDATEField = value
+                    Me.RaisePropertyChanged("BIRTHDATE")
+                End If
             End Set
         End Property
         
@@ -3522,14 +3578,40 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property DESCRIPTION() As String
+        Public Property DEPARTMENT() As String
             Get
-                Return Me.DESCRIPTIONField
+                Return Me.DEPARTMENTField
             End Get
             Set
-                If (Object.ReferenceEquals(Me.DESCRIPTIONField, value) <> true) Then
-                    Me.DESCRIPTIONField = value
-                    Me.RaisePropertyChanged("DESCRIPTION")
+                If (Object.ReferenceEquals(Me.DEPARTMENTField, value) <> true) Then
+                    Me.DEPARTMENTField = value
+                    Me.RaisePropertyChanged("DEPARTMENT")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property DIVISION() As String
+            Get
+                Return Me.DIVISIONField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.DIVISIONField, value) <> true) Then
+                    Me.DIVISIONField = value
+                    Me.RaisePropertyChanged("DIVISION")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property DT_HIRED() As Date
+            Get
+                Return Me.DT_HIREDField
+            End Get
+            Set
+                If (Me.DT_HIREDField.Equals(value) <> true) Then
+                    Me.DT_HIREDField = value
+                    Me.RaisePropertyChanged("DT_HIRED")
                 End If
             End Set
         End Property
@@ -3678,6 +3760,45 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property MARITAL_STATUS() As String
+            Get
+                Return Me.MARITAL_STATUSField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.MARITAL_STATUSField, value) <> true) Then
+                    Me.MARITAL_STATUSField = value
+                    Me.RaisePropertyChanged("MARITAL_STATUS")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property MIDDLE_NAME() As String
+            Get
+                Return Me.MIDDLE_NAMEField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.MIDDLE_NAMEField, value) <> true) Then
+                    Me.MIDDLE_NAMEField = value
+                    Me.RaisePropertyChanged("MIDDLE_NAME")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Nick_Name() As String
+            Get
+                Return Me.Nick_NameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.Nick_NameField, value) <> true) Then
+                    Me.Nick_NameField = value
+                    Me.RaisePropertyChanged("Nick_Name")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
         Public Property OTHERPHONE() As String
             Get
                 Return Me.OTHERPHONEField
@@ -3691,14 +3812,53 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property POS_ID() As Integer
+        Public Property PERMISSION_GROUP() As String
             Get
-                Return Me.POS_IDField
+                Return Me.PERMISSION_GROUPField
             End Get
             Set
-                If (Me.POS_IDField.Equals(value) <> true) Then
-                    Me.POS_IDField = value
-                    Me.RaisePropertyChanged("POS_ID")
+                If (Object.ReferenceEquals(Me.PERMISSION_GROUPField, value) <> true) Then
+                    Me.PERMISSION_GROUPField = value
+                    Me.RaisePropertyChanged("PERMISSION_GROUP")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property POSITION() As Integer
+            Get
+                Return Me.POSITIONField
+            End Get
+            Set
+                If (Me.POSITIONField.Equals(value) <> true) Then
+                    Me.POSITIONField = value
+                    Me.RaisePropertyChanged("POSITION")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SHIFT() As String
+            Get
+                Return Me.SHIFTField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SHIFTField, value) <> true) Then
+                    Me.SHIFTField = value
+                    Me.RaisePropertyChanged("SHIFT")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property STATUS() As String
+            Get
+                Return Me.STATUSField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.STATUSField, value) <> true) Then
+                    Me.STATUSField = value
+                    Me.RaisePropertyChanged("STATUS")
                 End If
             End Set
         End Property

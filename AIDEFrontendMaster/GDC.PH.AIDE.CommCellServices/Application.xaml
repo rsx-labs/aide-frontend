@@ -114,7 +114,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="10" Background="#FF02CB5D">
+                            <Border x:Name="border" CornerRadius="15" Background="#FF02CB5D">
                                 <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           TextElement.FontWeight="Bold">
@@ -669,7 +669,7 @@
                 </Grid.ColumnDefinitions>
                 <Border x:Name="Border" 
                         Grid.ColumnSpan="2"
-                        CornerRadius="10"
+                        CornerRadius="15"
                         Background="White"
                         BorderBrush="Gainsboro"
                         BorderThickness="3" />
