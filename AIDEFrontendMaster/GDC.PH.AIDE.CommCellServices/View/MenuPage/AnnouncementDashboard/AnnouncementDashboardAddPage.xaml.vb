@@ -72,13 +72,11 @@ Class AnnouncementDashboardAddPage
         Try
             InitializeService()
             Dim textRange As New TextRange(txtAnnouncementMessage.Document.ContentStart, txtAnnouncementMessage.Document.ContentEnd)
-            If textRange.Text = Nothing Or _announcementmodel.TITLE = Nothing Then
-            Else
+            If Not IsNothing(textRange.Text) Or Not _announcementmodel.TITLE = Nothing Then
                 _announce.MESSAGE = textRange.Text
                 _announce.TITLE = _announcementmodel.TITLE
                 _announce.END_DATE = DateTime.Today
                 _announce.EMP_ID = Me.empID
-
             End If
             Return _announce
         Catch ex As Exception
@@ -106,9 +104,9 @@ Class AnnouncementDashboardAddPage
     Private Sub btnAnnouncementCreate_Click(sender As Object, e As RoutedEventArgs)
         Try
             InitializeService()
+            Dim textRange As New TextRange(txtAnnouncementMessage.Document.ContentStart, txtAnnouncementMessage.Document.ContentEnd)
 
-
-            If _announce.TITLE = Nothing Or _announce.MESSAGE = Nothing Then
+            If _announcemodel.TITLE = Nothing Or textRange.Text.Trim() = String.Empty Then
                 MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else
                 aide.InsertAnnouncements(getDataInsert(Me.DataContext()))

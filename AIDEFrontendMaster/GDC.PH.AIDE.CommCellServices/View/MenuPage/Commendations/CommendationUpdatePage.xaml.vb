@@ -66,6 +66,11 @@ Class CommendationUpdatePage
         'dateInput.IsEnabled = False
         If Not permission = "Manager" Then
             btnCommendationUpdate.Visibility = Windows.Visibility.Hidden
+            comboAddEmployee.Visibility = Windows.Visibility.Hidden
+            txtemployeeWM.Visibility = Windows.Visibility.Hidden
+            txtlabelSelectedEmployee.Visibility = Windows.Visibility.Hidden
+            btnCommendationAddEmployee.Visibility = Windows.Visibility.Hidden
+            ManagerAuthScreen.Visibility = Windows.Visibility.Visible
         End If
 
 

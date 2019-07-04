@@ -318,6 +318,7 @@
   <xs:complexType name="Nickname">
     <xs:sequence>
       <xs:element minOccurs="0" name="Emp_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="Employee_Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="First_Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Nick_Name" nillable="true" type="xs:string" />
     </xs:sequence>
@@ -360,10 +361,13 @@
   <xs:element name="ArrayOfContactList" nillable="true" type="tns:ArrayOfContactList" />
   <xs:complexType name="ContactList">
     <xs:sequence>
+      <xs:element minOccurs="0" name="ACTIVE" type="xs:int" />
       <xs:element minOccurs="0" name="BIRTHDATE" type="xs:dateTime" />
       <xs:element minOccurs="0" name="CELL_NO" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DEPARTMENT" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DEPARTMENT_ID" type="xs:int" />
       <xs:element minOccurs="0" name="DIVISION" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DIVISION_ID" type="xs:int" />
       <xs:element minOccurs="0" name="DT_HIRED" type="xs:dateTime" />
       <xs:element minOccurs="0" name="DateReviewed" type="xs:dateTime" />
       <xs:element minOccurs="0" name="EMADDRESS" nillable="true" type="xs:string" />
@@ -377,13 +381,15 @@
       <xs:element minOccurs="0" name="LAST_NAME" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LOC" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MARITAL_STATUS" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MARITAL_STATUS_ID" type="xs:int" />
       <xs:element minOccurs="0" name="MIDDLE_NAME" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Nick_Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="OTHERPHONE" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PERMISSION_GROUP" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="POSITION" type="xs:int" />
+      <xs:element minOccurs="0" name="PERMISSION_GROUP_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="POSITION" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="POSITION_ID" type="xs:int" />
       <xs:element minOccurs="0" name="SHIFT" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="STATUS" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="lOCAL" type="xs:int" />
     </xs:sequence>
   </xs:complexType>

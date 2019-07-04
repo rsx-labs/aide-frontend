@@ -11,6 +11,7 @@ Public Class ContactListViewModel
     Implements INotifyPropertyChanged
 
     Public _contactList As New ObservableCollection(Of ContactListModel)
+    Private _contactmodel As New ContactListModel
     'Private _NicknameDBProvider As ObservableCollection(Of MyNickname)
     Private client As AideServiceClient
 
@@ -26,6 +27,16 @@ Public Class ContactListViewModel
         Set(value As ObservableCollection(Of ContactListModel))
             _contactList = value
             NotifyPropertyChanged("ContactList")
+        End Set
+    End Property
+
+    Public Property ContactProfile As ContactListModel
+        Get
+            Return _contactmodel
+        End Get
+        Set(value As ContactListModel)
+            _contactmodel = value
+            NotifyPropertyChanged("ContactProfile")
         End Set
     End Property
 

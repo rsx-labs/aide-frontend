@@ -33,44 +33,63 @@ Public Class ContactListDBProvider
         End If
         Dim _contactsObject As MyContactList = New MyContactList With {
                 .EmpID = _contact.EmpID,
+                .LAST_NAME = _contact.LAST_NAME,
+                .FIRST_NAME = _contact.FIRST_NAME,
+                .MIDDLE_NAME = _contact.MIDDLE_NAME,
+                .NICK_NAME = _contact.Nick_Name,
+                .ACTIVE = _contact.ACTIVE,
+                .BDATE = _contact.BIRTHDATE,
+                .POSITION = _contact.POSITION,
+                .DT_HIRED = _contact.DT_HIRED,
+                .MARITAL_STATUS = _contact.MARITAL_STATUS,
+                .IMAGE_PATH = _contact.IMAGE_PATH,
+                .PERMISSION_GROUP = _contact.PERMISSION_GROUP,
+                .DEPARTMENT = _contact.DEPARTMENT,
+                .DIVISION = _contact.DIVISION,
+                .SHIFT = _contact.SHIFT,
                 .EMADDRESS = _contact.EMADDRESS,
                 .EMADDRESS2 = _contact.EMADDRESS2,
+                .LOC = _contact.LOC,
                 .CELL_NO = _contact.CELL_NO,
+                .lOCAL = _contact.lOCAL,
                 .HOUSEPHONE = _contact.HOUSEPHONE,
                 .OTHERPHONE = _contact.OTHERPHONE,
-                .lOCAL = _contact.lOCAL,
-                .LOC = _contact.LOC,
                 .DateReviewed = _contact.DateReviewed,
-                .POSITION = _contact.POSITION,
-                .MARITAL_STATUS = _contact.MARITAL_STATUS,
-                .FULL_NAME = _contact.FIRST_NAME + " " + _contact.LAST_NAME,
-                .IMAGE_PATH = _contact.IMAGE_PATH,
                 .IsREVIEWED = isReviewed,
-                .NICK_NAME = _contact.Nick_Name
-                }
+                .FULL_NAME = _contact.FIRST_NAME + " " + _contact.LAST_NAME
+                      }
         _contactList.Add(_contactsObject)
     End Sub
 
 End Class
 
 Public Class MyContactList
-    Property CELL_NO As String
-    Property DateReviewed As Date
+    Property EmpID As Integer
+    Property LAST_NAME As String
+    Property FIRST_NAME As String
+    Property MIDDLE_NAME As String
+    Property NICK_NAME As String
+    Property ACTIVE As Integer
+    Property BDATE As Date
+    Property POSITION As String
+    Property DT_HIRED As Date
+    Property MARITAL_STATUS As String
+    Property IMAGE_PATH As String
+    Property PERMISSION_GROUP As String
+    Property DEPARTMENT As String
+    Property DIVISION As String
+    Property SHIFT As String
     Property EMADDRESS As String
     Property EMADDRESS2 As String
-    Property EmpID As Integer
-    Property HOUSEPHONE As String
-    Property lOCAL As Integer
     Property LOC As String
-    Property MARITAL_STATUS As String
-    Property POSITION As String
+    Property CELL_NO As String
+    Property lOCAL As Integer
+    Property HOUSEPHONE As String
     Property OTHERPHONE As String
-    Property FIRST_NAME As String
-    Property LAST_NAME As String
+    Property DateReviewed As Date
     Property IsREVIEWED As Boolean
     Property FULL_NAME As String
-    Property IMAGE_PATH As String
-    Property NICK_NAME As String
+
 End Class
 '''''''''''''''''''''''''''''''''
 '   AEVAN CAMILLE BATONGBACAL   '

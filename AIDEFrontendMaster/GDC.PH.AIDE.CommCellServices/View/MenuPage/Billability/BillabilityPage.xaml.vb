@@ -152,6 +152,7 @@ Public Class BillabilityPage
             chartMonthSummary.Series = SeriesCollection
             chartMonthSummary.AxisX.First().Labels = employee
             chartMonthSummary.AxisY.First().LabelFormatter = Function(value) value
+            chartMonthSummary.AxisX.First().LabelsRotation = 135
 
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
@@ -217,6 +218,7 @@ Public Class BillabilityPage
             chartMonth.Series = SeriesCollection
             chartMonth.AxisX.First().Labels = employee
             chartMonth.AxisY.First().LabelFormatter = Function(value) value
+            chartMonth.AxisX.First().LabelsRotation = 135
 
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")

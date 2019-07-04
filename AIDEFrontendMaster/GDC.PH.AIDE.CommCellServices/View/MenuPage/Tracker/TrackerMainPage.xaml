@@ -634,23 +634,14 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="12*"/>
+                    
+                    
 
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <!--<Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
-                            <Image Source="..\..\..\Assets\Icon\SabaIcon.png" />
-                        </Viewbox>-->
-
-                    </Grid>
-
-                    <Grid Grid.Column="1">
+                    
                         <Viewbox HorizontalAlignment="Left">
                             <TextBlock TextWrapping="Wrap" Padding="0" Text="Tracker" Margin="0,7,0,7" Foreground="DimGray"/>
                         </Viewbox>
-                    </Grid>
+                 
 
                 </Grid>
                 <Grid Grid.Column="1">
@@ -681,7 +672,7 @@
                                         <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png">
                                         </Image>
                                     </Viewbox>
-                                    <TextBlock TextWrapping="WrapWithOverflow" IsHitTestVisible="False" Text="Search a Saba course" VerticalAlignment="Center" HorizontalAlignment="left" Margin="5,0,0,0" Foreground="DarkGray">
+                                    <TextBlock TextWrapping="WrapWithOverflow" IsHitTestVisible="False" Text="Search a tracker course" VerticalAlignment="Center" HorizontalAlignment="left" Margin="5,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>

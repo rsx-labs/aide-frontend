@@ -86,11 +86,12 @@ Class AnnouncementDashboardUpdatePage
         Try
             InitializeService()
             Dim textRange As New TextRange(txtAnnouncementMessage.Document.ContentStart, txtAnnouncementMessage.Document.ContentEnd)
-            Me.DataContext = announcementModel.ObjectAnnouncement
 
-            If announcementModel.ObjectAnnouncement.TITLE = Nothing Or textRange.Text = String.Empty Then
+
+            If announcementModel.ObjectAnnouncement.TITLE = Nothing Or textRange.Text.Trim() = String.Empty Then
                 MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else
+                Me.DataContext = announcementModel.ObjectAnnouncement
                 aide.UpdateAnnouncements(getDataUpdate(Me.DataContext()))
                 MsgBox("Successfully Updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 _announce.TITLE = Nothing

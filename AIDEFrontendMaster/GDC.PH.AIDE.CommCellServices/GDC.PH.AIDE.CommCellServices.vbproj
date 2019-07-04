@@ -381,6 +381,9 @@
     <Compile Include="View\MenuPage\ContactList\UpdateContactList.xaml.vb">
       <DependentUpon>UpdateContactList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MenuPage\ContactList\UpdateContactListPage.xaml.vb">
+      <DependentUpon>UpdateContactListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MenuPage\CreateProject\CreateProjectPage.xaml.vb">
       <DependentUpon>CreateProjectPage.xaml</DependentUpon>
     </Compile>
@@ -664,6 +667,10 @@
     <Page Include="View\MenuPage\ContactList\UpdateContactList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\ContactList\UpdateContactListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MenuPage\CreateProject\CreateProjectPage.xaml">
       <Generator>MSBuild:Compile</Generator>

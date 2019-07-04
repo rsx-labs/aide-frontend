@@ -46,7 +46,8 @@ Public Class SuccessRegisterDBProvider
     Public Sub SetMyNickname(ByVal _nickname As Nickname)
         Dim _successObject As MyNickname = New MyNickname With {
             .EmpID = _nickname.Emp_ID,
-            .NickName = _nickname.Nick_Name
+            .NickName = _nickname.Nick_Name,
+        .EmployeeName = _nickname.Employee_Name
                 }
         _nicknameList.Add(_successObject)
     End Sub
@@ -68,4 +69,5 @@ End Class
 Public Class MyNickname
     Property EmpID As Integer
     Property NickName As String
+    Property EmployeeName As String
 End Class

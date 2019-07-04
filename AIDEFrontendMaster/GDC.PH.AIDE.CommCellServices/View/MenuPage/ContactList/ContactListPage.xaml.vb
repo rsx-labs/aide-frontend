@@ -254,21 +254,38 @@ Public Class ContactListPage
         If lv_contacts.SelectedIndex <> -1 Then
             If lv_contacts.SelectedItem IsNot Nothing Then
                 Dim _Email As String = CType(lv_contacts.SelectedItem, ContactListModel).EMAIL_ADDRESS
-                If email = _Email.ToLower Then
+
+                If profile.Permission = "Manager" Then
                     Dim contactList As New ContactListModel
                     contactList.EMP_ID = CType(lv_contacts.SelectedItem, ContactListModel).EMP_ID
-                    contactList.EMAIL_ADDRESS = CType(lv_contacts.SelectedItem, ContactListModel).EMAIL_ADDRESS
-                    contactList.EMAIL_ADDRESS2 = CType(lv_contacts.SelectedItem, ContactListModel).EMAIL_ADDRESS2
                     contactList.FIRST_NAME = CType(lv_contacts.SelectedItem, ContactListModel).FIRST_NAME
                     contactList.LAST_NAME = CType(lv_contacts.SelectedItem, ContactListModel).LAST_NAME
-                    contactList.LOCAL = CType(lv_contacts.SelectedItem, ContactListModel).LOCAL
+                    contactList.MIDDLE_NAME = CType(lv_contacts.SelectedItem, ContactListModel).MIDDLE_NAME
+                    contactList.NICK_NAME = CType(lv_contacts.SelectedItem, ContactListModel).NICK_NAME
+                    contactList.ACTIVE = CType(lv_contacts.SelectedItem, ContactListModel).ACTIVE
+                    contactList.BDATE = CType(lv_contacts.SelectedItem, ContactListModel).BDATE
+                    contactList.POSITION = CType(lv_contacts.SelectedItem, ContactListModel).POSITION
+                    contactList.DT_HIRED = CType(lv_contacts.SelectedItem, ContactListModel).DT_HIRED
+                    contactList.MARITAL_STATUS = CType(lv_contacts.SelectedItem, ContactListModel).MARITAL_STATUS
+                    contactList.IMAGE_PATH = CType(lv_contacts.SelectedItem, ContactListModel).IMAGE_PATH
+                    contactList.PERMISSION_GROUP = CType(lv_contacts.SelectedItem, ContactListModel).PERMISSION_GROUP
+                    contactList.DEPARTMENT = CType(lv_contacts.SelectedItem, ContactListModel).DEPARTMENT
+                    contactList.DIVISION = CType(lv_contacts.SelectedItem, ContactListModel).DIVISION
+                    contactList.SHIFT = CType(lv_contacts.SelectedItem, ContactListModel).SHIFT
+                    contactList.EMAIL_ADDRESS = CType(lv_contacts.SelectedItem, ContactListModel).EMAIL_ADDRESS
+                    contactList.EMAIL_ADDRESS2 = CType(lv_contacts.SelectedItem, ContactListModel).EMAIL_ADDRESS2
                     contactList.LOCATION = CType(lv_contacts.SelectedItem, ContactListModel).LOCATION
                     contactList.CEL_NO = CType(lv_contacts.SelectedItem, ContactListModel).CEL_NO
+                    contactList.LOCAL = CType(lv_contacts.SelectedItem, ContactListModel).LOCAL
                     contactList.HOMEPHONE = CType(lv_contacts.SelectedItem, ContactListModel).HOMEPHONE
                     contactList.OTHER_PHONE = CType(lv_contacts.SelectedItem, ContactListModel).OTHER_PHONE
-                    contactList.NICK_NAME = CType(lv_contacts.SelectedItem, ContactListModel).NICK_NAME
+                    contactList.DT_REVIEWED = CType(lv_contacts.SelectedItem, ContactListModel).DT_REVIEWED
 
-                    addframe.Navigate(New UpdateContactList(contactList, mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+                    addframe.Navigate(New UpdateContactListPage(contactList, mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+
+                    ', mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame
+
+                    'addframe.Navigate(New UpdateContactList(contactList, mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
                     mainFrame.IsEnabled = False
                     mainFrame.Opacity = 0.3
                     menugrid.IsEnabled = False
@@ -276,10 +293,53 @@ Public Class ContactListPage
                     submenuframe.IsEnabled = False
                     submenuframe.Opacity = 0.3
                     addframe.Visibility = Visibility.Visible
-                    addframe.Margin = New Thickness(150, 100, 150, 100)
+                    addframe.Margin = New Thickness(100, 80, 100, 80)
                 Else
-                    Exit Sub
+                    If email = _Email.ToLower Then
+                        Dim contactList As New ContactListModel
+                        contactList.EMP_ID = CType(lv_contacts.SelectedItem, ContactListModel).EMP_ID
+                        contactList.FIRST_NAME = CType(lv_contacts.SelectedItem, ContactListModel).FIRST_NAME
+                        contactList.LAST_NAME = CType(lv_contacts.SelectedItem, ContactListModel).LAST_NAME
+                        contactList.MIDDLE_NAME = CType(lv_contacts.SelectedItem, ContactListModel).MIDDLE_NAME
+                        contactList.NICK_NAME = CType(lv_contacts.SelectedItem, ContactListModel).NICK_NAME
+                        contactList.ACTIVE = CType(lv_contacts.SelectedItem, ContactListModel).ACTIVE
+                        contactList.BDATE = CType(lv_contacts.SelectedItem, ContactListModel).BDATE
+                        contactList.POSITION = CType(lv_contacts.SelectedItem, ContactListModel).POSITION
+                        contactList.DT_HIRED = CType(lv_contacts.SelectedItem, ContactListModel).DT_HIRED
+                        contactList.MARITAL_STATUS = CType(lv_contacts.SelectedItem, ContactListModel).MARITAL_STATUS
+                        contactList.IMAGE_PATH = CType(lv_contacts.SelectedItem, ContactListModel).IMAGE_PATH
+                        contactList.PERMISSION_GROUP = CType(lv_contacts.SelectedItem, ContactListModel).PERMISSION_GROUP
+                        contactList.DEPARTMENT = CType(lv_contacts.SelectedItem, ContactListModel).DEPARTMENT
+                        contactList.DIVISION = CType(lv_contacts.SelectedItem, ContactListModel).DIVISION
+                        contactList.SHIFT = CType(lv_contacts.SelectedItem, ContactListModel).SHIFT
+                        contactList.EMAIL_ADDRESS = CType(lv_contacts.SelectedItem, ContactListModel).EMAIL_ADDRESS
+                        contactList.EMAIL_ADDRESS2 = CType(lv_contacts.SelectedItem, ContactListModel).EMAIL_ADDRESS2
+                        contactList.LOCATION = CType(lv_contacts.SelectedItem, ContactListModel).LOCATION
+                        contactList.CEL_NO = CType(lv_contacts.SelectedItem, ContactListModel).CEL_NO
+                        contactList.LOCAL = CType(lv_contacts.SelectedItem, ContactListModel).LOCAL
+                        contactList.HOMEPHONE = CType(lv_contacts.SelectedItem, ContactListModel).HOMEPHONE
+                        contactList.OTHER_PHONE = CType(lv_contacts.SelectedItem, ContactListModel).OTHER_PHONE
+                        contactList.DT_REVIEWED = CType(lv_contacts.SelectedItem, ContactListModel).DT_REVIEWED
+
+                        addframe.Navigate(New UpdateContactListPage(contactList, mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+
+                        ', mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame
+
+                        'addframe.Navigate(New UpdateContactList(contactList, mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+                        mainFrame.IsEnabled = False
+                        mainFrame.Opacity = 0.3
+                        menugrid.IsEnabled = False
+                        menugrid.Opacity = 0.3
+                        submenuframe.IsEnabled = False
+                        submenuframe.Opacity = 0.3
+                        addframe.Visibility = Visibility.Visible
+                        addframe.Margin = New Thickness(100, 80, 100, 80)
+                    Else
+                        Exit Sub
+                    End If
                 End If
+
+                
             End If
         End If
     End Sub
