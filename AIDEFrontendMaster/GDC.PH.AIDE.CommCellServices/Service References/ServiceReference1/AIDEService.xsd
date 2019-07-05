@@ -381,9 +381,10 @@
       <xs:element minOccurs="0" name="LAST_NAME" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LOC" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MARITAL_STATUS" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MARITAL_STATUS_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="MARITAL_STATUS_ID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MIDDLE_NAME" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Nick_Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OLD_EMP_ID" type="xs:int" />
       <xs:element minOccurs="0" name="OTHERPHONE" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PERMISSION_GROUP" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PERMISSION_GROUP_ID" type="xs:int" />

@@ -3543,13 +3543,16 @@ Namespace ServiceReference1
         Private MARITAL_STATUSField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private MARITAL_STATUS_IDField As Integer
+        Private MARITAL_STATUS_IDField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private MIDDLE_NAMEField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private Nick_NameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private OLD_EMP_IDField As Integer
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private OTHERPHONEField As String
@@ -3843,12 +3846,12 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property MARITAL_STATUS_ID() As Integer
+        Public Property MARITAL_STATUS_ID() As String
             Get
                 Return Me.MARITAL_STATUS_IDField
             End Get
             Set
-                If (Me.MARITAL_STATUS_IDField.Equals(value) <> true) Then
+                If (Object.ReferenceEquals(Me.MARITAL_STATUS_IDField, value) <> true) Then
                     Me.MARITAL_STATUS_IDField = value
                     Me.RaisePropertyChanged("MARITAL_STATUS_ID")
                 End If
@@ -3877,6 +3880,19 @@ Namespace ServiceReference1
                 If (Object.ReferenceEquals(Me.Nick_NameField, value) <> true) Then
                     Me.Nick_NameField = value
                     Me.RaisePropertyChanged("Nick_Name")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property OLD_EMP_ID() As Integer
+            Get
+                Return Me.OLD_EMP_IDField
+            End Get
+            Set
+                If (Me.OLD_EMP_IDField.Equals(value) <> true) Then
+                    Me.OLD_EMP_IDField = value
+                    Me.RaisePropertyChanged("OLD_EMP_ID")
                 End If
             End Set
         End Property
