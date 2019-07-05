@@ -34,12 +34,11 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    Contents: '**\bin\**'
-    TargetFolder: '- task: DownloadFileshareArtifacts@1
-  inputs:
-    filesharePath: '$(Build.ArtifactStagingDirectory)'
-    artifactName: 'drop'
-    downloadPath: '$(System.ArtifactsDirectory)'\drops'
+    Contents: '**/bin/**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
     CleanTargetFolder: true
-    OverWrite: true
 
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Pipeline.Workspace)'
+    artifact: 'aide-frontend-drop'
