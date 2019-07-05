@@ -11,6 +11,8 @@ Public Class AssetsDBProvider
     Private client As AideServiceClient
     Private UNASSIGNED As String = "Unassigned"
     Private ASSIGNED As String = "Assigned"
+    Private PARTIALLY_ASSIGNED As String = "Partially Assigned"
+    Private PARTIALLY_UNASSIGNED As String = "Partially Unassigned"
     Private Status_Descr As String
     Private Date_Descr As String
 
@@ -45,8 +47,12 @@ Public Class AssetsDBProvider
     Public Sub SetAssetList(ByVal _assets As Assets)
         If _assets.STATUS = 1 Then
             Status_Descr = UNASSIGNED
-        Else
+        ElseIf _assets.STATUS = 2 Then
             Status_Descr = ASSIGNED
+        ElseIf _assets.STATUS = 3 Then
+            Status_Descr = PARTIALLY_ASSIGNED
+        ElseIf _assets.STATUS = 4 Then
+            Status_Descr = PARTIALLY_UNASSIGNED
         End If
 
         Dim dateDiffYear As Integer = DateDiff(DateInterval.Year, _assets.DATE_PURCHASED, Date.Now)
@@ -84,8 +90,12 @@ Public Class AssetsDBProvider
 
         If _assets.STATUS = 1 Then
             Status_Descr = UNASSIGNED
-        Else
+        ElseIf _assets.STATUS = 2 Then
             Status_Descr = ASSIGNED
+        ElseIf _assets.STATUS = 3 Then
+            Status_Descr = PARTIALLY_ASSIGNED
+        ElseIf _assets.STATUS = 4 Then
+            Status_Descr = PARTIALLY_UNASSIGNED
         End If
 
         If _assets.APPROVAL = 1 Then

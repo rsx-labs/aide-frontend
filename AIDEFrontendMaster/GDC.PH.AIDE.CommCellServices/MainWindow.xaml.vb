@@ -237,25 +237,6 @@ Class MainWindow
         End Try
     End Sub
 
-    Public Sub sendEmail()
-        Dim OutlookMessage As outlook.MailItem
-        Dim AppOutlook As New outlook.Application
-        Try
-            OutlookMessage = AppOutlook.CreateItem(outlook.OlItemType.olMailItem)
-            Dim Recipents As outlook.Recipients = OutlookMessage.Recipients
-            Recipents.Add("jhunellbarcenas@gmail.com")
-            OutlookMessage.Subject = "Sending through Outlook"
-            OutlookMessage.Body = "Testing outlook Mail"
-            OutlookMessage.BodyFormat = outlook.OlBodyFormat.olFormatHTML
-            OutlookMessage.Send()
-        Catch ex As Exception
-            MessageBox.Show("Mail could not be sent") 'if you dont want this message, simply delete this line 
-        Finally
-            OutlookMessage = Nothing
-            AppOutlook = Nothing
-        End Try
-    End Sub
-
     Public Sub attendance()
         Try
             'Get Login Time

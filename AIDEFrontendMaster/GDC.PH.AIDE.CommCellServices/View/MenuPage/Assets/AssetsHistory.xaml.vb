@@ -52,18 +52,8 @@ Public Class AssetsHistory
 
 #Region "EVENTS"
     Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
-
+        SetDataForSearch(txtSearch.Text)
     End Sub
-
-    'Private Sub lv_assetList_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles lv_assetList.LoadingRow
-    '    Dim RowDataContaxt As AssetsModel = TryCast(e.Row.DataContext, AssetsModel)
-
-    '    If RowDataContaxt IsNot Nothing Then
-    '        If RowDataContaxt.STATUS_DESCR = "Unassigned" Then
-    '            e.Row.Background = New SolidColorBrush(Colors.ForestGreen)
-    '        End If
-    '    End If
-    'End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As RoutedEventArgs) Handles btnPrint.Click
         Dim dialog As PrintDialog = New PrintDialog()
@@ -287,7 +277,4 @@ Public Class AssetsHistory
     End Sub
 #End Region
 
-    Private Sub txtSearch_TextChanged_1(sender As Object, e As TextChangedEventArgs)
-        SetDataForSearch(txtSearch.Text)
-    End Sub
 End Class

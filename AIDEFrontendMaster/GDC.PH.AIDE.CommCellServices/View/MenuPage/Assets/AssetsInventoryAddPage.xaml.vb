@@ -26,7 +26,8 @@ Public Class AssetsInventoryAddPage
 
     Dim lstNickname As Nickname()
     Dim nicknameVM As New NicknameViewModel()
-
+    Dim empId As Integer
+    Dim status As Integer
 #End Region
 
 #Region "Constructor"
@@ -66,6 +67,12 @@ Public Class AssetsInventoryAddPage
         'ListOfManagers()
         ListOfAssetType()
         ListOfAssetManufacturer()
+        empId = Integer.Parse(txtEmpID.Text)
+        If assetsModel.STATUS = 4 Then
+            status = 2
+        ElseIf assetsModel.STATUS = 3 Then
+            status = 1
+        End If
     End Sub
 
 #End Region
@@ -80,7 +87,7 @@ Public Class AssetsInventoryAddPage
                 MsgBox("Please Fill up the Fields!", MsgBoxStyle.Exclamation, "AIDE")
             Else
 
-                assets.EMP_ID = Integer.Parse(txtEmpID.Text)
+                assets.EMP_ID = empId
                 assets.ASSET_ID = Integer.Parse(txtID.Text)
                 assets.DATE_ASSIGNED = Date.Parse(dateInput.SelectedDate)
                 assets.COMMENTS = txtComments.Text
@@ -171,7 +178,11 @@ Public Class AssetsInventoryAddPage
     Private Sub btnDisapprove_Click(sender As Object, e As RoutedEventArgs) Handles btnDisapprove.Click
         Try
             e.Handled = True
-            approvalStatus = 2
+            If status = 2 Or status = 3 Then
+                approvalStatus = 1
+            ElseIf status = 1 Or status = 4 Then
+                approvalStatus = 2
+            End If
             Approval()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
@@ -275,6 +286,7 @@ Public Class AssetsInventoryAddPage
         assets.SERIAL_NO = txtSerial.Text
         assets.ASSET_TAG = txtAssetTag.Text
         assets.APPROVAL = approvalStatus
+        assets.STATUS = status
         assets.ASSIGNED_TO = 999 'USED JUST TO BE NOT NULL
 
         Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
@@ -298,6 +310,10 @@ Public Class AssetsInventoryAddPage
     End Sub
 
     Private Sub AssignEvents()
+        If fromPage = "Approval" Then
+            cbStatus.IsEnabled = False
+            cbNickname.IsEnabled = False
+        End If
         AddHandler btnApprove.Click, AddressOf btnApprove_Click
         AddHandler btnCancel.Click, AddressOf btnCancel_Click
         AddHandler btnBack.Click, AddressOf btnBack_Click
@@ -316,8 +332,13 @@ Public Class AssetsInventoryAddPage
     Public Sub LoadStatus()
         cbStatus.DisplayMemberPath = "Text"
         cbStatus.SelectedValuePath = "Value"
-        cbStatus.Items.Add(New With {.Text = "Unassigned", .Value = 1})
-        cbStatus.Items.Add(New With {.Text = "Assigned", .Value = 2})
+        cbStatus.Items.Add(New With {.Text = "Unassigned", .Value = 4})
+        cbStatus.Items.Add(New With {.Text = "Assigned", .Value = 3})
+        If assetsModel.STATUS = 3 Then
+            txtStatus.Text = "Partially Assigned"
+        ElseIf assetsModel.STATUS = 4 Then
+            txtStatus.Text = "Partially Unassigned"
+        End If
     End Sub
 
     Private Sub LoadData()

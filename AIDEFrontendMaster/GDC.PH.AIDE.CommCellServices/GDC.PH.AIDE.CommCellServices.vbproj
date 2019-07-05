@@ -875,7 +875,6 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
-    <None Include="GDC.PH.AIDE.CommCellServices_TemporaryKey.pfx" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

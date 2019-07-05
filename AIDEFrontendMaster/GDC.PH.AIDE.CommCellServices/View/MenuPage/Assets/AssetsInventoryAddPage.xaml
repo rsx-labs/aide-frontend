@@ -1185,7 +1185,7 @@
                         </Grid>
                         <Grid Grid.Row="1">
                             <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbStatus" Margin="5,5,0,5" IsReadOnly="True" VerticalContentAlignment="Center"/>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select asset status" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock x:Name="txtStatus" FontSize="12" IsHitTestVisible="False" Text="Select asset status" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1202,7 +1202,7 @@
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=cbStatus}" Value="">
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtStatus}" Value="">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -1243,7 +1243,7 @@
                         </Grid>
                         <Grid Grid.Row="3">
                             <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbNickname" Margin="5,5,0,5" IsReadOnly="True" VerticalContentAlignment="Center"
-                          SelectedValuePath="Emp_ID" DisplayMemberPath="Employee_Name" ItemsSource="{Binding NicknameList}"/>
+                          SelectedValuePath="Emp_ID" DisplayMemberPath="Nick_Name" ItemsSource="{Binding NicknameList}"/>
                             <TextBlock x:Name="txtEmpName" FontSize="12" IsHitTestVisible="False" Text="Select employee" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">

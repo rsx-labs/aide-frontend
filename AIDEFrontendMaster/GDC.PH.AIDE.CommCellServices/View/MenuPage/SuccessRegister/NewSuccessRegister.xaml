@@ -1011,7 +1011,7 @@
                              MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
                             <ComboBox x:Name="comboRaisedBy" SelectedValuePath="Emp_ID" 
-                              DisplayMemberPath="Nick_Name" Margin="0,5,5,5" Style="{DynamicResource StyleComboBox}" ItemsSource="{Binding NicknameList}" IsReadOnly="True"/>
+                              DisplayMemberPath="Employee_Name" Margin="0,5,5,5" Style="{DynamicResource StyleComboBox}" ItemsSource="{Binding NicknameList}" IsReadOnly="True"/>
 
                             <TextBlock x:Name="comboRaisedTBlock" FontSize="12" IsHitTestVisible="False" Text="Raised by" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
@@ -1133,7 +1133,7 @@
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="comboAddEmployee" Margin="5,5,2.5,5" IsReadOnly="True"
-                          SelectedValuePath="Emp_ID" DisplayMemberPath="Nick_Name" ItemsSource="{Binding NicknameList}"/>
+                          SelectedValuePath="Emp_ID" DisplayMemberPath="Employee_Name" ItemsSource="{Binding NicknameList}"/>
                                 <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select employee" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">

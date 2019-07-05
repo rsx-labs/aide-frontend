@@ -633,7 +633,7 @@
                                 <ColumnDefinition Width="181*"/>
                                 <ColumnDefinition Width="26*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox MaxLength="30" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="DimGray" FontSize="12" Margin="10" BorderThickness="3" Name="txtSearch" TextWrapping="Wrap" TextChanged="txtSearch_TextChanged_1" Width="auto" Grid.ColumnSpan="2" />
+                            <TextBox MaxLength="30" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="DimGray" FontSize="12" Margin="10" BorderThickness="3" Name="txtSearch" TextWrapping="Wrap" TextChanged="txtSearch_TextChanged" Width="auto" Grid.ColumnSpan="2" />
                             <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
                                 <Viewbox Margin="15,15,0,15">
                                     <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png">
