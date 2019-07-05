@@ -280,6 +280,11 @@ Public Class ContactListPage
                     contactList.HOMEPHONE = CType(lv_contacts.SelectedItem, ContactListModel).HOMEPHONE
                     contactList.OTHER_PHONE = CType(lv_contacts.SelectedItem, ContactListModel).OTHER_PHONE
                     contactList.DT_REVIEWED = CType(lv_contacts.SelectedItem, ContactListModel).DT_REVIEWED
+                    contactList.MARITAL_STATUS_ID = CType(lv_contacts.SelectedItem, ContactListModel).MARITAL_STATUS_ID
+                    contactList.POSITION_ID = CType(lv_contacts.SelectedItem, ContactListModel).POSITION_ID
+                    contactList.PERMISSION_GROUP_ID = CType(lv_contacts.SelectedItem, ContactListModel).PERMISSION_GROUP_ID
+                    contactList.DEPARTMENT_ID = CType(lv_contacts.SelectedItem, ContactListModel).DEPARTMENT_ID
+                    contactList.DIVISION_ID = CType(lv_contacts.SelectedItem, ContactListModel).DIVISION_ID
 
                     addframe.Navigate(New UpdateContactListPage(contactList, mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
 
@@ -361,7 +366,7 @@ Public Class ContactListPage
     End Sub
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
-        addframe.Navigate(New InsertContactList())
+        addframe.Navigate(New InsertContactList(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
         mainFrame.IsEnabled = False
         mainFrame.Opacity = 0.3
         menugrid.IsEnabled = False

@@ -135,6 +135,7 @@ Class UpdateContactList
     Private Sub AssignEvents()
         AddHandler btnCCancel.Click, AddressOf btnCCancel_Click
         AddHandler btnCUpdate.Click, AddressOf btnCUpdate_Click
+
     End Sub 'Assign events to buttons
 
     Private Sub ClearFields()

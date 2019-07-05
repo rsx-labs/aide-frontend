@@ -74,7 +74,7 @@
                                     <!--//First row-->
                                     <Grid Grid.Row="0" Grid.Column="0">
                                         <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                            <TextBox x:Name="txtContactEmpID" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=EMP_ID}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                            <TextBox IsReadOnly="True" x:Name="txtContactEmpID" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=EMP_ID}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         </Border>
 
                                         <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter employee ID" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
@@ -204,7 +204,7 @@
                                     <!--Middle Initial-->
                                     <Grid Grid.Row="1" Grid.Column="1">
                                         <Border Margin="5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
-                                            <DatePicker Style="{DynamicResource styleDatePickerfrom}" Margin="2" x:Name="dtContactBdate" BorderBrush="Transparent" Text="{Binding BDATE}" FontSize="12"/>
+                                            <DatePicker PreviewTextInput="NumberValidationTextBox" Style="{DynamicResource styleDatePickerfrom}" Margin="2" x:Name="dtContactBdate" BorderBrush="Transparent" SelectedDate="{Binding Path=BDATE}" FontSize="12"/>
                                         </Border>
 
                                         <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select birth date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
@@ -234,7 +234,7 @@
                                     </Grid>
                                     <!--Date of Birth-->
                                     <Grid Grid.Row="1" Grid.Column="2">
-                                        <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactPosition" Text="{Binding Path=POSITION}" Margin="5,5,0,5"/>
+                                        <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactPosition" Text="{Binding Path=POSITION}" SelectedValue="{Binding POSITION_ID}" Margin="5,5,0,5"/>
 
                                         <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select job position" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
@@ -267,7 +267,7 @@
                                     <!--//Third row-->
                                     <Grid Grid.Row="2" Grid.Column="0">
                                         <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
-                                            <DatePicker Style="{DynamicResource styleDatePickerfrom}" Margin="2" x:Name="dtContactDateHire" Text="{Binding DT_HIRED}" BorderBrush="Transparent" FontSize="12"/>
+                                            <DatePicker PreviewTextInput="NumberValidationTextBox" Style="{DynamicResource styleDatePickerfrom}" Margin="2" x:Name="dtContactDateHire" SelectedDate="{Binding DT_HIRED}" BorderBrush="Transparent" FontSize="12"/>
                                         </Border>
 
                                         <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select hire date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
@@ -297,7 +297,7 @@
                                     </Grid>
                                     <!--Date Hired-->
                                     <Grid Grid.Row="2" Grid.Column="1">
-                                        <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactMaritalStatus" Text="{Binding Path=MARITAL_STATUS}" Margin="5"/>
+                                        <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactMaritalStatus" Text="{Binding Path=MARITAL_STATUS}" SelectedValue="{Binding MARITAL_STATUS_ID}" Margin="5" />
 
                                         <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Marital Status" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
@@ -327,7 +327,7 @@
                                     </Grid>
                                     <!--Marital Status-->
                                     <Grid Grid.Row="2" Grid.Column="2">
-                                        <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactGroup" Text="{Binding Path=PERMISSION_GROUP}" Margin="5,5,0,5"/>
+                                        <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactGroup" Text="{Binding Path=PERMISSION_GROUP}" Margin="5,5,0,5" SelectedValue="{Binding PERMISSION_GROUP_ID}"/>
 
                                         <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select permission" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
@@ -359,7 +359,7 @@
 
                                     <!--//Fourth row-->
                                     <Grid Grid.Row="3" Grid.Column="0">
-                                        <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactDepartment" Text="{Binding Path=DEPARTMENT}" Margin="0,5,5,5"/>
+                                        <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactDepartment" Text="{Binding Path=DEPARTMENT}" Margin="0,5,5,5" SelectedValue="{Binding DEPARTMENT_ID}"/>
 
                                         <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Department" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
@@ -389,7 +389,7 @@
                                     </Grid>
                                     <!--Department-->
                                     <Grid Grid.Row="3" Grid.Column="1">
-                                        <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactDivision" Text="{Binding Path=DIVISION}" Margin="5"/>
+                                        <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactDivision" Text="{Binding Path=DIVISION}" Margin="5" SelectedValue="{Binding DIVISION_ID}"/>
 
                                         <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Division" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
@@ -785,6 +785,13 @@
                             <ColumnDefinition Width="*"/>
 
                         </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="1">
+                            <Button Style="{DynamicResource RoundCornerDelete}" x:Name="btnCDelete" Margin="5" >
+
+                                <TextBlock Text="DELETE" TextWrapping="Wrap" Margin="5"/>
+
+                            </Button>
+                        </Grid>
                         <Grid Grid.Column="2">
                             <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnCUpdate" Margin="5" >
 
