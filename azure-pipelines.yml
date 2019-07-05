@@ -31,3 +31,15 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: CopyFiles@2
+  inputs:
+    Contents: '**\bin\**'
+    TargetFolder: '- task: DownloadFileshareArtifacts@1
+  inputs:
+    filesharePath: '$(Build.ArtifactStagingDirectory)'
+    artifactName: 'drop'
+    downloadPath: '$(System.ArtifactsDirectory)'\drops'
+    CleanTargetFolder: true
+    OverWrite: true
+
