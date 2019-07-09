@@ -62,7 +62,7 @@
 
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Border Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Margin="3">
+                                <Border Background="white" BorderBrush="Gainsboro" BorderThickness="2" CornerRadius="15" Margin="3">
                                     <StackPanel VerticalAlignment="Stretch">
                                         <Grid>
                                             <Grid.RowDefinitions>

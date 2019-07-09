@@ -8,7 +8,7 @@
       Title="AnnouncementDashboard">
     
     <Page.Resources>
-        <LinearGradientBrush Opacity=".5" x:Key="GradientDesign" MappingMode="RelativeToBoundingBox">
+        <RadialGradientBrush Opacity=".5" x:Key="GradientDesign" MappingMode="RelativeToBoundingBox">
             <!--<RadialGradientBrush.RelativeTransform>
                     <TransformGroup>
                         <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="1"/>
@@ -17,8 +17,21 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </RadialGradientBrush.RelativeTransform>-->
-            <GradientStop Color="#FFFFD1FF" Offset="0.0"/>
-            <GradientStop Color="#FFC4FFF4" Offset="1.0"/>
+            <GradientStop Color="White" Offset="0.0"/>
+            <GradientStop Color="#FFF2F2F2" Offset="1.0"/>
+        </RadialGradientBrush>
+
+        <LinearGradientBrush Opacity=".5" x:Key="GradientDesign2" MappingMode="RelativeToBoundingBox">
+            <!--<RadialGradientBrush.RelativeTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="1"/>
+                        <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                        <RotateTransform CenterY="0.5" CenterX="0.5" Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </RadialGradientBrush.RelativeTransform>-->
+            <GradientStop Color="#FF3EBBF5" Offset="0.0"/>
+            <GradientStop Color="#FF86FDBF" Offset="1.0"/>
         </LinearGradientBrush>
     </Page.Resources>
     
@@ -50,38 +63,45 @@
                 </Grid>
             </Grid>
             
-            <Grid Grid.Row="1" Background="{DynamicResource GradientDesign}">
-                <ListView Background="Transparent"  Margin="5" ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" x:Name="AnnouncementLV" ItemsSource="{Binding ObjectAnnouncementSet}" Height="auto" Width="auto" BorderBrush="{x:Null}" SelectionMode="Single" Foreground="#FF07B9B1" TextOptions.TextFormattingMode="Display" AllowDrop="True" BorderThickness="0" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseDoubleClick="AnnouncementLV_MouseDoubleClick">
+            <Grid Grid.Row="1" Background="white" >
+                <ListView Background="{DynamicResource GradientDesign}" ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" x:Name="AnnouncementLV" ItemsSource="{Binding ObjectAnnouncementSet}" Height="auto" Width="auto" BorderBrush="{x:Null}" SelectionMode="Single" Foreground="#FF07B9B1" TextOptions.TextFormattingMode="Display" AllowDrop="True" BorderThickness="0" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled" MouseDoubleClick="AnnouncementLV_MouseDoubleClick">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Border Background="white" BorderBrush="#FFF0F0F0" BorderThickness="3" CornerRadius="15" Margin="3">
-                                <StackPanel VerticalAlignment="Stretch" Margin="7">
+                            <Border Margin="5,5,5,0" Background="{DynamicResource GradientDesign2}" BorderBrush="{DynamicResource GradientDesign2}" BorderThickness="2" CornerRadius="15">
+
+                                <!--<Border.Effect>
+                                    <DropShadowEffect  Direction="0" Opacity="0.9" ShadowDepth="1" Color="LightGray"/>
+                                </Border.Effect>-->
+                                <StackPanel VerticalAlignment="Stretch">
                                     <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="1*"/>
-                                            <RowDefinition Height="3*"/>
+                                            <RowDefinition Height="2*"/>
+                                            <RowDefinition Height="1.5*"/>
                                         </Grid.RowDefinitions>
                                         
-                                        <Grid Grid.Row="0">
+                                        <Grid Grid.Row="0" Margin="10,10,10,10">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="8*"/>
                                                 <ColumnDefinition Width="2*"/>
                                             </Grid.ColumnDefinitions>
                                             
                                             <Grid Grid.Column="0">
-                                                <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding TITLE}" FontSize="14" FontWeight="Bold" Foreground="Goldenrod"/>
+                                                <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding TITLE}" FontSize="14" FontWeight="SemiBold" Foreground="White"/>
                                             </Grid>
                                             
                                             <Grid Grid.Column="1">
-                                                <TextBlock TextWrapping="WrapWithOverflow" FontSize="12" Text="{Binding DATE_POSTED, StringFormat=MM/dd/yyyy}" TextAlignment="Right" VerticalAlignment="Center" Foreground="Gray" FontStyle="Italic" />
+                                                <TextBlock TextWrapping="WrapWithOverflow" FontSize="11" Text="{Binding DATE_POSTED, StringFormat=MM/dd/yyyy}" TextAlignment="Right" VerticalAlignment="Center" Foreground="DimGray" FontStyle="Italic" />
                                             </Grid>
                                         </Grid>
                                         
-                                        <Grid Grid.Row="1" Margin="0,5,0,0">
+                                        <Grid Grid.Row="1" >
                                             <Grid>
-                                                <Grid Grid.Column="0">
-                                                    <TextBlock x:Name="AnnouncementMessage" TextAlignment="Justify" TextWrapping="Wrap" Height="30" Foreground="DimGray" FontSize="11" Text="{Binding MESSAGE}" HorizontalAlignment="Left" TextTrimming="WordEllipsis"  VerticalAlignment="Center"/>
-                                                </Grid>
+                                                <Border Background="White" BorderThickness="0" CornerRadius="0,0,15,15" >
+
+                                                    <Grid Grid.Column="0">
+                                                        <TextBlock Margin="10,10,10,10" x:Name="AnnouncementMessage" TextAlignment="Justify" TextWrapping="Wrap" Height="0" Foreground="DimGray" FontSize="11" Text="{Binding MESSAGE}" HorizontalAlignment="Left" TextTrimming="WordEllipsis"  VerticalAlignment="Center"/>
+                                                    </Grid>
+                                                </Border>
                                             </Grid>
                                         </Grid>
                                     </Grid>

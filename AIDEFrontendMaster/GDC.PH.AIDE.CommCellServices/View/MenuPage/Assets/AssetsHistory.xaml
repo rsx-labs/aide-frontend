@@ -48,7 +48,7 @@
             </GradientBrush.GradientStops>
         </LinearGradientBrush>
 
-        <Style x:Key="ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
+        <!--<Style x:Key="ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
             <Setter Property="Visibility" Value="Hidden"/>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="OverridesDefaultStyle" Value="true"/>
@@ -184,7 +184,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
+        </Style>-->
         <!-- end of scroll -->
         <Style x:Key="RoundCorner" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>

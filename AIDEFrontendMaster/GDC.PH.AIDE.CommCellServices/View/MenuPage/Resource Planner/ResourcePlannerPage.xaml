@@ -221,7 +221,7 @@
             </GradientBrush.GradientStops>
         </LinearGradientBrush>
 
-        <Style x:Key="ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
+        <!--<Style x:Key="ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
             <Setter Property="Visibility" Value="Hidden"/>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="OverridesDefaultStyle" Value="true"/>
@@ -358,7 +358,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <!-- end of scroll -->
+        --><!-- end of scroll -->
         <SolidColorBrush x:Key="ComboBoxNormalBorderBrush" Color="#e3e9ef" />
         <SolidColorBrush x:Key="ComboBoxNormalBackgroundBrush" Color="#fff" />
         <SolidColorBrush x:Key="ComboBoxDisabledForegroundBrush" Color="#888" />
