@@ -362,6 +362,7 @@
   <xs:complexType name="ContactList">
     <xs:sequence>
       <xs:element minOccurs="0" name="ACTIVE" type="xs:int" />
+      <xs:element minOccurs="0" name="APPROVED" type="xs:int" />
       <xs:element minOccurs="0" name="BIRTHDATE" type="xs:dateTime" />
       <xs:element minOccurs="0" name="CELL_NO" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DEPARTMENT" nillable="true" type="xs:string" />

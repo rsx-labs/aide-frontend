@@ -335,6 +335,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="selection" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -349,6 +350,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="contact" nillable="true" type="q27:ContactList" />
+        <xs:element minOccurs="0" name="selection" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

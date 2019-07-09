@@ -68,6 +68,9 @@ Public Class AttendanceModel
 
     Public Property EmpImage As String
         Get
+            If _EmpImage = String.Empty Then
+                Return "\..\Assets\EmployeePhotos\shadowImage.png"
+            End If
             Return _EmpImage
         End Get
         Set(value As String)

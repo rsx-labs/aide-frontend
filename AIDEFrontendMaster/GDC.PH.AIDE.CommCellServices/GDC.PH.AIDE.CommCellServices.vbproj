@@ -1405,5 +1405,8 @@
   <ItemGroup>
     <Resource Include="Assets\Button\Wrong.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\EmployeePhotos\shadowImage.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
