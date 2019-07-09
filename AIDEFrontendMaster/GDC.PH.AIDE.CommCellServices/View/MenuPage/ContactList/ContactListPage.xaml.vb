@@ -7,6 +7,7 @@ Imports System.Collections.ObjectModel
 Imports System.Windows.Xps.Packaging
 Imports System.Windows.Xps
 Imports System.Printing
+Imports System.Configuration
 Imports Excel = Microsoft.Office.Interop.Excel
 
 ''' <summary>
@@ -41,9 +42,13 @@ Public Class ContactListPage
     Private submenuframe As Frame
     Private attendanceFrame As Frame
     Private profile As Profile
+    Private page As String
+    Dim totalRecords As Integer
 
     Dim lstContacts As ContactList()
     Dim paginatedCollection As PaginatedObservableCollection(Of ContactListModel) = New PaginatedObservableCollection(Of ContactListModel)(pagingRecordPerPage)
+    Dim addFg As Integer = ConfigurationManager.AppSettings("addFg")
+    Dim deleteFg As Integer = ConfigurationManager.AppSettings("deleteFg")
 #End Region
 
 #Region "Constructor"
@@ -61,10 +66,12 @@ Public Class ContactListPage
 
         If profile.Permission = "Manager" Then
             btnCreate.Visibility = Windows.Visibility.Visible
+            AllEmployeeDetailsTab.Visibility = Windows.Visibility.Visible
+            UnapprovedEmployeeDetailsTab.Visibility = Windows.Visibility.Visible
         End If
 
-        SetData()
-        LoadData()
+        'SetData()
+        'LoadData()
         'DisplayPagingInfo()
     End Sub
 
@@ -85,11 +92,35 @@ Public Class ContactListPage
 
 #Region "Sub Procedures"
 
+    'Public Sub SetData()
+    '    Try
+    '        If InitializeService() Then
+    '            lstContacts = _AideService.ViewContactListAll(email)
+    '            'SetPaging(PagingMode._First)
+    '        End If
+    '    Catch ex As Exception
+    '        MessageBox.Show(ex.Message)
+    '    End Try
+    'End Sub
+
     Public Sub SetData()
         Try
             If InitializeService() Then
-                lstContacts = _AideService.ViewContactListAll(email)
-                'SetPaging(PagingMode._First)
+                If ContactsTC.SelectedIndex = 0 Then
+                    lstContacts = _AideService.ViewContactListAll(email, 0)
+                    btnPrint.Visibility = Windows.Visibility.Hidden
+                ElseIf ContactsTC.SelectedIndex = 1 Then
+                    lstContacts = _AideService.ViewContactListAll(email, 1)
+                    btnPrint.Visibility = Windows.Visibility.Hidden
+                Else
+                    lstContacts = _AideService.ViewContactListAll(email, 2)
+                    btnPrint.Visibility = Windows.Visibility.Hidden
+                End If
+
+                LoadData()
+                totalRecords = lstContacts.Length
+
+                ' SetPaging(PagingMode._First)
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -102,6 +133,8 @@ Public Class ContactListPage
             Dim contactListDBProvider As New ContactListDBProvider
             Dim contactListVM As New ContactListViewModel()
 
+            paginatedCollection = New PaginatedObservableCollection(Of ContactListModel)(pagingRecordPerPage)
+
             For Each objContacts As ContactList In lstContacts
                 contactListDBProvider.SetMyContactList(objContacts)
             Next
@@ -110,7 +143,13 @@ Public Class ContactListPage
                 paginatedCollection.Add(New ContactListModel(contacts))
             Next
 
-            lv_contacts.ItemsSource = paginatedCollection
+            If ContactsTC.SelectedIndex = 0 Then
+                lv_team.ItemsSource = paginatedCollection
+            ElseIf ContactsTC.SelectedIndex = 1 Then
+                lv_all.ItemsSource = paginatedCollection
+            Else
+                lv_unapproved.ItemsSource = paginatedCollection
+            End If
             'contactListVM.ContactList = lstContactsList
             'lv_contacts.ItemsSource = lstContactsList
             'Me.DataContext = contactListVM
@@ -225,14 +264,14 @@ Public Class ContactListPage
     End Sub
 
     Private Sub GUISettingsOff()
-        lv_contacts.Visibility = Windows.Visibility.Hidden
+        lv_team.Visibility = Windows.Visibility.Hidden
 
         btnPrev.IsEnabled = False
         btnNext.IsEnabled = False
     End Sub
 
     Private Sub GUISettingsOn()
-        lv_contacts.Visibility = Windows.Visibility.Visible
+        lv_team.Visibility = Windows.Visibility.Visible
 
         btnPrev.IsEnabled = True
         btnNext.IsEnabled = True
@@ -240,7 +279,7 @@ Public Class ContactListPage
 #End Region
 
 #Region "Events"
-    Private Sub lv_contacts_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles lv_contacts.LoadingRow
+    Private Sub lv_team_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles lv_team.LoadingRow
         Dim RowDataContaxt As ContactListModel = TryCast(e.Row.DataContext, ContactListModel)
         If RowDataContaxt IsNot Nothing Then
             If RowDataContaxt.IsREVIEWED = False Then
@@ -249,102 +288,169 @@ Public Class ContactListPage
         End If
     End Sub
 
-    Private Sub lv_contacts_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles lv_contacts.MouseDoubleClick
+    Private Sub lv_team_MouseDoubleClick(sender As Object, e As SelectionChangedEventArgs) Handles lv_team.SelectionChanged
         e.Handled = True
-        If lv_contacts.SelectedIndex <> -1 Then
-            If lv_contacts.SelectedItem IsNot Nothing Then
-                Dim _Email As String = CType(lv_contacts.SelectedItem, ContactListModel).EMAIL_ADDRESS
-
+        If lv_team.SelectedIndex <> -1 Then
+            If lv_team.SelectedItem IsNot Nothing Then
+                Dim _Email As String = CType(lv_team.SelectedItem, ContactListModel).EMAIL_ADDRESS
+                Dim _selectedEmpID As Integer = CType(lv_team.SelectedItem, ContactListModel).EMP_ID
                 If profile.Permission = "Manager" Then
                     Dim contactList As New ContactListModel
-                    contactList.EMP_ID = CType(lv_contacts.SelectedItem, ContactListModel).EMP_ID
-                    contactList.FIRST_NAME = CType(lv_contacts.SelectedItem, ContactListModel).FIRST_NAME
-                    contactList.LAST_NAME = CType(lv_contacts.SelectedItem, ContactListModel).LAST_NAME
-                    contactList.MIDDLE_NAME = CType(lv_contacts.SelectedItem, ContactListModel).MIDDLE_NAME
-                    contactList.NICK_NAME = CType(lv_contacts.SelectedItem, ContactListModel).NICK_NAME
-                    contactList.ACTIVE = CType(lv_contacts.SelectedItem, ContactListModel).ACTIVE
-                    contactList.BDATE = CType(lv_contacts.SelectedItem, ContactListModel).BDATE
-                    contactList.POSITION = CType(lv_contacts.SelectedItem, ContactListModel).POSITION
-                    contactList.DT_HIRED = CType(lv_contacts.SelectedItem, ContactListModel).DT_HIRED
-                    contactList.MARITAL_STATUS = CType(lv_contacts.SelectedItem, ContactListModel).MARITAL_STATUS
-                    contactList.IMAGE_PATH = CType(lv_contacts.SelectedItem, ContactListModel).IMAGE_PATH
-                    contactList.PERMISSION_GROUP = CType(lv_contacts.SelectedItem, ContactListModel).PERMISSION_GROUP
-                    contactList.DEPARTMENT = CType(lv_contacts.SelectedItem, ContactListModel).DEPARTMENT
-                    contactList.DIVISION = CType(lv_contacts.SelectedItem, ContactListModel).DIVISION
-                    contactList.SHIFT = CType(lv_contacts.SelectedItem, ContactListModel).SHIFT
-                    contactList.EMAIL_ADDRESS = CType(lv_contacts.SelectedItem, ContactListModel).EMAIL_ADDRESS
-                    contactList.EMAIL_ADDRESS2 = CType(lv_contacts.SelectedItem, ContactListModel).EMAIL_ADDRESS2
-                    contactList.LOCATION = CType(lv_contacts.SelectedItem, ContactListModel).LOCATION
-                    contactList.CEL_NO = CType(lv_contacts.SelectedItem, ContactListModel).CEL_NO
-                    contactList.LOCAL = CType(lv_contacts.SelectedItem, ContactListModel).LOCAL
-                    contactList.HOMEPHONE = CType(lv_contacts.SelectedItem, ContactListModel).HOMEPHONE
-                    contactList.OTHER_PHONE = CType(lv_contacts.SelectedItem, ContactListModel).OTHER_PHONE
-                    contactList.DT_REVIEWED = CType(lv_contacts.SelectedItem, ContactListModel).DT_REVIEWED
-                    contactList.MARITAL_STATUS_ID = CType(lv_contacts.SelectedItem, ContactListModel).MARITAL_STATUS_ID
-                    contactList.POSITION_ID = CType(lv_contacts.SelectedItem, ContactListModel).POSITION_ID
-                    contactList.PERMISSION_GROUP_ID = CType(lv_contacts.SelectedItem, ContactListModel).PERMISSION_GROUP_ID
-                    contactList.DEPARTMENT_ID = CType(lv_contacts.SelectedItem, ContactListModel).DEPARTMENT_ID
-                    contactList.DIVISION_ID = CType(lv_contacts.SelectedItem, ContactListModel).DIVISION_ID
+
+                    For Each empContacts As ContactListModel In paginatedCollection
+                        If _selectedEmpID = empContacts.EMP_ID Then
+                            contactList = empContacts
+                        End If
+                    Next
 
                     addframe.Navigate(New UpdateContactListPage(contactList, mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+                    LoadUpdateScreen()
 
-                    ', mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame
-
-                    'addframe.Navigate(New UpdateContactList(contactList, mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
-                    mainFrame.IsEnabled = False
-                    mainFrame.Opacity = 0.3
-                    menugrid.IsEnabled = False
-                    menugrid.Opacity = 0.3
-                    submenuframe.IsEnabled = False
-                    submenuframe.Opacity = 0.3
-                    addframe.Visibility = Visibility.Visible
-                    addframe.Margin = New Thickness(100, 80, 100, 80)
                 Else
                     If email = _Email.ToLower Then
                         Dim contactList As New ContactListModel
-                        contactList.EMP_ID = CType(lv_contacts.SelectedItem, ContactListModel).EMP_ID
-                        contactList.FIRST_NAME = CType(lv_contacts.SelectedItem, ContactListModel).FIRST_NAME
-                        contactList.LAST_NAME = CType(lv_contacts.SelectedItem, ContactListModel).LAST_NAME
-                        contactList.MIDDLE_NAME = CType(lv_contacts.SelectedItem, ContactListModel).MIDDLE_NAME
-                        contactList.NICK_NAME = CType(lv_contacts.SelectedItem, ContactListModel).NICK_NAME
-                        contactList.ACTIVE = CType(lv_contacts.SelectedItem, ContactListModel).ACTIVE
-                        contactList.BDATE = CType(lv_contacts.SelectedItem, ContactListModel).BDATE
-                        contactList.POSITION = CType(lv_contacts.SelectedItem, ContactListModel).POSITION
-                        contactList.DT_HIRED = CType(lv_contacts.SelectedItem, ContactListModel).DT_HIRED
-                        contactList.MARITAL_STATUS = CType(lv_contacts.SelectedItem, ContactListModel).MARITAL_STATUS
-                        contactList.IMAGE_PATH = CType(lv_contacts.SelectedItem, ContactListModel).IMAGE_PATH
-                        contactList.PERMISSION_GROUP = CType(lv_contacts.SelectedItem, ContactListModel).PERMISSION_GROUP
-                        contactList.DEPARTMENT = CType(lv_contacts.SelectedItem, ContactListModel).DEPARTMENT
-                        contactList.DIVISION = CType(lv_contacts.SelectedItem, ContactListModel).DIVISION
-                        contactList.SHIFT = CType(lv_contacts.SelectedItem, ContactListModel).SHIFT
-                        contactList.EMAIL_ADDRESS = CType(lv_contacts.SelectedItem, ContactListModel).EMAIL_ADDRESS
-                        contactList.EMAIL_ADDRESS2 = CType(lv_contacts.SelectedItem, ContactListModel).EMAIL_ADDRESS2
-                        contactList.LOCATION = CType(lv_contacts.SelectedItem, ContactListModel).LOCATION
-                        contactList.CEL_NO = CType(lv_contacts.SelectedItem, ContactListModel).CEL_NO
-                        contactList.LOCAL = CType(lv_contacts.SelectedItem, ContactListModel).LOCAL
-                        contactList.HOMEPHONE = CType(lv_contacts.SelectedItem, ContactListModel).HOMEPHONE
-                        contactList.OTHER_PHONE = CType(lv_contacts.SelectedItem, ContactListModel).OTHER_PHONE
-                        contactList.DT_REVIEWED = CType(lv_contacts.SelectedItem, ContactListModel).DT_REVIEWED
+                                            For Each empContacts As ContactListModel In paginatedCollection
+                            If _selectedEmpID = empContacts.EMP_ID Then
+                                contactList = empContacts
+                            End If
+                        Next
 
                         addframe.Navigate(New UpdateContactListPage(contactList, mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+                        LoadUpdateScreen()
 
-                        ', mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame
-
-                        'addframe.Navigate(New UpdateContactList(contactList, mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
-                        mainFrame.IsEnabled = False
-                        mainFrame.Opacity = 0.3
-                        menugrid.IsEnabled = False
-                        menugrid.Opacity = 0.3
-                        submenuframe.IsEnabled = False
-                        submenuframe.Opacity = 0.3
-                        addframe.Visibility = Visibility.Visible
-                        addframe.Margin = New Thickness(100, 80, 100, 80)
                     Else
                         Exit Sub
                     End If
                 End If
 
-                
+
+            End If
+        End If
+    End Sub
+
+    Public Sub LoadUpdateScreen()
+        mainFrame.IsEnabled = False
+        mainFrame.Opacity = 0.3
+        menugrid.IsEnabled = False
+        menugrid.Opacity = 0.3
+        submenuframe.IsEnabled = False
+        submenuframe.Opacity = 0.3
+        addframe.Visibility = Visibility.Visible
+        addframe.Margin = New Thickness(100, 80, 100, 80)
+    End Sub
+
+    Private Sub lv_all_MouseDoubleClick(sender As Object, e As SelectionChangedEventArgs) Handles lv_all.SelectionChanged
+        e.Handled = True
+        If lv_all.SelectedIndex <> -1 Then
+            If lv_all.SelectedItem IsNot Nothing Then
+                Dim _Email As String = CType(lv_all.SelectedItem, ContactListModel).EMAIL_ADDRESS
+                Dim _selectedEmpID As Integer = CType(lv_all.SelectedItem, ContactListModel).EMP_ID
+
+                If profile.Permission = "Manager" Then
+                    Dim contactListMod As New ContactListModel
+                    For Each empContacts As ContactListModel In paginatedCollection
+                        If _selectedEmpID = empContacts.EMP_ID Then
+                            contactListMod = empContacts
+                        End If
+                    Next
+
+                    If MsgBox("Are you sure to assign " + contactListMod.FULL_NAME + " on your team?", vbYesNo, "Assigned Employee") = vbYes Then
+                        Dim contactList As New ContactList
+                        contactList.EmpID = contactListMod.EMP_ID
+                        contactList.LAST_NAME = contactListMod.LAST_NAME
+                        contactList.FIRST_NAME = contactListMod.FIRST_NAME
+                        contactList.MIDDLE_NAME = contactListMod.MIDDLE_NAME
+                        contactList.Nick_Name = contactListMod.NICK_NAME
+                        contactList.ACTIVE = addFg
+                        contactList.BIRTHDATE = contactListMod.BDATE
+                        contactList.POSITION = contactListMod.POSITION
+                        contactList.DT_HIRED = contactListMod.DT_HIRED
+                        contactList.MARITAL_STATUS = contactListMod.MARITAL_STATUS
+                        contactList.IMAGE_PATH = contactListMod.IMAGE_PATH
+                        contactList.PERMISSION_GROUP = contactListMod.PERMISSION_GROUP
+                        contactList.DEPARTMENT = contactListMod.DEPARTMENT
+                        contactList.DIVISION = contactListMod.DIVISION
+                        contactList.SHIFT = contactListMod.SHIFT
+                        contactList.EMADDRESS = contactListMod.EMAIL_ADDRESS
+                        contactList.EMADDRESS2 = contactListMod.EMAIL_ADDRESS2
+                        contactList.LOC = contactListMod.LOCATION
+                        contactList.CELL_NO = contactListMod.CEL_NO
+                        contactList.lOCAL = contactListMod.LOCAL
+                        contactList.HOUSEPHONE = contactListMod.HOMEPHONE
+                        contactList.OTHERPHONE = contactListMod.OTHER_PHONE
+                        contactList.DateReviewed = DateTime.Now.Date
+                        contactList.MARITAL_STATUS_ID = contactListMod.MARITAL_STATUS_ID
+                        contactList.POSITION_ID = contactListMod.POSITION_ID
+                        contactList.PERMISSION_GROUP_ID = contactListMod.PERMISSION_GROUP_ID
+                        contactList.DEPARTMENT_ID = contactListMod.DEPARTMENT_ID
+                        contactList.DIVISION_ID = contactListMod.DIVISION_ID
+                        contactList.OLD_EMP_ID = profile.Emp_ID
+                        _AideService.UpdateContactListByEmpID(contactList, 1)
+                        paginatedCollection.Clear()
+                        SetData()
+                    End If
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub lv_unapproved_MouseDoubleClick(sender As Object, e As SelectionChangedEventArgs) Handles lv_unapproved.SelectionChanged
+        e.Handled = True
+        If lv_unapproved.SelectedIndex <> -1 Then
+            If lv_unapproved.SelectedItem IsNot Nothing Then
+                Dim _Email As String = CType(lv_unapproved.SelectedItem, ContactListModel).EMAIL_ADDRESS
+                Dim _selectedEmpID As Integer = CType(lv_unapproved.SelectedItem, ContactListModel).EMP_ID
+
+                If profile.Permission = "Manager" Then
+                    Dim contactListMod As New ContactListModel
+                    For Each empContacts As ContactListModel In paginatedCollection
+                        If _selectedEmpID = empContacts.EMP_ID Then
+                            contactListMod = empContacts
+                        End If
+                    Next
+
+                    Dim contactList As New ContactList
+                    contactList.EmpID = contactListMod.EMP_ID
+                    contactList.LAST_NAME = contactListMod.LAST_NAME
+                    contactList.FIRST_NAME = contactListMod.FIRST_NAME
+                    contactList.MIDDLE_NAME = contactListMod.MIDDLE_NAME
+                    contactList.Nick_Name = contactListMod.NICK_NAME
+                    contactList.BIRTHDATE = contactListMod.BDATE
+                    contactList.POSITION = contactListMod.POSITION
+                    contactList.DT_HIRED = contactListMod.DT_HIRED
+                    contactList.MARITAL_STATUS = contactListMod.MARITAL_STATUS
+                    contactList.IMAGE_PATH = contactListMod.IMAGE_PATH
+                    contactList.PERMISSION_GROUP = contactListMod.PERMISSION_GROUP
+                    contactList.DEPARTMENT = contactListMod.DEPARTMENT
+                    contactList.DIVISION = contactListMod.DIVISION
+                    contactList.SHIFT = contactListMod.SHIFT
+                    contactList.EMADDRESS = contactListMod.EMAIL_ADDRESS
+                    contactList.EMADDRESS2 = contactListMod.EMAIL_ADDRESS2
+                    contactList.LOC = contactListMod.LOCATION
+                    contactList.CELL_NO = contactListMod.CEL_NO
+                    contactList.lOCAL = contactListMod.LOCAL
+                    contactList.HOUSEPHONE = contactListMod.HOMEPHONE
+                    contactList.OTHERPHONE = contactListMod.OTHER_PHONE
+                    contactList.DateReviewed = DateTime.Now.Date
+                    contactList.MARITAL_STATUS_ID = contactListMod.MARITAL_STATUS_ID
+                    contactList.POSITION_ID = contactListMod.POSITION_ID
+                    contactList.PERMISSION_GROUP_ID = contactListMod.PERMISSION_GROUP_ID
+                    contactList.DEPARTMENT_ID = contactListMod.DEPARTMENT_ID
+                    contactList.DIVISION_ID = contactListMod.DIVISION_ID
+                    contactList.OLD_EMP_ID = profile.Emp_ID
+
+                    If MsgBox("Are you sure to assign " + contactListMod.FULL_NAME + " on your team?", vbYesNo, "Assigned Employee") = vbYes Then
+                        contactList.ACTIVE = addFg
+                        _AideService.UpdateContactListByEmpID(contactList, 2)
+                        paginatedCollection.Clear()
+                        SetData()
+                    Else
+                        contactList.ACTIVE = deleteFg
+                        _AideService.UpdateContactListByEmpID(contactList, 2)
+                        paginatedCollection.Clear()
+                        SetData()
+                    End If
+                End If
             End If
         End If
     End Sub
@@ -363,6 +469,23 @@ Public Class ContactListPage
 
         dv_contacts.Visibility = Windows.Visibility.Hidden
         printBorder.Visibility = Windows.Visibility.Hidden
+    End Sub
+
+    Private Sub ContactsTC_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles ContactsTC.SelectionChanged
+        e.Handled = True
+        paginatedCollection.Clear()
+
+
+        'If ContactsTC.SelectedIndex = 0 Then
+        '    Page = "Personal"
+        'ElseIf ContactsTC.SelectedIndex = 1 Then
+        '    Page = "All"
+        '    btnPrint.Visibility = Windows.Visibility.Visible
+        'Else
+        '    Page = "Approval"
+        'End If
+
+        SetData()
     End Sub
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)

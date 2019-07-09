@@ -75,7 +75,7 @@ Class UpdateContactList
                 Dim result As Integer = MsgBox("Are you sure you want to continue?", MsgBoxStyle.OkCancel, "AIDE")
                 If result = 1 Then
                     If InitializeService() Then
-                        client.UpdateContactListByEmpID(contactList)
+                        client.UpdateContactListByEmpID(contactList, 0)
                         ClearFields()
                         attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
                         mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))

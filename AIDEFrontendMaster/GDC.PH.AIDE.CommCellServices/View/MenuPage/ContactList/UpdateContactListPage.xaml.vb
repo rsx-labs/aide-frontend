@@ -80,7 +80,7 @@ Class UpdateContactListPage
         Me.email = _profile.Email_Address
         Me.profile = _profile
         contactVM.ContactProfile = contactModel
-        old_empid = contactVM.ContactProfile.EMP_ID
+        old_empid = profile.Emp_ID
         DataContext = contactVM.ContactProfile
         ' Add any initialization after the InitializeComponent() call.
         ProcessUIAccess()
@@ -303,7 +303,7 @@ Class UpdateContactListPage
                 Dim result As Integer = MsgBox("Are you sure you want to continue?", MsgBoxStyle.OkCancel, "AIDE")
                 If result = 1 Then
                     If InitializeService() Then
-                        client.UpdateContactListByEmpID(contactList)
+                        client.UpdateContactListByEmpID(contactList, 0)
                         'ClearFields()
                         attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
                         mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
@@ -363,10 +363,10 @@ Class UpdateContactListPage
                 contactList.DIVISION_ID = contactVM.ContactProfile.DIVISION_ID
                 contactList.OLD_EMP_ID = old_empid
 
-                Dim result As Integer = MsgBox("Are you sure you want to continue? Employee will be deleted.", MsgBoxStyle.OkCancel, "AIDE")
+                Dim result As Integer = MsgBox("Are you sure you want to continue? Employee will be removed.", MsgBoxStyle.OkCancel, "AIDE")
                 If result = 1 Then
                     If InitializeService() Then
-                        client.UpdateContactListByEmpID(contactList)
+                        client.UpdateContactListByEmpID(contactList, 0)
                         'ClearFields()
                         attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
                         mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))

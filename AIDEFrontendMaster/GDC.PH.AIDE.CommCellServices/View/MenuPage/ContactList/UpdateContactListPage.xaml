@@ -786,16 +786,17 @@
 
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="1">
-                            <Button Style="{DynamicResource RoundCornerDelete}" x:Name="btnCDelete" Margin="5" >
+                            <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnCUpdate" Margin="5" >
 
-                                <TextBlock Text="DELETE" TextWrapping="Wrap" Margin="5"/>
+                                <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
 
                             </Button>
                         </Grid>
                         <Grid Grid.Column="2">
-                            <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnCUpdate" Margin="5" >
 
-                                <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
+                            <Button Style="{DynamicResource RoundCornerDelete}" x:Name="btnCDelete" Margin="5" >
+
+                                <TextBlock Text="REMOVE" TextWrapping="Wrap" Margin="5"/>
 
                             </Button>
                         </Grid>

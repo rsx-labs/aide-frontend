@@ -42,10 +42,22 @@
             </Grid>
 
             <Grid Grid.Row="1">
-                <Border Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
-                    <DataGrid FrozenColumnCount ="1" 
+                
+                <Grid Margin="10,5,10,0">
+                    <TabControl Background="Transparent" BorderThickness="0" x:Name="ContactsTC" Margin="5" HorizontalAlignment="Stretch" >
+                        <TabItem x:Name="EmployeeDetailsTab"
+                         Foreground="White" Width="150" HorizontalContentAlignment="Stretch" 
+                         Height="30">
+                            <TabItem.Header>
+                                <Viewbox HorizontalAlignment="Center">
+                                    <TextBlock TextWrapping="Wrap" Padding="10,0,0,0" Text="Team Details" Margin="10" Foreground="White" FontSize="20"/>
+                                </Viewbox>
+                            </TabItem.Header>
+                            <Grid Margin="0">
+                                <Border Margin="0,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="0,0,15,15" Grid.ColumnSpan="3">
+                                    <DataGrid FrozenColumnCount ="1" 
                               Background="Transparent" 
-                              x:Name="lv_contacts" 
+                              x:Name="lv_team" 
                               ItemsSource="{Binding ContactList}" 
                               CanUserAddRows="False" 
                               AutoGenerateColumns="False" 
@@ -54,34 +66,34 @@
                               IsReadOnly="True" 
                               Visibility="Visible" 
                               HorizontalAlignment="Left" >
-                        <DataGrid.Resources>
-                            <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="#CCFFD8D8" />
-                        </DataGrid.Resources>
+                                        <DataGrid.Resources>
+                                            <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="#CCFFD8D8" />
+                                        </DataGrid.Resources>
 
-                        <DataGrid.Columns>
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Name" Width="200" Binding="{Binding FULL_NAME}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Nick Name" Width="200" Binding="{Binding NICK_NAME}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Role" Width="150" Binding="{Binding DESCR}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Location" Width="100" Binding="{Binding LOCATION}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Email Address" Width="210" Binding="{Binding EMAIL_ADDRESS}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Extension" Width="75" Binding="{Binding LOCAL}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Work Mobile" Width="100" Binding="{Binding CEL_NO}"  />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Home Phone" Width="100" Binding="{Binding HOMEPHONE}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Other Phone" Width="100" Binding="{Binding OTHER_PHONE}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Reviewed" Width="110" Binding="{Binding DT_REVIEWED, StringFormat=d}" />
-                            <DataGridTemplateColumn Header="Reviewed" Width="75" >
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate >
-                                        <CheckBox Name="chkDiscontinue" IsChecked="{Binding Path=IsREVIEWED}" IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Border>
-                
-                <Border Visibility="Hidden" x:Name="printBorder" Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
-                    <DataGrid  Background="Transparent" 
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Name" Width="200" Binding="{Binding FULL_NAME}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Nick Name" Width="200" Binding="{Binding NICK_NAME}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Role" Width="150" Binding="{Binding DESCR}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Location" Width="100" Binding="{Binding LOCATION}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Email Address" Width="210" Binding="{Binding EMAIL_ADDRESS}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Extension" Width="75" Binding="{Binding LOCAL}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Work Mobile" Width="100" Binding="{Binding CEL_NO}"  />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Home Phone" Width="100" Binding="{Binding HOMEPHONE}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Other Phone" Width="100" Binding="{Binding OTHER_PHONE}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Reviewed" Width="110" Binding="{Binding DT_REVIEWED, StringFormat=d}" />
+                                            <DataGridTemplateColumn Header="Reviewed" Width="75" >
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate >
+                                                        <CheckBox Name="chkDiscontinue" IsChecked="{Binding Path=IsREVIEWED}" IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Border>
+
+                                <Border Visibility="Hidden" x:Name="printBorder" Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+                                    <DataGrid  Background="Transparent" 
                                x:Name="dv_contacts" 
                                ItemsSource="{Binding ContactListForPrint}" 
                                CanUserAddRows="False" 
@@ -90,30 +102,136 @@
                                BorderBrush="Transparent" 
                                IsReadOnly="True" 
                                Visibility="Hidden" >
-                        <DataGrid.Resources>
-                            <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="#CCFFD8D8" />
-                        </DataGrid.Resources>
+                                        <DataGrid.Resources>
+                                            <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="#CCFFD8D8" />
+                                        </DataGrid.Resources>
 
-                        <DataGrid.Columns>
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Name" Width="200" Binding="{Binding FULL_NAME}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Role" Width="100" Binding="{Binding DESCR}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Location" Width="100" Binding="{Binding LOCATION}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Email Address" Width="210" Binding="{Binding EMAIL_ADDRESS}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Extension" Width="75" Binding="{Binding LOCAL}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Work Mobile" Width="100" Binding="{Binding CEL_NO}"  />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Home Phone" Width="100" Binding="{Binding HOMEPHONE}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Other Phone" Width="100" Binding="{Binding OTHER_PHONE}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Reviewed" Width="110" Binding="{Binding DT_REVIEWED, StringFormat=d}" />
-                            <DataGridTemplateColumn Header="Reviewed" Width="75" >
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate >
-                                        <CheckBox Name="chkDiscontinue" IsChecked="{Binding Path=IsREVIEWED}" IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Border>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Name" Width="200" Binding="{Binding FULL_NAME}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Role" Width="100" Binding="{Binding DESCR}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Location" Width="100" Binding="{Binding LOCATION}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Email Address" Width="210" Binding="{Binding EMAIL_ADDRESS}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Extension" Width="75" Binding="{Binding LOCAL}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Work Mobile" Width="100" Binding="{Binding CEL_NO}"  />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Home Phone" Width="100" Binding="{Binding HOMEPHONE}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Other Phone" Width="100" Binding="{Binding OTHER_PHONE}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Reviewed" Width="110" Binding="{Binding DT_REVIEWED, StringFormat=d}" />
+                                            <DataGridTemplateColumn Header="Reviewed" Width="75" >
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate >
+                                                        <CheckBox Name="chkDiscontinue" IsChecked="{Binding Path=IsREVIEWED}" IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Border>
+                            </Grid>
+
+                        </TabItem>
+
+                        <TabItem Visibility="Hidden" x:Name="AllEmployeeDetailsTab"
+                         Foreground="White" Width="150" HorizontalContentAlignment="Stretch" 
+                         Height="30" >
+                            <TabItem.Header>
+                                <Viewbox HorizontalAlignment="Center">
+                                    <TextBlock TextWrapping="Wrap" Padding="10,0,0,0" Text="Unassigned Employees" Margin="10" Foreground="White" FontSize="20"/>
+                                </Viewbox>
+                            </TabItem.Header>
+                            <Grid Margin="0">
+                                <Border Margin="0,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="0,0,15,15" Grid.ColumnSpan="3">
+                                    <DataGrid FrozenColumnCount ="1" 
+                              Background="Transparent" 
+                              x:Name="lv_all" 
+                              ItemsSource="{Binding ContactList}" 
+                              CanUserAddRows="False" 
+                              AutoGenerateColumns="False" 
+                              CanUserResizeColumns="False"
+                              BorderBrush="Transparent" 
+                              IsReadOnly="True" 
+                              Visibility="Visible" 
+                              HorizontalAlignment="Left" >
+                                        <DataGrid.Resources>
+                                            <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="#CCFFD8D8" />
+                                        </DataGrid.Resources>
+
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Name" Width="200" Binding="{Binding FULL_NAME}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Nick Name" Width="200" Binding="{Binding NICK_NAME}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Role" Width="150" Binding="{Binding DESCR}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Location" Width="100" Binding="{Binding LOCATION}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Email Address" Width="210" Binding="{Binding EMAIL_ADDRESS}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Extension" Width="75" Binding="{Binding LOCAL}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Work Mobile" Width="100" Binding="{Binding CEL_NO}"  />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Home Phone" Width="100" Binding="{Binding HOMEPHONE}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Other Phone" Width="100" Binding="{Binding OTHER_PHONE}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Reviewed" Width="110" Binding="{Binding DT_REVIEWED, StringFormat=d}" />
+                                            <DataGridTemplateColumn Header="Reviewed" Width="75" >
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate >
+                                                        <CheckBox Name="chkDiscontinue" IsChecked="{Binding Path=IsREVIEWED}" IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Border>
+
+                            </Grid>
+                        </TabItem>
+                        
+                        
+                        <TabItem Visibility="Collapsed" x:Name="UnapprovedEmployeeDetailsTab"
+                         Foreground="White" Width="150" HorizontalContentAlignment="Stretch" 
+                         Height="30" >
+                            <TabItem.Header>
+                                <Viewbox HorizontalAlignment="Center">
+                                    <TextBlock TextWrapping="Wrap" Padding="10,0,0,0" Text="Unapproved Employees" Margin="10" Foreground="White" FontSize="20"/>
+                                </Viewbox>
+                            </TabItem.Header>
+                            <Grid Margin="0">
+                                <Border Margin="0,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="0,0,15,15" Grid.ColumnSpan="3">
+                                    <DataGrid FrozenColumnCount ="1" 
+                              Background="Transparent" 
+                              x:Name="lv_unapproved" 
+                              ItemsSource="{Binding ContactList}" 
+                              CanUserAddRows="False" 
+                              AutoGenerateColumns="False" 
+                              CanUserResizeColumns="False"
+                              BorderBrush="Transparent" 
+                              IsReadOnly="True" 
+                              Visibility="Visible" 
+                              HorizontalAlignment="Left" >
+                                        <DataGrid.Resources>
+                                            <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="#CCFFD8D8" />
+                                        </DataGrid.Resources>
+
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Name" Width="200" Binding="{Binding FULL_NAME}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Nick Name" Width="200" Binding="{Binding NICK_NAME}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Role" Width="150" Binding="{Binding DESCR}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Location" Width="100" Binding="{Binding LOCATION}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Email Address" Width="210" Binding="{Binding EMAIL_ADDRESS}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Extension" Width="75" Binding="{Binding LOCAL}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Work Mobile" Width="100" Binding="{Binding CEL_NO}"  />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Home Phone" Width="100" Binding="{Binding HOMEPHONE}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Other Phone" Width="100" Binding="{Binding OTHER_PHONE}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Reviewed" Width="110" Binding="{Binding DT_REVIEWED, StringFormat=d}" />
+                                            <DataGridTemplateColumn Header="Reviewed" Width="75" >
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate >
+                                                        <CheckBox Name="chkDiscontinue" IsChecked="{Binding Path=IsREVIEWED}" IsEnabled="False" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Border>
+
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
             </Grid>
             
             <Grid Grid.Row="2">
