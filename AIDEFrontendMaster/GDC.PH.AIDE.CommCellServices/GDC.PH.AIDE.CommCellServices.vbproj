@@ -178,11 +178,13 @@
     <Compile Include="DataProviderService\CommendationDBProvider.vb" />
     <Compile Include="DataProviderService\ConcernDBProvider.vb" />
     <Compile Include="DataProviderService\ContactListDBProvider.vb" />
+    <Compile Include="DataProviderService\ContributorsDBProvider.vb" />
     <Compile Include="DataProviderService\EmployeeListProvider.vb" />
     <Compile Include="DataProviderService\EmployeeProvider1.vb" />
     <Compile Include="DataProviderService\LateDBProvider.vb" />
     <Compile Include="DataProviderService\LessonLearntDBProvider.vb" />
     <Compile Include="DataProviderService\MailConfigDBProvider.vb" />
+    <Compile Include="DataProviderService\MessageDBProvider.vb" />
     <Compile Include="DataProviderService\ProfileDBProvider.vb" />
     <Compile Include="DataProviderService\ProjectDBProvider.vb" />
     <Compile Include="DataProviderService\ResourcePlannerDBProvider.vb" />
@@ -212,11 +214,13 @@
     <Compile Include="Model\CommendationModel.vb" />
     <Compile Include="Model\ConcernModel.vb" />
     <Compile Include="Model\ContactListModel.vb" />
+    <Compile Include="Model\ContributorsModel.vb" />
     <Compile Include="Model\EmployeeListModel.vb" />
     <Compile Include="Model\EmployeeModel.vb" />
     <Compile Include="Model\LateModel.vb" />
     <Compile Include="Model\LessonLearntModel.vb" />
     <Compile Include="Model\MailConfigModel.vb" />
+    <Compile Include="Model\MessageModel.vb" />
     <Compile Include="Model\ProfileModel.vb" />
     <Compile Include="Model\ProjectModel.vb" />
     <Compile Include="Model\ResourcePlannerModel.vb" />
@@ -246,6 +250,7 @@
     <Compile Include="ViewModel\BirthdayListViewModel.vb" />
     <Compile Include="ViewModel\ComcellClockViewModel.vb" />
     <Compile Include="ViewModel\ComcellViewModel.vb" />
+    <Compile Include="ViewModel\ContributorsViewModel.vb" />
     <Compile Include="ViewModel\LateViewModel.vb" />
     <Compile Include="ViewModel\CommendationViewModel.vb" />
     <Compile Include="ViewModel\ConcernViewModel.vb" />
@@ -253,6 +258,7 @@
     <Compile Include="ViewModel\EmployeeListViewModel.vb" />
     <Compile Include="ViewModel\LessonLearntViewModel.vb" />
     <Compile Include="ViewModel\MailConfigViewModel.vb" />
+    <Compile Include="ViewModel\MessageViewModel.vb" />
     <Compile Include="ViewModel\ProfileViewModel.vb" />
     <Compile Include="ViewModel\ProjectViewModel.vb" />
     <Compile Include="ViewModel\ResourcePlannerViewModel.vb" />
@@ -473,6 +479,9 @@
     </Compile>
     <Compile Include="View\MenuPage\Workplace Audit\QuarterlyAuditPage.xaml.vb">
       <DependentUpon>QuarterlyAuditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Notifications\About\AboutPage.xaml.vb">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Notifications\Birthday\Birthday.xaml.vb">
       <DependentUpon>Birthday.xaml</DependentUpon>
@@ -789,6 +798,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MenuPage\Workplace Audit\QuarterlyAuditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Notifications\About\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1407,6 +1420,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\EmployeePhotos\shadowImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\AboutLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\Dashboard2Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Background\bgg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\NextAbout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\NextAbout2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\CloseAbout.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

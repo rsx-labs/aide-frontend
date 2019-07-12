@@ -291,6 +291,35 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfWorkplaceAudit" nillable="true" type="tns:ArrayOfWorkplaceAudit" />
+  <xs:complexType name="ArrayOfContributors">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Contributors" nillable="true" type="tns:Contributors" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfContributors" nillable="true" type="tns:ArrayOfContributors" />
+  <xs:complexType name="Contributors">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DEPARTMENT" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DIVISION" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FULL_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IMAGE_PATH" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="POSITION" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Contributors" nillable="true" type="tns:Contributors" />
+  <xs:complexType name="ArrayOfMessageDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MessageDetail" nillable="true" type="tns:MessageDetail" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMessageDetail" nillable="true" type="tns:ArrayOfMessageDetail" />
+  <xs:complexType name="MessageDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MESSAGE_DESCR" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TITLE" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MessageDetail" nillable="true" type="tns:MessageDetail" />
   <xs:complexType name="SuccessRegister">
     <xs:sequence>
       <xs:element minOccurs="0" name="AdditionalInformation" nillable="true" type="xs:string" />

@@ -154,7 +154,7 @@ Class MainWindow
             Return True
         Catch ex As Exception
             '    CheckOutlook()
-            If MsgBox("Please login to Outlook", MsgBoxStyle.Critical + vbYesNo, "AIDE") = vbYes Then
+            If MsgBox("Outlook is not running. Do you want to proceed with AIDE without Outlook?", MsgBoxStyle.Critical + vbYesNo, "AIDE") = vbYes Then
                 Environment.Exit(0)
                 Return Nothing
             Else
@@ -339,6 +339,35 @@ Class MainWindow
     '    SubMenuFrame.Navigate(New AuditSchedSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
     'End Sub
 
+    Private Sub HomeBtn2_Click(sender As Object, e As RoutedEventArgs) Handles HomeBtn2.Click
+        LoadSideBar()
+        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
+        SubMenuFrame.Navigate(New BlankSubMenu())
+        'If MenuGrid.Visibility = Windows.Visibility.Visible Then
+        '    MenuGrid.Visibility = Windows.Visibility.Collapsed
+        '    AttendanceGrid.Visibility = Windows.Visibility.Collapsed
+        '    SideBarGrid.Visibility = Windows.Visibility.Collapsed
+        '    MainGrid.SetValue(Grid.RowProperty, 0)
+        '    MainGrid.SetValue(Grid.RowSpanProperty, 3)
+        '    MainGridParent.SetValue(Grid.ColumnProperty, 0)
+        '    MainGridParent.SetValue(Grid.ColumnSpanProperty, 3)
+        'Else
+        '    AttendanceGrid.Visibility = Windows.Visibility.Visible
+        '    SideBarGrid.Visibility = Windows.Visibility.Visible
+        '    MenuGrid.Visibility = Windows.Visibility.Visible
+        '    MainGrid.SetValue(Grid.RowSpanProperty, 1)
+        '    MainGridParent.SetValue(Grid.ColumnSpanProperty, 1)
+        '    MainGrid.SetValue(Grid.RowProperty, 1)
+        '    MainGridParent.SetValue(Grid.ColumnProperty, 1)
+        'End If
+
+        'LoadSideBar()
+        'PagesFrame.Navigate(New AuditSchedMainPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
+        'SubMenuFrame.Navigate(New AuditSchedSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
+    End Sub
+
+
+
     Private Sub HomeBtn_Click(sender As Object, e As RoutedEventArgs) Handles HomeBtn.Click
         LoadSideBar()
         PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
@@ -418,4 +447,8 @@ Class MainWindow
     End Sub
 #End Region
 
+    Private Sub AboutBtn_Click(sender As Object, e As RoutedEventArgs)
+        Dim AboutPage As New AboutPage()
+        AboutPage.ShowDialog()
+    End Sub
 End Class

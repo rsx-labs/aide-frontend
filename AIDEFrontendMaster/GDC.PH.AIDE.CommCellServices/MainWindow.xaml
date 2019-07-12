@@ -68,12 +68,12 @@
                 <ColumnDefinition Width="64*"/>
                 <ColumnDefinition Width="18*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Margin="0,5,5,5">
+            <Grid x:Name="AttendanceGrid" Grid.Column="0" Margin="0,5,5,5">
 
                 <Frame Name="AttendanceFrame" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 
             </Grid>
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="1" x:Name="MainGridParent">
                 <!--<Grid.Background>
                     <ImageBrush ImageSource="Assets/FujitsuBG.jpg" Stretch="Fill"/>
                 </Grid.Background>-->
@@ -89,8 +89,8 @@
 
                 </Grid>
 
-                <Grid Grid.Row="1" Margin="5">
-                    <Frame x:Name="PagesFrame" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="9,0"/>
+                <Grid x:Name="MainGrid" Grid.Row="1" Margin="5">
+                    <Frame x:Name="PagesFrame" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     <Frame x:Name="AddFrame" NavigationUIVisibility="Hidden" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="230,50"/>
                 </Grid>
 
@@ -263,7 +263,7 @@
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid Grid.Column="2">
+            <Grid Grid.Column="2" x:Name="SideBarGrid">
                 <Grid.RowDefinitions>
 
                     <RowDefinition Height="60*"/>
@@ -289,17 +289,48 @@
                 <ColumnDefinition Width="7*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>-->
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="white">
-                <Viewbox>
-                    <TextBlock FontWeight="Bold" Name="TimeTxt" TextWrapping="Wrap" Margin="5" Foreground="DarkSlateGray" Text="{Binding Now}"/>
-                </Viewbox>
-                <Rectangle Fill="Black" Width="1" Margin="2,10,2,10"/>
-                <Viewbox HorizontalAlignment="Left">
-                    <TextBlock FontStyle="Italic" Name="DateTxt" TextWrapping="Wrap" Margin="10" Foreground="DimGray"/>
-                </Viewbox>
-            </StackPanel>
             
+           
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Viewbox HorizontalAlignment="left">
+                            <Button Name="HomeBtn2"  Grid.Column="0" Style="{DynamicResource TaskBarBtn}" >
+                                <Image Margin="1" Source="Assets/Button/DashboardLogo.png"/>
+                            </Button>
+                        </Viewbox>
+                    </Grid>
+                    <Grid Grid.Column="1">
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Viewbox Margin="5" HorizontalAlignment="Right">
+                            <Button Name="AboutBtn" Margin="2" Style="{DynamicResource AideAboutBtn}" Click="AboutBtn_Click">
+
+                            </Button>
+                        </Viewbox>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="white">
+                            <Viewbox>
+                                <TextBlock FontWeight="Bold" Name="TimeTxt" TextWrapping="Wrap" Margin="5" Foreground="DarkSlateGray" Text="{Binding Now}"/>
+                            </Viewbox>
+                            <Rectangle Fill="Black" Width="1" Margin="2,10,2,10"/>
+                            <Viewbox HorizontalAlignment="Left">
+                                <TextBlock FontStyle="Italic" Name="DateTxt" TextWrapping="Wrap" Margin="10" Foreground="DimGray"/>
+                            </Viewbox>
+                        </StackPanel>
+                    </StackPanel>
+                    </Grid>
+                </Grid>
+               
+
+
+
+
+                
+          
+
             <!--<Grid.RowDefinitions>
                         <RowDefinition Height="2*"/>
                         <RowDefinition Height="1.2*"/>
@@ -361,7 +392,38 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="TaskBarBtn" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="0" Background="Transparent">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          TextElement.FontWeight="Bold">
+                                </ContentPresenter>
+                            </Border>
 
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FF005895"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FF09C2EA"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="Flat" TargetType="Button">
             <Setter Property="Background" Value="{x:Null}" />
             <Setter Property="BorderBrush" Value="{x:Null}" />

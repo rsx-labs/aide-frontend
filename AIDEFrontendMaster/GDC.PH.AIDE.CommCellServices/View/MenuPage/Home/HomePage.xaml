@@ -629,8 +629,8 @@
 
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
-                            <Image Source="..\..\..\Assets\Button\SkillsMatrixLogo.png" />
+                        <Viewbox HorizontalAlignment="Left" Margin="5,5,0,5">
+                            <Image Source="..\..\..\Assets\Button\DashboardLogo.png" />
                         </Viewbox>
 
                     </Grid>
