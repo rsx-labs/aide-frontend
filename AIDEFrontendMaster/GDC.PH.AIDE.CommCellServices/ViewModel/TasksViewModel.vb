@@ -6,6 +6,7 @@ Public Class TasksViewModel
     Implements INotifyPropertyChanged
 
     Private _taskStatusList As New ObservableCollection(Of TaskStatusModel)
+    Private _severityStatusList As New ObservableCollection(Of SeverityStatusModel)
     Private _categoryStatusList As New ObservableCollection(Of CategoryStatusModel)
     Private _phaseStatusList As New ObservableCollection(Of PhaseStatusModel)
     Private _reworkStatusList As New ObservableCollection(Of ReworkStatusModel)
@@ -29,6 +30,16 @@ Public Class TasksViewModel
         Set(value As ObservableCollection(Of TaskStatusModel))
             _taskstatusList = value
             NotifyPropertyChanged("TaskStatusList")
+        End Set
+    End Property
+
+    Public Property SeverityStatusList As ObservableCollection(Of SeverityStatusModel)
+        Get
+            Return _severityStatusList
+        End Get
+        Set(value As ObservableCollection(Of SeverityStatusModel))
+            _severityStatusList = value
+            NotifyPropertyChanged("SeverityStatusList")
         End Set
     End Property
 

@@ -53,7 +53,6 @@ Public Class WeeklyReportModel
         Me.DateStarted = aRawTasks.DateStarted
         Me.DateTarget = aRawTasks.DateTarget
         Me.DateFinished = aRawTasks.DateFinished
-        Me.DateCreated = aRawTasks.DateCreated
         Me.EffortEst = aRawTasks.EffortEst
         Me.ActualEffort = aRawTasks.ActEffort
         Me.ActualEffortWk = aRawTasks.ActEffortWk
@@ -252,7 +251,7 @@ Public Class WeeklyReportModel
             If _dateStarted = Nothing Then
                 Return String.Empty
             Else
-                Return _dateStarted.ToString("MM-dd-yyyy")
+                Return _dateStarted.ToString("MM/dd/yyyy")
             End If
         End Get
         Set(value As String)
@@ -270,7 +269,7 @@ Public Class WeeklyReportModel
             If _dateTarget  = Nothing Then
                 Return String.Empty
             Else
-                Return _dateTarget.ToString("MM-dd-yyyy")
+                Return _dateTarget.ToString("MM/dd/yyyy")
             End If
         End Get
         Set(value As String)
@@ -288,7 +287,7 @@ Public Class WeeklyReportModel
             If _dateFinished = Nothing Then
                 Return String.Empty
             Else
-                Return _dateFinished.ToString("MM-dd-yyyy")
+                Return _dateFinished.ToString("MM/dd/yyyy")
             End If
         End Get
         Set(value As String)
@@ -300,8 +299,6 @@ Public Class WeeklyReportModel
             NotifyPropertyChanged("DateFinished")
         End Set
     End Property
-
-    Public Property DateCreated As Date
 
     Public Property EffortEst As String
         Get
@@ -394,92 +391,3 @@ Public Class WeeklyReportModel
 
 End Class
 
-Public Class WTaskStatusModel
-    Sub New()
-        ' TODO: Complete member initialization 
-    End Sub
-
-    Public Property Key As Integer
-    Public Property Value As String
-
-    Public Sub New(ByVal rawStatus As MyWTaskStatusList)
-        Me.Key = rawStatus.Key
-        Me.Value = rawStatus.Value
-    End Sub
-
-    Public Function ToMyStatus() As MyWTaskStatusList
-        ToMyStatus = New MyWTaskStatusList() With {.Key = Me.Key, .Value = Me.Value}
-    End Function
-End Class
-
-Public Class WCategoryStatusModel
-    Sub New()
-        ' TODO: Complete member initialization 
-    End Sub
-
-    Public Property Key As Integer
-    Public Property Value As String
-
-    Public Sub New(ByVal aRawstatus As MyWCategoryStatusList)
-        Me.Key = aRawstatus.Key
-        Me.Value = aRawstatus.Value
-    End Sub
-
-    Public Function ToMyStatus() As MyWCategoryStatusList
-        ToMyStatus = New MyWCategoryStatusList() With {.Key = Me.Key, .Value = Me.Value}
-    End Function
-End Class
-
-Public Class WPhaseStatusModel
-    Sub New()
-        ' TODO: Complete member initialization 
-    End Sub
-
-    Public Property Key As Integer
-    Public Property Value As String
-
-    Public Sub New(ByVal aRawstatus As MyWPhaseStatusList)
-        Me.Key = aRawstatus.Key
-        Me.Value = aRawstatus.Value
-    End Sub
-
-    Public Function ToMyStatus() As MyWPhaseStatusList
-        ToMyStatus = New MyWPhaseStatusList() With {.Key = Me.Key, .Value = Me.Value}
-    End Function
-End Class
-
-Public Class WReworkStatusModel
-    Sub New()
-        ' TODO: Complete member initialization 
-    End Sub
-
-    Public Property Key As Integer
-    Public Property Value As String
-
-    Public Sub New(ByVal aRawstatus As MyWReworkStatusList)
-        Me.Key = aRawstatus.Key
-        Me.Value = aRawstatus.Value
-    End Sub
-
-    Public Function ToMyStatus() As MyWReworkStatusList
-        ToMyStatus = New MyWReworkStatusList() With {.Key = Me.Key, .Value = Me.Value}
-    End Function
-End Class
-
-Public Class SeverityStatusModel
-    Sub New()
-        ' TODO: Complete member initialization 
-    End Sub
-
-    Public Property Key As Integer
-    Public Property Value As String
-
-    Public Sub New(ByVal aRawstatus As MySeverityStatusList)
-        Me.Key = aRawstatus.Key
-        Me.Value = aRawstatus.Value
-    End Sub
-
-    Public Function ToMyStatus() As MySeverityStatusList
-        ToMyStatus = New MySeverityStatusList() With {.Key = Me.Key, .Value = Me.Value}
-    End Function
-End Class

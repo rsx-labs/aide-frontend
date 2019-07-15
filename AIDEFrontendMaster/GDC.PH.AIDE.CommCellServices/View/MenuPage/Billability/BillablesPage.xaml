@@ -9,10 +9,6 @@
       Title="Billable">
     
     <Page.Resources>
-        <!--<Style TargetType="lvc:PieSeries">
-            <Setter Property="Background" Value="Red"/>
-        </Style>-->
-        
         <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="5" />
             <Setter Property="TextWrapping" Value="Wrap"/>
@@ -25,13 +21,15 @@
         <Grid Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.11*" />
-                <RowDefinition Height="0.89*" />
+                <RowDefinition Height="0.11*" />
+                <RowDefinition Height="0.78*" />
             </Grid.RowDefinitions>
             
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.08*"/>
-                    <ColumnDefinition Width="0.92*"/>
+                    <ColumnDefinition Width="0.70*"/>
+                    <ColumnDefinition Width="0.22*"/>
                 </Grid.ColumnDefinitions>
                 
                 <Grid Grid.Column="0">
@@ -44,103 +42,167 @@
                         <TextBlock TextWrapping="Wrap" Padding="0" Text="Billable Hours" Margin="0,7,0,7" Foreground="DimGray"/>
                     </Viewbox>
                 </Grid>
+                <Grid Grid.Column="2">
+                    <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Height="30" Margin="5,5,5,5"/>
+                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=cbYear}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
             </Grid>
             
             <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-               
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.15*"/>
-                    <RowDefinition Height="0.85*"/>
-                </Grid.RowDefinitions>
-                
-                <Grid Grid.ColumnSpan="2">
-                    <Border Background="White" 
-                            BorderBrush="Gainsboro" 
-                            BorderThickness="1" 
-                            CornerRadius="10"
-                            Margin="10,0">
-                        <Grid Grid.Row="0">
+                <Border Background="White" 
+                        BorderBrush="Gainsboro" 
+                        BorderThickness="1" 
+                        CornerRadius="10"
+                        Margin="10,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                            
+                        <Grid Grid.Column="0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            
+                                
                             <Grid Grid.Column="0">
-                                <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Width="230">
-                                        <Label Content="Billable Hours" Margin="2" Height="28" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        <Label Name="WBillableHours" Margin="2" Height="28" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Width="230">
-                                        <Label Content="Non Billable Hours" Margin="2" Height="28" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        <Label Name="WNonBillableHours" Margin="2" Height="28" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </StackPanel>
+                                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0,0,10,0" >
+                                    <Label Content="Billable Hours" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                    <Label Content="Non Billable Hours" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                                
+                            <Grid Grid.Column="1">
+                                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10,0,0,0">
+                                    <Label Name="WBillableHours" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Name="WNonBillableHours" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                            
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0">
+                                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0,0,10,0" >
+                                    <Label Content="Billable Hours" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                    <Label Content="Non Billable Hours" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Grid>
                             
                             <Grid Grid.Column="1">
-                                <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Width="230">
-                                        <Label Content="Billable Hours" Margin="2" Height="28" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        <Label Name="MBillableHours" Margin="2" Height="28" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Width="230">
-                                        <Label Content="Non Billable Hours" Margin="2" Height="28" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        <Label Name="MNonBillableHours" Margin="2" Height="28" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </StackPanel>
+                                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="10,0,0,0">
+                                    <Label Name="MBillableHours" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Name="MNonBillableHours" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </Grid>
                         </Grid>
-                    </Border>
-                </Grid>
-                
-                <Grid Grid.Column="0" Grid.Row="1" Margin="2">
+                    </Grid>
+                </Border>
+            </Grid>
+            
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.4*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0" Margin="1,0,0,0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.15*"/>
-                        <RowDefinition Height="0.85*"/>
+                        <RowDefinition Height="0.13*"/>
+                        <RowDefinition Height="0.07*"/>
+                        <RowDefinition Height="0.80*"/>
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Label FontWeight="Bold" FontSize="15">Weekly Hours</Label>
                     </Grid>
 
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="1" HorizontalAlignment="Center">
+                        <ComboBox ItemsSource="{Binding Path=WeekRangeList}" 
+                                  DisplayMemberPath="DateRange" 
+                                  SelectedValuePath="WeekRangeID"
+                                  Width="210"
+                                  Style="{DynamicResource StyleComboBox}"
+                                  x:Name="cbDateRange"/>
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Week Range" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbDateRange}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+
+                    <Grid Grid.Row="2">
                         <lvc:PieChart x:Name="pieChartWeekly" 
-                                  LegendLocation="Right"   
+                                  LegendLocation="None"    
                                   InnerRadius="50" 
                                   Margin="5">
-                            <lvc:PieChart.ChartLegend>
-                                <lvc:DefaultLegend BulletSize="15" FontSize="12" />
-                            </lvc:PieChart.ChartLegend>
                             <lvc:PieChart.DataTooltip>
-                                <lvc:DefaultTooltip BulletSize="15" SelectionMode="OnlySender" />
+                                <lvc:DefaultTooltip BulletSize="12" SelectionMode="OnlySender" />
                             </lvc:PieChart.DataTooltip>
                         </lvc:PieChart>
                     </Grid>
                 </Grid>
+
+                <Grid Grid.Column="1">
+                    <Canvas x:Name="cCanvas" Margin="5">
+                    </Canvas>
+                </Grid>
                 
-                <Grid Grid.Column="1" Grid.Row="1" Margin="2">
+                <Grid Grid.Column="2" Margin="0,0,1,0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.15*"/>
-                        <RowDefinition Height="0.85*"/>
+                        <RowDefinition Height="0.13*"/>
+                        <RowDefinition Height="0.07*"/>
+                        <RowDefinition Height="0.80*"/>
                     </Grid.RowDefinitions>
-                    
+
                     <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Label FontWeight="Bold" FontSize="15">Monthly Hours</Label>
                     </Grid>
                     
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Row="1" HorizontalAlignment="Center">
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Width="120" />
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Month" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                    
+                    <Grid Grid.Row="2">
                         <lvc:PieChart x:Name="pieChartMonth" 
-                                  LegendLocation="Right"   
                                   InnerRadius="50" 
                                   Margin="5">
-                            <lvc:PieChart.ChartLegend>
-                                <lvc:DefaultLegend BulletSize="12" FontSize="12" />
-                            </lvc:PieChart.ChartLegend>
                             <lvc:PieChart.DataTooltip>
                                 <lvc:DefaultTooltip BulletSize="12" SelectionMode="OnlySender" />
                             </lvc:PieChart.DataTooltip>

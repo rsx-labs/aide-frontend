@@ -1,69 +1,32 @@
 ﻿Imports UI_AIDE_CommCellServices.ServiceReference1
 Imports System.Collections.ObjectModel
 
-'''''''''''''''''''''''''''''''''
-'   AEVAN CAMILLE BATONGBACAL   '
-'           START               '
-'''''''''''''''''''''''''''''''''
 Public Class BillabilityDBProvider
-    Private _billabilityMonthList As ObservableCollection(Of MyBillability)
-    Private _billabilityWeekList As ObservableCollection(Of MyBillability)
-    Private client As AideServiceClient
+    Private _billabilityList As ObservableCollection(Of MyBillability)
 
     Public Sub New()
-        _billabilityMonthList = New ObservableCollection(Of MyBillability)
+        _billabilityList = New ObservableCollection(Of MyBillability)
     End Sub
 
-    Public Function GetBillabilityWeekList() As ObservableCollection(Of MyBillability)
-        Return _billabilityWeekList
+    Public Function GetBillabilityList() As ObservableCollection(Of MyBillability)
+        Return _billabilityList
     End Function
 
-    Public Sub SetBillabilityWeekList(ByVal _status As NonBillableSummary)
-        Dim _birthdayObject As MyBillability = New MyBillability With {
-                .EMPID = _status.EmployeeID,
-                .NICK_NAME = _status.Name,
-                .VL = _status.VacationLeave,
-                .SL = _status.SickLeave,
-                .HOLIDAY = _status.Holiday,
-                .HALFDAY = _status.HalfDay,
-                .HALFVL = _status.HalfdayVL,
-                .HALFSL = _status.HalfdaySL,
-                .TOTAL = _status.Total
+    Public Sub SetBillabilityList(ByVal _billability As BillableHours)
+        Dim billability As MyBillability = New MyBillability With {
+                .Name = _billability.Name,
+                .Status = _billability.Status,
+                .Hours = _billability.Hours
                 }
-        _billabilityWeekList.Add(_birthdayObject)
-    End Sub
-
-    Public Function GetBillabilityMonthList() As ObservableCollection(Of MyBillability)
-        Return _billabilityMonthList
-    End Function
-
-    Public Sub SetBillabilityMonthList(ByVal _status As NonBillableSummary)
-        Dim _birthdayObjectMonth As MyBillability = New MyBillability With {
-                .EMPID = _status.EmployeeID,
-                .NICK_NAME = _status.Name,
-                .VL = _status.VacationLeave,
-                .SL = _status.SickLeave,
-                .HOLIDAY = _status.Holiday,
-                .HALFDAY = _status.HalfDay,
-                .HALFVL = _status.HalfdayVL,
-                .HALFSL = _status.HalfdaySL,
-                .TOTAL = _status.Total
-                }
-        _billabilityMonthList.Add(_birthdayObjectMonth)
+        _billabilityList.Add(billability)
     End Sub
 
 End Class
 
 Public Class MyBillability
-    Property EMPID As Integer
-    Property NICK_NAME As String
-    Property VL As Double
-    Property SL As Double
-    Property HOLIDAY As Double
-    Property HALFDAY As Double
-    Property HALFVL As Double
-    Property HALFSL As Double
-    Property TOTAL As Double
+    Property Name As String
+    Property Status As Short
+    Property Hours As Decimal
 End Class
 '''''''''''''''''''''''''''''''''
 '   AEVAN CAMILLE BATONGBACAL   '

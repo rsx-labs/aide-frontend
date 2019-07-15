@@ -75,9 +75,15 @@
             </Grid>
 
             <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}" >
-                <Button Style="{DynamicResource RoundCornerCreate}" x:Name="btnSubmit" Margin="5" Width="100">
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="SUBMIT" TextWrapping="Wrap" Margin="5"/>
-                </Button>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnSave" Margin="5" Width="100" IsEnabled="False" >
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="SAVE" TextWrapping="Wrap" Margin="5"/>
+                    </Button>
+
+                    <Button Style="{DynamicResource RoundCornerCreate}" x:Name="btnSubmit" Margin="5" Width="100" IsEnabled="False" >
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="SUBMIT" TextWrapping="Wrap" Margin="5"/>
+                    </Button>
+                </StackPanel>
             </Grid>
 
             <Grid Grid.Row="3" Background="Gray" >

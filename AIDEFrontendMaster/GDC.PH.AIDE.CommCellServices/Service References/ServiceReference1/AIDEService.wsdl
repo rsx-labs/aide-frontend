@@ -103,7 +103,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetWeeklyReportsByEmpID_Input_policy">
+  <wsp:Policy wsu:Id="dual_GetTasksDataByEmpID_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -126,7 +126,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetWeeklyReportsByEmpID_output_policy">
+  <wsp:Policy wsu:Id="dual_GetTasksDataByEmpID_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -149,7 +149,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetWeeklyReportsByWeekRangeID_Input_policy">
+  <wsp:Policy wsu:Id="dual_GetMissingReportsByEmpID_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -172,7 +172,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetWeeklyReportsByWeekRangeID_output_policy">
+  <wsp:Policy wsu:Id="dual_GetMissingReportsByEmpID_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -564,29 +564,6 @@
     </wsp:ExactlyOne>
   </wsp:Policy>
   <wsp:Policy wsu:Id="dual_GetMessage_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_CreateNewSuccessRegister_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -2219,98 +2196,6 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetBillableHoursByMonth_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetBillableHoursByMonth_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetBillableHoursByWeek_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetBillableHoursByWeek_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
   <wsp:Policy wsu:Id="dual_GetNonBillableHours_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -3070,6 +2955,144 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetWeekRangeByMonthYear_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetWeekRangeByMonthYear_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetWeeklyReportsByEmpID_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetWeeklyReportsByEmpID_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetWeeklyReportsByWeekRangeID_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetWeeklyReportsByWeekRangeID_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="dual_InsertActionList_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -3461,7 +3484,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetNonBillabilityHoursByEmpID_Input_policy">
+  <wsp:Policy wsu:Id="dual_GetBillableHoursByMonth_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -3484,7 +3507,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetNonBillabilityHoursByEmpID_output_policy">
+  <wsp:Policy wsu:Id="dual_GetBillableHoursByMonth_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -3507,7 +3530,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetNonBillabilityHoursAll_Input_policy">
+  <wsp:Policy wsu:Id="dual_GetBillableHoursByWeek_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -3530,53 +3553,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetNonBillabilityHoursAll_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetNonBillabilityHoursSummary_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetNonBillabilityHoursSummary_output_policy">
+  <wsp:Policy wsu:Id="dual_GetBillableHoursByWeek_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -4496,7 +4473,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetTaskDetailByIncidentId_Input_policy">
+  <wsp:Policy wsu:Id="dual_GetTasksByEmpID_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -4519,7 +4496,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetTaskDetailByIncidentId_output_policy">
+  <wsp:Policy wsu:Id="dual_GetTasksByEmpID_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -5508,6 +5485,29 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_CreateNewSuccessRegister_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="dual_NotifySuccess_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -5642,12 +5642,6 @@
   <wsdl:message name="IAideService2_DashboardGetContactList_OutputMessage">
     <wsdl:part name="parameters" element="tns:DashboardGetContactListResponse" />
   </wsdl:message>
-  <wsdl:message name="IAideService2_DashboardGetNonBillableHours_InputMessage">
-    <wsdl:part name="parameters" element="tns:DashboardGetNonBillableHours" />
-  </wsdl:message>
-  <wsdl:message name="IAideService2_DashboardGetNonBillableHours_OutputMessage">
-    <wsdl:part name="parameters" element="tns:DashboardGetNonBillableHoursResponse" />
-  </wsdl:message>
   <wsdl:message name="IAideService2_DashboardGetNonBillableHoursSummary_InputMessage">
     <wsdl:part name="parameters" element="tns:DashboardGetNonBillableHoursSummary" />
   </wsdl:message>
@@ -5678,17 +5672,17 @@
   <wsdl:message name="IAideService2_DashboardGetTaskSummaryTotals_OutputMessage">
     <wsdl:part name="parameters" element="tns:DashboardGetTaskSummaryTotalsResponse" />
   </wsdl:message>
-  <wsdl:message name="IAideService_GetWeeklyReportsByEmpID_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetWeeklyReportsByEmpID" />
+  <wsdl:message name="IAideService_GetTasksDataByEmpID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTasksDataByEmpID" />
   </wsdl:message>
-  <wsdl:message name="IAideService_GetWeeklyReportsByEmpID_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetWeeklyReportsByEmpIDResponse" />
+  <wsdl:message name="IAideService_GetTasksDataByEmpID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTasksDataByEmpIDResponse" />
   </wsdl:message>
-  <wsdl:message name="IAideService_GetWeeklyReportsByWeekRangeID_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetWeeklyReportsByWeekRangeID" />
+  <wsdl:message name="IAideService_GetMissingReportsByEmpID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMissingReportsByEmpID" />
   </wsdl:message>
-  <wsdl:message name="IAideService_GetWeeklyReportsByWeekRangeID_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetWeeklyReportsByWeekRangeIDResponse" />
+  <wsdl:message name="IAideService_GetMissingReportsByEmpID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMissingReportsByEmpIDResponse" />
   </wsdl:message>
   <wsdl:message name="IAideService_InsertAuditSched_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertAuditSched" />
@@ -5740,9 +5734,6 @@
   </wsdl:message>
   <wsdl:message name="IAideService_GetMessage_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetMessageResponse" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_CreateNewSuccessRegister_InputMessage">
-    <wsdl:part name="parameters" element="tns:CreateNewSuccessRegister" />
   </wsdl:message>
   <wsdl:message name="IAideService_ViewSuccessRegisterByEmpID_InputMessage">
     <wsdl:part name="parameters" element="tns:ViewSuccessRegisterByEmpID" />
@@ -5954,18 +5945,6 @@
   <wsdl:message name="IAideService_GetResourcePlanner_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetResourcePlannerResponse" />
   </wsdl:message>
-  <wsdl:message name="IAideService_GetBillableHoursByMonth_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetBillableHoursByMonth" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetBillableHoursByMonth_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetBillableHoursByMonthResponse" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetBillableHoursByWeek_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetBillableHoursByWeek" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetBillableHoursByWeek_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetBillableHoursByWeekResponse" />
-  </wsdl:message>
   <wsdl:message name="IAideService_GetNonBillableHours_InputMessage">
     <wsdl:part name="parameters" element="tns:GetNonBillableHours" />
   </wsdl:message>
@@ -6065,6 +6044,24 @@
   <wsdl:message name="IAideService_GetWeekRange_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetWeekRangeResponse" />
   </wsdl:message>
+  <wsdl:message name="IAideService_GetWeekRangeByMonthYear_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWeekRangeByMonthYear" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetWeekRangeByMonthYear_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWeekRangeByMonthYearResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetWeeklyReportsByEmpID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWeeklyReportsByEmpID" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetWeeklyReportsByEmpID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWeeklyReportsByEmpIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetWeeklyReportsByWeekRangeID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWeeklyReportsByWeekRangeID" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetWeeklyReportsByWeekRangeID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWeeklyReportsByWeekRangeIDResponse" />
+  </wsdl:message>
   <wsdl:message name="IAideService_InsertActionList_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertActionList" />
   </wsdl:message>
@@ -6116,23 +6113,17 @@
   <wsdl:message name="IAideService_GetAttendanceTodayBySearch_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAttendanceTodayBySearchResponse" />
   </wsdl:message>
-  <wsdl:message name="IAideService_GetNonBillabilityHoursByEmpID_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetNonBillabilityHoursByEmpID" />
+  <wsdl:message name="IAideService_GetBillableHoursByMonth_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBillableHoursByMonth" />
   </wsdl:message>
-  <wsdl:message name="IAideService_GetNonBillabilityHoursByEmpID_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetNonBillabilityHoursByEmpIDResponse" />
+  <wsdl:message name="IAideService_GetBillableHoursByMonth_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBillableHoursByMonthResponse" />
   </wsdl:message>
-  <wsdl:message name="IAideService_GetNonBillabilityHoursAll_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetNonBillabilityHoursAll" />
+  <wsdl:message name="IAideService_GetBillableHoursByWeek_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBillableHoursByWeek" />
   </wsdl:message>
-  <wsdl:message name="IAideService_GetNonBillabilityHoursAll_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetNonBillabilityHoursAllResponse" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetNonBillabilityHoursSummary_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetNonBillabilityHoursSummary" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetNonBillabilityHoursSummary_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetNonBillabilityHoursSummaryResponse" />
+  <wsdl:message name="IAideService_GetBillableHoursByWeek_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBillableHoursByWeekResponse" />
   </wsdl:message>
   <wsdl:message name="IAideService_GetContactInformation_InputMessage">
     <wsdl:part name="parameters" element="tns:GetContactInformation" />
@@ -6251,11 +6242,11 @@
   <wsdl:message name="IAideService_GetAllTasks_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllTasksResponse" />
   </wsdl:message>
-  <wsdl:message name="IAideService_GetTaskDetailByIncidentId_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetTaskDetailByIncidentId" />
+  <wsdl:message name="IAideService_GetTasksByEmpID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTasksByEmpID" />
   </wsdl:message>
-  <wsdl:message name="IAideService_GetTaskDetailByIncidentId_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetTaskDetailByIncidentIdResponse" />
+  <wsdl:message name="IAideService_GetTasksByEmpID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTasksByEmpIDResponse" />
   </wsdl:message>
   <wsdl:message name="IAideService_InsertCommendations_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertCommendations" />
@@ -6383,6 +6374,9 @@
   <wsdl:message name="IAideService_UpdateLessonLearntInfo_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateLessonLearntInfo" />
   </wsdl:message>
+  <wsdl:message name="IAideService_CreateNewSuccessRegister_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateNewSuccessRegister" />
+  </wsdl:message>
   <wsdl:message name="IAideService_NotifySuccess_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifySuccess" />
   </wsdl:message>
@@ -6407,10 +6401,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService2/DashboardGetContactList" message="tns:IAideService2_DashboardGetContactList_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService2/DashboardGetContactListResponse" message="tns:IAideService2_DashboardGetContactList_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="DashboardGetNonBillableHours">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService2/DashboardGetNonBillableHours" message="tns:IAideService2_DashboardGetNonBillableHours_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService2/DashboardGetNonBillableHoursResponse" message="tns:IAideService2_DashboardGetNonBillableHours_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="DashboardGetNonBillableHoursSummary">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService2/DashboardGetNonBillableHoursSummary" message="tns:IAideService2_DashboardGetNonBillableHoursSummary_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService2/DashboardGetNonBillableHoursSummaryResponse" message="tns:IAideService2_DashboardGetNonBillableHoursSummary_OutputMessage" />
@@ -6433,13 +6423,13 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType msc:usingSession="true" name="IAideService">
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetWeeklyReportsByEmpID">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetWeeklyReportsByEmpID" message="tns:IAideService_GetWeeklyReportsByEmpID_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetWeeklyReportsByEmpIDResponse" message="tns:IAideService_GetWeeklyReportsByEmpID_OutputMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetTasksDataByEmpID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetTasksDataByEmpID" message="tns:IAideService_GetTasksDataByEmpID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetTasksDataByEmpIDResponse" message="tns:IAideService_GetTasksDataByEmpID_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetWeeklyReportsByWeekRangeID">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetWeeklyReportsByWeekRangeID" message="tns:IAideService_GetWeeklyReportsByWeekRangeID_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetWeeklyReportsByWeekRangeIDResponse" message="tns:IAideService_GetWeeklyReportsByWeekRangeID_OutputMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetMissingReportsByEmpID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetMissingReportsByEmpID" message="tns:IAideService_GetMissingReportsByEmpID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetMissingReportsByEmpIDResponse" message="tns:IAideService_GetMissingReportsByEmpID_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InsertAuditSched">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/InsertAuditSched" message="tns:IAideService_InsertAuditSched_InputMessage" />
@@ -6477,9 +6467,6 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetMessage">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetMessage" message="tns:IAideService_GetMessage_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetMessageResponse" message="tns:IAideService_GetMessage_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CreateNewSuccessRegister">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/CreateNewSuccessRegister" message="tns:IAideService_CreateNewSuccessRegister_InputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ViewSuccessRegisterByEmpID">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/ViewSuccessRegisterByEmpID" message="tns:IAideService_ViewSuccessRegisterByEmpID_InputMessage" />
@@ -6633,14 +6620,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetResourcePlanner" message="tns:IAideService_GetResourcePlanner_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetResourcePlannerResponse" message="tns:IAideService_GetResourcePlanner_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetBillableHoursByMonth">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetBillableHoursByMonth" message="tns:IAideService_GetBillableHoursByMonth_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetBillableHoursByMonthResponse" message="tns:IAideService_GetBillableHoursByMonth_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetBillableHoursByWeek">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetBillableHoursByWeek" message="tns:IAideService_GetBillableHoursByWeek_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetBillableHoursByWeekResponse" message="tns:IAideService_GetBillableHoursByWeek_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetNonBillableHours">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetNonBillableHours" message="tns:IAideService_GetNonBillableHours_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetNonBillableHoursResponse" message="tns:IAideService_GetNonBillableHours_OutputMessage" />
@@ -6714,6 +6693,18 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetWeekRange" message="tns:IAideService_GetWeekRange_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetWeekRangeResponse" message="tns:IAideService_GetWeekRange_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetWeekRangeByMonthYear">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetWeekRangeByMonthYear" message="tns:IAideService_GetWeekRangeByMonthYear_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetWeekRangeByMonthYearResponse" message="tns:IAideService_GetWeekRangeByMonthYear_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetWeeklyReportsByEmpID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetWeeklyReportsByEmpID" message="tns:IAideService_GetWeeklyReportsByEmpID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetWeeklyReportsByEmpIDResponse" message="tns:IAideService_GetWeeklyReportsByEmpID_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetWeeklyReportsByWeekRangeID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetWeeklyReportsByWeekRangeID" message="tns:IAideService_GetWeeklyReportsByWeekRangeID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetWeeklyReportsByWeekRangeIDResponse" message="tns:IAideService_GetWeeklyReportsByWeekRangeID_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InsertActionList">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/InsertActionList" message="tns:IAideService_InsertActionList_InputMessage" />
     </wsdl:operation>
@@ -6753,17 +6744,13 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAttendanceTodayBySearch" message="tns:IAideService_GetAttendanceTodayBySearch_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAttendanceTodayBySearchResponse" message="tns:IAideService_GetAttendanceTodayBySearch_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetNonBillabilityHoursByEmpID">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetNonBillabilityHoursByEmpID" message="tns:IAideService_GetNonBillabilityHoursByEmpID_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetNonBillabilityHoursByEmpIDResponse" message="tns:IAideService_GetNonBillabilityHoursByEmpID_OutputMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetBillableHoursByMonth">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetBillableHoursByMonth" message="tns:IAideService_GetBillableHoursByMonth_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetBillableHoursByMonthResponse" message="tns:IAideService_GetBillableHoursByMonth_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetNonBillabilityHoursAll">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetNonBillabilityHoursAll" message="tns:IAideService_GetNonBillabilityHoursAll_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetNonBillabilityHoursAllResponse" message="tns:IAideService_GetNonBillabilityHoursAll_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetNonBillabilityHoursSummary">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetNonBillabilityHoursSummary" message="tns:IAideService_GetNonBillabilityHoursSummary_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetNonBillabilityHoursSummaryResponse" message="tns:IAideService_GetNonBillabilityHoursSummary_OutputMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetBillableHoursByWeek">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetBillableHoursByWeek" message="tns:IAideService_GetBillableHoursByWeek_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetBillableHoursByWeekResponse" message="tns:IAideService_GetBillableHoursByWeek_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetContactInformation">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetContactInformation" message="tns:IAideService_GetContactInformation_InputMessage" />
@@ -6850,9 +6837,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllTasks" message="tns:IAideService_GetAllTasks_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllTasksResponse" message="tns:IAideService_GetAllTasks_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetTaskDetailByIncidentId">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetTaskDetailByIncidentId" message="tns:IAideService_GetTaskDetailByIncidentId_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetTaskDetailByIncidentIdResponse" message="tns:IAideService_GetTaskDetailByIncidentId_OutputMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetTasksByEmpID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetTasksByEmpID" message="tns:IAideService_GetTasksByEmpID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetTasksByEmpIDResponse" message="tns:IAideService_GetTasksByEmpID_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InsertCommendations">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/InsertCommendations" message="tns:IAideService_InsertCommendations_InputMessage" />
@@ -6948,6 +6935,9 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateLessonLearntInfo">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/UpdateLessonLearntInfo" message="tns:IAideService_UpdateLessonLearntInfo_InputMessage" />
     </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CreateNewSuccessRegister">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/CreateNewSuccessRegister" message="tns:IAideService_CreateNewSuccessRegister_InputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifySuccess">
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/NotifySuccess" message="tns:IAideService_NotifySuccess_OutputCallbackMessage" />
     </wsdl:operation>
@@ -6977,15 +6967,6 @@
     </wsdl:operation>
     <wsdl:operation name="DashboardGetContactList">
       <soap:operation soapAction="http://tempuri.org/IAideService2/DashboardGetContactList" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="DashboardGetNonBillableHours">
-      <soap:operation soapAction="http://tempuri.org/IAideService2/DashboardGetNonBillableHours" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -7042,25 +7023,25 @@
   <wsdl:binding name="dual" type="tns:IAideService">
     <wsp:PolicyReference URI="#dual_policy" />
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetWeeklyReportsByEmpID">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetWeeklyReportsByEmpID" style="document" />
+    <wsdl:operation name="GetTasksDataByEmpID">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetTasksDataByEmpID" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetWeeklyReportsByEmpID_Input_policy" />
+        <wsp:PolicyReference URI="#dual_GetTasksDataByEmpID_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetWeeklyReportsByEmpID_output_policy" />
+        <wsp:PolicyReference URI="#dual_GetTasksDataByEmpID_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetWeeklyReportsByWeekRangeID">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetWeeklyReportsByWeekRangeID" style="document" />
+    <wsdl:operation name="GetMissingReportsByEmpID">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetMissingReportsByEmpID" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetWeeklyReportsByWeekRangeID_Input_policy" />
+        <wsp:PolicyReference URI="#dual_GetMissingReportsByEmpID_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetWeeklyReportsByWeekRangeID_output_policy" />
+        <wsp:PolicyReference URI="#dual_GetMissingReportsByEmpID_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
@@ -7161,13 +7142,6 @@
         <wsp:PolicyReference URI="#dual_GetMessage_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="CreateNewSuccessRegister">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/CreateNewSuccessRegister" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_CreateNewSuccessRegister_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
     </wsdl:operation>
     <wsdl:operation name="ViewSuccessRegisterByEmpID">
       <soap12:operation soapAction="http://tempuri.org/IAideService/ViewSuccessRegisterByEmpID" style="document" />
@@ -7572,28 +7546,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetBillableHoursByMonth">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetBillableHoursByMonth" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetBillableHoursByMonth_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetBillableHoursByMonth_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetBillableHoursByWeek">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetBillableHoursByWeek" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetBillableHoursByWeek_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetBillableHoursByWeek_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetNonBillableHours">
       <soap12:operation soapAction="http://tempuri.org/IAideService/GetNonBillableHours" style="document" />
       <wsdl:input>
@@ -7786,6 +7738,39 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetWeekRangeByMonthYear">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetWeekRangeByMonthYear" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetWeekRangeByMonthYear_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetWeekRangeByMonthYear_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWeeklyReportsByEmpID">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetWeeklyReportsByEmpID" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetWeeklyReportsByEmpID_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetWeeklyReportsByEmpID_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWeeklyReportsByWeekRangeID">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetWeeklyReportsByWeekRangeID" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetWeeklyReportsByWeekRangeID_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetWeeklyReportsByWeekRangeID_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="InsertActionList">
       <soap12:operation soapAction="http://tempuri.org/IAideService/InsertActionList" style="document" />
       <wsdl:input>
@@ -7887,36 +7872,25 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetNonBillabilityHoursByEmpID">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetNonBillabilityHoursByEmpID" style="document" />
+    <wsdl:operation name="GetBillableHoursByMonth">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetBillableHoursByMonth" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetNonBillabilityHoursByEmpID_Input_policy" />
+        <wsp:PolicyReference URI="#dual_GetBillableHoursByMonth_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetNonBillabilityHoursByEmpID_output_policy" />
+        <wsp:PolicyReference URI="#dual_GetBillableHoursByMonth_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetNonBillabilityHoursAll">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetNonBillabilityHoursAll" style="document" />
+    <wsdl:operation name="GetBillableHoursByWeek">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetBillableHoursByWeek" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetNonBillabilityHoursAll_Input_policy" />
+        <wsp:PolicyReference URI="#dual_GetBillableHoursByWeek_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetNonBillabilityHoursAll_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetNonBillabilityHoursSummary">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetNonBillabilityHoursSummary" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetNonBillabilityHoursSummary_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetNonBillabilityHoursSummary_output_policy" />
+        <wsp:PolicyReference URI="#dual_GetBillableHoursByWeek_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
@@ -8145,14 +8119,14 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetTaskDetailByIncidentId">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetTaskDetailByIncidentId" style="document" />
+    <wsdl:operation name="GetTasksByEmpID">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetTasksByEmpID" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetTaskDetailByIncidentId_Input_policy" />
+        <wsp:PolicyReference URI="#dual_GetTasksByEmpID_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetTaskDetailByIncidentId_output_policy" />
+        <wsp:PolicyReference URI="#dual_GetTasksByEmpID_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
@@ -8399,6 +8373,13 @@
       <soap12:operation soapAction="http://tempuri.org/IAideService/UpdateLessonLearntInfo" style="document" />
       <wsdl:input>
         <wsp:PolicyReference URI="#dual_UpdateLessonLearntInfo_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="CreateNewSuccessRegister">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/CreateNewSuccessRegister" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_CreateNewSuccessRegister_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
