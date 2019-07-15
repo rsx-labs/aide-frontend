@@ -9,29 +9,7 @@ Imports System.ServiceModel
 Class CreateProjectPage
     Implements IAideServiceCallback
 
-    Private _pFrame As New Frame
-    Public _empID As Integer
-
-    Public Sub New(pFrame As Frame, empID As Integer)
-        _pFrame = pFrame
-        _empID = empID
-        InitializeComponent()
-        LoadProjectList()
-        SetPaging(CInt(PagingMode._Next))
-    End Sub
-
-    Private _ProjectDBProvider As New ProjectDBProvider
-    Private _ProjectViewModel As New ProjectViewModel
-    Dim lstProj As Project()
-    Private client As AideServiceClient
-
 #Region "Paging Declarations"
-    Dim startRowIndex As Integer
-    Dim lastRowIndex As Integer
-    Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 13
-#End Region
-
     Private Enum PagingMode
         _First = 1
         _Next = 2
@@ -39,9 +17,35 @@ Class CreateProjectPage
         _Last = 4
     End Enum
 
+    Dim startRowIndex As Integer
+    Dim lastRowIndex As Integer
+    Dim pagingPageIndex As Integer
+    Dim pagingRecordPerPage As Integer = 8
+    Dim currentPage As Integer
+    Dim lastPage As Integer
+#End Region
+
 #Region "Fields"
+    Private _pFrame As New Frame
+    Public _empID As Integer
+    Private _ProjectDBProvider As New ProjectDBProvider
+    Private _ProjectViewModel As New ProjectViewModel
+    Private client As AideServiceClient
+
     Dim billabiltiy As Short
     Dim category As Short
+    Dim lstProj As Project()
+    Dim totalRecords As Integer
+    Dim paginatedCollection As PaginatedObservableCollection(Of ProjectModel) = New PaginatedObservableCollection(Of ProjectModel)(pagingRecordPerPage)
+#End Region
+
+#Region "Constructor"
+    Public Sub New(pFrame As Frame, empID As Integer)
+        _pFrame = pFrame
+        _empID = empID
+        InitializeComponent()
+        SetData()
+    End Sub
 #End Region
 
 #Region "Common Procedure"
@@ -77,6 +81,7 @@ Class CreateProjectPage
     End Sub
 #End Region
 
+#Region "Sub Procedure"
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
         Try
@@ -89,13 +94,23 @@ Class CreateProjectPage
         End Try
         Return bInitialize
     End Function
-
-#Region "Sub Procedure"
-
     ''' <summary>
     ''' Load project into textbox to be edit or updated
     ''' Hyacinth Amarles
     ''' </summary>
+    ''' 
+    Public Sub SetData()
+        Try
+            If InitializeService() Then
+                lstProj = client.GetProjectList(_empID)
+                LoadProjectList()
+                DisplayPagingInfo()
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
     Public Sub LoadProject(projid As Integer)
         Try
             Dim lstProject As Project = client.GetProjectByID(projid)
@@ -120,51 +135,31 @@ Class CreateProjectPage
     ''' </summary>
     Private Sub LoadProjectList()
         Try
-            InitializeService()
-            lstProj = client.GetProjectList(_empID)
-            If lstProj.Length = 0 Then
+            paginatedCollection.Clear()
+            Dim lstProjectObs As New ObservableCollection(Of ProjectModel)
+            Dim projectDBProvider As New ProjectDBProvider
 
-            Else
-                Dim lstProjectObs As New ObservableCollection(Of ProjectModel)
-                Dim projectDBProvider As New ProjectDBProvider
-                Dim projectViewModel As New ProjectViewModel
+            For Each objProject As Project In lstProj
+                projectDBProvider.setProjectList(objProject)
+            Next
 
-                Dim objProject As New Project()
+            For Each iProject As myProjectList In projectDBProvider.getProjectList()
+                If iProject.billability = 0 Then
+                    iProject.billability = "Internal"
+                Else
+                    iProject.billability = "External"
+                End If
+                If iProject.category = 0 Then
+                    iProject.category = "Project"
+                Else
+                    iProject.category = "Task"
+                End If
+                paginatedCollection.Add(New ProjectModel(iProject))
+            Next
 
-                ' Set the ProjectList 
-                For i As Integer = startRowIndex To lastRowIndex
-                    If startRowIndex < 0 Then
-                        Exit For
-                    End If
-                    objProject = lstProj(i)
-
-                    projectDBProvider.setProjectList(objProject)
-                Next
-
-                ' Set the lstProject
-                For Each iProject As myProjectList In projectDBProvider.getProjectList()
-                    If iProject.billability = 0 Then
-                        iProject.billability = "Internal"
-                    Else
-                        iProject.billability = "External"
-                    End If
-                    If iProject.category = 0 Then
-                        iProject.category = "Project"
-                    Else
-                        iProject.category = "Task"
-                    End If
-
-                    lstProjectObs.Add(New ProjectModel(iProject))
-                Next
-
-                projectViewModel.ProjectList = lstProjectObs
-
-                ' Display the data using binding
-
-                dgProjectList.DataContext = projectViewModel
-
-            End If
-
+            dgProjectList.ItemsSource = paginatedCollection
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(lstProj.Length / pagingRecordPerPage)
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -219,18 +214,47 @@ Class CreateProjectPage
         End Try
     End Sub
 
-#End Region
+    Public Sub SetDataForSearch(input As String)
+        Try
+            Dim projectDBProvider As New ProjectDBProvider
 
-#Region "Input Validation"
-    Private Sub txtSearch_KeyDown(sender As Object, e As KeyEventArgs) Handles txtSearch.KeyDown
-        Dim key As Integer = CInt(e.Key)
-        e.Handled = Not (key >= 34 AndAlso key <= 43 OrElse key >= 74 AndAlso key <= 83 OrElse key = 2 OrElse key = 18)
-        If Not e.Handled Then
-        Else
-            MsgBox("Number/s Only")
-        End If
+            paginatedCollection = New PaginatedObservableCollection(Of ProjectModel)(pagingRecordPerPage)
+
+            Dim items = From i In lstProj Where i.ProjectName.ToLower.Contains(input.ToLower) Or i.ProjectID.ToString.ToLower.Contains(input.ToLower)
+            Dim searchProjects = New ObservableCollection(Of Project)(items)
+
+            For Each objProject As Project In searchProjects
+                projectDBProvider.setProjectList(objProject)
+            Next
+
+            For Each objProject As myProjectList In projectDBProvider.getProjectList()
+                If objProject.billability = 0 Then
+                    objProject.billability = "Internal"
+                Else
+                    objProject.billability = "External"
+                End If
+                If objProject.category = 0 Then
+                    objProject.category = "Project"
+                Else
+                    objProject.category = "Task"
+                End If
+
+                paginatedCollection.Add(New ProjectModel(objProject))
+            Next
+
+            totalRecords = searchProjects.Count
+            dgProjectList.ItemsSource = paginatedCollection
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+            DisplayPagingInfo()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 
+#End Region
+
+#Region "Events"
     Private Sub txtProjID_KeyDown(sender As Object, e As KeyEventArgs) Handles txtProjID.KeyDown
         Dim key As Integer = CInt(e.Key)
         e.Handled = Not (key >= 34 AndAlso key <= 43 OrElse key >= 74 AndAlso key <= 83 OrElse key = 2 OrElse key = 18)
@@ -241,7 +265,6 @@ Class CreateProjectPage
         End If
 
     End Sub
-#End Region
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
         If txtProjName.Text = String.Empty Or cbBillability.Text = String.Empty Or cbCategory.Text = String.Empty Then
@@ -263,15 +286,12 @@ Class CreateProjectPage
 
     Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
         If txtSearch.Text = String.Empty Or txtSearch.Text = " " Then
-            GUISettingsOn()
             txtSearch.Text = String.Empty
-            _ProjectDBProvider._myprojectlist.Clear()
-            LoadProjectList()
+            SetData()
             ClearSelection()
         Else
             ClearSelection()
-            GUISettingsOff()
-            LoadProject(Convert.ToInt32(txtSearch.Text))
+            SetDataForSearch(txtSearch.Text)
         End If
     End Sub
 
@@ -336,17 +356,16 @@ Class CreateProjectPage
                 LoadProject(Convert.ToInt32(txtSearch.Text))
             ElseIf (String.IsNullOrEmpty((txtSearch.Text))) = True Then
                 UpdateProjectDetails()
-                LoadProjectList()     
+                LoadProjectList()
             End If
             btnCreate.Visibility = Windows.Visibility.Visible
             btnUpdate.Visibility = Windows.Visibility.Hidden
             txtProjID.IsEnabled = True
         End If
     End Sub
-   
+#End Region
 
 #Region "Paging Method"
-
     Private Sub SetPaging(mode As Integer)
         Try
             Dim totalRecords As Integer = lstProj.Length
@@ -410,32 +429,50 @@ Class CreateProjectPage
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
-
     End Sub
 
-
+    Private Sub DisplayPagingInfo()
+        ' If there has no data found
+        If lstProj.Length = 0 Then
+            txtPageNo.Text = "No Results Found "
+            GUISettingsOff()
+        Else
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
+            GUISettingsOn()
+        End If
+    End Sub
 
     Private Sub GUISettingsOff()
-        'lblPagingInfo.Visibility = Windows.Visibility.Hidden
+        dgProjectList.Visibility = Windows.Visibility.Hidden
 
         btnPrev.IsEnabled = False
         btnNext.IsEnabled = False
     End Sub
 
     Private Sub GUISettingsOn()
-
-        'lblPagingInfo.Visibility = Windows.Visibility.Visible
+        dgProjectList.Visibility = Windows.Visibility.Visible
 
         btnPrev.IsEnabled = True
         btnNext.IsEnabled = True
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Next))
+        Dim totalRecords As Integer = lstProj.Length
+
+        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+            paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+        End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Previous))
+        paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
+        If currentPage > 1 Then
+            currentPage -= 1
+        End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
@@ -447,7 +484,7 @@ Class CreateProjectPage
     End Sub
 #End Region
 
-
+#Region "INotify Methods"
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
     End Sub
@@ -467,4 +504,6 @@ Class CreateProjectPage
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
 
     End Sub
+#End Region
+
 End Class

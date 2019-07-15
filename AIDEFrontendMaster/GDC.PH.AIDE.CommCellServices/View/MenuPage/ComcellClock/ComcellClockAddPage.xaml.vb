@@ -77,7 +77,7 @@ Class ComcellClockAddPage
     Public Sub SetData(clockVM As ComcellClockModel)
         Try
             SetDataDay()
-            If Not clockVM.CLOCK_DAY = 0 AndAlso Not clockVM.CLOCK_HOUR = 0 Then
+            If Not clockVM.CLOCK_DAY = 0 AndAlso Not clockVM.CLOCK_HOUR = 0 AndAlso Not clockVM.CLOCK_MINUTE = 0 Then
                 If checkLimit() Then
                     If InitializeService() Then
                         _comcellclock.Clock_Day = clockVM.CLOCK_DAY
@@ -89,10 +89,10 @@ Class ComcellClockAddPage
                         comcellFrame.Navigate(New ComcellClockPage(profile, Me.comcellFrame, Me._window))
                     End If
                 Else
-                    MsgBox("Please check time entry. Hours should not exceed 24. Minutes should not exceed 59.", MsgBoxStyle.OkOnly, "AIDE")
+                    MsgBox("Please check time entry. Hours input should exceed 24. Minutes input should not exceed 59.", MsgBoxStyle.Exclamation, "AIDE")
                 End If
             Else
-                MsgBox("Please fill up all needed information.", MsgBoxStyle.OkOnly, "AIDE")
+                MsgBox("Please fill up all fields!", MsgBoxStyle.Exclamation, "AIDE")
             End If
         Catch ex As Exception
 

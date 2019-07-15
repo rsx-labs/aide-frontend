@@ -224,7 +224,6 @@ Class UpdateContactListPage
 
 #End Region
 
-
 #Region "Service Methods"
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
@@ -246,7 +245,6 @@ Class UpdateContactListPage
 
     End Sub
 #End Region
-
 
 #Region "Events"
     Private Sub btnCCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCCancel.Click
@@ -300,7 +298,7 @@ Class UpdateContactListPage
                 contactList.DIVISION_ID = contactVM.ContactProfile.DIVISION_ID
                 contactList.OLD_EMP_ID = old_empid
 
-                Dim result As Integer = MsgBox("Are you sure you want to continue?", MsgBoxStyle.OkCancel, "AIDE")
+                Dim result As Integer = MsgBox("Are you sure you want to continue?", MsgBoxStyle.Information, "AIDE")
                 If result = 1 Then
                     If InitializeService() Then
                         client.UpdateContactListByEmpID(contactList, 0)
@@ -363,7 +361,7 @@ Class UpdateContactListPage
                 contactList.DIVISION_ID = contactVM.ContactProfile.DIVISION_ID
                 contactList.OLD_EMP_ID = old_empid
 
-                Dim result As Integer = MsgBox("Are you sure you want to continue? Employee will be removed.", MsgBoxStyle.OkCancel, "AIDE")
+                Dim result As Integer = MsgBox("Are you sure you want to continue? Employee will be deleted.", MsgBoxStyle.Information, "AIDE")
                 If result = 1 Then
                     If InitializeService() Then
                         client.UpdateContactListByEmpID(contactList, 0)

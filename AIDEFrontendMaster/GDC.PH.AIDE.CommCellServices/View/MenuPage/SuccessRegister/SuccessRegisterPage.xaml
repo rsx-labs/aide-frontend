@@ -624,33 +624,29 @@
         </Style>
 
     </Page.Resources>
+    
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="1.5*"/>
                 <RowDefinition Height="1.3*"/>
                 <RowDefinition Height="11*"/>
-
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Background="White">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10*"/>
                     <ColumnDefinition Width="1*"/>
-
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="12*"/>
-
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
                             <Image Source="..\..\..\Assets\Button\SuccessRegistersLogo.png" />
                         </Viewbox>
-
                     </Grid>
 
                     <Grid Grid.Column="1">
@@ -658,380 +654,182 @@
                             <TextBlock TextWrapping="Wrap" Padding="0" Text="Success Registers" Margin="0,7,0,7" Foreground="DimGray"/>
                         </Viewbox>
                     </Grid>
-
                 </Grid>
+                
                 <Grid Grid.Column="1">
                     <Viewbox Margin="10" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <Button x:Name="btnSRAdd" Style="{DynamicResource ButtonAdd}" BorderBrush="{x:Null}">
-
-                        </Button>
+                        <Button x:Name="btnSRAdd" Style="{DynamicResource ButtonAdd}" BorderBrush="{x:Null}"/>
                     </Viewbox>
                 </Grid>
-
             </Grid>
-            <Grid Grid.Row="1" Background="#FFFBFBFB">
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        
-                       
-                        <Grid Grid.Column="0" HorizontalAlignment="Stretch">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="181*"/>
-                                    <ColumnDefinition Width="26*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBox MaxLength="30" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="DimGray" FontSize="12" Margin="10" BorderThickness="3"  TextWrapping="Wrap" x:Name="txtSRSearch" TextChanged="txtSRSearch_TextChanged" Width="auto" Grid.ColumnSpan="2" />
-                                <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                                    <Viewbox Margin="15,15,0,15">
-                                        <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png">
-                                        </Image>
-                                    </Viewbox>
-                                    <TextBlock TextWrapping="WrapWithOverflow" IsHitTestVisible="False" Text="Search success registers" VerticalAlignment="Center" HorizontalAlignment="left" Margin="5,0,0,0" Foreground="DarkGray">
-                                        <TextBlock.Style>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=txtSRSearch}" Value="">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </StackPanel>
-                            </Grid>
-                            <!--<TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtSRSearch" TextChanged="txtSRSearch_TextChanged" TextWrapping="Wrap" Margin="0,17,0,17" Width="auto" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>-->
 
+            <Grid Grid.Row="1" Background="#FFFBFBFB">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Grid Grid.Column="0" HorizontalAlignment="Stretch">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="181*"/>
+                                <ColumnDefinition Width="26*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox MaxLength="30" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="DimGray" FontSize="12" Margin="10" BorderThickness="3"  TextWrapping="Wrap" x:Name="txtSRSearch" TextChanged="txtSRSearch_TextChanged" Width="auto" Grid.ColumnSpan="2" />
+                            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                                <Viewbox Margin="15,15,0,15">
+                                    <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png">
+                                    </Image>
+                                </Viewbox>
+                                <TextBlock TextWrapping="WrapWithOverflow" IsHitTestVisible="False" Text="Search success registers" VerticalAlignment="Center" HorizontalAlignment="left" Margin="5,0,0,0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtSRSearch}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
                         </Grid>
                     </Grid>
-
                 </Grid>
-                <Grid Grid.Column="2">
-
-                </Grid>
-
-
-
             </Grid>
 
             <Grid Grid.Row="2" Background="White">
-                <TabControl x:Name="SR" BorderBrush="Transparent" BorderThickness="0">
-                    <TabItem x:Name="Own"
-                         Foreground="White" Width="200" HorizontalContentAlignment="center" 
-                         Height="30" BorderThickness="0" Margin="0" VerticalContentAlignment="Stretch" VerticalAlignment="Center">
-                        <TabItem.Header>
-                            <Viewbox HorizontalAlignment="Left">
-                                <TextBlock TextWrapping="Wrap" Padding="10,0,0,0" Text="Personal Success Register" Margin="10" Foreground="White" FontSize="20"/>
-                            </Viewbox>
-                        </TabItem.Header>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="9*"/>
-                                <RowDefinition Height="1*"/>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row ="0">
-                                <!--<WrapPanel HorizontalAlignment="Stretch" Grid.Row="0">-->
-                                    <Grid Grid.Row="0" Margin="0">
-                                        <Grid Grid.Row="0">
-                                        <Border Margin="0,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
-                                                <DataGrid x:Name="lv_successRegisterOwn"
-                                                  ItemsSource="{Binding SuccessRegisterList}" 
-                                                  AutoGenerateColumns="False"
-                                                  Width="auto" BorderBrush="Transparent" Background="Transparent" CanUserResizeColumns="False">
-                                                    <DataGrid.Columns>
-                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="ID" Width="5*" Binding="{Binding SuccessID}" />
-                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Created" Width="15*" Binding="{Binding DateInput, StringFormat=MM/dd/yyyy}" />
-                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Raised By" Width="10*" Binding="{Binding Nick_Name}" />
-                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Details of Success" Width="30*" Binding="{Binding DetailsOfSuccess}" />
-                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Who's Involve" Width="20*" Binding="{Binding WhosInvolve}" />
-                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Additional Information" Width="30*" Binding="{Binding AdditionalInformation}" />
-                                                    </DataGrid.Columns>
-                                                </DataGrid>
-                                            </Border>
-                                        </Grid>
-                                    </Grid>
-                                <!--</WrapPanel>-->
-                            </Grid>
-                            <Grid Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width=".8*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="10*"/>
-                                            <ColumnDefinition Width="30*"/>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="10*"/>
-                                            <ColumnDefinition Width="35*"/>
-                                            <ColumnDefinition Width="30*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0">
-                                            <Viewbox>
-                                                <Label HorizontalAlignment="Left" Background="White" BorderBrush="DimGray" BorderThickness="1" Margin="5"></Label>
-                                            </Viewbox>
-                                        </Grid>
-                                        <Grid Grid.Column="1">
-                                            <Viewbox HorizontalAlignment="Left">
-                                                <Label Foreground="DimGray" Content="Open/Close" VerticalAlignment="Center"/>
-                                            </Viewbox>
-                                        </Grid>
-                                        <Grid Grid.Column="2">
-
-                                        </Grid>
-                                        <Grid Grid.Column="3">
-
-                                            <Viewbox>
-                                                <Label HorizontalAlignment="Left" Background="#FFFDF2CE" Margin="5"></Label>
-                                            </Viewbox>
-                                        </Grid>
-                                        <Grid Grid.Column="4">
-                                            <Viewbox HorizontalAlignment="Left">
-                                                <Label Foreground="DimGray" Content="Due date today and Open" VerticalAlignment="Center"/>
-                                            </Viewbox>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid Grid.Row="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="10*"/>
-                                            <ColumnDefinition Width="30*"/>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="10*"/>
-                                            <ColumnDefinition Width="35*"/>
-                                            <ColumnDefinition Width="30*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0">
-                                            <Viewbox>
-                                                <Label HorizontalAlignment="Left" Background="#FFFFDEDE" Margin="5"></Label>
-                                            </Viewbox>
-                                        </Grid>
-                                        <Grid Grid.Column="1">
-                                            <Viewbox HorizontalAlignment="Left">
-                                                <Label Foreground="DimGray" Content="Overdue and Open" VerticalAlignment="Center"/>
-                                            </Viewbox>
-                                        </Grid>
-                                        <Grid Grid.Column="2">
-
-                                        </Grid>
-                                        <Grid Grid.Column="3">
-
-                                        </Grid>
-                                        <Grid Grid.Column="4">
-
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-
-
-                                <Grid Grid.Column="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width=".2*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0">
-                                        <Button Height="auto" Width="auto"  Margin="5"
-                            x:Name="btnPrev1" Style="{DynamicResource ButtonPageBack}" BorderBrush="{x:Null}" >
-
-                                        </Button>
-                                    </Grid>
-                                    <Grid Grid.Column="1">
-
-                                    </Grid>
-                                    <Grid Grid.Column="2">
-                                        <Button Height="auto" Width="auto" Margin="5" 
-                             x:Name="btnNext1" Style="{DynamicResource ButtonPageNext}" BorderBrush="{x:Null}">
-
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                                <Grid Grid.Column="2" >
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="6*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width=".3*"/>
-
-
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0"></Grid>
-                                    <Grid Grid.Column="1">
-
-                                    </Grid>
-
-                                </Grid>
-                            </Grid>
-
-                        </Grid>
-                    </TabItem>
-                    <TabItem x:Name="All" Foreground="White" 
-                         Width="200" HorizontalContentAlignment="Center"
-                        
-                         Height="30" VerticalContentAlignment="Stretch">
-                        <TabItem.Header>
-                            <Viewbox HorizontalAlignment="Left">
-                                <TextBlock TextWrapping="Wrap" Padding="10,0,0,0" Text="All Success Register" Margin="10" Foreground="White" FontSize="20"/>
-                            </Viewbox>
-                        </TabItem.Header>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="9*"/>
-                                <RowDefinition Height="1*"/>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row ="0">
-                                <!--<WrapPanel HorizontalAlignment="Center" Grid.Row="0">-->
-                                    <Grid Grid.Row="0" Margin="0">
-                                        <Grid Grid.Row="0">
-                                        <Border Margin="0,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
-                                                <DataGrid Background="Transparent" x:Name="lv_successRegisterAll" 
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="9*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row ="0">
+                        <Grid Grid.Row="0" Margin="0">
+                            <Grid Grid.Row="0">
+                                <Border Margin="0,0,0,0" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+                                    <DataGrid Background="Transparent" x:Name="lv_successRegisterAll" 
                                                   ItemsSource="{Binding SuccessRegisterList}" 
                                                   CanUserResizeColumns="False" AutoGenerateColumns="False"
                                                   Width="auto" BorderBrush="Transparent">
-                                                    <DataGrid.Columns>
-                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="ID" Width="5*" Binding="{Binding SuccessID}" />
-                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Created" Width="15*" Binding="{Binding DateInput, StringFormat=MM/dd/yyyy}" />
-                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Raised By" Width="10*" Binding="{Binding Nick_Name}" />
-                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Details of Success" Width="30*" Binding="{Binding DetailsOfSuccess}" />
-                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Who's Involve" Width="20*" Binding="{Binding WhosInvolve}" />
-                                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Additional Information" Width="30*" Binding="{Binding AdditionalInformation}" />
-                                                    </DataGrid.Columns>
-                                                </DataGrid>
-                                            </Border>
-                                        </Grid>
-                                    </Grid>
-                                <!--</WrapPanel>-->
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="ID" Width="5*" Binding="{Binding SuccessID}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Created" Width="15*" Binding="{Binding DateInput, StringFormat=MM/dd/yyyy}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Raised By" Width="10*" Binding="{Binding Nick_Name}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Details of Success" Width="30*" Binding="{Binding DetailsOfSuccess}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Who's Involve" Width="20*" Binding="{Binding WhosInvolve}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Additional Information" Width="30*" Binding="{Binding AdditionalInformation}" />
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width=".8*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="10*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="10*"/>
+                                    <ColumnDefinition Width="35*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <Viewbox>
+                                        <Label HorizontalAlignment="Left" Background="White" BorderBrush="DimGray" BorderThickness="1" Margin="5"></Label>
+                                    </Viewbox>
+                                </Grid>
+                                <Grid Grid.Column="1">
+                                    <Viewbox HorizontalAlignment="Left">
+                                        <Label Foreground="DimGray" Content="Open/Close" VerticalAlignment="Center"/>
+                                    </Viewbox>
+                                </Grid>
+                                <Grid Grid.Column="2">
+                                </Grid>
+                                <Grid Grid.Column="3">
+                                    <Viewbox>
+                                        <Label HorizontalAlignment="Left" Background="#FFFDF2CE" Margin="5"></Label>
+                                    </Viewbox>
+                                </Grid>
+                                <Grid Grid.Column="4">
+                                    <Viewbox HorizontalAlignment="Left">
+                                        <Label Foreground="DimGray" Content="Due date today and Open" VerticalAlignment="Center"/>
+                                    </Viewbox>
+                                </Grid>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="3*"/>
-                                    <ColumnDefinition Width=".8*"/>
-                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="10*"/>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="10*"/>
+                                    <ColumnDefinition Width="35*"/>
+                                    <ColumnDefinition Width="30*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="10*"/>
-                                            <ColumnDefinition Width="30*"/>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="10*"/>
-                                            <ColumnDefinition Width="35*"/>
-                                            <ColumnDefinition Width="30*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0">
-                                            <Viewbox>
-                                                <Label HorizontalAlignment="Left" Background="White" BorderBrush="DimGray" BorderThickness="1" Margin="5"></Label>
-                                            </Viewbox>
-                                        </Grid>
-                                        <Grid Grid.Column="1">
-                                            <Viewbox HorizontalAlignment="Left">
-                                                <Label Foreground="DimGray" Content="Open/Close" VerticalAlignment="Center"/>
-                                            </Viewbox>
-                                        </Grid>
-                                        <Grid Grid.Column="2">
-
-                                        </Grid>
-                                        <Grid Grid.Column="3">
-
-                                            <Viewbox>
-                                                <Label HorizontalAlignment="Left" Background="#FFFDF2CE" Margin="5"></Label>
-                                            </Viewbox>
-                                        </Grid>
-                                        <Grid Grid.Column="4">
-                                            <Viewbox HorizontalAlignment="Left">
-                                                <Label Foreground="DimGray" Content="Due date today and Open" VerticalAlignment="Center"/>
-                                            </Viewbox>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid Grid.Row="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="10*"/>
-                                            <ColumnDefinition Width="30*"/>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="10*"/>
-                                            <ColumnDefinition Width="35*"/>
-                                            <ColumnDefinition Width="30*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0">
-                                            <Viewbox>
-                                                <Label HorizontalAlignment="Left" Background="#FFFFDEDE" Margin="5"></Label>
-                                            </Viewbox>
-                                        </Grid>
-                                        <Grid Grid.Column="1">
-                                            <Viewbox HorizontalAlignment="Left">
-                                                <Label Foreground="DimGray" Content="Overdue and Open" VerticalAlignment="Center"/>
-                                            </Viewbox>
-                                        </Grid>
-                                        <Grid Grid.Column="2">
-
-                                        </Grid>
-                                        <Grid Grid.Column="3">
-
-                                        </Grid>
-                                        <Grid Grid.Column="4">
-
-                                        </Grid>
-                                    </Grid>
+                                    <Viewbox>
+                                        <Label HorizontalAlignment="Left" Background="#FFFFDEDE" Margin="5"></Label>
+                                    </Viewbox>
                                 </Grid>
-
-
                                 <Grid Grid.Column="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width=".2*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0">
-                                        <Button Height="auto" Width="auto"  Margin="5"
-                            x:Name="btnPrev2" Style="{DynamicResource ButtonPageBack}" BorderBrush="{x:Null}" >
-
-                                        </Button>
-                                    </Grid>
-                                    <Grid Grid.Column="1">
-
-                                    </Grid>
-                                    <Grid Grid.Column="2">
-                                        <Button Height="auto" Width="auto" Margin="5" 
-                             x:Name="btnNext2" Style="{DynamicResource ButtonPageNext}" BorderBrush="{x:Null}">
-
-                                        </Button>
-                                    </Grid>
+                                    <Viewbox HorizontalAlignment="Left">
+                                        <Label Foreground="DimGray" Content="Overdue and Open" VerticalAlignment="Center"/>
+                                    </Viewbox>
                                 </Grid>
-                                <Grid Grid.Column="2" >
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="6*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                        <ColumnDefinition Width=".3*"/>
-
-
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0"></Grid>
-                                    <Grid Grid.Column="1">
-                                        <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" >
-
-                                        </Button>
-                                    </Grid>
+                                <Grid Grid.Column="2">
 
                                 </Grid>
+                                <Grid Grid.Column="3">
 
+                                </Grid>
+                                <Grid Grid.Column="4">
+
+                                </Grid>
                             </Grid>
                         </Grid>
-                    </TabItem>
-                </TabControl>
+
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1.5*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Button Height="auto" Width="auto"  Margin="5" x:Name="btnPrev" Style="{DynamicResource ButtonPageBack}" BorderBrush="{x:Null}"/>
+                            </Grid>
+                            <Grid Grid.Column="1">
+                                <TextBlock TextWrapping="Wrap" Padding="0" x:Name="txtPageNo" Margin="0,10,0,7" Foreground="DimGray" FontSize="9"/>
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <Button Height="auto" Width="auto" Margin="5" x:Name="btnNext" Style="{DynamicResource ButtonPageNext}" BorderBrush="{x:Null}"/>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Column="2" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="6*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width=".3*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0"></Grid>
+                            <Grid Grid.Column="1">
+                                <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
     </Border>

@@ -630,19 +630,12 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10*"/>
                     <ColumnDefinition Width="1*"/>
-
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
-                    
-                    
-
-                    
-                        <Viewbox HorizontalAlignment="Left">
-                            <TextBlock TextWrapping="Wrap" Padding="10" Text="Tracker" Margin="0,7,0,7" Foreground="DimGray"/>
-                        </Viewbox>
-                 
-
+                    <Viewbox HorizontalAlignment="Left">
+                        <TextBlock TextWrapping="Wrap" Padding="0" Text="Tracker" Margin="0,7,0,7" Foreground="DimGray"/>
+                    </Viewbox>
                 </Grid>
                 <Grid Grid.Column="1">
                     <Viewbox Margin="10" HorizontalAlignment="Right" VerticalAlignment="Center">
@@ -650,7 +643,6 @@
                     </Viewbox>
                 </Grid>
             </Grid>
-
             <Grid Grid.Row="1">
                 <Grid Grid.Row="1" Background="#FFFBFBFB">
                     <Grid.ColumnDefinitions>
@@ -695,7 +687,6 @@
             </Grid>
             <Grid Grid.Row="2" Background="#FFFBFBFB">
                 <Border Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
-
                     <DataGrid Background="Transparent" AutoGenerateColumns="False" x:Name="SabaLearningLV" 
                       Width="auto" BorderBrush="Transparent" CanUserResizeColumns="False"
                       ItemsSource="{Binding ObjectSabaLearningSet}" 
@@ -707,6 +698,42 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
+            </Grid>
+            <Grid Grid.Row="3" Background="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width=".8*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Button Height="Auto" Width="Auto"  
+                                Margin="5"
+                                x:Name="btnPrev" 
+                                Style="{DynamicResource ButtonPageBack}" 
+                                BorderBrush="{x:Null}" >
+                        </Button>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <TextBlock TextWrapping="Wrap" Padding="0" x:Name="txtPageNo" Margin="0,7,0,7" Foreground="DimGray" FontSize="9"/>
+                    </Grid>
+
+                    <Grid Grid.Column="2">
+                        <Button Height="Auto" Width="Auto" Margin="5" 
+                                x:Name="btnNext" 
+                                Style="{DynamicResource ButtonPageNext}" 
+                                BorderBrush="{x:Null}">
+                        </Button>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
     </Border>

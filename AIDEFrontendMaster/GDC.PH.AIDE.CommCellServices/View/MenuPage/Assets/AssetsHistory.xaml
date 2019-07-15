@@ -664,11 +664,8 @@
                 <Border Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
                     <DataGrid Background="Transparent" x:Name="lv_assetList" 
                           ItemsSource="{Binding AssetHistoryList}"
-                          
                           AutoGenerateColumns="False" 
                           CanUserResizeColumns="False"
-                          
-                         
                           BorderBrush="Transparent" 
                           IsReadOnly="True">
                         <DataGrid.Resources>
@@ -700,7 +697,7 @@
                 <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width=".2*"/>
+                        <ColumnDefinition Width="1.5*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
@@ -714,7 +711,9 @@
                         </Button>
                     </Grid>
                     
-                    <Grid Grid.Column="1"></Grid>
+                    <Grid Grid.Column="1">
+                        <TextBlock TextWrapping="Wrap" Padding="0" x:Name="txtPageNo" Margin="0,10,0,7" Foreground="DimGray" FontSize="9"/>
+                    </Grid>
                     
                     <Grid Grid.Column="2">
                         <Button Height="auto" Width="auto" Margin="5" 

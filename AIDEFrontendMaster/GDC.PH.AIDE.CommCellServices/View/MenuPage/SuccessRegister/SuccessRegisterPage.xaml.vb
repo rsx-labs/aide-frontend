@@ -14,20 +14,9 @@ Imports System.Drawing.Printing
 ''' <remarks></remarks>
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Public Class SuccessRegisterPage
-
     Implements ServiceReference1.IAideServiceCallback
 
-#Region "Fields"
-
-    Private _AideService As ServiceReference1.AideServiceClient
-    Private mainFrame As Frame
-    Private isEmpty As Boolean
-    Private email As String
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
-    Dim lstSuccess As SuccessRegister()
-
+#Region "Paging Declarations"
     Private Enum PagingMode
         _First = 1
         _Next = 2
@@ -35,34 +24,49 @@ Public Class SuccessRegisterPage
         _Last = 4
     End Enum
 
-#End Region
-
-#Region "Constructor"
-
-    Public Sub New(mainFrame As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
-
-        InitializeComponent()
-        Me.email = _email
-        Me.mainFrame = mainFrame
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
-    End Sub
-
-#End Region
-
-#Region "Paging Declarations"
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
     Dim pagingRecordPerPage As Integer = 10
+    Dim currentPage As Integer
+    Dim lastPage As Integer
+#End Region
+
+#Region "Fields"
+    Private _AideService As ServiceReference1.AideServiceClient
+    Private mainFrame As Frame
+    Private isEmpty As Boolean
+    Private email As String
+    Private _addframe As Frame
+    Private _menugrid As Grid
+    Private _submenuframe As Frame
+    Private profile As Profile
+
+    Dim lstSuccess As SuccessRegister()
+    Dim paginatedCollection As PaginatedObservableCollection(Of SuccessRegisterModel) = New PaginatedObservableCollection(Of SuccessRegisterModel)(pagingRecordPerPage)
+
+#End Region
+
+#Region "Constructor"
+
+    Public Sub New(mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+        InitializeComponent()
+        Me.profile = _profile
+        Me.email = profile.Email_Address
+        Me.mainFrame = mainFrame
+        Me._addframe = _addframe
+        Me._menugrid = _menugrid
+        Me._submenuframe = _submenuframe
+        SetData()
+    End Sub
+
 #End Region
 
 #Region "Events"
 
     Private Sub btnSRAdd_Click(sender As Object, e As RoutedEventArgs) Handles btnSRAdd.Click
         isEmpty = True
-        _addframe.Navigate(New NewSuccessRegister(isEmpty, mainFrame, email, _addframe, _menugrid, _submenuframe))
+        _addframe.Navigate(New NewSuccessRegister(isEmpty, mainFrame, profile, _addframe, _menugrid, _submenuframe))
         mainFrame.IsEnabled = False
         mainFrame.Opacity = 0.3
         _menugrid.IsEnabled = False
@@ -73,23 +77,21 @@ Public Class SuccessRegisterPage
         _addframe.Visibility = Visibility.Visible
     End Sub
 
-    Private Sub lv_successRegisterOwn_MouseDoubleClick(sender As Object, e As SelectionChangedEventArgs) Handles lv_successRegisterOwn.SelectionChanged
-        'mainFrame.Navigate(New NewSuccessRegister(lv_successRegisterOwn, mainFrame))
+    Private Sub lv_successRegisterAll_MouseDoubleClick(sender As Object, e As SelectionChangedEventArgs) Handles lv_successRegisterAll.SelectionChanged
+        'mainFrame.Navigate(New NewSuccessRegister(lv_successRegisterAll, mainFrame))
         e.Handled = True
-        If lv_successRegisterOwn.SelectedIndex <> -1 Then
+        Dim successRegister As New SuccessRegisterModel
+        If lv_successRegisterAll.SelectedIndex <> -1 Then
+            If lv_successRegisterAll.SelectedItem IsNot Nothing And profile.Emp_ID = CType(lv_successRegisterAll.SelectedItem, SuccessRegisterModel).Emp_ID Then
+                successRegister.SuccessID = CType(lv_successRegisterAll.SelectedItem, SuccessRegisterModel).SuccessID
+                successRegister.Emp_ID = CType(lv_successRegisterAll.SelectedItem, SuccessRegisterModel).Emp_ID
+                successRegister.Nick_Name = CType(lv_successRegisterAll.SelectedItem, SuccessRegisterModel).Nick_Name
+                successRegister.DetailsOfSuccess = CType(lv_successRegisterAll.SelectedItem, SuccessRegisterModel).DetailsOfSuccess
+                successRegister.WhosInvolve = CType(lv_successRegisterAll.SelectedItem, SuccessRegisterModel).WhosInvolve
+                successRegister.AdditionalInformation = CType(lv_successRegisterAll.SelectedItem, SuccessRegisterModel).AdditionalInformation
+                successRegister.DateInput = CType(lv_successRegisterAll.SelectedItem, SuccessRegisterModel).DateInput
 
-            If lv_successRegisterOwn.SelectedItem IsNot Nothing Then
-                Dim successRegister As New SuccessRegisterModel
-
-                successRegister.SuccessID = CType(lv_successRegisterOwn.SelectedItem, SuccessRegisterModel).SuccessID
-                successRegister.Emp_ID = CType(lv_successRegisterOwn.SelectedItem, SuccessRegisterModel).Emp_ID
-                successRegister.Nick_Name = CType(lv_successRegisterOwn.SelectedItem, SuccessRegisterModel).Nick_Name
-                successRegister.DetailsOfSuccess = CType(lv_successRegisterOwn.SelectedItem, SuccessRegisterModel).DetailsOfSuccess
-                successRegister.WhosInvolve = CType(lv_successRegisterOwn.SelectedItem, SuccessRegisterModel).WhosInvolve
-                successRegister.AdditionalInformation = CType(lv_successRegisterOwn.SelectedItem, SuccessRegisterModel).AdditionalInformation
-                successRegister.DateInput = CType(lv_successRegisterOwn.SelectedItem, SuccessRegisterModel).DateInput
-
-                _addframe.Navigate(New NewSuccessRegister(successRegister, mainFrame, email, _addframe, _menugrid, _submenuframe))
+                _addframe.Navigate(New NewSuccessRegister(successRegister, mainFrame, profile, _addframe, _menugrid, _submenuframe))
                 mainFrame.IsEnabled = False
                 mainFrame.Opacity = 0.3
                 _menugrid.IsEnabled = False
@@ -101,12 +103,6 @@ Public Class SuccessRegisterPage
             End If
         End If
 
-    End Sub
-
-    Private Sub SR_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles SR.SelectionChanged
-        e.Handled = True
-        Me.DataContext = Nothing
-        SetData()
     End Sub
 
     Private Sub txtSRSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSRSearch.TextChanged
@@ -133,14 +129,10 @@ Public Class SuccessRegisterPage
     Public Sub SetData()
         Try
             If InitializeService() Then
-                If SR.SelectedIndex = 0 Then
-                    lstSuccess = _AideService.ViewSuccessRegisterByEmpID(email)
-                    btnPrint.Visibility = Windows.Visibility.Hidden
-                Else
-                    lstSuccess = _AideService.ViewSuccessRegisterAll(email)
-                    btnPrint.Visibility = Windows.Visibility.Visible
-                End If
-                SetPaging(PagingMode._First)
+                lstSuccess = _AideService.ViewSuccessRegisterAll(email)
+                btnPrint.Visibility = Windows.Visibility.Visible
+                LoadData()
+                DisplayPagingInfo()
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -149,24 +141,23 @@ Public Class SuccessRegisterPage
 
     Public Sub LoadData()
         Try
+            paginatedCollection.Clear()
             Dim lstSuccessRegister As New ObservableCollection(Of SuccessRegisterModel)
             Dim successRegisterDBProvider As New SuccessRegisterDBProvider
-            Dim successRegisterVM As New SuccessRegisterViewModel()
-
-            Dim objSuccessRegister As New SuccessRegister()
 
             ' Set the MyLessonLearntList 
-            For i As Integer = startRowIndex To lastRowIndex
-                objSuccessRegister = lstSuccess(i)
+            For Each objSuccessRegister As SuccessRegister In lstSuccess
                 successRegisterDBProvider.SetMySuccessRegister(objSuccessRegister)
             Next
 
-            For Each rawUser As MySuccessRegister In successRegisterDBProvider.GetMySuccessRegister()
-                lstSuccessRegister.Add(New SuccessRegisterModel(rawUser))
+            For Each lessonLearnt As MySuccessRegister In successRegisterDBProvider.GetMySuccessRegister()
+                paginatedCollection.Add(New SuccessRegisterModel(lessonLearnt))
             Next
 
-            successRegisterVM.SuccessRegisterList = lstSuccessRegister
-            Me.DataContext = successRegisterVM
+            lv_successRegisterAll.ItemsSource = paginatedCollection
+            'LoadDataForPrint()
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(lstSuccess.Length / pagingRecordPerPage)
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -174,13 +165,10 @@ Public Class SuccessRegisterPage
 
     Public Sub SetDataForSearch(input As String, email As String)
         Try
-            If SR.SelectedIndex = 0 Then
-                Exit Sub
-            Else
-                If InitializeService() Then
-                    lstSuccess = _AideService.ViewSuccessRegisterBySearch(input, email)
-                    SetPaging(PagingMode._First)
-                End If
+            If InitializeService() Then
+                lstSuccess = _AideService.ViewSuccessRegisterBySearch(input, email)
+                LoadData()
+                DisplayPagingInfo()
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -269,49 +257,49 @@ Public Class SuccessRegisterPage
     End Sub
 
     Private Sub DisplayPagingInfo()
-        Dim pagingInfo As String
-
         ' If there has no data found
         If lstSuccess.Length = 0 Then
-            pagingInfo = "No Results Found "
+            txtPageNo.Text = "No Results Found "
             GUISettingsOff()
         Else
-            pagingInfo = "Displaying " & startRowIndex + 1 & " to " & lastRowIndex + 1
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
             GUISettingsOn()
         End If
-
-
-
     End Sub
 
     Private Sub GUISettingsOff()
-        lv_successRegisterOwn.Visibility = Windows.Visibility.Hidden
+        lv_successRegisterAll.Visibility = Windows.Visibility.Hidden
         lv_successRegisterAll.Visibility = Windows.Visibility.Hidden
 
-        btnPrev1.IsEnabled = False
-        btnNext1.IsEnabled = False
-
-        btnPrev2.IsEnabled = False
-        btnNext2.IsEnabled = False
+        btnPrev.IsEnabled = False
+        btnNext.IsEnabled = False
     End Sub
 
     Private Sub GUISettingsOn()
-        lv_successRegisterOwn.Visibility = Windows.Visibility.Visible
+        lv_successRegisterAll.Visibility = Windows.Visibility.Visible
         lv_successRegisterAll.Visibility = Windows.Visibility.Visible
 
-        btnPrev1.IsEnabled = True
-        btnNext1.IsEnabled = True
-
-        btnPrev2.IsEnabled = True
-        btnNext2.IsEnabled = True
+        btnPrev.IsEnabled = True
+        btnNext.IsEnabled = True
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Next))
+        Dim totalRecords As Integer = lstSuccess.Length
+
+        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+            paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+        End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Previous))
+        paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
+        If currentPage > 1 Then
+            currentPage -= 1
+        End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
@@ -348,7 +336,5 @@ Public Class SuccessRegisterPage
 
     End Sub
 #End Region
-
-
 
 End Class

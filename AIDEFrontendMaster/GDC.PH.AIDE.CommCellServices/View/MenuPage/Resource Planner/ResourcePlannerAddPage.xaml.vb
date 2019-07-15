@@ -21,19 +21,8 @@ Class ResourcePlannerAddPage
     Private profile As Profile
     Private mainwindows As MainWindow
 
-    Dim status As Integer
     Dim setStatus As Integer
     Dim displayStatus As String = String.Empty
-    Dim HALF As Integer = 1
-    Dim FULL As Integer = 2
-    Dim SICK_LEAVE As Integer = 3
-    Dim VACATION_LEAVE As Integer = 4
-    Dim HALF_SICK_LEAVE As Integer = 5
-    Dim HALF_VACATION_LEAVE As Integer = 6
-    Dim HOLIDAY As Integer = 7
-    Dim EMERGENCY_LEAVE As Integer = 8
-    Dim HALF_EMERGENCY_LEAVE As Integer = 9
-    Dim OTHER_LEAVES As Integer = 10
 
 #End Region
 
@@ -55,14 +44,14 @@ Class ResourcePlannerAddPage
 
     Private Sub dtpFrom_CalendarClosed(sender As Object, e As RoutedEventArgs) Handles dtpFrom.CalendarClosed
         If Not dtpFrom.SelectedDate Is Nothing Then
-            If (cbCategory.SelectedIndex = 0 Or cbCategory.SelectedIndex = 1 Or cbCategory.SelectedIndex = 3 Or cbCategory.SelectedIndex = 4) And cbCategoryLeave.SelectedIndex = 0 Then
+            If cbCategory.SelectedValue = 5 Or cbCategory.SelectedValue = 6 Or cbCategory.SelectedValue = 9 Or cbCategory.SelectedValue = 12 Or cbCategory.SelectedValue = 14 Then
                 dtpTo.Text = dtpFrom.Text
                 dtpTo.IsEnabled = False
-            ElseIf cbCategory.SelectedIndex = 0 And cbCategoryLeave.SelectedIndex = 1 Then
-                dtpTo.DisplayDateStart = Date.MinValue
-                dtpTo.DisplayDateEnd = Date.Today
+            ElseIf cbCategory.SelectedValue = 3 Or cbCategory.SelectedValue = 4 Or cbCategory.SelectedValue = 7 Or cbCategory.SelectedValue = 8 Or cbCategory.SelectedValue = 10 Or cbCategory.SelectedValue = 13 Then
+                dtpTo.DisplayDateStart = dtpFrom.Text
+                dtpTo.DisplayDateEnd = Date.MaxValue
                 dtpTo.IsEnabled = True
-            ElseIf (cbCategory.SelectedIndex = 1 Or cbCategory.SelectedIndex = 2 Or cbCategory.SelectedIndex = 3) And cbCategoryLeave.SelectedIndex = 1 Then
+            ElseIf (cbCategory.SelectedIndex = 1 Or cbCategory.SelectedIndex = 2 Or cbCategory.SelectedIndex = 3) Then
                 dtpTo.DisplayDateStart = dtpFrom.Text
                 dtpTo.DisplayDateEnd = Date.MaxValue
                 dtpTo.IsEnabled = True
@@ -78,8 +67,7 @@ Class ResourcePlannerAddPage
 
     Private Sub btnCreateLeave_Click(sender As Object, e As RoutedEventArgs) Handles btnCreateLeave.Click
         Try
-            GetStatus()
-            If profile.Permission <> "Manager" And status = HOLIDAY Then
+            If profile.Permission <> "Manager" AndAlso cbCategory.DisplayMemberPath = "Holiday" Then
                 MsgBox("Sorry! You do not have authorization to file Holiday Leave. Please contact your Manager", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 If cbCategory.SelectedValue = setStatus Then
@@ -132,24 +120,15 @@ Class ResourcePlannerAddPage
     End Sub
 
     Private Sub cbCategory_DropDownOpened(sender As Object, e As EventArgs) Handles cbCategory.DropDownOpened
-        cbCategoryLeave.IsEnabled = True
         dtpFrom.IsEnabled = True
-        cbCategoryLeave.Text = ""
         dtpFrom.Text = ""
         dtpTo.Text = ""
     End Sub
 
     Private Sub cbCategory_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbCategory.SelectionChanged
-        If cbCategory.SelectedIndex = 0 Then
+        If cbCategory.SelectedValue = 3 Or cbCategory.SelectedValue = 5 Then
             dtpFrom.DisplayDateStart = Date.MinValue
             dtpFrom.DisplayDateEnd = Date.Today
-        ElseIf cbCategory.SelectedIndex = 2 Then
-            cbCategoryLeave.Text = "Full"
-            cbCategoryLeave.IsEnabled = False
-        ElseIf cbCategory.SelectedIndex = 3 Then
-        ElseIf cbCategory.SelectedIndex = 4 Then
-            dtpFrom.DisplayDateStart = Date.Today
-            dtpFrom.DisplayDateEnd = Date.MaxValue
         Else
             dtpFrom.DisplayDateStart = Date.Today
             dtpFrom.DisplayDateEnd = Date.MaxValue
@@ -200,7 +179,7 @@ Class ResourcePlannerAddPage
         Resource.EmpID = txtEmpID.Text
         Resource.dateFrom = dtpFrom.SelectedDate
         Resource.dateTo = dtpTo.SelectedDate
-        Resource.Status = status
+        Resource.Status = cbCategory.SelectedValue
         If profile.Emp_ID <> txtEmpID.Text Then
             client.InsertResourcePlanner(Resource)
         Else
@@ -229,35 +208,6 @@ Class ResourcePlannerAddPage
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
-    End Sub
-
-    Public Sub GetStatus()
-        '3 is for Sick Leave
-        '4 is for Vacation Leave
-        '8 is for Emergency Leave
-        If cbCategory.SelectedValue = SICK_LEAVE Then
-            If CType(cbCategoryLeave.SelectedValue, Integer) = HALF Then
-                status = HALF_SICK_LEAVE
-            Else
-                status = SICK_LEAVE
-            End If
-        ElseIf cbCategory.SelectedValue = VACATION_LEAVE Then
-            If CType(cbCategoryLeave.SelectedValue, Integer) = HALF Then
-                status = HALF_VACATION_LEAVE
-            Else
-                status = VACATION_LEAVE
-            End If
-        ElseIf cbCategory.SelectedValue = EMERGENCY_LEAVE Then
-            If CType(cbCategoryLeave.SelectedValue, Integer) = HALF Then
-                status = HALF_EMERGENCY_LEAVE
-            Else
-                status = EMERGENCY_LEAVE
-            End If
-        ElseIf cbCategory.SelectedValue = HOLIDAY Then
-            status = HOLIDAY
-        ElseIf cbCategory.SelectedValue = OTHER_LEAVES Then
-            status = OTHER_LEAVES
-        End If
     End Sub
 
     Public Sub LoadData()

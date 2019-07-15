@@ -26,6 +26,8 @@ Public Class AssetsInventoryListPage
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
     Dim pagingRecordPerPage As Integer = 10
+    Dim currentPage As Integer
+    Dim lastPage As Integer
 #End Region
 
 #Region "Fields"
@@ -92,7 +94,7 @@ Public Class AssetsInventoryListPage
 
                 LoadData()
                 totalRecords = lstAssets.Length
-
+                DisplayPagingInfo()
                 ' SetPaging(PagingMode._First)
             End If
         Catch ex As Exception
@@ -123,7 +125,8 @@ Public Class AssetsInventoryListPage
             Else
                 lv_assetInventoryListUnapproved.ItemsSource = paginatedCollection
             End If
-
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(lstAssets.Length / pagingRecordPerPage)
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -156,29 +159,34 @@ Public Class AssetsInventoryListPage
 
     Public Sub SetDataForSearch(input As String)
         Try
-            If InitializeService() Then
-                Dim assetsDBProvider As New AssetsDBProvider
-                'lstAssets = _AideService.GetAllAssetsInventoryBySearch(profile.Emp_ID, input, page)
-                'SetPaging(PagingMode._First)
+            Dim assetsDBProvider As New AssetsDBProvider
 
-                paginatedCollection.Clear()
-                paginatedCollection.Collections.Clear()
+            paginatedCollection = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
 
-                Dim items = From i In lstAssets Where i.ASSET_DESC.ToLower.Contains(input.ToLower) Or i.MANUFACTURER.ToLower.Contains(input.ToLower) _
-                          Or i.MODEL_NO.ToLower.Contains(input.ToLower) Or i.SERIAL_NO.ToLower.Contains(input.ToLower) Or i.ASSET_TAG.ToLower.Contains(input.ToLower) _
-                          Or i.FULL_NAME.ToLower.Contains(input.ToLower)
-                Dim searchAssets = New ObservableCollection(Of Assets)(items)
+            Dim items = From i In lstAssets Where i.ASSET_DESC.ToLower.Contains(input.ToLower) Or i.MANUFACTURER.ToLower.Contains(input.ToLower) _
+                      Or i.MODEL_NO.ToLower.Contains(input.ToLower) Or i.SERIAL_NO.ToLower.Contains(input.ToLower) Or i.ASSET_TAG.ToLower.Contains(input.ToLower) _
+                      Or i.FULL_NAME.ToLower.Contains(input.ToLower)
+            Dim searchAssets = New ObservableCollection(Of Assets)(items)
 
-                For Each assets As Assets In searchAssets
-                    assetsDBProvider.SetAssetInventoryList(assets)
-                Next
+            For Each assets As Assets In searchAssets
+                assetsDBProvider.SetAssetInventoryList(assets)
+            Next
 
-                For Each assets As MyAssets In assetsDBProvider.GetAssetInventoryList()
-                    paginatedCollection.Add(New AssetsModel(assets))
-                Next
+            For Each assets As MyAssets In assetsDBProvider.GetAssetInventoryList()
+                paginatedCollection.Add(New AssetsModel(assets))
+            Next
 
-                totalRecords = searchAssets.Count
+            totalRecords = searchAssets.Count
+            If SR.SelectedIndex = 0 Then
+                lv_assetInventoryListOwn.ItemsSource = paginatedCollection
+            ElseIf SR.SelectedIndex = 1 Then
+                lv_assetInventoryList.ItemsSource = paginatedCollection
+            Else
+                lv_assetInventoryListUnapproved.ItemsSource = paginatedCollection
             End If
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+            DisplayPagingInfo()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -263,18 +271,17 @@ Public Class AssetsInventoryListPage
     End Sub
 
     Private Sub DisplayPagingInfo()
-        Dim pagingInfo As String
 
         ' If there has no data found
         If lstAssets.Length = 0 Then
-            pagingInfo = "No Results Found "
+            txtPageNo.Text = "No Results Found "
+            txtAllPageNo.Text = "No Results Found "
             GUISettingsOff()
         Else
-            pagingInfo = "Displaying " & startRowIndex + 1 & " to " & lastRowIndex + 1
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
+            txtAllPageNo.Text = "page " & currentPage & " of " & lastPage
             GUISettingsOn()
         End If
-
-        'lblPagingInfo2.Content = pagingInfo
     End Sub
 
     Private Sub GUISettingsOff()
@@ -307,11 +314,18 @@ Public Class AssetsInventoryListPage
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
         If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
             paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = lastPage
         End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
         paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
+        If currentPage > 1 Then
+            currentPage -= 1
+        End If
+        DisplayPagingInfo()
     End Sub
 
     'Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)

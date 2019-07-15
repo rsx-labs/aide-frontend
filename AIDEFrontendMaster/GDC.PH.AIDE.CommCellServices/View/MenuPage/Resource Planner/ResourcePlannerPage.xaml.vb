@@ -170,6 +170,12 @@ Class ResourcePlannerPage
             displayStatus = "OL"
         ElseIf setStatus = 11 Then
             displayStatus = "L"
+        ElseIf setStatus = 12 Then
+            displayStatus = "HOL"
+        ElseIf setStatus = 13 Then
+            displayStatus = "OBA"
+        ElseIf setStatus = 14 Then
+            displayStatus = "HOBA"
         Else
             displayStatus = ""
         End If

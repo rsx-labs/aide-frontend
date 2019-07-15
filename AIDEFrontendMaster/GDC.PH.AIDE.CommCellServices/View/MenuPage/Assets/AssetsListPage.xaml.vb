@@ -13,15 +13,7 @@ Imports System.Drawing.Printing
 Public Class AssetsListPage
     Implements ServiceReference1.IAideServiceCallback
 
-#Region "FIELDS"
-    Private frame As Frame
-    Private profile As New Profile
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
-    Private _AideService As ServiceReference1.AideServiceClient
-    Dim lstAssets As Assets()
-
+#Region "Paging Declarations"
     Private Enum PagingMode
         _First = 1
         _Next = 2
@@ -29,23 +21,31 @@ Public Class AssetsListPage
         _Last = 4
     End Enum
 
-#End Region
-
-#Region "Paging Declarations"
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
     Dim pagingRecordPerPage As Integer = 10
+    Dim currentPage As Integer
+    Dim lastPage As Integer
+#End Region
+
+#Region "FIELDS"
+    Private frame As Frame
+    Private profile As New Profile
+    Private _addframe As Frame
+    Private _menugrid As Grid
+    Private _submenuframe As Frame
+    Private _AideService As ServiceReference1.AideServiceClient
+    Dim totalRecords As Integer
+    Dim lstAssets As Assets()
+    Dim paginatedCollection As PaginatedObservableCollection(Of AssetsModel) = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
 #End Region
 
 #Region "CONSTRUCTOR"
 
     Public Sub New(_frame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
-
         ' This call is required by the designer.
         InitializeComponent()
-
-        ' Add any initialization after the InitializeComponent() call.
         frame = _frame
         profile = _profile
         Me._addframe = _addframe
@@ -141,8 +141,8 @@ Public Class AssetsListPage
             If InitializeService() Then
                 lstAssets = _AideService.GetAllAssetsByEmpID(profile.Emp_ID)
                 btnPrint.Visibility = Windows.Visibility.Hidden
-
-                SetPaging(PagingMode._First)
+                LoadData()
+                DisplayPagingInfo()
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -151,24 +151,22 @@ Public Class AssetsListPage
 
     Public Sub LoadData()
         Try
+            paginatedCollection.Clear()
             Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
             Dim assetsDBProvider As New AssetsDBProvider
-            Dim assetsVM As New AssetsViewModel()
 
-            Dim objAssets As New Assets()
-
-            ' Set the MyLessonLearntList 
-            For i As Integer = startRowIndex To lastRowIndex
-                objAssets = lstAssets(i)
+            For Each objAssets As Assets In lstAssets
                 assetsDBProvider.SetAssetList(objAssets)
             Next
 
-            For Each rawUser As MyAssets In assetsDBProvider.GetAssetList()
-                lstAssetsList.Add(New AssetsModel(rawUser))
+            For Each assetList As MyAssets In assetsDBProvider.GetAssetList()
+                paginatedCollection.Add(New AssetsModel(assetList))
             Next
 
-            assetsVM.AssetList = lstAssetsList
-            Me.DataContext = assetsVM
+            lv_assetList.ItemsSource = paginatedCollection
+            'LoadDataForPrint()
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(lstAssets.Length / pagingRecordPerPage)
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -176,10 +174,28 @@ Public Class AssetsListPage
 
     Public Sub SetDataForSearch(input As String)
         Try
-            If InitializeService() Then
-                lstAssets = _AideService.GetAllAssetsBySearch(profile.Emp_ID, input)
-                SetPaging(PagingMode._First)
-            End If
+            Dim assetsDBProvider As New AssetsDBProvider
+
+            paginatedCollection = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
+
+            Dim items = From i In lstAssets Where i.ASSET_DESC.ToLower.Contains(input.ToLower) Or i.MANUFACTURER.ToLower.Contains(input.ToLower) _
+                      Or i.MODEL_NO.ToLower.Contains(input.ToLower) Or i.SERIAL_NO.ToLower.Contains(input.ToLower) Or i.ASSET_TAG.ToLower.Contains(input.ToLower) _
+                      Or i.FULL_NAME.ToLower.Contains(input.ToLower)
+            Dim searchAssets = New ObservableCollection(Of Assets)(items)
+
+            For Each assets As Assets In searchAssets
+                assetsDBProvider.SetAssetList(assets)
+            Next
+
+            For Each assets As MyAssets In assetsDBProvider.GetAssetList()
+                paginatedCollection.Add(New AssetsModel(assets))
+            Next
+
+            totalRecords = searchAssets.Count
+            lv_assetList.ItemsSource = paginatedCollection
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+            DisplayPagingInfo()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -267,19 +283,14 @@ Public Class AssetsListPage
     End Sub
 
     Private Sub DisplayPagingInfo()
-        Dim pagingInfo As String
-
         ' If there has no data found
         If lstAssets.Length = 0 Then
-            pagingInfo = "No Results Found "
+            txtPageNo.Text = "No Results Found "
             GUISettingsOff()
         Else
-            pagingInfo = "Displaying " & startRowIndex + 1 & " to " & lastRowIndex + 1
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
             GUISettingsOn()
         End If
-
-        'lblPagingInfo2.Content = pagingInfo
-
     End Sub
 
     Private Sub GUISettingsOff()
@@ -297,11 +308,22 @@ Public Class AssetsListPage
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Next))
+        Dim totalRecords As Integer = lstAssets.Length
+
+        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+            paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+        End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Previous))
+        paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
+        If currentPage > 1 Then
+            currentPage -= 1
+        End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)

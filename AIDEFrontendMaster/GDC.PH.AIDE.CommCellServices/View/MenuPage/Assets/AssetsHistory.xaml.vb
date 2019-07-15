@@ -13,13 +13,7 @@ Imports System.Drawing.Printing
 Public Class AssetsHistory
     Implements ServiceReference1.IAideServiceCallback
 
-#Region "FIELDS"
-    Private frame As Frame
-    Private profile As New Profile
-
-    Private _AideService As ServiceReference1.AideServiceClient
-    Dim lstAssets As Assets()
-
+#Region "Paging Declarations"
     Private Enum PagingMode
         _First = 1
         _Next = 2
@@ -27,13 +21,23 @@ Public Class AssetsHistory
         _Last = 4
     End Enum
 
-#End Region
-
-#Region "Paging Declarations"
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
     Dim pagingRecordPerPage As Integer = 10
+    Dim currentPage As Integer
+    Dim lastPage As Integer
+#End Region
+
+#Region "FIELDS"
+    Private frame As Frame
+    Private profile As New Profile
+
+    Private _AideService As ServiceReference1.AideServiceClient
+    Dim lstAssets As Assets()
+    Dim totalRecords As Integer
+    Dim searchAssets = New ObservableCollection(Of Assets)
+    Dim paginatedCollection As PaginatedObservableCollection(Of AssetsModel) = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
 #End Region
 
 #Region "CONSTRUCTOR"
@@ -79,8 +83,8 @@ Public Class AssetsHistory
             If InitializeService() Then
                 lstAssets = _AideService.GetAllAssetsHistory(profile.Emp_ID)
                 btnPrint.Visibility = Windows.Visibility.Hidden
-
-                SetPaging(PagingMode._First)
+                LoadData()
+                DisplayPagingInfo()
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -91,22 +95,19 @@ Public Class AssetsHistory
         Try
             Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
             Dim assetsDBProvider As New AssetsDBProvider
-            Dim assetsVM As New AssetsViewModel()
 
-            Dim objAssets As New Assets()
-
-            ' Set the MyLessonLearntList 
-            For i As Integer = startRowIndex To lastRowIndex
-                objAssets = lstAssets(i)
+            For Each objAssets As Assets In lstAssets
                 assetsDBProvider.SetAssetHistoryList(objAssets)
             Next
 
-            For Each rawUser As MyAssets In assetsDBProvider.GetAssetHistoryList()
-                lstAssetsList.Add(New AssetsModel(rawUser))
+            For Each assetList As MyAssets In assetsDBProvider.GetAssetHistoryList()
+                paginatedCollection.Add(New AssetsModel(assetList))
             Next
 
-            assetsVM.AssetHistoryList = lstAssetsList
-            Me.DataContext = assetsVM
+            lv_assetList.ItemsSource = paginatedCollection
+            'LoadDataForPrint()
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(lstAssets.Length / pagingRecordPerPage)
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -114,10 +115,36 @@ Public Class AssetsHistory
 
     Public Sub SetDataForSearch(input As String)
         Try
-            If InitializeService() Then
-                lstAssets = _AideService.GetAllAssetsHistoryBySearch(profile.Emp_ID, input)
-                SetPaging(PagingMode._First)
+            'Dim items
+            Dim assetsDBProvider As New AssetsDBProvider
+            paginatedCollection = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
+
+            If input.ToLower.Equals("approved") Then
+                Dim items = From i In lstAssets Where i.ASSET_DESC.ToLower.Contains(input.ToLower) Or i.MANUFACTURER.ToLower.Contains(input.ToLower) _
+                      Or i.MODEL_NO.ToLower.Contains(input.ToLower) Or i.SERIAL_NO.ToLower.Contains(input.ToLower) Or i.ASSET_TAG.ToLower.Contains(input.ToLower) _
+                      Or i.FULL_NAME.ToLower.Contains(input.ToLower) Or i.STATUS_DESCR.ToLower.Equals("approved")
+                searchAssets = New ObservableCollection(Of Assets)(items)
+            Else
+                Dim items2 = From i In lstAssets Where i.ASSET_DESC.ToLower.Contains(input.ToLower) Or i.MANUFACTURER.ToLower.Contains(input.ToLower) _
+                      Or i.MODEL_NO.ToLower.Contains(input.ToLower) Or i.SERIAL_NO.ToLower.Contains(input.ToLower) Or i.ASSET_TAG.ToLower.Contains(input.ToLower) _
+                      Or i.FULL_NAME.ToLower.Contains(input.ToLower) Or i.STATUS_DESCR.ToLower.Contains(input.ToLower)
+                searchAssets = New ObservableCollection(Of Assets)(items2)
             End If
+
+
+            For Each assets As Assets In searchAssets
+                assetsDBProvider.SetAssetHistoryList(assets)
+            Next
+
+            For Each assets As MyAssets In assetsDBProvider.GetAssetHistoryList()
+                paginatedCollection.Add(New AssetsModel(assets))
+            Next
+
+            totalRecords = searchAssets.Count
+            lv_assetList.ItemsSource = paginatedCollection
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+            DisplayPagingInfo()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -205,19 +232,14 @@ Public Class AssetsHistory
     End Sub
 
     Private Sub DisplayPagingInfo()
-        Dim pagingInfo As String
-
-        ' If there has no data found
+       ' If there has no data found
         If lstAssets.Length = 0 Then
-            pagingInfo = "No Results Found "
+            txtPageNo.Text = "No Results Found "
             GUISettingsOff()
         Else
-            pagingInfo = "Displaying " & startRowIndex + 1 & " to " & lastRowIndex + 1
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
             GUISettingsOn()
         End If
-
-        'lblPagingInfo2.Content = pagingInfo
-
     End Sub
 
     Private Sub GUISettingsOff()
@@ -235,11 +257,22 @@ Public Class AssetsHistory
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Next))
+        Dim totalRecords As Integer = searchAssets.Count
+
+        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+            paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+        End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Previous))
+        paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
+        If currentPage > 1 Then
+            currentPage -= 1
+        End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
