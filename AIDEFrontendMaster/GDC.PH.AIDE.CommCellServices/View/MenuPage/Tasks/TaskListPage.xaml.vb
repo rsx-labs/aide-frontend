@@ -28,6 +28,8 @@ Public Class TaskListPage
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
     Dim pagingRecordPerPage As Integer = 10
+    Dim currentPage As Integer
+    Dim lastPage As Integer
 #End Region
 
 #Region "Fields"

@@ -43,18 +43,14 @@ Public Class ThreeC_Page
         Me._menugrid = _menugrid
         Me._submenuframe = _submenuframe
 
-
         LoadConcernList(offsetVal, nextVal)
     End Sub
 
 
 #Region "Methods"
-
     ''DISPLAY to DATAGIRD VIEW
     Public Sub LoadConcernList(offSet As Integer, NextVal As Integer)
-
         Try
-
             Dim _GetAllConcernDBProvider As New ConcernDBProvider
             Dim _concernViewModel As New ConcernViewModel
 
@@ -75,10 +71,8 @@ Public Class ThreeC_Page
 
             max = lstConcern.Count
         Catch ex As SystemException
-
             MsgBox(ex.Message)
             _AIDEClientService.Abort()
-
         End Try
     End Sub
 
@@ -89,7 +83,6 @@ Public Class ThreeC_Page
         Try
             Dim lstConcern As Concern() = _AIDEClientService.GetResultSearch(email, txtSearch.Text, offSet, NextVal)
             Dim lstConcernList As New ObservableCollection(Of ConcernModel)
-
 
             For Each objConcern As Concern In lstConcern
                 _newProvider.SetConcernList(objConcern)
@@ -102,26 +95,20 @@ Public Class ThreeC_Page
             _newViewModel.ConcernList = lstConcernList
             max = lstConcern.Count
             Me.DataContext = _newViewModel
-
         Catch ex As SystemException
-
             MsgBox(ex.Message)
             _AIDEClientService.Abort()
-
         End Try
     End Sub
 
     ''DISPLAY to DATAGIRD VIEW WITH DATE SEARCH
     Public Sub LoadBetweenSearchDate(offSet As Integer, NextVal As Integer, _concerngetDate As ConcernViewModel)
-
         Try
-
             Dim _GetAllConcernDBProvider As New ConcernDBProvider
             Dim _concernViewModel As New ConcernViewModel
 
             Dim lstConcern As Concern() = _AIDEClientService.GetBetweenSearchConcern(email, offSet, NextVal, dtpFrom.SelectedDate, dtpTo.SelectedDate)
             Dim lstConcernList As New ObservableCollection(Of ConcernModel)
-
 
             For Each objConcern As Concern In lstConcern
                 _GetAllConcernDBProvider.SetConcernList(objConcern)
@@ -136,24 +123,17 @@ Public Class ThreeC_Page
             Me.DataContext = _concernViewModel
 
             max = lstConcern.Count
-
         Catch ex As SystemException
-
             MsgBox(ex.Message)
             _AIDEClientService.Abort()
-
         End Try
-
     End Sub
 
-
     Private Function GetDateTimeNow(_setDateNow As ConcernViewModel)
-
         _setDateNow.GetBetWeenDate.DATE1 = DateTime.Now
         _setDateNow.GetBetWeenDate.DATE2 = DateTime.Now
 
         Return _setDateNow
-
     End Function
 
 #End Region
@@ -162,13 +142,10 @@ Public Class ThreeC_Page
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
         Try
-            'DisplayText("Opening client service...")
             Dim Context As InstanceContext = New InstanceContext(Me)
             _AIDEClientService = New AideServiceClient(Context)
             _AIDEClientService.Open()
             bInitialize = True
-            'DisplayText("Service opened successfully...")
-            'Return True
         Catch ex As SystemException
             _AIDEClientService.Abort()
         End Try
@@ -199,7 +176,6 @@ Public Class ThreeC_Page
 #End Region
 
 #Region "Buttons/Text - Events"
-
     'TextChange Search Keyword
     Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
         If txtSearch.Text = String.Empty Then

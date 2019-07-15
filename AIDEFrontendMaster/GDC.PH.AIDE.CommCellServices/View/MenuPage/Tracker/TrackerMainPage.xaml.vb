@@ -8,6 +8,21 @@ Imports System.Collections.ObjectModel
 Class SabaLearningMainPage
     Implements ServiceReference1.IAideServiceCallback
 
+#Region "Paging Declarations"
+    Dim startRowIndex As Integer
+    Dim lastRowIndex As Integer
+    Dim pagingPageIndex As Integer
+    Dim pagingRecordPerPage As Integer = 10
+    Dim currentPage As Integer
+    Dim lastPage As Integer
+
+    Private Enum PagingMode
+        _First = 1
+        _Next = 2
+        _Previous = 3
+        _Last = 4
+    End Enum
+#End Region
 
 #Region "Fields"
 
@@ -22,21 +37,7 @@ Class SabaLearningMainPage
     Dim lstSabaLearning As SabaLearning()
     Dim lstSabaLearning2 As SabaLearning()
     Dim SabaLearningListVM As New SabaLearningViewModel()
-
-#End Region
-
-#Region "Paging Declarations"
-    Dim startRowIndex As Integer
-    Dim lastRowIndex As Integer
-    Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 10
-
-    Private Enum PagingMode
-        _First = 1
-        _Next = 2
-        _Previous = 3
-        _Last = 4
-    End Enum
+    Dim paginatedCollection As PaginatedObservableCollection(Of SabaLearningModel) = New PaginatedObservableCollection(Of SabaLearningModel)(pagingRecordPerPage)
 #End Region
 
 #Region "Constructor"
@@ -50,7 +51,6 @@ Class SabaLearningMainPage
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
         SetData()
-        Me.DataContext = SabaLearningListVM
 
         If profile.Permission <> "Manager" Then
             btnCreate.Visibility = Windows.Visibility.Collapsed
@@ -78,8 +78,8 @@ Class SabaLearningMainPage
         Try
             If InitializeService() Then
                 lstSabaLearning = _AideService.GetAllSabaCourses(profile.Emp_ID)
-                'LoadSabaCourses()
-                SetPaging(PagingMode._First)
+                LoadSabaCourses()
+                DisplayPagingInfo()
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -90,23 +90,21 @@ Class SabaLearningMainPage
         Try
             Dim lstSabaLearningList As New ObservableCollection(Of SabaLearningModel)
             Dim sabalearningDBProvider As New SabaLearningDBProvider
-            Dim objSabaLearning As New SabaLearning
             Dim percentFinished As String
 
-            For i As Integer = startRowIndex To lastRowIndex
-
-                objSabaLearning = lstSabaLearning(i)
-                percentFinished = SetData2(objSabaLearning.SABA_ID)
-                sabalearningDBProvider._setlistofitems(objSabaLearning, percentFinished)
+            For Each objTracker As SabaLearning In lstSabaLearning
+                percentFinished = SetData2(objTracker.SABA_ID)
+                sabalearningDBProvider._setlistofitems(objTracker, percentFinished)
             Next
 
             For Each rawUser As mySabaLearningSet In sabalearningDBProvider._getobjSabaLearning()
-                lstSabaLearningList.Add(New SabaLearningModel(rawUser))
+                paginatedCollection.Add(New SabaLearningModel(rawUser))
             Next
 
-            SabaLearningListVM.ObjectSabaLearningSet = lstSabaLearningList
-            'SabaLearningLV.ItemsSource = SabaLearningListVM.ObjectSabaLearningSet
-            Me.DataContext = SabaLearningListVM
+            SabaLearningLV.ItemsSource = paginatedCollection
+            'LoadDataForPrint()
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(lstSabaLearning.Length / pagingRecordPerPage)
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -116,8 +114,7 @@ Class SabaLearningMainPage
         Try
             If InitializeService() Then
                 lstSabaLearning = _AideService.GetAllSabaCourseByTitle(title, profile.Emp_ID)
-                'LoadSabaCourses()
-                SetPaging(PagingMode._First)
+                LoadSabaCourses()
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -218,6 +215,49 @@ Class SabaLearningMainPage
 
     End Sub
 
+    Private Sub DisplayPagingInfo()
+        ' If there has no data found
+        If lstSabaLearning.Length = 0 Then
+            txtPageNo.Text = "No Results Found "
+            GUISettingsOff()
+        Else
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
+            GUISettingsOn()
+        End If
+    End Sub
+
+    Private Sub GUISettingsOff()
+        SabaLearningLV.Visibility = Windows.Visibility.Hidden
+
+        btnPrev.IsEnabled = False
+        btnNext.IsEnabled = False
+    End Sub
+
+    Private Sub GUISettingsOn()
+        SabaLearningLV.Visibility = Windows.Visibility.Visible
+
+        btnPrev.IsEnabled = True
+        btnNext.IsEnabled = True
+    End Sub
+
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
+        Dim totalRecords As Integer = lstSabaLearning.Length
+
+        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+            paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+        End If
+        DisplayPagingInfo()
+    End Sub
+
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
+        paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
+        If currentPage > 1 Then
+            currentPage -= 1
+        End If
+        DisplayPagingInfo()
+    End Sub
 #End Region
 
 #Region "Events"

@@ -9,8 +9,23 @@ Imports System.Collections.ObjectModel
 Class AnnouncementDashboard
     Implements ServiceReference1.IAideServiceCallback
 
-#Region "Fields"
+#Region "Paging Declarations"
+    Dim startRowIndex As Integer
+    Dim lastRowIndex As Integer
+    Dim pagingPageIndex As Integer
+    Dim pagingRecordPerPage As Integer = 4
+    Dim currentPage As Integer
+    Dim lastPage As Integer
 
+    Private Enum PagingMode
+        _First = 1
+        _Next = 2
+        _Previous = 3
+        _Last = 4
+    End Enum
+#End Region
+
+#Region "Fields"
     Private _AideService As ServiceReference1.AideServiceClient
     Private empID As Integer
     Private mainframe As Frame
@@ -22,28 +37,8 @@ Class AnnouncementDashboard
 
     Dim lstAnnouncements As Announcements()
     Dim AnnouncementListVM As New AnnouncementListViewModel()
+    Dim paginatedCollection As PaginatedObservableCollection(Of AnnouncementModel) = New PaginatedObservableCollection(Of AnnouncementModel)(pagingRecordPerPage)
 
-    'Private Enum PagingMode
-    '    _First = 1
-    '    _Next = 2
-    '    _Previous = 3
-    '    _Last = 4
-    'End Enum
-
-#End Region
-
-#Region "Paging Declarations"
-    Dim startRowIndex As Integer
-    Dim lastRowIndex As Integer
-    Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 5
-
-    Private Enum PagingMode
-        _First = 1
-        _Next = 2
-        _Previous = 3
-        _Last = 4
-    End Enum
 #End Region
 
 #Region "Constructor"
@@ -59,7 +54,6 @@ Class AnnouncementDashboard
         Me.profile = _profile
         Me.email = _email
         SetData()
-        Me.DataContext = AnnouncementListVM
 
         If profile.Permission = "Manager" Then
             btnCreate.Visibility = Windows.Visibility.Visible
@@ -69,7 +63,7 @@ Class AnnouncementDashboard
 
 #End Region
 
-#Region "Functions"
+#Region "Functions/Methods"
 
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
@@ -88,127 +82,70 @@ Class AnnouncementDashboard
         Try
             If InitializeService() Then
                 lstAnnouncements = _AideService.GetAnnouncements(empID)
-                'LoadAnnouncements()
-                SetPaging(PagingMode._First)
+                LoadAnnouncements()
+                DisplayPagingInfo()
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
     End Sub
 
-
     Public Sub LoadAnnouncements()
         Try
             Dim lstAnnouncementList As New ObservableCollection(Of AnnouncementModel)
             Dim announcementDBProvider As New AnnouncementDBProvider
-            Dim objAnnounce As New Announcements
 
-
-            For i As Integer = startRowIndex To lastRowIndex
-                objAnnounce = lstAnnouncements(i)
-                announcementDBProvider._setlistofitems(objAnnounce)
+            For Each objAnnouncements As Announcements In lstAnnouncements
+                announcementDBProvider._setlistofitems(objAnnouncements)
             Next
 
             For Each rawUser As myAnnouncementSet In announcementDBProvider._getobjAnnouncement()
-                lstAnnouncementList.Add(New AnnouncementModel(rawUser))
+                paginatedCollection.Add(New AnnouncementModel(rawUser))
             Next
 
-            AnnouncementListVM.ObjectAnnouncementSet = lstAnnouncementList
-            AnnouncementLV.ItemsSource = AnnouncementListVM.ObjectAnnouncementSet
+            AnnouncementLV.ItemsSource = paginatedCollection
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(lstAnnouncements.Length / pagingRecordPerPage)
+            'If lstAnnouncements.Length > pagingRecordPerPage Then
+            '    lastPage = (lstAnnouncements.Length / pagingRecordPerPage) + 1
+            'End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
-    Private Sub SetPaging(mode As Integer)
-        Try
-            Dim totalRecords As Integer = lstAnnouncements.Length
 
-            Select Case mode
-                Case CInt(PagingMode._Next)
-                    ' Set the rows to be displayed if the total records is more than the (Record per Page * Page Index)
-                    If totalRecords > (pagingPageIndex * pagingRecordPerPage) Then
+    Private Sub DisplayPagingInfo()
 
-                        ' Set the last row to be displayed if the total records is more than the (Record per Page * Page Index) + Record per Page
-                        If totalRecords >= ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) Then
-                            lastRowIndex = ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) - 1
-                        Else
-                            lastRowIndex = totalRecords - 1
-                        End If
+        ' If there has no data found
+        If lstAnnouncements.Length = 0 Then
+            txtPageNo.Text = "No Results Found "
+            GUISettingsOff()
+        Else
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
+            GUISettingsOn()
+        End If
+    End Sub
 
-                        startRowIndex = pagingPageIndex * pagingRecordPerPage
-                        pagingPageIndex += 1
-                    Else
-                        startRowIndex = (pagingPageIndex - 1) * pagingRecordPerPage
-                        lastRowIndex = totalRecords - 1
-                    End If
-                    ' Bind data to the Data Grid
-                    LoadAnnouncements()
-                    Exit Select
-                Case CInt(PagingMode._Previous)
-                    ' Set the Previous Page if the page index is greater than 1
-                    If pagingPageIndex > 1 Then
-                        pagingPageIndex -= 1
+    Private Sub GUISettingsOff()
+        AnnouncementLV.Visibility = Windows.Visibility.Hidden
 
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-                        lastRowIndex = (pagingPageIndex * pagingRecordPerPage) - 1
-                        LoadAnnouncements()
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._First)
-                    If totalRecords > pagingRecordPerPage Then
-                        pagingPageIndex = 2
-                        SetPaging(CInt(PagingMode._Previous))
-                    Else
-                        pagingPageIndex = 1
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
+        btnPrev.IsEnabled = False
+        btnNext.IsEnabled = False
+    End Sub
 
-                        If Not totalRecords = 0 Then
-                            lastRowIndex = totalRecords - 1
-                            LoadAnnouncements()
-                        Else
-                            lastRowIndex = 0
-                            Me.DataContext = Nothing
-                        End If
+    Private Sub GUISettingsOn()
+        AnnouncementLV.Visibility = Windows.Visibility.Visible
 
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._Last)
-                    pagingPageIndex = (lstAnnouncements.Length / pagingRecordPerPage)
-                    SetPaging(CInt(PagingMode._Next))
-                    Exit Select
-            End Select
-
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-
+        btnPrev.IsEnabled = True
+        btnNext.IsEnabled = True
     End Sub
 #End Region
 
-    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
-
-    End Sub
-
-    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
-
-    End Sub
-
-    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
-
-    End Sub
-
-    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
-
-    End Sub
-
-    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
-
-    End Sub
-
+#Region "Events"
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
         addframe.Navigate(New AnnouncementDashboardAddPage(mainframe, empID, addframe, menugrid, submenuframe, email, profile))
-        mainFrame.IsEnabled = False
-        mainFrame.Opacity = 0.3
+        mainframe.IsEnabled = False
+        mainframe.Opacity = 0.3
         menugrid.IsEnabled = False
         menugrid.Opacity = 0.3
         submenuframe.IsEnabled = False
@@ -217,12 +154,23 @@ Class AnnouncementDashboard
         addframe.Visibility = Visibility.Visible
     End Sub
 
-    Private Sub btnPrev_Click_1(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Previous))
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
+        Dim totalRecords As Integer = lstAnnouncements.Length
+
+        If totalRecords > ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+            paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+        End If
+        DisplayPagingInfo()
     End Sub
 
-    Private Sub btnNext_Click_1(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Next))
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
+        paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
+        If currentPage > 1 Then
+            currentPage -= 1
+        End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub AnnouncementLV_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
@@ -251,7 +199,31 @@ Class AnnouncementDashboard
                     addframe.Visibility = Visibility.Visible
                 End If
             End If
-            
+
         End If
     End Sub
+#End Region
+
+#Region "INotify Methods"
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
+
+    End Sub
+
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
+
+    End Sub
+
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
+
+    End Sub
+
+    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
+
+    End Sub
+
+    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+
+    End Sub
+#End Region
+
 End Class

@@ -16,6 +16,7 @@ Class NewSuccessRegister
     Private _addframe As Frame
     Private _menugrid As Grid
     Private _submenuframe As Frame
+    Private profile As Profile
     Private dsplyByDiv As Integer = 1
     'Private srmodel As SuccessRegisterModel
 
@@ -23,10 +24,11 @@ Class NewSuccessRegister
 
 #Region "Constructor"
 
-    Public Sub New(isEmpty As Boolean, mainFrame As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(isEmpty As Boolean, mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
 
         InitializeComponent()
-        Me.email = _email
+        Me.profile = _profile
+        Me.email = profile.Email_Address
         Me.mainFrame = mainFrame
         Me._addframe = _addframe
         Me._menugrid = _menugrid
@@ -41,12 +43,11 @@ Class NewSuccessRegister
         PopulateComboBox()
     End Sub
 
-    Public Sub New(_successRegister As SuccessRegisterModel, mainFrame As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
-
+    Public Sub New(_successRegister As SuccessRegisterModel, mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         InitializeComponent()
-
         Me.mainFrame = mainFrame
-        Me.email = _email
+        Me.profile = _profile
+        Me.email = profile.Email_Address
         Me.successRegister = _successRegister
         Me._addframe = _addframe
         Me._menugrid = _menugrid
@@ -56,7 +57,6 @@ Class NewSuccessRegister
         AssignEvents()
         PopulateComboBox()
     End Sub
-
 #End Region
 
 #Region "Events"
@@ -80,7 +80,7 @@ Class NewSuccessRegister
                 SuccessRegisters.AdditionalInformation = txtSRAdditional.Text
                 client.UpdateSuccessRegisterByEmpID(SuccessRegisters)
                 ClearFields()
-                mainFrame.Navigate(New SuccessRegisterPage(mainFrame, email, _addframe, _menugrid, _submenuframe))
+                mainFrame.Navigate(New SuccessRegisterPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
                 mainFrame.IsEnabled = True
                 mainFrame.Opacity = 1
                 _menugrid.IsEnabled = True
@@ -115,7 +115,7 @@ Class NewSuccessRegister
                 If result = 1 Then
                     client.CreateNewSuccessRegister(SuccessRegisters)
                     ClearFields()
-                    mainFrame.Navigate(New SuccessRegisterPage(mainFrame, email, _addframe, _menugrid, _submenuframe))
+                    mainFrame.Navigate(New SuccessRegisterPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
                     mainFrame.IsEnabled = True
                     mainFrame.Opacity = 1
                     _menugrid.IsEnabled = True
@@ -134,7 +134,7 @@ Class NewSuccessRegister
     End Sub
 
     Private Sub btnSRCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnSRCancel.Click
-        mainFrame.Navigate(New SuccessRegisterPage(mainFrame, email, _addframe, _menugrid, _submenuframe))
+        mainFrame.Navigate(New SuccessRegisterPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         _menugrid.IsEnabled = True
@@ -179,7 +179,7 @@ Class NewSuccessRegister
                 If result = 1 Then
                     client.DeleteSuccessRegisterBySuccessID(CUInt(txtSRID.Text))
                     ClearFields()
-                    _addframe.Navigate(New SuccessRegisterPage(mainFrame, email, _addframe, _menugrid, _submenuframe))
+                    _addframe.Navigate(New SuccessRegisterPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
                     mainFrame.IsEnabled = True
                     mainFrame.Opacity = 1
                     _menugrid.IsEnabled = True

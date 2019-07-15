@@ -31,6 +31,6 @@ Class ImproveSubMenuPage
     End Sub
 
     Private Sub SuccessRegister_Click(sender As Object, e As RoutedEventArgs)
-        _MainFrame.Navigate(New SuccessRegisterPage(_MainFrame, _email, _addframe, _menugrid, _submenuframe))
+        _MainFrame.Navigate(New SuccessRegisterPage(_MainFrame, profile, _addframe, _menugrid, _submenuframe))
     End Sub
 End Class

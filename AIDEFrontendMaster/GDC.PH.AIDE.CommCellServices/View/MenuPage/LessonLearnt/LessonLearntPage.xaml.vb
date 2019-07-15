@@ -12,6 +12,23 @@ Imports System.Printing
 Class LessonLearntPage
     Implements IAideServiceCallback
 
+#Region "Paging Declarations"
+    Private Enum PagingMode
+        _First = 1
+        _Next = 2
+        _Previous = 3
+        _Last = 4
+    End Enum
+
+    Dim startRowIndex As Integer
+    Dim lastRowIndex As Integer
+    Dim pagingPageIndex As Integer
+    Dim pagingRecordPerPage As Integer = 10
+    Dim currentPage As Integer
+    Dim lastPage As Integer
+#End Region
+
+#Region "Fields"
     Public frame As Frame
     Public email As String
     Private _addframe As Frame
@@ -19,22 +36,10 @@ Class LessonLearntPage
     Private _submenuframe As Frame
     Private profile As Profile
 
-#Region "Paging Declarations"
-    Dim startRowIndex As Integer
-    Dim lastRowIndex As Integer
-    Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 10
-#End Region
-
     Dim lstLesson As LessonLearnt()
     Dim client As AideServiceClient
-
-    Private Enum PagingMode
-        _First = 1
-        _Next = 2
-        _Previous = 3
-        _Last = 4
-    End Enum
+    Dim paginatedCollection As PaginatedObservableCollection(Of LessonLearntModel) = New PaginatedObservableCollection(Of LessonLearntModel)(pagingRecordPerPage)
+#End Region
 
     Public Sub New(_frame As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
         InitializeComponent()
@@ -94,7 +99,8 @@ Class LessonLearntPage
         Try
             If Me.InitializeService Then
                 lstLesson = client.GetLessonLearntList(profile.Email_Address)
-                SetPaging(PagingMode._First)
+                SetLists()
+                DisplayPagingInfo()
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -105,7 +111,8 @@ Class LessonLearntPage
         Try
             If Me.InitializeService() Then
                 lstLesson = client.GetLessonLearntByProblem(search, profile.Email_Address)
-                SetPaging(PagingMode._First)
+                SetLists()
+                DisplayPagingInfo()
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
@@ -114,77 +121,27 @@ Class LessonLearntPage
 
     Private Sub SetLists()
         Try
+            paginatedCollection.Clear()
             Dim lstLessonLearnt As New ObservableCollection(Of LessonLearntModel)
             Dim lessonLearntDBProvider As New LessonLearntDBProvider
-            Dim lessonLearntViewModel As New LessonLearntViewModel
-
-            Dim objLessonLearnt As New LessonLearnt()
 
             ' Set the MyLessonLearntList 
-            For i As Integer = startRowIndex To lastRowIndex
-                objLessonLearnt = lstLesson(i)
+            For Each objLessonLearnt As LessonLearnt In lstLesson
                 lessonLearntDBProvider.SetLessonLearntList(objLessonLearnt)
             Next
 
             ' Set the lstLessonLearnt
             For Each iLessonLearnt As MyLessonLearntList In lessonLearntDBProvider.GetLessonLearntList()
-                lstLessonLearnt.Add(New LessonLearntModel(iLessonLearnt))
+                paginatedCollection.Add(New LessonLearntModel(iLessonLearnt))
             Next
 
-            lessonLearntViewModel.LessonLearntList = lstLessonLearnt
-
-            ' Display the data using binding
-            Me.DataContext = lessonLearntViewModel
+            dgLessonLearnt.ItemsSource = paginatedCollection
+            'LoadDataForPrint()
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(lstLesson.Length / pagingRecordPerPage)
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
-    End Sub
-
-    Private Sub btnAddLessonLearnt_Click(sender As Object, e As RoutedEventArgs) Handles btnAddLessonLearnt.Click
-        _addframe.Navigate(New LessonLearntAddPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
-        frame.IsEnabled = False
-        frame.Opacity = 0.3
-        _menugrid.IsEnabled = False
-        _menugrid.Opacity = 0.3
-        _submenuframe.IsEnabled = False
-        _submenuframe.Opacity = 0.3
-        _addframe.Visibility = Visibility.Visible
-        _addframe.Margin = New Thickness(200, 80, 200, 80)
-    End Sub
-
-    Private Sub dgLessonLearnt_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles dgLessonLearnt.MouseDoubleClick
-        Try
-            ' If user double click the rows
-            If dgLessonLearnt.SelectedIndex <> -1 Then
-                Dim selectedRowEmpID As Integer = CType(dgLessonLearnt.SelectedItem, LessonLearntModel).EmployeeID
-
-                ' The user will update his/her own lesson learnt details
-                If profile.Emp_ID = selectedRowEmpID Then
-                    Dim lessonLearnt As New LessonLearntModel
-
-                    lessonLearnt.ReferenceNo = CType(dgLessonLearnt.SelectedItem, LessonLearntModel).ReferenceNo
-                    lessonLearnt.Problem = CType(dgLessonLearnt.SelectedItem, LessonLearntModel).Problem
-                    lessonLearnt.Resolution = CType(dgLessonLearnt.SelectedItem, LessonLearntModel).Resolution
-                    lessonLearnt.ActionNo = CType(dgLessonLearnt.SelectedItem, LessonLearntModel).ActionNo
-
-                    _addframe.Navigate(New LessonLearntUpdatePage(frame, lessonLearnt, profile, email, _menugrid, _submenuframe, _addframe))
-                    frame.IsEnabled = False
-                    frame.Opacity = 0.3
-                    _menugrid.IsEnabled = False
-                    _menugrid.Opacity = 0.3
-                    _submenuframe.IsEnabled = False
-                    _submenuframe.Opacity = 0.3
-                    _addframe.Visibility = Visibility.Visible
-                    _addframe.Margin = New Thickness(200, 80, 200, 80)
-                End If
-            End If
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-    End Sub
-
-    Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
-        SearchProblemEncountered(txtSearch.Text.Trim)
     End Sub
 
     Private Sub SetPaging(mode As Integer)
@@ -254,30 +211,25 @@ Class LessonLearntPage
     End Sub
 
     Private Sub DisplayPagingInfo()
-        Dim pagingInfo As String
-
-        ' If there has no data found
+       ' If there has no data found
         If lstLesson.Length = 0 Then
-            pagingInfo = "No Results Found "
+            txtPageNo.Text = "No Results Found "
             GUISettingsOff()
         Else
-            pagingInfo = "Displaying " & startRowIndex + 1 & " to " & lastRowIndex + 1
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
             GUISettingsOn()
         End If
-
-
-
     End Sub
 
     Private Sub GUISettingsOff()
-
+        dgLessonLearnt.Visibility = Windows.Visibility.Hidden
 
         btnPrev.IsEnabled = False
         btnNext.IsEnabled = False
     End Sub
 
     Private Sub GUISettingsOn()
-
+        dgLessonLearnt.Visibility = Windows.Visibility.Visible
 
         btnPrev.IsEnabled = True
         btnNext.IsEnabled = True
@@ -286,25 +238,75 @@ Class LessonLearntPage
 #End Region
 
 #Region "Buttons"
+    Private Sub btnAddLessonLearnt_Click(sender As Object, e As RoutedEventArgs) Handles btnAddLessonLearnt.Click
+        _addframe.Navigate(New LessonLearntAddPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
+        frame.IsEnabled = False
+        frame.Opacity = 0.3
+        _menugrid.IsEnabled = False
+        _menugrid.Opacity = 0.3
+        _submenuframe.IsEnabled = False
+        _submenuframe.Opacity = 0.3
+        _addframe.Visibility = Visibility.Visible
+        _addframe.Margin = New Thickness(200, 80, 200, 80)
+    End Sub
+
+    Private Sub dgLessonLearnt_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles dgLessonLearnt.MouseDoubleClick
+        Try
+            ' If user double click the rows
+            If dgLessonLearnt.SelectedIndex <> -1 Then
+                Dim selectedRowEmpID As Integer = CType(dgLessonLearnt.SelectedItem, LessonLearntModel).EmployeeID
+
+                ' The user will update his/her own lesson learnt details
+                If profile.Emp_ID = selectedRowEmpID Then
+                    Dim lessonLearnt As New LessonLearntModel
+
+                    lessonLearnt.ReferenceNo = CType(dgLessonLearnt.SelectedItem, LessonLearntModel).ReferenceNo
+                    lessonLearnt.Problem = CType(dgLessonLearnt.SelectedItem, LessonLearntModel).Problem
+                    lessonLearnt.Resolution = CType(dgLessonLearnt.SelectedItem, LessonLearntModel).Resolution
+                    lessonLearnt.ActionNo = CType(dgLessonLearnt.SelectedItem, LessonLearntModel).ActionNo
+
+                    _addframe.Navigate(New LessonLearntUpdatePage(frame, lessonLearnt, profile, email, _menugrid, _submenuframe, _addframe))
+                    frame.IsEnabled = False
+                    frame.Opacity = 0.3
+                    _menugrid.IsEnabled = False
+                    _menugrid.Opacity = 0.3
+                    _submenuframe.IsEnabled = False
+                    _submenuframe.Opacity = 0.3
+                    _addframe.Visibility = Visibility.Visible
+                    _addframe.Margin = New Thickness(200, 80, 200, 80)
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
+        SearchProblemEncountered(txtSearch.Text.Trim)
+    End Sub
+
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Next))
+        Dim totalRecords As Integer = lstLesson.Length
+
+        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+            paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+        End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Previous))
-    End Sub
-
-    Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._First))
-    End Sub
-
-    Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Last))
+        paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
+        If currentPage > 1 Then
+            currentPage -= 1
+        End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As RoutedEventArgs) Handles btnPrint.Click
         Dim dialog As PrintDialog = New PrintDialog()
-        
+
         If CBool(dialog.ShowDialog().GetValueOrDefault()) Then
             dialog.PrintTicket.PageOrientation = PageOrientation.Landscape
 
@@ -313,7 +315,6 @@ Class LessonLearntPage
             dgLessonLearnt.Arrange(New Rect(5, 5, pageSize.Width, pageSize.Height))
             dialog.PrintVisual(dgLessonLearnt, "Print Lesson Learnt")
         End If
-
     End Sub
 
 #End Region

@@ -1147,16 +1147,10 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Border Margin="5,10,10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-
-                            <TextBox IsReadOnly="True" Focusable="False" Background="Transparent" BorderBrush="Transparent" x:Name="txtEmpID" MaxLength="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="DimGray" FontSize="12" Grid.ColumnSpan="2" Margin="5" BorderThickness="0">
-
-                                
-                            </TextBox>
-                            
+                            <TextBox IsReadOnly="True" Focusable="False" Background="Transparent" BorderBrush="Transparent" x:Name="txtEmpID" MaxLength="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="DimGray" FontSize="12" Grid.ColumnSpan="2" Margin="5" BorderThickness="0"/>
                         </Border>
                         <TextBlock x:Name="txtlabelReason" Width="120" TextAlignment="Center" Margin="5,10,5,5" Text="Employee ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
                             <TextBlock.Style>
@@ -1174,7 +1168,7 @@
                     <Grid Grid.Row="1">
                         <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbCategory" Margin="5,5,10,5" ItemsSource="{Binding CategoryList}" SelectedValue="{Binding Path=Status}"
                                DisplayMemberPath="Descr" SelectedValuePath="Status" />
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Leave" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Leave Type" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -1200,41 +1194,8 @@
                         </TextBlock>
                     </Grid>
                     <Grid Grid.Row="2">
-
-                            <ComboBox Style="{DynamicResource StyleComboBox}" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" x:Name="cbCategoryLeave" SelectedValuePath="Tag" Margin="5,5,10,5" HorizontalContentAlignment="Center" >
-              
-                            <ComboBoxItem Tag="1">Half</ComboBoxItem>
-                                <ComboBoxItem Tag="2">Full</ComboBoxItem>
-                            </ComboBox>
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Duration" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=cbCategoryLeave}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                        <TextBlock x:Name="txtlabelDuration" Width="120" TextAlignment="Center" Margin="5" Text="Duration" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=cbCategoryLeave}" Value="">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </Grid>
-                    <Grid Grid.Row="3">
                         <Border Margin="5,5,10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                             <DatePicker Loaded="DatePicker_Loaded" Style="{DynamicResource styleDatePickerfrom}" BorderBrush="Transparent" x:Name="dtpFrom" Text="12" Margin="2"/>
-
                         </Border>
                         <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select Start Date" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
@@ -1260,9 +1221,8 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-
                     </Grid>
-                    <Grid Grid.Row="4">
+                    <Grid Grid.Row="3">
                         <Border Margin="5,5,10,5"  Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                             <DatePicker Loaded="DatePicker_Loaded" Style="{DynamicResource styleDatePickerto}" x:Name="dtpTo" Margin="2" BorderBrush="Transparent"/>
                         </Border>
@@ -1291,60 +1251,12 @@
                             </TextBlock.Style>
                         </TextBlock>
                     </Grid>
-                    <Grid Grid.Row="5">
+                    <Grid Grid.Row="4">
                         <Button Style="{DynamicResource RoundCorner}" Margin="5,5,10,10" x:Name="btnCreateLeave"  >
-                            
-                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="CREATE" TextWrapping="Wrap" Margin="5"/>
-                            
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="CREATE" TextWrapping="Wrap" Margin="5"/>
                         </Button>
                     </Grid>
-
-                    
                 </Grid>
-
-                <!--<Border BorderBrush="DimGray" BorderThickness="0.5"/>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="9*" />
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0" Background="SteelBlue">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Style="{DynamicResource textblockStyle}" FontSize="15">LEAVE APPLICATION</TextBlock>
-                    </Grid>
-                    <Grid Grid.Row="1" Margin="20">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Row="1" Grid.Column="0" Margin="20" Style="{StaticResource labelStyle}" Content="Type: " Height="28" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <Grid Grid.Row="1" Grid.Column="1">
-                            <StackPanel>
-                                <ComboBox x:Name="cbCategory" Margin="20" ItemsSource="{Binding CategoryList}" SelectedValue="{Binding Path=Status}"
-                               DisplayMemberPath="Descr" SelectedValuePath="Status" Width="120" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" />
-                                <ComboBox x:Name="cbCategoryLeave" SelectedValuePath="Tag" Margin="20" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" >
-                                    <ComboBoxItem Tag="1">Half</ComboBoxItem>
-                                    <ComboBoxItem Tag="2">Full</ComboBoxItem>
-                                </ComboBox>
-                            </StackPanel>
-                        </Grid>
-                        <Label Grid.Row="0" Grid.Column="2" Margin="20" Style="{StaticResource labelStyle}" Content="From: " Height="28" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                        <DatePicker x:Name="dtpFrom" Grid.Row="0" Grid.Column="3" Margin="20"  Width="150" Height="35" HorizontalAlignment="Right" VerticalAlignment="Top" />
-                        <Label Grid.Row="1" Grid.Column="2" Margin="20"  Style="{StaticResource labelStyle}" Content="To: " Height="28" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                        <DatePicker x:Name="dtpTo" Grid.Row="1" Grid.Column="3" Margin="20"  Width="150" Height="35" HorizontalAlignment="Right" VerticalAlignment="Top" />
-                        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="3" Margin="20" x:Name="btnCreateLeave" Content="Create Leave" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
-                    </Grid>-->
-                <!--</Grid>-->
             </Grid>
         </Grid>
     </Border>

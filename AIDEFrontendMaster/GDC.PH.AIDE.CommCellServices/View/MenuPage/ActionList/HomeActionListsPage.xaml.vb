@@ -13,7 +13,23 @@ Imports System.Printing
 Class HomeActionListsPage
     Implements IAideServiceCallback
 
-#Region "Page Declaration"
+#Region "Paging Declarations"
+    Dim startRowIndex As Integer
+    Dim lastRowIndex As Integer
+    Dim pagingPageIndex As Integer
+    Dim pagingRecordPerPage As Integer = 10
+    Dim currentPage As Integer
+    Dim lastPage As Integer
+
+    Private Enum PagingMode
+        _First = 1
+        _Next = 2
+        _Previous = 3
+        _Last = 4
+    End Enum
+#End Region
+
+#Region "Fields"
     Private _frame As Frame
     Private _email As String
 
@@ -26,22 +42,11 @@ Class HomeActionListsPage
     Private EnableRowHeaderDoubleClick As Boolean = False
     Private lstAction As Action()
     Private profiles As Profile
+
+    Dim paginatedCollection As PaginatedObservableCollection(Of ActionModel) = New PaginatedObservableCollection(Of ActionModel)(pagingRecordPerPage)
 #End Region
 
-#Region "Paging Declarations"
-    Dim startRowIndex As Integer
-    Dim lastRowIndex As Integer
-    Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 10
-
-    Private Enum PagingMode
-        _First = 1
-        _Next = 2
-        _Previous = 3
-        _Last = 4
-    End Enum
-#End Region
-
+#Region "Constructor"
     Public Sub New(_frame As Frame, email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _prof As Profile)
         Try
             Me._email = email
@@ -59,6 +64,7 @@ Class HomeActionListsPage
             End If
         End Try
     End Sub
+#End Region
 
 #Region "Main Function/ Method"
 
@@ -67,7 +73,8 @@ Class HomeActionListsPage
         Try
             If Me.InitializeService Then
                 lstAction = aide.GetActionSummary(email)
-                SetPaging(PagingMode._First)
+                SetLists()
+                DisplayPagingInfo()
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -78,7 +85,8 @@ Class HomeActionListsPage
         Try
             If Me.InitializeService Then
                 lstAction = aide.GetActionListByMessage(_message, email)
-                SetPaging(PagingMode._First)
+                SetLists()
+                DisplayPagingInfo()
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -91,24 +99,25 @@ Class HomeActionListsPage
 
     Private Sub SetLists()
         Try
+            paginatedCollection.Clear()
             Dim lstactionlist As New ObservableCollection(Of ActionModel)
             Dim lstactionprovider As New ActionListDBProvider
-            Dim lstactionVM As New ActionListViewModel
-
-            Dim objAct As New Action()
-
-            For i As Integer = startRowIndex To lastRowIndex
-                objAct = lstAction(i)
-                lstactionprovider._setlistofitems(objAct)
-            Next
 
             For Each iactionlist As myActionSet In lstactionprovider._getobAction()
                 lstactionlist.Add(New ActionModel(iactionlist))
             Next
 
-            lstactionVM.objectActionSet = lstactionlist
-            'Set all action lists to datacontext
-            Me.DataContext = lstactionVM
+            For Each objAct As Action In lstAction
+                lstactionprovider._setlistofitems(objAct)
+            Next
+
+            For Each actions As myActionSet In lstactionprovider._getobAction()
+                paginatedCollection.Add(New ActionModel(actions))
+            Next
+
+            ActionLV.ItemsSource = paginatedCollection
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(lstAction.Length / pagingRecordPerPage)
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -179,10 +188,33 @@ Class HomeActionListsPage
 
     End Sub
 
+    Private Sub DisplayPagingInfo()
+        ' If there has no data found
+        If lstAction.Length = 0 Then
+            txtPageNo.Text = "No Results Found "
+            GUISettingsOff()
+        Else
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
+            GUISettingsOn()
+        End If
+    End Sub
+
+    Private Sub GUISettingsOff()
+        ActionLV.Visibility = Windows.Visibility.Hidden
+
+        btnPrev.IsEnabled = False
+        btnNext.IsEnabled = False
+    End Sub
+
+    Private Sub GUISettingsOn()
+        ActionLV.Visibility = Windows.Visibility.Visible
+
+        btnPrev.IsEnabled = True
+        btnNext.IsEnabled = True
+    End Sub
 #End Region
 
 #Region "Services Function/Method"
-
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
         Try
@@ -219,7 +251,6 @@ Class HomeActionListsPage
 #End Region
 
 #Region "Events Trigger"
-
     Private Sub ActionLV_MouseDoubleClick(sender As Object, e As MouseEventArgs)
         Try
             If ActionLV.SelectedIndex = -1 Then
@@ -300,11 +331,22 @@ Class HomeActionListsPage
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Next))
+        Dim totalRecords As Integer = lstAction.Length
+
+        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+            paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+        End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Previous))
+        paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
+        If currentPage > 1 Then
+            currentPage -= 1
+        End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)

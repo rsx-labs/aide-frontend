@@ -12,31 +12,6 @@ Imports System.Printing
 Class TaskAdminPage
     Implements IAideServiceCallback
 
-    Public frame As Frame
-    Public mainWindow As MainWindow
-    Public empID As Integer
-    Public email As String
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
-
-    Dim lstTasks As TaskSummary()
-
-    Dim client As AideServiceClient
-
-    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _empID As Integer, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
-        InitializeComponent()
-        frame = _frame
-        mainWindow = _mainWindow
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
-        empID = _empID
-        email = _email
-        SetDates()
-        LoadEmployeeTaskAll()
-    End Sub
-
 #Region "Paging Declarations"
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
@@ -49,6 +24,38 @@ Class TaskAdminPage
         _Previous = 3
         _Last = 4
     End Enum
+#End Region
+
+#Region "Fields"
+    Public frame As Frame
+    Public mainWindow As MainWindow
+    Public empID As Integer
+    Public email As String
+    Private _addframe As Frame
+    Private _menugrid As Grid
+    Private _submenuframe As Frame
+
+    Dim currentPage As Integer
+    Dim lastPage As Integer
+    Dim lstTasks As TaskSummary()
+    Dim client As AideServiceClient
+    Dim paginatedCollection As PaginatedObservableCollection(Of TasksSpModel) = New PaginatedObservableCollection(Of TasksSpModel)(pagingRecordPerPage)
+
+#End Region
+
+#Region "Constructor"
+    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _empID As Integer, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+        InitializeComponent()
+        frame = _frame
+        mainWindow = _mainWindow
+        Me._addframe = _addframe
+        Me._menugrid = _menugrid
+        Me._submenuframe = _submenuframe
+        empID = _empID
+        email = _email
+        SetDates()
+        LoadEmployeeTaskAll()
+    End Sub
 #End Region
 
 #Region "Common Methods"
@@ -134,7 +141,8 @@ Class TaskAdminPage
         Try
             If Me.InitializeService Then
                 lstTasks = client.ViewTaskSummaryAll(Convert.ToDateTime(Date.Now).ToString("yyyy-MM-dd"), email)
-                SetPaging(PagingMode._First)
+                LoadData()
+                DisplayPagingInfo()
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
@@ -143,27 +151,20 @@ Class TaskAdminPage
 
     Private Sub LoadData()
         Try
-
-            Dim lstMyTasks As New ObservableCollection(Of TasksSpModel)
             Dim taskDBProvider As New TaskDBProvider
-            Dim taskSpViewModel As New TasksSpViewModel
 
-            Dim objTask As New TaskSummary()
-
-            For i As Integer = startRowIndex To lastRowIndex
-                objTask = lstTasks(i)
+            For Each objTask As TaskSummary In lstTasks
                 taskDBProvider.SetTasksSpList(objTask)
             Next
-            
-            For Each iTasks As MyTasksSp In taskDBProvider.GetTasksSp()
-                lstMyTasks.Add(New TasksSpModel(iTasks))
+
+            For Each tasks As MyTasksSp In taskDBProvider.GetTasksSp()
+                paginatedCollection.Add(New TasksSpModel(tasks))
             Next
 
-            'taskSpViewModel.TasksSpList = lstMyTasks
-            dgTask.ItemsSource = lstMyTasks
-
-            'Me.DataContext = taskSpViewModel
+            dgTask.ItemsSource = paginatedCollection
             LoadDataForPrint()
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(lstTasks.Length / pagingRecordPerPage)
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -253,7 +254,7 @@ Class TaskAdminPage
                     SetPaging(CInt(PagingMode._Next))
                     Exit Select
             End Select
-
+            DisplayPagingInfo()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -261,19 +262,14 @@ Class TaskAdminPage
     End Sub
 
     Private Sub DisplayPagingInfo()
-        Dim pagingInfo As String
-
         ' If there has no data found
         If lstTasks.Length = 0 Then
-            pagingInfo = "No Results Found "
+            txtPageNo.Text = "No Results Found "
             GUISettingsOff()
         Else
-            pagingInfo = "Displaying " & startRowIndex + 1 & " to " & lastRowIndex + 1
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
             GUISettingsOn()
         End If
-
-
-
     End Sub
 
     Private Sub GUISettingsOff()
@@ -292,25 +288,9 @@ Class TaskAdminPage
         btnNext.IsEnabled = True
     End Sub
 
-    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Next))
-    End Sub
-
-    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Previous))
-    End Sub
-
-    Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._First))
-    End Sub
-
-    Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Last))
-    End Sub
 #End Region
 
 #Region "Buttons"
-
     Private Sub btnCreateTask_Click(sender As Object, e As RoutedEventArgs) Handles btnCreateTask.Click
         _addframe.Navigate(New TaskAddPage(frame, mainWindow, email, _addframe, _menugrid, _submenuframe, empID))
         frame.IsEnabled = False
@@ -348,6 +328,33 @@ Class TaskAdminPage
         _submenuframe.Opacity = 0.3
         '_addframe.Visibility = Visibility.Visible
         '_addframe.Margin = New Thickness(0, 0, 0, 0)
+    End Sub
+
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
+        Dim totalRecords As Integer = lstTasks.Length
+
+        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+            paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+        End If
+        DisplayPagingInfo()
+    End Sub
+
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
+        paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
+        If currentPage > 1 Then
+            currentPage -= 1
+        End If
+        DisplayPagingInfo()
+    End Sub
+
+    Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
+        SetPaging(CInt(PagingMode._First))
+    End Sub
+
+    Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
+        SetPaging(CInt(PagingMode._Last))
     End Sub
 
 #End Region
