@@ -16,20 +16,7 @@ Imports System.Printing
 Public Class TaskListPage
     Implements ServiceReference1.IAideServiceCallback
 
-
-#Region "Fields"
-
-    Private _AideService As ServiceReference1.AideServiceClient
-    Private mainFrame As Frame
-    Private mainWindow As MainWindow
-    Public empID As Integer
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
-    Private isEmpty As Boolean
-    Public email As String
-    Dim lstTask As Tasks()
-
+#Region "Paging Declarations"
     Private Enum PagingMode
         _First = 1
         _Next = 2
@@ -37,130 +24,203 @@ Public Class TaskListPage
         _Last = 4
     End Enum
 
-#End Region
-
-#Region "Paging Declarations"
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
     Dim pagingRecordPerPage As Integer = 10
 #End Region
 
+#Region "Fields"
+    Private aideService As ServiceReference1.AideServiceClient
+    Private mainFrame As Frame
+    Private mainWindow As MainWindow
+    Private addframe As Frame
+    Private menugrid As Grid
+    Private submenuframe As Frame
+    Private isEmpty As Boolean
+    Public email As String
+    Public empID As Integer
+
+    Dim incidentTypeID As Integer = 2
+    Dim statusID As Integer = 3
+    Dim phaseID As Integer = 4
+    Dim reworkID As Integer = 5
+    Dim severityID As Integer = 13
+
+    Dim listProjects As New ObservableCollection(Of ProjectModel)
+    Dim listReworkStatus As New ObservableCollection(Of ReworkStatusModel)
+    Dim listSeverityStatus As New ObservableCollection(Of SeverityStatusModel)
+    Dim listCategoryStatus As New ObservableCollection(Of CategoryStatusModel)
+    Dim listPhaseStatus As New ObservableCollection(Of PhaseStatusModel)
+    Dim listTaskStatus As New ObservableCollection(Of TaskStatusModel)
+
+    Dim lstTask As Tasks()
+    Dim lstTasksData As PaginatedObservableCollection(Of TasksModel) = New PaginatedObservableCollection(Of TasksModel)(pagingRecordPerPage)
+#End Region
+
+#Region "Provider Declaration"
+    Dim tasksDBProvider As New TaskDBProvider
+    Dim projectDBProvider As New ProjectDBProvider
+#End Region
+
+#Region "Model Declaration"
+    Dim tasksModel As New WeeklyReportModel
+#End Region
+
+#Region "View Model Declarations"
+    Dim tasksViewModel As New TasksViewModel
+    Dim projectViewModel As New ProjectViewModel
+#End Region
+
 #Region "Constructor"
-
-
     Public Sub New(_frame As Frame, _mainWindow As MainWindow, _empID As Integer, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
-
         InitializeComponent()
         Me.empID = _empID
         Me.mainFrame = _frame
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
+        Me.addframe = _addframe
+        Me.menugrid = _menugrid
+        Me.submenuframe = _submenuframe
         Me.mainWindow = _mainWindow
         Me.email = _email
+        LoadDescriptionData()
         SetData()
     End Sub
-
 #End Region
 
-#Region "Events"
+#Region "Sub Procedures"
+    Private Sub LoadDescriptionData()
+        InitializeService()
 
-    Private Sub lv_taskList_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles lv_taskList.MouseDoubleClick
-        e.Handled = True
+        ' Load Items For Projects
+        Try
+            Dim lstProjects As Project() = aideService.GetProjectList(empID)
 
-        Dim rawStatus As String
-        Dim rawPhase As String
-        Dim tasksListDBProvider As New TaskDBProvider
+            For Each objProjects As Project In lstProjects
+                projectDBProvider.setProjectList(objProjects)
+            Next
 
-        If lv_taskList.SelectedIndex <> -1 Then
-            If lv_taskList.SelectedItem IsNot Nothing Then
+            For Each myProjects As myProjectList In projectDBProvider.getProjectList()
+                listProjects.Add(New ProjectModel(myProjects))
+            Next
 
-                Dim taskList As New TasksModel
+            projectViewModel.ProjectList = listProjects
+        Catch ex As Exception
+            aideService.Abort()
+        End Try
 
-                taskList.EmpID = CType(lv_taskList.SelectedItem, TasksModel).EmpId
-                taskList.TaskID = CType(lv_taskList.SelectedItem, TasksModel).TaskId
-                taskList.IncId = CType(lv_taskList.SelectedItem, TasksModel).IncId
-                taskList.IncDescr = CType(lv_taskList.SelectedItem, TasksModel).IncDescr
-                taskList.DateStarted = CType(lv_taskList.SelectedItem, TasksModel).DateStarted
-                taskList.DateCreated = CType(lv_taskList.SelectedItem, TasksModel).DateCreated
-                taskList.TargetDate = CType(lv_taskList.SelectedItem, TasksModel).TargetDate
-                taskList.EffortEst = CType(lv_taskList.SelectedItem, TasksModel).EffortEst
-                taskList.ActEffortEstWk = CType(lv_taskList.SelectedItem, TasksModel).ActEffortEstWk
-                taskList.ActEffortEst = CType(lv_taskList.SelectedItem, TasksModel).ActEffortEst
-                rawPhase = tasksListDBProvider.SetPhaseDesc(CType(lv_taskList.SelectedItem, TasksModel).Phase)
-                rawStatus = tasksListDBProvider.SetStatusDesc(CType(lv_taskList.SelectedItem, TasksModel).Status)
-                taskList.ProjId = CType(lv_taskList.SelectedItem, TasksModel).ProjId
-                taskList.Remarks = CType(lv_taskList.SelectedItem, TasksModel).Remarks
-                taskList.Rework = CType(lv_taskList.SelectedItem, TasksModel).Rework
-                taskList.TaskType = CType(lv_taskList.SelectedItem, TasksModel).TaskType
-                taskList.Phase = rawPhase
-                taskList.Status = rawStatus
+        ' Load Items For Rework 
+        Try
+            Dim lstStatus As StatusGroup() = aideService.GetStatusList(reworkID)
 
-                _addframe.Navigate(New TaskAddPage(mainFrame, mainWindow, taskList, email, _addframe, _menugrid, _submenuframe, Me.empID))
-                _addframe.Margin = New Thickness(100, 50, 100, 50)
-                _addframe.IsEnabled = True
-                _addframe.Visibility = Visibility.Visible
-                mainFrame.IsEnabled = False
-                mainFrame.Opacity = 0.3
-            End If
-        End If
+            For Each objStatus As StatusGroup In lstStatus
+                tasksDBProvider.SetMyReworkStatusList(objStatus)
+            Next
+
+            For Each myStatus As MyReworkStatusList In tasksDBProvider.GetReworkStatusList()
+                listReworkStatus.Add(New ReworkStatusModel(myStatus))
+            Next
+
+            tasksViewModel.ReworkStatusList = listReworkStatus
+        Catch ex As SystemException
+            aideService.Abort()
+        End Try
+
+        ' Load Items For Severity 
+        Try
+            Dim lstStatus As StatusGroup() = aideService.GetStatusList(severityID)
+
+            For Each objStatus As StatusGroup In lstStatus
+                tasksDBProvider.SetMySeverityStatusList(objStatus)
+            Next
+
+            For Each myStatus As MySeverityStatusList In tasksDBProvider.GetSeverityStatusList()
+                listSeverityStatus.Add(New SeverityStatusModel(myStatus))
+            Next
+
+            tasksViewModel.SeverityStatusList = listSeverityStatus
+        Catch ex As SystemException
+            aideService.Abort()
+        End Try
+
+        ' Load Items For Incident Type 
+        Try
+            Dim lstStatus As StatusGroup() = aideService.GetStatusList(incidentTypeID)
+
+            For Each objStatus As StatusGroup In lstStatus
+                tasksDBProvider.SetMyCategoryStatusList(objStatus)
+            Next
+
+            For Each myStatus As MyCategoryStatusList In tasksDBProvider.GetCategoryStatusList()
+                listCategoryStatus.Add(New CategoryStatusModel(myStatus))
+            Next
+
+            tasksViewModel.CategoryStatusList = listCategoryStatus
+        Catch ex As SystemException
+            aideService.Abort()
+        End Try
+
+        ' Load Items For Phase Status 
+        Try
+            Dim lstStatus As StatusGroup() = aideService.GetStatusList(phaseID)
+
+            For Each objStatus As StatusGroup In lstStatus
+                tasksDBProvider.SetMyPhaseStatusList(objStatus)
+            Next
+
+            For Each myStatus As MyPhaseStatusList In tasksDBProvider.GetPhaseStatusList()
+                listPhaseStatus.Add(New PhaseStatusModel(myStatus))
+            Next
+
+            tasksViewModel.PhaseStatusList = listPhaseStatus
+        Catch ex As SystemException
+            aideService.Abort()
+        End Try
+
+        ' Load Items For Task Status
+        Try
+            Dim lstStatus As StatusGroup() = aideService.GetStatusList(statusID)
+
+            For Each objStatus As StatusGroup In lstStatus
+                tasksDBProvider.SetMyTaskStatusList(objStatus)
+            Next
+
+            For Each myStatus As MyTaskStatusList In tasksDBProvider.GetTaskStatusList()
+                listTaskStatus.Add(New TaskStatusModel(myStatus))
+            Next
+
+            tasksViewModel.TaskStatusList = listTaskStatus
+        Catch ex As SystemException
+            aideService.Abort()
+        End Try
     End Sub
 
-    Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs)
-        mainFrame.Navigate(New TaskAdminPage(mainFrame, mainWindow, empID, email, _addframe, _menugrid, _submenuframe))
-        mainFrame.IsEnabled = True
-        mainFrame.Opacity = 1
-        _menugrid.IsEnabled = True
-        _menugrid.Opacity = 1
-        _submenuframe.IsEnabled = True
-        _submenuframe.Opacity = 1
-        _addframe.Visibility = Visibility.Hidden
-    End Sub
-
-    'Private Sub btnPrint_Click(sender As Object, e As RoutedEventArgs) Handles btnPrint.Click
-    '    Dim dialog As PrintDialog = New PrintDialog()
-    '    If dialog.ShowDialog() = True Then
-    '        dialog.PrintTicket.PageOrientation = PageOrientation.Landscape
-    '        dialog.PrintVisual(lv_contacts, "My Canvas")
-    '    End If
-    'End Sub
-
-    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Next))
-    End Sub
-
-    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Previous))
-    End Sub
-
-    Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._First))
-    End Sub
-
-    Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Last))
-    End Sub
-
-#End Region
-
-#Region "Functions"
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            aideService = New AideServiceClient(Context)
+            aideService.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            aideService.Abort()
+        End Try
+        Return bInitialize
+    End Function
 
     Public Sub SetData()
         Try
             If InitializeService() Then
-                lstTask = _AideService.GetTaskDetailByIncidentId(empID)
+                lstTask = aideService.GetTasksByEmpID(empID)
                 If lstTask.Count <> 0 Then
-                    SetPaging(PagingMode._First)
+                    'SetPaging(PagingMode._First)
+                    LoadData()
                 Else
                     lbl_noOT.Visibility = Windows.Visibility.Visible
                     lbl_noOT1.Visibility = Windows.Visibility.Visible
                     lbl_noOT2.Visibility = Windows.Visibility.Visible
                     lv_taskList.Visibility = Windows.Visibility.Collapsed
-                    btnPrint.Visibility = Windows.Visibility.Collapsed
                     btnNext.Visibility = Windows.Visibility.Collapsed
                     btnPrev.Visibility = Windows.Visibility.Collapsed
-
                 End If
             End If
         Catch ex As Exception
@@ -174,131 +234,166 @@ Public Class TaskListPage
             Dim tasksListDBProvider As New TaskDBProvider
             Dim taskListVM As New TasksViewModel()
 
-            Dim objTasks As New Tasks()
-
-            For i As Integer = startRowIndex To lastRowIndex
-                objTasks = lstTask(i)
+            For Each objTasks As Tasks In lstTask
                 tasksListDBProvider.SetTaskList(objTasks)
             Next
 
-            For Each rawUser As MyTasks In tasksListDBProvider.GetTaskList()
-                lstTaskList.Add(New TasksModel(rawUser))
+            For Each tasks As MyTasks In tasksListDBProvider.GetTaskList()
+                lstTasksData.Add(New TasksModel With {.TaskId = tasks.TaskId,
+                                                      .ProjId = tasks.ProjId,
+                                                      .ProjectCode = tasks.ProjectCode,
+                                                      .Rework = tasks.Rework,
+                                                      .ReworkDesc = getReworkValue(tasks.Rework),
+                                                      .ReferenceID = tasks.ReferenceID,
+                                                      .IncDescr = tasks.IncDescr,
+                                                      .Severity = tasks.Severity,
+                                                      .SeverityDesc = getSeverityValue(tasks.Severity),
+                                                      .IncidentType = tasks.IncidentType,
+                                                      .IncidentDesc = getIncidentValue(tasks.IncidentType),
+                                                      .EmpId = tasks.EmpId,
+                                                      .Phase = tasks.Phase,
+                                                      .PhaseDesc = getPhaseValue(tasks.Phase),
+                                                      .Status = tasks.Status,
+                                                      .StatusDesc = getStatusValue(tasks.Status),
+                                                      .DateStarted = tasks.DateStarted,
+                                                      .TargetDate = tasks.TargetDate,
+                                                      .CompltdDate = tasks.CompltdDate,
+                                                      .DateCreated = tasks.DateCreated,
+                                                      .EffortEst = tasks.EffortEst,
+                                                      .ActEffortWk = tasks.ActEffortWk,
+                                                      .ActEffort = tasks.ActEffort,
+                                                      .Comments = tasks.Comments
+                                                    })
             Next
 
-            taskListVM.TaskList = lstTaskList
-            Me.DataContext = taskListVM
+            lv_taskList.ItemsSource = lstTasksData
+
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
+#End Region
 
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            _AideService = New AideServiceClient(Context)
-            _AideService.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            _AideService.Abort()
-        End Try
-        Return bInitialize
+#Region "Functions"
+
+    Private Function getReworkValue(key As Integer) As String
+        Dim value = listReworkStatus.Where(Function(x) x.Key = key).FirstOrDefault()
+
+        If value Is Nothing Then
+            Return ""
+        Else
+            Return listReworkStatus.Where(Function(x) x.Key = key).First().Value
+        End If
     End Function
 
-    Private Sub SetPaging(mode As Integer)
-        Try
-            Dim totalRecords As Integer = lstTask.Length
+    Private Function getSeverityValue(key As Integer) As String
+        Dim value = listSeverityStatus.Where(Function(x) x.Key = key).FirstOrDefault()
 
-            Select Case mode
-                Case CInt(PagingMode._Next)
-                    ' Set the rows to be displayed if the total records is more than the (Record per Page * Page Index)
-                    If totalRecords > (pagingPageIndex * pagingRecordPerPage) Then
-
-                        ' Set the last row to be displayed if the total records is more than the (Record per Page * Page Index) + Record per Page
-                        If totalRecords >= ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) Then
-                            lastRowIndex = ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) - 1
-                        Else
-                            lastRowIndex = totalRecords - 1
-                        End If
-
-                        startRowIndex = pagingPageIndex * pagingRecordPerPage
-                        pagingPageIndex += 1
-                    Else
-                        startRowIndex = (pagingPageIndex - 1) * pagingRecordPerPage
-                        lastRowIndex = totalRecords - 1
-                    End If
-                    ' Bind data to the Data Grid
-                    LoadData()
-                    Exit Select
-                Case CInt(PagingMode._Previous)
-                    ' Set the Previous Page if the page index is greater than 1
-                    If pagingPageIndex > 1 Then
-                        pagingPageIndex -= 1
-
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-                        lastRowIndex = (pagingPageIndex * pagingRecordPerPage) - 1
-                        LoadData()
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._First)
-                    If totalRecords > pagingRecordPerPage Then
-                        pagingPageIndex = 2
-                        SetPaging(CInt(PagingMode._Previous))
-                    Else
-                        pagingPageIndex = 1
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-
-                        If Not totalRecords = 0 Then
-                            lastRowIndex = totalRecords - 1
-                            LoadData()
-                        Else
-                            lastRowIndex = 0
-                            Me.DataContext = Nothing
-                        End If
-
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._Last)
-                    pagingPageIndex = (lstTask.Length / pagingRecordPerPage)
-                    SetPaging(CInt(PagingMode._Next))
-                    Exit Select
-            End Select
-
-            DisplayPagingInfo()
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-    End Sub
-
-    Private Sub DisplayPagingInfo()
-        Dim pagingInfo As String
-
-        ' If there has no data found
-        If lstTask.Length = 0 Then
-            pagingInfo = "No Results Found "
-            GUISettingsOff()
+        If value Is Nothing Then
+            Return ""
         Else
-            pagingInfo = "Displaying " & startRowIndex + 1 & " to " & lastRowIndex + 1
-            GUISettingsOn()
+            Return listSeverityStatus.Where(Function(x) x.Key = key).First().Value
         End If
+    End Function
 
-        lblPagingInfo.Content = pagingInfo
+    Private Function getIncidentValue(key As Integer) As String
+        Dim value = listCategoryStatus.Where(Function(x) x.Key = key).FirstOrDefault()
 
+        If value Is Nothing Then
+            Return ""
+        Else
+            Return listCategoryStatus.Where(Function(x) x.Key = key).First().Value
+        End If
+    End Function
+
+    Private Function getPhaseValue(key As Integer) As String
+        Dim value = listPhaseStatus.Where(Function(x) x.Key = key).FirstOrDefault()
+
+        If value Is Nothing Then
+            Return ""
+        Else
+            Return listPhaseStatus.Where(Function(x) x.Key = key).First().Value
+        End If
+    End Function
+
+    Private Function getStatusValue(key As Integer) As String
+        Dim value = listTaskStatus.Where(Function(x) x.Key = key).FirstOrDefault()
+
+        If value Is Nothing Then
+            Return ""
+        Else
+            Return listTaskStatus.Where(Function(x) x.Key = key).First().Value
+        End If
+    End Function
+#End Region
+
+#Region "Events"
+
+    Private Sub lv_taskList_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles lv_taskList.MouseDoubleClick
+        e.Handled = True
+
+        Dim tasksListDBProvider As New TaskDBProvider
+
+        If lv_taskList.SelectedIndex <> -1 Then
+            If lv_taskList.SelectedItem IsNot Nothing Then
+
+                Dim taskList As New TasksModel
+
+                taskList.TaskId = CType(lv_taskList.SelectedItem, TasksModel).TaskId
+                taskList.ProjId = CType(lv_taskList.SelectedItem, TasksModel).ProjId
+                taskList.ProjectCode = CType(lv_taskList.SelectedItem, TasksModel).ProjectCode
+                taskList.Rework = CType(lv_taskList.SelectedItem, TasksModel).Rework
+                taskList.ReferenceID = CType(lv_taskList.SelectedItem, TasksModel).ReferenceID
+                taskList.IncDescr = CType(lv_taskList.SelectedItem, TasksModel).IncDescr
+                taskList.Severity = CType(lv_taskList.SelectedItem, TasksModel).Severity
+                taskList.IncidentType = CType(lv_taskList.SelectedItem, TasksModel).IncidentType
+                taskList.EmpId = CType(lv_taskList.SelectedItem, TasksModel).EmpId
+                taskList.Phase = CType(lv_taskList.SelectedItem, TasksModel).Phase
+                taskList.Status = CType(lv_taskList.SelectedItem, TasksModel).Status
+                taskList.DateStarted = CType(lv_taskList.SelectedItem, TasksModel).DateStarted
+                taskList.TargetDate = CType(lv_taskList.SelectedItem, TasksModel).TargetDate
+                taskList.CompltdDate = CType(lv_taskList.SelectedItem, TasksModel).CompltdDate
+                taskList.DateCreated = CType(lv_taskList.SelectedItem, TasksModel).DateCreated
+                taskList.EffortEst = CType(lv_taskList.SelectedItem, TasksModel).EffortEst
+                taskList.ActEffort = CType(lv_taskList.SelectedItem, TasksModel).ActEffort
+                taskList.ActEffortWk = CType(lv_taskList.SelectedItem, TasksModel).ActEffortWk
+                taskList.Comments = CType(lv_taskList.SelectedItem, TasksModel).Comments
+
+                addframe.Navigate(New TaskAddPage(mainFrame, mainWindow, taskList, email, addframe, menugrid, submenuframe, empID))
+                addframe.Margin = New Thickness(100, 50, 100, 50)
+                addframe.IsEnabled = True
+                addframe.Visibility = Visibility.Visible
+                mainFrame.IsEnabled = False
+                mainFrame.Opacity = 0.3
+            End If
+        End If
     End Sub
 
-    Private Sub GUISettingsOff()
-        lv_taskList.Visibility = Windows.Visibility.Hidden
-
-        btnPrev.IsEnabled = False
-        btnNext.IsEnabled = False
+    Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs)
+        mainFrame.Navigate(New TaskAdminPage(mainFrame, mainWindow, empID, email, addframe, menugrid, submenuframe))
+        mainFrame.IsEnabled = True
+        mainFrame.Opacity = 1
+        menugrid.IsEnabled = True
+        menugrid.Opacity = 1
+        submenuframe.IsEnabled = True
+        submenuframe.Opacity = 1
+        addframe.Visibility = Visibility.Hidden
     End Sub
 
-    Private Sub GUISettingsOn()
-        lv_taskList.Visibility = Windows.Visibility.Visible
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
+        Dim totalRecords As Integer = lstTask.Length
 
-        btnPrev.IsEnabled = True
-        btnNext.IsEnabled = True
+        If totalRecords >= ((lstTasksData.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+            lstTasksData.CurrentPage = lstTasksData.CurrentPage + 1
+        End If
+        'SetPaging(CInt(PagingMode._Next))
     End Sub
+
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
+        lstTasksData.CurrentPage = lstTasksData.CurrentPage - 1
+        'SetPaging(CInt(PagingMode._Previous))
+    End Sub
+
 #End Region
 
 #Region "ICallBack Function"
@@ -326,4 +421,5 @@ Public Class TaskListPage
 
     End Sub
 #End Region
+
 End Class

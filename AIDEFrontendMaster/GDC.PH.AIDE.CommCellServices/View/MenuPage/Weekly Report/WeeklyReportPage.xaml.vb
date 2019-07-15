@@ -16,8 +16,21 @@ Imports System.Printing
 Class WeeklyReportPage
     Implements ServiceReference1.IAideServiceCallback
 
-#Region "Fields"
+#Region "Paging Declarations"
+    Dim startRowIndex As Integer
+    Dim lastRowIndex As Integer
+    Dim pagingPageIndex As Integer
+    Dim pagingRecordPerPage As Integer = 10
 
+    Private Enum PagingMode
+        _First = 1
+        _Next = 2
+        _Previous = 3
+        _Last = 4
+    End Enum
+#End Region
+
+#Region "Fields"
     Private AideServiceClient As ServiceReference1.AideServiceClient
     Private mainFrame As Frame
     Private isEmpty As Boolean
@@ -26,35 +39,38 @@ Class WeeklyReportPage
     Private menugrid As Grid
     Private submenuframe As Frame
     Private empID As Integer
-    Private month As Integer = Date.Now.Month
+    Private month As Integer
+    Private year As Integer
+
     Private displayMonth As String
 
+    Dim dateToday As Date = Date.Today
+    Dim daySatDiff As Integer = Today.DayOfWeek - DayOfWeek.Saturday
+    Dim saturday As Date = Today.AddDays(-daySatDiff)
+    Dim lastWeekSaturday As Date = saturday.AddDays(-14)
+
+    Dim dayFriDiff As Integer = Today.DayOfWeek - DayOfWeek.Friday
+    Dim friday As Date = Today.AddDays(-dayFriDiff)
+    Dim lastWeekFriday As Date = friday.AddDays(-7)
+
+    Dim statusID As Integer = 14
     Dim lstWeekRange As WeekRange()
+    Dim lstMissingReports As ContactList()
     Dim lstWeeklyReports As ObservableCollection(Of WeekRangeModel) = New ObservableCollection(Of WeekRangeModel)
 
+    Dim listWeeklyReportStatus As New ObservableCollection(Of WeeklyReportStatusModel)
+
+    Dim weeklyReportCollection As PaginatedObservableCollection(Of WeekRangeModel) = New PaginatedObservableCollection(Of WeekRangeModel)(pagingRecordPerPage)
+    Dim missingReportCollection As PaginatedObservableCollection(Of ContactListModel) = New PaginatedObservableCollection(Of ContactListModel)(pagingRecordPerPage)
+
     Dim weeklyReportDBProvider As New WeeklyReportDBProvider
-    Dim weeklyReportVM As New WeekRangeViewModel()
-
-    Private Enum PagingMode
-        _First = 1
-        _Next = 2
-        _Previous = 3
-        _Last = 4
-    End Enum
-
-#End Region
-
-#Region "Paging Declarations"
-    Dim startRowIndex As Integer
-    Dim lastRowIndex As Integer
-    Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 10
+    Dim weekRangeViewModel As New WeekRangeViewModel
 #End Region
 
 #Region "Constructor"
-
     Public Sub New(_mainFrame As Frame, _empID As Integer, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         InitializeComponent()
+        InitializeService()
         Me.email = _email
         Me.mainFrame = _mainFrame
         Me.empID = _empID
@@ -62,8 +78,19 @@ Class WeeklyReportPage
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
 
+        month = Date.Now.Month
+        year = Date.Now.Year
+
+        LoadMonth()
+        LoadYears()
+
+        LoadStatusData()
         dgWeeklyReports.ItemsSource = lstWeeklyReports
         SetWeeklyReports()
+        SetMissingReports()
+
+        cbMonth.SelectedValue = month
+        cbYear.SelectedValue = year
     End Sub
 
     Public Function InitializeService() As Boolean
@@ -83,11 +110,29 @@ Class WeeklyReportPage
 
 #Region "Functions"
 
+    Public Sub LoadStatusData()
+        Try
+            Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(statusID)
+
+            For Each objStatus As StatusGroup In lstStatus
+                weeklyReportDBProvider.SetMyWeeklyReportStatusList(objStatus)
+            Next
+
+            For Each myStatus As MyWeeklyReportStatusList In weeklyReportDBProvider.GetWeeklyReportStatusList()
+                listWeeklyReportStatus.Add(New WeeklyReportStatusModel(myStatus))
+            Next
+
+            weekRangeViewModel.WeeklyReportStatusList = listWeeklyReportStatus
+        Catch ex As SystemException
+            AideServiceClient.Abort()
+        End Try
+    End Sub
+
     Public Sub SetWeeklyReports()
         Try
             If InitializeService() Then
-                lstWeekRange = AideServiceClient.GetWeeklyReportsByEmpID(empID)
-                SetPaging(PagingMode._First)
+                lstWeekRange = AideServiceClient.GetWeeklyReportsByEmpID(empID, month, year)
+                LoadWeeklyReports()
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -96,21 +141,88 @@ Class WeeklyReportPage
 
     Private Sub LoadWeeklyReports()
         Try
-            Dim objWeeklyReport As New WeekRange()
+            weeklyReportCollection.Clear()
+            weeklyReportDBProvider.GetWeekRangeList().Clear()
 
-            For i As Integer = startRowIndex To lastRowIndex
-                objWeeklyReport = lstWeekRange(i)
+            For Each objWeeklyReport As WeekRange In lstWeekRange
                 weeklyReportDBProvider.SetWeekRangeList(objWeeklyReport)
             Next
 
             For Each weekRange As MyWeekRange In weeklyReportDBProvider.GetWeekRangeList()
-                lstWeeklyReports.Add(New WeekRangeModel(weekRange))
+                weeklyReportCollection.Add(New WeekRangeModel With {
+                                            .StartWeek = weekRange.StartWeek,
+                                            .EndWeek = weekRange.EndWeek,
+                                            .DateSubmitted = weekRange.DateSubmitted,
+                                            .Status = weekRange.Status,
+                                            .StatusDesc = getStatusValue(weekRange.Status),
+                                            .WeekRangeID = weekRange.WeekRangeID
+                                         })
             Next
 
-            weeklyReportVM.WeekRangeList = lstWeeklyReports
+            dgWeeklyReports.ItemsSource = weeklyReportCollection
 
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Public Sub SetMissingReports()
+        Try
+            lstMissingReports = AideServiceClient.GetMissingReportsByEmpID(empID, lastWeekSaturday)
+            LoadMissingReports()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub LoadMissingReports()
+        Try
+            Dim contactListDBProvider As New ContactListDBProvider
+            Dim contactListVM As New ContactListViewModel()
+
+            For Each objContacts As ContactList In lstMissingReports
+                contactListDBProvider.SetMyContactList(objContacts)
+            Next
+
+            For Each contacts As MyContactList In contactListDBProvider.GetMyContactList()
+                missingReportCollection.Add(New ContactListModel(contacts))
+            Next
+
+            dgMissingReports.ItemsSource = missingReportCollection
+
+            lblMissingReportsWeek.Content = lastWeekSaturday.ToShortDateString + " - " + lastWeekFriday.ToShortDateString + " Missing Reports"
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Private Sub LoadMonth()
+        cbMonth.DisplayMemberPath = "Text"
+        cbMonth.SelectedValuePath = "Value"
+        cbMonth.Items.Add(New With {.Text = "January", .Value = 1})
+        cbMonth.Items.Add(New With {.Text = "February", .Value = 2})
+        cbMonth.Items.Add(New With {.Text = "March", .Value = 3})
+        cbMonth.Items.Add(New With {.Text = "April", .Value = 4})
+        cbMonth.Items.Add(New With {.Text = "May", .Value = 5})
+        cbMonth.Items.Add(New With {.Text = "June", .Value = 6})
+        cbMonth.Items.Add(New With {.Text = "July", .Value = 7})
+        cbMonth.Items.Add(New With {.Text = "August", .Value = 8})
+        cbMonth.Items.Add(New With {.Text = "September", .Value = 9})
+        cbMonth.Items.Add(New With {.Text = "October", .Value = 10})
+        cbMonth.Items.Add(New With {.Text = "November", .Value = 11})
+        cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
+    End Sub
+
+    Private Sub LoadYears()
+        Try
+            cbYear.DisplayMemberPath = "Text"
+            cbYear.SelectedValuePath = "Value"
+            For i As Integer = 2019 To DateTime.Today.Year
+                Dim nextYear As Integer = i + 1
+                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
+            Next
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
         End Try
     End Sub
 
@@ -148,74 +260,20 @@ Class WeeklyReportPage
         End If
     End Sub
 
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
+        Dim totalRecords As Integer = lstMissingReports.Length
+
+        If totalRecords >= ((missingReportCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+            missingReportCollection.CurrentPage = missingReportCollection.CurrentPage + 1
+        End If
+    End Sub
+
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
+        missingReportCollection.CurrentPage = missingReportCollection.CurrentPage - 1
+    End Sub
 #End Region
 
 #Region "Paging"
-    Private Sub SetPaging(mode As Integer)
-        Try
-            Dim totalRecords As Integer = lstWeekRange.Length
-
-            Select Case mode
-                Case CInt(PagingMode._Next)
-                    ' Set the rows to be displayed if the total records is more than the (Record per Page * Page Index)
-                    If totalRecords > (pagingPageIndex * pagingRecordPerPage) Then
-
-                        ' Set the last row to be displayed if the total records is more than the (Record per Page * Page Index) + Record per Page
-                        If totalRecords >= ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) Then
-                            lastRowIndex = ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) - 1
-                        Else
-                            lastRowIndex = totalRecords - 1
-                        End If
-
-                        startRowIndex = pagingPageIndex * pagingRecordPerPage
-                        pagingPageIndex += 1
-                    Else
-                        startRowIndex = (pagingPageIndex - 1) * pagingRecordPerPage
-                        lastRowIndex = totalRecords - 1
-                    End If
-                    ' Bind data to the Data Grid
-                    LoadWeeklyReports()
-                    Exit Select
-                Case CInt(PagingMode._Previous)
-                    ' Set the Previous Page if the page index is greater than 1
-                    If pagingPageIndex > 1 Then
-                        pagingPageIndex -= 1
-
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-                        lastRowIndex = (pagingPageIndex * pagingRecordPerPage) - 1
-                        LoadWeeklyReports()
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._First)
-                    If totalRecords > pagingRecordPerPage Then
-                        pagingPageIndex = 2
-                        SetPaging(CInt(PagingMode._Previous))
-                    Else
-                        pagingPageIndex = 1
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-
-                        If Not totalRecords = 0 Then
-                            lastRowIndex = totalRecords - 1
-                            LoadWeeklyReports()
-                        Else
-                            lastRowIndex = 0
-                            Me.DataContext = Nothing
-                        End If
-
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._Last)
-                    pagingPageIndex = (lstWeekRange.Length / pagingRecordPerPage)
-                    SetPaging(CInt(PagingMode._Next))
-                    Exit Select
-            End Select
-
-            DisplayPagingInfo()
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-    End Sub
-
     Private Sub DisplayPagingInfo()
         Dim pagingInfo As String
 
@@ -228,8 +286,35 @@ Class WeeklyReportPage
             'GUISettingsOn()
         End If
 
+    End Sub
+#End Region
+
+#Region "Events"
+    Private Sub cbMonth_DropDownClosed(sender As Object, e As EventArgs) Handles cbMonth.DropDownClosed
+        month = cbMonth.SelectedValue
+        SetWeeklyReports()
+    End Sub
+
+    Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
+        year = cbYear.SelectedValue
+        SetWeeklyReports()
+    End Sub
+
+    Private Sub tcWeeklyReports_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles tcWeeklyReports.SelectionChanged
 
     End Sub
+#End Region
+
+#Region "Functions"
+    Private Function getStatusValue(key As Integer) As String
+        Dim value = listWeeklyReportStatus.Where(Function(x) x.Key = key).FirstOrDefault()
+
+        If value Is Nothing Then
+            Return ""
+        Else
+            Return listWeeklyReportStatus.Where(Function(x) x.Key = key).First().Value
+        End If
+    End Function
 #End Region
 
 #Region "ICallBack Function"

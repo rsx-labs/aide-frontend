@@ -25,18 +25,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="DashboardGetNonBillableHours">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="DashboardGetNonBillableHoursResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="DashboardGetNonBillableHoursResult" nillable="true" type="q3:ArrayOfDashboardNonBillableHours" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="DashboardGetNonBillableHoursSummary">
     <xs:complexType>
       <xs:sequence />
@@ -45,7 +33,7 @@
   <xs:element name="DashboardGetNonBillableHoursSummaryResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="DashboardGetNonBillableHoursSummaryResult" nillable="true" type="q4:ArrayOfDashboardNonBillableHoursSummary" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="DashboardGetNonBillableHoursSummaryResult" nillable="true" type="q3:ArrayOfDashboardNonBillableHoursSummary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -57,7 +45,7 @@
   <xs:element name="DashboardGetTeamAttendanceResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="DashboardGetTeamAttendanceResult" nillable="true" type="q5:ArrayOfDashboardTeamAttendance" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="DashboardGetTeamAttendanceResult" nillable="true" type="q4:ArrayOfDashboardTeamAttendance" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -69,7 +57,7 @@
   <xs:element name="DashboardGetResourcePlannerResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="DashboardGetResourcePlannerResult" nillable="true" type="q6:ArrayOfAttendanceSummary" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="DashboardGetResourcePlannerResult" nillable="true" type="q5:ArrayOfAttendanceSummary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -84,7 +72,7 @@
   <xs:element name="DashboardGetTaskSummaryResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="DashboardGetTaskSummaryResult" nillable="true" type="q7:ArrayOfTaskSummary" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="DashboardGetTaskSummaryResult" nillable="true" type="q6:ArrayOfTaskSummary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -99,25 +87,11 @@
   <xs:element name="DashboardGetTaskSummaryTotalsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="DashboardGetTaskSummaryTotalsResult" nillable="true" type="q8:ArrayOfDashboardTaskSummaryTotals" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="DashboardGetTaskSummaryTotalsResult" nillable="true" type="q7:ArrayOfDashboardTaskSummaryTotals" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetWeeklyReportsByEmpID">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="empID" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetWeeklyReportsByEmpIDResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetWeeklyReportsByEmpIDResult" nillable="true" type="q9:ArrayOfWeekRange" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetWeeklyReportsByWeekRangeID">
+  <xs:element name="GetTasksDataByEmpID">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="weekRangeID" type="xs:int" />
@@ -125,17 +99,32 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetWeeklyReportsByWeekRangeIDResponse">
+  <xs:element name="GetTasksDataByEmpIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetWeeklyReportsByWeekRangeIDResult" nillable="true" type="q10:ArrayOfWeeklyReport" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetTasksDataByEmpIDResult" nillable="true" type="q8:ArrayOfWeeklyReport" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMissingReportsByEmpID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="empID" type="xs:int" />
+        <xs:element minOccurs="0" name="currentDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMissingReportsByEmpIDResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetMissingReportsByEmpIDResult" nillable="true" type="q9:ArrayOfContactList" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="InsertAuditSched">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="auditSched" nillable="true" type="q11:AuditSched" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="auditSched" nillable="true" type="q10:AuditSched" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -150,14 +139,14 @@
   <xs:element name="GetAuditSchedResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAuditSchedResult" nillable="true" type="q12:ArrayOfAuditSched" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAuditSchedResult" nillable="true" type="q11:ArrayOfAuditSched" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateAuditSched">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="auditSched" nillable="true" type="q13:AuditSched" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="auditSched" nillable="true" type="q12:AuditSched" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -171,7 +160,7 @@
   <xs:element name="GetWorkEmailbyEmailResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetWorkEmailbyEmailResult" nillable="true" type="q14:SendCode" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetWorkEmailbyEmailResult" nillable="true" type="q13:SendCode" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -183,14 +172,14 @@
   <xs:element name="GetMailConfigResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetMailConfigResult" nillable="true" type="q15:MailConfig" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetMailConfigResult" nillable="true" type="q14:MailConfig" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="InsertAuditDaily">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="auditSched" nillable="true" type="q16:WorkplaceAudit" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="auditSched" nillable="true" type="q15:WorkplaceAudit" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -205,7 +194,7 @@
   <xs:element name="GetAuditDailyResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAuditDailyResult" nillable="true" type="q17:ArrayOfWorkplaceAudit" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAuditDailyResult" nillable="true" type="q16:ArrayOfWorkplaceAudit" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -220,7 +209,7 @@
   <xs:element name="GetAuditQuestionsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAuditQuestionsResult" nillable="true" type="q18:ArrayOfWorkplaceAudit" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAuditQuestionsResult" nillable="true" type="q17:ArrayOfWorkplaceAudit" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -234,7 +223,7 @@
   <xs:element name="GetAllContributorsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAllContributorsResult" nillable="true" type="q19:ArrayOfContributors" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAllContributorsResult" nillable="true" type="q18:ArrayOfContributors" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -249,14 +238,7 @@
   <xs:element name="GetMessageResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetMessageResult" nillable="true" type="q20:ArrayOfMessageDetail" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="CreateNewSuccessRegister">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="success" nillable="true" type="q21:SuccessRegister" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetMessageResult" nillable="true" type="q19:ArrayOfMessageDetail" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -270,7 +252,7 @@
   <xs:element name="ViewSuccessRegisterByEmpIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewSuccessRegisterByEmpIDResult" nillable="true" type="q22:ArrayOfSuccessRegister" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewSuccessRegisterByEmpIDResult" nillable="true" type="q20:ArrayOfSuccessRegister" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -285,7 +267,7 @@
   <xs:element name="ViewSuccessRegisterBySearchResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewSuccessRegisterBySearchResult" nillable="true" type="q23:ArrayOfSuccessRegister" />
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewSuccessRegisterBySearchResult" nillable="true" type="q21:ArrayOfSuccessRegister" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -299,7 +281,7 @@
   <xs:element name="ViewSuccessRegisterAllResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewSuccessRegisterAllResult" nillable="true" type="q24:ArrayOfSuccessRegister" />
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewSuccessRegisterAllResult" nillable="true" type="q22:ArrayOfSuccessRegister" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -314,14 +296,14 @@
   <xs:element name="ViewNicknameByDeptIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewNicknameByDeptIDResult" nillable="true" type="q25:ArrayOfNickname" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewNicknameByDeptIDResult" nillable="true" type="q23:ArrayOfNickname" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateSuccessRegisterByEmpID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="success" nillable="true" type="q26:SuccessRegister" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="success" nillable="true" type="q24:SuccessRegister" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -342,7 +324,7 @@
   <xs:element name="SignOnResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="SignOnResult" nillable="true" type="q27:Profile" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="SignOnResult" nillable="true" type="q25:Profile" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -371,14 +353,14 @@
   <xs:element name="ViewContactListAllResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewContactListAllResult" nillable="true" type="q28:ArrayOfContactList" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewContactListAllResult" nillable="true" type="q26:ArrayOfContactList" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateContactListByEmpID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="contact" nillable="true" type="q29:ContactList" />
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="contact" nillable="true" type="q27:ContactList" />
         <xs:element minOccurs="0" name="selection" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -386,7 +368,7 @@
   <xs:element name="CreateNewContactByEmpID">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="contact" nillable="true" type="q30:ContactList" />
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="contact" nillable="true" type="q28:ContactList" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -400,7 +382,7 @@
   <xs:element name="ViewBirthdayListAllResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewBirthdayListAllResult" nillable="true" type="q31:ArrayOfBirthdayList" />
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewBirthdayListAllResult" nillable="true" type="q29:ArrayOfBirthdayList" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -414,7 +396,7 @@
   <xs:element name="ViewBirthdayListByCurrentMonthResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewBirthdayListByCurrentMonthResult" nillable="true" type="q32:ArrayOfBirthdayList" />
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewBirthdayListByCurrentMonthResult" nillable="true" type="q30:ArrayOfBirthdayList" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -428,7 +410,7 @@
   <xs:element name="ViewBirthdayListByCurrentDayResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewBirthdayListByCurrentDayResult" nillable="true" type="q33:ArrayOfBirthdayList" />
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewBirthdayListByCurrentDayResult" nillable="true" type="q31:ArrayOfBirthdayList" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -444,14 +426,14 @@
   <xs:element name="selectAllConcernResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="selectAllConcernResult" nillable="true" type="q34:ArrayOfConcern" />
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="selectAllConcernResult" nillable="true" type="q32:ArrayOfConcern" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="InsertIntoConcern">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="concern" nillable="true" type="q35:Concern" />
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="concern" nillable="true" type="q33:Concern" />
         <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -464,7 +446,7 @@
   <xs:element name="GetGeneratedRefNoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetGeneratedRefNoResult" nillable="true" type="q36:Concern" />
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetGeneratedRefNoResult" nillable="true" type="q34:Concern" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -481,7 +463,7 @@
   <xs:element name="GetResultSearchResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetResultSearchResult" nillable="true" type="q37:ArrayOfConcern" />
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetResultSearchResult" nillable="true" type="q35:ArrayOfConcern" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -496,7 +478,7 @@
   <xs:element name="GetListOfACtionResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetListOfACtionResult" nillable="true" type="q38:ArrayOfConcern" />
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetListOfACtionResult" nillable="true" type="q36:ArrayOfConcern" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -510,21 +492,21 @@
   <xs:element name="GetListOfACtionsReferencesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetListOfACtionsReferencesResult" nillable="true" type="q39:ArrayOfConcern" />
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetListOfACtionsReferencesResult" nillable="true" type="q37:ArrayOfConcern" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="insertAndDeleteSelectedAction">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="concern" nillable="true" type="q40:Concern" />
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="concern" nillable="true" type="q38:Concern" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateSelectedConcern">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="concern" nillable="true" type="q41:Concern" />
+        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="concern" nillable="true" type="q39:Concern" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -542,7 +524,7 @@
   <xs:element name="GetBetweenSearchConcernResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetBetweenSearchConcernResult" nillable="true" type="q42:ArrayOfConcern" />
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetBetweenSearchConcernResult" nillable="true" type="q40:ArrayOfConcern" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -558,7 +540,7 @@
   <xs:element name="GetSearchActionResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetSearchActionResult" nillable="true" type="q43:ArrayOfConcern" />
+        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetSearchActionResult" nillable="true" type="q41:ArrayOfConcern" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -570,28 +552,28 @@
   <xs:element name="GetSkillsListResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetSkillsListResult" nillable="true" type="q44:ArrayOfSkills" />
+        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetSkillsListResult" nillable="true" type="q42:ArrayOfSkills" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="InsertNewSkills">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="skills" nillable="true" type="q45:Skills" />
+        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="skills" nillable="true" type="q43:Skills" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateSkills">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="skills" nillable="true" type="q46:Skills" />
+        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="skills" nillable="true" type="q44:Skills" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateAllSkills">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="skills" nillable="true" type="q47:Skills" />
+        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="skills" nillable="true" type="q45:Skills" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -605,7 +587,7 @@
   <xs:element name="ViewEmpSKillsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewEmpSKillsResult" nillable="true" type="q48:ArrayOfSkills" />
+        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewEmpSKillsResult" nillable="true" type="q46:ArrayOfSkills" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -620,7 +602,7 @@
   <xs:element name="GetProfLvlByEmpIDSkillIDsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetProfLvlByEmpIDSkillIDsResult" nillable="true" type="q49:Skills" />
+        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetProfLvlByEmpIDSkillIDsResult" nillable="true" type="q47:Skills" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -634,7 +616,7 @@
   <xs:element name="GetSkillsProfByEmpIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetSkillsProfByEmpIDResult" nillable="true" type="q50:ArrayOfSkills" />
+        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetSkillsProfByEmpIDResult" nillable="true" type="q48:ArrayOfSkills" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -649,21 +631,21 @@
   <xs:element name="GetSkillsLastReviewByEmpIDSkillIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetSkillsLastReviewByEmpIDSkillIDResult" nillable="true" type="q51:Skills" />
+        <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetSkillsLastReviewByEmpIDSkillIDResult" nillable="true" type="q49:Skills" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateResourcePlanner">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="resource" nillable="true" type="q52:ResourcePlanner" />
+        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="resource" nillable="true" type="q50:ResourcePlanner" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="InsertResourcePlanner">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="resource" nillable="true" type="q53:ResourcePlanner" />
+        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="resource" nillable="true" type="q51:ResourcePlanner" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -677,7 +659,7 @@
   <xs:element name="ViewEmpResourcePlannerResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q54="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewEmpResourcePlannerResult" nillable="true" type="q54:ArrayOfResourcePlanner" />
+        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="ViewEmpResourcePlannerResult" nillable="true" type="q52:ArrayOfResourcePlanner" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -689,7 +671,7 @@
   <xs:element name="GetStatusResourcePlannerResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q55="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetStatusResourcePlannerResult" nillable="true" type="q55:ArrayOfResourcePlanner" />
+        <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetStatusResourcePlannerResult" nillable="true" type="q53:ArrayOfResourcePlanner" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -706,7 +688,7 @@
   <xs:element name="GetResourcePlannerByEmpIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q56="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetResourcePlannerByEmpIDResult" nillable="true" type="q56:ArrayOfResourcePlanner" />
+        <xs:element xmlns:q54="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetResourcePlannerByEmpIDResult" nillable="true" type="q54:ArrayOfResourcePlanner" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -722,7 +704,7 @@
   <xs:element name="GetAllEmpResourcePlannerResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q57="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAllEmpResourcePlannerResult" nillable="true" type="q57:ArrayOfResourcePlanner" />
+        <xs:element xmlns:q55="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAllEmpResourcePlannerResult" nillable="true" type="q55:ArrayOfResourcePlanner" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -739,7 +721,7 @@
   <xs:element name="GetAllEmpResourcePlannerByStatusResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q58="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAllEmpResourcePlannerByStatusResult" nillable="true" type="q58:ArrayOfResourcePlanner" />
+        <xs:element xmlns:q56="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAllEmpResourcePlannerByStatusResult" nillable="true" type="q56:ArrayOfResourcePlanner" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -751,7 +733,7 @@
   <xs:element name="GetAllStatusResourcePlannerResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q59="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAllStatusResourcePlannerResult" nillable="true" type="q59:ArrayOfResourcePlanner" />
+        <xs:element xmlns:q57="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAllStatusResourcePlannerResult" nillable="true" type="q57:ArrayOfResourcePlanner" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -768,38 +750,7 @@
   <xs:element name="GetResourcePlannerResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q60="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetResourcePlannerResult" nillable="true" type="q60:ArrayOfResourcePlanner" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetBillableHoursByMonth">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="empID" type="xs:int" />
-        <xs:element minOccurs="0" name="month" type="xs:int" />
-        <xs:element minOccurs="0" name="year" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetBillableHoursByMonthResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q61="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetBillableHoursByMonthResult" nillable="true" type="q61:ArrayOfResourcePlanner" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetBillableHoursByWeek">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="empID" type="xs:int" />
-        <xs:element minOccurs="0" name="currentDate" type="xs:dateTime" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetBillableHoursByWeekResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q62="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetBillableHoursByWeekResult" nillable="true" type="q62:ArrayOfResourcePlanner" />
+        <xs:element xmlns:q58="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetResourcePlannerResult" nillable="true" type="q58:ArrayOfResourcePlanner" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -816,14 +767,14 @@
   <xs:element name="GetNonBillableHoursResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q63="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetNonBillableHoursResult" nillable="true" type="q63:ArrayOfResourcePlanner" />
+        <xs:element xmlns:q59="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetNonBillableHoursResult" nillable="true" type="q59:ArrayOfResourcePlanner" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="InsertAnnouncements">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q64="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="announcements" nillable="true" type="q64:Announcements" />
+        <xs:element xmlns:q60="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="announcements" nillable="true" type="q60:Announcements" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -837,14 +788,14 @@
   <xs:element name="GetAnnouncementsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q65="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAnnouncementsResult" nillable="true" type="q65:ArrayOfAnnouncements" />
+        <xs:element xmlns:q61="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAnnouncementsResult" nillable="true" type="q61:ArrayOfAnnouncements" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateAnnouncements">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q66="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="announcements" nillable="true" type="q66:Announcements" />
+        <xs:element xmlns:q62="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="announcements" nillable="true" type="q62:Announcements" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -861,7 +812,7 @@
   <xs:element name="GetLateResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q67="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetLateResult" nillable="true" type="q67:ArrayOfLate" />
+        <xs:element xmlns:q63="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetLateResult" nillable="true" type="q63:ArrayOfLate" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -875,7 +826,7 @@
   <xs:element name="GetAllSabaCoursesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q68="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAllSabaCoursesResult" nillable="true" type="q68:ArrayOfSabaLearning" />
+        <xs:element xmlns:q64="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAllSabaCoursesResult" nillable="true" type="q64:ArrayOfSabaLearning" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -890,14 +841,14 @@
   <xs:element name="GetAllSabaXrefResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q69="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAllSabaXrefResult" nillable="true" type="q69:ArrayOfSabaLearning" />
+        <xs:element xmlns:q65="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAllSabaXrefResult" nillable="true" type="q65:ArrayOfSabaLearning" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="InsertSabaCourses">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q70="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="obj" nillable="true" type="q70:SabaLearning" />
+        <xs:element xmlns:q66="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="obj" nillable="true" type="q66:SabaLearning" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -909,7 +860,7 @@
   <xs:element name="UpdateSabaCourses">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q71="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="obj" nillable="true" type="q71:SabaLearning" />
+        <xs:element xmlns:q67="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="obj" nillable="true" type="q67:SabaLearning" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -921,7 +872,7 @@
   <xs:element name="UpdateSabaXref">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q72="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="obj" nillable="true" type="q72:SabaLearning" />
+        <xs:element xmlns:q68="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="obj" nillable="true" type="q68:SabaLearning" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -941,14 +892,14 @@
   <xs:element name="GetAllSabaCourseByTitleResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q73="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAllSabaCourseByTitleResult" nillable="true" type="q73:ArrayOfSabaLearning" />
+        <xs:element xmlns:q69="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAllSabaCourseByTitleResult" nillable="true" type="q69:ArrayOfSabaLearning" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="InsertComcellMeeting">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q74="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="comcell" nillable="true" type="q74:Comcell" />
+        <xs:element xmlns:q70="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="comcell" nillable="true" type="q70:Comcell" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -963,14 +914,14 @@
   <xs:element name="GetComcellMeetingResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q75="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetComcellMeetingResult" nillable="true" type="q75:ArrayOfComcell" />
+        <xs:element xmlns:q71="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetComcellMeetingResult" nillable="true" type="q71:ArrayOfComcell" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateComcellMeeting">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q76="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="comcell" nillable="true" type="q76:Comcell" />
+        <xs:element xmlns:q72="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="comcell" nillable="true" type="q72:Comcell" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -984,14 +935,14 @@
   <xs:element name="GetClockTimeByEmployeeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q77="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetClockTimeByEmployeeResult" nillable="true" type="q77:ComcellClock" />
+        <xs:element xmlns:q73="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetClockTimeByEmployeeResult" nillable="true" type="q73:ComcellClock" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateComcellClock">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q78="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="obj" nillable="true" type="q78:ComcellClock" />
+        <xs:element xmlns:q74="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="obj" nillable="true" type="q74:ComcellClock" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1003,21 +954,23 @@
   <xs:element name="CreateWeeklyReport">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q79="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="weeklyReport" nillable="true" type="q79:ArrayOfWeeklyReport" />
+        <xs:element xmlns:q75="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="weeklyReport" nillable="true" type="q75:ArrayOfWeeklyReport" />
+        <xs:element xmlns:q76="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="weeklyReportXref" nillable="true" type="q76:WeekRange" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateWeeklyReport">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q80="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="weeklyReport" nillable="true" type="q80:ArrayOfWeeklyReport" />
+        <xs:element xmlns:q77="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="weeklyReport" nillable="true" type="q77:ArrayOfWeeklyReport" />
+        <xs:element xmlns:q78="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="weeklyReportXref" nillable="true" type="q78:WeekRange" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="CreateWeekRange">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q81="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="weekRange" nillable="true" type="q81:WeekRange" />
+        <xs:element xmlns:q79="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="weekRange" nillable="true" type="q79:WeekRange" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1032,14 +985,61 @@
   <xs:element name="GetWeekRangeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q82="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetWeekRangeResult" nillable="true" type="q82:ArrayOfWeekRange" />
+        <xs:element xmlns:q80="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetWeekRangeResult" nillable="true" type="q80:ArrayOfWeekRange" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWeekRangeByMonthYear">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="empID" type="xs:int" />
+        <xs:element minOccurs="0" name="month" type="xs:int" />
+        <xs:element minOccurs="0" name="year" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWeekRangeByMonthYearResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q81="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetWeekRangeByMonthYearResult" nillable="true" type="q81:ArrayOfWeekRange" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWeeklyReportsByEmpID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="empID" type="xs:int" />
+        <xs:element minOccurs="0" name="month" type="xs:int" />
+        <xs:element minOccurs="0" name="year" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWeeklyReportsByEmpIDResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q82="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetWeeklyReportsByEmpIDResult" nillable="true" type="q82:ArrayOfWeekRange" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWeeklyReportsByWeekRangeID">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="weekRangeID" type="xs:int" />
+        <xs:element minOccurs="0" name="empID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWeeklyReportsByWeekRangeIDResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q83="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetWeeklyReportsByWeekRangeIDResult" nillable="true" type="q83:ArrayOfWeeklyReport" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="InsertActionList">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q83="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="_Action" nillable="true" type="q83:Action" />
+        <xs:element xmlns:q84="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="_Action" nillable="true" type="q84:Action" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1054,7 +1054,7 @@
   <xs:element name="GetActionListByMessageResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q84="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetActionListByMessageResult" nillable="true" type="q84:ArrayOfAction" />
+        <xs:element xmlns:q85="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetActionListByMessageResult" nillable="true" type="q85:ArrayOfAction" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1068,14 +1068,14 @@
   <xs:element name="GetActionSummaryResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q85="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetActionSummaryResult" nillable="true" type="q85:ArrayOfAction" />
+        <xs:element xmlns:q86="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetActionSummaryResult" nillable="true" type="q86:ArrayOfAction" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateActionList">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q86="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="_Action" nillable="true" type="q86:Action" />
+        <xs:element xmlns:q87="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="_Action" nillable="true" type="q87:Action" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1090,7 +1090,7 @@
   <xs:element name="GetMyAttendanceResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q87="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetMyAttendanceResult" nillable="true" type="q87:MyAttendance" />
+        <xs:element xmlns:q88="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetMyAttendanceResult" nillable="true" type="q88:MyAttendance" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1105,14 +1105,14 @@
   <xs:element name="GetAttendanceSummaryResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q88="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAttendanceSummaryResult" nillable="true" type="q88:ArrayOfAttendanceSummary" />
+        <xs:element xmlns:q89="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAttendanceSummaryResult" nillable="true" type="q89:ArrayOfAttendanceSummary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UpdateAttendance">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q89="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="_Attendance" nillable="true" type="q89:AttendanceSummary" />
+        <xs:element xmlns:q90="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="_Attendance" nillable="true" type="q90:AttendanceSummary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1128,7 +1128,7 @@
   <xs:element name="InsertAttendance">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q90="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="_Attendance" nillable="true" type="q90:AttendanceSummary" />
+        <xs:element xmlns:q91="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="_Attendance" nillable="true" type="q91:AttendanceSummary" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1142,7 +1142,7 @@
   <xs:element name="GetAttendanceTodayResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q91="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAttendanceTodayResult" nillable="true" type="q91:ArrayOfMyAttendance" />
+        <xs:element xmlns:q92="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAttendanceTodayResult" nillable="true" type="q92:ArrayOfMyAttendance" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1157,50 +1157,38 @@
   <xs:element name="GetAttendanceTodayBySearchResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q92="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAttendanceTodayBySearchResult" nillable="true" type="q92:ArrayOfMyAttendance" />
+        <xs:element xmlns:q93="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetAttendanceTodayBySearchResult" nillable="true" type="q93:ArrayOfMyAttendance" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetNonBillabilityHoursByEmpID">
+  <xs:element name="GetBillableHoursByMonth">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="EmpID" type="xs:int" />
-        <xs:element minOccurs="0" name="userChoice" type="xs:short" />
+        <xs:element minOccurs="0" name="empID" type="xs:int" />
+        <xs:element minOccurs="0" name="month" type="xs:int" />
+        <xs:element minOccurs="0" name="year" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetNonBillabilityHoursByEmpIDResponse">
+  <xs:element name="GetBillableHoursByMonthResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q93="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetNonBillabilityHoursByEmpIDResult" nillable="true" type="q93:NonBillableHours" />
+        <xs:element xmlns:q94="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetBillableHoursByMonthResult" nillable="true" type="q94:ArrayOfBillableHours" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetNonBillabilityHoursAll">
+  <xs:element name="GetBillableHoursByWeek">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="userChoice" type="xs:short" />
+        <xs:element minOccurs="0" name="empID" type="xs:int" />
+        <xs:element minOccurs="0" name="weekID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetNonBillabilityHoursAllResponse">
+  <xs:element name="GetBillableHoursByWeekResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q94="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetNonBillabilityHoursAllResult" nillable="true" type="q94:ArrayOfNonBillableHours" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetNonBillabilityHoursSummary">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="dateInput" type="xs:dateTime" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetNonBillabilityHoursSummaryResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q95="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetNonBillabilityHoursSummaryResult" nillable="true" type="q95:ArrayOfNonBillableSummary" />
+        <xs:element xmlns:q95="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetBillableHoursByWeekResult" nillable="true" type="q95:ArrayOfBillableHours" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1472,17 +1460,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetTaskDetailByIncidentId">
+  <xs:element name="GetTasksByEmpID">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="id" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetTaskDetailByIncidentIdResponse">
+  <xs:element name="GetTasksByEmpIDResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q119="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetTaskDetailByIncidentIdResult" nillable="true" type="q119:ArrayOfTasks" />
+        <xs:element xmlns:q119="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="GetTasksByEmpIDResult" nillable="true" type="q119:ArrayOfTasks" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1780,6 +1768,13 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q145="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="lesson" nillable="true" type="q145:LessonLearnt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateNewSuccessRegister">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q146="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService" minOccurs="0" name="success" nillable="true" type="q146:SuccessRegister" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

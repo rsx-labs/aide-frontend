@@ -11,8 +11,6 @@ Class WeeklyReportAddPage
 #Region "Fields"
     Private AideServiceClient As ServiceReference1.AideServiceClient
     Private _ProjectViewModel As New ProjectViewModel
-    Private _EmployeeListViewModel As New EmployeeListViewModel
-    Private _employeeList As New ObservableCollection(Of EmployeeModel)
     Public email As String
     Private frame As Frame
     Private addframe As Frame
@@ -27,26 +25,41 @@ Class WeeklyReportAddPage
     Dim reworkID As Integer = 5
     Dim severityID As Integer = 13
 
+    Dim submitStatus As Integer = 3
+    Dim workingStatus As Integer = 1
+
+    Dim listProjects As New ObservableCollection(Of ProjectModel)
+    Dim listReworkStatus As New ObservableCollection(Of ReworkStatusModel)
+    Dim listSeverityStatus As New ObservableCollection(Of SeverityStatusModel)
+    Dim listCategoryStatus As New ObservableCollection(Of CategoryStatusModel)
+    Dim listPhaseStatus As New ObservableCollection(Of PhaseStatusModel)
+    Dim listTaskStatus As New ObservableCollection(Of TaskStatusModel)
+
     Dim lstWeekRange As WeekRange()
     Dim lstWeeklyReportsData As ObservableCollection(Of WeeklyReportModel) = New ObservableCollection(Of WeeklyReportModel)
 
     Dim dateToday As Date = Date.Today
-    Dim dayMonDiff As Integer = Today.DayOfWeek - DayOfWeek.Monday
-    Dim monday As Date = Today.AddDays(-dayMonDiff)
-    Dim lastWeekMonday As Date = monday.AddDays(-7)
+    Dim daySatDiff As Integer = Today.DayOfWeek - DayOfWeek.Saturday
+    Dim saturday As Date = Today.AddDays(-daySatDiff)
+    Dim lastWeekSaturday As Date = saturday.AddDays(-7)
+
+    Dim totalWeeklyHours As Decimal
 #End Region
 
 #Region "Provider Declaration"
     Dim weeklyReportDBProvider As New WeeklyReportDBProvider
+    Dim taskDBProvider As New TaskDBProvider
     Dim projectDBProvider As New ProjectDBProvider
 #End Region
 
 #Region "Model Declaration"
     Dim weeklyReportModel As New WeeklyReportModel
+    Dim taskModel As New TasksModel
 #End Region
 
 #Region "View Model Declarations"
     Dim weeklyReportViewModel As New WeeklyReportViewModel
+    Dim taskViewModel As New TasksViewModel
     Dim weekRangeViewModel As New WeekRangeViewModel
     Dim projectViewModel As New ProjectViewModel
 #End Region
@@ -55,6 +68,7 @@ Class WeeklyReportAddPage
     Public Sub New(_frame As Frame, _empID As Integer, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         ' This call is required by the designer.
         InitializeComponent()
+        InitializeService()
         ' Add any initialization after the InitializeComponent() call.
         email = _email
         Me.frame = _frame
@@ -66,7 +80,7 @@ Class WeeklyReportAddPage
         dgWeeklyReport.ItemsSource = lstWeeklyReportsData
         GenerateWeekRange()
         LoadData()
-        GetPreviousData() ' Get last week data for the tasks that are not completed yet
+        PopulateWeeklyReportData() ' Get data for the tasks that are not completed yet
     End Sub
 
     Private Function InitializeService() As Boolean
@@ -87,7 +101,6 @@ Class WeeklyReportAddPage
 
     Private Sub GenerateWeekRange()
         Try
-            InitializeService()
             Dim weekRange As New WeekRange
             weekRange.StartWeek = Date.Now
             AideServiceClient.CreateWeekRange(weekRange)
@@ -96,56 +109,58 @@ Class WeeklyReportAddPage
         End Try
     End Sub
 
-    Private Sub GetPreviousData()
-        InitializeService()
+    Private Sub PopulateWeeklyReportData()
         Try
-            'Dim lstWeeklyReport As WeeklyReport() = AideServiceClient.GetWeeklyReportsNotCompleted(lastWeekMonday, empID)
-            'For Each objWeeklyReport As WeeklyReport In lstWeeklyReport
-            '    weeklyReportDBProvider.SetWeeklyReportList(objWeeklyReport)
-            'Next
+            Dim lstWeeklyReport As WeeklyReport() = AideServiceClient.GetTasksDataByEmpID(cbDateRange.SelectedValue, empID)
 
-            'For Each weeklyReport As MyWeeklyReport In weeklyReportDBProvider.GetWeeklyReportList()
-            '    lstWeeklyReportsData.Add(New WeeklyReportModel With {
-            '                                .WeekID = weeklyReport.WeekID,
-            '                                .WeekRangeID = weeklyReport.WeekRangeID,
-            '                                .ProjectID = weeklyReport.ProjectID,
-            '                                .ProjectDesc = listProjects.Where(Function(x) x.ProjectID = weeklyReport.ProjectID).First().ProjectName,
-            '                                .Rework = weeklyReport.Rework,
-            '                                .ReworkDesc = getReworkValue(weeklyReport.Rework),
-            '                                .RefID = weeklyReport.RefID,
-            '                                .Subject = weeklyReport.Subject,
-            '                                .Severity = weeklyReport.Severity,
-            '                                .SeverityDesc = getSeverityValue(weeklyReport.Severity),
-            '                                .IncidentType = weeklyReport.IncType,
-            '                                .IncidentDesc = getIncidentValue(weeklyReport.IncType),
-            '                                .EmpID = weeklyReport.EmpID,
-            '                                .Phase = weeklyReport.Phase,
-            '                                .PhaseDesc = getPhaseValue(weeklyReport.Phase),
-            '                                .Status = weeklyReport.Status,
-            '                                .StatusDesc = getStatusValue(weeklyReport.Status),
-            '                                .DateStarted = weeklyReport.DateStarted,
-            '                                .DateTarget = weeklyReport.DateTarget,
-            '                                .DateFinished = weeklyReport.DateFinished,
-            '                                .DateCreated = weeklyReport.DateCreated,
-            '                                .EffortEst = weeklyReport.EffortEst,
-            '                                .ActualEffort = weeklyReport.ActEffort,
-            '                                .ActualEffortWk = weeklyReport.ActEffortWk,
-            '                                .Comments = weeklyReport.Comment,
-            '                                .InboundContacts = weeklyReport.InboundContacts
-            '                             })
-            'Next
+            For Each objWeeklyReport As WeeklyReport In lstWeeklyReport
+                weeklyReportDBProvider.SetWeeklyReportList(objWeeklyReport)
+            Next
+
+            For Each weeklyReport As MyWeeklyReport In weeklyReportDBProvider.GetWeeklyReportList()
+                lstWeeklyReportsData.Add(New WeeklyReportModel With {
+                                            .WeekID = weeklyReport.WeekID,
+                                            .WeekRangeID = weeklyReport.WeekRangeID,
+                                            .ProjectID = weeklyReport.ProjectID,
+                                            .ProjectDesc = listProjects.Where(Function(x) x.ProjectID = weeklyReport.ProjectID).First().ProjectName,
+                                            .Rework = weeklyReport.Rework,
+                                            .ReworkDesc = getReworkValue(weeklyReport.Rework),
+                                            .RefID = weeklyReport.RefID,
+                                            .Subject = weeklyReport.Subject,
+                                            .Severity = weeklyReport.Severity,
+                                            .SeverityDesc = getSeverityValue(weeklyReport.Severity),
+                                            .IncidentType = weeklyReport.IncType,
+                                            .IncidentDesc = getIncidentValue(weeklyReport.IncType),
+                                            .EmpID = weeklyReport.EmpID,
+                                            .Phase = weeklyReport.Phase,
+                                            .PhaseDesc = getPhaseValue(weeklyReport.Phase),
+                                            .Status = weeklyReport.Status,
+                                            .StatusDesc = getStatusValue(weeklyReport.Status),
+                                            .DateStarted = weeklyReport.DateStarted,
+                                            .DateTarget = weeklyReport.DateTarget,
+                                            .DateFinished = weeklyReport.DateFinished,
+                                            .EffortEst = weeklyReport.EffortEst,
+                                            .ActualEffort = weeklyReport.ActEffort,
+                                            .ActualEffortWk = weeklyReport.ActEffortWk,
+                                            .Comments = weeklyReport.Comment,
+                                            .InboundContacts = weeklyReport.InboundContacts
+                                         })
+            Next
+
+            If lstWeeklyReportsData.Count > 0 Then
+                btnSave.IsEnabled = True
+                GetTotalHours()
+            End If
+
         Catch ex As Exception
             AideServiceClient.Abort()
         End Try
     End Sub
 
     Private Sub LoadData()
-        InitializeService()
-
         ' Load Items For Projects
         Try
             Dim lstProjects As Project() = AideServiceClient.GetProjectList(empID)
-            Dim listProjects As New ObservableCollection(Of ProjectModel)
 
             For Each objProjects As Project In lstProjects
                 projectDBProvider.setProjectList(objProjects)
@@ -164,18 +179,17 @@ Class WeeklyReportAddPage
         ' Load Items For Rework Combobox
         Try
             Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(reworkID)
-            Dim listReworkStatus As New ObservableCollection(Of WReworkStatusModel)
 
             For Each objStatus As StatusGroup In lstStatus
-                weeklyReportDBProvider.SetMyReworkStatusList(objStatus)
+                taskDBProvider.SetMyReworkStatusList(objStatus)
             Next
 
-            For Each myStatus As MyWReworkStatusList In weeklyReportDBProvider.GetReworkStatusList()
-                listReworkStatus.Add(New WReworkStatusModel(myStatus))
+            For Each myStatus As MyReworkStatusList In taskDBProvider.GetReworkStatusList()
+                listReworkStatus.Add(New ReworkStatusModel(myStatus))
             Next
 
-            weeklyReportViewModel.ReworkStatusList = listReworkStatus
-            cbRework.DataContext = weeklyReportViewModel
+            taskViewModel.ReworkStatusList = listReworkStatus
+            cbRework.DataContext = taskViewModel
         Catch ex As SystemException
             AideServiceClient.Abort()
         End Try
@@ -183,18 +197,17 @@ Class WeeklyReportAddPage
         ' Load Items For Severity Combobox
         Try
             Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(severityID)
-            Dim listSeverityStatus As New ObservableCollection(Of SeverityStatusModel)
 
             For Each objStatus As StatusGroup In lstStatus
-                weeklyReportDBProvider.SetMySeverityStatusList(objStatus)
+                taskDBProvider.SetMySeverityStatusList(objStatus)
             Next
 
-            For Each myStatus As MySeverityStatusList In weeklyReportDBProvider.GetSeverityStatusList()
+            For Each myStatus As MySeverityStatusList In taskDBProvider.GetSeverityStatusList()
                 listSeverityStatus.Add(New SeverityStatusModel(myStatus))
             Next
 
-            weeklyReportViewModel.SeverityStatusList = listSeverityStatus
-            cbSeverity.DataContext = weeklyReportViewModel
+            taskViewModel.SeverityStatusList = listSeverityStatus
+            cbSeverity.DataContext = taskViewModel
         Catch ex As SystemException
             AideServiceClient.Abort()
         End Try
@@ -202,18 +215,17 @@ Class WeeklyReportAddPage
         ' Load Items For Incident Type Combobox
         Try
             Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(incidentTypeID)
-            Dim listCategoryStatus As New ObservableCollection(Of WCategoryStatusModel)
 
             For Each objStatus As StatusGroup In lstStatus
-                weeklyReportDBProvider.SetMyCategoryStatusList(objStatus)
+                taskDBProvider.SetMyCategoryStatusList(objStatus)
             Next
 
-            For Each myStatus As MyWCategoryStatusList In weeklyReportDBProvider.GetCategoryStatusList()
-                listCategoryStatus.Add(New WCategoryStatusModel(myStatus))
+            For Each myStatus As MyCategoryStatusList In taskDBProvider.GetCategoryStatusList()
+                listCategoryStatus.Add(New CategoryStatusModel(myStatus))
             Next
 
-            weeklyReportViewModel.CategoryStatusList = listCategoryStatus
-            cbIncidentType.DataContext = weeklyReportViewModel
+            taskViewModel.CategoryStatusList = listCategoryStatus
+            cbIncidentType.DataContext = taskViewModel
         Catch ex As SystemException
             AideServiceClient.Abort()
         End Try
@@ -221,18 +233,17 @@ Class WeeklyReportAddPage
         ' Load Items For Phase Status Combobox
         Try
             Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(phaseID)
-            Dim listPhaseStatus As New ObservableCollection(Of WPhaseStatusModel)
 
             For Each objStatus As StatusGroup In lstStatus
-                weeklyReportDBProvider.SetMyPhaseStatusList(objStatus)
+                taskDBProvider.SetMyPhaseStatusList(objStatus)
             Next
 
-            For Each myStatus As MyWPhaseStatusList In weeklyReportDBProvider.GetPhaseStatusList()
-                listPhaseStatus.Add(New WPhaseStatusModel(myStatus))
+            For Each myStatus As MyPhaseStatusList In taskDBProvider.GetPhaseStatusList()
+                listPhaseStatus.Add(New PhaseStatusModel(myStatus))
             Next
 
-            weeklyReportViewModel.PhaseStatusList = listPhaseStatus
-            cbPhase.DataContext = weeklyReportViewModel
+            taskViewModel.PhaseStatusList = listPhaseStatus
+            cbPhase.DataContext = taskViewModel
         Catch ex As SystemException
             AideServiceClient.Abort()
         End Try
@@ -240,18 +251,17 @@ Class WeeklyReportAddPage
         ' Load Items For Task Status Combobox
         Try
             Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(statusID)
-            Dim listTaskStatus As New ObservableCollection(Of WTaskStatusModel)
 
             For Each objStatus As StatusGroup In lstStatus
-                weeklyReportDBProvider.SetMyTaskStatusList(objStatus)
+                taskDBProvider.SetMyTaskStatusList(objStatus)
             Next
 
-            For Each myStatus As MyWTaskStatusList In weeklyReportDBProvider.GetTaskStatusList()
-                listTaskStatus.Add(New WTaskStatusModel(myStatus))
+            For Each myStatus As MyTaskStatusList In taskDBProvider.GetTaskStatusList()
+                listTaskStatus.Add(New TaskStatusModel(myStatus))
             Next
 
-            weeklyReportViewModel.TaskStatusList = listTaskStatus
-            cbStatus.DataContext = weeklyReportViewModel
+            taskViewModel.TaskStatusList = listTaskStatus
+            cbStatus.DataContext = taskViewModel
         Catch ex As SystemException
             AideServiceClient.Abort()
         End Try
@@ -268,7 +278,7 @@ Class WeeklyReportAddPage
             For Each weekRange As MyWeekRange In weeklyReportDBProvider.GetWeekRangeList()
                 listWeekRange.Add(New WeekRangeModel(weekRange))
 
-                If monday = weekRange.StartWeek Then
+                If saturday = weekRange.StartWeek Then
                     selectedValue = weekRange.WeekRangeID
                 End If
             Next
@@ -283,6 +293,20 @@ Class WeeklyReportAddPage
         'If dgWeeklyReport.DataContext Is Nothing Then
         '    dgWeeklyReport.Visibility = Windows.Visibility.Hidden
         'End If
+    End Sub
+
+    Private Sub GetTotalHours()
+        totalWeeklyHours = 0
+
+        For Each reports In lstWeeklyReportsData
+            totalWeeklyHours = totalWeeklyHours + reports.ActualEffortWk
+        Next
+
+        If (totalWeeklyHours >= 40) Then
+            btnSubmit.IsEnabled = True
+        Else
+            btnSubmit.IsEnabled = False
+        End If
     End Sub
 #End Region
 
@@ -316,23 +340,23 @@ Class WeeklyReportAddPage
         End If
     End Sub
 
-    Private Sub cbDateRange_DropDownClosed(sender As Object, e As EventArgs) Handles cbDateRange.DropDownClosed
-        If Not selectedValue = cbDateRange.SelectedValue Then
-            If lstWeeklyReportsData.Count > 0 Then
-                Dim result As Integer = MsgBox("Changing Period Date will delete input data?", MsgBoxStyle.YesNo, "AIDE")
+    'Private Sub cbDateRange_DropDownClosed(sender As Object, e As EventArgs) Handles cbDateRange.DropDownClosed
+    '    If Not selectedValue = cbDateRange.SelectedValue Then
+    '        If lstWeeklyReportsData.Count > 0 Then
+    '            Dim result As Integer = MsgBox("Changing Period Date will delete input data?", MsgBoxStyle.YesNo, "AIDE")
 
-                If result = vbYes Then
-                    selectedValue = cbDateRange.SelectedValue
-                    lstWeeklyReportsData.Clear()
-                    btnSubmit.IsEnabled = False
-                Else
-                    cbDateRange.SelectedValue = selectedValue
-                End If
-            Else
-                selectedValue = cbDateRange.SelectedValue
-            End If
-        End If
-    End Sub
+    '            If result = vbYes Then
+    '                selectedValue = cbDateRange.SelectedValue
+    '                lstWeeklyReportsData.Clear()
+    '                btnSubmit.IsEnabled = False
+    '            Else
+    '                cbDateRange.SelectedValue = selectedValue
+    '            End If
+    '        Else
+    '            selectedValue = cbDateRange.SelectedValue
+    '        End If
+    '    End If
+    'End Sub
 
     Private Sub btnAdd_Click(sender As Object, e As RoutedEventArgs) Handles btnAdd.Click
         Try
@@ -342,7 +366,7 @@ Class WeeklyReportAddPage
 
             If isValidate Then
                 lstWeeklyReportsData.Add(New WeeklyReportModel With {
-                             .WeekRangeID = 1,
+                             .WeekRangeID = cbDateRange.SelectedValue,
                              .EmpID = empID,
                              .ProjectID = cbProject.SelectedValue,
                              .ProjectDesc = cbProject.Text,
@@ -361,16 +385,16 @@ Class WeeklyReportAddPage
                              .DateStarted = dpStartDate.Text,
                              .DateTarget = dpTargetDate.Text,
                              .DateFinished = dpCompletedDate.Text,
-                             .DateCreated = Date.Now,
                              .EffortEst = txtEffortEst.Text,
                              .ActualEffort = txtActualEffort.Text,
                              .ActualEffortWk = txtActualEffortWk.Text,
                              .Comments = txtComments.Text,
                              .InboundContacts = txtInboundContacts.Text})
 
+                GetTotalHours()
                 ClearFields()
                 dgWeeklyReport.SelectedIndex = -1
-                btnSubmit.IsEnabled = True
+
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "AIDE")
@@ -384,10 +408,12 @@ Class WeeklyReportAddPage
         If selectedItem IsNot Nothing Then
             lstWeeklyReportsData.RemoveAt(dgWeeklyReport.SelectedIndex)
             ClearFields()
+            GetTotalHours()
             dgWeeklyReport.SelectedIndex = -1
 
             If lstWeeklyReportsData.Count = 0 Then
                 btnSubmit.IsEnabled = False
+                btnSave.IsEnabled = False
             End If
         End If
     End Sub
@@ -398,6 +424,7 @@ Class WeeklyReportAddPage
         isValidate = ValidateFields(isValidate)
 
         If isValidate Then
+
             lstWeeklyReportsData.Item(dgWeeklyReport.SelectedIndex).ProjectID = cbProject.SelectedValue
             lstWeeklyReportsData.Item(dgWeeklyReport.SelectedIndex).ProjectDesc = cbProject.Text
             lstWeeklyReportsData.Item(dgWeeklyReport.SelectedIndex).Rework = cbRework.SelectedValue
@@ -415,13 +442,13 @@ Class WeeklyReportAddPage
             lstWeeklyReportsData.Item(dgWeeklyReport.SelectedIndex).DateStarted = dpStartDate.Text
             lstWeeklyReportsData.Item(dgWeeklyReport.SelectedIndex).DateTarget = dpTargetDate.Text
             lstWeeklyReportsData.Item(dgWeeklyReport.SelectedIndex).DateFinished = dpCompletedDate.Text
-            lstWeeklyReportsData.Item(dgWeeklyReport.SelectedIndex).DateCreated = Date.Now
             lstWeeklyReportsData.Item(dgWeeklyReport.SelectedIndex).EffortEst = txtEffortEst.Text
             lstWeeklyReportsData.Item(dgWeeklyReport.SelectedIndex).ActualEffort = txtActualEffort.Text
             lstWeeklyReportsData.Item(dgWeeklyReport.SelectedIndex).ActualEffortWk = txtActualEffortWk.Text
             lstWeeklyReportsData.Item(dgWeeklyReport.SelectedIndex).Comments = txtComments.Text
             lstWeeklyReportsData.Item(dgWeeklyReport.SelectedIndex).InboundContacts = txtInboundContacts.Text
 
+            GetTotalHours()
             ClearFields()
             dgWeeklyReport.SelectedIndex = -1
         End If
@@ -435,13 +462,18 @@ Class WeeklyReportAddPage
         If lstWeeklyReportsData.Count > 0 Then
 
             Dim weeklyReport As New List(Of WeeklyReport)
-            Dim totalActualEffortWeek As Decimal
+            Dim weeklyReportXref As New WeekRange
 
             Try
+                weeklyReportXref.WeekRangeID = cbDateRange.SelectedValue
+                weeklyReportXref.EmployeeID = empID
+                weeklyReportXref.Status = submitStatus
+                weeklyReportXref.DateSubmitted = Date.Now
+
                 For Each reports In lstWeeklyReportsData
 
                     Dim objReports As New WeeklyReport
-                    objReports.WeekRangeID = selectedValue
+                    objReports.WeekRangeID = cbDateRange.SelectedValue
                     objReports.EmpID = reports.EmpID
                     objReports.ProjectID = reports.ProjectID
                     objReports.Rework = reports.Rework
@@ -451,7 +483,6 @@ Class WeeklyReportAddPage
                     objReports.IncidentType = reports.IncidentType
                     objReports.Phase = reports.Phase
                     objReports.Status = reports.Status
-                    objReports.DateCreated = reports.DateCreated
                     objReports.EffortEst = reports.EffortEst
                     objReports.ActualEffort = reports.ActualEffort
                     objReports.ActualEffortWk = reports.ActualEffortWk
@@ -473,17 +504,16 @@ Class WeeklyReportAddPage
                         objReports.InboundContacts = reports.InboundContacts
                     End If
 
-                    totalActualEffortWeek = totalActualEffortWeek + objReports.ActualEffortWk
                     weeklyReport.Add(objReports)
                 Next
 
-                If totalActualEffortWeek < 40 Then
-                    MsgBox("Insufficient Actual Effort Hours [Total:" + totalActualEffortWeek.ToString + "]", MsgBoxStyle.Critical, "AIDE")
+                If totalWeeklyHours < 40 Then
+                    MsgBox("Insufficient Actual Effort Hours [Total:" + totalWeeklyHours.ToString + "]", MsgBoxStyle.Critical, "AIDE")
                 Else
                     Dim result As Integer = MsgBox("Submit Weekly Report for the week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
 
                     If result = vbYes Then
-                        AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray)
+                        AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, weeklyReportXref)
                         MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information)
                         ExitPage()
                     End If
@@ -493,6 +523,74 @@ Class WeeklyReportAddPage
                 MsgBox(ex.Message)
             End Try
         End If
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As RoutedEventArgs) Handles btnSave.Click
+        If cbDateRange.SelectedIndex = -1 Then
+            If cbDateRange.SelectedIndex = -1 Then
+                MsgBox("Please select a Date Range", MsgBoxStyle.Critical, "AIDE")
+                cbDateRange.Focus()
+            End If
+        Else
+            If lstWeeklyReportsData.Count > 0 Then
+                Dim weeklyReport As New List(Of WeeklyReport)
+                Dim weeklyReportXref As New WeekRange
+
+                Try
+                    weeklyReportXref.WeekRangeID = cbDateRange.SelectedValue
+                    weeklyReportXref.EmployeeID = empID
+                    weeklyReportXref.Status = workingStatus
+
+                    For Each reports In lstWeeklyReportsData
+                        Dim objReports As New WeeklyReport
+                        objReports.WeekRangeID = cbDateRange.SelectedValue
+                        objReports.EmpID = reports.EmpID
+                        objReports.ProjectID = reports.ProjectID
+                        objReports.Rework = reports.Rework
+                        objReports.ReferenceID = reports.RefID
+                        objReports.Subject = reports.Subject
+                        objReports.Severity = reports.Severity
+                        objReports.IncidentType = reports.IncidentType
+                        objReports.Phase = reports.Phase
+                        objReports.Status = reports.Status
+                        objReports.EffortEst = reports.EffortEst
+                        objReports.ActualEffort = reports.ActualEffort
+                        objReports.ActualEffortWk = reports.ActualEffortWk
+                        objReports.Comments = reports.Comments
+
+                        If reports.DateStarted IsNot String.Empty Then
+                            objReports.DateStarted = reports.DateStarted
+                        End If
+
+                        If reports.DateTarget IsNot String.Empty Then
+                            objReports.DateTarget = reports.DateTarget
+                        End If
+
+                        If reports.DateFinished IsNot String.Empty Then
+                            objReports.DateFinished = reports.DateFinished
+                        End If
+
+                        If reports.InboundContacts IsNot String.Empty Then
+                            objReports.InboundContacts = reports.InboundContacts
+                        End If
+
+                        weeklyReport.Add(objReports)
+                    Next
+
+                    Dim result As Integer = MsgBox("Save Weekly Report for the week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
+
+                    If result = vbYes Then
+                        AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, weeklyReportXref)
+                        MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information)
+                        ExitPage()
+                    End If
+
+                Catch ex As Exception
+                    MsgBox(ex.Message)
+                End Try
+            End If
+        End If
+        
     End Sub
 
     Private Sub DatePicker_Loaded(ByVal sender As Object, ByVal e As RoutedEventArgs)
@@ -505,7 +603,6 @@ Class WeeklyReportAddPage
                     watermark.Content = String.Empty
                     'or set it some value here...
                 End If
-
             End If
         End If
     End Sub
@@ -573,6 +670,56 @@ Class WeeklyReportAddPage
 #End Region
 
 #Region "Functions"
+    Private Function getReworkValue(key As Integer) As String
+        Dim value = listReworkStatus.Where(Function(x) x.Key = key).FirstOrDefault()
+
+        If value Is Nothing Then
+            Return ""
+        Else
+            Return listReworkStatus.Where(Function(x) x.Key = key).First().Value
+        End If
+    End Function
+
+    Private Function getSeverityValue(key As Integer) As String
+        Dim value = listSeverityStatus.Where(Function(x) x.Key = key).FirstOrDefault()
+
+        If value Is Nothing Then
+            Return ""
+        Else
+            Return listSeverityStatus.Where(Function(x) x.Key = key).First().Value
+        End If
+    End Function
+
+    Private Function getIncidentValue(key As Integer) As String
+        Dim value = listCategoryStatus.Where(Function(x) x.Key = key).FirstOrDefault()
+
+        If value Is Nothing Then
+            Return ""
+        Else
+            Return listCategoryStatus.Where(Function(x) x.Key = key).First().Value
+        End If
+    End Function
+
+    Private Function getPhaseValue(key As Integer) As String
+        Dim value = listPhaseStatus.Where(Function(x) x.Key = key).FirstOrDefault()
+
+        If value Is Nothing Then
+            Return ""
+        Else
+            Return listPhaseStatus.Where(Function(x) x.Key = key).First().Value
+        End If
+    End Function
+
+    Private Function getStatusValue(key As Integer) As String
+        Dim value = listTaskStatus.Where(Function(x) x.Key = key).FirstOrDefault()
+
+        If value Is Nothing Then
+            Return ""
+        Else
+            Return listTaskStatus.Where(Function(x) x.Key = key).First().Value
+        End If
+    End Function
+
     Private Function FindVisualChild(Of T)(ByVal depencencyObject As DependencyObject) As T
         If (Not (depencencyObject) Is Nothing) Then
             Dim i As Integer = 0
@@ -592,6 +739,12 @@ Class WeeklyReportAddPage
     End Function
 
     Private Function ValidateFields(isValidate As Boolean)
+        If cbDateRange.SelectedIndex = -1 Then
+            MsgBox("Please select a Date Range", MsgBoxStyle.Critical, "AIDE")
+            cbDateRange.Focus()
+            Return False
+        End If
+
         If cbProject.SelectedIndex = -1 Then
             MsgBox("Please select a Project", MsgBoxStyle.Critical, "AIDE")
             cbProject.Focus()

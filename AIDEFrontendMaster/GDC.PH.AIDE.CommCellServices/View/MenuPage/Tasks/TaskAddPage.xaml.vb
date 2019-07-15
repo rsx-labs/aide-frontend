@@ -6,16 +6,33 @@ Imports UI_AIDE_CommCellServices.ServiceReference1
 Class TaskAddPage
     Implements IAideServiceCallback
 
+#Region "Fields"
     Public frame As Frame
     Public mainWindow As MainWindow
     Public email As String
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
-    Private _empID As Integer
-    Private _ProjectName As String
-    Private _ProjectID As Integer
-    'Public taskList As New TasksModel
+    Private addframe As Frame
+    Private menugrid As Grid
+    Private submenuframe As Frame
+    Private empID As Integer
+    Private ProjectName As String
+    Private ProjectID As Integer
+
+    Dim incidentTypeID As Integer = 2
+    Dim statusID As Integer = 3
+    Dim phaseID As Integer = 4
+    Dim reworkID As Integer = 5
+    Dim severityID As Integer = 13
+
+    Dim tasks As New Tasks
+    Dim client As AideServiceClient
+
+    Dim listProjects As New ObservableCollection(Of ProjectModel)
+    Dim listReworkStatus As New ObservableCollection(Of ReworkStatusModel)
+    Dim listSeverityStatus As New ObservableCollection(Of SeverityStatusModel)
+    Dim listCategoryStatus As New ObservableCollection(Of CategoryStatusModel)
+    Dim listPhaseStatus As New ObservableCollection(Of PhaseStatusModel)
+    Dim listTaskStatus As New ObservableCollection(Of TaskStatusModel)
+#End Region
 
 #Region "Provider Declaration"
     Dim taskDBProvider As New TaskDBProvider
@@ -31,43 +48,41 @@ Class TaskAddPage
     Dim tasksModel As New TasksModel
 #End Region
 
-    Dim tasks As New Tasks
-    Dim client As AideServiceClient
-
-    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, empID As Integer)
+#Region "Constructor"
+    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _empID As Integer)
         InitializeComponent()
         frame = _frame
         email = _email
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
-        Me._empID = empID
+        Me.addframe = _addframe
+        Me.menugrid = _menugrid
+        Me.submenuframe = _submenuframe
+        Me.empID = _empID
         mainWindow = _mainWindow
         btnUpdate.Visibility = Windows.Visibility.Collapsed
         dpStartDate.DisplayDate = Date.Now
         LoadData()
     End Sub
 
-    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _taskList As TasksModel, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, empID As Integer)
+    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _taskList As TasksModel, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _empID As Integer)
         InitializeComponent()
         frame = _frame
         mainWindow = _mainWindow
         email = _email
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
-        Me._empID = empID
+        Me.addframe = _addframe
+        Me.menugrid = _menugrid
+        Me.submenuframe = _submenuframe
+        Me.empID = _empID
         btnCreate.Visibility = Windows.Visibility.Collapsed
-        _ProjectID = _taskList.ProjId
+        ProjectID = _taskList.ProjId
         LoadData()
         tasksViewModel.NewTasks = _taskList
-        Me.DataContext = tasksViewModel
-        GetDataContext(Me.DataContext)
         LoadControlsForUpdate()
         txtTitle.Text = "Update Task"
     End Sub
+#End Region
 
-#Region "Common Methods"
+#Region "Sub Methods"
+
     Private Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
         Try
@@ -79,34 +94,17 @@ Class TaskAddPage
             client.Abort()
         End Try
         Return bInitialize
+
     End Function
-
-    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
-
-    End Sub
-
-    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
-
-    End Sub
-
-    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
-
-    End Sub
-
-    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
-
-    End Sub
-
-    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
-
-    End Sub
-#End Region
-
-#Region "Sub Methods"
 
     Private Sub LoadControlsForUpdate()
         btnCreate.Visibility = Windows.Visibility.Collapsed
-        cboProject.Text = _ProjectName
+        cboProject.Text = ProjectName
+        cbCategory.SelectedValue = tasksViewModel.NewTasks.IncidentType
+        cbPhase.SelectedValue = tasksViewModel.NewTasks.Phase
+        cbRework.SelectedValue = tasksViewModel.NewTasks.Rework
+        cbSeverity.SelectedValue = tasksViewModel.NewTasks.Severity
+        cbStatus.SelectedValue = tasksViewModel.NewTasks.Status
         ''Project.Visibility = Windows.Visibility.Hidden
         'cboProject.IsEnabled = True
         ''Rework.Visibility = Windows.Visibility.Hidden
@@ -125,8 +123,7 @@ Class TaskAddPage
 
         ' Load Items For Category Combobox
         Try
-            Dim lstStatus As StatusGroup() = client.GetStatusList(2)
-            Dim listCategoryStatus As New ObservableCollection(Of CategoryStatusModel)
+            Dim lstStatus As StatusGroup() = client.GetStatusList(incidentTypeID)
 
             For Each objStatus As StatusGroup In lstStatus
                 taskDBProvider.SetMyCategoryStatusList(objStatus)
@@ -141,9 +138,26 @@ Class TaskAddPage
             client.Abort()
         End Try
 
+        ' Load Items For Severity Combobox
+        Try
+            Dim lstStatus As StatusGroup() = client.GetStatusList(severityID)
+
+            For Each objStatus As StatusGroup In lstStatus
+                taskDBProvider.SetMySeverityStatusList(objStatus)
+            Next
+
+            For Each myStatus As MySeverityStatusList In taskDBProvider.GetSeverityStatusList()
+                listSeverityStatus.Add(New SeverityStatusModel(myStatus))
+            Next
+
+            tasksViewModel.SeverityStatusList = listSeverityStatus
+        Catch ex As SystemException
+            client.Abort()
+        End Try
+
         ' Load Items For Task Status Combobox
         Try
-            Dim lstStatus As StatusGroup() = client.GetStatusList(3)
+            Dim lstStatus As StatusGroup() = client.GetStatusList(statusID)
             Dim listTaskStatus As New ObservableCollection(Of TaskStatusModel)
 
             For Each objStatus As StatusGroup In lstStatus
@@ -161,7 +175,7 @@ Class TaskAddPage
 
         ' Load Items For Phase Status Combobox
         Try
-            Dim lstStatus As StatusGroup() = client.GetStatusList(4)
+            Dim lstStatus As StatusGroup() = client.GetStatusList(phaseID)
             Dim listPhaseStatus As New ObservableCollection(Of PhaseStatusModel)
 
             For Each objStatus As StatusGroup In lstStatus
@@ -179,7 +193,7 @@ Class TaskAddPage
 
         ' Load Items For Rework Combobox
         Try
-            Dim lstStatus As StatusGroup() = client.GetStatusList(5)
+            Dim lstStatus As StatusGroup() = client.GetStatusList(reworkID)
             Dim listReworkStatus As New ObservableCollection(Of ReworkStatusModel)
 
             For Each objStatus As StatusGroup In lstStatus
@@ -200,17 +214,15 @@ Class TaskAddPage
 
         ' Load Items For Projects
         Try
-            Dim lstProjects As Project() = client.GetProjectList(_empID)
-            Dim listProjects As New ObservableCollection(Of ProjectModel)
+            Dim lstProjects As Project() = client.GetProjectList(empID)
 
             For Each objProjects As Project In lstProjects
-
                 projectDBProvider.setProjectList(objProjects)
             Next
 
             For Each myProjects As myProjectList In projectDBProvider.getProjectList()
-                If _ProjectID = myProjects.Project_ID Then
-                    _ProjectName = myProjects.Project_Name
+                If ProjectID = myProjects.Project_ID Then
+                    ProjectName = myProjects.Project_Name
                 End If
                 listProjects.Add(New ProjectModel(myProjects))
             Next
@@ -244,11 +256,34 @@ Class TaskAddPage
     Private Function GetDataContext(obj As TasksViewModel) As Boolean
         Try
             tasks.TaskID = obj.NewTasks.TaskId
+
+            If IsNothing(cboProject.SelectedValue) Then
+                tasks.ProjectID = obj.NewTasks.ProjId
+                tasks.ProjectCode = obj.NewTasks.ProjId
+            Else
+                tasks.ProjectID = cboProject.SelectedValue
+                tasks.ProjectCode = cboProject.SelectedValue
+            End If
+
+            tasks.Rework = obj.NewTasks.Rework
+            tasks.ReferenceID = obj.NewTasks.ReferenceID
+            tasks.IncidentDescr = obj.NewTasks.IncDescr
+            tasks.Severity = obj.NewTasks.Severity
+            tasks.IncidentType = obj.NewTasks.IncidentType
             tasks.EmpID = obj.NewTasks.EmpId
-            tasks.IncidentID = obj.NewTasks.IncId
+            tasks.Phase = obj.NewTasks.Phase
+            tasks.Status = obj.NewTasks.Status
+
+            If Not obj.NewTasks.DateStarted.Equals(String.Empty) Then
+                tasks.DateStarted = obj.NewTasks.DateStarted
+            End If
 
             If Not obj.NewTasks.TargetDate.Equals(String.Empty) Then
                 tasks.TargetDate = obj.NewTasks.TargetDate
+            End If
+
+            If Not obj.NewTasks.CompltdDate.Equals(String.Empty) Then
+                tasks.CompletedDate = obj.NewTasks.CompltdDate
             End If
 
             'tasks.DateCreated = Date.Now.ToShortDateString
@@ -258,42 +293,19 @@ Class TaskAddPage
                 tasks.DateCreated = Date.Now.ToShortDateString
             End If
 
-            If Not obj.NewTasks.CompltdDate.Equals(String.Empty) Then
-                tasks.CompletedDate = obj.NewTasks.CompltdDate
-            End If
-
-            If Not obj.NewTasks.DateStarted.Equals(String.Empty) Then
-                tasks.DateStarted = obj.NewTasks.DateStarted
-            End If
-
-            tasks.Status = obj.NewTasks.Status
-
             If Not obj.NewTasks.EffortEst.Equals(String.Empty) Then
                 tasks.EffortEst = obj.NewTasks.EffortEst
             End If
 
-            If Not obj.NewTasks.ActEffortEstWk.Equals(String.Empty) Then
-                tasks.EffortEstWk = obj.NewTasks.ActEffortEstWk
+            If Not obj.NewTasks.ActEffortWk.Equals(String.Empty) Then
+                tasks.ActualEffortWk = obj.NewTasks.ActEffortWk
             End If
 
-            If Not obj.NewTasks.ActEffortEst.Equals(String.Empty) Then
-                tasks.ActualEffortEst = obj.NewTasks.ActEffortEst
+            If Not obj.NewTasks.ActEffort.Equals(String.Empty) Then
+                tasks.ActualEffort = obj.NewTasks.ActEffort
             End If
 
-            tasks.TaskType = obj.NewTasks.TaskType
-            If IsNothing(cboProject.SelectedValue) Then
-                tasks.ProjectID = obj.NewTasks.ProjId
-                tasks.ProjectCode = obj.NewTasks.ProjId
-            Else
-                tasks.ProjectID = cboProject.SelectedValue
-                tasks.ProjectCode = cboProject.SelectedValue
-            End If
-           
-            tasks.Rework = obj.NewTasks.Rework
-            tasks.Phase = obj.NewTasks.Phase
-            tasks.TaskDescr = obj.NewTasks.TaskDescr
-            tasks.IncidentDescr = obj.NewTasks.IncDescr
-            tasks.Remarks = obj.NewTasks.Remarks
+            tasks.Comments = obj.NewTasks.Comments
             tasks.Others1 = obj.NewTasks.Others1
             tasks.Others2 = obj.NewTasks.Others2
             tasks.Others3 = obj.NewTasks.Others3
@@ -305,29 +317,30 @@ Class TaskAddPage
     End Function
 
     Private Sub ClearValues()
-        tasksModel.IncId = Nothing
+        tasksModel.ReferenceID = Nothing
 
         tasksModel.EffortEst = Nothing
-        tasksModel.ActEffortEst = Nothing
-        tasksModel.ActEffortEstWk = Nothing
+        tasksModel.ActEffort = Nothing
+        tasksModel.ActEffortWk = Nothing
 
         tasksModel.DateStarted = Nothing
         tasksModel.TargetDate = Nothing
         tasksModel.CompltdDate = Nothing
 
         tasksModel.IncDescr = Nothing
-        tasksModel.Remarks = Nothing
-        tasksModel.TaskDescr = Nothing
+        tasksModel.Comments = Nothing
 
         tasksModel.Status = Nothing
-        tasksModel.TaskType = Nothing
+        tasksModel.IncidentType = Nothing
         tasksModel.Phase = Nothing
+        tasksModel.Severity = Nothing
+        tasksModel.Rework = Nothing
 
         cboProject.SelectedIndex = -1
     End Sub
 
     Private Function FindMissingFields(obj As TasksViewModel) As Boolean
-        If txtIncID.Text = String.Empty Or
+        If txtRefID.Text = String.Empty Or
            txtIncDescr.Text = String.Empty Or
            cbPhase.Text = String.Empty Or
            cbCategory.Text = String.Empty Or
@@ -375,7 +388,6 @@ Class TaskAddPage
 
                 i = (i + 1)
             Loop
-
         End If
 
         Return Nothing
@@ -397,23 +409,23 @@ Class TaskAddPage
 
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
         If txtTitle.Text = "Update Task" Then
-            frame.Navigate(New TaskListPage(frame, mainWindow, txtEmpID.Text, email, _addframe, _menugrid, _submenuframe))
+            frame.Navigate(New TaskListPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
             frame.IsEnabled = True
             frame.Opacity = 1
-            _menugrid.IsEnabled = True
-            _menugrid.Opacity = 1
-            _submenuframe.IsEnabled = True
-            _submenuframe.Opacity = 1
-            _addframe.Visibility = Visibility.Hidden
+            menugrid.IsEnabled = True
+            menugrid.Opacity = 1
+            submenuframe.IsEnabled = True
+            submenuframe.Opacity = 1
+            addframe.Visibility = Visibility.Hidden
         Else
-            frame.Navigate(New TaskAdminPage(frame, mainWindow, txtEmpID.Text, email, _addframe, _menugrid, _submenuframe))
+            frame.Navigate(New TaskAdminPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
             frame.IsEnabled = True
             frame.Opacity = 1
-            _menugrid.IsEnabled = True
-            _menugrid.Opacity = 1
-            _submenuframe.IsEnabled = True
-            _submenuframe.Opacity = 1
-            _addframe.Visibility = Visibility.Hidden
+            menugrid.IsEnabled = True
+            menugrid.Opacity = 1
+            submenuframe.IsEnabled = True
+            submenuframe.Opacity = 1
+            addframe.Visibility = Visibility.Hidden
         End If
     End Sub
 
@@ -428,14 +440,14 @@ Class TaskAddPage
                             client.CreateTask(tasks)
                             MsgBox("Successfully Created Task", MsgBoxStyle.Information, "AIDE")
                             ClearValues()
-                            frame.Navigate(New TaskAdminPage(frame, mainWindow, txtEmpID.Text, email, _addframe, _menugrid, _submenuframe))
+                            frame.Navigate(New TaskAdminPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
                             frame.IsEnabled = True
                             frame.Opacity = 1
-                            _menugrid.IsEnabled = True
-                            _menugrid.Opacity = 1
-                            _submenuframe.IsEnabled = True
-                            _submenuframe.Opacity = 1
-                            _addframe.Visibility = Visibility.Hidden
+                            menugrid.IsEnabled = True
+                            menugrid.Opacity = 1
+                            submenuframe.IsEnabled = True
+                            submenuframe.Opacity = 1
+                            addframe.Visibility = Visibility.Hidden
                         End If
                     End If
                 End If
@@ -454,14 +466,14 @@ Class TaskAddPage
                         client.UpdateTask(tasks)
                         MsgBox("Successfully Updated", MsgBoxStyle.Information, "AIDE")
                         ClearValues()
-                        frame.Navigate(New TaskListPage(frame, mainWindow, txtEmpID.Text, email, _addframe, _menugrid, _submenuframe))
+                        frame.Navigate(New TaskListPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
                         frame.IsEnabled = True
                         frame.Opacity = 1
-                        _menugrid.IsEnabled = True
-                        _menugrid.Opacity = 1
-                        _submenuframe.IsEnabled = True
-                        _submenuframe.Opacity = 1
-                        _addframe.Visibility = Visibility.Hidden
+                        menugrid.IsEnabled = True
+                        menugrid.Opacity = 1
+                        submenuframe.IsEnabled = True
+                        submenuframe.Opacity = 1
+                        addframe.Visibility = Visibility.Hidden
                     End If
                 End If
             End If
@@ -474,6 +486,28 @@ Class TaskAddPage
         dpTargetDate.DisplayDateStart = dpStartDate.SelectedDate
     End Sub
 
+#End Region
+
+#Region "ICallBack Function"
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
+
+    End Sub
+
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
+
+    End Sub
+
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
+
+    End Sub
+
+    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
+
+    End Sub
+
+    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+
+    End Sub
 #End Region
 
 End Class

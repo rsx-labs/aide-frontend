@@ -48,7 +48,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="15" Background="#FF16ACE4">
+                            <Border x:Name="border" CornerRadius="10" Background="#FF16ACE4">
                                 <ContentPresenter HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
                                                   TextElement.FontWeight="Bold">
@@ -81,7 +81,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="15" Background="#FFE42F2F">
+                            <Border x:Name="border" CornerRadius="10" Background="#FFE42F2F">
                                 <ContentPresenter HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
                                                   TextElement.FontWeight="Bold">
@@ -114,7 +114,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="15" Background="#FF02CB5D">
+                            <Border x:Name="border" CornerRadius="10" Background="#FF02CB5D">
                                 <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           TextElement.FontWeight="Bold">
@@ -669,7 +669,7 @@
                 </Grid.ColumnDefinitions>
                 <Border x:Name="Border" 
                         Grid.ColumnSpan="2"
-                        CornerRadius="15"
+                        CornerRadius="10"
                         Background="White"
                         BorderBrush="Gainsboro"
                         BorderThickness="3" />
@@ -1027,20 +1027,19 @@
         
         <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
             <Grid>
-
-                <Border CornerRadius="2" Background="Transparent">
+                <Border CornerRadius="2" Background="#F0F0F0">
                     <Track Name="PART_Track" IsDirectionReversed="False">
                         <Track.DecreaseRepeatButton>
                             <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageLeftCommand" />
                         </Track.DecreaseRepeatButton>
                         <Track.Thumb>
-                            <Thumb Style="{StaticResource ScrollBarHorizontalThumb}" Margin="0,10,0,0" Background="{StaticResource NormalBrush}" BorderBrush="{StaticResource NormalBorderBrush}" />
+                            <Thumb Style="{StaticResource ScrollBarHorizontalThumb}" Background="{StaticResource NormalBrush}" BorderBrush="{StaticResource NormalBorderBrush}" />
                         </Track.Thumb>
                         <Track.IncreaseRepeatButton>
                             <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageRightCommand" />
                         </Track.IncreaseRepeatButton>
                     </Track>
-                </Border>        
+                </Border>
             </Grid>
         </ControlTemplate>
         
