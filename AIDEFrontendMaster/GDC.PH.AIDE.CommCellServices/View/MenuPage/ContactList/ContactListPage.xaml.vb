@@ -354,7 +354,7 @@ Public Class ContactListPage
                         End If
                     Next
 
-                    If MsgBox("Are you sure to assign " + contactListMod.FULL_NAME + " on your team?", vbYesNo, "Assigned Employee") = vbYes Then
+                    If MsgBox("Are you sure to assign " + contactListMod.FULL_NAME + " on your team?", vbYesNo, "AIDE") = vbYes Then
                         Dim contactList As New ContactList
                         contactList.EmpID = contactListMod.EMP_ID
                         contactList.LAST_NAME = contactListMod.LAST_NAME
@@ -439,7 +439,7 @@ Public Class ContactListPage
                     contactList.DIVISION_ID = contactListMod.DIVISION_ID
                     contactList.OLD_EMP_ID = profile.Emp_ID
 
-                    If MsgBox("Are you sure to assign " + contactListMod.FULL_NAME + " on your team?", vbYesNo, "Assigned Employee") = vbYes Then
+                    If MsgBox("Are you sure to assign " + contactListMod.FULL_NAME + " on your team?", vbYesNo, "AIDE") = vbYes Then
                         contactList.ACTIVE = addFg
                         _AideService.UpdateContactListByEmpID(contactList, 2)
                         paginatedCollection.Clear()

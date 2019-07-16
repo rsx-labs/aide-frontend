@@ -217,10 +217,11 @@ Public Class TaskListPage
                     'SetPaging(PagingMode._First)
                     LoadData()
                 Else
+                    lv_taskList.Visibility = Windows.Visibility.Collapsed
                     lbl_noOT.Visibility = Windows.Visibility.Visible
                     lbl_noOT1.Visibility = Windows.Visibility.Visible
                     lbl_noOT2.Visibility = Windows.Visibility.Visible
-                    lv_taskList.Visibility = Windows.Visibility.Collapsed
+
                     btnNext.Visibility = Windows.Visibility.Collapsed
                     btnPrev.Visibility = Windows.Visibility.Collapsed
                 End If

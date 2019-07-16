@@ -73,7 +73,7 @@
                                         <DataGrid.Columns>
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Name" Width="200" Binding="{Binding FULL_NAME}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Nick Name" Width="200" Binding="{Binding NICK_NAME}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Role" Width="150" Binding="{Binding DESCR}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Role" Width="150" Binding="{Binding POSITION}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Location" Width="100" Binding="{Binding LOCATION}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Email Address" Width="210" Binding="{Binding EMAIL_ADDRESS}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Extension" Width="75" Binding="{Binding LOCAL}" />
