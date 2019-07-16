@@ -30,6 +30,8 @@ Public Class ContactListPage
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
     Dim pagingRecordPerPage As Integer = 10
+    Dim currentPage As Integer
+    Dim lastPage As Integer
 #End Region
 
 #Region "Fields"
@@ -72,7 +74,6 @@ Public Class ContactListPage
 
         'SetData()
         'LoadData()
-        'DisplayPagingInfo()
     End Sub
 
     Public Function InitializeService() As Boolean
@@ -119,7 +120,7 @@ Public Class ContactListPage
 
                 LoadData()
                 totalRecords = lstContacts.Length
-
+                DisplayPagingInfo()
                 ' SetPaging(PagingMode._First)
             End If
         Catch ex As Exception
@@ -150,9 +151,8 @@ Public Class ContactListPage
             Else
                 lv_unapproved.ItemsSource = paginatedCollection
             End If
-            'contactListVM.ContactList = lstContactsList
-            'lv_contacts.ItemsSource = lstContactsList
-            'Me.DataContext = contactListVM
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(lstContacts.Length / pagingRecordPerPage)
             LoadDataForPrint()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
@@ -251,20 +251,20 @@ Public Class ContactListPage
     End Sub
 
     Private Sub DisplayPagingInfo()
-        Dim pagingInfo As String
-
         ' If there has no data found
         If lstContacts.Length = 0 Then
-            pagingInfo = "No Results Found "
+            txtPageNo.Text = "No Results Found "
             GUISettingsOff()
         Else
-            pagingInfo = "Displaying " & startRowIndex + 1 & " to " & lastRowIndex + 1
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
             GUISettingsOn()
         End If
     End Sub
 
     Private Sub GUISettingsOff()
         lv_team.Visibility = Windows.Visibility.Hidden
+        lv_all.Visibility = Windows.Visibility.Hidden
+        lv_unapproved.Visibility = Windows.Visibility.Hidden
 
         btnPrev.IsEnabled = False
         btnNext.IsEnabled = False
@@ -272,6 +272,8 @@ Public Class ContactListPage
 
     Private Sub GUISettingsOn()
         lv_team.Visibility = Windows.Visibility.Visible
+        lv_all.Visibility = Windows.Visibility.Visible
+        lv_unapproved.Visibility = Windows.Visibility.Visible
 
         btnPrev.IsEnabled = True
         btnNext.IsEnabled = True
@@ -505,11 +507,18 @@ Public Class ContactListPage
 
         If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
             paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
         End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
         paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
+        If currentPage > 1 Then
+            currentPage -= 1
+        End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
