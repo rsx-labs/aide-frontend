@@ -330,7 +330,7 @@ Class HomeActionListsPage
         End If
     End Sub
 
-    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
         Dim totalRecords As Integer = lstAction.Length
 
         If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
@@ -341,7 +341,7 @@ Class HomeActionListsPage
         DisplayPagingInfo()
     End Sub
 
-    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
         paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
         If currentPage > 1 Then
             currentPage -= 1
