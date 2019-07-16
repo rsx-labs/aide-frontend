@@ -514,7 +514,7 @@ Class WeeklyReportAddPage
 
                     If result = vbYes Then
                         AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, weeklyReportXref)
-                        MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information)
+                        MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information, "AIDE")
                         ExitPage()
                     End If
                 End If

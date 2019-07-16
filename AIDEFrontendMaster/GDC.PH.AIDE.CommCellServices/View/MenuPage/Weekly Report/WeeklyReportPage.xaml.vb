@@ -21,6 +21,8 @@ Class WeeklyReportPage
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
     Dim pagingRecordPerPage As Integer = 10
+    Dim currentPage As Integer
+    Dim lastPage As Integer
 
     Private Enum PagingMode
         _First = 1
@@ -170,6 +172,7 @@ Class WeeklyReportPage
         Try
             lstMissingReports = AideServiceClient.GetMissingReportsByEmpID(empID, lastWeekSaturday)
             LoadMissingReports()
+            DisplayPagingInfo()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -189,7 +192,8 @@ Class WeeklyReportPage
             Next
 
             dgMissingReports.ItemsSource = missingReportCollection
-
+            currentPage = missingReportCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(lstMissingReports.Length / pagingRecordPerPage)
             lblMissingReportsWeek.Content = lastWeekSaturday.ToShortDateString + " - " + lastWeekFriday.ToShortDateString + " Missing Reports"
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
@@ -265,31 +269,49 @@ Class WeeklyReportPage
 
         If totalRecords >= ((missingReportCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
             missingReportCollection.CurrentPage = missingReportCollection.CurrentPage + 1
+            currentPage = missingReportCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
         End If
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
         missingReportCollection.CurrentPage = missingReportCollection.CurrentPage - 1
+        If currentPage > 1 Then
+            currentPage -= 1
+        End If
+        DisplayPagingInfo()
     End Sub
 #End Region
 
 #Region "Paging"
     Private Sub DisplayPagingInfo()
-        Dim pagingInfo As String
-
         ' If there has no data found
-        If lstWeekRange.Length = 0 Then
-            pagingInfo = "No Results Found "
-            'GUISettingsOff()
+        If lstMissingReports.Length = 0 Then
+            txtPageNo.Text = "No Results Found "
+            GUISettingsOff()
         Else
-            pagingInfo = "Displaying " & startRowIndex + 1 & " to " & lastRowIndex + 1
-            'GUISettingsOn()
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
+            GUISettingsOn()
         End If
-
     End Sub
 #End Region
 
 #Region "Events"
+    Private Sub GUISettingsOff()
+        dgWeeklyReports.Visibility = Windows.Visibility.Hidden
+
+        btnPrev.IsEnabled = False
+        btnNext.IsEnabled = False
+    End Sub
+
+    Private Sub GUISettingsOn()
+        dgWeeklyReports.Visibility = Windows.Visibility.Visible
+
+        btnPrev.IsEnabled = True
+        btnNext.IsEnabled = True
+    End Sub
+
     Private Sub cbMonth_DropDownClosed(sender As Object, e As EventArgs) Handles cbMonth.DropDownClosed
         month = cbMonth.SelectedValue
         SetWeeklyReports()

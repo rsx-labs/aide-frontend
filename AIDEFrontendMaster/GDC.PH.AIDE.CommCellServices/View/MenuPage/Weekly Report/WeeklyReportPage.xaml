@@ -173,7 +173,7 @@
                                                 Style="{DynamicResource ButtonPageBack}" 
                                                 BorderBrush="{x:Null}" >
                                     </Button>
-
+                                    <TextBlock TextWrapping="Wrap" Padding="0" x:Name="txtPageNo" Margin="0,10,0,7" Foreground="DimGray" FontSize="9"/>
                                     <Button Height="30" Width="30"
                                                 x:Name="btnNext" 
                                                 Style="{DynamicResource ButtonPageNext}" 

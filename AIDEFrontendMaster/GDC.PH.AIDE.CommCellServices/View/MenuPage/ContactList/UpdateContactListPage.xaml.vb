@@ -268,39 +268,37 @@ Class UpdateContactListPage
              OrElse contactVM.ContactProfile.EMAIL_ADDRESS = String.Empty OrElse contactVM.ContactProfile.CEL_NO = String.Empty AndAlso contactVM.ContactProfile.LOCATION = String.Empty Then
                 MsgBox("Please Fill Up all the Fields", MsgBoxStyle.Exclamation, "AIDE")
             Else
-                contactList.EmpID = contactVM.ContactProfile.EMP_ID
-                contactList.LAST_NAME = contactVM.ContactProfile.LAST_NAME.ToUpper()
-                contactList.FIRST_NAME = contactVM.ContactProfile.FIRST_NAME.ToUpper()
-                contactList.MIDDLE_NAME = contactVM.ContactProfile.MIDDLE_NAME.ToUpper()
-                contactList.Nick_Name = contactVM.ContactProfile.NICK_NAME.ToUpper()
-                contactList.ACTIVE = contactVM.ContactProfile.ACTIVE
-                contactList.BIRTHDATE = contactVM.ContactProfile.BDATE
-                contactList.POSITION = contactVM.ContactProfile.POSITION
-                contactList.DT_HIRED = contactVM.ContactProfile.DT_HIRED
-                contactList.MARITAL_STATUS = contactVM.ContactProfile.MARITAL_STATUS
-                contactList.IMAGE_PATH = contactVM.ContactProfile.IMAGE_PATH
-                contactList.PERMISSION_GROUP = contactVM.ContactProfile.PERMISSION_GROUP
-                contactList.DEPARTMENT = contactVM.ContactProfile.DEPARTMENT
-                contactList.DIVISION = contactVM.ContactProfile.DIVISION
-                contactList.SHIFT = contactVM.ContactProfile.SHIFT
-                contactList.EMADDRESS = contactVM.ContactProfile.EMAIL_ADDRESS
-                contactList.EMADDRESS2 = contactVM.ContactProfile.EMAIL_ADDRESS2
-                contactList.LOC = contactVM.ContactProfile.LOCATION
-                contactList.CELL_NO = contactVM.ContactProfile.CEL_NO
-                contactList.lOCAL = contactVM.ContactProfile.LOCAL
-                contactList.HOUSEPHONE = contactVM.ContactProfile.HOMEPHONE
-                contactList.OTHERPHONE = contactVM.ContactProfile.OTHER_PHONE
-                contactList.DateReviewed = DateTime.Now.Date
-                contactList.MARITAL_STATUS_ID = contactVM.ContactProfile.MARITAL_STATUS_ID
-                contactList.POSITION_ID = contactVM.ContactProfile.POSITION_ID
-                contactList.PERMISSION_GROUP_ID = contactVM.ContactProfile.PERMISSION_GROUP_ID
-                contactList.DEPARTMENT_ID = contactVM.ContactProfile.DEPARTMENT_ID
-                contactList.DIVISION_ID = contactVM.ContactProfile.DIVISION_ID
-                contactList.OLD_EMP_ID = old_empid
-
-                Dim result As Integer = MsgBox("Are you sure you want to continue?", MsgBoxStyle.Information, "AIDE")
-                If result = 1 Then
+                If MsgBox("Are you sure you want to continue?", vbYesNo, "AIDE") = vbYes Then
                     If InitializeService() Then
+                        contactList.EmpID = contactVM.ContactProfile.EMP_ID
+                        contactList.LAST_NAME = contactVM.ContactProfile.LAST_NAME.ToUpper()
+                        contactList.FIRST_NAME = contactVM.ContactProfile.FIRST_NAME.ToUpper()
+                        contactList.MIDDLE_NAME = contactVM.ContactProfile.MIDDLE_NAME.ToUpper()
+                        contactList.Nick_Name = contactVM.ContactProfile.NICK_NAME.ToUpper()
+                        contactList.ACTIVE = contactVM.ContactProfile.ACTIVE
+                        contactList.BIRTHDATE = contactVM.ContactProfile.BDATE
+                        contactList.POSITION = contactVM.ContactProfile.POSITION
+                        contactList.DT_HIRED = contactVM.ContactProfile.DT_HIRED
+                        contactList.MARITAL_STATUS = contactVM.ContactProfile.MARITAL_STATUS
+                        contactList.IMAGE_PATH = contactVM.ContactProfile.IMAGE_PATH
+                        contactList.PERMISSION_GROUP = contactVM.ContactProfile.PERMISSION_GROUP
+                        contactList.DEPARTMENT = contactVM.ContactProfile.DEPARTMENT
+                        contactList.DIVISION = contactVM.ContactProfile.DIVISION
+                        contactList.SHIFT = contactVM.ContactProfile.SHIFT
+                        contactList.EMADDRESS = contactVM.ContactProfile.EMAIL_ADDRESS
+                        contactList.EMADDRESS2 = contactVM.ContactProfile.EMAIL_ADDRESS2
+                        contactList.LOC = contactVM.ContactProfile.LOCATION
+                        contactList.CELL_NO = contactVM.ContactProfile.CEL_NO
+                        contactList.lOCAL = contactVM.ContactProfile.LOCAL
+                        contactList.HOUSEPHONE = contactVM.ContactProfile.HOMEPHONE
+                        contactList.OTHERPHONE = contactVM.ContactProfile.OTHER_PHONE
+                        contactList.DateReviewed = DateTime.Now.Date
+                        contactList.MARITAL_STATUS_ID = contactVM.ContactProfile.MARITAL_STATUS_ID
+                        contactList.POSITION_ID = contactVM.ContactProfile.POSITION_ID
+                        contactList.PERMISSION_GROUP_ID = contactVM.ContactProfile.PERMISSION_GROUP_ID
+                        contactList.DEPARTMENT_ID = contactVM.ContactProfile.DEPARTMENT_ID
+                        contactList.DIVISION_ID = contactVM.ContactProfile.DIVISION_ID
+                        contactList.OLD_EMP_ID = old_empid
                         client.UpdateContactListByEmpID(contactList, 0)
                         'ClearFields()
                         attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
@@ -321,7 +319,6 @@ Class UpdateContactListPage
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
         End Try
     End Sub
-
 
     Private Sub btnCDelete_Click(sender As Object, e As RoutedEventArgs) Handles btnCDelete.Click
         Try
@@ -361,8 +358,7 @@ Class UpdateContactListPage
                 contactList.DIVISION_ID = contactVM.ContactProfile.DIVISION_ID
                 contactList.OLD_EMP_ID = old_empid
 
-                Dim result As Integer = MsgBox("Are you sure you want to continue? Employee will be deleted.", MsgBoxStyle.Information, "AIDE")
-                If result = 1 Then
+                If MsgBox("Are you sure you want to continue? Employee will be removed from the lists.", vbYesNo, "AIDE") = vbYes Then
                     If InitializeService() Then
                         client.UpdateContactListByEmpID(contactList, 0)
                         'ClearFields()
