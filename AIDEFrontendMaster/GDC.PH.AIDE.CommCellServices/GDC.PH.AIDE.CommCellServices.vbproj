@@ -107,6 +107,7 @@
     <Reference Include="System.ServiceModel">
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Controls.DataVisualization.Toolkit">
       <HintPath>..\..\..\..\Users\Admin\Documents\AIDE Latest Source version 2.1_v2\GDC.PH.AIDE.CommCellServices\GDC.PH.AIDE.CommCellServices\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
     </Reference>
