@@ -159,7 +159,6 @@ Class MainWindow
                 addwindow.ShowDialog()
                 email = addwindow.GetEmail
             Else
-                
                 Environment.Exit(0)
                 Return Nothing
                 Return True
