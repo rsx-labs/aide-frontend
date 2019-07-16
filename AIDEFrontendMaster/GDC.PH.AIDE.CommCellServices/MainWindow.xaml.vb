@@ -155,13 +155,12 @@ Class MainWindow
         Catch ex As Exception
             '    CheckOutlook()
             If MsgBox("Outlook is not running. Do you want to proceed with AIDE without Outlook?", MsgBoxStyle.Critical + vbYesNo, "AIDE") = vbYes Then
-                Environment.Exit(0)
-                Return Nothing
-            Else
                 Dim addwindow As New AddEmailWindow()
                 addwindow.ShowDialog()
                 email = addwindow.GetEmail
-
+            Else
+                Environment.Exit(0)
+                Return Nothing
                 Return True
             End If
         End Try
