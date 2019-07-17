@@ -1182,7 +1182,7 @@
                         </Grid>
                         <Grid Grid.Column="6">
                             <Viewbox Margin="2" HorizontalAlignment="Left">
-                                <TextBlock Text="HOL - Half Official Business Activity" Foreground="DimGray"/>
+                                <TextBlock Text="HOBA - Half Official Business Activity" Foreground="DimGray"/>
                             </Viewbox>
                         </Grid>
                     </Grid>

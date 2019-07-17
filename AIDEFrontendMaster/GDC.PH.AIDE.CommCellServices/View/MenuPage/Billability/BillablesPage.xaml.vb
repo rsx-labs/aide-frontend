@@ -26,8 +26,8 @@ Public Class BillablesPage
     Dim displayOption As Integer = 1 'Weekly is the Default Display Options
 
     Dim selectedValue As Integer
-    Dim totalMonthly As Integer
-    Dim totalWeekly As Integer
+    Dim totalMonthly As Double
+    Dim totalWeekly As Double
 
     Dim dateToday As Date = Date.Today
     Dim daySatDiff As Integer = Today.DayOfWeek - DayOfWeek.Saturday

@@ -278,7 +278,7 @@ Class WeeklyReportAddPage
             For Each weekRange As MyWeekRange In weeklyReportDBProvider.GetWeekRangeList()
                 listWeekRange.Add(New WeekRangeModel(weekRange))
 
-                If saturday = weekRange.StartWeek Then
+                If lastWeekSaturday = weekRange.StartWeek Then
                     selectedValue = weekRange.WeekRangeID
                 End If
             Next
