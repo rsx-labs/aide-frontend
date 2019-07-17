@@ -87,7 +87,6 @@ Class WeeklyReportPage
         LoadYears()
 
         LoadStatusData()
-        dgWeeklyReports.ItemsSource = lstWeeklyReports
         SetWeeklyReports()
         SetMissingReports()
 
