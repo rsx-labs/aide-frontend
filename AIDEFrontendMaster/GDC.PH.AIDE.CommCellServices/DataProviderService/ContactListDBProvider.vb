@@ -56,7 +56,7 @@ Public Class ContactListDBProvider
                 .OTHERPHONE = _contact.OTHERPHONE,
                 .DateReviewed = _contact.DateReviewed,
                 .IsREVIEWED = isReviewed,
-                .FULL_NAME = _contact.FIRST_NAME + " " + _contact.LAST_NAME,
+                .FULL_NAME = _contact.LAST_NAME + ", " + _contact.FIRST_NAME,
                 .MARITAL_STATUS_ID = _contact.MARITAL_STATUS_ID,
                 .POSITION_ID = _contact.POSITION_ID,
                 .PERMISSION_GROUP_ID = _contact.PERMISSION_GROUP_ID,
