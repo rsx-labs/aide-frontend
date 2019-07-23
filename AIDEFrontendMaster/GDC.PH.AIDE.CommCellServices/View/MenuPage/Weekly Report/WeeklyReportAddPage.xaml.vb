@@ -395,6 +395,9 @@ Class WeeklyReportAddPage
                 ClearFields()
                 dgWeeklyReport.SelectedIndex = -1
 
+                If lstWeeklyReportsData.Count > 0 Then
+                    btnSave.IsEnabled = True
+                End If
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "AIDE")
@@ -513,9 +516,11 @@ Class WeeklyReportAddPage
                     Dim result As Integer = MsgBox("Submit Weekly Report for the week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
 
                     If result = vbYes Then
-                        AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, weeklyReportXref)
-                        MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information, "AIDE")
-                        ExitPage()
+                        If InitializeService() Then
+                            AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, weeklyReportXref)
+                            MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information, "AIDE")
+                            ExitPage()
+                        End If
                     End If
                 End If
 
@@ -580,9 +585,11 @@ Class WeeklyReportAddPage
                     Dim result As Integer = MsgBox("Save Weekly Report for the week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
 
                     If result = vbYes Then
-                        AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, weeklyReportXref)
-                        MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information)
-                        ExitPage()
+                        If InitializeService() Then
+                            AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, weeklyReportXref)
+                            MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information)
+                            ExitPage()
+                        End If
                     End If
 
                 Catch ex As Exception

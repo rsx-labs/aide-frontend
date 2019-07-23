@@ -358,6 +358,7 @@ Class TaskAddPage
     '        dpCompltdDate.DisplayDateStart = tasksViewModel.NewTasks.DateStarted
     '    End If
     'End Sub
+
     Private Sub DatePicker_Loaded(ByVal sender As Object, ByVal e As RoutedEventArgs)
         Dim datePicker As DatePicker = CType(sender, DatePicker)
         If (Not (datePicker) Is Nothing) Then
@@ -368,11 +369,8 @@ Class TaskAddPage
                     watermark.Content = String.Empty
                     'or set it some value here...
                 End If
-
             End If
-
         End If
-
     End Sub
 
     Private Function FindVisualChild(Of T)(ByVal depencencyObject As DependencyObject) As T
@@ -393,6 +391,15 @@ Class TaskAddPage
         Return Nothing
     End Function
 
+    Private Sub ExitPage()
+        frame.IsEnabled = True
+        frame.Opacity = 1
+        menugrid.IsEnabled = True
+        menugrid.Opacity = 1
+        submenuframe.IsEnabled = True
+        submenuframe.Opacity = 1
+        addframe.Visibility = Visibility.Hidden
+    End Sub
 #End Region
 
 #Region "Button/Events"
@@ -410,22 +417,10 @@ Class TaskAddPage
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
         If txtTitle.Text = "Update Task" Then
             frame.Navigate(New TaskListPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
-            frame.IsEnabled = True
-            frame.Opacity = 1
-            menugrid.IsEnabled = True
-            menugrid.Opacity = 1
-            submenuframe.IsEnabled = True
-            submenuframe.Opacity = 1
-            addframe.Visibility = Visibility.Hidden
+            ExitPage()
         Else
             frame.Navigate(New TaskAdminPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
-            frame.IsEnabled = True
-            frame.Opacity = 1
-            menugrid.IsEnabled = True
-            menugrid.Opacity = 1
-            submenuframe.IsEnabled = True
-            submenuframe.Opacity = 1
-            addframe.Visibility = Visibility.Hidden
+            ExitPage()
         End If
     End Sub
 
@@ -435,19 +430,13 @@ Class TaskAddPage
                 Dim result As Integer = MsgBox("Are you sure you want to add task?", MsgBoxStyle.YesNo, "AIDE")
 
                 If result = vbYes Then
-                    If Me.InitializeService Then
+                    If InitializeService() Then
                         If GetDataContext(Me.DataContext) Then
                             client.CreateTask(tasks)
                             MsgBox("Successfully Created Task", MsgBoxStyle.Information, "AIDE")
                             ClearValues()
                             frame.Navigate(New TaskAdminPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
-                            frame.IsEnabled = True
-                            frame.Opacity = 1
-                            menugrid.IsEnabled = True
-                            menugrid.Opacity = 1
-                            submenuframe.IsEnabled = True
-                            submenuframe.Opacity = 1
-                            addframe.Visibility = Visibility.Hidden
+                            ExitPage()
                         End If
                     End If
                 End If
@@ -461,19 +450,13 @@ Class TaskAddPage
         Try
             Dim result As Integer = MsgBox("Are you sure you want to Update?", MsgBoxStyle.YesNo, "AIDE")
             If result = vbYes Then
-                If Me.InitializeService Then
+                If InitializeService() Then
                     If GetDataContext(Me.DataContext) Then
                         client.UpdateTask(tasks)
                         MsgBox("Successfully Updated", MsgBoxStyle.Information, "AIDE")
                         ClearValues()
                         frame.Navigate(New TaskListPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
-                        frame.IsEnabled = True
-                        frame.Opacity = 1
-                        menugrid.IsEnabled = True
-                        menugrid.Opacity = 1
-                        submenuframe.IsEnabled = True
-                        submenuframe.Opacity = 1
-                        addframe.Visibility = Visibility.Hidden
+                        ExitPage()
                     End If
                 End If
             End If

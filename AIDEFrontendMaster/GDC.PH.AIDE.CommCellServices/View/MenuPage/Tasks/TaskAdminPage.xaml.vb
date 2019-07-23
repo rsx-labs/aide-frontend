@@ -6,8 +6,6 @@ Imports System.Windows.Xps.Packaging
 Imports System.IO
 Imports System.Printing
 
-
-
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class TaskAdminPage
     Implements IAideServiceCallback
@@ -91,9 +89,6 @@ Class TaskAdminPage
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
 
     End Sub
-
-
-
 #End Region
 
     Dim _outstanding As Integer
@@ -358,4 +353,5 @@ Class TaskAdminPage
     End Sub
 
 #End Region
+
 End Class
