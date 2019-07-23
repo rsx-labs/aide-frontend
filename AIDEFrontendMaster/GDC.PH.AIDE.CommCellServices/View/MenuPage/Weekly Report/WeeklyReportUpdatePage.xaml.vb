@@ -377,6 +377,10 @@ Class WeeklyReportUpdatePage
             GetTotalHours()
             ClearFields()
             dgWeeklyReport.SelectedIndex = -1
+
+            If lstWeeklyReportsData.Count > 0 Then
+                btnSave.IsEnabled = True
+            End If
         End If
     End Sub
 
@@ -487,9 +491,11 @@ Class WeeklyReportUpdatePage
                     Dim result As Integer = MsgBox("Update Weekly Report on week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
 
                     If result = vbYes Then
-                        AideServiceClient.UpdateWeeklyReport(weeklyReport.ToArray, weeklyReportXref)
-                        MsgBox("Weekly Report Successfully Updated!", MsgBoxStyle.Information)
-                        ExitPage()
+                        If InitializeService() Then
+                            AideServiceClient.UpdateWeeklyReport(weeklyReport.ToArray, weeklyReportXref)
+                            MsgBox("Weekly Report Successfully Updated!", MsgBoxStyle.Information)
+                            ExitPage()
+                        End If
                     End If
                 End If
 
@@ -556,9 +562,11 @@ Class WeeklyReportUpdatePage
                     Dim result As Integer = MsgBox("Save Weekly Report for the week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
 
                     If result = vbYes Then
-                        AideServiceClient.UpdateWeeklyReport(weeklyReport.ToArray, weeklyReportXref)
-                        MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information)
-                        ExitPage()
+                        If InitializeService() Then
+                            AideServiceClient.UpdateWeeklyReport(weeklyReport.ToArray, weeklyReportXref)
+                            MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information)
+                            ExitPage()
+                        End If
                     End If
 
                 Catch ex As Exception
