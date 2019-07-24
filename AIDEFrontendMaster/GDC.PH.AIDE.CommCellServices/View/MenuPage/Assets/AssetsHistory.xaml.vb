@@ -74,6 +74,33 @@ Public Class AssetsHistory
             MsgBox("No Records Found!", MsgBoxStyle.Exclamation, "AIDE")
         End If
     End Sub
+
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
+        Dim totalRecords As Integer = lstAssets.Count
+
+        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+            paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+        End If
+        DisplayPagingInfo()
+    End Sub
+
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
+        paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
+        If currentPage > 1 Then
+            currentPage -= 1
+        End If
+        DisplayPagingInfo()
+    End Sub
+
+    Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
+        SetPaging(CInt(PagingMode._First))
+    End Sub
+
+    Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
+        SetPaging(CInt(PagingMode._Last))
+    End Sub
 #End Region
 
 #Region "METHODS"
@@ -245,43 +272,18 @@ Public Class AssetsHistory
     Private Sub GUISettingsOff()
         lv_assetList.Visibility = Windows.Visibility.Hidden
 
-        btnPrev2.IsEnabled = False
-        btnNext2.IsEnabled = False
+        btnPrev.IsEnabled = False
+        btnNext.IsEnabled = False
     End Sub
 
     Private Sub GUISettingsOn()
         lv_assetList.Visibility = Windows.Visibility.Visible
 
-        btnPrev2.IsEnabled = True
-        btnNext2.IsEnabled = True
+        btnPrev.IsEnabled = True
+        btnNext.IsEnabled = True
     End Sub
 
-    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
-        Dim totalRecords As Integer = searchAssets.Count
-
-        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
-            paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
-            currentPage = paginatedCollection.CurrentPage + 1
-            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
-        End If
-        DisplayPagingInfo()
-    End Sub
-
-    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
-        paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
-        If currentPage > 1 Then
-            currentPage -= 1
-        End If
-        DisplayPagingInfo()
-    End Sub
-
-    Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._First))
-    End Sub
-
-    Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Last))
-    End Sub
+    
 #End Region
 
 #Region "ICallBack Function"

@@ -109,7 +109,7 @@ Public Class ContactListPage
             If InitializeService() Then
                 If ContactsTC.SelectedIndex = 0 Then
                     lstContacts = _AideService.ViewContactListAll(email, 0)
-                    btnPrint.Visibility = Windows.Visibility.Hidden
+                    btnPrint.Visibility = Windows.Visibility.Visible
                 ElseIf ContactsTC.SelectedIndex = 1 Then
                     lstContacts = _AideService.ViewContactListAll(email, 1)
                     btnPrint.Visibility = Windows.Visibility.Hidden

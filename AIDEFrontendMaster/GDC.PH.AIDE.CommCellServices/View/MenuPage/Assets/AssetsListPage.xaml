@@ -701,9 +701,9 @@
 
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width=".8*"/>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.4*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
@@ -752,27 +752,19 @@
                 </Grid>
 
                 <Grid Grid.Column="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Grid Grid.Column="0">
-                        <Button Height="auto" Width="auto"  Margin="5"
-                            Name="btnPrev2" Click="btnPrev_Click" Style="{DynamicResource ButtonPageBack}" BorderBrush="{x:Null}" >
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Height="30" Width="30"
+                                x:Name="btnPrev"
+                                Style="{DynamicResource ButtonPageBack}" 
+                                BorderBrush="{x:Null}" >
                         </Button>
-                    </Grid>
-                    
-                    <Grid Grid.Column="1">
-                        <TextBlock TextWrapping="Wrap" Padding="0" x:Name="txtPageNo" Margin="0,10,0,7" Foreground="DimGray" FontSize="9"/>
-                    </Grid>
-                    
-                    <Grid Grid.Column="2">
-                        <Button Height="auto" Width="auto" Margin="5" 
-                                Name="btnNext2" Click="btnNext_Click" Style="{DynamicResource ButtonPageNext}" BorderBrush="{x:Null}">
+                        <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" x:Name="txtPageNo" Margin="5,0,5,0" Foreground="DimGray" FontSize="10"/>
+                        <Button Height="30" Width="30"
+                                x:Name="btnNext" 
+                                Style="{DynamicResource ButtonPageNext}" 
+                                BorderBrush="{x:Null}">
                         </Button>
-                    </Grid>
+                    </StackPanel>
                 </Grid>
                 
                 <Grid Grid.Column="2" >
