@@ -96,7 +96,7 @@ Class InsertContactList
         AddHandler btnCreate.Click, AddressOf btnCreate_Click
     End Sub
     Public Sub textLimits()
-        txtContactCellNo.MaxLength = 15
+        txtContactCellNo.MaxLength = 11
         txtContactHomePhone.MaxLength = 15
         txtContactLocalNumber.MaxLength = 4
         txtContactOtherPhone.MaxLength = 15
