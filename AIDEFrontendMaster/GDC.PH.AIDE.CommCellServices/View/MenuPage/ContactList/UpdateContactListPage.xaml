@@ -35,7 +35,7 @@
 
             <Grid Grid.Row="1" Background="Gray">
                 <Viewbox>
-                    <TextBlock Foreground="White" Margin="10" Text="Please complete all fields."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Foreground="White" Margin="10" Text="Please fillup all mandatory(*) fields."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Viewbox>
             </Grid>
 
@@ -77,7 +77,7 @@
                                             <TextBox IsReadOnly="True" x:Name="txtContactEmpID" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=EMP_ID}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         </Border>
 
-                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter employee ID" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter employee ID *" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -109,7 +109,7 @@
                                             <TextBox x:Name="txtContactFName" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=FIRST_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         </Border>
 
-                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter first name" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter first name *" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -141,7 +141,7 @@
                                             <TextBox x:Name="txtContactLName" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=LAST_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         </Border>
 
-                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter last name" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter last name *" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -207,7 +207,7 @@
                                             <DatePicker PreviewTextInput="NumberValidationTextBox" Style="{DynamicResource styleDatePickerfrom}" Margin="2" x:Name="dtContactBdate" BorderBrush="Transparent" SelectedDate="{Binding Path=BDATE}" FontSize="12"/>
                                         </Border>
 
-                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select birth date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select birth date *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -236,7 +236,7 @@
                                     <Grid Grid.Row="1" Grid.Column="2">
                                         <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactPosition" Text="{Binding Path=POSITION}" SelectedValue="{Binding POSITION_ID}" Margin="5,5,0,5"/>
 
-                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select job position" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select job position *" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -270,7 +270,7 @@
                                             <DatePicker PreviewTextInput="NumberValidationTextBox" Style="{DynamicResource styleDatePickerfrom}" Margin="2" x:Name="dtContactDateHire" SelectedDate="{Binding DT_HIRED}" BorderBrush="Transparent" FontSize="12"/>
                                         </Border>
 
-                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select hire date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select hire date *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -299,7 +299,7 @@
                                     <Grid Grid.Row="2" Grid.Column="1">
                                         <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactMaritalStatus" Text="{Binding Path=MARITAL_STATUS}" SelectedValue="{Binding MARITAL_STATUS_ID}" Margin="5" />
 
-                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Marital Status" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Marital Status *" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -329,7 +329,7 @@
                                     <Grid Grid.Row="2" Grid.Column="2">
                                         <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactGroup" Text="{Binding Path=PERMISSION_GROUP}" Margin="5,5,0,5" SelectedValue="{Binding PERMISSION_GROUP_ID}"/>
 
-                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select permission" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select permission *" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -361,7 +361,7 @@
                                     <Grid Grid.Row="3" Grid.Column="0">
                                         <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactDepartment" Text="{Binding Path=DEPARTMENT}" Margin="0,5,5,5" SelectedValue="{Binding DEPARTMENT_ID}"/>
 
-                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Department" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Department *" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -391,7 +391,7 @@
                                     <Grid Grid.Row="3" Grid.Column="1">
                                         <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactDivision" Text="{Binding Path=DIVISION}" Margin="5" SelectedValue="{Binding DIVISION_ID}"/>
 
-                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Division" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Division *" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -421,7 +421,7 @@
                                     <Grid Grid.Row="3" Grid.Column="2">
                                         <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactShiftStatus" Text="{Binding Path=SHIFT}" Margin="5,5,0,5"/>
 
-                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Work Shift" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Work Shift *" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -483,7 +483,7 @@
                                             <TextBox x:Name="txtContactNickName" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=NICK_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         </Border>
 
-                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter nick name" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter nick name *" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -515,7 +515,7 @@
                                             <TextBox x:Name="txtContactWorkEmail" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=EMAIL_ADDRESS}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         </Border>
 
-                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter work email" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter work email *" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -580,7 +580,7 @@
 
                                         <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactLocation" Text="{Binding Path=LOCATION}" Margin="0,5,5,5"/>
 
-                                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select work location" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select work location *" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                                 <TextBlock.Style>
                                                     <Style TargetType="{x:Type TextBlock}">
                                                         <Setter Property="Visibility" Value="Collapsed"/>
