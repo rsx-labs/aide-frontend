@@ -123,7 +123,7 @@ Class SkillsMatrixManagerPage
             InitializeService()
             _SkillDBProvider.GetSkillList.Clear()
 
-            lstSkills = client.GetSkillsList()
+            lstSkills = client.GetSkillsList(empID)
             Dim skillslist As New ObservableCollection(Of SkillsModel)
 
             For Each objSkill As Skills In lstSkills

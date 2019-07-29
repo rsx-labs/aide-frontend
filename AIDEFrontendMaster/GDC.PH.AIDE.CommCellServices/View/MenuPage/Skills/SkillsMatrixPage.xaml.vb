@@ -147,7 +147,7 @@ Class SkillsMatrixPage
     Public Sub LoadProjectList()
         Try
             InitializeService()
-            Dim lstskill As Skills() = client.GetSkillsList()
+            Dim lstskill As Skills() = client.GetSkillsList(empid)
             Dim skillslist As New ObservableCollection(Of SkillsModel)
 
             For Each objSkill As Skills In lstskill

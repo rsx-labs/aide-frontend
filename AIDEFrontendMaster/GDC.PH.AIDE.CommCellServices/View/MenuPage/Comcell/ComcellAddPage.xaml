@@ -894,7 +894,7 @@
                         </TextBlock>
                     </Grid>
                     <Grid Grid.Row="1">
-                        <ComboBox ItemsSource="{Binding NicknameList}" SelectedValuePath="Nick_Name" DisplayMemberPath="Employee_Name" Style="{DynamicResource StyleComboBox}" x:Name="cbFacilitator" Margin="10,5,5,5"/>
+                        <ComboBox ItemsSource="{Binding NicknameList}" SelectedValuePath="First_Name" DisplayMemberPath="First_Name" Style="{DynamicResource StyleComboBox}" x:Name="cbFacilitator" Margin="10,5,5,5"/>
                         <TextBlock x:Name="txtBlockFacilitator" FontSize="12" IsHitTestVisible="False" Text="Select Facilitator" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -909,7 +909,7 @@
                         </TextBlock>
                     </Grid>
                     <Grid Grid.Row="2">
-                        <ComboBox ItemsSource="{Binding NicknameList}" Style="{DynamicResource StyleComboBox}" SelectedValuePath="Nick_Name" DisplayMemberPath="Employee_Name" x:Name="cbMinTaker" Margin="10,5,5,5"/>
+                        <ComboBox ItemsSource="{Binding NicknameList}" Style="{DynamicResource StyleComboBox}" SelectedValuePath="First_Name" DisplayMemberPath="First_Name" x:Name="cbMinTaker" Margin="10,5,5,5"/>
                         <TextBlock x:Name="txtBlockMinsTaker" FontSize="12" IsHitTestVisible="False" Text="Select Minutes Taker" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">

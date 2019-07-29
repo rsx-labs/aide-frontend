@@ -140,13 +140,13 @@ Public Class AttendanceDashBoard
     End Sub
 
     Public Sub SetCategory(rawUser_ As myAttendanceList)
-        If setStatus = 1 Then
+        If setStatus = 1 Or setStatus = 13 Or setStatus = 14 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\onsite.png"
         ElseIf setStatus = 2 Or setStatus = 11 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\present.png"
         ElseIf setStatus = 3 Or setStatus = 5 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\sick.png"
-        ElseIf setStatus = 4 Or setStatus = 6 Or setStatus = 8 Or setStatus = 9 Or setStatus = 10 Then
+        ElseIf setStatus = 4 Or setStatus = 6 Or setStatus = 8 Or setStatus = 9 Or setStatus = 10 Or setStatus = 12 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\vacation.png"
         End If
     End Sub

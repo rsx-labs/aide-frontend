@@ -166,8 +166,8 @@ Class ComcellAddPage
 
                     comcell.EMP_ID = profile.Emp_ID
                     comcell.MONTH = cbMonth.Text
-                    comcell.FACILITATOR = cbFacilitator.Text
-                    comcell.MINUTES_TAKER = cbMinTaker.Text
+                    comcell.FACILITATOR = cbFacilitator.SelectedValue
+                    comcell.MINUTES_TAKER = cbMinTaker.SelectedValue
                     comcell.YEAR = cbYear.SelectedValue
 
                     aide.InsertComcellMeeting(comcell)
@@ -193,8 +193,8 @@ Class ComcellAddPage
 
                     comcell.COMCELL_ID = comcellID
                     comcell.MONTH = cbMonth.Text
-                    comcell.FACILITATOR = cbFacilitator.Text
-                    comcell.MINUTES_TAKER = cbMinTaker.Text
+                    comcell.FACILITATOR = cbFacilitator.SelectedValue
+                    comcell.MINUTES_TAKER = cbMinTaker.SelectedValue
                     comcell.YEAR = cbYear.SelectedValue
 
                     aide.UpdateComcellMeeting(comcell)
