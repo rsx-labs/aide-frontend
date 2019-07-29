@@ -322,7 +322,11 @@ Class WeeklyReportPage
     End Sub
 
     Private Sub tcWeeklyReports_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles tcWeeklyReports.SelectionChanged
-
+        If tcWeeklyReports.SelectedIndex = 0 Then
+            btnAddReport.Visibility = Windows.Visibility.Visible
+        ElseIf tcWeeklyReports.SelectedIndex = 1 Then
+            btnAddReport.Visibility = Windows.Visibility.Hidden
+        End If
     End Sub
 #End Region
 
