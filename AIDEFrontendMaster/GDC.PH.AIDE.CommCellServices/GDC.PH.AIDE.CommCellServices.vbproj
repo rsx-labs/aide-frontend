@@ -190,6 +190,7 @@
     <Compile Include="DataProviderService\ProjectDBProvider.vb" />
     <Compile Include="DataProviderService\ResourcePlannerDBProvider.vb" />
     <Compile Include="DataProviderService\SabaLearningDBProvider.vb" />
+    <Compile Include="DataProviderService\SelectionListDBProvider.vb" />
     <Compile Include="DataProviderService\SendCodeDBProvider.vb" />
     <Compile Include="DataProviderService\SkillsDBProvider.vb" />
     <Compile Include="DataProviderService\SuccessRegisterDBProvider.vb" />
@@ -222,6 +223,7 @@
     <Compile Include="Model\LessonLearntModel.vb" />
     <Compile Include="Model\MailConfigModel.vb" />
     <Compile Include="Model\MessageModel.vb" />
+    <Compile Include="Model\PositionModel.vb" />
     <Compile Include="Model\ProfileModel.vb" />
     <Compile Include="Model\ProjectModel.vb" />
     <Compile Include="Model\ResourcePlannerModel.vb" />
@@ -264,6 +266,7 @@
     <Compile Include="ViewModel\ProjectViewModel.vb" />
     <Compile Include="ViewModel\ResourcePlannerViewModel.vb" />
     <Compile Include="ViewModel\SabaLearningViewModel.vb" />
+    <Compile Include="ViewModel\SelectionListViewModel.vb" />
     <Compile Include="ViewModel\SendCodeViewModel.vb" />
     <Compile Include="ViewModel\SkillsViewModel.vb" />
     <Compile Include="ViewModel\SuccessRegisterViewModel.vb" />

@@ -110,12 +110,15 @@ Public Class ContactListPage
                 If ContactsTC.SelectedIndex = 0 Then
                     lstContacts = _AideService.ViewContactListAll(email, 0)
                     btnPrint.Visibility = Windows.Visibility.Visible
+                    btnCreate.Visibility = Windows.Visibility.Visible
                 ElseIf ContactsTC.SelectedIndex = 1 Then
                     lstContacts = _AideService.ViewContactListAll(email, 1)
                     btnPrint.Visibility = Windows.Visibility.Hidden
+                    btnCreate.Visibility = Windows.Visibility.Hidden
                 Else
                     lstContacts = _AideService.ViewContactListAll(email, 2)
                     btnPrint.Visibility = Windows.Visibility.Hidden
+                    btnCreate.Visibility = Windows.Visibility.Hidden
                 End If
 
                 LoadData()

@@ -36,7 +36,7 @@
 
                 <Grid Grid.Column="2">
                     <Viewbox Margin="10" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <Button Click="btnCreate_Click" Visibility="Collapsed" Style="{DynamicResource ButtonAdd}" x:Name="btnCreate" BorderBrush="{x:Null}"/>
+                        <Button Click="btnCreate_Click" Style="{DynamicResource ButtonAdd}" x:Name="btnCreate" BorderBrush="{x:Null}"/>
                     </Viewbox>
                 </Grid>
             </Grid>
@@ -77,7 +77,7 @@
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Location" Width="100" Binding="{Binding LOCATION}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Email Address" Width="210" Binding="{Binding EMAIL_ADDRESS}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Extension" Width="75" Binding="{Binding LOCAL}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Work Mobile" Width="100" Binding="{Binding CEL_NO}"  />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Mobile Number" Width="110" Binding="{Binding CEL_NO}"  />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Home Phone" Width="100" Binding="{Binding HOMEPHONE}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Other Phone" Width="100" Binding="{Binding OTHER_PHONE}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Reviewed" Width="110" Binding="{Binding DT_REVIEWED, StringFormat=d}" />

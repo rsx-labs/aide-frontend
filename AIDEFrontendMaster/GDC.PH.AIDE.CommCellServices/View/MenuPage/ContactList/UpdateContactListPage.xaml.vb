@@ -28,43 +28,7 @@ Class UpdateContactListPage
     Dim locationNet As String = ConfigurationManager.AppSettings("locationNet")
     Dim locationDurham As String = ConfigurationManager.AppSettings("locationDurham")
     Dim locationWfh As String = ConfigurationManager.AppSettings("locationWfh")
-    Dim shiftsemi As String = ConfigurationManager.AppSettings("shiftsemi")
-    Dim shiftflex As String = ConfigurationManager.AppSettings("shiftflex")
-    Dim deleteFg As Integer = ConfigurationManager.AppSettings("deleteFg")
-
-    'Marital Status
-    Dim maritalSingleID As String = ConfigurationManager.AppSettings("maritalSingleID")
-    Dim maritalSingleDesc As String = ConfigurationManager.AppSettings("maritalSingleDesc")
-    Dim maritalMarriedID As String = ConfigurationManager.AppSettings("maritalMarriedID")
-    Dim maritalMarriedDesc As String = ConfigurationManager.AppSettings("maritalMarriedDesc")
-
-    'Job Position
-    Dim posManagerID As Integer = ConfigurationManager.AppSettings("posManagerID")
-    Dim posJDeveloperID As Integer = ConfigurationManager.AppSettings("posJDeveloperID")
-    Dim posSDeveloperID As Integer = ConfigurationManager.AppSettings("posSDeveloperID")
-    Dim posMDeveloperID As Integer = ConfigurationManager.AppSettings("posMDeveloperID")
-    Dim posInternID As Integer = ConfigurationManager.AppSettings("posInternID")
-    Dim posManagerDesc As String = ConfigurationManager.AppSettings("posManagerDesc")
-    Dim posJDeveloperDesc As String = ConfigurationManager.AppSettings("posJDeveloperDesc")
-    Dim posSDeveloperDesc As String = ConfigurationManager.AppSettings("posSDeveloperDesc")
-    Dim posMDeveloperDesc As String = ConfigurationManager.AppSettings("posMDeveloperDesc")
-    Dim posInternDesc As String = ConfigurationManager.AppSettings("posInternDesc")
-
-    'Permission Group
-    Dim permManagerID As Integer = ConfigurationManager.AppSettings("permManagerID")
-    Dim permUserLevelID As Integer = ConfigurationManager.AppSettings("permUserLevelID")
-    Dim permManagerDesc As String = ConfigurationManager.AppSettings("permManagerDesc")
-    Dim permUserLevelDesc As String = ConfigurationManager.AppSettings("permUserLevelDesc")
-
-    'Department
-    Dim deptRetailID As Integer = ConfigurationManager.AppSettings("deptRetailID")
-    Dim deptRetailDesc As String = ConfigurationManager.AppSettings("deptRetailDesc")
-
-    'Division
-    Dim divDevID As Integer = ConfigurationManager.AppSettings("divDevID")
-    Dim divQAID As Integer = ConfigurationManager.AppSettings("divQAID")
-    Dim divDevDesc As String = ConfigurationManager.AppSettings("divDevDesc")
-    Dim divQADesc As String = ConfigurationManager.AppSettings("divQADesc")
+    
 #End Region
 
 #Region "Constructors"
@@ -87,6 +51,7 @@ Class UpdateContactListPage
         AssignEvents()
         textLimits()
         LoadAllCB()
+        loadUI(contactModel)
     End Sub
 #End Region
 
@@ -101,12 +66,31 @@ Class UpdateContactListPage
 
     Public Sub LoadAllCB()
         SetLocationCB()
-        SetWorkShiftCB()
-        SetMaritalStatusCB()
-        SetJobPositionCB()
-        SetPermissionGroupCB()
-        SetDepartmentCB()
-        SetDivisionCB()
+        LoadJobPosition()
+        LoadPermission()
+        LoadDepartment()
+        LoadDivision()
+        LoadMaritalStatus()
+        LoadWorkShift()
+    End Sub
+
+    Public Sub loadUI(contactmod As ContactListModel)
+        cbContactPosition.SelectedValue = contactmod.POSITION_ID
+        cbContactPosition.Text = contactmod.POSITION
+
+        cbContactGroup.SelectedValue = contactmod.PERMISSION_GROUP_ID
+        cbContactGroup.Text = contactmod.PERMISSION_GROUP
+
+        cbContactDepartment.SelectedValue = contactmod.DEPARTMENT_ID
+        cbContactDepartment.Text = contactmod.DEPARTMENT
+
+        cbContactDivision.SelectedValue = contactmod.DIVISION_ID
+        cbContactDivision.Text = contactmod.DIVISION
+
+        cbContactMaritalStatus.SelectedValue = contactmod.MARITAL_STATUS_ID
+        cbContactMaritalStatus.Text = contactmod.MARITAL_STATUS
+
+        cbContactShiftStatus.Text = contactmod.SHIFT
     End Sub
     Private Sub ProcessUIAccess()
         If Not GetManagerAuth() Then
@@ -116,7 +100,7 @@ Class UpdateContactListPage
     End Sub
 
     Public Sub textLimits()
-        txtContactCellNo.MaxLength = 15
+        txtContactCellNo.MaxLength = 11
         txtContactHomePhone.MaxLength = 15
         txtContactLocalNumber.MaxLength = 4
         txtContactOtherPhone.MaxLength = 15
@@ -131,50 +115,163 @@ Class UpdateContactListPage
         cbContactLocation.Items.Add(New With {.Text = locationWfh, .Value = locationWfh})
     End Sub
 
-    Public Sub SetWorkShiftCB()
-        cbContactShiftStatus.DisplayMemberPath = "Text"
-        cbContactShiftStatus.SelectedValuePath = "Value"
-        cbContactShiftStatus.Items.Add(New With {.Text = shiftsemi, .Value = shiftsemi})
-        cbContactShiftStatus.Items.Add(New With {.Text = shiftflex, .Value = shiftflex})
+    Public Sub LoadJobPosition()
+        Try
+            If InitializeService() Then
+                Dim lstPosition As PositionList() = client.GetAllPosition()
+                Dim lstPositionList As New ObservableCollection(Of PositionModel)
+                Dim selectionDBProvider As New SelectionListDBProvider
+                Dim selectionListVM As New SelectionListViewModel()
+
+                For Each objposition As PositionList In lstPosition
+                    selectionDBProvider._setlistofPosition(objposition)
+                Next
+
+                For Each rawUser As myPositionSet In selectionDBProvider._getobjPosition()
+                    lstPositionList.Add(New PositionModel(rawUser))
+                Next
+
+                selectionListVM.ObjectPositionSet = lstPositionList
+
+                cbContactPosition.DataContext = selectionListVM
+                cbContactPosition.ItemsSource = selectionListVM.ObjectPositionSet
+
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 
-    Public Sub SetMaritalStatusCB()
-        cbContactMaritalStatus.DisplayMemberPath = "Text"
-        cbContactMaritalStatus.SelectedValuePath = "Value"
-        cbContactMaritalStatus.Items.Add(New With {.Text = maritalSingleDesc, .Value = maritalSingleID})
-        cbContactMaritalStatus.Items.Add(New With {.Text = maritalMarriedDesc, .Value = maritalMarriedID})
+    Public Sub LoadPermission()
+        Try
+            If InitializeService() Then
+                Dim lstPermission As PermissionList() = client.GetAllPermission()
+                Dim lstPermissionList As New ObservableCollection(Of PermissionModel)
+                Dim selectionDBProvider As New SelectionListDBProvider
+                Dim selectionListVM As New SelectionListViewModel()
+
+                For Each objpermission As PermissionList In lstPermission
+                    selectionDBProvider._setlistofPermission(objpermission)
+                Next
+
+                For Each rawUser As myPermissionSet In selectionDBProvider._getobjPermission()
+                    lstPermissionList.Add(New PermissionModel(rawUser))
+                Next
+
+                selectionListVM.ObjectPermissionSet = lstPermissionList
+
+                cbContactGroup.DataContext = selectionListVM
+                cbContactGroup.ItemsSource = selectionListVM.ObjectPermissionSet
+
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 
-    Public Sub SetJobPositionCB()
-        cbContactPosition.DisplayMemberPath = "Text"
-        cbContactPosition.SelectedValuePath = "Value"
-        cbContactPosition.Items.Add(New With {.Text = posManagerDesc, .Value = posManagerID})
-        cbContactPosition.Items.Add(New With {.Text = posJDeveloperDesc, .Value = posJDeveloperID})
-        cbContactPosition.Items.Add(New With {.Text = posSDeveloperDesc, .Value = posSDeveloperID})
-        cbContactPosition.Items.Add(New With {.Text = posMDeveloperDesc, .Value = posMDeveloperID})
-        cbContactPosition.Items.Add(New With {.Text = posInternDesc, .Value = posInternID})
+    Public Sub LoadDepartment()
+        Try
+            If InitializeService() Then
+                Dim lstDepartment As DepartmentList() = client.GetAllDepartment()
+                Dim lstDepartmentList As New ObservableCollection(Of DepartmentModel)
+                Dim selectionDBProvider As New SelectionListDBProvider
+                Dim selectionListVM As New SelectionListViewModel()
+
+                For Each objdepartment As DepartmentList In lstDepartment
+                    selectionDBProvider._setlistofDepartment(objdepartment)
+                Next
+
+                For Each rawUser As myDepartmentSet In selectionDBProvider._getobjDepartment()
+                    lstDepartmentList.Add(New DepartmentModel(rawUser))
+                Next
+
+                selectionListVM.ObjectDepartmentSet = lstDepartmentList
+
+                cbContactDepartment.DataContext = selectionListVM
+                cbContactDepartment.ItemsSource = selectionListVM.ObjectDepartmentSet
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Public Sub LoadDivision()
+        Try
+            If InitializeService() Then
+                Dim lstDivision As DivisionList() = client.GetAllDivision()
+                Dim lstDivisionList As New ObservableCollection(Of DivisionModel)
+                Dim selectionDBProvider As New SelectionListDBProvider
+                Dim selectionListVM As New SelectionListViewModel()
+
+                For Each objdivision As DivisionList In lstDivision
+                    selectionDBProvider._setlistofDivision(objdivision)
+                Next
+
+                For Each rawUser As myDivisionSet In selectionDBProvider._getobjDivision()
+                    lstDivisionList.Add(New DivisionModel(rawUser))
+                Next
+
+                selectionListVM.ObjectDivisionSet = lstDivisionList
+
+                cbContactDivision.DataContext = selectionListVM
+                cbContactDivision.ItemsSource = selectionListVM.ObjectDivisionSet
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 
 
-    Public Sub SetPermissionGroupCB()
-        cbContactGroup.DisplayMemberPath = "Text"
-        cbContactGroup.SelectedValuePath = "Value"
-        cbContactGroup.Items.Add(New With {.Text = permManagerDesc, .Value = permManagerID})
-        cbContactGroup.Items.Add(New With {.Text = permUserLevelDesc, .Value = permUserLevelID})
+    Public Sub LoadMaritalStatus()
+        Try
+            If InitializeService() Then
+                Dim lstMarital As StatusList() = client.GetAllStatus("EMPLOYEE")
+                Dim lstStatusList As New ObservableCollection(Of MaritalModel)
+                Dim selectionDBProvider As New SelectionListDBProvider
+                Dim selectionListVM As New SelectionListViewModel()
+
+                For Each objMarital As StatusList In lstMarital
+                    selectionDBProvider._setlistofStatus(objMarital)
+                Next
+
+                For Each rawUser As myStatusSet In selectionDBProvider._getobjStatus()
+                    lstStatusList.Add(New MaritalModel(rawUser))
+                Next
+
+                selectionListVM.ObjectMaritalSet = lstStatusList
+
+                cbContactMaritalStatus.DataContext = selectionListVM
+                cbContactMaritalStatus.ItemsSource = selectionListVM.ObjectMaritalSet
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 
-    Public Sub SetDepartmentCB()
-        cbContactDepartment.DisplayMemberPath = "Text"
-        cbContactDepartment.SelectedValuePath = "Value"
-        cbContactDepartment.Items.Add(New With {.Text = deptRetailDesc, .Value = deptRetailID})
+    Public Sub LoadWorkShift()
+        Try
+            If InitializeService() Then
+                Dim lstWorkShift As StatusList() = client.GetAllStatus("WORK_SHIFT")
+                Dim lstWorkList As New ObservableCollection(Of WorkShiftModel)
+                Dim selectionDBProvider As New SelectionListDBProvider
+                Dim selectionListVM As New SelectionListViewModel()
 
-    End Sub
+                For Each objWork As StatusList In lstWorkShift
+                    selectionDBProvider._setlistofStatus(objWork)
+                Next
 
-    Public Sub SetDivisionCB()
-        cbContactDivision.DisplayMemberPath = "Text"
-        cbContactDivision.SelectedValuePath = "Value"
-        cbContactDivision.Items.Add(New With {.Text = divDevDesc, .Value = divDevID})
-        cbContactDivision.Items.Add(New With {.Text = divQADesc, .Value = divQAID})
+                For Each rawUser As myStatusSet In selectionDBProvider._getobjStatus()
+                    lstWorkList.Add(New WorkShiftModel(rawUser))
+                Next
+
+                selectionListVM.ObjectWorkShiftSet = lstWorkList
+
+                cbContactShiftStatus.DataContext = selectionListVM
+                cbContactShiftStatus.ItemsSource = selectionListVM.ObjectWorkShiftSet
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
     Private Sub NumberValidationTextBox(ByVal sender As Object, ByVal e As TextCompositionEventArgs)
         Dim regex As Regex = New Regex("[^0-9/]+")
@@ -186,28 +283,6 @@ Class UpdateContactListPage
         AddHandler btnCUpdate.Click, AddressOf btnCUpdate_Click
         AddHandler btnCDelete.Click, AddressOf btnCDelete_Click
     End Sub 'Assign events to buttons
-
-    'Private Sub ClearFields()
-    '    txtCEmpID.Clear()
-    '    txtCCelNo.Clear()
-    '    txtCEmail.Clear()
-    '    txtCEmail2.Clear()
-    '    txtCHome.Clear()
-    '    txtCLocal.Clear()
-    '    cbLocation.Text = String.Empty
-    'End Sub
-
-    'Private Sub LoadData()
-    '    txtCCelNo.Text = contacts.CEL_NO
-    '    txtCEmail.Text = contacts.EMAIL_ADDRESS
-    '    txtCEmail2.Text = contacts.EMAIL_ADDRESS2
-    '    txtCHome.Text = contacts.HOMEPHONE
-    '    txtCOther.Text = contacts.OTHER_PHONE
-    '    txtCEmpID.Text = contacts.EMP_ID
-    '    txtCLocal.Text = contacts.LOCAL
-    '    cbLocation.Text = contacts.LOCATION
-    '    txtCNickName.Text = contacts.NICK_NAME
-    'End Sub
 
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
@@ -260,12 +335,26 @@ Class UpdateContactListPage
 
     Private Sub btnCUpdate_Click(sender As Object, e As RoutedEventArgs) Handles btnCUpdate.Click
         Try
+
             e.Handled = True
             contactVM.ContactProfile = DataContext
             Dim contactList As New ContactList
-            If contactVM.ContactProfile.LAST_NAME = String.Empty OrElse contactVM.ContactProfile.FIRST_NAME = String.Empty OrElse _
-             contactVM.ContactProfile.NICK_NAME = String.Empty OrElse IsNothing(contactVM.ContactProfile.BDATE) OrElse IsNothing(contactVM.ContactProfile.DT_HIRED) _
-             OrElse contactVM.ContactProfile.EMAIL_ADDRESS = String.Empty OrElse contactVM.ContactProfile.CEL_NO = String.Empty AndAlso contactVM.ContactProfile.LOCATION = String.Empty Then
+            If Me.profile.Emp_ID = 0 OrElse _
+                contactVM.ContactProfile.LAST_NAME = String.Empty OrElse _
+                contactVM.ContactProfile.FIRST_NAME = String.Empty OrElse _
+                contactVM.ContactProfile.NICK_NAME = String.Empty OrElse _
+                IsNothing(contactVM.ContactProfile.BDATE) OrElse _
+                IsNothing(contactVM.ContactProfile.DT_HIRED) OrElse _
+                cbContactGroup.SelectedValue = Nothing OrElse _
+                cbContactMaritalStatus.SelectedValue = Nothing OrElse _
+                cbContactPosition.SelectedValue = Nothing OrElse _
+                cbContactShiftStatus.SelectedValue = Nothing OrElse _
+                cbContactDepartment.SelectedValue = Nothing OrElse _
+                cbContactDivision.SelectedValue = Nothing OrElse _
+                contactVM.ContactProfile.EMAIL_ADDRESS = String.Empty OrElse _
+                contactVM.ContactProfile.CEL_NO = String.Empty OrElse _
+                contactVM.ContactProfile.EMAIL_ADDRESS2 = String.Empty OrElse _
+                contactVM.ContactProfile.LOCATION = String.Empty Then
                 MsgBox("Please Fill Up all the Fields", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 If MsgBox("Are you sure you want to continue?", vbYesNo, "AIDE") = vbYes Then
@@ -277,14 +366,8 @@ Class UpdateContactListPage
                         contactList.Nick_Name = contactVM.ContactProfile.NICK_NAME.ToUpper()
                         contactList.ACTIVE = contactVM.ContactProfile.ACTIVE
                         contactList.BIRTHDATE = contactVM.ContactProfile.BDATE
-                        contactList.POSITION = contactVM.ContactProfile.POSITION
                         contactList.DT_HIRED = contactVM.ContactProfile.DT_HIRED
-                        contactList.MARITAL_STATUS = contactVM.ContactProfile.MARITAL_STATUS
                         contactList.IMAGE_PATH = contactVM.ContactProfile.IMAGE_PATH
-                        contactList.PERMISSION_GROUP = contactVM.ContactProfile.PERMISSION_GROUP
-                        contactList.DEPARTMENT = contactVM.ContactProfile.DEPARTMENT
-                        contactList.DIVISION = contactVM.ContactProfile.DIVISION
-                        contactList.SHIFT = contactVM.ContactProfile.SHIFT
                         contactList.EMADDRESS = contactVM.ContactProfile.EMAIL_ADDRESS
                         contactList.EMADDRESS2 = contactVM.ContactProfile.EMAIL_ADDRESS2
                         contactList.LOC = contactVM.ContactProfile.LOCATION
@@ -293,11 +376,20 @@ Class UpdateContactListPage
                         contactList.HOUSEPHONE = contactVM.ContactProfile.HOMEPHONE
                         contactList.OTHERPHONE = contactVM.ContactProfile.OTHER_PHONE
                         contactList.DateReviewed = DateTime.Now.Date
-                        contactList.MARITAL_STATUS_ID = contactVM.ContactProfile.MARITAL_STATUS_ID
-                        contactList.POSITION_ID = contactVM.ContactProfile.POSITION_ID
-                        contactList.PERMISSION_GROUP_ID = contactVM.ContactProfile.PERMISSION_GROUP_ID
-                        contactList.DEPARTMENT_ID = contactVM.ContactProfile.DEPARTMENT_ID
-                        contactList.DIVISION_ID = contactVM.ContactProfile.DIVISION_ID
+
+                        contactList.POSITION = cbContactPosition.Text
+                        contactList.PERMISSION_GROUP = cbContactGroup.Text
+                        contactList.DEPARTMENT = cbContactDepartment.Text
+                        contactList.DIVISION = cbContactDivision.Text
+                        contactList.MARITAL_STATUS = cbContactMaritalStatus.Text
+
+                        contactList.MARITAL_STATUS_ID = cbContactMaritalStatus.SelectedValue
+                        contactList.POSITION_ID = cbContactPosition.SelectedValue
+                        contactList.PERMISSION_GROUP_ID = cbContactGroup.SelectedValue
+                        contactList.DEPARTMENT_ID = cbContactDepartment.SelectedValue
+                        contactList.DIVISION_ID = cbContactDivision.SelectedValue
+                        contactList.SHIFT = cbContactShiftStatus.Text
+
                         contactList.OLD_EMP_ID = old_empid
                         client.UpdateContactListByEmpID(contactList, 0)
                         'ClearFields()
@@ -333,7 +425,7 @@ Class UpdateContactListPage
                 contactList.FIRST_NAME = contactVM.ContactProfile.FIRST_NAME
                 contactList.MIDDLE_NAME = contactVM.ContactProfile.MIDDLE_NAME
                 contactList.Nick_Name = contactVM.ContactProfile.NICK_NAME
-                contactList.ACTIVE = deleteFg
+                contactList.ACTIVE = 2
                 contactList.BIRTHDATE = contactVM.ContactProfile.BDATE
                 contactList.POSITION = contactVM.ContactProfile.POSITION
                 contactList.DT_HIRED = contactVM.ContactProfile.DT_HIRED
