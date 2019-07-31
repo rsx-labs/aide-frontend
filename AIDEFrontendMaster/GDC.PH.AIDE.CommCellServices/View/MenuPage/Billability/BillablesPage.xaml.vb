@@ -157,7 +157,7 @@ Public Class BillablesPage
             billabilityDBProvider.GetBillabilityList.Clear()
             totalMonthly = 0
 
-            Dim lstresource As BillableHours() = client.GetBillableHoursByMonth(profile.Emp_ID, month, year)
+            Dim lstresource As BillableHours() = client.GetBillableHoursByMonth(profile.Emp_ID, month, year, cbDateRange.SelectedValue)
 
             For Each objBillables As BillableHours In lstresource
                 billabilityDBProvider.SetBillabilityList(objBillables)
@@ -361,21 +361,22 @@ Public Class BillablesPage
         month = cbMonth.SelectedValue
         cCanvas.Children.Clear()
         LoadWeeks()
-        LoadDataMonthly()
         LoadDataWeekly()
+        LoadDataMonthly()
     End Sub
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
         year = cbYear.SelectedValue
         cCanvas.Children.Clear()
         LoadWeeks()
-        LoadDataMonthly()
         LoadDataWeekly()
+        LoadDataMonthly()
     End Sub
 
     Private Sub cbDateRange_DropDownClosed(sender As Object, e As EventArgs) Handles cbDateRange.DropDownClosed
         cCanvas.Children.Clear()
         LoadDataWeekly()
+        LoadDataMonthly()
     End Sub
 #End Region
 
