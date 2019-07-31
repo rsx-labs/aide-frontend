@@ -15,6 +15,7 @@ Class ViewProjectUI
     Implements ServiceReference1.IAideServiceCallback
 
 
+#Region "Fields"
     Private _AideServiceClient As ServiceReference1.AideServiceClient
     Private _ViewProjectProvider As New ViewProjectProvider
     Private _ViewProjectViewModel As New ViewProjectViewModel
@@ -24,29 +25,30 @@ Class ViewProjectUI
     Private _menugrid As Grid
     Private _submenuframe As Frame
     Private _empID As Integer
+    Private profile As Profile
+#End Region
 
-
-    Public Sub New(_frame As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, empID As Integer)
-
+#Region "Constructor"
+    Public Sub New(_frame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         ' This call is required by the designer.
         InitializeComponent()
-
         ' Add any initialization after the InitializeComponent() call.
         InitializeService()
         Me.DataContext = _ViewProjectViewModel
         Me.FrameNavi = _frame
-        email = _email
+        Me.profile = _profile
+        email = profile.Email_Address
         Me._addframe = _addframe
         Me._menugrid = _menugrid
         Me._submenuframe = _submenuframe
-        Me._empID = empID
+        Me._empID = profile.Emp_ID
         LoadProjectList()
     End Sub
+#End Region
 
-
+#Region "Methods/Functions"
     Public Sub LoadProjectList()
         Try
-            '_empID
             Dim lstProjects As ViewProject() = _AideServiceClient.ViewProjectListofEmployee(_empID)
             For Each objProject As ViewProject In lstProjects
                 _ViewProjectProvider.SetProjectList(objProject)
@@ -59,9 +61,7 @@ Class ViewProjectUI
         Catch ex As SystemException
             _AideServiceClient.Abort()
         End Try
-
     End Sub
-
 
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
@@ -78,12 +78,23 @@ Class ViewProjectUI
         End Try
         Return bInitialize
     End Function
+#End Region
 
+#Region "Events"
+    Private Sub btnAssign_Click(sender As Object, e As RoutedEventArgs) Handles btnAssign.Click
+        _addframe.Navigate(New NewProject(FrameNavi, profile, _addframe, _menugrid, _submenuframe))
+        FrameNavi.IsEnabled = False
+        FrameNavi.Opacity = 0.3
+        _menugrid.IsEnabled = False
+        _menugrid.Opacity = 0.3
+        _submenuframe.IsEnabled = False
+        _submenuframe.Opacity = 0.3
+        _addframe.Margin = New Thickness(50, 80, 50, 80)
+        _addframe.Visibility = Visibility.Visible
+    End Sub
+#End Region
 
-
-
-
-
+#Region "INotify Methods"
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
     End Sub
@@ -103,16 +114,5 @@ Class ViewProjectUI
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
 
     End Sub
-
-    Private Sub btnAssign_Click(sender As Object, e As RoutedEventArgs) Handles btnAssign.Click
-        _addframe.Navigate(New NewProject(FrameNavi, email, _addframe, _menugrid, _submenuframe, _empID))
-        FrameNavi.IsEnabled = False
-        FrameNavi.Opacity = 0.3
-        _menugrid.IsEnabled = False
-        _menugrid.Opacity = 0.3
-        _submenuframe.IsEnabled = False
-        _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(50, 80, 50, 80)
-        _addframe.Visibility = Visibility.Visible
-    End Sub
+#End Region
 End Class

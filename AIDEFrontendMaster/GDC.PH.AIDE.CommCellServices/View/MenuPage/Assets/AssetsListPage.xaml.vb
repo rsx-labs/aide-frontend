@@ -296,18 +296,18 @@ Public Class AssetsListPage
     Private Sub GUISettingsOff()
         lv_assetList.Visibility = Windows.Visibility.Hidden
 
-        btnPrev.IsEnabled = False
-        btnNext.IsEnabled = False
+        btnPrev2.IsEnabled = False
+        btnNext2.IsEnabled = False
     End Sub
 
     Private Sub GUISettingsOn()
         lv_assetList.Visibility = Windows.Visibility.Visible
 
-        btnPrev.IsEnabled = True
-        btnNext.IsEnabled = True
+        btnPrev2.IsEnabled = True
+        btnNext2.IsEnabled = True
     End Sub
 
-    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
         Dim totalRecords As Integer = lstAssets.Length
 
         If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
@@ -318,7 +318,7 @@ Public Class AssetsListPage
         DisplayPagingInfo()
     End Sub
 
-    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
         paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
         If currentPage > 1 Then
             currentPage -= 1

@@ -238,20 +238,6 @@ Class UpdateActionListPage
         End If
     End Sub
 
-    'Validate if selected date is less than duedate
-    Private Sub Act_DateClosed_SelectedDateChanged(sender As Object, e As SelectionChangedEventArgs)
-        If Act_DateClosed.SelectedDate < Act_DueDate.SelectedDate Then
-            MsgBox("Date Should be not the Day Before Selected From Date!", MsgBoxStyle.Critical, "AIDE")
-
-            Act_DateClosed.Text = String.Empty
-        End If
-
-        If Act_DateClosed.Text = String.Empty Then
-            Act_DateClosed.Text = _actionModel.DATE_CLOSED
-        End If
-    End Sub
-
-
     Private Sub btnRemovedEmployee_Click(sender As Object, e As RoutedEventArgs) Handles btnRemovedEmployee.Click
         e.Handled = True
         If Act_AssignedAll.Text = String.Empty Then

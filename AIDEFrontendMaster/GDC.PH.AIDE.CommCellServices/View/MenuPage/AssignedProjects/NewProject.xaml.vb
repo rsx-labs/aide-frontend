@@ -3,10 +3,8 @@ Imports System.ServiceModel
 Imports System.Windows
 Imports UI_AIDE_CommCellServices.ServiceReference1
 
-
-
 ''' <summary>
-''' BY GIANN CARLO CAMILO 
+''' BY GIANN CARLO CAMILO / JHUNELL BARCENAS
 ''' </summary>
 ''' <remarks></remarks>
 
@@ -28,29 +26,28 @@ Public Class NewProject
     Private _menugrid As Grid
     Private _submenuframe As Frame
     Private _empID As Integer
+    Private profile As Profile
 #End Region
 
-
-
-    Public Sub New(_frame As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, empID As Integer)
-
+#Region "Constructor"
+    Public Sub New(_frame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         ' This call is required by the designer.
         InitializeComponent()
-        email = _email
+        profile = _profile
+        email = profile.Email_Address
         Me._Frame = _frame
         ' Add any initialization after the InitializeComponent() call.
         Me._addframe = _addframe
         Me._menugrid = _menugrid
         Me._submenuframe = _submenuframe
-        Me._empID = empID
+        Me._empID = profile.Emp_ID
         InitializeService()
         LoadEmployeeList()
         LoadAllProjectName()
-
     End Sub
+#End Region
 
-
-
+#Region "Methods"
     Public Sub LoadEmployeeList()
         Try
             Dim _EmployeeListDBProvider As New EmployeeListProvider
@@ -83,7 +80,6 @@ Public Class NewProject
     End Sub
 
     Public Sub LoadAllProjectName()
-
         Try
             InitializeService()
             Dim _GetAllConcernDBProvider As New ProjectDBProvider
@@ -94,7 +90,7 @@ Public Class NewProject
 
 
             For Each objConcern As Project In lstConcern
-                _GetAllConcernDBProvider.SetProjectList(objConcern)
+                _GetAllConcernDBProvider.setProjectList(objConcern)
             Next
 
             For Each iConcern As myProjectList In _GetAllConcernDBProvider.getProjectList()
@@ -105,14 +101,9 @@ Public Class NewProject
             _projectViewModel.ProjectList = lstConcernList
 
             cbProjectName.DataContext = _projectViewModel
-
-
-
         Catch ex As SystemException
-
             MsgBox(ex.Message)
             _AideServiceClient.Abort()
-
         End Try
     End Sub
 
@@ -132,31 +123,6 @@ Public Class NewProject
         Return bInitialize
     End Function
 
-    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
-
-    End Sub
-
-    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
-
-    End Sub
-
-    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
-
-    End Sub
-
-    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
-
-    End Sub
-
-    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
-
-    End Sub
-
-    Private Sub cbProjectName_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbProjectName.SelectionChanged
-
-        LoadAllProjectNameByID()
-
-    End Sub
     Private Function LoadAllProjectNameByID()
         Dim _setSelectedProject As New ProjectViewModel
 
@@ -184,20 +150,47 @@ Public Class NewProject
         _setSelectedProject = _ProjectViewModel
         Me.DataContext = _setSelectedProject
         Return _setSelectedProject
-
     End Function
+#End Region
 
+#Region "Events"
     Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
+        _Frame.Navigate(New ViewProjectUI(_Frame, profile, _addframe, _menugrid, _submenuframe))
 
-        _Frame.Navigate(New ViewProjectUI(_Frame, email, _addframe, _menugrid, _submenuframe, _empID))
-
-        _frame.IsEnabled = True
-        _frame.Opacity = 1
+        _Frame.IsEnabled = True
+        _Frame.Opacity = 1
         _menugrid.IsEnabled = True
         _menugrid.Opacity = 1
         _submenuframe.IsEnabled = True
         _submenuframe.Opacity = 1
         _addframe.Visibility = Visibility.Hidden
-   
     End Sub
+
+    Private Sub cbProjectName_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbProjectName.SelectionChanged
+        LoadAllProjectNameByID()
+    End Sub
+#End Region
+
+#Region "INotfiy Methods"
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
+
+    End Sub
+
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
+
+    End Sub
+
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
+
+    End Sub
+
+    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
+
+    End Sub
+
+    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+
+    End Sub
+#End Region
+
 End Class

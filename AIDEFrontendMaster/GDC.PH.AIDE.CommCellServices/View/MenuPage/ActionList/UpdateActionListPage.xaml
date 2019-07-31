@@ -200,7 +200,7 @@
                     
                     <Grid Grid.Row="4">
                         <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                            <DatePicker Name="Act_DateClosed" Style="{DynamicResource styleDatePickerfrom}" Text="{Binding DATE_CLOSED,Mode=TwoWay}" SelectedDateChanged="Act_DateClosed_SelectedDateChanged"/>
+                            <DatePicker Name="Act_DateClosed" Style="{DynamicResource styleDatePickerfrom}" Text="{Binding DATE_CLOSED,Mode=TwoWay}"/>
                         </Border>
                         
                         <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select close date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">

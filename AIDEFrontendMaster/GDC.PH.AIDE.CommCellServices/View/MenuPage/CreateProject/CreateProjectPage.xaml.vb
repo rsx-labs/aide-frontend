@@ -4,7 +4,7 @@ Imports System.Data
 Imports System.ServiceModel
 
 'CREATE PROJECT
-'MARIVIC ESPINO / HYACINTH AMARLES
+'MARIVIC ESPINO / HYACINTH AMARLES / JHUNELL BARCENAS
 
 Class CreateProjectPage
     Implements IAideServiceCallback
@@ -31,6 +31,7 @@ Class CreateProjectPage
     Private _ProjectDBProvider As New ProjectDBProvider
     Private _ProjectViewModel As New ProjectViewModel
     Private client As AideServiceClient
+    Private _profile As Profile
 
     Dim billabiltiy As Short
     Dim category As Short
@@ -40,9 +41,10 @@ Class CreateProjectPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(pFrame As Frame, empID As Integer)
+    Public Sub New(pFrame As Frame, profile As Profile)
         _pFrame = pFrame
-        _empID = empID
+        _profile = profile
+        _empID = _profile.Emp_ID
         InitializeComponent()
         SetData()
     End Sub
@@ -135,9 +137,10 @@ Class CreateProjectPage
     ''' </summary>
     Private Sub LoadProjectList()
         Try
-            paginatedCollection.Clear()
             Dim lstProjectObs As New ObservableCollection(Of ProjectModel)
             Dim projectDBProvider As New ProjectDBProvider
+
+            paginatedCollection = New PaginatedObservableCollection(Of ProjectModel)(pagingRecordPerPage)
 
             For Each objProject As Project In lstProj
                 projectDBProvider.setProjectList(objProject)
@@ -184,7 +187,7 @@ Class CreateProjectPage
             LoadProjectList()
             ClearSelection()
             txtSearch.Text = String.Empty
-            MsgBox("Project Successfully Added")
+            MsgBox("Project Successfully Added", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Project")
         End Try
@@ -204,11 +207,11 @@ Class CreateProjectPage
             Projects.Category = category
             Projects.Billability = billabiltiy
             client.UpdateProject(Projects)
-            _ProjectDBProvider._myprojectlist.Clear()
+            '_ProjectDBProvider._myprojectlist.Clear()
 
             ClearSelection()
             ' txtSearch.Text = String.Empty
-            MsgBox("Project Successfully Updated")
+            MsgBox("Project Successfully Updated", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Project")
         End Try
@@ -263,7 +266,6 @@ Class CreateProjectPage
         Else
             MsgBox("Number/s Only")
         End If
-
     End Sub
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
@@ -318,29 +320,31 @@ Class CreateProjectPage
 
     Private Sub dgProjectList_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles dgProjectList.MouseDoubleClick
         Try
-            If dgProjectList.SelectedIndex <> -1 Then
+            If _profile.Permission = "Manager" Then
+                If dgProjectList.SelectedIndex <> -1 Then
 
-                btnUpdate.Visibility = Windows.Visibility.Visible
-                btnCreate.Visibility = Windows.Visibility.Hidden
+                    btnUpdate.Visibility = Windows.Visibility.Visible
+                    btnCreate.Visibility = Windows.Visibility.Hidden
 
-                txtProjID.IsEnabled = False
-                txtProjID.Text = CType(dgProjectList.SelectedItem, ProjectModel).ProjectID
-                txtProjName.Text = CType(dgProjectList.SelectedItem, ProjectModel).ProjectName
+                    txtProjID.IsEnabled = False
+                    txtProjID.Text = CType(dgProjectList.SelectedItem, ProjectModel).ProjectID
+                    txtProjName.Text = CType(dgProjectList.SelectedItem, ProjectModel).ProjectName
 
 
-                If CType(dgProjectList.SelectedItem, ProjectModel).Category = " Task" Then
-                    cbCategory.SelectedIndex = 0
-                Else
-                    cbCategory.SelectedIndex = 1
+                    If CType(dgProjectList.SelectedItem, ProjectModel).Category = "Task" Then
+                        cbCategory.SelectedIndex = 0
+                    Else
+                        cbCategory.SelectedIndex = 1
+                    End If
+                    If CType(dgProjectList.SelectedItem, ProjectModel).Billability = "Internal" Then
+                        cbBillability.SelectedIndex = 0
+                    Else
+                        cbBillability.SelectedIndex = 1
+                    End If
+
+                    lblProjIdValidation.Content = String.Empty
+                    txtProjID.IsEnabled = False
                 End If
-                If CType(dgProjectList.SelectedItem, ProjectModel).Billability = " Internal" Then
-                    cbBillability.SelectedIndex = 0
-                Else
-                    cbBillability.SelectedIndex = 1
-                End If
-
-                lblProjIdValidation.Content = String.Empty
-                txtProjID.IsEnabled = False
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
@@ -356,7 +360,7 @@ Class CreateProjectPage
                 LoadProject(Convert.ToInt32(txtSearch.Text))
             ElseIf (String.IsNullOrEmpty((txtSearch.Text))) = True Then
                 UpdateProjectDetails()
-                LoadProjectList()
+                SetData()
             End If
             btnCreate.Visibility = Windows.Visibility.Visible
             btnUpdate.Visibility = Windows.Visibility.Hidden

@@ -417,7 +417,7 @@
                                              Template="{DynamicResource TextBoxBaseControlTemplate}"/>
                                 </Border>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter reference ID *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter Reference ID*" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -450,7 +450,7 @@
                                     <TextBox Text="{Binding NewTasks.IncDescr, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtIncDescr"/>
                                 </Border>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter description *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter Description*" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -482,7 +482,7 @@
                                     <TextBox  Text="{Binding NewTasks.EffortEst, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtEffortEst"/>
                                 </Border>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter estimate effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter Estimate Effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -514,7 +514,7 @@
                                     <TextBox Text="{Binding NewTasks.ActEffort, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEffortEst"/>
                                 </Border>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter actual effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter Actual Effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -546,7 +546,7 @@
                                     <TextBox Text="{Binding NewTasks.ActEffortWk, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEfforEstWk"/>
                                 </Border>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter weekly effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter Weekly Effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -582,7 +582,7 @@
                                           Style="{DynamicResource StyleComboBox}"
                                           x:Name="cbPhase"/>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select phase *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Phase*" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -616,7 +616,7 @@
                                            SelectedValuePath="Key"
                                            x:Name="cbStatus" Margin="0,5,5,5" Style="{DynamicResource StyleComboBox}"/>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a status *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a status*" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -648,7 +648,7 @@
                                     <TextBox Text="{Binding NewTasks.Comments, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtComments"/>
                                 </Border>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter comments" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter Comments" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -700,7 +700,7 @@
                                           Margin="5,5,0,5"
                                           Style="{DynamicResource StyleComboBox}"/>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a project *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a project*" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -741,7 +741,7 @@
                                           Margin="5,5,0,5"
                                           x:Name="cbCategory" Style="{DynamicResource StyleComboBox}"/>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a category *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a category*" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>

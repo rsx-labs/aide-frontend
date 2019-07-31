@@ -332,8 +332,14 @@ Public Class AssetsInventoryAddPage
     Public Sub LoadStatus()
         cbStatus.DisplayMemberPath = "Text"
         cbStatus.SelectedValuePath = "Value"
-        cbStatus.Items.Add(New With {.Text = "Unassigned", .Value = 4})
-        cbStatus.Items.Add(New With {.Text = "Assigned", .Value = 3})
+        If profile.Permission = "Manager" Then
+            cbStatus.Items.Add(New With {.Text = "Unassigned", .Value = 1})
+            cbStatus.Items.Add(New With {.Text = "Assigned", .Value = 2})
+        Else
+            cbStatus.Items.Add(New With {.Text = "Unassigned", .Value = 4})
+            cbStatus.Items.Add(New With {.Text = "Assigned", .Value = 3})
+        End If
+        
         If assetsModel.STATUS = 3 Then
             txtStatus.Text = "Partially Assigned"
         ElseIf assetsModel.STATUS = 4 Then
