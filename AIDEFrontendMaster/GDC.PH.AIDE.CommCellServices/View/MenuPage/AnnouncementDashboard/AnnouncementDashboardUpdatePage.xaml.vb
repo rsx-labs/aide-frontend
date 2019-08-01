@@ -89,11 +89,11 @@ Class AnnouncementDashboardUpdatePage
 
 
             If announcementModel.ObjectAnnouncement.TITLE = Nothing Or textRange.Text.Trim() = String.Empty Then
-                MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else
                 Me.DataContext = announcementModel.ObjectAnnouncement
                 aide.UpdateAnnouncements(getDataUpdate(Me.DataContext()))
-                MsgBox("Successfully Updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                MsgBox("Successfully updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 _announce.TITLE = Nothing
                 _announce.MESSAGE = Nothing
                 _announce.END_DATE = Nothing

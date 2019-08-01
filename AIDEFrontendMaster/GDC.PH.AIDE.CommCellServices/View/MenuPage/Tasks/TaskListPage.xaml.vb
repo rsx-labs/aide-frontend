@@ -219,8 +219,7 @@ Public Class TaskListPage
                 Else
                     lv_taskList.Visibility = Windows.Visibility.Collapsed
                     lbl_noOT.Visibility = Windows.Visibility.Visible
-                    lbl_noOT1.Visibility = Windows.Visibility.Visible
-                    lbl_noOT2.Visibility = Windows.Visibility.Visible
+                    taskborder.Visibility = Windows.Visibility.Hidden
 
                     btnNext.Visibility = Windows.Visibility.Collapsed
                     btnPrev.Visibility = Windows.Visibility.Collapsed

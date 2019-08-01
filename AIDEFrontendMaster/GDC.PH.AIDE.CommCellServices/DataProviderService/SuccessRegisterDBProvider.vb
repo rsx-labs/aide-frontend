@@ -1,7 +1,7 @@
 ﻿Imports UI_AIDE_CommCellServices.ServiceReference1
 Imports System.Collections.ObjectModel
 ''' <summary>
-''' By Aevan Camille Batongbacal
+''' By Aevan Camille Batongbacal / JHUNELL BARCENAS
 ''' </summary>
 ''' <remarks></remarks>
 Public Class SuccessRegisterDBProvider
@@ -47,6 +47,7 @@ Public Class SuccessRegisterDBProvider
         Dim _successObject As MyNickname = New MyNickname With {
             .EmpID = _nickname.Emp_ID,
             .NickName = _nickname.Nick_Name,
+            .FirstName = _nickname.First_Name,
         .EmployeeName = _nickname.Employee_Name
                 }
         _nicknameList.Add(_successObject)
@@ -69,5 +70,6 @@ End Class
 Public Class MyNickname
     Property EmpID As Integer
     Property NickName As String
+    Property FirstName As String
     Property EmployeeName As String
 End Class

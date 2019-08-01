@@ -9,6 +9,7 @@ Imports UI_AIDE_CommCellServices.ServiceReference1
 Class LessonLearntAddPage
     Implements IAideServiceCallback
 
+#Region "Fields"
     Public frame As Frame
     Public mainWindow As MainWindow
     Public email As String
@@ -16,6 +17,10 @@ Class LessonLearntAddPage
     Private _menugrid As Grid
     Private _submenuframe As Frame
     Private profile As Profile
+
+    Dim lessonLearnt As New LessonLearnt
+    Dim client As AideServiceClient
+#End Region
 
 #Region "Provider Declaration"
     Dim actionListProvider As New ActionListDBProvider
@@ -31,9 +36,7 @@ Class LessonLearntAddPage
     Dim lessonLearntModel As New LessonLearntModel
 #End Region
 
-    Dim lessonLearnt As New LessonLearnt
-    Dim client As AideServiceClient
-
+#Region "Constructor"
     Public Sub New(_frame As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
         InitializeComponent()
 
@@ -48,9 +51,9 @@ Class LessonLearntAddPage
         GetActionReference()
         SetDataContext()
     End Sub
+#End Region
 
 #Region "Common Methods"
-
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
         Try
@@ -91,7 +94,6 @@ Class LessonLearntAddPage
 #End Region
 
 #Region "Private Functions"
-
     Private Sub CreateReferenceNo()
         Try
             If Me.InitializeService() Then
@@ -179,7 +181,7 @@ Class LessonLearntAddPage
             GetDataContext(Me.DataContext())
 
             If lessonLearnt.Problem.Trim = String.Empty Or lessonLearnt.Resolution.Trim = String.Empty Then
-                MsgBox("Please Enter All Required Fields", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 Dim result As Integer = MsgBox("Are you sure you want to save?", MsgBoxStyle.YesNo, "AIDE")
 
@@ -187,7 +189,7 @@ Class LessonLearntAddPage
                     Try
                         If Me.InitializeService Then
                             client.CreateLessonLearnt(lessonLearnt)
-                            MsgBox("Successfully Created", MsgBoxStyle.Information, "AIDE")
+                            MsgBox("Successfully created", MsgBoxStyle.Information, "AIDE")
                             ClearValues()
                             frame.Navigate(New LessonLearntPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
                             frame.IsEnabled = True

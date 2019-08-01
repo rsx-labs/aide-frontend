@@ -896,7 +896,7 @@
             </Grid>
             <Grid Grid.Row="1" Background="Gray">
                 <Viewbox>
-                    <TextBlock Foreground="White" Margin="10" Text="Please fill up all required field."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Foreground="White" Margin="10" Text="Please fill up all required fields."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Viewbox>
             </Grid>
 
@@ -942,7 +942,7 @@
                              Text="{Binding lessonLearntViewModel.SelectedLessonLearnt.Problem, Mode=TwoWay}" 
                              VerticalContentAlignment="Center"  HorizontalContentAlignment="Center"/>
                         </Border>
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter problem encountered" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter problem encountered *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -974,7 +974,7 @@
                              Text="{Binding lessonLearntViewModel.SelectedLessonLearnt.Resolution, Mode=TwoWay}" 
                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                         </Border>
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter resolution" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter resolution *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>

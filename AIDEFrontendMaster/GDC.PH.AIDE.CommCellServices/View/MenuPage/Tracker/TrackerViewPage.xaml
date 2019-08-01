@@ -1100,7 +1100,7 @@ xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
                             <Border Background="White" BorderBrush="Transparent" BorderThickness="1" CornerRadius="15,15,0,0">
 
                                 <Viewbox>
-                                    <TextBlock Foreground="DimGray" Margin="5" Text="Completed the Course"  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <TextBlock Foreground="DimGray" Margin="5" Text="Completed the course"  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 </Viewbox>
                             </Border>
                         </Grid>
@@ -1125,7 +1125,7 @@ xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
                             <Border Background="White" BorderBrush="Transparent" BorderThickness="1" CornerRadius="15,15,0,0">
 
                                 <Viewbox>
-                                    <TextBlock Foreground="DimGray" Margin="5" Text="Not Yet Completed the Course"  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <TextBlock Foreground="DimGray" Margin="5" Text="Not yet completed the course"  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 </Viewbox>
                             </Border>
                         </Grid>

@@ -70,7 +70,7 @@ Class CommendationDashBoard
 
 #End Region
 
-#Region "Functions"
+#Region "Methods/Functions"
 
     Public Sub SetButtonCreateVisible()
         If position = MANAGER Then
@@ -177,39 +177,7 @@ Class CommendationDashBoard
     End Function
 #End Region
 
-    Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
-        _addframe.Navigate(New CommendationAddPage(mainFrame, position, empID, _addframe, _menugrid, _submenuframe, Me.email, Me.profile, Me.commendFrame))
-        mainFrame.IsEnabled = False
-        mainFrame.Opacity = 0.3
-        _menugrid.IsEnabled = False
-        _menugrid.Opacity = 0.3
-        _submenuframe.IsEnabled = False
-        _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(150, 100, 150, 100)
-        _addframe.Visibility = Visibility.Visible
-    End Sub
-
-
-    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
-        Throw New NotImplementedException()
-    End Sub
-
+#Region "Events"
     Private Sub CommendationLV_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
         e.Handled = True
         If CommendationLV.SelectedIndex <> -1 Then
@@ -218,7 +186,7 @@ Class CommendationDashBoard
                 For Each _comm As CommendationModel In commendationVM.CommendationList
                     If CType(CommendationLV.SelectedItem, CommendationModel).CommendID = _comm.CommendID Then
                         commmendationList.CommendID = _comm.CommendID
-                        commmendationList.Dept_ID = _comm.Dept_ID
+                        commmendationList.EMP_ID = _comm.EMP_ID
                         commmendationList.DateSent = _comm.DateSent
                         commmendationList.Employees = _comm.Employees
                         commmendationList.Project = _comm.Project
@@ -240,6 +208,18 @@ Class CommendationDashBoard
         End If
     End Sub
 
+    Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
+        _addframe.Navigate(New CommendationAddPage(mainFrame, position, empID, _addframe, _menugrid, _submenuframe, Me.email, Me.profile, Me.commendFrame))
+        mainFrame.IsEnabled = False
+        mainFrame.Opacity = 0.3
+        _menugrid.IsEnabled = False
+        _menugrid.Opacity = 0.3
+        _submenuframe.IsEnabled = False
+        _submenuframe.Opacity = 0.3
+        _addframe.Margin = New Thickness(150, 100, 150, 100)
+        _addframe.Visibility = Visibility.Visible
+    End Sub
+
     Private Sub cbMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbMonth.SelectionChanged
         month = cbMonth.SelectedValue
         LoadCommendationsBySearch()
@@ -249,4 +229,27 @@ Class CommendationDashBoard
         year = cbYear.SelectedValue
         LoadCommendationsBySearch()
     End Sub
+#End Region
+
+#Region "INotify Methods"
+    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
+        Throw New NotImplementedException()
+    End Sub
+
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
+        Throw New NotImplementedException()
+    End Sub
+
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
+        Throw New NotImplementedException()
+    End Sub
+
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
+        Throw New NotImplementedException()
+    End Sub
+
+    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+        Throw New NotImplementedException()
+    End Sub
+#End Region
 End Class

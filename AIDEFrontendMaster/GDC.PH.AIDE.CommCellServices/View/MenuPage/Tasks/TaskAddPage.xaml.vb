@@ -82,7 +82,6 @@ Class TaskAddPage
 #End Region
 
 #Region "Sub Methods"
-
     Private Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
         Try
@@ -311,7 +310,7 @@ Class TaskAddPage
             tasks.Others3 = obj.NewTasks.Others3
             Return True
         Catch ex As Exception
-            MsgBox("Invalid Input!", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Invalid input!", MsgBoxStyle.Critical, "AIDE")
             Return False
         End Try
     End Function
@@ -346,7 +345,7 @@ Class TaskAddPage
            cbCategory.Text = String.Empty Or
             cboProject.Text = String.Empty Or
             cbStatus.Text = String.Empty Then
-            MsgBox("Please Fill All Required Fields", MsgBoxStyle.Exclamation, "FAILED")
+            MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "FAILED")
             Return True
         End If
         Return False
@@ -403,7 +402,6 @@ Class TaskAddPage
 #End Region
 
 #Region "Button/Events"
-
     Private Sub cbStatus_DropDownClosed(sender As Object, e As EventArgs) Handles cbStatus.DropDownClosed
         If cbStatus.Text = "Completed" Or cbStatus.Text = "Returned to Triage" Then
             dpTargetDate.SelectedDate = Date.Now
@@ -433,7 +431,7 @@ Class TaskAddPage
                     If InitializeService() Then
                         If GetDataContext(Me.DataContext) Then
                             client.CreateTask(tasks)
-                            MsgBox("Successfully Created Task", MsgBoxStyle.Information, "AIDE")
+                            MsgBox("Successfully created task", MsgBoxStyle.Information, "AIDE")
                             ClearValues()
                             frame.Navigate(New TaskAdminPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
                             ExitPage()
@@ -453,7 +451,7 @@ Class TaskAddPage
                 If InitializeService() Then
                     If GetDataContext(Me.DataContext) Then
                         client.UpdateTask(tasks)
-                        MsgBox("Successfully Updated", MsgBoxStyle.Information, "AIDE")
+                        MsgBox("Successfully updated", MsgBoxStyle.Information, "AIDE")
                         ClearValues()
                         frame.Navigate(New TaskListPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
                         ExitPage()

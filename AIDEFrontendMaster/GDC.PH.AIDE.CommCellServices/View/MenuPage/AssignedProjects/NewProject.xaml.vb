@@ -14,7 +14,6 @@ UseSynchronizationContext:=False)>
 Public Class NewProject
     Implements ServiceReference1.IAideServiceCallback
 
-
 #Region "Fields"
     Private _AideServiceClient As ServiceReference1.AideServiceClient
     Private _EmployeeListViewModel As New EmployeeListViewModel

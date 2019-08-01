@@ -46,11 +46,9 @@ Public Class ContactListPage
     Private profile As Profile
     Private page As String
     Dim totalRecords As Integer
-
     Dim lstContacts As ContactList()
     Dim paginatedCollection As PaginatedObservableCollection(Of ContactListModel) = New PaginatedObservableCollection(Of ContactListModel)(pagingRecordPerPage)
-    Dim addFg As Integer = ConfigurationManager.AppSettings("addFg")
-    Dim deleteFg As Integer = ConfigurationManager.AppSettings("deleteFg")
+
 #End Region
 
 #Region "Constructor"
@@ -366,7 +364,7 @@ Public Class ContactListPage
                         contactList.FIRST_NAME = contactListMod.FIRST_NAME
                         contactList.MIDDLE_NAME = contactListMod.MIDDLE_NAME
                         contactList.Nick_Name = contactListMod.NICK_NAME
-                        contactList.ACTIVE = addFg
+                        contactList.ACTIVE = 1
                         contactList.BIRTHDATE = contactListMod.BDATE
                         contactList.POSITION = contactListMod.POSITION
                         contactList.DT_HIRED = contactListMod.DT_HIRED
@@ -445,12 +443,12 @@ Public Class ContactListPage
                     contactList.OLD_EMP_ID = profile.Emp_ID
 
                     If MsgBox("Are you sure to assign " + contactListMod.FULL_NAME + " on your team?", vbYesNo, "AIDE") = vbYes Then
-                        contactList.ACTIVE = addFg
+                        contactList.ACTIVE = 1
                         _AideService.UpdateContactListByEmpID(contactList, 2)
                         paginatedCollection.Clear()
                         SetData()
                     Else
-                        contactList.ACTIVE = deleteFg
+                        contactList.ACTIVE = 2
                         _AideService.UpdateContactListByEmpID(contactList, 2)
                         paginatedCollection.Clear()
                         SetData()

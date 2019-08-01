@@ -30,7 +30,7 @@ Class InsertContactList
 
 #End Region
 
-
+#Region "Constructor"
     Public Sub New(_mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _attendanceFrame As Frame)
         ' This call is required by the designer.
         InitializeComponent()
@@ -45,14 +45,11 @@ Class InsertContactList
         ClearTextVal()
         user_empid = Me.profile.Emp_ID
 
-        ' Add any initialization after the InitializeComponent() call.
         AssignEvents()
         textLimits()
         LoadAllCB()
-        
-
-        ' Add any initialization after the InitializeComponent() call.
     End Sub
+#End Region
 
 #Region "Service methods"
 
@@ -236,7 +233,7 @@ Class InsertContactList
                 contactVM.ContactProfile.CEL_NO = String.Empty OrElse _
                 contactVM.ContactProfile.EMAIL_ADDRESS2 = String.Empty OrElse _
                 contactVM.ContactProfile.LOCATION = String.Empty Then
-                MsgBox("Please Fill Up all the Fields", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 contactList.EmpID = contactVM.ContactProfile.EMP_ID
                 contactList.LAST_NAME = contactVM.ContactProfile.LAST_NAME.ToUpper()
@@ -303,7 +300,6 @@ Class InsertContactList
         End Try
     End Sub
 #End Region
-
 
 #Region "Service methods"
     Public Function InitializeService() As Boolean

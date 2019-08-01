@@ -9,8 +9,6 @@ Imports System.Configuration
 Class UpdateContactListPage
     Implements ServiceReference1.IAideServiceCallback
 
-
-
 #Region "Declarations"
     Private mainFrame As Frame
     Private client As ServiceReference1.AideServiceClient
@@ -355,7 +353,7 @@ Class UpdateContactListPage
                 contactVM.ContactProfile.CEL_NO = String.Empty OrElse _
                 contactVM.ContactProfile.EMAIL_ADDRESS2 = String.Empty OrElse _
                 contactVM.ContactProfile.LOCATION = String.Empty Then
-                MsgBox("Please Fill Up all the Fields", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 If MsgBox("Are you sure you want to continue?", vbYesNo, "AIDE") = vbYes Then
                     If InitializeService() Then
@@ -446,8 +444,8 @@ Class UpdateContactListPage
                 contactList.MARITAL_STATUS_ID = contactVM.ContactProfile.MARITAL_STATUS_ID
                 contactList.POSITION_ID = contactVM.ContactProfile.POSITION_ID
                 contactList.PERMISSION_GROUP_ID = contactVM.ContactProfile.PERMISSION_GROUP_ID
-                contactList.DEPARTMENT_ID = contactVM.ContactProfile.DEPARTMENT_ID
-                contactList.DIVISION_ID = contactVM.ContactProfile.DIVISION_ID
+                contactList.DEPARTMENT_ID = 0
+                contactList.DIVISION_ID = 0
                 contactList.OLD_EMP_ID = old_empid
 
                 If MsgBox("Are you sure you want to continue? Employee will be removed from the lists.", vbYesNo, "AIDE") = vbYes Then

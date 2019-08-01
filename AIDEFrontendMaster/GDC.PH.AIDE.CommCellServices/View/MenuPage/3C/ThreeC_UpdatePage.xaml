@@ -35,7 +35,7 @@
             
             <Grid Grid.Row="1" Background="Gray">
                 <Viewbox>
-                    <TextBlock Foreground="White" Margin="10" Text="Please fill up all required field."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Foreground="White" Margin="10" Text="Please fill up all required fields."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Viewbox>
             </Grid>
 
@@ -94,7 +94,7 @@
                                          Template="{DynamicResource TextBoxBaseControlTemplate}" VerticalContentAlignment="Center"/>
                             </Border>
                             
-                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter your concern" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter your concern *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -128,7 +128,7 @@
                                          Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center"/>
                             </Border>
                             
-                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter the cause" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter the cause *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -162,7 +162,7 @@
                                          HorizontalContentAlignment="Center" Template="{DynamicResource TextBoxBaseControlTemplate}" />
                             </Border>
                             
-                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter a counter measure" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter a counter measure *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -194,7 +194,7 @@
                                 <DatePicker Style="{DynamicResource styleDatePickerfrom}" x:Name="dtDate" BorderBrush="Transparent" Margin="2" FontSize="12" Text="{Binding SelectedConcern.DUE_DATE, Mode=TwoWay}" />
                             </Border>
                             
-                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a date *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>

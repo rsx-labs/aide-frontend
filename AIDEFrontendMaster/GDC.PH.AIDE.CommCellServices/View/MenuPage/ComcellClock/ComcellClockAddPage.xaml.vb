@@ -5,6 +5,8 @@ Imports System.Text.RegularExpressions
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class ComcellClockAddPage
     Implements ServiceReference1.IAideServiceCallback
+
+#Region "Fields"
     Private empID As Integer
     Private comcellFrame As Frame
     Private aide As ServiceReference1.AideServiceClient
@@ -13,22 +15,25 @@ Class ComcellClockAddPage
     Private _window As Window
     Private pos As String
     Private profile As Profile
+    Private comcellClockModel As New ComcellClockModel
+#End Region
 
-
-    Public Sub New(_profile As Profile, com_cellframe As Frame, winx As Window)
-
+#Region "Constructor"
+    Public Sub New(_profile As Profile, com_cellframe As Frame, winx As Window, _ComcellClockModel As ComcellClockModel)
         ' This call is required by the designer.
         InitializeComponent()
         Me.profile = _profile
         Me.empID = profile.Emp_ID
         Me.comcellFrame = com_cellframe
         Me._window = winx
+        Me.comcellClockModel = _ComcellClockModel
         populateDayCB()
         DataContext = comcellClockVM
-
-        ' Add any initialization after the InitializeComponent() call.
-
+        ComcellDayCB.SelectedIndex = comcellClockModel.CLOCK_DAY - 1
+        ComcellHourCB.Text = (comcellClockModel.CLOCK_HOUR / 30).ToString
+        ComcellMinuteCB.Text = (comcellClockModel.CLOCK_MINUTE / 6).ToString
     End Sub
+#End Region
 
 #Region "Service Methods"
     Public Function InitializeService() As Boolean
@@ -64,10 +69,16 @@ Class ComcellClockAddPage
     End Sub
 #End Region
 
-
+#Region "Methods/Functions"
     Private Sub SetDataDay()
         If Not ComcellDayCB.Text = String.Empty Then
             comcellClockVM.objectComcellClockSet.CLOCK_DAY = ConvertDays(ComcellDayCB.Text)
+        End If
+        If Not ComcellHourCB.Text = String.Empty Then
+            comcellClockVM.objectComcellClockSet.CLOCK_HOUR = ComcellHourCB.Text
+        End If
+        If Not ComcellMinuteCB.Text = String.Empty Then
+            comcellClockVM.objectComcellClockSet.CLOCK_MINUTE = ComcellMinuteCB.Text
         End If
         If Not Me.empID = 0 Then
             comcellClockVM.objectComcellClockSet.EMP_ID = Me.empID
@@ -77,7 +88,7 @@ Class ComcellClockAddPage
     Public Sub SetData(clockVM As ComcellClockModel)
         Try
             SetDataDay()
-            If Not clockVM.CLOCK_DAY = 0 AndAlso Not clockVM.CLOCK_HOUR = 0 AndAlso Not clockVM.CLOCK_MINUTE = 0 Then
+            If Not clockVM.CLOCK_DAY = 0 AndAlso Not clockVM.CLOCK_HOUR = 0 Then
                 If checkLimit() Then
                     If InitializeService() Then
                         _comcellclock.Clock_Day = clockVM.CLOCK_DAY
@@ -89,19 +100,14 @@ Class ComcellClockAddPage
                         comcellFrame.Navigate(New ComcellClockPage(profile, Me.comcellFrame, Me._window))
                     End If
                 Else
-                    MsgBox("Please check time entry. Hours input should exceed 24. Minutes input should not exceed 59.", MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("Please check time entry. Hours input should not exceed 24. Minutes input should not exceed 59.", MsgBoxStyle.Exclamation, "AIDE")
                 End If
             Else
-                MsgBox("Please fill up all fields!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
             End If
         Catch ex As Exception
 
         End Try
-    End Sub
-
-
-    Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
-        comcellFrame.Navigate(New ComcellClockPage(profile, Me.comcellFrame, _window))
     End Sub
 
     Public Sub populateDayCB()
@@ -126,6 +132,7 @@ Class ComcellClockAddPage
                 Return String.Empty
         End Select
     End Function
+
     Private Function ConvertDays(days As String) As Integer
         Select Case days
             Case "Monday"
@@ -154,14 +161,18 @@ Class ComcellClockAddPage
         End If
         Return checkLimit
     End Function
+#End Region
+
+#Region "Events"
+    Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
+        comcellFrame.Navigate(New ComcellClockPage(profile, Me.comcellFrame, _window))
+    End Sub
 
     Private Sub UpdateBtn_Click(sender As Object, e As RoutedEventArgs)
         Try
             SetData(comcellClockVM.objectComcellClockSet)
         Catch ex As Exception
-
         End Try
-
     End Sub
 
     Private Sub ComcellMinuteCB_PreviewTextInput(sender As Object, e As TextCompositionEventArgs)
@@ -173,4 +184,5 @@ Class ComcellClockAddPage
         Dim _regex As Regex = New Regex("[^0-9]+")
         e.Handled = _regex.IsMatch(e.Text)
     End Sub
+#End Region
 End Class

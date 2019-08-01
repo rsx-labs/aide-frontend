@@ -26,6 +26,7 @@ Class TrackerUpdatePage
     Private profile As Profile
 #End Region
 
+#Region "Constructor"
     Public Sub New(mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame, sabamodel As SabaLearningModel, _profile As Profile)
         Try
             Me._frame = mainframe
@@ -45,7 +46,9 @@ Class TrackerUpdatePage
             End If
         End Try
     End Sub
+#End Region
 
+#Region "Service Methods"
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
         Try
@@ -59,6 +62,28 @@ Class TrackerUpdatePage
         Return bInitialize
     End Function
 
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
+
+    End Sub
+
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
+
+    End Sub
+
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
+
+    End Sub
+
+    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
+
+    End Sub
+
+    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+
+    End Sub
+#End Region
+
+#Region "Methods/Functions"
     Public Sub SetDueDate()
         Me.dtDate.Text = _sabaModel.END_DATE
     End Sub
@@ -82,8 +107,9 @@ Class TrackerUpdatePage
             Return ex
         End Try
     End Function
+#End Region
 
-
+#Region "Events"
     Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
         _frame.Navigate(New SabaLearningMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
         _frame.IsEnabled = True
@@ -96,35 +122,15 @@ Class TrackerUpdatePage
         _addframe.Visibility = Visibility.Hidden
     End Sub
 
-    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
-
-    End Sub
-
-    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
-
-    End Sub
-
-    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
-
-    End Sub
-
-    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
-
-    End Sub
-
-    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
-
-    End Sub
-
     Private Sub UpdateBtn_Click(sender As Object, e As RoutedEventArgs)
         Try
             InitializeService()
 
             aide.UpdateSabaCourses(getDataInsert(Me.DataContext()))
             If sabalearning.TITLE = Nothing Or sabalearning.END_DATE = Nothing Then
-                MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else
-                MsgBox("Successfully Updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                MsgBox("Successfully updated", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
                 sabalearning.TITLE = Nothing
                 sabalearning.END_DATE = Nothing
@@ -148,4 +154,5 @@ Class TrackerUpdatePage
             End If
         End Try
     End Sub
+#End Region
 End Class

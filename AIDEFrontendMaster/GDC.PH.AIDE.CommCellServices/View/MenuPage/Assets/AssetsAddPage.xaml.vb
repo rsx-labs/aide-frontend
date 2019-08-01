@@ -6,6 +6,7 @@ Imports System.ServiceModel
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Public Class AssetsAddPage
     Implements ServiceReference1.IAideServiceCallback
+
 #Region "Fields"
 
     Private mainFrame As Frame
@@ -58,13 +59,12 @@ Public Class AssetsAddPage
 #End Region
 
 #Region "Events"
-
     Private Sub btnUpdate_Click(sender As Object, e As RoutedEventArgs) Handles btnUpdate.Click
         Try
             e.Handled = True
             Dim assets As New Assets
             If CheckMissingField() Then
-                MsgBox("Please Fill up the Fields!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 assets.ASSET_ID = txtID.Text
                 assets.EMP_ID = txtCreatedBy.Text
@@ -106,7 +106,7 @@ Public Class AssetsAddPage
             e.Handled = True
             Dim assets As New Assets
             If CheckMissingField() Then
-                MsgBox("Please Fill up the Fields!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 assets.EMP_ID = Integer.Parse(txtCreatedBy.Text)
                 assets.ASSET_DESC = cbAssetType.Text
@@ -157,7 +157,7 @@ Public Class AssetsAddPage
         Try
             e.Handled = True
             If txtID.Text = String.Empty Then
-                MsgBox("Please Fill up the Fields", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
                 If result = 1 Then
@@ -193,7 +193,6 @@ Public Class AssetsAddPage
 #End Region
 
 #Region "Functions"
-
     Private Sub AssignEvents()
         AddHandler btnCreate.Click, AddressOf btnCreate_Click
         AddHandler btnCancel.Click, AddressOf btnCancel_Click
@@ -252,10 +251,9 @@ Public Class AssetsAddPage
 
     Public Function CheckMissingField() As Boolean
         If cbAssetType.SelectedValue = Nothing AndAlso _
-               txtAssetTag.Text = String.Empty AndAlso _
-               txtSerial.Text = String.Empty AndAlso _
-               txtModel.Text = String.Empty AndAlso _
-               cbAssetManufacturer.SelectedValue = Nothing Then
+            txtAssetTag.Text = String.Empty AndAlso _
+            cbNickname.SelectedValue = Nothing AndAlso _
+            cbAssetManufacturer.SelectedValue = Nothing Then
             Return True
         Else
             Return False

@@ -60,7 +60,6 @@ Class NewSuccessRegister
 #End Region
 
 #Region "Events"
-
     ''' <summary>
     ''' By Krizza Tolento
     ''' </summary>
@@ -70,7 +69,7 @@ Class NewSuccessRegister
             e.Handled = True
             Dim SuccessRegisters As New SuccessRegister
             If txtSRDetails.Text = String.Empty AndAlso txtSRAdditional.Text = String.Empty AndAlso txtSRWhosInvolve.Text = String.Empty Then
-                MsgBox("Please Fill up the Fields!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 SuccessRegisters.SuccessID = txtSRID.Text
                 SuccessRegisters.Emp_ID = comboRaisedBy.SelectedValue
@@ -104,7 +103,7 @@ Class NewSuccessRegister
             e.Handled = True
             Dim SuccessRegisters As New SuccessRegister
             If txtSRDetails.Text = String.Empty Or dateInput.Text = String.Empty Or comboRaisedBy.SelectedValue = Nothing Or txtSRWhosInvolve.Text = String.Empty Then
-                MsgBox("Please Fill up the Fields!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 SuccessRegisters.Emp_ID = comboRaisedBy.SelectedValue
                 SuccessRegisters.DateInput = dateInput.SelectedDate
@@ -160,7 +159,7 @@ Class NewSuccessRegister
             If ifYes = -1 Then
                 txtSRWhosInvolve.Text += ", " + comboAddEmployee.Text
             Else
-                MsgBox("Cannot Allow Duplicate Entry!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Cannot allow duplicate entry!", MsgBoxStyle.Exclamation, "AIDE")
             End If
         End If
     End Sub
@@ -173,7 +172,7 @@ Class NewSuccessRegister
         Try
             e.Handled = True
             If txtSRID.Text = String.Empty Then
-                MsgBox("Please Fill up the Fields", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please fill up all required Fields", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
                 If result = 1 Then
@@ -216,7 +215,7 @@ Class NewSuccessRegister
     Private Sub btnRemovedEmployee_Click(sender As Object, e As RoutedEventArgs) Handles btnRemovedEmployee.Click
         e.Handled = True
         If txtSRWhosInvolve.Text = String.Empty Then
-            MsgBox("Textbox is Empty", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Textbox is empty", MsgBoxStyle.Exclamation, "AIDE")
         Else
             Dim txtBox As String = txtSRWhosInvolve.Text
             Dim cbBox As String = String.Empty

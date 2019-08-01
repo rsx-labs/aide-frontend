@@ -179,7 +179,7 @@ Class AnnouncementDashboard
             If profile.Permission = "Manager" Then
                 Dim announcementList As New AnnouncementModel
                 If AnnouncementLV.SelectedItem IsNot Nothing Then
-                    For Each _ann As AnnouncementModel In AnnouncementListVM.ObjectAnnouncementSet
+                    For Each _ann As AnnouncementModel In paginatedCollection
                         If CType(AnnouncementLV.SelectedItem, AnnouncementModel).ANNOUNCEMENT_ID = _ann.ANNOUNCEMENT_ID Then
                             announcementList.ANNOUNCEMENT_ID = _ann.ANNOUNCEMENT_ID
                             announcementList.EMP_ID = _ann.EMP_ID
