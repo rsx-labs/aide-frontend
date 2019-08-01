@@ -110,21 +110,14 @@ Class MainWindow
         InitializeComponent()
         InitializeService()
         getTime()
+
         If enableOutlook = "True" Then
             CheckOutlook()
-            MsgBox("Welcome " & email, MsgBoxStyle.Information, "AIDE")
-            SetEmployeeData()
-            attendance()
         Else
             email = defaultEmail
-            MsgBox("Welcome " & email, MsgBoxStyle.Information, "AIDE")
-            SetEmployeeData()
-            attendance()
         End If
-        
-        LoadSideBar()
-        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
-        SubMenuFrame.Navigate(New BlankSubMenu())
+
+        InitializeData()
     End Sub
 
     Public Sub New(_email As String)
@@ -132,16 +125,23 @@ Class MainWindow
         InitializeService()
         getTime()
         email = _email
-        MsgBox("Welcome " & email, MsgBoxStyle.Information, "AIDE")
-        SetEmployeeData()
-        attendance()
-        LoadSideBar()
-        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
-        SubMenuFrame.Navigate(New BlankSubMenu())
+        
+        InitializeData()
     End Sub
 #End Region
 
 #Region "Common Methods"
+
+    Private Sub InitializeData()
+        MsgBox("Welcome " & email, MsgBoxStyle.Information, "AIDE")
+        SetEmployeeData()
+        attendance()
+
+        LoadVersionNo()
+        LoadSideBar()
+        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
+        SubMenuFrame.Navigate(New BlankSubMenu())
+    End Sub
 
     Public Function CheckOutlook() As Boolean
         Try
@@ -294,6 +294,12 @@ Class MainWindow
             MessageBox.Show("Another instance of AIDE is already running!")
             End
         End If
+    End Sub
+
+    Private Sub LoadVersionNo()
+        With Assembly.GetExecutingAssembly().GetName().Version
+            txtTitle.Text = "Adaptive Intelligent Dashboard for Employees " & .Major & "." & .Minor & "." & .Build
+        End With
     End Sub
 
 #End Region

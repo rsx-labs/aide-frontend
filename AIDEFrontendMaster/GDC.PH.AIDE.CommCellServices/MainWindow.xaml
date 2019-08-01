@@ -42,7 +42,7 @@
              
                     <Viewbox HorizontalAlignment="Left" >
                         <Button x:Name="DashboardBtn" Click="DashboardBtn_Click" Style="{DynamicResource Flat}" Margin="10,7"  >
-                        <TextBlock TextWrapping="Wrap" Margin="0" Text="Adaptive Intelligent Dashboard for Employees" Foreground="WhiteSmoke"/>
+                        <TextBlock x:Name="txtTitle" TextWrapping="Wrap" Margin="0" FontWeight="Bold" Foreground="WhiteSmoke"/>
                         </Button>
                     </Viewbox>
                 </StackPanel>
