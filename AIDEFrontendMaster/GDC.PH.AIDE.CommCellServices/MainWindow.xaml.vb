@@ -396,8 +396,8 @@ Class MainWindow
     End Sub
 
     Private Sub ProjectBtn_Click(sender As Object, e As RoutedEventArgs)
-        PagesFrame.Navigate(New CreateProjectPage(PagesFrame, profile.Emp_ID))
-        SubMenuFrame.Navigate(New ProjectSubMenuPage(PagesFrame, profile.Emp_ID, email, AddFrame, MenuGrid, SubMenuFrame))
+        PagesFrame.Navigate(New CreateProjectPage(PagesFrame, profile))
+        SubMenuFrame.Navigate(New ProjectSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
         LoadSideBar()
         'PagesFrame.Navigate(New ViewProjectUI(PagesFrame))
         'SubMenuFrame.Navigate(New BlankSubMenu())
