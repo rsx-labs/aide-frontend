@@ -56,8 +56,8 @@ Public Class BillablesPage
         Me.InitializeComponent()
         InitializeService()
 
-        month = Date.Now.Month
-        year = Date.Now.Year
+        month = lastWeekSaturday.Month
+        year = lastWeekSaturday.Year
 
         GenerateColors()
         LoadMonth()

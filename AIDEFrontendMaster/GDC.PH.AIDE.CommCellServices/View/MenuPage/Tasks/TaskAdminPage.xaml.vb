@@ -6,8 +6,6 @@ Imports System.Windows.Xps.Packaging
 Imports System.IO
 Imports System.Printing
 
-
-
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class TaskAdminPage
     Implements IAideServiceCallback
@@ -91,9 +89,6 @@ Class TaskAdminPage
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
 
     End Sub
-
-
-
 #End Region
 
     Dim _outstanding As Integer
@@ -330,7 +325,7 @@ Class TaskAdminPage
         '_addframe.Margin = New Thickness(0, 0, 0, 0)
     End Sub
 
-    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
         Dim totalRecords As Integer = lstTasks.Length
 
         If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
@@ -341,7 +336,7 @@ Class TaskAdminPage
         DisplayPagingInfo()
     End Sub
 
-    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
         paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
         If currentPage > 1 Then
             currentPage -= 1
@@ -358,4 +353,5 @@ Class TaskAdminPage
     End Sub
 
 #End Region
+
 End Class
