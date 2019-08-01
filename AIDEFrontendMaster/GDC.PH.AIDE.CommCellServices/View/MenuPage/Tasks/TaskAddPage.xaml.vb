@@ -1,6 +1,7 @@
 ﻿Imports System.Collections.ObjectModel
 Imports System.ServiceModel
 Imports UI_AIDE_CommCellServices.ServiceReference1
+Imports System.ComponentModel
 
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class TaskAddPage

@@ -1260,10 +1260,9 @@
 
                         <DataGrid Background="Transparent" x:Name="dgProjectList" ItemsSource="{Binding ProjectList}" BorderBrush="Transparent" AutoGenerateColumns="False" IsReadOnly="True" CanUserResizeColumns="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Project ID" Binding="{Binding ProjectID}" Width="1*"/>
-                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Project Name" Binding="{Binding ProjectName}" Width="2*"/>
-                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Category" Binding="{Binding Category}" Width="1*"/>
-                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Billability" Binding="{Binding Billability}" Width="1*"/>
+                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Project ID" Binding="{Binding ProjectID}" Width="0.25*"/>
+                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Project Name" Binding="{Binding ProjectName}" Width="0.5*"/>
+                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Billability" Binding="{Binding Billability}" Width="0.25*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Border>
