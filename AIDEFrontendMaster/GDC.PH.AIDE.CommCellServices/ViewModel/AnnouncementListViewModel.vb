@@ -5,14 +5,12 @@ Imports System.Collections.ObjectModel
 Public Class AnnouncementListViewModel
     Implements INotifyPropertyChanged
 
-    Private _objAnnouncementset As New ObservableCollection(Of AnnouncementModel)
-    Private _objAnnouncement As New AnnouncementModel
-    Private myAnnouncementSet As New AnnouncementDBProvider
+    Public _objAnnouncement As New AnnouncementModel
+    Public _objAnnouncementset As New ObservableCollection(Of AnnouncementModel)
 
     Sub New()
-        For Each _myannounceSet As myAnnouncementSet In myAnnouncementSet._getobjAnnouncement
-            _objAnnouncementset.Add(New AnnouncementModel(_myannounceSet))
-        Next
+        _objAnnouncementset = New ObservableCollection(Of AnnouncementModel)
+        _objAnnouncement = New AnnouncementModel
     End Sub
 
     Public Property ObjectAnnouncementSet As ObservableCollection(Of AnnouncementModel)

@@ -861,7 +861,7 @@
             </Grid>
             <Grid Grid.Row="1" Background="Gray">
                 <Viewbox>
-                    <TextBlock Foreground="White" Margin="10" Text="Please complete all commendation fields"  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Foreground="White" Margin="10" Text="Please fill up all required fields." FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Viewbox>
             </Grid>
 
@@ -904,7 +904,7 @@
                             <TextBox x:Name="txtSentBy" TextWrapping="Wrap" BorderThickness="0" Background="Transparent" Template="{DynamicResource TextBoxBaseControlTemplate}" 
                              MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                         </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Sent by" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Sent by *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -941,7 +941,7 @@
                           SelectedValue="{Binding SelectedProject}"
                           SelectedValuePath="ProjectID" Style="{DynamicResource StyleComboBox}"/>
 
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select project" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select project *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -973,7 +973,7 @@
                             <TextBox Background="Transparent" BorderThickness="0" x:Name="txtCommendationEmployees" Template="{DynamicResource TextBoxBaseControlTemplate}" 
                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                         </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Add employee" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Add employee *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -1004,7 +1004,7 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <ComboBox x:Name="comboAddEmployee" Margin="10,5,5,10" IsReadOnly="True"
+                            <ComboBox x:Name="comboAddEmployee" Margin="10,5,5,10" IsReadOnly="True" IsEnabled="False"
                           SelectedValuePath="Emp_ID" Style="{DynamicResource StyleComboBox}" DisplayMemberPath="Nick_Name" />
                             <TextBlock x:Name="txtemployeeWM" FontSize="12" IsHitTestVisible="False" Text="Select employee" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                 <TextBlock.Style>
@@ -1032,7 +1032,7 @@
                             </TextBlock>
                         </Grid>
                         <Grid Grid.Column="1">
-                            <Button Style="{DynamicResource ButtonAdd}" x:Name="btnCommendationAddEmployee" Margin="5,5,5,10" VerticalContentAlignment="Center">
+                            <Button Style="{DynamicResource ButtonAdd}" x:Name="btnCommendationAddEmployee" IsEnabled="False" Margin="5,5,5,10" VerticalContentAlignment="Center">
                                 <!--<Viewbox>
                                     --><!--<TextBlock Text="+" TextWrapping="Wrap" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>--><!--
                                 </Viewbox>-->
@@ -1059,7 +1059,7 @@
                             </RichTextBox>
                             
                         </Border>
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Write commendation reason" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Write commendation reason *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -1089,7 +1089,7 @@
 
                             <DatePicker Style="{DynamicResource styleDatePickerfrom}" Text="12" Margin="2" x:Name="dateInput" BorderBrush="Transparent"/>
                         </Border>
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a date *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>

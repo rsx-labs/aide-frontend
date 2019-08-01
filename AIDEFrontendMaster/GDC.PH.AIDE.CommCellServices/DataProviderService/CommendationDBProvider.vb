@@ -20,7 +20,7 @@ Public Class CommendationDBProvider
     Public Sub SetMyCommendations(ByVal _commend As Commendations)
         Dim _commendObject As MyCommendations = New MyCommendations With {
                 .COMMEND_ID = _commend.COMMEND_ID,
-                .DEPT_ID = _commend.DEPT_ID,
+                .EMP_ID = _commend.EMP_ID,
                 .PROJECT = _commend.PROJECT,
                 .EMPLOYEE = _commend.EMPLOYEE,
                 .DATE_SENT = _commend.DATE_SENT,
@@ -34,7 +34,7 @@ End Class
 
 Public Class MyCommendations
     Property COMMEND_ID As Integer
-    Property DEPT_ID As Integer
+    Property EMP_ID As Integer
     Property PROJECT As String
     Property EMPLOYEE As String
     Property DATE_SENT As Date

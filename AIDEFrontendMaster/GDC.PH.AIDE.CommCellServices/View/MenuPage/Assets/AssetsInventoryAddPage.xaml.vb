@@ -78,15 +78,13 @@ Public Class AssetsInventoryAddPage
 #End Region
 
 #Region "Events"
-
     Private Sub btnUpdate_Click(sender As Object, e As RoutedEventArgs) Handles btnUpdate.Click
         Try
             e.Handled = True
             Dim assets As New Assets
             If CheckMissingField() Then
-                MsgBox("Please Fill up the Fields!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
             Else
-
                 assets.EMP_ID = empId
                 assets.ASSET_ID = Integer.Parse(txtID.Text)
                 assets.DATE_ASSIGNED = Date.Parse(dateInput.SelectedDate)
@@ -415,8 +413,9 @@ Public Class AssetsInventoryAddPage
     Public Function CheckMissingField() As Boolean
         If cbAssetType.Text = String.Empty AndAlso _
                txtAssetTag.Text = String.Empty AndAlso _
-               txtSerial.Text = String.Empty AndAlso _
-               txtModel.Text = String.Empty AndAlso _
+                txtAssetType.Text = String.Empty AndAlso _
+                cbStatus.Text = String.Empty AndAlso _
+                cbNickname.Text = String.Empty AndAlso _
                cbAssetManufacturer.Text = String.Empty Then
             Return True
         Else

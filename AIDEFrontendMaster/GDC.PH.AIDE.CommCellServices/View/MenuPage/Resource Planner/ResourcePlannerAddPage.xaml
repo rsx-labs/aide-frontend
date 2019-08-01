@@ -1117,7 +1117,7 @@
             </Grid>
             <Grid Grid.Row="1" Background="Gray">
                 <Viewbox>
-                <TextBlock Foreground="White" Margin="10" Text="Please Select Employee Name (For Managers Only!)"  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <TextBlock x:Name="txtInfo" Foreground="White" Margin="10" Text="Please Select Employee Name (For Managers Only)"  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Viewbox>
             </Grid>
             <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}">
@@ -1166,7 +1166,7 @@
                     <Grid Grid.Row="1">
                         <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbCategory" Margin="5,5,10,5" ItemsSource="{Binding CategoryList}" SelectedValue="{Binding Path=Status}"
                                DisplayMemberPath="Descr" SelectedValuePath="Status" />
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Leave Type" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select leave type *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -1195,7 +1195,7 @@
                         <Border Margin="5,5,10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                             <DatePicker Loaded="DatePicker_Loaded" Style="{DynamicResource styleDatePickerfrom}" BorderBrush="Transparent" x:Name="dtpFrom" Text="12" Margin="2"/>
                         </Border>
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select Start Date" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select start date *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -1224,7 +1224,7 @@
                         <Border Margin="5,5,10,5"  Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                             <DatePicker Loaded="DatePicker_Loaded" Style="{DynamicResource styleDatePickerto}" x:Name="dtpTo" Margin="2" BorderBrush="Transparent"/>
                         </Border>
-                        <TextBlock IsHitTestVisible="False" Text="Select End Date" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                        <TextBlock IsHitTestVisible="False" Text="Select end date *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>

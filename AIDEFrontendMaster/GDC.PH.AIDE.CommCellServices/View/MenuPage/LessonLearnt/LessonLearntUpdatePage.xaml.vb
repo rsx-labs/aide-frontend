@@ -11,12 +11,17 @@ UseSynchronizationContext:=False)>
 Class LessonLearntUpdatePage
     Implements IAideServiceCallback
 
+#Region "Fields"
     Public frame As Frame
     Public profile As Profile
     Public email As String
     Private _menugrid As Grid
     Private _addframe As Frame
     Private _submenuframe As Frame
+
+    Dim lessonLearnt As New LessonLearnt
+    Dim client As AideServiceClient
+#End Region
 
 #Region "Provider Declaration"
     Dim actionListProvider As New ActionListDBProvider
@@ -32,9 +37,7 @@ Class LessonLearntUpdatePage
     Dim lessonLearntModel As New LessonLearntModel
 #End Region
 
-    Dim lessonLearnt As New LessonLearnt
-    Dim client As AideServiceClient
-
+#Region "Constructor"
     Public Sub New(_frame As Frame, _lessonLearntModel As LessonLearntModel, _profile As Profile, _email As String, _menugrid As Grid, _submenuframe As Frame, _addframe As Frame)
         InitializeComponent()
         Me._menugrid = _menugrid
@@ -48,9 +51,9 @@ Class LessonLearntUpdatePage
         GetActionReference()
         SetDataContext()
     End Sub
+#End Region
 
 #Region "Common Methods"
-
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
         Try
@@ -87,11 +90,9 @@ Class LessonLearntUpdatePage
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
 
     End Sub
-
 #End Region
 
 #Region "Private Methods"
-
     Private Sub GetActionReference()
         Try
             If Me.InitializeService() Then
@@ -140,15 +141,15 @@ Class LessonLearntUpdatePage
             GetDataContext(Me.DataContext())
 
             If lessonLearnt.Problem.Trim = String.Empty Or lessonLearnt.Resolution.Trim = String.Empty Then
-                MsgBox("Please Enter All Required Fields", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
             Else
-                Dim result As Integer = MsgBox("Are you sure you want to Update?", MsgBoxStyle.YesNo, "AIDE")
+                Dim result As Integer = MsgBox("Are you sure you want to update?", MsgBoxStyle.YesNo, "AIDE")
 
                 If result = vbYes Then
                     Try
                         If Me.InitializeService() Then
                             client.UpdateLessonLearntInfo(lessonLearnt)
-                            MsgBox("Successfully Updated", MsgBoxStyle.Information, "AIDE")
+                            MsgBox("Successfully updated", MsgBoxStyle.Information, "AIDE")
                             frame.Navigate(New LessonLearntPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
                             frame.IsEnabled = True
                             frame.Opacity = 1
@@ -178,7 +179,6 @@ Class LessonLearntUpdatePage
         _submenuframe.Opacity = 1
         _addframe.Visibility = Visibility.Hidden
     End Sub
-
 #End Region
 
 End Class

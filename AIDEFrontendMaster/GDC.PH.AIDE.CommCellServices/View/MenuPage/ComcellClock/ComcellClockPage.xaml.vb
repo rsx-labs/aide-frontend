@@ -24,6 +24,7 @@ Class ComcellClockPage
     Private monthToday As Integer
     Private ComcellVM As New ComcellViewModel
     Private profile As Profile
+    Private ComcellClockModel As New ComcellClockModel
 #End Region
 
 #Region "Constructor"
@@ -79,7 +80,23 @@ Class ComcellClockPage
     End Sub
 #End Region
 
-#Region "Main Functions"
+#Region "Methods/Functions"
+    Public Sub getTime()
+        Dim actualTime As String
+        Dim timer As DispatcherTimer = New DispatcherTimer(New TimeSpan(0, 0, 1), DispatcherPriority.Normal, Function()
+                                                                                                                 actualTime = DateTime.Now.DayOfWeek.ToString().ToUpper() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString()
+                                                                                                                 If TimeCheck(actualTime) Then
+                                                                                                                     'alarmActive = True
+                                                                                                                     Dim winwin As New ComcellClockWindow
+                                                                                                                     winwin.ShowDialog()
+                                                                                                                     If _window.WindowState = WindowState.Minimized Then
+                                                                                                                         _window.Show()
+
+                                                                                                                     End If
+                                                                                                                 End If
+                                                                                                             End Function, Me.Dispatcher)
+    End Sub
+
     Private Sub GetData()
         Try
             If InitializeService() Then
@@ -94,7 +111,7 @@ Class ComcellClockPage
 
     Private Sub LoadData()
         'Dim AlarmDate As String
-        Dim ComcellClockModel As New ComcellClockModel
+        ComcellClockModel = New ComcellClockModel
         Dim ComcellClockDB As New ComcellClockDBProvider
 
         Try
@@ -155,28 +172,6 @@ Class ComcellClockPage
                 Return String.Empty
         End Select
     End Function
-#End Region
-
-
-    Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
-        comcellFrame.Navigate(New ComcellClockAddPage(profile, Me.comcellFrame, _window))
-    End Sub
-
-    Public Sub getTime()
-        Dim actualTime As String
-        Dim timer As DispatcherTimer = New DispatcherTimer(New TimeSpan(0, 0, 1), DispatcherPriority.Normal, Function()
-                                                                                                                 actualTime = DateTime.Now.DayOfWeek.ToString().ToUpper() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString()
-                                                                                                                 If TimeCheck(actualTime) Then
-                                                                                                                     'alarmActive = True
-                                                                                                                     Dim winwin As New ComcellClockWindow
-                                                                                                                     winwin.ShowDialog()
-                                                                                                                     If _window.WindowState = WindowState.Minimized Then
-                                                                                                                         _window.Show()
-
-                                                                                                                     End If
-                                                                                                                 End If
-                                                                                                             End Function, Me.Dispatcher)
-    End Sub
 
     Public Function TimeCheck(timenow As String) As Boolean
         TimeCheck = False
@@ -222,6 +217,12 @@ Class ComcellClockPage
         'load controls
         ManagerAuth()
     End Sub
+#End Region
+
+#Region "Events"
+    Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
+        comcellFrame.Navigate(New ComcellClockAddPage(profile, Me.comcellFrame, _window, ComcellClockModel))
+    End Sub
 
     'Private Sub StopBtn_Click(sender As Object, e As RoutedEventArgs)
     '    GridAlarm.Tag = String.Empty
@@ -230,4 +231,6 @@ Class ComcellClockPage
     '    alarmActive = False
     '    StopBtn.Visibility = False
     'End Sub
+#End Region
+
 End Class

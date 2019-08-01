@@ -93,10 +93,10 @@ Class ThreeC_InsertPage
     
     Private Function ValidateFields(ByVal obj As ConcernViewModel)
         If obj.SelectedConcern.CONCERN = "" Or obj.SelectedConcern.CAUSE = "" Or obj.SelectedConcern.COUNTERMEASURE = "" Then
-            MsgBox("Fields Cannot Be null", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
             Return False
         ElseIf dtDate.SelectedDate.ToString() = String.Empty Then
-            MsgBox("Please select Due Date before creating concern.", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Please select due date before creating concern.", MsgBoxStyle.Exclamation, "AIDE")
             Return False
         Else
             concern.Cause = obj.SelectedConcern.CAUSE
@@ -169,7 +169,7 @@ Class ThreeC_InsertPage
 
         If isValidate Then
             _AIDEClientService.InsertIntoConcern(concern, email)
-            MsgBox("Successfully Created 3C!", MsgBoxStyle.Information, "AIDE")
+            MsgBox("Successfully created 3C!", MsgBoxStyle.Information, "AIDE")
 
             txtRefNo.Text = String.Empty
             txtConcern.Clear()

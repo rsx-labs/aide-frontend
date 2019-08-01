@@ -1092,7 +1092,7 @@
 
                                             <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Name="txtProjID" TextWrapping="Wrap" Text="{Binding ACTION_MESSAGE, Mode=TwoWay}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12"/>
                                         </Border>
-                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter project ID" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter project ID *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -1123,7 +1123,7 @@
 
                                         <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Name="txtProjName" TextWrapping="Wrap" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12"/>
                                     </Border>
-                                    <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter project name" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                    <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter project name *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -1215,7 +1215,7 @@
                                         <ComboBoxItem Content="Internal"/>
                                         <ComboBoxItem Content="External"/>
                                     </ComboBox>
-                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select billability" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select billability *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>

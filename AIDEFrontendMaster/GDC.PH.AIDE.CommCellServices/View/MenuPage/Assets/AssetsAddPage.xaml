@@ -900,7 +900,7 @@
             </Grid>
             <Grid Grid.Row="1" Background="Gray">
                 <Viewbox>
-                    <TextBlock Foreground="White" Margin="10" Text="Fill up all required fields"  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Foreground="White" Margin="10" Text="Please fill up all required fields."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Viewbox>
             </Grid>
 
@@ -942,7 +942,6 @@
                         </Grid>
                         <Grid Grid.Row="0">
                             <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-
                                 <DatePicker x:Name="dateInput" Style="{DynamicResource styleDatePickerfrom}" BorderBrush="Transparent" Margin="2" />
                             </Border>
                             <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select date assigned" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
@@ -1004,7 +1003,7 @@
                         <Grid Grid.Row="2">
                             <ComboBox x:Name="cbAssetType" IsReadOnly="True" VerticalContentAlignment="Center" Margin="0,5,5,5"
                           SelectedValuePath="ASSET_ID" Style="{DynamicResource StyleComboBox}" DisplayMemberPath="ASSET_DESC" ItemsSource="{Binding AssetTypeList}"/>
-                            <TextBlock x:Name="cbAssetWaterMark" FontSize="12" IsHitTestVisible="False" Text="Select an asset" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock x:Name="cbAssetWaterMark" FontSize="12" IsHitTestVisible="False" Text="Select an asset *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1132,7 +1131,7 @@
 
                                 <TextBox x:Name="txtAssetTag" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center"/>
                             </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter asset tag" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter asset tag *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1160,7 +1159,7 @@
                         <Grid Grid.Row="2">
                             <ComboBox x:Name="cbNickname" Margin="5,5,0,5" IsReadOnly="True" Style="{DynamicResource StyleComboBox}" VerticalContentAlignment="Center"
                           SelectedValuePath="Emp_ID" DisplayMemberPath="Employee_Name" ItemsSource="{Binding NicknameList}"/>
-                            <TextBlock x:Name="cbNickNameWaterMark" FontSize="12" IsHitTestVisible="False" Text="Whom to assign?" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock x:Name="cbNickNameWaterMark" FontSize="12" IsHitTestVisible="False" Text="Whom to assign? *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>

@@ -866,7 +866,7 @@
             </Grid>
             <Grid Grid.Row="1" Background="Gray">
                 <Viewbox>
-                    <TextBlock Foreground="White" Margin="10" Text="Please fill up all required field."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Foreground="White" Margin="10" Text="Please fill up all required fields."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Viewbox>
             </Grid>
             <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}">
@@ -880,7 +880,7 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Margin="10,5,5,5"/>
-                        <TextBlock x:Name="txtBlockMonth" FontSize="12" IsHitTestVisible="False" Text="Select Month" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                        <TextBlock x:Name="txtBlockMonth" FontSize="12" IsHitTestVisible="False" Text="Select Month *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -895,7 +895,7 @@
                     </Grid>
                     <Grid Grid.Row="1">
                         <ComboBox ItemsSource="{Binding NicknameList}" SelectedValuePath="First_Name" DisplayMemberPath="First_Name" Style="{DynamicResource StyleComboBox}" x:Name="cbFacilitator" Margin="10,5,5,5"/>
-                        <TextBlock x:Name="txtBlockFacilitator" FontSize="12" IsHitTestVisible="False" Text="Select Facilitator" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                        <TextBlock x:Name="txtBlockFacilitator" FontSize="12" IsHitTestVisible="False" Text="Select Facilitator *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -910,7 +910,7 @@
                     </Grid>
                     <Grid Grid.Row="2">
                         <ComboBox ItemsSource="{Binding NicknameList}" Style="{DynamicResource StyleComboBox}" SelectedValuePath="First_Name" DisplayMemberPath="First_Name" x:Name="cbMinTaker" Margin="10,5,5,5"/>
-                        <TextBlock x:Name="txtBlockMinsTaker" FontSize="12" IsHitTestVisible="False" Text="Select Minutes Taker" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                        <TextBlock x:Name="txtBlockMinsTaker" FontSize="12" IsHitTestVisible="False" Text="Select Minutes Taker *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -925,7 +925,7 @@
                     </Grid>
                     <Grid Grid.Row="3">
                         <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="10,5,5,5"/>
-                        <TextBlock x:Name="txtBlockYear" FontSize="12" IsHitTestVisible="False" Text="Select Fiscal Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                        <TextBlock x:Name="txtBlockYear" FontSize="12" IsHitTestVisible="False" Text="Select Fiscal Year *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>

@@ -51,14 +51,10 @@
                 <Label x:Name="lblPagingInfo" Visibility="Hidden" HorizontalAlignment="Stretch"/>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock FontSize="15" Name="lbl_noOT" Margin="0,0,5,0" Visibility="Collapsed" 
-                               Foreground="Red" VerticalAlignment="Center">N O</TextBlock>
-                    <TextBlock FontSize="15" Name="lbl_noOT1" Margin="0,0,5,0" Visibility="Collapsed" 
-                               Foreground="Red" VerticalAlignment="Center">O U T S T A N D I N G</TextBlock>
-                    <TextBlock  FontSize="15" Name="lbl_noOT2" Visibility="Collapsed" 
-                                Foreground="Red" VerticalAlignment="Center">T A S K</TextBlock>
+                    <TextBlock FontSize="15" Name="lbl_noOT" Margin="0,0,5,0" Text="N O    O U T S T A N D I N G    T A S K S" Visibility="Collapsed" 
+                               Foreground="Red" VerticalAlignment="Center"/>
                 </StackPanel>
-                <Border Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+                <Border x:Name="taskborder" Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
                     <DataGrid x:Name="lv_taskList" 
                           Background="Transparent"
                           ItemsSource="{Binding TaskList}" 

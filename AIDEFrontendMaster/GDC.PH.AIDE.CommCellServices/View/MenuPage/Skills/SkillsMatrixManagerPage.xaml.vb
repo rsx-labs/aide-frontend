@@ -469,7 +469,7 @@ Class SkillsMatrixManagerPage
             skillid = cbProjectList.SelectedValue
             GetProfLevel()
             If cbProjectList.SelectedValue = 0 Or checkRB() = True Then
-                Dim result = MsgBox("You are going to update your Skills" & vbNewLine & "Do you wish to Continue?", MessageBoxButtons.YesNo, "Employee Assist Tools")
+                Dim result = MsgBox("You are going to update your Skills" & vbNewLine & "Do you wish to continue?", MessageBoxButtons.YesNo, "AIDE")
 
                 If bClick = False Then
                     If result = vbYes Then
@@ -484,18 +484,18 @@ Class SkillsMatrixManagerPage
 
             Else
                 If proficiency = proflevel Then
-                    MsgBox("You've Selected Your Current Proficiency!" & vbNewLine & "Please Select Another One to Update " & cbProjectList.Text.ToUpper, MsgBoxStyle.Critical, "Employee Assist Tools")
+                    MsgBox("You've selected your current proficiency!" & vbNewLine & "Please select another one to update " & cbProjectList.Text.ToUpper, MsgBoxStyle.Critical, "AIDE")
                 Else
                     InitializeService()
                     If client.GetProfLvlByEmpIDSkillIDs(Convert.ToInt32(lblEmpID.Text), skillid).Prof_LVL = 1 Then
-                        Dim result = MsgBox("You are going to Update " & cbProjectList.Text.ToUpper & " Skill." & vbNewLine & "Do you wish to Continue?", MessageBoxButtons.YesNo, "Employee Assist Tools")
+                        Dim result = MsgBox("You are going to update " & cbProjectList.Text.ToUpper & " Skill." & vbNewLine & "Do you wish to Continue?", MessageBoxButtons.YesNo, "AIDE")
                         If result = vbYes Then
                             UpdateSkillsProficiency()
                         Else
                             ClearSelection()
                         End If
                     Else
-                        Dim result = MsgBox("You are going to Add Proficiency Level to " & cbProjectList.Text.ToUpper & " Skill." & vbNewLine & "Do you wish to Continue?", MessageBoxButtons.YesNo, "Employee Assist Tools")
+                        Dim result = MsgBox("You are going to add proficiency level to " & cbProjectList.Text.ToUpper & " skill." & vbNewLine & "Do you wish to Continue?", MessageBoxButtons.YesNo, "AIDE")
                         If result = vbYes Then
                             InsertSkillsProficiency()
                         Else
@@ -508,7 +508,7 @@ Class SkillsMatrixManagerPage
                 End If
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Employee Assist Tools")
+            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
         End Try
     End Sub
 

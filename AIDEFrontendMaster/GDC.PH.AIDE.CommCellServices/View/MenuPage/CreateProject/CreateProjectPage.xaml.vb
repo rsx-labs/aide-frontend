@@ -187,7 +187,7 @@ Class CreateProjectPage
             LoadProjectList()
             ClearSelection()
             txtSearch.Text = String.Empty
-            MsgBox("Project Successfully Added", MsgBoxStyle.Information, "AIDE")
+            MsgBox("Project successfully added", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Project")
         End Try
@@ -211,7 +211,7 @@ Class CreateProjectPage
 
             ClearSelection()
             ' txtSearch.Text = String.Empty
-            MsgBox("Project Successfully Updated", MsgBoxStyle.Information, "AIDE")
+            MsgBox("Project successfully updated", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Project")
         End Try
@@ -270,7 +270,7 @@ Class CreateProjectPage
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
         If txtProjName.Text = String.Empty Or cbBillability.Text = String.Empty Or cbCategory.Text = String.Empty Then
-            MsgBox("Please fill up all the Fields", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
         ElseIf (String.IsNullOrEmpty((lblProjIdValidation.Content))) = False Then
             MsgBox("Project ID isn't available", MsgBoxStyle.Critical, "AIDE")
         Else
@@ -307,7 +307,7 @@ Class CreateProjectPage
             Try
                 Dim lstProject As Project = client.GetProjectByID(txtProjID.Text)
                 If Not IsNothing(lstProject) Then
-                    lblProjIdValidation.Content = "Project ID isn't Available"
+                    lblProjIdValidation.Content = "Project ID isn't available"
                 Else
                     lblProjIdValidation.Content = String.Empty
                 End If
@@ -353,7 +353,7 @@ Class CreateProjectPage
 
     Private Sub btnUpdate_Click(sender As Object, e As RoutedEventArgs) Handles btnUpdate.Click
         If txtProjName.Text = Nothing Or cbBillability.Text = Nothing Or cbCategory.Text = Nothing Then
-            MsgBox("Please fill out completely")
+            MsgBox("Please fill up all required fields")
         Else
             If (String.IsNullOrEmpty((txtSearch.Text))) = False Then
                 UpdateProjectDetails()

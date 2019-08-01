@@ -163,7 +163,6 @@ Class UpdateActionListPage
 #End Region
 
 #Region "Events Trigger"
-
     Private Sub UpdateBtn_Click(sender As Object, e As RoutedEventArgs)
         Try
             InitializeService()
@@ -171,7 +170,7 @@ Class UpdateActionListPage
                 If _actionModel.DATE_CLOSED = Nothing And _actionModel.ACTION_MESSAGE <> Nothing And _actionModel.DUE_DATE <> Nothing And Act_AssignedAll.Text <> String.Empty Then
                     If MsgBox("Do you want to proceed without closing date?", MsgBoxStyle.Information + vbYesNo, "AIDE") = vbYes Then
                         aide.UpdateActionList(getDataUpdate(Me.DataContext()))
-                        MsgBox("Successfully Updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                        MsgBox("Successfully updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                         act_ion.Act_ID = Nothing
                         act_ion.Act_Message = Nothing
                         act_ion.Act_Assignee = Nothing
@@ -188,11 +187,11 @@ Class UpdateActionListPage
                         _addframe.Visibility = Visibility.Hidden
                     End If
                 Else
-                    MsgBox("Please fill up all fields!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                    MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 End If
             Else
                 aide.UpdateActionList(getDataUpdate(Me.DataContext()))
-                MsgBox("Successfully Updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                MsgBox("Successfully updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 act_ion.Act_ID = Nothing
                 act_ion.Act_Message = Nothing
                 act_ion.Act_Assignee = Nothing
@@ -229,7 +228,7 @@ Class UpdateActionListPage
     'Validates if selected duedate is less than the previous due date
     Private Sub Act_DueDate_SelectedDateChanged(sender As Object, e As SelectionChangedEventArgs)
         If Act_DueDate.SelectedDate < hold_Duedate Then
-            MsgBox("Dates Should be not the Day Before!", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Dates should be not the day before!", MsgBoxStyle.Critical, "AIDE")
 
             Act_DueDate.Text = hold_Duedate
         End If
@@ -241,7 +240,7 @@ Class UpdateActionListPage
     Private Sub btnRemovedEmployee_Click(sender As Object, e As RoutedEventArgs) Handles btnRemovedEmployee.Click
         e.Handled = True
         If Act_AssignedAll.Text = String.Empty Then
-            MsgBox("Textbox is Empty", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Textbox is empty", MsgBoxStyle.Exclamation, "AIDE")
         ElseIf Act_AssigneeCB2.Text = String.Empty Then
             MsgBox("Please select an employee", MsgBoxStyle.Exclamation, "AIDE")
         Else
@@ -269,7 +268,6 @@ Class UpdateActionListPage
             End If
         End If
     End Sub
-#End Region
 
     Private Sub btnAddEmployee_Click(sender As Object, e As RoutedEventArgs)
         e.Handled = True
@@ -282,7 +280,7 @@ Class UpdateActionListPage
             If ifYes = -1 Then
                 Act_AssignedAll.Text += ", " + Act_AssigneeCB2.Text
             Else
-                MsgBox("Cannot Allow Duplicate Entry!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Cannot allow duplicate entry!", MsgBoxStyle.Exclamation, "AIDE")
             End If
         End If
     End Sub
@@ -316,4 +314,6 @@ Class UpdateActionListPage
             End If
         End If
     End Sub
+#End Region
+
 End Class

@@ -554,17 +554,9 @@
                         
                     </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <ComboBox FontSize="12" Style="{DynamicResource StyleComboBox}" Name="ComcellDayCB" Margin="0,5,2.5,5" >
-                                <!--<ComboBoxItem Content="Monday"/>
-                                <ComboBoxItem Content="Tuesday"/>
-                                <ComboBoxItem Content="Wednesday"/>
-                                <ComboBoxItem Content="Tuesday"/>
-                                <ComboBoxItem Content=""/>
-                                <ComboBoxItem Content="Saturday"/>
-                                <ComboBoxItem Content="Sunday"/>-->
-                            </ComboBox>
+                            <ComboBox FontSize="12" Style="{DynamicResource StyleComboBox}" Name="ComcellDayCB" Margin="0,5,2.5,5"/>
 
-                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Day" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Day *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -599,10 +591,9 @@
 
                     <Grid Grid.Column="0">
                             <Border Margin="2.5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-
-                                <TextBox MaxLength="2" BorderBrush="Transparent" Background="Transparent" MinWidth="70" BorderThickness="0" Template="{DynamicResource TextBoxBaseControlTemplate}" Name="ComcellHourCB" TextWrapping="Wrap" Text="{Binding objectComcellClockSet.CLOCK_HOUR, Mode=TwoWay}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12" PreviewTextInput="ComcellHourCB_PreviewTextInput"/>
+                                <TextBox MaxLength="2" BorderBrush="Transparent" Background="Transparent" MinWidth="70" BorderThickness="0" Template="{DynamicResource TextBoxBaseControlTemplate}" Name="ComcellHourCB" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12" PreviewTextInput="ComcellHourCB_PreviewTextInput"/>
                             </Border>
-                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Hours" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Hours *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -614,7 +605,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelSelectedHour" TextAlignment="Center" Margin="5" Text="Hours" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                            <TextBlock x:Name="txtlabelSelectedHour" TextAlignment="Center" Margin="5" Text="Hours *" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -659,11 +650,10 @@
                             </TextBlock.Style>
                         </TextBlock>-->
                             <Border Margin="0,5,2.5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-
-                                <TextBox MaxLength="2" BorderBrush="Transparent" Background="Transparent" MinWidth="70" BorderThickness="0" Template="{DynamicResource TextBoxBaseControlTemplate}" Name="ComcellMinuteCB" TextWrapping="Wrap" Text="{Binding objectComcellClockSet.CLOCK_MINUTE, Mode=TwoWay}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12" PreviewTextInput="ComcellMinuteCB_PreviewTextInput"/>
+                                <TextBox MaxLength="2" BorderBrush="Transparent" Background="Transparent" MinWidth="70" BorderThickness="0" Template="{DynamicResource TextBoxBaseControlTemplate}" Name="ComcellMinuteCB" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12" PreviewTextInput="ComcellMinuteCB_PreviewTextInput"/>
                             </Border>
 
-                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Minutes" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Minutes *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -675,7 +665,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelSelectedMinute" TextAlignment="Center" Margin="5" Text="Minutes" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                            <TextBlock x:Name="txtlabelSelectedMinute" TextAlignment="Center" Margin="5" Text="Minutes *" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>

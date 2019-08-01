@@ -69,7 +69,6 @@ Class CommendationAddPage
 #End Region
 
 #Region "Events"
-
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
         'mainFrame.Navigate(New HomePage(mainFrame, position, empID, _addframe, _menugrid, _submenuframe))
         mainFrame.IsEnabled = True
@@ -84,11 +83,13 @@ Class CommendationAddPage
 
     Private Sub comboProject_DropDownClosed(sender As Object, e As EventArgs) Handles comboProject.DropDownClosed
         PopulateComboBox()
+        comboAddEmployee.IsEnabled = True
+        btnCommendationAddEmployee.IsEnabled = True
     End Sub
 
     Private Sub btnCommendationCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCommendationCreate.Click
         If FindMissingFields() Then
-            Dim ans = MsgBox("Are you sure you want to Create Commendation?", MsgBoxStyle.YesNo, "AIDE")
+            Dim ans = MsgBox("Are you sure you want to create commendation?", MsgBoxStyle.YesNo, "AIDE")
             If ans = MsgBoxResult.Yes Then
                 'CreateTaskID()
                 Dim comm As New Commendations
@@ -100,7 +101,7 @@ Class CommendationAddPage
                 comm.REASON = textRange.Text
                 comm.EMPLOYEE = UCase(txtCommendationEmployees.Text)
                 comm.DATE_SENT = dateInput.SelectedDate
-                comm.DEPT_ID = empID
+                comm.EMP_ID = empID
                 client.InsertCommendations(comm)
                 'mainFrame.Navigate(New HomePage(mainFrame, position, empID, _addframe, _menugrid, _submenuframe, _))
                 commendFrame.Navigate(New CommendationDashBoard(mainFrame, Me.position, Me.empID, _addframe, _menugrid, _submenuframe, Me.profiles.Email_Address, Me.profiles, commendFrame))
@@ -124,10 +125,23 @@ Class CommendationAddPage
             Dim txtBox As String = txtCommendationEmployees.Text
             Dim cbBox As String = comboAddEmployee.Text
             Dim ifYes As Integer = txtBox.IndexOf(cbBox)
-            If ifYes <> 0 Then
+            If ifYes = -1 Then
                 txtCommendationEmployees.Text += ", " + comboAddEmployee.Text
+            Else
+                MsgBox("Cannot allow duplicate entry!", MsgBoxStyle.Exclamation, "AIDE")
             End If
         End If
+    End Sub
+
+    Private Sub txtCommendationReason_KeyDown(sender As Object, e As KeyEventArgs)
+        Dim textRange As New TextRange(txtCommendationReason.Document.ContentStart, txtCommendationReason.Document.ContentEnd)
+        If textRange.Text.Length >= 10 Then
+            e.Handled = False
+        End If
+    End Sub
+
+    Private Sub txtCommendationReason_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtCommendationReason.TextChanged
+
     End Sub
 #End Region
 
@@ -251,7 +265,7 @@ Class CommendationAddPage
            comboProject.Text = String.Empty Or
            textRange.Text = String.Empty Or
             txtCommendationEmployees.Text = String.Empty Then
-            MsgBox("Please Fill All Required Fields", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
             Return False
         End If
         Return True
@@ -280,16 +294,4 @@ Class CommendationAddPage
 
     End Sub
 #End Region
-
-    Private Sub txtCommendationReason_TextChanged(sender As Object, e As TextChangedEventArgs)
-
-    End Sub
-
-    Private Sub txtCommendationReason_KeyDown(sender As Object, e As KeyEventArgs)
-        Dim textRange As New TextRange(txtCommendationReason.Document.ContentStart, txtCommendationReason.Document.ContentEnd)
-        If textRange.Text.Length >= 10 Then
-            e.Handled = False
-
-        End If
-    End Sub
 End Class

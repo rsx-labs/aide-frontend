@@ -41,7 +41,6 @@ Class ResourcePlannerAddPage
 #End Region
 
 #Region "Events"
-
     Private Sub dtpFrom_CalendarClosed(sender As Object, e As RoutedEventArgs) Handles dtpFrom.CalendarClosed
         If Not dtpFrom.SelectedDate Is Nothing Then
             If cbCategory.SelectedValue = 5 Or cbCategory.SelectedValue = 6 Or cbCategory.SelectedValue = 9 Or cbCategory.SelectedValue = 12 Or cbCategory.SelectedValue = 14 Then
@@ -68,15 +67,15 @@ Class ResourcePlannerAddPage
     Private Sub btnCreateLeave_Click(sender As Object, e As RoutedEventArgs) Handles btnCreateLeave.Click
         Try
             If profile.Permission <> "Manager" AndAlso cbCategory.DisplayMemberPath = "Holiday" Then
-                MsgBox("Sorry! You do not have authorization to file Holiday Leave. Please contact your Manager", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Sorry! You do not have authorization to file holiday Leave. Please contact your Manager", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 If cbCategory.SelectedValue = setStatus Then
-                    Dim notify = MsgBox("There is Already an Existing " & cbCategory.Text & " For This Date" & vbNewLine & "Do you wish to proceed?", MsgBoxStyle.YesNo, "AIDE")
+                    Dim notify = MsgBox("There is already an existing " & cbCategory.Text & " for this date" & vbNewLine & "Do you wish to proceed?", MsgBoxStyle.YesNo, "AIDE")
                     If notify = MsgBoxResult.Yes Then
                         InsertResourcePlanner()
                     End If
                 Else
-                    Dim ans = MsgBox("Are you sure you want to Create a " & cbCategory.Text & " Leave?", MsgBoxStyle.YesNo, "AIDE")
+                    Dim ans = MsgBox("Are you sure you want to create a " & cbCategory.Text & " leave?", MsgBoxStyle.YesNo, "AIDE")
                     If ans = MsgBoxResult.Yes Then
                         InsertResourcePlanner()
                         dtpTo.IsEnabled = True
@@ -103,7 +102,7 @@ Class ResourcePlannerAddPage
             txtEmpID.Text = lstEmployee.SelectedValue
         Else
             txtEmpID.Text = profile.Emp_ID
-            MsgBox("Sorry You Do Not Have Authorization For This Employee", MsgBoxStyle.Exclamation, "Employee Assist Tools")
+            MsgBox("Sorry you do not have authorization for this Employee", MsgBoxStyle.Exclamation, "AIDE")
         End If
     End Sub
 
@@ -187,7 +186,7 @@ Class ResourcePlannerAddPage
         End If
         'client.InsertResourcePlanner(Resource)
         _ResourceDBProvider._splist.Clear()
-        MsgBox("Successfully Applied " & cbCategory.Text, MsgBoxStyle.Information, "AIDE")
+        MsgBox("Successfully applied " & cbCategory.Text, MsgBoxStyle.Information, "AIDE")
     End Sub
 
     Public Sub LoadCategory()
@@ -218,6 +217,7 @@ Class ResourcePlannerAddPage
             txtEmpID.Text = profile.Emp_ID
             LoadEmployee()
         Else
+            txtInfo.Text = "Please fill up all required fields."
             GridForManagers.Visibility = Windows.Visibility.Collapsed
             GridLine.Visibility = Windows.Visibility.Collapsed
         End If
@@ -233,11 +233,8 @@ Class ResourcePlannerAddPage
                     watermark.Content = String.Empty
                     'or set it some value here...
                 End If
-
             End If
-
         End If
-
     End Sub
 
     Private Function FindVisualChild(Of T)(ByVal depencencyObject As DependencyObject) As T
@@ -250,12 +247,9 @@ Class ResourcePlannerAddPage
                 If (Not (result) Is Nothing) Then
                     Return result
                 End If
-
                 i = (i + 1)
             Loop
-
         End If
-
         Return Nothing
     End Function
 #End Region

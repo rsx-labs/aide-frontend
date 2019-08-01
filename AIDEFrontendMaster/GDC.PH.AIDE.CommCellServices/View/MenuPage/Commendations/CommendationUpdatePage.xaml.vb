@@ -50,6 +50,7 @@ Class CommendationUpdatePage
 
     End Sub
 #End Region
+
 #Region "Main Method"
 
 
@@ -166,12 +167,13 @@ Class CommendationUpdatePage
            comboProject.Text = String.Empty Or
            textRange.Text = String.Empty Or
             txtCommendationEmployees.Text = String.Empty Then
-            MsgBox("Please Fill All Required Fields", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
             Return False
         End If
         Return True
     End Function
 #End Region
+
 #Region "Events"
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
         'mainFrame.Navigate(New HomePage(mainFrame, position, empID, _addframe, _menugrid, _submenuframe))
@@ -197,15 +199,50 @@ Class CommendationUpdatePage
             Dim txtBox As String = txtCommendationEmployees.Text
             Dim cbBox As String = comboAddEmployee.Text
             Dim ifYes As Integer = txtBox.IndexOf(cbBox)
-            If ifYes <> 0 Then
+            If ifYes = -1 Then
                 txtCommendationEmployees.Text += ", " + comboAddEmployee.Text
+            Else
+                MsgBox("Cannot allow duplicate entry!", MsgBoxStyle.Exclamation, "AIDE")
+            End If
+        End If
+    End Sub
+
+    Private Sub btnCommendationCreate_Click(sender As Object, e As RoutedEventArgs)
+
+    End Sub
+
+    Private Sub btnCommendationUpdate_Click(sender As Object, e As RoutedEventArgs)
+        If FindMissingFields() Then
+            Dim ans = MsgBox("Are you sure you want to update commendation?", MsgBoxStyle.YesNo, "AIDE")
+            If ans = MsgBoxResult.Yes Then
+                'CreateTaskID()
+                Dim comm As New Commendations
+                Dim textRange As New TextRange(txtCommendationReason.Document.ContentStart, txtCommendationReason.Document.ContentEnd)
+
+                comm.COMMEND_ID = commendationVM._commendationModel.CommendID
+                comm.SENT_BY = txtSentBy.Text
+                comm.PROJECT = comboProject.Text
+                comm.REASON = textRange.Text
+                comm.EMPLOYEE = UCase(txtCommendationEmployees.Text)
+                comm.DATE_SENT = dateInput.SelectedDate
+                comm.EMP_ID = empID
+                client.UpdateCommendations(comm)
+                'mainFrame.Navigate(New HomePage(mainFrame, position, empID, _addframe, _menugrid, _submenuframe, _))
+                commendFrame.Navigate(New CommendationDashBoard(mainFrame, Me.position, Me.empID, _addframe, _menugrid, _submenuframe, Me.profiles.Email_Address, Me.profiles, commendFrame))
+                mainFrame.IsEnabled = True
+                mainFrame.Opacity = 1
+                _menugrid.IsEnabled = True
+                _menugrid.Opacity = 1
+                _submenuframe.IsEnabled = True
+                _submenuframe.Opacity = 1
+
+                _addframe.Visibility = Visibility.Hidden
             End If
         End If
     End Sub
 #End Region
 
 #Region "Service Methods"
-
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
         Try
@@ -242,39 +279,4 @@ Class CommendationUpdatePage
 
     End Sub
 #End Region
-
-    Private Sub btnCommendationCreate_Click(sender As Object, e As RoutedEventArgs)
-
-    End Sub
-
-    
-    Private Sub btnCommendationUpdate_Click(sender As Object, e As RoutedEventArgs)
-        If FindMissingFields() Then
-            Dim ans = MsgBox("Are you sure you want to Update Commendation?", MsgBoxStyle.YesNo, "AIDE")
-            If ans = MsgBoxResult.Yes Then
-                'CreateTaskID()
-                Dim comm As New Commendations
-                Dim textRange As New TextRange(txtCommendationReason.Document.ContentStart, txtCommendationReason.Document.ContentEnd)
-
-                comm.COMMEND_ID = commendationVM._commendationModel.CommendID
-                comm.SENT_BY = txtSentBy.Text
-                comm.PROJECT = comboProject.Text
-                comm.REASON = textRange.Text
-                comm.EMPLOYEE = UCase(txtCommendationEmployees.Text)
-                comm.DATE_SENT = dateInput.SelectedDate
-                comm.DEPT_ID = empID
-                client.UpdateCommendations(comm)
-                'mainFrame.Navigate(New HomePage(mainFrame, position, empID, _addframe, _menugrid, _submenuframe, _))
-                commendFrame.Navigate(New CommendationDashBoard(mainFrame, Me.position, Me.empID, _addframe, _menugrid, _submenuframe, Me.profiles.Email_Address, Me.profiles, commendFrame))
-                mainFrame.IsEnabled = True
-                mainFrame.Opacity = 1
-                _menugrid.IsEnabled = True
-                _menugrid.Opacity = 1
-                _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
-
-                _addframe.Visibility = Visibility.Hidden
-            End If
-        End If
-    End Sub
 End Class

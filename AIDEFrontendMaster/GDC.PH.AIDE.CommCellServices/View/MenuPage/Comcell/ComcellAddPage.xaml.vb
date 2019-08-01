@@ -158,11 +158,11 @@ Class ComcellAddPage
             InitializeService()
             If mode = "Add" Then
                 If cbMonth.Text = Nothing Or cbFacilitator.Text = Nothing Or cbMinTaker.Text = Nothing Or cbYear.Text = Nothing Then
-                    MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 ElseIf cbFacilitator.Text = cbMinTaker.Text Then
-                    MsgBox("Selected Facilitator and Minutes Taker is the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("Selected facilitator and minutes taker are the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 Else
-                    MsgBox("Successfully Added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                    MsgBox("Successfully added", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
                     comcell.EMP_ID = profile.Emp_ID
                     comcell.MONTH = cbMonth.Text
@@ -185,11 +185,11 @@ Class ComcellAddPage
                 End If
             Else
                 If cbMonth.Text = Nothing Or cbFacilitator.Text = Nothing Or cbMinTaker.Text = Nothing Or cbYear.Text = Nothing Then
-                    MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 ElseIf cbFacilitator.Text = cbMinTaker.Text Then
-                    MsgBox("Selected Facilitator and Minutes Taker is the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("Selected facilitator and minutes taker are the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 Else
-                    MsgBox("Successfully Updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                    MsgBox("Successfully updated", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
                     comcell.COMCELL_ID = comcellID
                     comcell.MONTH = cbMonth.Text
@@ -211,7 +211,6 @@ Class ComcellAddPage
                     _addframe.Visibility = Visibility.Hidden
                 End If
             End If
-            
         Catch ex As Exception
             If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "AIDE") = vbYes Then
                 Environment.Exit(0)
@@ -228,7 +227,6 @@ Class ComcellAddPage
         _menugrid.Opacity = 1
         _submenuframe.IsEnabled = True
         _submenuframe.Opacity = 1
-
         _addframe.Visibility = Visibility.Hidden
     End Sub
 #End Region

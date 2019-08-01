@@ -1172,7 +1172,7 @@
             </Grid>
             <Grid Grid.Row="1" Background="Gray">
                 <Viewbox>
-                    <TextBlock Foreground="White" Margin="10" Text="Please fill up all required field."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Foreground="White" Margin="10" Text="Please fill up all required fields."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Viewbox>
             </Grid>
 
@@ -1195,7 +1195,7 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbProjectName" Margin="0,5,5,5"
-                                          IsEditable="True" IsReadOnly="True" Text="Select Project" 
+                                          IsEditable="True" IsReadOnly="True" Text="Select Project *" 
                                           ItemsSource="{Binding ProjectList}" DisplayMemberPath="ProjectName" 
                                           SelectedValue="{Binding SelectedProject}"
                                           SelectedValuePath="ProjectID"/>
@@ -1230,7 +1230,7 @@
                                 <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding SelectedProject.ProjectID}" TextWrapping="Wrap"
                                      x:Name="projID"    MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
-                                <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter project ID" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                                <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter project ID *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1319,9 +1319,7 @@
                         </Grid>
                         <Grid Grid.Row="4">
                             <Button Style="{DynamicResource RoundCorner1 }" Command="{Binding CreateCommand}"  Margin="0,5,5,5" >
-                               
-                                    <TextBlock Text="CREATE" TextWrapping="Wrap" Margin="5"/>
-                                
+                                <TextBlock Text="ASSIGN EMPLOYEE(S)" TextWrapping="Wrap" Margin="5"/>
                             </Button>
                         </Grid>
                         <Grid Grid.Row="5">
@@ -1381,7 +1379,7 @@
                             <Border Margin="5" Background="Transparent" BorderBrush="White" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
 
                                 <Viewbox  HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <TextBlock Foreground="White" TextWrapping="Wrap" Margin="5" Text="List of Assignee"/>
+                                    <TextBlock Foreground="White" TextWrapping="Wrap" Margin="5" Text="List of Assigned"/>
                                 </Viewbox>
                             </Border>
                         </Grid>

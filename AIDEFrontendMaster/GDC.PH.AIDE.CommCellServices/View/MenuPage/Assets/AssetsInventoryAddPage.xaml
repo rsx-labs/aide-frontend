@@ -896,7 +896,7 @@
             </Grid>
             <Grid Grid.Row="1" Background="Gray">
                 <Viewbox>
-                    <TextBlock Foreground="White" Margin="10" Text="Fill up all required fields"  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Foreground="White" Margin="10" Text="Please fill up all required fields."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Viewbox>
             </Grid>
 
@@ -942,7 +942,7 @@
                                 <TextBox x:Name="txtAssetType" IsReadOnly="True" TextWrapping="Wrap"  Template="{DynamicResource TextBoxBaseControlTemplate}"
                              MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Collapsed"/>
                             </Border>
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Asset type" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Asset type *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1076,7 +1076,7 @@
                                 <TextBox x:Name="txtAssetTag" IsReadOnly="True" Template="{DynamicResource TextBoxBaseControlTemplate}"
                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter asset tag" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter asset tag *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1185,7 +1185,7 @@
                         </Grid>
                         <Grid Grid.Row="1">
                             <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbStatus" Margin="5,5,0,5" IsReadOnly="True" VerticalContentAlignment="Center"/>
-                            <TextBlock x:Name="txtStatus" FontSize="12" IsHitTestVisible="False" Text="Select asset status" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock x:Name="txtStatus" FontSize="12" IsHitTestVisible="False" Text="Select asset status *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1244,7 +1244,7 @@
                         <Grid Grid.Row="3">
                             <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbNickname" Margin="5,5,0,5" IsReadOnly="True" VerticalContentAlignment="Center"
                           SelectedValuePath="Emp_ID" DisplayMemberPath="Employee_Name" ItemsSource="{Binding NicknameList}"/>
-                            <TextBlock x:Name="txtEmpName" FontSize="12" IsHitTestVisible="False" Text="Select employee" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock x:Name="txtEmpName" FontSize="12" IsHitTestVisible="False" Text="Select employee *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1268,25 +1268,6 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <!--<Border  Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-
-                                <TextBox x:Name="txtAssignedTo" IsReadOnly="True" TextWrapping="Wrap" Template="{DynamicResource TextBoxBaseControlTemplate}"
-                             MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Collapsed"/>
-
-                            </Border>
-                            <TextBlock x:Name="txtlabelAssignedto" Width="120" TextAlignment="Center" Margin="5" Text="Assigned to" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=txtAssignedTo}" Value="">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>-->
-
                         </Grid>
                         <Grid Grid.Row="4">
                             <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
