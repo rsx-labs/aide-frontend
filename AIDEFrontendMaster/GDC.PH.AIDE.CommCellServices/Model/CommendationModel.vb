@@ -11,7 +11,7 @@ Public Class CommendationModel
     Implements INotifyPropertyChanged
 
     Private _commendID As Integer
-    Private _deptID As Integer
+    Private _empID As Integer
     Private _employee As String
     Private _project As String
     Private _dateSent As Date
@@ -23,7 +23,7 @@ Public Class CommendationModel
 
     Public Sub New(ByVal rawSuccessRegister As MyCommendations)
         Me.CommendID = rawSuccessRegister.COMMEND_ID
-        Me.Dept_ID = rawSuccessRegister.DEPT_ID
+        Me.EMP_ID = rawSuccessRegister.EMP_ID
         Me.Employees = rawSuccessRegister.EMPLOYEE
         Me.DateSent = rawSuccessRegister.DATE_SENT
         Me.Project = rawSuccessRegister.PROJECT
@@ -41,13 +41,13 @@ Public Class CommendationModel
         End Set
     End Property
 
-    Public Property Dept_ID As Integer
+    Public Property EMP_ID As Integer
         Get
-            Return _deptID
+            Return _empID
         End Get
         Set(value As Integer)
-            _deptID = value
-            NotifyPropertyChanged("Dept_ID")
+            _empID = value
+            NotifyPropertyChanged("EMP_ID")
         End Set
     End Property
 

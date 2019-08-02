@@ -56,33 +56,49 @@ Class InsertContactList
 #End Region
 
 #Region "Main methods"
-    Public Sub LoadAllCB()
-        SetLocationCB()
+    Private Sub LoadAllCB()
+        LoadLocation()
         LoadJobPosition()
         LoadPermission()
         LoadMaritalStatus()
         LoadWorkShift()
     End Sub
+
     Private Sub AssignEvents()
         AddHandler btnCCancel.Click, AddressOf btnCCancel_Click
         AddHandler btnCreate.Click, AddressOf btnCreate_Click
     End Sub
-    Public Sub textLimits()
+
+    Private Sub textLimits()
         txtContactCellNo.MaxLength = 11
         txtContactHomePhone.MaxLength = 15
         txtContactLocalNumber.MaxLength = 4
         txtContactOtherPhone.MaxLength = 15
     End Sub
-    Public Sub SetLocationCB()
-        cbContactLocation.DisplayMemberPath = "Text"
-        cbContactLocation.SelectedValuePath = "Value"
-        cbContactLocation.Items.Add(New With {.Text = locationEco, .Value = locationEco})
-        cbContactLocation.Items.Add(New With {.Text = locationNet, .Value = locationNet})
-        cbContactLocation.Items.Add(New With {.Text = locationDurham, .Value = locationDurham})
-        cbContactLocation.Items.Add(New With {.Text = locationWfh, .Value = locationWfh})
+
+    Private Sub LoadLocation()
+        If InitializeService() Then
+            Dim lstLocation As LocationList() = client.GetAllLocation()
+            Dim lstLocationList As New ObservableCollection(Of LocationModel)
+            Dim selectionDBProvider As New SelectionListDBProvider
+            Dim selectionListVM As New SelectionListViewModel()
+
+            For Each objLocation As LocationList In lstLocation
+                selectionDBProvider._setlistofLocation(objLocation)
+            Next
+
+            For Each rawUser As myLocationSet In selectionDBProvider._getobjLocation()
+                lstLocationList.Add(New LocationModel(rawUser))
+            Next
+
+            selectionListVM.ObjectLocationSet = lstLocationList
+
+            cbContactLocation.DataContext = selectionListVM
+            cbContactLocation.ItemsSource = selectionListVM.ObjectLocationSet
+        End If
     End Sub
 
-    Public Sub LoadJobPosition()
+    Private Sub LoadJobPosition()
         Try
             If InitializeService() Then
                 Dim lstPosition As PositionList() = client.GetAllPosition()
@@ -102,14 +118,13 @@ Class InsertContactList
 
                 cbContactPosition.DataContext = selectionListVM
                 cbContactPosition.ItemsSource = selectionListVM.ObjectPositionSet
-                'cbMinTaker.DataContext = nicknameVM
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
     End Sub
 
-    Public Sub LoadPermission()
+    Private Sub LoadPermission()
         Try
             If InitializeService() Then
                 Dim lstPermission As PermissionList() = client.GetAllPermission()
@@ -129,15 +144,13 @@ Class InsertContactList
 
                 cbContactGroup.DataContext = selectionListVM
                 cbContactGroup.ItemsSource = selectionListVM.ObjectPermissionSet
-                'cbMinTaker.DataContext = nicknameVM
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
     End Sub
 
-  
-    Public Sub LoadMaritalStatus()
+    Private Sub LoadMaritalStatus()
         Try
             If InitializeService() Then
                 Dim lstMarital As StatusList() = client.GetAllStatus("EMPLOYEE")
@@ -163,7 +176,7 @@ Class InsertContactList
         End Try
     End Sub
 
-    Public Sub LoadWorkShift()
+    Private Sub LoadWorkShift()
         Try
             If InitializeService() Then
                 Dim lstWorkShift As StatusList() = client.GetAllStatus("WORK_SHIFT")
@@ -189,7 +202,7 @@ Class InsertContactList
         End Try
     End Sub
 
-    Public Sub ClearTextVal()
+    Private Sub ClearTextVal()
         txtContactEmpID.Text = String.Empty
 
     End Sub
@@ -232,7 +245,7 @@ Class InsertContactList
                 contactVM.ContactProfile.EMAIL_ADDRESS = String.Empty OrElse _
                 contactVM.ContactProfile.CEL_NO = String.Empty OrElse _
                 contactVM.ContactProfile.EMAIL_ADDRESS2 = String.Empty OrElse _
-                contactVM.ContactProfile.LOCATION = String.Empty Then
+                cbContactLocation.SelectedValue = Nothing Then
                 MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 contactList.EmpID = contactVM.ContactProfile.EMP_ID
@@ -250,7 +263,6 @@ Class InsertContactList
                 contactList.DIVISION_ID = contactVM.ContactProfile.DIVISION_ID
                 contactList.EMADDRESS = contactVM.ContactProfile.EMAIL_ADDRESS
                 contactList.EMADDRESS2 = contactVM.ContactProfile.EMAIL_ADDRESS2
-                contactList.LOC = contactVM.ContactProfile.LOCATION
                 contactList.CELL_NO = contactVM.ContactProfile.CEL_NO
                 If contactVM.ContactProfile.LOCAL Is Nothing Then
                     contactList.lOCAL = 0
@@ -264,6 +276,8 @@ Class InsertContactList
 
                 contactList.OLD_EMP_ID = user_empid
 
+                contactList.LOC = cbContactLocation.SelectedValue.ToString 
+
                 contactList.POSITION_ID = CInt(cbContactPosition.SelectedValue)
                 contactList.POSITION = cbContactPosition.Text
 
@@ -274,7 +288,6 @@ Class InsertContactList
 
                 contactList.MARITAL_STATUS_ID = CInt(cbContactMaritalStatus.SelectedValue)
                 contactList.MARITAL_STATUS = cbContactMaritalStatus.Text
-
 
                 Dim result As Integer = MsgBox("Are you sure you want to continue?", MsgBoxStyle.OkCancel, "AIDE")
                 If result = 1 Then

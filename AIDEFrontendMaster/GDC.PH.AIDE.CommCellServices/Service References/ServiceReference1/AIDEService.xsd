@@ -221,6 +221,7 @@
       <xs:element minOccurs="0" name="IsREVIEWED" type="xs:boolean" />
       <xs:element minOccurs="0" name="LAST_NAME" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LOC" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LOCATION_ID" type="xs:int" />
       <xs:element minOccurs="0" name="MARITAL_STATUS" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MARITAL_STATUS_ID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MIDDLE_NAME" nillable="true" type="xs:string" />
@@ -330,6 +331,20 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="MessageDetail" nillable="true" type="tns:MessageDetail" />
+  <xs:complexType name="ArrayOfLocationList">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LocationList" nillable="true" type="tns:LocationList" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLocationList" nillable="true" type="tns:ArrayOfLocationList" />
+  <xs:complexType name="LocationList">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LOCATION" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LOCATION_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="ONSITE_FLG" type="xs:short" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LocationList" nillable="true" type="tns:LocationList" />
   <xs:complexType name="ArrayOfPositionList">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="PositionList" nillable="true" type="tns:PositionList" />
@@ -844,8 +859,8 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="COMMEND_ID" type="xs:int" />
       <xs:element minOccurs="0" name="DATE_SENT" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="DEPT_ID" type="xs:int" />
       <xs:element minOccurs="0" name="EMPLOYEE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EMP_ID" type="xs:int" />
       <xs:element minOccurs="0" name="PROJECT" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="REASON" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SENT_BY" nillable="true" type="xs:string" />

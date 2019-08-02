@@ -160,7 +160,8 @@ Class WeeklyReportAddPage
     Private Sub LoadData()
         ' Load Items For Projects
         Try
-            Dim lstProjects As Project() = AideServiceClient.GetProjectList(empID)
+            Dim displayStatus As Integer = 1
+            Dim lstProjects As Project() = AideServiceClient.GetProjectList(empID, displayStatus)
 
             For Each objProjects As Project In lstProjects
                 projectDBProvider.setProjectList(objProjects)

@@ -4,6 +4,7 @@ Imports System.Collections.ObjectModel
 Public Class SelectionListViewModel
     Implements INotifyPropertyChanged
 
+    Private _objLocationSet As New ObservableCollection(Of LocationModel)
     Private _objPositionSet As New ObservableCollection(Of PositionModel)
     Private _objPermissionSet As New ObservableCollection(Of PermissionModel)
     Private _objDepartmentSet As New ObservableCollection(Of DepartmentModel)
@@ -13,6 +14,10 @@ Public Class SelectionListViewModel
     Private _selectionListDB As New SelectionListDBProvider
 
     Sub New()
+        For Each _myLocationSet As myLocationSet In _selectionListDB._getobjLocation
+            _objLocationSet.Add(New LocationModel(_myLocationSet))
+        Next
+
         For Each _myPositionSet As myPositionSet In _selectionListDB._getobjPosition
             _objPositionSet.Add(New PositionModel(_myPositionSet))
         Next
@@ -36,6 +41,17 @@ Public Class SelectionListViewModel
             _objWorkShiftSet.Add(New WorkShiftModel(_myStatusSet))
         Next
     End Sub
+
+    Public Property ObjectLocationSet As ObservableCollection(Of LocationModel)
+        Get
+            Return _objLocationSet
+        End Get
+        Set(value As ObservableCollection(Of LocationModel))
+            _objLocationSet = value
+            NotifyPropertyChanged("ObjectLocationSet")
+        End Set
+    End Property
+
     Public Property ObjectPositionSet As ObservableCollection(Of PositionModel)
         Get
             Return _objPositionSet
@@ -85,6 +101,7 @@ Public Class SelectionListViewModel
             NotifyPropertyChanged("ObjectMaritalSet")
         End Set
     End Property
+
     Public Property ObjectWorkShiftSet As ObservableCollection(Of WorkShiftModel)
         Get
             Return _objWorkShiftSet

@@ -104,7 +104,8 @@ Class CreateProjectPage
     Public Sub SetData()
         Try
             If InitializeService() Then
-                lstProj = client.GetProjectList(_empID)
+                Dim displayStatus As Integer = 0
+                lstProj = client.GetProjectList(_empID, displayStatus)
                 LoadProjectList()
                 DisplayPagingInfo()
             End If

@@ -95,7 +95,8 @@ Public Class TaskListPage
 
         ' Load Items For Projects
         Try
-            Dim lstProjects As Project() = aideService.GetProjectList(empID)
+            Dim displayStatus As Integer = 0
+            Dim lstProjects As Project() = aideService.GetProjectList(empID, displayStatus)
 
             For Each objProjects As Project In lstProjects
                 projectDBProvider.setProjectList(objProjects)

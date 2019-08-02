@@ -2000,6 +2000,9 @@ Namespace ServiceReference1
         Private LOCField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private LOCATION_IDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private MARITAL_STATUSField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
@@ -2301,6 +2304,19 @@ Namespace ServiceReference1
                 If (Object.ReferenceEquals(Me.LOCField, value) <> true) Then
                     Me.LOCField = value
                     Me.RaisePropertyChanged("LOC")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property LOCATION_ID() As Integer
+            Get
+                Return Me.LOCATION_IDField
+            End Get
+            Set
+                If (Me.LOCATION_IDField.Equals(value) <> true) Then
+                    Me.LOCATION_IDField = value
+                    Me.RaisePropertyChanged("LOCATION_ID")
                 End If
             End Set
         End Property
@@ -3283,6 +3299,85 @@ Namespace ServiceReference1
                 If (Object.ReferenceEquals(Me.TITLEField, value) <> true) Then
                     Me.TITLEField = value
                     Me.RaisePropertyChanged("TITLE")
+                End If
+            End Set
+        End Property
+        
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        
+        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
+            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
+            If (Not (propertyChanged) Is Nothing) Then
+                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
+            End If
+        End Sub
+    End Class
+    
+    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="LocationList", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
+     System.SerializableAttribute()>  _
+    Partial Public Class LocationList
+        Inherits Object
+        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+        
+        <System.NonSerializedAttribute()>  _
+        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private LOCATIONField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private LOCATION_IDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ONSITE_FLGField As Short
+        
+        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
+        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
+            Get
+                Return Me.extensionDataField
+            End Get
+            Set
+                Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property LOCATION() As String
+            Get
+                Return Me.LOCATIONField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.LOCATIONField, value) <> true) Then
+                    Me.LOCATIONField = value
+                    Me.RaisePropertyChanged("LOCATION")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property LOCATION_ID() As Integer
+            Get
+                Return Me.LOCATION_IDField
+            End Get
+            Set
+                If (Me.LOCATION_IDField.Equals(value) <> true) Then
+                    Me.LOCATION_IDField = value
+                    Me.RaisePropertyChanged("LOCATION_ID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ONSITE_FLG() As Short
+            Get
+                Return Me.ONSITE_FLGField
+            End Get
+            Set
+                If (Me.ONSITE_FLGField.Equals(value) <> true) Then
+                    Me.ONSITE_FLGField = value
+                    Me.RaisePropertyChanged("ONSITE_FLG")
                 End If
             End Set
         End Property
@@ -7607,10 +7702,10 @@ Namespace ServiceReference1
         Private DATE_SENTField As Date
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private DEPT_IDField As Integer
+        Private EMPLOYEEField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private EMPLOYEEField As String
+        Private EMP_IDField As Integer
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private PROJECTField As String
@@ -7658,19 +7753,6 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property DEPT_ID() As Integer
-            Get
-                Return Me.DEPT_IDField
-            End Get
-            Set
-                If (Me.DEPT_IDField.Equals(value) <> true) Then
-                    Me.DEPT_IDField = value
-                    Me.RaisePropertyChanged("DEPT_ID")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
         Public Property EMPLOYEE() As String
             Get
                 Return Me.EMPLOYEEField
@@ -7679,6 +7761,19 @@ Namespace ServiceReference1
                 If (Object.ReferenceEquals(Me.EMPLOYEEField, value) <> true) Then
                     Me.EMPLOYEEField = value
                     Me.RaisePropertyChanged("EMPLOYEE")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property EMP_ID() As Integer
+            Get
+                Return Me.EMP_IDField
+            End Get
+            Set
+                If (Me.EMP_IDField.Equals(value) <> true) Then
+                    Me.EMP_IDField = value
+                    Me.RaisePropertyChanged("EMP_ID")
                 End If
             End Set
         End Property
@@ -8389,6 +8484,12 @@ Namespace ServiceReference1
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetMessage", ReplyAction:="http://tempuri.org/IAideService/GetMessageResponse")>  _
         Function GetMessageAsync(ByVal msgID As Integer, ByVal secID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.MessageDetail())
         
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllLocation", ReplyAction:="http://tempuri.org/IAideService/GetAllLocationResponse")>  _
+        Function GetAllLocation() As ServiceReference1.LocationList()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllLocation", ReplyAction:="http://tempuri.org/IAideService/GetAllLocationResponse")>  _
+        Function GetAllLocationAsync() As System.Threading.Tasks.Task(Of ServiceReference1.LocationList())
+        
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllPosition", ReplyAction:="http://tempuri.org/IAideService/GetAllPositionResponse")>  _
         Function GetAllPosition() As ServiceReference1.PositionList()
         
@@ -8918,16 +9019,16 @@ Namespace ServiceReference1
         Function GetProfileInformationAsync(ByVal empId As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Profile)
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllListOfProject", ReplyAction:="http://tempuri.org/IAideService/GetAllListOfProjectResponse")>  _
-        Function GetAllListOfProject(ByVal empID As Integer) As ServiceReference1.Project()
+        Function GetAllListOfProject(ByVal empID As Integer, ByVal displayStatus As Integer) As ServiceReference1.Project()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllListOfProject", ReplyAction:="http://tempuri.org/IAideService/GetAllListOfProjectResponse")>  _
-        Function GetAllListOfProjectAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Project())
+        Function GetAllListOfProjectAsync(ByVal empID As Integer, ByVal displayStatus As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Project())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetProjectList", ReplyAction:="http://tempuri.org/IAideService/GetProjectListResponse")>  _
-        Function GetProjectList(ByVal empID As Integer) As ServiceReference1.Project()
+        Function GetProjectList(ByVal empID As Integer, ByVal displayStatus As Integer) As ServiceReference1.Project()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetProjectList", ReplyAction:="http://tempuri.org/IAideService/GetProjectListResponse")>  _
-        Function GetProjectListAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Project())
+        Function GetProjectListAsync(ByVal empID As Integer, ByVal displayStatus As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Project())
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/CreateProject")>  _
         Sub CreateProject(ByVal project As ServiceReference1.Project)
@@ -9032,10 +9133,10 @@ Namespace ServiceReference1
         Function InsertCommendationsAsync(ByVal task As ServiceReference1.Commendations) As System.Threading.Tasks.Task
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetCommendations", ReplyAction:="http://tempuri.org/IAideService/GetCommendationsResponse")>  _
-        Function GetCommendations(ByVal deptID As Integer) As ServiceReference1.Commendations()
+        Function GetCommendations(ByVal empID As Integer) As ServiceReference1.Commendations()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetCommendations", ReplyAction:="http://tempuri.org/IAideService/GetCommendationsResponse")>  _
-        Function GetCommendationsAsync(ByVal deptID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Commendations())
+        Function GetCommendationsAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Commendations())
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateCommendations")>  _
         Sub UpdateCommendations(ByVal task As ServiceReference1.Commendations)
@@ -9232,6 +9333,8 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Contributors)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MessageDetail())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MessageDetail)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PermissionList())),  _
@@ -9420,6 +9523,14 @@ Namespace ServiceReference1
         
         Public Function GetMessageAsync(ByVal msgID As Integer, ByVal secID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.MessageDetail()) Implements ServiceReference1.IAideService.GetMessageAsync
             Return MyBase.Channel.GetMessageAsync(msgID, secID)
+        End Function
+        
+        Public Function GetAllLocation() As ServiceReference1.LocationList() Implements ServiceReference1.IAideService.GetAllLocation
+            Return MyBase.Channel.GetAllLocation
+        End Function
+        
+        Public Function GetAllLocationAsync() As System.Threading.Tasks.Task(Of ServiceReference1.LocationList()) Implements ServiceReference1.IAideService.GetAllLocationAsync
+            Return MyBase.Channel.GetAllLocationAsync
         End Function
         
         Public Function GetAllPosition() As ServiceReference1.PositionList() Implements ServiceReference1.IAideService.GetAllPosition
@@ -10126,20 +10237,20 @@ Namespace ServiceReference1
             Return MyBase.Channel.GetProfileInformationAsync(empId)
         End Function
         
-        Public Function GetAllListOfProject(ByVal empID As Integer) As ServiceReference1.Project() Implements ServiceReference1.IAideService.GetAllListOfProject
-            Return MyBase.Channel.GetAllListOfProject(empID)
+        Public Function GetAllListOfProject(ByVal empID As Integer, ByVal displayStatus As Integer) As ServiceReference1.Project() Implements ServiceReference1.IAideService.GetAllListOfProject
+            Return MyBase.Channel.GetAllListOfProject(empID, displayStatus)
         End Function
         
-        Public Function GetAllListOfProjectAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Project()) Implements ServiceReference1.IAideService.GetAllListOfProjectAsync
-            Return MyBase.Channel.GetAllListOfProjectAsync(empID)
+        Public Function GetAllListOfProjectAsync(ByVal empID As Integer, ByVal displayStatus As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Project()) Implements ServiceReference1.IAideService.GetAllListOfProjectAsync
+            Return MyBase.Channel.GetAllListOfProjectAsync(empID, displayStatus)
         End Function
         
-        Public Function GetProjectList(ByVal empID As Integer) As ServiceReference1.Project() Implements ServiceReference1.IAideService.GetProjectList
-            Return MyBase.Channel.GetProjectList(empID)
+        Public Function GetProjectList(ByVal empID As Integer, ByVal displayStatus As Integer) As ServiceReference1.Project() Implements ServiceReference1.IAideService.GetProjectList
+            Return MyBase.Channel.GetProjectList(empID, displayStatus)
         End Function
         
-        Public Function GetProjectListAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Project()) Implements ServiceReference1.IAideService.GetProjectListAsync
-            Return MyBase.Channel.GetProjectListAsync(empID)
+        Public Function GetProjectListAsync(ByVal empID As Integer, ByVal displayStatus As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Project()) Implements ServiceReference1.IAideService.GetProjectListAsync
+            Return MyBase.Channel.GetProjectListAsync(empID, displayStatus)
         End Function
         
         Public Sub CreateProject(ByVal project As ServiceReference1.Project) Implements ServiceReference1.IAideService.CreateProject
@@ -10278,12 +10389,12 @@ Namespace ServiceReference1
             Return MyBase.Channel.InsertCommendationsAsync(task)
         End Function
         
-        Public Function GetCommendations(ByVal deptID As Integer) As ServiceReference1.Commendations() Implements ServiceReference1.IAideService.GetCommendations
-            Return MyBase.Channel.GetCommendations(deptID)
+        Public Function GetCommendations(ByVal empID As Integer) As ServiceReference1.Commendations() Implements ServiceReference1.IAideService.GetCommendations
+            Return MyBase.Channel.GetCommendations(empID)
         End Function
         
-        Public Function GetCommendationsAsync(ByVal deptID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Commendations()) Implements ServiceReference1.IAideService.GetCommendationsAsync
-            Return MyBase.Channel.GetCommendationsAsync(deptID)
+        Public Function GetCommendationsAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Commendations()) Implements ServiceReference1.IAideService.GetCommendationsAsync
+            Return MyBase.Channel.GetCommendationsAsync(empID)
         End Function
         
         Public Sub UpdateCommendations(ByVal task As ServiceReference1.Commendations) Implements ServiceReference1.IAideService.UpdateCommendations
