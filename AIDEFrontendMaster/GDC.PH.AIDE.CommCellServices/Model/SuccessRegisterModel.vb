@@ -121,11 +121,14 @@ Public Class NicknameModel
 
     Public Sub New(ByVal rawNickname As MyNickname)
         Me.Emp_ID = rawNickname.EmpID
+        Me.First_Name = rawNickname.FirstName
         Me.Nick_Name = rawNickname.NickName
         Me.Employee_Name = rawNickname.EmployeeName
     End Sub
+
     Private _empID As Integer
     Private _nickname As String
+    Private _firstName As String
     Private _employeename As String
 
     Public Property Emp_ID As Integer
@@ -145,6 +148,16 @@ Public Class NicknameModel
         Set(value As String)
             _nickname = value
             NotifyPropertyChanged("Nick_Name")
+        End Set
+    End Property
+
+    Public Property First_Name As String
+        Get
+            Return _firstName
+        End Get
+        Set(value As String)
+            _firstName = value
+            NotifyPropertyChanged("First_Name")
         End Set
     End Property
 

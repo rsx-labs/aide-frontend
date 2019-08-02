@@ -80,8 +80,8 @@ Class WeeklyReportPage
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
 
-        month = Date.Now.Month
-        year = Date.Now.Year
+        month = lastWeekSaturday.Month
+        year = lastWeekSaturday.Year
 
         LoadMonth()
         LoadYears()

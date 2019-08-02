@@ -63,7 +63,7 @@ Class UpdateContactListPage
     End Function
 
     Public Sub LoadAllCB()
-        SetLocationCB()
+        LoadLocation()
         LoadJobPosition()
         LoadPermission()
         LoadDepartment()
@@ -73,6 +73,8 @@ Class UpdateContactListPage
     End Sub
 
     Public Sub loadUI(contactmod As ContactListModel)
+        cbContactLocation.Text = contactmod.LOCATION
+
         cbContactPosition.SelectedValue = contactmod.POSITION_ID
         cbContactPosition.Text = contactmod.POSITION
 
@@ -90,6 +92,7 @@ Class UpdateContactListPage
 
         cbContactShiftStatus.Text = contactmod.SHIFT
     End Sub
+
     Private Sub ProcessUIAccess()
         If Not GetManagerAuth() Then
             ManagerAuthScreen.Visibility = Windows.Visibility.Visible
@@ -104,13 +107,26 @@ Class UpdateContactListPage
         txtContactOtherPhone.MaxLength = 15
     End Sub
 
-    Public Sub SetLocationCB()
-        cbContactLocation.DisplayMemberPath = "Text"
-        cbContactLocation.SelectedValuePath = "Value"
-        cbContactLocation.Items.Add(New With {.Text = locationEco, .Value = locationEco})
-        cbContactLocation.Items.Add(New With {.Text = locationNet, .Value = locationNet})
-        cbContactLocation.Items.Add(New With {.Text = locationDurham, .Value = locationDurham})
-        cbContactLocation.Items.Add(New With {.Text = locationWfh, .Value = locationWfh})
+    Private Sub LoadLocation()
+        If InitializeService() Then
+            Dim lstLocation As LocationList() = client.GetAllLocation()
+            Dim lstLocationList As New ObservableCollection(Of LocationModel)
+            Dim selectionDBProvider As New SelectionListDBProvider
+            Dim selectionListVM As New SelectionListViewModel()
+
+            For Each objLocation As LocationList In lstLocation
+                selectionDBProvider._setlistofLocation(objLocation)
+            Next
+
+            For Each rawUser As myLocationSet In selectionDBProvider._getobjLocation()
+                lstLocationList.Add(New LocationModel(rawUser))
+            Next
+
+            selectionListVM.ObjectLocationSet = lstLocationList
+
+            cbContactLocation.DataContext = selectionListVM
+            cbContactLocation.ItemsSource = selectionListVM.ObjectLocationSet
+        End If
     End Sub
 
     Public Sub LoadJobPosition()
@@ -271,6 +287,7 @@ Class UpdateContactListPage
             MessageBox.Show(ex.Message)
         End Try
     End Sub
+
     Private Sub NumberValidationTextBox(ByVal sender As Object, ByVal e As TextCompositionEventArgs)
         Dim regex As Regex = New Regex("[^0-9/]+")
         e.Handled = regex.IsMatch(e.Text)
@@ -352,7 +369,7 @@ Class UpdateContactListPage
                 contactVM.ContactProfile.EMAIL_ADDRESS = String.Empty OrElse _
                 contactVM.ContactProfile.CEL_NO = String.Empty OrElse _
                 contactVM.ContactProfile.EMAIL_ADDRESS2 = String.Empty OrElse _
-                contactVM.ContactProfile.LOCATION = String.Empty Then
+                cbContactLocation.SelectedValue = Nothing Then
                 MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 If MsgBox("Are you sure you want to continue?", vbYesNo, "AIDE") = vbYes Then
@@ -368,13 +385,13 @@ Class UpdateContactListPage
                         contactList.IMAGE_PATH = contactVM.ContactProfile.IMAGE_PATH
                         contactList.EMADDRESS = contactVM.ContactProfile.EMAIL_ADDRESS
                         contactList.EMADDRESS2 = contactVM.ContactProfile.EMAIL_ADDRESS2
-                        contactList.LOC = contactVM.ContactProfile.LOCATION
                         contactList.CELL_NO = contactVM.ContactProfile.CEL_NO
                         contactList.lOCAL = contactVM.ContactProfile.LOCAL
                         contactList.HOUSEPHONE = contactVM.ContactProfile.HOMEPHONE
                         contactList.OTHERPHONE = contactVM.ContactProfile.OTHER_PHONE
                         contactList.DateReviewed = DateTime.Now.Date
 
+                        contactList.LOC = cbContactLocation.SelectedValue.ToString
                         contactList.POSITION = cbContactPosition.Text
                         contactList.PERMISSION_GROUP = cbContactGroup.Text
                         contactList.DEPARTMENT = cbContactDepartment.Text

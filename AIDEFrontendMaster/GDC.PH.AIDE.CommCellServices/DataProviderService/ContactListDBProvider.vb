@@ -96,6 +96,7 @@ Public Class MyContactList
     Property FULL_NAME As String
     Property MARITAL_STATUS_ID As String
     Property POSITION_ID As Integer
+    Property LOCATION_ID As Integer
     Property PERMISSION_GROUP_ID As Integer
     Property DEPARTMENT_ID As Integer
     Property DIVISION_ID As Integer

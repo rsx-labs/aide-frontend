@@ -1195,7 +1195,7 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbProjectName" Margin="0,5,5,5"
-                                          IsEditable="True" IsReadOnly="True" Text="Select Project *" 
+                                          IsEditable="True" IsReadOnly="True" Text="Select project *" 
                                           ItemsSource="{Binding ProjectList}" DisplayMemberPath="ProjectName" 
                                           SelectedValue="{Binding SelectedProject}"
                                           SelectedValuePath="ProjectID"/>

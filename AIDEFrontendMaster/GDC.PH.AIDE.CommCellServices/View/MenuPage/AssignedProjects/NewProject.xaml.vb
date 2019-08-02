@@ -14,6 +14,7 @@ UseSynchronizationContext:=False)>
 Public Class NewProject
     Implements ServiceReference1.IAideServiceCallback
 
+
 #Region "Fields"
     Private _AideServiceClient As ServiceReference1.AideServiceClient
     Private _EmployeeListViewModel As New EmployeeListViewModel
@@ -84,20 +85,19 @@ Public Class NewProject
             Dim _GetAllConcernDBProvider As New ProjectDBProvider
             Dim _projectViewModel As New ProjectViewModel
 
-            Dim lstConcern As Project() = _AideServiceClient.GetAllListOfProject(_empID)
-            Dim lstConcernList As New ObservableCollection(Of ProjectModel)
+            Dim displayStatus As Integer = 0
+            Dim lstProject As Project() = _AideServiceClient.GetAllListOfProject(_empID, displayStatus)
+            Dim lstProjectList As New ObservableCollection(Of ProjectModel)
 
-
-            For Each objConcern As Project In lstConcern
-                _GetAllConcernDBProvider.setProjectList(objConcern)
+            For Each objProject As Project In lstProject
+                _GetAllConcernDBProvider.setProjectList(objProject)
             Next
 
-            For Each iConcern As myProjectList In _GetAllConcernDBProvider.getProjectList()
-
-                lstConcernList.Add(New ProjectModel(iConcern))
-
+            For Each iProject As myProjectList In _GetAllConcernDBProvider.getProjectList()
+                lstProjectList.Add(New ProjectModel(iProject))
             Next
-            _projectViewModel.ProjectList = lstConcernList
+
+            _projectViewModel.ProjectList = lstProjectList
 
             cbProjectName.DataContext = _projectViewModel
         Catch ex As SystemException

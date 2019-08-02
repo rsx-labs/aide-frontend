@@ -214,7 +214,8 @@ Class TaskAddPage
 
         ' Load Items For Projects
         Try
-            Dim lstProjects As Project() = client.GetProjectList(empID)
+            Dim displayStatus As Integer = 0
+            Dim lstProjects As Project() = client.GetProjectList(empID, displayStatus)
 
             For Each objProjects As Project In lstProjects
                 projectDBProvider.setProjectList(objProjects)

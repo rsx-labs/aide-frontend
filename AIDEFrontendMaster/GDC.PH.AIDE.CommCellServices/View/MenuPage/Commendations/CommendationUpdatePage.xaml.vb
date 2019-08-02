@@ -133,7 +133,8 @@ Class CommendationUpdatePage
                 Dim _GetAllConcernDBProvider As New ProjectDBProvider
                 Dim _projectViewModel As New ProjectViewModel
 
-                Dim lstConcern As Project() = client.GetAllListOfProject(empID)
+                Dim displayStatus As Integer = 0
+                Dim lstConcern As Project() = client.GetAllListOfProject(empID, displayStatus)
                 Dim lstConcernList As New ObservableCollection(Of ProjectModel)
 
 
