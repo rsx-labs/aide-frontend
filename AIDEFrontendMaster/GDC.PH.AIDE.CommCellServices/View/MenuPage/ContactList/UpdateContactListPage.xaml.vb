@@ -76,19 +76,19 @@ Class UpdateContactListPage
         cbContactLocation.Text = contactmod.LOCATION
 
         cbContactPosition.SelectedValue = contactmod.POSITION_ID
-        cbContactPosition.Text = contactmod.POSITION
+        'cbContactPosition.Text = contactmod.POSITION
 
         cbContactGroup.SelectedValue = contactmod.PERMISSION_GROUP_ID
-        cbContactGroup.Text = contactmod.PERMISSION_GROUP
+        'cbContactGroup.Text = contactmod.PERMISSION_GROUP
 
         cbContactDepartment.SelectedValue = contactmod.DEPARTMENT_ID
-        cbContactDepartment.Text = contactmod.DEPARTMENT
+        'cbContactDepartment.Text = contactmod.DEPARTMENT
 
         cbContactDivision.SelectedValue = contactmod.DIVISION_ID
-        cbContactDivision.Text = contactmod.DIVISION
+        'cbContactDivision.Text = contactmod.DIVISION
 
         cbContactMaritalStatus.SelectedValue = contactmod.MARITAL_STATUS_ID
-        cbContactMaritalStatus.Text = contactmod.MARITAL_STATUS
+        'cbContactMaritalStatus.Text = contactmod.MARITAL_STATUS
 
         cbContactShiftStatus.Text = contactmod.SHIFT
     End Sub
@@ -452,7 +452,7 @@ Class UpdateContactListPage
                 contactList.SHIFT = contactVM.ContactProfile.SHIFT
                 contactList.EMADDRESS = contactVM.ContactProfile.EMAIL_ADDRESS
                 contactList.EMADDRESS2 = contactVM.ContactProfile.EMAIL_ADDRESS2
-                contactList.LOC = contactVM.ContactProfile.LOCATION
+                contactList.LOC = cbContactLocation.SelectedValue.ToString
                 contactList.CELL_NO = contactVM.ContactProfile.CEL_NO
                 contactList.lOCAL = contactVM.ContactProfile.LOCAL
                 contactList.HOUSEPHONE = contactVM.ContactProfile.HOMEPHONE
