@@ -126,7 +126,7 @@ Class ComcellClockPage
     End Sub
 
     Public Sub ManagerAuth()
-        If profile.Permission = "Manager" Or profile.Nickname.ToUpper = Facilitator.Text Or profile.Nickname.ToUpper = MinutesTaker.Text Then
+        If profile.Permission = "Manager" Or profile.FirstName.ToUpper = Facilitator.Text Or profile.FirstName.ToUpper = MinutesTaker.Text Then
             btnCreate.Visibility = Windows.Visibility.Visible
         Else
             btnCreate.Visibility = Windows.Visibility.Hidden
