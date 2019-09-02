@@ -770,6 +770,7 @@
       <xs:element minOccurs="0" name="Billability" type="xs:short" />
       <xs:element minOccurs="0" name="Category" type="xs:int" />
       <xs:element minOccurs="0" name="EmpID" type="xs:int" />
+      <xs:element minOccurs="0" name="ProjectCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ProjectID" type="xs:int" />
       <xs:element minOccurs="0" name="ProjectName" nillable="true" type="xs:string" />
     </xs:sequence>

@@ -6894,6 +6894,9 @@ Namespace ServiceReference1
         Private EmpIDField As Integer
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ProjectCodeField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private ProjectIDField As Integer
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
@@ -6944,6 +6947,19 @@ Namespace ServiceReference1
                 If (Me.EmpIDField.Equals(value) <> true) Then
                     Me.EmpIDField = value
                     Me.RaisePropertyChanged("EmpID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ProjectCode() As String
+            Get
+                Return Me.ProjectCodeField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.ProjectCodeField, value) <> true) Then
+                    Me.ProjectCodeField = value
+                    Me.RaisePropertyChanged("ProjectCode")
                 End If
             End Set
         End Property

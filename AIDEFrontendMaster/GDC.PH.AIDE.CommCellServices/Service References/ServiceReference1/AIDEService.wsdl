@@ -8830,7 +8830,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>http://localhost:49627/AIDEService.svc/dual</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>AIDE-VM-WIN10\AIDE-Win10</Upn>
+          <Upn>DESKTOP-GREGUV8\FujitsuUser</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

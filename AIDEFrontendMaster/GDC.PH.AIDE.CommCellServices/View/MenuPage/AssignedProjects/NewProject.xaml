@@ -1227,27 +1227,27 @@
                         <Grid Grid.Row="1">
                             <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
-                                <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding SelectedProject.ProjectID}" TextWrapping="Wrap"
-                                     x:Name="projID"    MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding SelectedProject.ProjectCode}" TextWrapping="Wrap"
+                                     x:Name="projCD"    MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
-                                <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter project ID *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                                <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Project Code *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=projID}" Value="">
+                                            <DataTrigger Binding="{Binding Text, ElementName=projCD}" Value="">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelProjectID" Width="120" TextAlignment="Center" Margin="5" Text="Project ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock x:Name="txtlabelProjectCode" Width="120" TextAlignment="Center" Margin="5" Text="Project Code" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=projID}" Value="">
+                                            <DataTrigger Binding="{Binding Text, ElementName=projCD}" Value="">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
                                         </Style.Triggers>
