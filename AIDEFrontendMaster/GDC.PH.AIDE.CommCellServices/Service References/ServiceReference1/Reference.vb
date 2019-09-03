@@ -5494,6 +5494,9 @@ Namespace ServiceReference1
         Private FACILITATORField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FACILITATOR_NAMEField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private FY_ENDField As Date
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
@@ -5501,6 +5504,9 @@ Namespace ServiceReference1
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private MINUTES_TAKERField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private MINUTES_TAKER_NAMEField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private MONTHField As String
@@ -5561,6 +5567,19 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FACILITATOR_NAME() As String
+            Get
+                Return Me.FACILITATOR_NAMEField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FACILITATOR_NAMEField, value) <> true) Then
+                    Me.FACILITATOR_NAMEField = value
+                    Me.RaisePropertyChanged("FACILITATOR_NAME")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
         Public Property FY_END() As Date
             Get
                 Return Me.FY_ENDField
@@ -5595,6 +5614,19 @@ Namespace ServiceReference1
                 If (Object.ReferenceEquals(Me.MINUTES_TAKERField, value) <> true) Then
                     Me.MINUTES_TAKERField = value
                     Me.RaisePropertyChanged("MINUTES_TAKER")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property MINUTES_TAKER_NAME() As String
+            Get
+                Return Me.MINUTES_TAKER_NAMEField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.MINUTES_TAKER_NAMEField, value) <> true) Then
+                    Me.MINUTES_TAKER_NAMEField = value
+                    Me.RaisePropertyChanged("MINUTES_TAKER_NAME")
                 End If
             End Set
         End Property

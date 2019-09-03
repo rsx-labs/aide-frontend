@@ -84,8 +84,8 @@ Class ComcellAddPage
     Public Sub LoadControls()
         txtHeader.Text = "Update Facilitator and Minutes Taker"
         txtBlockMonth.Text = ComcellModel.MONTH
-        txtBlockFacilitator.Text = ComcellModel.FACILITATOR
-        txtBlockMinsTaker.Text = ComcellModel.MINUTES_TAKER
+        txtBlockFacilitator.Text = ComcellModel.FACILITATOR_NAME
+        txtBlockMinsTaker.Text = ComcellModel.MINUTES_TAKER_NAME
         txtBlockButton.Text = "Update"
         txtBlockYear.Text = ComcellModel.FY_START
 
@@ -166,8 +166,8 @@ Class ComcellAddPage
 
                     comcell.EMP_ID = profile.Emp_ID
                     comcell.MONTH = cbMonth.Text
-                    comcell.FACILITATOR = cbFacilitator.SelectedValue
-                    comcell.MINUTES_TAKER = cbMinTaker.SelectedValue
+                    comcell.FACILITATOR = CType(cbFacilitator.SelectedItem, NicknameModel).Emp_ID.ToString()
+                    comcell.MINUTES_TAKER = CType(cbMinTaker.SelectedItem, NicknameModel).Emp_ID.ToString()
                     comcell.YEAR = cbYear.SelectedValue
 
                     aide.InsertComcellMeeting(comcell)
@@ -193,8 +193,8 @@ Class ComcellAddPage
 
                     comcell.COMCELL_ID = comcellID
                     comcell.MONTH = cbMonth.Text
-                    comcell.FACILITATOR = cbFacilitator.SelectedValue
-                    comcell.MINUTES_TAKER = cbMinTaker.SelectedValue
+                    comcell.FACILITATOR = CType(cbFacilitator.SelectedItem, NicknameModel).Emp_ID.ToString()
+                    comcell.MINUTES_TAKER = CType(cbMinTaker.SelectedItem, NicknameModel).Emp_ID.ToString()
                     comcell.YEAR = cbYear.SelectedValue
 
                     aide.UpdateComcellMeeting(comcell)

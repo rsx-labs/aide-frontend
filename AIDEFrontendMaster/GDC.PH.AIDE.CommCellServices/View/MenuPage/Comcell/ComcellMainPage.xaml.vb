@@ -206,6 +206,8 @@ Class ComcellMainPage
                 comcell.MONTH = CType(ComcellLV.SelectedItem, ComcellModel).MONTH
                 comcell.FACILITATOR = CType(ComcellLV.SelectedItem, ComcellModel).FACILITATOR
                 comcell.MINUTES_TAKER = CType(ComcellLV.SelectedItem, ComcellModel).MINUTES_TAKER
+                comcell.FACILITATOR_NAME = CType(ComcellLV.SelectedItem, ComcellModel).FACILITATOR_NAME
+                comcell.MINUTES_TAKER_NAME = CType(ComcellLV.SelectedItem, ComcellModel).MINUTES_TAKER_NAME
                 comcell.COMCELL_ID = CType(ComcellLV.SelectedItem, ComcellModel).COMCELL_ID
                 comcell.FY_START = CType(ComcellLV.SelectedItem, ComcellModel).FY_START
 

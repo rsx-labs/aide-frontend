@@ -610,9 +610,11 @@
       <xs:element minOccurs="0" name="COMCELL_ID" type="xs:int" />
       <xs:element minOccurs="0" name="EMP_ID" type="xs:int" />
       <xs:element minOccurs="0" name="FACILITATOR" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FACILITATOR_NAME" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FY_END" type="xs:dateTime" />
       <xs:element minOccurs="0" name="FY_START" type="xs:dateTime" />
       <xs:element minOccurs="0" name="MINUTES_TAKER" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MINUTES_TAKER_NAME" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MONTH" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SCHEDULE" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="YEAR" type="xs:int" />

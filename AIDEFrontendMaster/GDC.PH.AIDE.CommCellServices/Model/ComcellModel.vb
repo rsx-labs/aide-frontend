@@ -17,7 +17,8 @@ Public Class ComcellModel
     Private _minsTaker As String
     Private _fyStart As DateTime
     Private _fyEnd As DateTime
-
+    Private _facilitatorName As String
+    Private _minsTakerName As String
     Public Sub New()
     End Sub
 
@@ -29,6 +30,8 @@ Public Class ComcellModel
         Me.MINUTES_TAKER = rawComcell.MINUTES_TAKER
         Me.FY_START = rawComcell.FY_START
         Me.FY_END = rawComcell.FY_END
+        Me.FACILITATOR_NAME = rawComcell.FACILITATOR_NAME
+        Me.MINUTES_TAKER_NAME = rawComcell.MINUTES_TAKER_NAME
     End Sub
 
     Public Property COMCELL_ID As Integer
@@ -98,6 +101,26 @@ Public Class ComcellModel
         Set(value As DateTime)
             _fyEnd = value
             NotifyPropertyChanged("FY_END")
+        End Set
+    End Property
+
+    Public Property FACILITATOR_NAME As String
+        Get
+            Return _facilitatorName
+        End Get
+        Set(value As String)
+            _facilitatorName = value
+            NotifyPropertyChanged("FACILITATOR_NAME")
+        End Set
+    End Property
+
+    Public Property MINUTES_TAKER_NAME As String
+        Get
+            Return _minsTakerName
+        End Get
+        Set(value As String)
+            _minsTakerName = value
+            NotifyPropertyChanged("MINUTES_TAKER_NAME")
         End Set
     End Property
 

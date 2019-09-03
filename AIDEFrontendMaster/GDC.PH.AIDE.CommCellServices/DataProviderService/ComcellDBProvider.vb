@@ -32,7 +32,9 @@ Public Class ComcellDBProvider
                 .FACILITATOR = _comcell.FACILITATOR,
                 .MINUTES_TAKER = _comcell.MINUTES_TAKER,
                 .FY_START = _comcell.FY_START,
-                .FY_END = _comcell.FY_END
+                .FY_END = _comcell.FY_END,
+                .FACILITATOR_NAME = _comcell.FACILITATOR_NAME,
+                .MINUTES_TAKER_NAME = _comcell.MINUTES_TAKER_NAME
                 }
 
         _comcellList.Add(_comcellObject)
@@ -46,6 +48,8 @@ Public Class ComcellDBProvider
         _comcellItem.MINUTES_TAKER = _comcell.MINUTES_TAKER
         _comcellItem.FY_START = _comcell.FY_START
         _comcellItem.FY_END = _comcell.FY_END
+        _comcellItem.FACILITATOR_NAME = _comcell.FACILITATOR_NAME
+        _comcellItem.MINUTES_TAKER_NAME = _comcell.MINUTES_TAKER_NAME
     End Sub
 
 
@@ -60,4 +64,6 @@ Public Class MyComcell
     Property SCHEDULE As Date
     Property FY_START As DateTime
     Property FY_END As DateTime
+    Property FACILITATOR_NAME As String
+    Property MINUTES_TAKER_NAME As String
 End Class
