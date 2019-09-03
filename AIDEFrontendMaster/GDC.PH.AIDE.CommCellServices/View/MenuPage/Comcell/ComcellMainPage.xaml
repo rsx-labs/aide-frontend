@@ -888,8 +888,8 @@
                       MouseDoubleClick="ComcellLV_MouseDoubleClick">
                         <DataGrid.Columns>
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Month Of" Width="8*" Binding="{Binding MONTH,Mode=TwoWay}" IsReadOnly="True"/>
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Facilitator"  Width="15*" Binding="{Binding FACILITATOR,Mode=TwoWay}" IsReadOnly="True"/>
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Minutes Taker" Width="15*" Binding="{Binding MINUTES_TAKER,Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Facilitator"  Width="15*" Binding="{Binding FACILITATOR_NAME,Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Minutes Taker" Width="15*" Binding="{Binding MINUTES_TAKER_NAME,Mode=TwoWay}" IsReadOnly="True"/>
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Comcell ID" Visibility="Collapsed" Width="8*" Binding="{Binding COMCELL_ID,Mode=TwoWay}" IsReadOnly="True"/>
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="FY_START" Visibility="Collapsed" Width="8*" Binding="{Binding FY_START,Mode=TwoWay}" IsReadOnly="True"/>
                         </DataGrid.Columns>

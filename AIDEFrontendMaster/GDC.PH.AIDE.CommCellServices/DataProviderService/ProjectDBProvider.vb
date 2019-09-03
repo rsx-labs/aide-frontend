@@ -16,6 +16,7 @@ Public Class ProjectDBProvider
 
     Public Sub setProjectList(ByRef projectlist As Project)
         Dim projObj As myProjectList = New myProjectList With {.Project_ID = projectlist.ProjectID,
+                                                              .Project_Code = projectlist.ProjectCode,
                                                               .Project_Name = projectlist.ProjectName,
                                                                .category = projectlist.Category,
                                                               .billability = projectlist.Billability}
@@ -24,6 +25,7 @@ Public Class ProjectDBProvider
 
     Public Sub setProject(ByRef project As Project)
         _project.Project_ID = project.ProjectID
+        _project.Project_Code = project.ProjectCode
         _project.Project_Name = project.ProjectName
         _project.category = project.Category
         _project.billability = project.Billability
@@ -43,6 +45,7 @@ End Class
 ''' <remarks></remarks>
 Public Class myProjectList
     Public Project_ID As Integer
+    Public Project_Code As String
     Public Project_Name As String
     Public category As String
     Public billability As String

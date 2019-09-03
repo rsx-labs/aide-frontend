@@ -10,12 +10,14 @@ Public Class ProjectModel
 
 
     Private _ProjectID As Integer
+    Private _ProjectCode As String
     Private _ProjectName As String
     Private _Category As String
     Private _Billability As String
 
     Public Sub New(ByVal rawProjectList As myProjectList)
         Me._ProjectID = rawProjectList.Project_ID
+        Me._ProjectCode = rawProjectList.Project_Code
         Me._ProjectName = rawProjectList.Project_Name
         Me._Category = rawProjectList.category
         Me._Billability = rawProjectList.billability
@@ -34,6 +36,17 @@ Public Class ProjectModel
             Return _ProjectID
         End Get
     End Property
+
+    Public Property ProjectCode As String
+        Set(value As String)
+            _ProjectCode = value
+            NotifyPropertyChanged("ProjectCode")
+        End Set
+        Get
+            Return _ProjectCode
+        End Get
+    End Property
+
     Public Property ProjectName As String
         Set(value As String)
             _ProjectName = value

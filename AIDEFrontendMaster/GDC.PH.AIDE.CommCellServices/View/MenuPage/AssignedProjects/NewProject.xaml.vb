@@ -126,6 +126,7 @@ Public Class NewProject
         Dim _setSelectedProject As New ProjectViewModel
 
         Dim getID As Integer = CType(cbProjectName.SelectedItem, ProjectModel).ProjectID
+        Dim getProjCd As Integer = CType(cbProjectName.SelectedItem, ProjectModel).ProjectCode
         Dim getCategory As Integer = CType(cbProjectName.SelectedItem, ProjectModel).Category
         Dim getBillability As Integer = CType(cbProjectName.SelectedItem, ProjectModel).Billability
 
@@ -135,8 +136,8 @@ Public Class NewProject
             _ProjectViewModel.SelectedProject.Category = "Project"
         End If
 
-
         _ProjectViewModel.SelectedProject.ProjectID = getID
+        _ProjectViewModel.SelectedProject.ProjectCode = getProjCd
 
 
         If getBillability = 0 Then

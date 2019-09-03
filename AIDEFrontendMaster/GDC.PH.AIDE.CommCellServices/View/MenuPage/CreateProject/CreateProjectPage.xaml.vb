@@ -52,15 +52,15 @@ Class CreateProjectPage
 
 #Region "Common Procedure"
     Public Sub ClearSelection()
-        txtProjID.IsEnabled = True
+        txtProjCD.IsEnabled = True
         cbBillability.Text = String.Empty
         cbCategory.Text = String.Empty
-        txtProjID.Text = String.Empty
+        txtProjCD.Text = String.Empty
         txtProjName.Text = String.Empty
     End Sub
 
     Public Sub DisableControl()
-        txtProjID.IsEnabled = False
+        txtProjCD.IsEnabled = False
         txtProjName.IsEnabled = False
         cbBillability.IsEnabled = False
         cbCategory.IsEnabled = False
@@ -178,13 +178,14 @@ Class CreateProjectPage
             GetBillability()
             GetCategory()
             Dim Projects As New Project
-            Projects.ProjectID = Convert.ToInt32(txtProjID.Text)
+            Projects.ProjectCode = txtProjCD.Text
             Projects.EmpID = _empID
             Projects.ProjectName = txtProjName.Text
             Projects.Category = category
             Projects.Billability = billabiltiy
             client.CreateProject(Projects)
             _ProjectDBProvider._myprojectlist.Clear()
+            lstProj = client.GetProjectList(_empID, 0)
             LoadProjectList()
             ClearSelection()
             txtSearch.Text = String.Empty
@@ -203,7 +204,8 @@ Class CreateProjectPage
             GetBillability()
             GetCategory()
             Dim Projects As New Project
-            Projects.ProjectID = Convert.ToInt32(txtProjID.Text)
+            Projects.ProjectID = Convert.ToInt32(1)
+            Projects.ProjectCode = txtProjCD.Text
             Projects.ProjectName = txtProjName.Text
             Projects.Category = category
             Projects.Billability = billabiltiy
@@ -259,7 +261,7 @@ Class CreateProjectPage
 #End Region
 
 #Region "Events"
-    Private Sub txtProjID_KeyDown(sender As Object, e As KeyEventArgs) Handles txtProjID.KeyDown
+    Private Sub txtProjCD_KeyDown(sender As Object, e As KeyEventArgs) Handles txtProjCD.KeyDown
         Dim key As Integer = CInt(e.Key)
         e.Handled = Not (key >= 34 AndAlso key <= 43 OrElse key >= 74 AndAlso key <= 83 OrElse key = 2 OrElse key = 18)
 
@@ -298,15 +300,15 @@ Class CreateProjectPage
         End If
     End Sub
 
-    Private Sub txtProjID_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtProjID.TextChanged
-        If txtProjID.Text = String.Empty Then
+    Private Sub txtProjCD_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtProjCD.TextChanged
+        If txtProjCD.Text = String.Empty Then
             btnUpdate.Visibility = Windows.Visibility.Hidden
             btnCreate.Visibility = Windows.Visibility.Visible
             ClearSelection()
             lblProjIdValidation.Content = String.Empty
         Else
             Try
-                Dim lstProject As Project = client.GetProjectByID(txtProjID.Text)
+                Dim lstProject As Project = client.GetProjectByID(txtProjCD.Text)
                 If Not IsNothing(lstProject) Then
                     lblProjIdValidation.Content = "Project ID isn't available"
                 Else
@@ -327,8 +329,8 @@ Class CreateProjectPage
                     btnUpdate.Visibility = Windows.Visibility.Visible
                     btnCreate.Visibility = Windows.Visibility.Hidden
 
-                    txtProjID.IsEnabled = False
-                    txtProjID.Text = CType(dgProjectList.SelectedItem, ProjectModel).ProjectID
+                    txtProjCD.IsEnabled = False
+                    txtProjCD.Text = CType(dgProjectList.SelectedItem, ProjectModel).ProjectCode
                     txtProjName.Text = CType(dgProjectList.SelectedItem, ProjectModel).ProjectName
 
 
@@ -344,7 +346,7 @@ Class CreateProjectPage
                     End If
 
                     lblProjIdValidation.Content = String.Empty
-                    txtProjID.IsEnabled = False
+                    txtProjCD.IsEnabled = False
                 End If
             End If
         Catch ex As Exception
@@ -365,7 +367,7 @@ Class CreateProjectPage
             End If
             btnCreate.Visibility = Windows.Visibility.Visible
             btnUpdate.Visibility = Windows.Visibility.Hidden
-            txtProjID.IsEnabled = True
+            txtProjCD.IsEnabled = True
         End If
     End Sub
 #End Region

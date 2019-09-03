@@ -494,10 +494,10 @@
                       Width="auto" BorderBrush="Transparent" IsEnabled="True" AutoGenerateColumns="False" CanUserResizeColumns="False" >
                         <DataGrid.Columns>
                             <!--<DataGridTextColumn Header="Status" Width="1*" Binding="{Binding Name}" IsReadOnly="True"/>-->
-                            <DataGridTextColumn Header="Name" Width="3*" Binding="{Binding Position}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="First Month" Width="1.5*" Binding="{Binding EmailAddress}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Second Month" Width="1.5*" Binding="{Binding AlternateEmail}" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="Third Month" Width="1.5*" Binding="{Binding WorkMobile}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Name" Width="1.5*" Binding="{Binding Position}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Assigned Project(s)" Width="3*" Binding="{Binding EmailAddress}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Second Month" Width="1.5*" Binding="{Binding AlternateEmail}" IsReadOnly="True" Visibility="Collapsed"/>
+                            <DataGridTextColumn Header="Third Month" Width="1.5*" Binding="{Binding WorkMobile}" IsReadOnly="True" Visibility="Collapsed"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
