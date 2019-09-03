@@ -904,7 +904,7 @@
                             <TextBox x:Name="txtSentBy" TextWrapping="Wrap" BorderThickness="0" Background="Transparent" Template="{DynamicResource TextBoxBaseControlTemplate}" 
                              MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                         </Border>
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Sent by" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter sent by" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -1058,7 +1058,7 @@
                             </RichTextBox>
 
                         </Border>
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Write commendation reason" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter commendation reason" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
