@@ -16,7 +16,8 @@ Public Class ComcellClockDBProvider
         Dim _myComcellClockSet As New myComcellClockSet With {._clockDay = clock.Clock_Day, _
                                                   ._clockHour = clock.Clock_Hour, _
                                                   ._clockMinute = clock.Clock_Minute, _
-                                                  ._empID = clock.Emp_ID}
+                                                  ._empID = clock.Emp_ID, _
+                                                ._midday = clock.MIDDAY}
 
         _objClock = _myComcellClockSet
         Return _myComcellClockSet
@@ -29,5 +30,6 @@ Public Class myComcellClockSet
     Property _clockHour As Integer
     Property _clockMinute As Integer
     Property _empID As Integer
+    Property _midday As String
 End Class
 

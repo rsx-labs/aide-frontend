@@ -112,6 +112,10 @@ Public Class BillabilityVacationLeavePage
                 TotalBalance.Add(iResource.TotalBalance)
                 employee(i) = iResource.Emp_Name
                 i += 1
+                If Me.profile.Emp_ID = iResource.Emp_ID Then
+                    Dim totRemBal As Double = iResource.HalfBalance + iResource.TotalBalance
+                    TxtRemBalance.Text = totRemBal.ToString()
+                End If
             Next
 
             SeriesCollection = New SeriesCollection From {
@@ -127,7 +131,8 @@ Public Class BillabilityVacationLeavePage
                     .StackMode = StackMode.Values,
                     .DataLabels = True,
                     .LabelsPosition = BarLabelPosition.Perpendicular,
-                    .Title = "Half Balance"
+                    .Title = "Half Balance",
+                    .Fill = Brushes.Goldenrod
                 },
                 New StackedColumnSeries With {
                     .Values = TotalBalance,

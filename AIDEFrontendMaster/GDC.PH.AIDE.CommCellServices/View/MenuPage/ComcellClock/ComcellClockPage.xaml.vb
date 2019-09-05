@@ -113,13 +113,25 @@ Class ComcellClockPage
         'Dim AlarmDate As String
         ComcellClockModel = New ComcellClockModel
         Dim ComcellClockDB As New ComcellClockDBProvider
-
+        Dim NewHour As String = String.Empty
         Try
             ComcellClockDB._setlistofitems(_comcellclock)
             ComcellClockModel = New ComcellClockModel(ComcellClockDB._getobjClock)
 
             comcellClockVM.objectComcellClockSet = ComcellClockModel
-            comcellClockVM.objectComcellSetAlarm = GetDayValue(ComcellClockModel.CLOCK_DAY) + ComcellClockModel.CLOCK_HOUR.ToString() + ComcellClockModel.CLOCK_MINUTE.ToString() + "1"
+
+            If ComcellClockModel.MIDDAY = "PM" Then
+                NewHour = ComcellClockModel.CLOCK_HOUR
+                If Not ComcellClockModel.CLOCK_HOUR = 12 Then
+                    NewHour = (ComcellClockModel.CLOCK_HOUR + 12).ToString()
+                End If
+            Else
+                NewHour = ComcellClockModel.CLOCK_HOUR
+                If ComcellClockModel.CLOCK_HOUR = 12 Then
+                    NewHour = "0"
+                End If
+            End If
+            comcellClockVM.objectComcellSetAlarm = GetDayValue(ComcellClockModel.CLOCK_DAY) + NewHour.ToString() + ComcellClockModel.CLOCK_MINUTE.ToString() + "1"
         Catch ex As Exception
 
         End Try

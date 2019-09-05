@@ -106,7 +106,7 @@
                                     <!--Employee ID-->
                                     <Grid Grid.Row="0" Grid.Column="1">
                                         <Border Margin="5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                            <TextBox x:Name="txtContactFName" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=FIRST_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                            <TextBox PreviewTextInput="AlphaValidationTextBox" x:Name="txtContactFName" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=FIRST_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         </Border>
 
                                         <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter first name *" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
@@ -138,7 +138,7 @@
                                     <!--First Name-->
                                     <Grid Grid.Row="0" Grid.Column="2">
                                         <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                            <TextBox x:Name="txtContactLName" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=LAST_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                            <TextBox PreviewTextInput="AlphaValidationTextBox" x:Name="txtContactLName" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=LAST_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         </Border>
 
                                         <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter last name *" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
@@ -172,7 +172,7 @@
                                     <!--//Second row-->
                                     <Grid Grid.Row="1" Grid.Column="0">
                                         <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                            <TextBox x:Name="txtContactMName" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=MIDDLE_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                            <TextBox PreviewTextInput="AlphaValidationTextBox" x:Name="txtContactMName" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=MIDDLE_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         </Border>
 
                                         <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter middle initial" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
@@ -342,7 +342,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Permission Group" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock TextAlignment="Center" Margin="5" Text="Permission" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -483,7 +483,7 @@
                                             <TextBox x:Name="txtContactNickName" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=NICK_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         </Border>
 
-                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter nick name *" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter nickname *" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -496,7 +496,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Nick Name" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock TextAlignment="Center" Margin="5" Text="Nickname" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>

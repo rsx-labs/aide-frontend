@@ -1443,5 +1443,11 @@
   <ItemGroup>
     <Resource Include="Assets\Button\CloseAbout.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\trackerlogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\Comcelllogo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

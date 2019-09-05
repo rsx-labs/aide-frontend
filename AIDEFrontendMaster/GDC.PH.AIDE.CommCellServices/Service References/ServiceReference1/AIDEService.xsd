@@ -633,6 +633,7 @@
       <xs:element minOccurs="0" name="Clock_Hour" type="xs:int" />
       <xs:element minOccurs="0" name="Clock_Minute" type="xs:int" />
       <xs:element minOccurs="0" name="Emp_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="MIDDAY" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ComcellClock" nillable="true" type="tns:ComcellClock" />

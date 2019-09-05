@@ -124,10 +124,10 @@ Public Class ContactListModel
             If _middle_name = Nothing Then
                 Return String.Empty
             End If
-            Return _middle_name
+            Return _middle_name.Trim()
         End Get
         Set(value As String)
-            _middle_name = value
+            _middle_name = value.Trim()
             NotifyPropertyChanged("MIDDLE_NAME")
         End Set
     End Property
