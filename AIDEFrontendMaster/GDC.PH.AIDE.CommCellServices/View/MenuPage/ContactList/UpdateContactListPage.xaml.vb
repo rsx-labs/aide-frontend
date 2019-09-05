@@ -105,6 +105,8 @@ Class UpdateContactListPage
         txtContactHomePhone.MaxLength = 15
         txtContactLocalNumber.MaxLength = 4
         txtContactOtherPhone.MaxLength = 15
+        txtContactEmpID.MaxLength = 9
+        txtContactMName.MaxLength = 1
     End Sub
 
     Private Sub LoadLocation()
@@ -290,6 +292,10 @@ Class UpdateContactListPage
 
     Private Sub NumberValidationTextBox(ByVal sender As Object, ByVal e As TextCompositionEventArgs)
         Dim regex As Regex = New Regex("[^0-9/]+")
+        e.Handled = regex.IsMatch(e.Text)
+    End Sub
+    Private Sub AlphaValidationTextBox(ByVal sender As Object, ByVal e As TextCompositionEventArgs)
+        Dim regex As Regex = New Regex("[^A-Za-z-.']+")
         e.Handled = regex.IsMatch(e.Text)
     End Sub
 

@@ -4,6 +4,7 @@ Public Class ComcellClockModel
     Private _clockHour As Integer
     Private _clockMinute As Integer
     Private _empID As Integer
+    Private _midday As String
 
     Public Sub New()
 
@@ -14,6 +15,7 @@ Public Class ComcellClockModel
         Me._clockHour = _iclockSet._clockHour
         Me._clockMinute = _iclockSet._clockMinute
         Me._empID = _iclockSet._empID
+        Me._midday = _iclockSet._midday
     End Sub
 
     Public Property CLOCK_DAY As Integer
@@ -53,6 +55,16 @@ Public Class ComcellClockModel
         Set(value As Integer)
             _empID = value
             OnPropertyChanged("EMP_ID")
+        End Set
+    End Property
+
+    Public Property MIDDAY As String
+        Get
+            Return _midday
+        End Get
+        Set(value As String)
+            _midday = value
+            OnPropertyChanged("MIDDAY")
         End Set
     End Property
 

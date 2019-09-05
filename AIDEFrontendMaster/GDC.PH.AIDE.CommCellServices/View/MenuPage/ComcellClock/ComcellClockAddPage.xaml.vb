@@ -29,9 +29,8 @@ Class ComcellClockAddPage
         Me.comcellClockModel = _ComcellClockModel
         populateDayCB()
         DataContext = comcellClockVM
-        ComcellDayCB.SelectedIndex = comcellClockModel.CLOCK_DAY - 1
-        ComcellHourCB.Text = (comcellClockModel.CLOCK_HOUR / 30).ToString
-        ComcellMinuteCB.Text = (comcellClockModel.CLOCK_MINUTE / 6).ToString
+        LoadData()
+
     End Sub
 #End Region
 
@@ -70,6 +69,13 @@ Class ComcellClockAddPage
 #End Region
 
 #Region "Methods/Functions"
+
+    Public Sub LoadData()
+        ComcellDayCB.SelectedIndex = comcellClockModel.CLOCK_DAY - 1
+        ComcellHourCB.Text = (comcellClockModel.CLOCK_HOUR / 30).ToString("00")
+        ComcellMinuteCB.Text = (comcellClockModel.CLOCK_MINUTE / 6).ToString("00")
+        ComcellTimeExtensionCB.Text = comcellClockModel.MIDDAY
+    End Sub
     Private Sub SetDataDay()
         If Not ComcellDayCB.Text = String.Empty Then
             comcellClockVM.objectComcellClockSet.CLOCK_DAY = ConvertDays(ComcellDayCB.Text)
@@ -83,18 +89,22 @@ Class ComcellClockAddPage
         If Not Me.empID = 0 Then
             comcellClockVM.objectComcellClockSet.EMP_ID = Me.empID
         End If
+        If Not Me.ComcellTimeExtensionCB.Text = String.Empty Then
+            comcellClockVM.objectComcellClockSet.MIDDAY = Me.ComcellTimeExtensionCB.Text
+        End If
     End Sub
 
     Public Sub SetData(clockVM As ComcellClockModel)
         Try
             SetDataDay()
-            If Not clockVM.CLOCK_DAY = 0 AndAlso Not clockVM.CLOCK_HOUR = 0 Then
+            If Not clockVM.CLOCK_DAY = 0 AndAlso Not clockVM.CLOCK_HOUR = 0 AndAlso Not clockVM.MIDDAY = String.Empty Then
                 If checkLimit() Then
                     If InitializeService() Then
                         _comcellclock.Clock_Day = clockVM.CLOCK_DAY
                         _comcellclock.Clock_Hour = clockVM.CLOCK_HOUR
                         _comcellclock.Clock_Minute = clockVM.CLOCK_MINUTE
                         _comcellclock.Emp_ID = clockVM.EMP_ID
+                        _comcellclock.MIDDAY = clockVM.MIDDAY
                         aide.UpdateComcellClock(_comcellclock)
                         MsgBox("Successfully set new Comm. Cell clock", MsgBoxStyle.OkOnly, "AIDE")
                         comcellFrame.Navigate(New ComcellClockPage(profile, Me.comcellFrame, Me._window))
@@ -154,7 +164,7 @@ Class ComcellClockAddPage
 
     Private Function checkLimit() As Boolean
         checkLimit = False
-        If comcellClockVM.objectComcellClockSet.CLOCK_HOUR > 0 And comcellClockVM.objectComcellClockSet.CLOCK_HOUR <= 24 Then
+        If comcellClockVM.objectComcellClockSet.CLOCK_HOUR > 0 And comcellClockVM.objectComcellClockSet.CLOCK_HOUR <= 12 Then
             If comcellClockVM.objectComcellClockSet.CLOCK_MINUTE >= 0 AndAlso comcellClockVM.objectComcellClockSet.CLOCK_MINUTE < 60 Then
                 checkLimit = True
             End If

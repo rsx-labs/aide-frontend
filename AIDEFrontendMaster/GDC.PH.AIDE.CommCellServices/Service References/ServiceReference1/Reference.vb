@@ -5703,6 +5703,9 @@ Namespace ServiceReference1
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private Emp_IDField As Integer
         
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private MIDDAYField As String
+        
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
             Get
@@ -5761,6 +5764,19 @@ Namespace ServiceReference1
                 If (Me.Emp_IDField.Equals(value) <> true) Then
                     Me.Emp_IDField = value
                     Me.RaisePropertyChanged("Emp_ID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property MIDDAY() As String
+            Get
+                Return Me.MIDDAYField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.MIDDAYField, value) <> true) Then
+                    Me.MIDDAYField = value
+                    Me.RaisePropertyChanged("MIDDAY")
                 End If
             End Set
         End Property

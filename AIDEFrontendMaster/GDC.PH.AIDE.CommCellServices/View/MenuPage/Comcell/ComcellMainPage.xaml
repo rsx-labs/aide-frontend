@@ -817,9 +817,9 @@
 
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <!--<Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
-                            <Image Source="..\..\..\Assets\Icon\SabaIcon.png" />
-                        </Viewbox>-->
+                        <Viewbox HorizontalAlignment="Left" Margin="10,5,10,5">
+                            <Image Source="..\..\..\Assets\Button\Comcelllogo.png" />
+                        </Viewbox>
 
                     </Grid>
 
