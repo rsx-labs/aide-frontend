@@ -164,10 +164,13 @@
                                         <!--<DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Approved By" Width="150" Binding="{Binding ApprovedBy}" />-->
                                     </DataGrid.Columns>
                                 </DataGrid>
+                                <Grid HorizontalAlignment="Center" Margin="0,30,0,0">
+                                    <Label x:Name="lblText">ALL REPORTS HAVE BEEN SUBMITTED</Label>
+                                </Grid>
                             </Grid>
 
                             <Grid Grid.Row="2">
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" x:Name="spNavigationArrows">
                                     <Button Height="30" Width="30"
                                                 x:Name="btnPrev" 
                                                 Style="{DynamicResource ButtonPageBack}" 
