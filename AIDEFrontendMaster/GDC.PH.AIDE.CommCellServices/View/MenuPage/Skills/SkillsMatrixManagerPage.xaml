@@ -6,7 +6,7 @@
       mc:Ignorable="d" 
       Height="auto" Width="auto"
       Title="SkillsMatrixManagerPage">
-    
+
     <Page.Resources>
         <Style TargetType="{x:Type DataGrid}">
             <Setter Property="HeadersVisibility" Value="Column"/>
@@ -19,13 +19,34 @@
             <Setter Property="CanUserReorderColumns" Value="False"/>
             <Setter Property="CanUserResizeRows" Value="False"/>
             <Setter Property="CanUserSortColumns" Value="False"/>
+            <Setter Property="CanUserResizeColumns" Value="False"/>
             <!--<Setter Property="Background" Value="#FF4DB6AC"/>-->
         </Style>
-        
+
         <Style TargetType="{x:Type DataGridCell}">
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="1">
+                    <Setter Property="Background" Value="LightBlue"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="2">
+                    <Setter Property="Background" Value="YellowGreen"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="3">
+                    <Setter Property="Background" Value="Orange"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="4">
+                    <Setter Property="Background" Value="Red"/>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
-        
+        <!--<Style TargetType="{x:Type TextBlock}">
+            <Style.Triggers>
+                <Trigger Property="Text" Value="1">
+                    <Setter Property="Background" Value="LightGreen"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>-->
         <Style TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="14"/>
@@ -47,7 +68,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <Style TargetType="{x:Type DataGridRow}">
             <Setter Property="Background" Value="white" />
             <Setter Property="Foreground" Value="#FF303030"/>
@@ -57,87 +78,51 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
+
         <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="5" />
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
+
     </Page.Resources>
-    
+
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1.5*"/>
                     <RowDefinition Height="1.5*"/>
-                    <RowDefinition Height="4*"/>
-                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="2.5*"/>
+                    <RowDefinition Height="13*"/>
                 </Grid.RowDefinitions>
-                
+
                 <Grid Grid.Row="0" Background="White">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="10*"/>
-                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Column="0">
+                    <Grid Grid.Column="0" Grid.ColumnSpan="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="12*"/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="50*"/>
                         </Grid.ColumnDefinitions>
-                        
+
                         <Grid Grid.Column="0">
-                            <Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
-                                <Image Source="..\..\..\Assets\Button\SkillsMatrixLogo.png" />
+                            <Viewbox HorizontalAlignment="Right" Margin="0,5,5,5">
+                                <Image Source="..\..\..\Assets\Button\SkillsMatrixLogo.png" Width="Auto" Height="Auto"/>
                             </Viewbox>
                         </Grid>
 
                         <Grid Grid.Column="1">
                             <Viewbox HorizontalAlignment="Left">
-                                <TextBlock TextWrapping="Wrap" Padding="0" Text="Skills Matrix" Margin="0,7,0,7" Foreground="DimGray"/>
+                                <TextBlock TextWrapping="Wrap" Padding="0" Text="Skills Matrix" Margin="0" Foreground="DimGray"/>
                             </Viewbox>
                         </Grid>
-                    </Grid>
-                    
-                    <Grid Grid.Column="1"/>
-                </Grid>
-                
-                <Grid Grid.Row="1" Background="#FFFBFBFB">
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="4*"/>
-                            <ColumnDefinition Width="6*"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <Grid Grid.Column="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.25*"/>
-                                <ColumnDefinition Width="0.5*"/>
-                                <ColumnDefinition Width="0.25*"/>
-                            </Grid.ColumnDefinitions>
-
-                            
-                            <Grid Grid.Column="0">
-                                <!--<Viewbox>
-                                    <TextBlock TextWrapping="Wrap" Text="Search" Margin="0,18,0,18" 
-                                   Foreground="DimGray" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                </Viewbox>-->
-                            </Grid>
-                            
-                            <Grid Grid.Column="1" HorizontalAlignment="Stretch">
-                                <!--<TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtSearch" PreviewTextInput="NumberValidationTextBox" TextWrapping="Wrap" Margin="0,17,0,17" Width="auto" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>-->
-                            </Grid>
-
-                            <Grid Grid.Column="2">
-                                <!--<Button x:Name="btnSearch" Width="60" Height="35" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource RoundCorner}" HorizontalContentAlignment="Center">
-                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Search"></TextBlock>
-                                </Button>-->
-                            </Grid>
-                        </Grid>
-
-                        <Grid Grid.Column="1">
+                        <Grid Grid.Column="2" >
                             <Grid>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                                     <Label Name="lblResult" FontWeight="Bold" Foreground="Red" />
@@ -147,14 +132,173 @@
                                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Print"></TextBlock>
                                     </Button>
                                     <Button x:Name="btnViewEmp" Width="140" Height="35"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Style="{DynamicResource RoundCornerUpdate}" HorizontalContentAlignment="Center">
-                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="View All Employee"></TextBlock>
+                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="View All Employees"></TextBlock>
                                     </Button>
                                 </StackPanel>
                             </Grid>
                         </Grid>
                     </Grid>
+
                 </Grid>
-                
+
+                <Grid Grid.Row="1" Background="#FFFBFBFB">
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="99*"/>
+                            <ColumnDefinition Width="355*"/>
+                            <ColumnDefinition Width="360*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0" Margin="5">
+                            <Button x:Name="btnEditMySkill" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource RoundCornerUpdate}">
+                                <Viewbox>
+                                    <TextBlock Text="Edit My Skills" TextWrapping="Wrap" Margin="10"/>
+                                </Viewbox>
+                            </Button>
+                        </Grid>
+                        <Grid Grid.Column="1" Grid.ColumnSpan="2">
+                            <Border BorderBrush="Gainsboro" CornerRadius="10" BorderThickness="1" Margin="0,10,30,5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Row="0" Grid.Column="0" Margin="5,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="8*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Grid.Column="0">
+                                            <Viewbox>
+                                                <Label Name="lblBeginner" Content="1" HorizontalContentAlignment="Center" Foreground="White" Background="LightBlue" Width="25" Height="25"/>
+                                            </Viewbox>
+                                        </Grid>
+
+                                        <Grid Grid.Column="1">
+                                            <RadioButton VerticalContentAlignment="Center" Content="Has Received Training" x:Name="rbProfLvl1" GroupName="Prof" IsEnabled="False"  FontSize="11" VerticalAlignment="Center" />
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid Grid.Row="0" Grid.Column="1" Margin="5,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="8*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Grid.Column="0">
+                                            <Viewbox>
+                                                <Label Name="lblIntermediate"  Content="2" Foreground="White" Background="YellowGreen" Width="25" Height="25" HorizontalContentAlignment="Center"/>
+                                            </Viewbox>
+                                        </Grid>
+
+                                        <Grid Grid.Column="1" >
+                                            <RadioButton x:Name="rbProfLvl2" GroupName="Prof" IsEnabled="False" Content="Could Deliver Supported" FontSize="11" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid Grid.Row="0" Grid.Column="2" Margin="5,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3*"/>
+                                            <ColumnDefinition Width="10*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Grid.Column="0">
+                                            <Viewbox>
+                                                <Label Name="lblAdvanced" Content="3" Foreground="White" Background="Orange" Width="25" Height="25" HorizontalContentAlignment="Center"/>
+                                            </Viewbox>
+                                        </Grid>
+
+                                        <Grid Grid.Column="1" >
+                                            <RadioButton x:Name="rbProfLvl3" GroupName="Prof" IsEnabled="False" Content="Could Deliver Unsupported" FontSize="11" VerticalAlignment="Center" />
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid Grid.Row="0" Grid.Column="3" Margin="5,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="8*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Grid.Column="0">
+                                            <Viewbox>
+                                                <Label Name="lblExpert" Content="4" Foreground="White" Background="Red" Width="25" Height="25" HorizontalContentAlignment="Center"/>
+                                            </Viewbox>
+                                        </Grid>
+
+                                        <Grid Grid.Column="1">
+                                            <RadioButton x:Name="rbProfLvl4" GroupName="Prof" IsEnabled="False" Content="Subject Matter Expert" FontSize="11" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                    </Grid>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="2" x:Name="grdUpdate">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <TextBlock Text="Last Reviewed" VerticalAlignment="Bottom" FontSize="11" TextWrapping="Wrap" Foreground="DimGray" Margin="0,0,0,0"/>
+                        </Grid>
+
+                        <Grid Grid.Column="1">
+                            <TextBlock x:Name="lblLastReviewed" FontSize="11" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="SteelBlue" Text="{Binding Path=_lastReviewed, StringFormat=d, Mode=TwoWay}" Margin="0"/>
+                        </Grid>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="89"/>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <TextBlock Text="List of Skills" TextWrapping="Wrap" FontSize="11" VerticalAlignment="Center" Foreground="DimGray"/>
+                        </Grid>
+
+                        <Grid Grid.Column="1">
+                            <ComboBox x:Name="cbProjectList" Margin="0,5" 
+                                              Style="{StaticResource StyleComboBox}"
+                                              ItemsSource="{Binding Path=SkillList}" 
+                                              SelectedValue="{Binding Path=Skill_ID}"
+                                              DisplayMemberPath="Skill_Descr" 
+                                              SelectedValuePath="Skill_ID" 
+                                              IsEnabled="False"/>
+                        </Grid>
+                        <Grid Grid.Column="2">
+                            <Button x:Name="btnAddUpdate" Style="{DynamicResource RoundCorner}" Margin="5">
+                                <Viewbox>
+                                    <TextBlock Text="Update" TextWrapping="Wrap" Margin="7"/>
+                                </Viewbox>
+                            </Button>
+                        </Grid>
+                    </Grid >
+
+                </Grid>
+                <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Center">
+                    <StackPanel Name="spGrid"  Background="White" HorizontalAlignment="Center">
+                        <DataGrid x:Name="dgSkillList" 
+                                  Margin="0,0,0,0"  
+                                  BorderBrush="Transparent" 
+                                  HorizontalGridLinesBrush="DimGray"
+                                  VerticalGridLinesBrush="DimGray"     
+                                  IsReadOnly="True"/>
+                    </StackPanel>
+                </ScrollViewer>
                 <!--<Grid Grid.Row="1" Background="White" Opacity=".9">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
@@ -193,13 +337,12 @@
                     </Button>
                 </Grid>
             </Grid>-->
-                <Grid Grid.Row="2" Background="White">
+                <Grid Grid.Row="3" Background="White" Visibility="Collapsed">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <Grid Grid.Column="0" Margin="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height=".2*"/>
@@ -207,7 +350,7 @@
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height=".5*"/>
                         </Grid.RowDefinitions>
-                        
+
                         <Grid Grid.Row="1">
                             <Image x:Name="picEmp" Source="{Binding Path=ImagePath, Mode=OneWay}" Stretch="Fill" Margin="20,10">
                                 <Image.OpacityMask>
@@ -218,17 +361,11 @@
                                 </Image.OpacityMask>
                             </Image>
                         </Grid>
-                        
-                        <Grid Grid.Row="2">
-                            <Button x:Name="btnEditMySkill" VerticalAlignment="Top" HorizontalAlignment="Center" Style="{DynamicResource RoundCornerUpdate}">
-                                <Viewbox>
-                                    <TextBlock Text="Edit My Skill" TextWrapping="Wrap" Margin="7"/>
-                                </Viewbox>
-                            </Button>
-                        </Grid>
+
+
                     </Grid>
-                    
-                    <Grid Grid.Column="1">
+
+                    <Grid Grid.Column="1" Visibility="Collapsed">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
@@ -240,95 +377,95 @@
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
-                        
+
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="3*"/>
                             </Grid.ColumnDefinitions>
-                            
+
                             <Grid Grid.Column="0">
                                 <Viewbox HorizontalAlignment="Left">
                                     <TextBlock Text="Employee ID" Margin="3" TextWrapping="Wrap" Foreground="DimGray"/>
                                 </Viewbox>
                             </Grid>
-                            
+
                             <Grid Grid.Column="1">
                                 <Viewbox HorizontalAlignment="Left">
                                     <TextBlock x:Name="lblEmpID" Margin="3" TextWrapping="Wrap" Text="{Binding Path=UserID, Mode=TwoWay}" Foreground="SteelBlue" />
                                 </Viewbox>
                             </Grid>
                         </Grid>
-                        
+
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="3*"/>
                             </Grid.ColumnDefinitions>
-                            
+
                             <Grid Grid.Column="0">
                                 <Viewbox HorizontalAlignment="Left">
                                     <TextBlock Text="Name" Margin="3" TextWrapping="Wrap" Foreground="DimGray"/>
                                 </Viewbox>
                             </Grid>
-                            
+
                             <Grid Grid.Column="1">
                                 <Viewbox HorizontalAlignment="Left">
                                     <TextBlock x:Name="lblName" Margin="3" TextWrapping="Wrap" Foreground="SteelBlue" Text="{Binding Path=EmpName, Mode=TwoWay}"/>
                                 </Viewbox>
                             </Grid>
                         </Grid>
-                        
+
                         <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="3*"/>
                             </Grid.ColumnDefinitions>
-                            
+
                             <Grid Grid.Column="0">
                                 <Viewbox HorizontalAlignment="Left">
                                     <TextBlock Text="Position" Margin="3" TextWrapping="Wrap" Foreground="DimGray"/>
                                 </Viewbox>
                             </Grid>
-                            
+
                             <Grid Grid.Column="1">
                                 <Viewbox HorizontalAlignment="Left">
                                     <TextBlock x:Name="lblPosition" Margin="3" TextWrapping="Wrap" Foreground="SteelBlue" Text="{Binding Path=Position, Mode=TwoWay}" />
                                 </Viewbox>
                             </Grid>
                         </Grid>
-                        
+
                         <Grid Grid.Row="4">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="3*"/>
                             </Grid.ColumnDefinitions>
-                            
+
                             <Grid Grid.Column="0">
                                 <Viewbox HorizontalAlignment="Left">
                                     <TextBlock Text="Email" Margin="3" TextWrapping="Wrap" Foreground="DimGray"/>
                                 </Viewbox>
                             </Grid>
-                            
+
                             <Grid Grid.Column="1">
                                 <Viewbox HorizontalAlignment="Left">
                                     <TextBlock x:Name="lblEmail" Margin="3" TextWrapping="Wrap" Foreground="SteelBlue" Text="{Binding Path=EmailAddress, Mode=TwoWay}"/>
                                 </Viewbox>
                             </Grid>
                         </Grid>
-                        
+
                         <Grid Grid.Row="5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="3*"/>
                             </Grid.ColumnDefinitions>
-                            
+
                             <Grid Grid.Column="0">
                                 <Viewbox HorizontalAlignment="Left">
                                     <TextBlock Text="Department" Margin="3" TextWrapping="Wrap" Foreground="DimGray"/>
                                 </Viewbox>
                             </Grid>
-                            
+
                             <Grid Grid.Column="1">
                                 <Viewbox HorizontalAlignment="Left">
                                     <TextBlock x:Name="lblDept" TextWrapping="Wrap" Margin="3" Foreground="SteelBlue" Text="{Binding Path=Department, Mode=TwoWay}"/>
@@ -341,32 +478,32 @@
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="3*"/>
                             </Grid.ColumnDefinitions>
-                            
+
                             <Grid Grid.Column="0">
                                 <Viewbox HorizontalAlignment="Left">
                                     <TextBlock Text="Phone" Margin="3" TextWrapping="Wrap" Foreground="DimGray"/>
                                 </Viewbox>
                             </Grid>
-                            
+
                             <Grid Grid.Column="1">
                                 <Viewbox HorizontalAlignment="Left">
                                     <TextBlock x:Name="lblPhone" TextWrapping="Wrap" Margin="3" Foreground="SteelBlue" Text="{Binding Path=CelNo, Mode=TwoWay}"/>
                                 </Viewbox>
                             </Grid>
                         </Grid>
-                        
+
                         <Grid Grid.Row="7">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="3*"/>
                             </Grid.ColumnDefinitions>
-                            
+
                             <Grid Grid.Column="0">
                                 <Viewbox HorizontalAlignment="Left">
                                     <TextBlock Text="Local" Margin="3" TextWrapping="Wrap" Foreground="DimGray"/>
                                 </Viewbox>
                             </Grid>
-                            
+
                             <Grid Grid.Column="1">
                                 <Viewbox HorizontalAlignment="Left">
                                     <TextBlock x:Name="lblLocal" TextWrapping="Wrap" Margin="3" Foreground="SteelBlue" Text="{Binding Path=Local, Mode=TwoWay}"/>
@@ -374,167 +511,20 @@
                             </Grid>
                         </Grid>
                     </Grid>
-                    
-                    <Grid Grid.Column="2" Margin="0,10,0,10">
+
+                    <Grid Grid.Column="1" Margin="0,10,0,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="4.5*"/>
                             <ColumnDefinition Width="5.5*"/>
                         </Grid.ColumnDefinitions>
-                        
-                        <Grid Grid.Column="0" Margin="0,0,10,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Grid Grid.Column="0">
-                                    <TextBlock Text="Last Reviewed" VerticalAlignment="Bottom" FontSize="11" TextWrapping="Wrap" Foreground="DimGray"/>
-                                </Grid>
-                                
-                                <Grid Grid.Column="1">
-                                    <TextBlock x:Name="lblLastReviewed" FontSize="11" TextWrapping="Wrap" VerticalAlignment="Bottom" Foreground="SteelBlue" Text="{Binding Path=_lastReviewed, StringFormat=d, Mode=TwoWay}"/>
-                                </Grid>
-                            </Grid>
-                            
-                            <Grid Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                </Grid.ColumnDefinitions>
-                                
-                                <Grid Grid.Column="0">
-                                    <TextBlock Text="List of Skills" TextWrapping="Wrap" FontSize="11" VerticalAlignment="Center" Foreground="DimGray"/>
-                                </Grid>
-                                
-                                <Grid Grid.Column="1">
-                                    <ComboBox x:Name="cbProjectList" Margin="0,5" 
-                                              Style="{StaticResource StyleComboBox}"
-                                              ItemsSource="{Binding Path=SkillList}" 
-                                              SelectedValue="{Binding Path=Skill_ID}"
-                                              DisplayMemberPath="Skill_Descr" 
-                                              SelectedValuePath="Skill_ID" 
-                                              IsEnabled="False"/>
-                                </Grid>
-                            </Grid>
-                            
-                            <Grid Grid.Row="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="3*"/>
-                                </Grid.ColumnDefinitions>
 
-                                <Grid Grid.Column="1">
-                                    <Button x:Name="btnAddUpdate" Style="{DynamicResource RoundCorner}" Margin="0,5">
-                                        <Viewbox>
-                                            <TextBlock Text="Update" TextWrapping="Wrap" Margin="7"/>
-                                        </Viewbox>
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        
-                        <Grid Grid.Column="1">
-                            <Border BorderBrush="Gainsboro" CornerRadius="10" BorderThickness="1" Margin="0,10,30,5">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    
-                                    <Grid Grid.Row="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="8*"/>
-                                        </Grid.ColumnDefinitions>
-                                        
-                                        <Grid Grid.Column="0">
-                                            <Viewbox>
-                                                <Label Content="1" Foreground="White" Background="DimGray"/>
-                                            </Viewbox>
-                                        </Grid>
-                                        
-                                        <Grid Grid.Column="1">
-                                            <RadioButton VerticalContentAlignment="Center" Content="Has Received Training" x:Name="rbProfLvl1" GroupName="Prof" IsEnabled="False"  FontSize="11" VerticalAlignment="Center" />
-                                        </Grid>
-                                    </Grid>
-                                    
-                                    <Grid Grid.Row="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="8*"/>
-                                        </Grid.ColumnDefinitions>
-                                        
-                                        <Grid Grid.Column="0">
-                                            <Viewbox>
-                                                <Label Content="2" Foreground="White" Background="DimGray"/>
-                                            </Viewbox>
-                                        </Grid>
-                                        
-                                        <Grid Grid.Column="1" >
-                                            <RadioButton x:Name="rbProfLvl2" GroupName="Prof" IsEnabled="False" Content="Could Deliver Supported" FontSize="11" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </Grid>
-                                    
-                                    <Grid Grid.Row="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="8*"/>
-                                        </Grid.ColumnDefinitions>
-                                        
-                                        <Grid Grid.Column="0">
-                                            <Viewbox>
-                                                <Label Content="3" Foreground="White" Background="DimGray"/>
-                                            </Viewbox>
-                                        </Grid>
-                                        
-                                        <Grid Grid.Column="1" >
-                                            <RadioButton x:Name="rbProfLvl3" GroupName="Prof" IsEnabled="False" Content="Could Deliver Unsupported" FontSize="11" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </Grid>
-                                    
-                                    <Grid Grid.Row="3">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="8*"/>
-                                        </Grid.ColumnDefinitions>
-                                        
-                                        <Grid Grid.Column="0">
-                                            <Viewbox>
-                                                <Label Content="4" Foreground="White" Background="DimGray"/>
-                                            </Viewbox>
-                                        </Grid>
-                                        
-                                        <Grid Grid.Column="1">
-                                            <RadioButton x:Name="rbProfLvl4" GroupName="Prof" IsEnabled="False" Content="Subject Matter Expert" FontSize="11" VerticalAlignment="Center"/>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </Border>
-                        </Grid>
+
+
+
                     </Grid>
                 </Grid>
-                
-                <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Center">
-                    <StackPanel Name="spGrid"  Background="White" HorizontalAlignment="Center">
-                        <DataGrid x:Name="dgSkillList" 
-                                  Margin="0,0,0,20"  
-                                  BorderBrush="Transparent" 
-                                  HorizontalGridLinesBrush="DimGray"
-                                  VerticalGridLinesBrush="DimGray"     
-                                  IsReadOnly="True">
-                        </DataGrid>
-                    </StackPanel>
-                </ScrollViewer>
+
+
             </Grid>
         </Grid>
     </Border>
