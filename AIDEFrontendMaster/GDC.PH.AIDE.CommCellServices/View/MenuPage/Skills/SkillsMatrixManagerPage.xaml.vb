@@ -38,6 +38,7 @@ Class SkillsMatrixManagerPage
     Dim proficiency As Integer
     Dim columnReviewed As String = "Reviewed"
     Dim columnDateReviewed As String = "Date Reviewed"
+
 #End Region
 
 #Region "Constructor"
@@ -52,6 +53,7 @@ Class SkillsMatrixManagerPage
         LoadSkillsList()
         LoadEmployeeList()
         LoadProfile()
+        grdUpdate.Visibility = Visibility.Collapsed
     End Sub
 
 #End Region
@@ -218,6 +220,9 @@ Class SkillsMatrixManagerPage
             table = ToDataTable(it)
 
             dgSkillList.ItemsSource = table.AsDataView
+
+
+
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -313,6 +318,7 @@ Class SkillsMatrixManagerPage
             dgSkillList.ItemsSource = table.AsDataView
             dgSkillList.SelectionMode = DataGridSelectionMode.Extended
             dgSkillList.SelectionUnit = DataGridSelectionUnit.FullRow
+
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -461,6 +467,7 @@ Class SkillsMatrixManagerPage
         _SkillDBProvider._splist.Clear()
         LoadSkillsProf()
         EnableControls()
+        grdUpdate.Visibility = Visibility.Visible
     End Sub
 
     Private Sub btnAddUpdate_Click(sender As Object, e As RoutedEventArgs) Handles btnAddUpdate.Click
@@ -512,7 +519,10 @@ Class SkillsMatrixManagerPage
         End Try
     End Sub
 
+
     Private Sub dgSkillList_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles dgSkillList.LoadingRow
+        Dim nIndex As Integer = 0
+
         For Each isReviewed In DirectCast(e.Row.DataContext, System.Data.DataRowView).Row.ItemArray
             If TypeOf isReviewed Is Boolean Then
                 If isReviewed = False Then
@@ -520,6 +530,7 @@ Class SkillsMatrixManagerPage
                 End If
             End If
         Next
+
     End Sub
 
     Private Sub dgSkillList_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles dgSkillList.MouseDoubleClick
@@ -548,11 +559,13 @@ Class SkillsMatrixManagerPage
                     LoadSkillsProf()
 
                     btnPrint.Visibility = Windows.Visibility.Hidden
+                    grdUpdate.Visibility = Visibility.Visible
                 End If
-                
+
             End If
         End If
     End Sub
+
 
     Private Sub btnViewEmp_Click(sender As Object, e As RoutedEventArgs) Handles btnViewEmp.Click
         LoadSkillsList()
@@ -563,6 +576,7 @@ Class SkillsMatrixManagerPage
         bClick = False
         'txtSearch.Text = String.Empty
         btnPrint.Visibility = Windows.Visibility.Visible
+        grdUpdate.Visibility = Visibility.Collapsed
     End Sub
 
     Private Sub cbProjectList_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbProjectList.SelectionChanged
@@ -703,7 +717,6 @@ Class SkillsMatrixManagerPage
         picEmp.Source = Nothing
     End Sub
 
-
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
     End Sub
@@ -723,6 +736,10 @@ Class SkillsMatrixManagerPage
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
 
     End Sub
+    Private Sub DgSkillList_Loaded(sender As Object, e As RoutedEventArgs) Handles dgSkillList.Loaded
+        dgSkillList.Columns.Item(0).Visibility = Visibility.Collapsed
+    End Sub
+
 #End Region
 
 End Class
