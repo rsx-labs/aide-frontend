@@ -223,8 +223,8 @@ Class ComcellClockPage
         If Not ComcellDBProvider.GetMyComcellItem.COMCELL_ID = 0 Then
             ComcellToday = New ComcellModel(ComcellDBProvider.GetMyComcellItem)
             ComcellVM.ComcellItem = ComcellToday
-            Facilitator.Text = ComcellVM.ComcellItem.FACILITATOR.ToUpper()
-            MinutesTaker.Text = ComcellVM.ComcellItem.MINUTES_TAKER.ToUpper()
+            Facilitator.Text = ComcellVM.ComcellItem.FACILITATOR_NAME.ToUpper()
+            MinutesTaker.Text = ComcellVM.ComcellItem.MINUTES_TAKER_NAME.ToUpper()
         End If
         'load controls
         ManagerAuth()
