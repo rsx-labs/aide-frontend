@@ -170,8 +170,17 @@ Class WeeklyReportPage
     Public Sub SetMissingReports()
         Try
             lstMissingReports = AideServiceClient.GetMissingReportsByEmpID(empID, lastWeekSaturday)
-            LoadMissingReports()
-            DisplayPagingInfo()
+            If lstMissingReports.Count > 0 Then
+                LoadMissingReports()
+                DisplayPagingInfo()
+                lblText.Visibility = Windows.Visibility.Hidden
+            Else
+                dgMissingReports.Visibility = Windows.Visibility.Hidden
+                spNavigationArrows.Visibility = Windows.Visibility.Hidden
+                lblText.Visibility = Windows.Visibility.Visible
+            End If
+
+            lblMissingReportsWeek.Content = lastWeekSaturday.ToShortDateString + " - " + lastWeekFriday.ToShortDateString + " Missing Reports"
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -193,7 +202,6 @@ Class WeeklyReportPage
             dgMissingReports.ItemsSource = missingReportCollection
             currentPage = missingReportCollection.CurrentPage + 1
             lastPage = Math.Ceiling(lstMissingReports.Length / pagingRecordPerPage)
-            lblMissingReportsWeek.Content = lastWeekSaturday.ToShortDateString + " - " + lastWeekFriday.ToShortDateString + " Missing Reports"
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
