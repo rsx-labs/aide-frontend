@@ -819,7 +819,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Viewbox HorizontalAlignment="Left">
-                        <TextBlock Text="Add Lesson's Learnt" Margin="5" Foreground="DimGray"/>
+                        <TextBlock Text="Add Lessons Learnt" Margin="5" Foreground="DimGray"/>
 
                     </Viewbox>
                 </Grid>
@@ -882,7 +882,6 @@
                             <TextBox Name="Problem_Encountered" TextWrapping="Wrap" 
                              Text="{Binding lessonLearntViewModel.SelectedLessonLearnt.Problem, Mode=TwoWay}" 
                              MaxLines="255" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-
                         </Border>
                         <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter problem encountered *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                             <TextBlock.Style>

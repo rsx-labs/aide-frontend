@@ -24,7 +24,7 @@
                     <Image Margin="0,10,10,10" Source="../../Assets/button/measuresub.png"/>
                 </Grid>
                 <Grid Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Foreground="White" Text="3C Measure"></TextBlock>
+                    <TextBlock Foreground="White" Text="3C"></TextBlock>
                 </Grid>
             </Grid>
         </Button>

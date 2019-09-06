@@ -19,9 +19,8 @@ Class ComcellMainPage
     Private submenuframe As Frame
     Private email As String
     Private profile As Profile
-    Private year As Integer
-    Private nextYear As Integer
-
+    Dim year As Integer = Date.Now.Year
+    Dim startYear As Integer = 2019 'Default Start Year
     Dim lstComcell As Comcell()
     Dim ComcellVM As New ComcellViewModel()
 
@@ -61,8 +60,10 @@ Class ComcellMainPage
         End If
 
         year = Date.Now.Year
-        SetData()
+        cbYear.SelectedValue = year
         LoadYears()
+        SetData()
+
     End Sub
 
 #End Region
@@ -121,8 +122,8 @@ Class ComcellMainPage
         Try
             cbYear.DisplayMemberPath = "Text"
             cbYear.SelectedValuePath = "Value"
-            For i As Integer = 2019 To DateTime.Today.Year
-                nextYear = i + 1
+            For i As Integer = startYear To DateTime.Today.Year
+                Dim nextYear As Integer = i + 1
                 cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
             Next
         Catch ex As Exception

@@ -880,7 +880,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Viewbox HorizontalAlignment="Left">
-                        <TextBlock Text="Update Lesson's Learnt" Margin="5" Foreground="DimGray"/>
+                        <TextBlock Text="Update Lessons Learnt" Margin="5" Foreground="DimGray"/>
 
                     </Viewbox>
                 </Grid>

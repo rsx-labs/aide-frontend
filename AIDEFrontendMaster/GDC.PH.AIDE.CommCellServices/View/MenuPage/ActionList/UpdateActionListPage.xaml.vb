@@ -241,22 +241,22 @@ Class UpdateActionListPage
         e.Handled = True
         If Act_AssignedAll.Text = String.Empty Then
             MsgBox("Textbox is empty", MsgBoxStyle.Exclamation, "AIDE")
-        ElseIf Act_AssigneeCB2.Text = String.Empty Then
+        ElseIf Act_AssigneeCB2.SelectedValue = String.Empty Then
             MsgBox("Please select an employee", MsgBoxStyle.Exclamation, "AIDE")
         Else
             Dim txtBox As String = Act_AssignedAll.Text
             Dim cbBox As String = String.Empty
-            Dim ifYes As Integer = txtBox.IndexOf(Act_AssigneeCB2.Text)
+            Dim ifYes As Integer = txtBox.IndexOf(Act_AssigneeCB2.SelectedValue)
 
             If ifYes <> -1 Then
                 If ifYes <> 0 Then
-                    cbBox = ", " & Act_AssigneeCB2.Text
+                    cbBox = ", " & Act_AssigneeCB2.SelectedValue
                     Dim ifYesAgain As Integer = txtBox.IndexOf(cbBox)
                     Act_AssignedAll.Text = Act_AssignedAll.Text.Remove(ifYesAgain, cbBox.Length)
                 Else
-                    cbBox = Act_AssigneeCB2.Text & ", "
+                    cbBox = Act_AssigneeCB2.SelectedValue & ", "
 
-                    If txtBox.Length <> Act_AssigneeCB2.Text.Length Then
+                    If txtBox.Length <> Act_AssigneeCB2.SelectedValue.Length Then
                         cbBox = Act_AssignedAll.Text & ", "
                     Else
                         cbBox = Act_AssignedAll.Text
@@ -272,13 +272,13 @@ Class UpdateActionListPage
     Private Sub btnAddEmployee_Click(sender As Object, e As RoutedEventArgs)
         e.Handled = True
         If Act_AssignedAll.Text = String.Empty Then
-            Act_AssignedAll.Text += Act_AssigneeCB2.Text
+            Act_AssignedAll.Text += Act_AssigneeCB2.SelectedValue
         Else
             Dim txtBox As String = Act_AssignedAll.Text
-            Dim cbBox As String = Act_AssigneeCB2.Text
+            Dim cbBox As String = Act_AssigneeCB2.SelectedValue
             Dim ifYes As Integer = txtBox.IndexOf(cbBox)
             If ifYes = -1 Then
-                Act_AssignedAll.Text += ", " + Act_AssigneeCB2.Text
+                Act_AssignedAll.Text += ", " + Act_AssigneeCB2.SelectedValue
             Else
                 MsgBox("Cannot allow duplicate entry!", MsgBoxStyle.Exclamation, "AIDE")
             End If
@@ -292,17 +292,17 @@ Class UpdateActionListPage
         Else
             Dim txtBox As String = Act_AssignedAll.Text
             Dim cbBox As String = String.Empty
-            Dim ifYes As Integer = txtBox.IndexOf(Act_AssigneeCB2.Text)
+            Dim ifYes As Integer = txtBox.IndexOf(Act_AssigneeCB2.SelectedValue)
 
             If ifYes <> -1 Then
                 If ifYes <> 0 Then
-                    cbBox = ", " & Act_AssigneeCB2.Text
+                    cbBox = ", " & Act_AssigneeCB2.SelectedValue
                     Dim ifYesAgain As Integer = txtBox.IndexOf(cbBox)
                     Act_AssignedAll.Text = Act_AssignedAll.Text.Remove(ifYesAgain, cbBox.Length)
                 Else
-                    cbBox = Act_AssigneeCB2.Text & ", "
+                    cbBox = Act_AssigneeCB2.SelectedValue & ", "
 
-                    If txtBox.Length <> Act_AssigneeCB2.Text.Length Then
+                    If txtBox.Length <> Act_AssigneeCB2.SelectedValue.Length Then
                         cbBox = Act_AssignedAll.Text & ", "
                     Else
                         cbBox = Act_AssignedAll.Text

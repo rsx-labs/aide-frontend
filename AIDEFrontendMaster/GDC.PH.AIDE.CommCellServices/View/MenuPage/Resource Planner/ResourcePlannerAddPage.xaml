@@ -1193,7 +1193,7 @@
                     </Grid>
                     <Grid Grid.Row="2">
                         <Border Margin="5,5,10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                            <DatePicker Loaded="DatePicker_Loaded" Style="{DynamicResource styleDatePickerfrom}" BorderBrush="Transparent" x:Name="dtpFrom" Text="12" Margin="2"/>
+                            <DatePicker IsEnabled="False" Loaded="DatePicker_Loaded" Style="{DynamicResource styleDatePickerfrom}" BorderBrush="Transparent" x:Name="dtpFrom" Text="12" Margin="2"/>
                         </Border>
                         <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select start date *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
@@ -1222,7 +1222,7 @@
                     </Grid>
                     <Grid Grid.Row="3">
                         <Border Margin="5,5,10,5"  Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                            <DatePicker Loaded="DatePicker_Loaded" Style="{DynamicResource styleDatePickerto}" x:Name="dtpTo" Margin="2" BorderBrush="Transparent"/>
+                            <DatePicker IsEnabled="False" Loaded="DatePicker_Loaded" Style="{DynamicResource styleDatePickerto}" x:Name="dtpTo" Margin="2" BorderBrush="Transparent"/>
                         </Border>
                         <TextBlock IsHitTestVisible="False" Text="Select end date *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>

@@ -53,7 +53,7 @@
                     <Image Margin="0,10,10,10" Source="../../Assets/Menu/Comcell.png"/>
                 </Grid>
                 <Grid Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock Foreground="White" Text="Comcell Meeting"></TextBlock>
+                    <TextBlock Foreground="White" Text="Comm. Cell Meeting"></TextBlock>
                 </Grid>
             </Grid>
         </Button>

@@ -73,7 +73,7 @@ Class CommendationDashBoard
 #Region "Methods/Functions"
 
     Public Sub SetButtonCreateVisible()
-        If position = MANAGER Then
+        If profile.Permission = MANAGER Then
             btnCreate.Visibility = Windows.Visibility.Visible
         Else
             btnCreate.Visibility = Windows.Visibility.Collapsed

@@ -260,7 +260,7 @@ Class MainWindow
             attendanceSummarry.TimeIn = timeIn
 
             If attendanceSummarry.EmployeeID = 0 Then 'Service time-out needs to be handled on the service or else always restart it when it time's out
-                MsgBox("Service Time-Out! Attendance will not be Recorded!" + Environment.NewLine + "Application will Automatically Close.", MsgBoxStyle.Critical, "AIDE")
+                MsgBox("Service time-out! Attendance will not be recorded!" + Environment.NewLine + "Application will automatically close.", MsgBoxStyle.Critical, "AIDE")
                 Environment.Exit(0)
             Else
                 aideClientService.InsertAttendance(attendanceSummarry)
@@ -331,6 +331,10 @@ Class MainWindow
 #End Region
 
 #Region "Button/Events"
+    Private Sub AboutBtn_Click(sender As Object, e As RoutedEventArgs)
+        Dim AboutPage As New AboutPage()
+        AboutPage.ShowDialog()
+    End Sub
 
     Private Sub ImprovementBtn_Click(sender As Object, e As RoutedEventArgs) Handles ImprovementBtn.Click
         LoadSideBar()
@@ -452,8 +456,4 @@ Class MainWindow
     End Sub
 #End Region
 
-    Private Sub AboutBtn_Click(sender As Object, e As RoutedEventArgs)
-        Dim AboutPage As New AboutPage()
-        AboutPage.ShowDialog()
-    End Sub
 End Class

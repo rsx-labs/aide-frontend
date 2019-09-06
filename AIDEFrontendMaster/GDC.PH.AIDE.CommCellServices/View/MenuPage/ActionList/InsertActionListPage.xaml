@@ -155,7 +155,7 @@
                         <Grid Grid.Column="0">
                             <ComboBox FontSize="12" Style="{DynamicResource StyleComboBox}" 
                                       Name="Act_AssigneeCB" Margin="0,5,2.5,5" 
-                                      SelectedValuePath="Emp_ID" DisplayMemberPath="Employee_Name" 
+                                      SelectedValuePath="First_Name" DisplayMemberPath="Employee_Name" 
                                       ItemsSource="{Binding NicknameList}"/>
                             
                             <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select employee" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">

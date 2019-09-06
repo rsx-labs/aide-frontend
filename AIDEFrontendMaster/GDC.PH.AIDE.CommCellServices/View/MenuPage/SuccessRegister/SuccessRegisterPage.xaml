@@ -713,12 +713,12 @@
                                                   CanUserResizeColumns="False" AutoGenerateColumns="False"
                                                   Width="auto" BorderBrush="Transparent">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="ID" Width="5*" Binding="{Binding SuccessID}" />
-                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Created" Width="15*" Binding="{Binding DateInput, StringFormat=MM/dd/yyyy}" />
-                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Raised By" Width="10*" Binding="{Binding Nick_Name}" />
-                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Details of Success" Width="30*" Binding="{Binding DetailsOfSuccess}" />
-                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Who's Involve" Width="20*" Binding="{Binding WhosInvolve}" />
-                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Additional Information" Width="30*" Binding="{Binding AdditionalInformation}" />
+                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="ID" Width="2*" Binding="{Binding SuccessID}" />
+                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Created" Width="2*" Binding="{Binding DateInput, StringFormat=MM/dd/yyyy}" />
+                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Raised By" Width="2*" Binding="{Binding Nick_Name}" />
+                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Details of Success" Width="5*" Binding="{Binding DetailsOfSuccess}" />
+                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Who's Involved" Width="5*" Binding="{Binding WhosInvolve}" />
+                                    <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Additional Information" Width="5*" Binding="{Binding AdditionalInformation}" />
                                 </DataGrid.Columns>
                             </DataGrid>
                         </Border>

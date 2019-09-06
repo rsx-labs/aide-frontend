@@ -69,7 +69,9 @@ Class ResourcePlannerAddPage
             If profile.Permission <> "Manager" AndAlso cbCategory.DisplayMemberPath = "Holiday" Then
                 MsgBox("Sorry! You do not have authorization to file holiday Leave. Please contact your Manager", MsgBoxStyle.Exclamation, "AIDE")
             Else
-                If cbCategory.SelectedValue = setStatus Then
+                If cbCategory.Text = String.Empty Or dtpFrom.Text = String.Empty Or dtpTo.Text = String.Empty Then
+                    MsgBox("Please fill all required fields!", MsgBoxStyle.Exclamation, "AIDE")
+                ElseIf cbCategory.SelectedValue = setStatus Then
                     Dim notify = MsgBox("There is already an existing " & cbCategory.Text & " for this date" & vbNewLine & "Do you wish to proceed?", MsgBoxStyle.YesNo, "AIDE")
                     If notify = MsgBoxResult.Yes Then
                         InsertResourcePlanner()
@@ -132,6 +134,7 @@ Class ResourcePlannerAddPage
             dtpFrom.DisplayDateStart = Date.Today
             dtpFrom.DisplayDateEnd = Date.MaxValue
         End If
+        dtpFrom.IsEnabled = True
     End Sub
 #End Region
 

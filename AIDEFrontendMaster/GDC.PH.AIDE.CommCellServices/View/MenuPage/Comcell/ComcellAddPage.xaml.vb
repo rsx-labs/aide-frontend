@@ -159,8 +159,8 @@ Class ComcellAddPage
             If mode = "Add" Then
                 If cbMonth.Text = Nothing Or cbFacilitator.Text = Nothing Or cbMinTaker.Text = Nothing Or cbYear.Text = Nothing Then
                     MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
-                ElseIf cbFacilitator.Text = cbMinTaker.Text Then
-                    MsgBox("Selected facilitator and minutes taker are the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                    'ElseIf cbFacilitator.Text = cbMinTaker.Text Then
+                    '    MsgBox("Selected facilitator and minutes taker are the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 Else
                     MsgBox("Successfully added", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
@@ -186,8 +186,8 @@ Class ComcellAddPage
             Else
                 If cbMonth.Text = Nothing Or cbFacilitator.Text = Nothing Or cbMinTaker.Text = Nothing Or cbYear.Text = Nothing Then
                     MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
-                ElseIf cbFacilitator.Text = cbMinTaker.Text Then
-                    MsgBox("Selected facilitator and minutes taker are the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                    'ElseIf cbFacilitator.Text = cbMinTaker.Text Then
+                    '    MsgBox("Selected facilitator and minutes taker are the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 Else
                     MsgBox("Successfully updated", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
