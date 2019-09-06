@@ -38,6 +38,8 @@ Public Class BillabilityVacationLeavePage
 
         LoadYears()
         LoadData()
+
+        cbYear.SelectedValue = year
     End Sub
 
 #Region "Private Methods"

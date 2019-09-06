@@ -24,7 +24,7 @@ Public Class BillablesPage
     Dim month As Integer = Date.Now.Month
     Dim year As Integer
     Dim displayOption As Integer = 1 'Weekly is the Default Display Options
-
+    Dim startYear As Integer = 2019 'Default Start Year
     Dim selectedValue As Integer
     Dim totalMonthly As Double
     Dim totalWeekly As Double
@@ -268,7 +268,7 @@ Public Class BillablesPage
         Try
             cbYear.DisplayMemberPath = "Text"
             cbYear.SelectedValuePath = "Value"
-            For i As Integer = 2019 To DateTime.Today.Year
+            For i As Integer = startYear To DateTime.Today.Year
                 Dim nextYear As Integer = i + 1
                 cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
             Next

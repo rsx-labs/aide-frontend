@@ -1182,7 +1182,7 @@
                                         <ComboBoxItem Content="Project"/>
                                         <ComboBoxItem Content="Task"/>
                                     </ComboBox>
-                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select Category" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select category" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>

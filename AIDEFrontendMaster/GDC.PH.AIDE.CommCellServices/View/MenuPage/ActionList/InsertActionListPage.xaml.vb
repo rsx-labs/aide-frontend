@@ -101,7 +101,7 @@ Class InsertActionListPage
             Else
                 act_ion.Act_ID = ActionModel.REF_NO
                 act_ion.Act_Message = ActionModel.ACTION_MESSAGE
-                act_ion.Act_Assignee = Act_AssigneeCB.SelectedValue
+                act_ion.Act_Assignee = profiles.Emp_ID
                 act_ion.Act_DueDate = ActionModel.DUE_DATE
                 act_ion.Act_DateClosed = String.Empty
                 act_ion.Act_NickName = Act_AssignedAll.Text
@@ -211,13 +211,13 @@ Class InsertActionListPage
     Private Sub btnAddEmployee_Click(sender As Object, e As RoutedEventArgs) Handles btnAddEmployee.Click
         e.Handled = True
         If Act_AssignedAll.Text = String.Empty Then
-            Act_AssignedAll.Text += Act_AssigneeCB.Text
+            Act_AssignedAll.Text += Act_AssigneeCB.SelectedValue
         Else
             Dim txtBox As String = Act_AssignedAll.Text
-            Dim cbBox As String = Act_AssigneeCB.Text
+            Dim cbBox As String = Act_AssigneeCB.SelectedValue
             Dim ifYes As Integer = txtBox.IndexOf(cbBox)
             If ifYes = -1 Then
-                Act_AssignedAll.Text += ", " + Act_AssigneeCB.Text
+                Act_AssignedAll.Text += ", " + Act_AssigneeCB.SelectedValue
             Else
                 MsgBox("Cannot allow duplicate entry!", MsgBoxStyle.Exclamation, "AIDE")
             End If
@@ -231,17 +231,17 @@ Class InsertActionListPage
         Else
             Dim txtBox As String = Act_AssignedAll.Text
             Dim cbBox As String = String.Empty
-            Dim ifYes As Integer = txtBox.IndexOf(Act_AssigneeCB.Text)
+            Dim ifYes As Integer = txtBox.IndexOf(Act_AssigneeCB.SelectedValue)
 
             If ifYes <> -1 Then
                 If ifYes <> 0 Then
-                    cbBox = ", " & Act_AssigneeCB.Text
+                    cbBox = ", " & Act_AssigneeCB.SelectedValue
                     Dim ifYesAgain As Integer = txtBox.IndexOf(cbBox)
                     Act_AssignedAll.Text = Act_AssignedAll.Text.Remove(ifYesAgain, cbBox.Length)
                 Else
-                    cbBox = Act_AssigneeCB.Text & ", "
+                    cbBox = Act_AssigneeCB.SelectedValue & ", "
 
-                    If txtBox.Length <> Act_AssigneeCB.Text.Length Then
+                    If txtBox.Length <> Act_AssigneeCB.SelectedValue.Length Then
                         cbBox = Act_AssignedAll.Text & ", "
                     Else
                         cbBox = Act_AssignedAll.Text

@@ -32,7 +32,7 @@ Public Class LatePage
     Dim checkStatus As Integer
     Dim year As Integer = Date.Now.Year
     Dim day As Integer
-    Dim startYear As Integer = 2018 'Default Start Year
+    Dim startYear As Integer = 2019 'Default Start Year
 #End Region
 
     Public Sub New(_mainframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
@@ -48,6 +48,9 @@ Public Class LatePage
         LoadYears()
         LoadStackLateFY()
         LoadStackLate()
+
+        cbMonth.SelectedValue = month
+        cbYear.SelectedValue = year
     End Sub
 
 #Region "Private Methods"
@@ -182,10 +185,12 @@ Public Class LatePage
 
     Public Sub LoadYears()
         Try
+            cbYear.DisplayMemberPath = "Text"
+            cbYear.SelectedValuePath = "Value"
             For i As Integer = startYear To DateTime.Today.Year
-                cbYear.Items.Add(i)
+                Dim nextYear As Integer = i + 1
+                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
             Next
-
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try

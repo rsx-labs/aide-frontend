@@ -98,7 +98,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Reference No." Width="1*" Binding="{Binding REF_NO,Mode=TwoWay}" IsReadOnly="True"/>
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Action Message"  Width="3*" Binding="{Binding ACTION_MESSAGE,Mode=TwoWay}" IsReadOnly="True"/>
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Assignee"  Width="1*" Binding="{Binding NICK_NAME,Mode=TwoWay}" IsReadOnly="True"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Assignee"  Width="3*" Binding="{Binding NICK_NAME,Mode=TwoWay}" IsReadOnly="True"/>
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Due Date" Width="1*" Binding="{Binding DUE_DATE,Mode=TwoWay, StringFormat=MM/dd/yyyy}" IsReadOnly="True"/>
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Closed" Width="1*" Binding="{Binding DATE_CLOSED,Mode=TwoWay, StringFormat=MM/dd/yyyy}" IsReadOnly="True"/>
                         </DataGrid.Columns>

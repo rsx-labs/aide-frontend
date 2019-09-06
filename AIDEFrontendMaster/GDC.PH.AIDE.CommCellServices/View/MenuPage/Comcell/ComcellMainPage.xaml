@@ -817,15 +817,14 @@
 
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <Viewbox HorizontalAlignment="Left" Margin="10,5,10,5">
-                            <Image Source="..\..\..\Assets\Button\Comcelllogo.png" />
+                        <Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
+                            <Image Source="..\..\..\Assets\Button\comcelllogo.png" />
                         </Viewbox>
-
                     </Grid>
 
                     <Grid Grid.Column="1">
                         <Viewbox HorizontalAlignment="Left">
-                            <TextBlock TextWrapping="Wrap" Padding="0" Text="Comcell Meeting" Margin="0,7,0,7" Foreground="DimGray"/>
+                            <TextBlock TextWrapping="Wrap" Padding="0" Text="Comm. Cell Meeting" Margin="0,7,0,7" Foreground="DimGray"/>
                         </Viewbox>
                     </Grid>
 

@@ -162,7 +162,7 @@
                                          HorizontalContentAlignment="Center" Template="{DynamicResource TextBoxBaseControlTemplate}" />
                             </Border>
                             
-                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter a counter measure *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter a countermeasure *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>

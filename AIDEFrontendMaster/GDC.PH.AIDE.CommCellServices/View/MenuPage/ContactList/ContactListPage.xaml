@@ -30,7 +30,7 @@
 
                 <Grid Grid.Column="1">
                     <Viewbox HorizontalAlignment="Left">
-                        <TextBlock TextWrapping="Wrap" Padding="0" Text="Contacts List" Margin="0,7,0,7" Foreground="DimGray"/>
+                        <TextBlock TextWrapping="Wrap" Padding="0" Text="Contact Lists" Margin="0,7,0,7" Foreground="DimGray"/>
                     </Viewbox>
                 </Grid>
 
@@ -76,7 +76,7 @@
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Role" Width="150" Binding="{Binding POSITION}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Location" Width="100" Binding="{Binding LOCATION}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Email Address" Width="210" Binding="{Binding EMAIL_ADDRESS}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Extension" Width="75" Binding="{Binding LOCAL}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Local Number" Width="75" Binding="{Binding LOCAL}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Mobile Number" Width="110" Binding="{Binding CEL_NO}"  />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Home Phone" Width="100" Binding="{Binding HOMEPHONE}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Other Phone" Width="100" Binding="{Binding OTHER_PHONE}" />

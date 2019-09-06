@@ -26,7 +26,7 @@ Public Class AssetsInventoryAddPage
 
     Dim lstNickname As Nickname()
     Dim nicknameVM As New NicknameViewModel()
-    Dim empId As Integer
+    Dim empId As Integer = 0
     Dim status As Integer
 #End Region
 
@@ -191,6 +191,12 @@ Public Class AssetsInventoryAddPage
         Try
             e.Handled = True
             approvalStatus = 1
+            empId = Integer.Parse(profile.Emp_ID)
+            If assetsModel.STATUS = 4 Then
+                status = 1
+            ElseIf assetsModel.STATUS = 3 Then
+                status = 2
+            End If
             Approval()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
@@ -263,6 +269,7 @@ Public Class AssetsInventoryAddPage
 
     Private Sub cbNickname_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbNickname.SelectionChanged
         txtEmpID.Text = cbNickname.SelectedValue
+        empId = Integer.Parse(txtEmpID.Text)
     End Sub
 
     Private Sub cbStatus_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbStatus.SelectionChanged
@@ -274,7 +281,7 @@ Public Class AssetsInventoryAddPage
 
     Public Sub Approval()
         Dim assets As New Assets
-        assets.EMP_ID = Integer.Parse(profile.Emp_ID)
+        assets.EMP_ID = empId
         assets.ASSET_ID = Integer.Parse(txtID.Text)
         assets.DATE_ASSIGNED = Date.Parse(dateInput.SelectedDate)
         assets.COMMENTS = txtComments.Text

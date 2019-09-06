@@ -659,7 +659,7 @@
                                         <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png">
                                         </Image>
                                     </Viewbox>
-                                    <TextBlock TextWrapping="WrapWithOverflow" IsHitTestVisible="False" Text="Search lesson's learnt" VerticalAlignment="Center" HorizontalAlignment="left" Margin="5,0,0,0" Foreground="DarkGray">
+                                    <TextBlock TextWrapping="WrapWithOverflow" IsHitTestVisible="False" Text="Search lessons learnt" VerticalAlignment="Center" HorizontalAlignment="left" Margin="5,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>

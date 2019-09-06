@@ -1085,7 +1085,7 @@
 
                                 <TextBox x:Name="txtSRWhosInvolve" Template="{DynamicResource TextBoxBaseControlTemplate}" IsEnabled="False" HorizontalContentAlignment="Center"/>
                             </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select who's involve *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select who's involved *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1133,7 +1133,7 @@
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
                                 <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="comboAddEmployee" Margin="5,5,2.5,5" IsReadOnly="True"
-                          SelectedValuePath="Emp_ID" DisplayMemberPath="Employee_Name" ItemsSource="{Binding NicknameList}"/>
+                          SelectedValuePath="First_Name" DisplayMemberPath="Employee_Name" ItemsSource="{Binding NicknameList}"/>
                                 <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select employee" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">

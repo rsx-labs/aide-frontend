@@ -892,9 +892,21 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
+                        <TextBlock x:Name="txtlabelMonth" Width="120" TextAlignment="Center" Margin="5,10,5,5" Text="Month" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </Grid>
                     <Grid Grid.Row="1">
-                        <ComboBox ItemsSource="{Binding NicknameList}" SelectedValuePath="First_Name" DisplayMemberPath="First_Name" Style="{DynamicResource StyleComboBox}" x:Name="cbFacilitator" Margin="10,5,5,5"/>
+                        <ComboBox ItemsSource="{Binding NicknameList}" SelectedValuePath="First_Name" DisplayMemberPath="Employee_Name" Style="{DynamicResource StyleComboBox}" x:Name="cbFacilitator" Margin="10,5,5,5"/>
                         <TextBlock x:Name="txtBlockFacilitator" FontSize="12" IsHitTestVisible="False" Text="Select facilitator *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -907,9 +919,21 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
+                        <TextBlock x:Name="txtlabelFacilitator" Width="120" TextAlignment="Center" Margin="5,10,5,5" Text="Facilitator" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbFacilitator}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </Grid>
                     <Grid Grid.Row="2">
-                        <ComboBox ItemsSource="{Binding NicknameList}" Style="{DynamicResource StyleComboBox}" SelectedValuePath="First_Name" DisplayMemberPath="First_Name" x:Name="cbMinTaker" Margin="10,5,5,5"/>
+                        <ComboBox ItemsSource="{Binding NicknameList}" Style="{DynamicResource StyleComboBox}" SelectedValuePath="First_Name" DisplayMemberPath="Employee_Name" x:Name="cbMinTaker" Margin="10,5,5,5"/>
                         <TextBlock x:Name="txtBlockMinsTaker" FontSize="12" IsHitTestVisible="False" Text="Select minutes taker *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -917,6 +941,18 @@
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=cbMinTaker}" Value="">
                                             <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock x:Name="txtlabelMinutesTaker" Width="120" TextAlignment="Center" Margin="5,10,5,5" Text="Minutes Taker" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbMinTaker}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -932,6 +968,18 @@
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=cbYear}" Value="">
                                             <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock x:Name="txtlabelYear" Width="120" TextAlignment="Center" Margin="5,10,5,5" Text="Year" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbYear}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>

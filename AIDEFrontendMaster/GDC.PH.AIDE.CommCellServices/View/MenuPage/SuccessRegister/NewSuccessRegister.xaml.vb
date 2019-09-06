@@ -151,13 +151,13 @@ Class NewSuccessRegister
     Private Sub btnSRAddEmployee_Click(sender As Object, e As RoutedEventArgs) Handles btnSRAddEmployee.Click
         e.Handled = True
         If txtSRWhosInvolve.Text = String.Empty Then
-            txtSRWhosInvolve.Text += comboAddEmployee.Text
+            txtSRWhosInvolve.Text += comboAddEmployee.SelectedValue
         Else
             Dim txtBox As String = txtSRWhosInvolve.Text
-            Dim cbBox As String = comboAddEmployee.Text
+            Dim cbBox As String = comboAddEmployee.SelectedValue
             Dim ifYes As Integer = txtBox.IndexOf(cbBox)
             If ifYes = -1 Then
-                txtSRWhosInvolve.Text += ", " + comboAddEmployee.Text
+                txtSRWhosInvolve.Text += ", " + comboAddEmployee.SelectedValue
             Else
                 MsgBox("Cannot allow duplicate entry!", MsgBoxStyle.Exclamation, "AIDE")
             End If
@@ -219,17 +219,17 @@ Class NewSuccessRegister
         Else
             Dim txtBox As String = txtSRWhosInvolve.Text
             Dim cbBox As String = String.Empty
-            Dim ifYes As Integer = txtBox.IndexOf(comboAddEmployee.Text)
+            Dim ifYes As Integer = txtBox.IndexOf(comboAddEmployee.SelectedValue)
 
             If ifYes <> -1 Then
                 If ifYes <> 0 Then
-                    cbBox = ", " & comboAddEmployee.Text
+                    cbBox = ", " & comboAddEmployee.SelectedValue
                     Dim ifYesAgain As Integer = txtBox.IndexOf(cbBox)
                     txtSRWhosInvolve.Text = txtSRWhosInvolve.Text.Remove(ifYesAgain, cbBox.Length)
                 Else
-                    cbBox = comboAddEmployee.Text & ", "
+                    cbBox = comboAddEmployee.SelectedValue & ", "
 
-                    If txtBox.Length <> comboAddEmployee.Text.Length Then
+                    If txtBox.Length <> comboAddEmployee.SelectedValue.Length Then
                         cbBox = txtSRWhosInvolve.Text & ", "
                     Else
                         cbBox = txtSRWhosInvolve.Text
