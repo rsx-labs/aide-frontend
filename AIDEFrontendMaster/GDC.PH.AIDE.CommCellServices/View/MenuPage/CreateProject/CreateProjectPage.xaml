@@ -1095,9 +1095,9 @@
                                         <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter project code *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
-                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding Text, ElementName=txtProjCd}" Value="">
+                                                        <DataTrigger Binding="{Binding Text, ElementName=txtProjCD}" Value="">
                                                             <Setter Property="Visibility" Value="Visible"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>

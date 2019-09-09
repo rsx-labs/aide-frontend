@@ -36,7 +36,7 @@
                     <ColumnDefinition Width="70*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
-                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/SabaIcon.png"/>
+                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/tracker.png"/>
                 </Grid>
                 <Grid Grid.Column="1" VerticalAlignment="Center">
                     <TextBlock Foreground="White" Text="Tracker"></TextBlock>
@@ -50,7 +50,7 @@
                     <ColumnDefinition Width="70*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
-                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/Comcell.png"/>
+                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/Comcell1.png"/>
                 </Grid>
                 <Grid Grid.Column="1" VerticalAlignment="Center">
                     <TextBlock Foreground="White" Text="Comm. Cell Meeting"></TextBlock>
