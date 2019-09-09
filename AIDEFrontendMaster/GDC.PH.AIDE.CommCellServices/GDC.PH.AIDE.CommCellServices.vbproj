@@ -1392,7 +1392,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Menu\clockBG.png" />
-    <Resource Include="Assets\Menu\Comcell.png" />
+    <Resource Include="Assets\Menu\tracker.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Button\BillableLogo.png" />
@@ -1448,6 +1448,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Button\Comcelllogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Menu\comcell1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
