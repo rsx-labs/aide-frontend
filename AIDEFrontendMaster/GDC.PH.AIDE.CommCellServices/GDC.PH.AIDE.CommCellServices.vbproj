@@ -1443,5 +1443,15 @@
   <ItemGroup>
     <Resource Include="Assets\Button\CloseAbout.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Contributors\Chris.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Contributors\Cha.png" />
+    <Resource Include="Assets\Contributors\Giann.png" />
+    <Resource Include="Assets\Contributors\Harvey.png" />
+    <Resource Include="Assets\Contributors\Jester.png" />
+    <Resource Include="Assets\Contributors\Nell.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
