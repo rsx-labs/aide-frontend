@@ -29,7 +29,7 @@ Class CommendationDashBoard
     Private month As Integer = Date.Now.Month
     Private year As Integer = Date.Now.Year
     Private displayMonth As String
-    Private MANAGER As String = "Manager"
+
 
     Dim lstBirthdayMonth As BirthdayList()
     Dim lstCommendation As Commendations()
@@ -73,7 +73,7 @@ Class CommendationDashBoard
 #Region "Methods/Functions"
 
     Public Sub SetButtonCreateVisible()
-        If profile.Permission = MANAGER Then
+        If profile.Permission_ID = 1 Then
             btnCreate.Visibility = Windows.Visibility.Visible
         Else
             btnCreate.Visibility = Windows.Visibility.Collapsed

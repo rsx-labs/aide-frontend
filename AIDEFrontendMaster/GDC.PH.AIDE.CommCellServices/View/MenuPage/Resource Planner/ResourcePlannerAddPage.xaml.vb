@@ -66,7 +66,7 @@ Class ResourcePlannerAddPage
 
     Private Sub btnCreateLeave_Click(sender As Object, e As RoutedEventArgs) Handles btnCreateLeave.Click
         Try
-            If profile.Permission <> "Manager" AndAlso cbCategory.DisplayMemberPath = "Holiday" Then
+            If profile.Permission_ID <> 1 AndAlso cbCategory.DisplayMemberPath = "Holiday" Then
                 MsgBox("Sorry! You do not have authorization to file holiday Leave. Please contact your Manager", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 If cbCategory.Text = String.Empty Or dtpFrom.Text = String.Empty Or dtpTo.Text = String.Empty Then
@@ -100,7 +100,7 @@ Class ResourcePlannerAddPage
     End Sub
 
     Private Sub lstEmployee_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles lstEmployee.SelectionChanged
-        If profile.Permission = "Manager" Then
+        If profile.Permission_ID = 1 Then
             txtEmpID.Text = lstEmployee.SelectedValue
         Else
             txtEmpID.Text = profile.Emp_ID
@@ -216,7 +216,7 @@ Class ResourcePlannerAddPage
         txtEmpID.Text = profile.Emp_ID
         txtEmpID.IsReadOnly = True
         btnCreateLeave.IsEnabled = False
-        If profile.Permission = "Manager" Then
+        If profile.Permission_ID = 1 Then
             txtEmpID.Text = profile.Emp_ID
             LoadEmployee()
         Else

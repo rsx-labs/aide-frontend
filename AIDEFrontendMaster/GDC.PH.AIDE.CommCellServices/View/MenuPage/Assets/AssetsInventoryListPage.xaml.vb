@@ -73,7 +73,7 @@ Public Class AssetsInventoryListPage
 #Region "Sub Procedures"
 
     Public Sub SetUnApprovedtTabVisible()
-        If profile.Permission = "Manager" Then
+        If profile.Permission_ID = 1 Then
             Unapproved.Visibility = Windows.Visibility.Visible
         End If
     End Sub
@@ -365,7 +365,7 @@ Public Class AssetsInventoryListPage
         Dim RowDataContaxt As AssetsModel = TryCast(e.Row.DataContext, AssetsModel)
 
         If RowDataContaxt IsNot Nothing Then
-            If RowDataContaxt.EMP_ID = profile.Emp_ID And RowDataContaxt.STATUS = 2 And RowDataContaxt.APPROVAL = 1 And profile.Permission = "Manager" Then
+            If RowDataContaxt.EMP_ID = profile.Emp_ID And RowDataContaxt.STATUS = 2 And RowDataContaxt.APPROVAL = 1 And profile.Permission_ID = 1 Then
                 e.Row.Background = New BrushConverter().ConvertFrom("#CCFFD8D8")
                 e.Row.Foreground = New SolidColorBrush(Colors.Black)
                 boxPersonal.Visibility = Windows.Visibility.Visible
@@ -414,7 +414,7 @@ Public Class AssetsInventoryListPage
         If show = True Then
             If lv_assetInventoryList.SelectedIndex <> -1 Then
                 If lv_assetInventoryList.SelectedItem IsNot Nothing Then
-                    If CType(lv_assetInventoryList.SelectedItem, AssetsModel).STATUS <> 1 OrElse CType(lv_assetInventoryList.SelectedItem, AssetsModel).EMP_ID <> profile.Emp_ID And profile.Permission <> "Manager" Then
+                    If CType(lv_assetInventoryList.SelectedItem, AssetsModel).STATUS <> 1 OrElse CType(lv_assetInventoryList.SelectedItem, AssetsModel).EMP_ID <> profile.Emp_ID And profile.Permission_ID <> 1 Then
                         Exit Sub
                     Else
                         Dim assetsModel As New AssetsModel

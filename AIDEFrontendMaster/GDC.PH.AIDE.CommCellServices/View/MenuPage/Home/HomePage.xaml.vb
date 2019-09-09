@@ -27,7 +27,7 @@ Class HomePage
     Private empID As Integer
     Private month As Integer = Date.Now.Month
     Private displayMonth As String
-    Private MANAGER As String = "Manager"
+    'Private MANAGER As String = "Manager"
     Private email As String
     Private profile As New Profile
     Dim lstBirthdayMonth As BirthdayList()

@@ -51,6 +51,7 @@ Public Class ProfileDBProvider
         _MyProfile.OtherPhone = _profile.Other_Phone
         _MyProfile.DtReviewed = _profile.Dt_Reviewed
         _MyProfile.Permission = _profile.Permission
+        _MyProfile.Permission_ID = _profile.Permission_ID
         _MyProfile.CivilStatus = _profile.CivilStatus
         _MyProfile.ShiftStatus = _profile.ShiftStatus
 
@@ -86,6 +87,7 @@ Public Class MyProfile
     Property OtherPhone As String
     Property DtReviewed As DateTime
     Property Permission As String
+    Property Permission_ID As Integer
     Property CivilStatus As String
     Property ShiftStatus As String
 

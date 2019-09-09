@@ -121,22 +121,22 @@ Class EmailCodeRequest
 
             MsgBox(mcVM.objectMailConfigSet.BODY + " " + codecombo.ToString(), MsgBoxStyle.Information, "AIDE")
 
-            'Dim client As SmtpClient = New SmtpClient()
-            'client.Port = mcVM.objectMailConfigSet.PORT
-            'client.Host = mcVM.objectMailConfigSet.HOST
-            'client.EnableSsl = CBool(mcVM.objectMailConfigSet.ENABLE_SSL)
-            'client.Timeout = mcVM.objectMailConfigSet.TIMEOUT
-            'client.DeliveryMethod = SmtpDeliveryMethod.Network
-            'client.UseDefaultCredentials = CBool(mcVM.objectMailConfigSet.USE_DFLT_CREDENTIALS)
-            'client.Credentials = New System.Net.NetworkCredential(sentFrom, mcVM.objectMailConfigSet.SENDER_PASSWORD)
+            Dim client As SmtpClient = New SmtpClient()
+            client.Port = mcVM.objectMailConfigSet.PORT
+            client.Host = mcVM.objectMailConfigSet.HOST
+            client.EnableSsl = CBool(mcVM.objectMailConfigSet.ENABLE_SSL)
+            client.Timeout = mcVM.objectMailConfigSet.TIMEOUT
+            client.DeliveryMethod = SmtpDeliveryMethod.Network
+            client.UseDefaultCredentials = CBool(mcVM.objectMailConfigSet.USE_DFLT_CREDENTIALS)
+            client.Credentials = New System.Net.NetworkCredential(sentFrom, mcVM.objectMailConfigSet.SENDER_PASSWORD)
 
-            'Dim mail As MailMessage = New MailMessage()
-            'mail.From = New MailAddress(sentFrom)
-            'mail.To.Add(sentTo)
-            'mail.Subject = subject
-            'mail.Body = body
+            Dim mail As MailMessage = New MailMessage()
+            mail.From = New MailAddress(sentFrom)
+            mail.To.Add(sentTo)
+            mail.Subject = subject
+            mail.Body = body
 
-            'client.Send(mail)
+            client.Send(mail)
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try

@@ -17,7 +17,6 @@ Class CommendationUpdatePage
     Private empID As Integer
     Private position As String
     Private totalCount As Integer
-    Private permission As String
     Private commendFrame As Frame
     Private profiles As Profile
     Private projID As Integer
@@ -41,7 +40,6 @@ Class CommendationUpdatePage
         Me.position = _position
         Me.commendFrame = _commendFrame
         Me.comboProject.Text = commendationVM._commendationModel.Project
-        Me.permission = _permission
         txtCommendationID.Visibility = Windows.Visibility.Hidden
         LoadAllProjectName()
         AssignEvents(commendationVM._commendationModel.Reason)
@@ -65,7 +63,7 @@ Class CommendationUpdatePage
         'txtCommendationReason.IsReadOnly = True
         'dateInput.SelectedDate = commendationModel.DateSent
         'dateInput.IsEnabled = False
-        If Not permission = "Manager" Then
+        If Not Me.profiles.Permission_ID = 1 Then
             btnCommendationUpdate.Visibility = Windows.Visibility.Hidden
             comboAddEmployee.Visibility = Windows.Visibility.Hidden
             txtemployeeWM.Visibility = Windows.Visibility.Hidden

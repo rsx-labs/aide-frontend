@@ -52,7 +52,7 @@ Class SabaLearningMainPage
         Me.submenuframe = _submenuframe
         SetData()
 
-        If profile.Permission <> "Manager" Then
+        If profile.Permission_ID <> 1 Then
             btnCreate.Visibility = Windows.Visibility.Collapsed
         End If
     End Sub

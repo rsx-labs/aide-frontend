@@ -64,8 +64,7 @@ Public Class ContactListPage
         Me.attendanceFrame = _attendanceFrame
         Me.profile = _profile
 
-        If profile.Permission = "Manager" Then
-            btnCreate.Visibility = Windows.Visibility.Visible
+        If profile.Permission_ID = 1 Then
             AllEmployeeDetailsTab.Visibility = Windows.Visibility.Visible
             UnapprovedEmployeeDetailsTab.Visibility = Windows.Visibility.Visible
         End If
@@ -107,8 +106,10 @@ Public Class ContactListPage
             If InitializeService() Then
                 If ContactsTC.SelectedIndex = 0 Then
                     lstContacts = _AideService.ViewContactListAll(email, 0)
+                    If profile.Permission_ID = 1 Then
+                        btnCreate.Visibility = Windows.Visibility.Visible
+                    End If
                     btnPrint.Visibility = Windows.Visibility.Visible
-                    btnCreate.Visibility = Windows.Visibility.Visible
                 ElseIf ContactsTC.SelectedIndex = 1 Then
                     lstContacts = _AideService.ViewContactListAll(email, 1)
                     btnPrint.Visibility = Windows.Visibility.Hidden
@@ -297,7 +298,7 @@ Public Class ContactListPage
             If lv_team.SelectedItem IsNot Nothing Then
                 Dim _Email As String = CType(lv_team.SelectedItem, ContactListModel).EMAIL_ADDRESS
                 Dim _selectedEmpID As Integer = CType(lv_team.SelectedItem, ContactListModel).EMP_ID
-                If profile.Permission = "Manager" Then
+                If profile.Permission_ID = 1 Then
                     Dim contactList As New ContactListModel
 
                     For Each empContacts As ContactListModel In paginatedCollection
@@ -312,7 +313,7 @@ Public Class ContactListPage
                 Else
                     If email = _Email.ToLower Then
                         Dim contactList As New ContactListModel
-                                            For Each empContacts As ContactListModel In paginatedCollection
+                        For Each empContacts As ContactListModel In paginatedCollection
                             If _selectedEmpID = empContacts.EMP_ID Then
                                 contactList = empContacts
                             End If
@@ -349,7 +350,7 @@ Public Class ContactListPage
                 Dim _Email As String = CType(lv_all.SelectedItem, ContactListModel).EMAIL_ADDRESS
                 Dim _selectedEmpID As Integer = CType(lv_all.SelectedItem, ContactListModel).EMP_ID
 
-                If profile.Permission = "Manager" Then
+                If profile.Permission_ID = 1 Then
                     Dim contactListMod As New ContactListModel
                     For Each empContacts As ContactListModel In paginatedCollection
                         If _selectedEmpID = empContacts.EMP_ID Then
@@ -404,7 +405,7 @@ Public Class ContactListPage
                 Dim _Email As String = CType(lv_unapproved.SelectedItem, ContactListModel).EMAIL_ADDRESS
                 Dim _selectedEmpID As Integer = CType(lv_unapproved.SelectedItem, ContactListModel).EMP_ID
 
-                If profile.Permission = "Manager" Then
+                If profile.Permission_ID = 1 Then
                     Dim contactListMod As New ContactListModel
                     For Each empContacts As ContactListModel In paginatedCollection
                         If _selectedEmpID = empContacts.EMP_ID Then

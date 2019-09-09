@@ -55,7 +55,7 @@ Class UpdateContactListPage
 
 #Region "Main Methods"
     Private Function GetManagerAuth() As Boolean
-        If Me.profile.Position = "Manager" Then
+        If Me.profile.Permission_ID = 1 Then
             Return True
         End If
 

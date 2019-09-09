@@ -4020,6 +4020,9 @@ Namespace ServiceReference1
         Private PermissionField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private Permission_IDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private PositionField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
@@ -4307,6 +4310,19 @@ Namespace ServiceReference1
                 If (Object.ReferenceEquals(Me.PermissionField, value) <> true) Then
                     Me.PermissionField = value
                     Me.RaisePropertyChanged("Permission")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Permission_ID() As Integer
+            Get
+                Return Me.Permission_IDField
+            End Get
+            Set
+                If (Me.Permission_IDField.Equals(value) <> true) Then
+                    Me.Permission_IDField = value
+                    Me.RaisePropertyChanged("Permission_ID")
                 End If
             End Set
         End Property
