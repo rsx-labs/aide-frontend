@@ -207,7 +207,7 @@ Class MainWindow
             If Not IsNothing(_profile) Then
                 EmployeeID = _profile.Emp_ID
 
-                If (_profile.Permission = "Manager") Then
+                If (_profile.Permission_ID = 1) Then
                     IsManagerSignedOn = True
                 Else
                     IsManagerSignedOn = False

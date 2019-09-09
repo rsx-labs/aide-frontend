@@ -55,7 +55,7 @@ Class ComcellMainPage
         Me.DataContext = ComcellVM
         Me.profile = _profile
 
-        If profile.Permission = "Manager" Then
+        If profile.Permission_ID = 1 Then
             btnCreate.Visibility = Windows.Visibility.Visible
         End If
 

@@ -323,7 +323,7 @@ Class CreateProjectPage
 
     Private Sub dgProjectList_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles dgProjectList.MouseDoubleClick
         Try
-            If _profile.Permission = "Manager" Then
+            If _profile.Permission_ID = 1 Then
                 If dgProjectList.SelectedIndex <> -1 Then
 
                     btnUpdate.Visibility = Windows.Visibility.Visible

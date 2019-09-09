@@ -97,7 +97,7 @@ Public Class AssetsInventoryAddPage
                 assets.STATUS = cbStatus.SelectedValue
                 assets.ASSIGNED_TO = 999 'USED JUST TO BE NOT NULL
 
-                If profile.Permission = "Manager" AndAlso profile.Emp_ID = assets.EMP_ID Then
+                If profile.Permission_ID = 1 AndAlso profile.Emp_ID = assets.EMP_ID Then
                     assets.APPROVAL = 1
                 Else
                     assets.APPROVAL = 0
@@ -337,7 +337,7 @@ Public Class AssetsInventoryAddPage
     Public Sub LoadStatus()
         cbStatus.DisplayMemberPath = "Text"
         cbStatus.SelectedValuePath = "Value"
-        If profile.Permission = "Manager" Then
+        If profile.Permission_ID = 1 Then
             cbStatus.Items.Add(New With {.Text = "Unassigned", .Value = 1})
             cbStatus.Items.Add(New With {.Text = "Assigned", .Value = 2})
         Else
@@ -366,15 +366,15 @@ Public Class AssetsInventoryAddPage
             btnDisapprove.Visibility = Windows.Visibility.Visible
             'btnCancel.Visibility = Windows.Visibility.Visible
         Else
-            If profile.Permission = "Manager" Then
+            If profile.Permission_ID = 1 Then
                 btnUpdate.Visibility = Windows.Visibility.Visible
                 'btnCancel.Visibility = Windows.Visibility.Collapsed
                 btnDisapprove.Visibility = Windows.Visibility.Collapsed
                 btnApprove.Visibility = Windows.Visibility.Collapsed
             Else
-                    btnDisapprove.Visibility = Windows.Visibility.Collapsed
-                    btnApprove.Visibility = Windows.Visibility.Collapsed
-                    btnUpdate.Visibility = Windows.Visibility.Visible
+                btnDisapprove.Visibility = Windows.Visibility.Collapsed
+                btnApprove.Visibility = Windows.Visibility.Collapsed
+                btnUpdate.Visibility = Windows.Visibility.Visible
 
                 'btnCancel.Visibility = Windows.Visibility.Collapsed
             End If

@@ -55,7 +55,7 @@ Class AnnouncementDashboard
         Me.email = _email
         SetData()
 
-        If profile.Permission = "Manager" Then
+        If profile.Permission_ID = 1 Then
             btnCreate.Visibility = Windows.Visibility.Visible
         End If
 
@@ -176,7 +176,7 @@ Class AnnouncementDashboard
     Private Sub AnnouncementLV_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
         e.Handled = True
         If AnnouncementLV.SelectedIndex <> -1 Then
-            If profile.Permission = "Manager" Then
+            If profile.Permission_ID = 1 Then
                 Dim announcementList As New AnnouncementModel
                 If AnnouncementLV.SelectedItem IsNot Nothing Then
                     For Each _ann As AnnouncementModel In paginatedCollection

@@ -30,13 +30,13 @@
 
                 <Grid Grid.Column="1">
                     <Viewbox HorizontalAlignment="Left">
-                        <TextBlock TextWrapping="Wrap" Padding="0" Text="Contact Lists" Margin="0,7,0,7" Foreground="DimGray"/>
+                        <TextBlock TextWrapping="Wrap" Padding="0" Text="Contacts List" Margin="0,7,0,7" Foreground="DimGray"/>
                     </Viewbox>
                 </Grid>
 
                 <Grid Grid.Column="2">
                     <Viewbox Margin="10" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <Button Click="btnCreate_Click" Style="{DynamicResource ButtonAdd}" x:Name="btnCreate" BorderBrush="{x:Null}"/>
+                        <Button Click="btnCreate_Click" Visibility="Hidden" Style="{DynamicResource ButtonAdd}" x:Name="btnCreate" BorderBrush="{x:Null}"/>
                     </Viewbox>
                 </Grid>
             </Grid>

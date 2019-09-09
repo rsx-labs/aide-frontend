@@ -28,6 +28,7 @@ Public Class ProfileModel
     Property OtherPhone As String
     Property DtReviewed As DateTime
     Property Permission As String
+    Property Permission_ID As Integer
     Property CivilStatus As String
 
 
@@ -62,6 +63,7 @@ Public Class ProfileModel
         Me.DtReviewed = aRawUser.DtReviewed
         Me.Permission = aRawUser.Permission
         Me.CivilStatus = aRawUser.CivilStatus
+        Me.Permission_ID = aRawUser.Permission_ID
     End Sub
 
     Public Function ToMyUser() As MyProfile
@@ -87,6 +89,7 @@ Public Class ProfileModel
                                         .OtherPhone = Me.OtherPhone,
                                         .DtReviewed = Me.DtReviewed,
                                         .Permission = Me.Permission,
+                                         .Permission_ID = Me.Permission_ID,
                                         .CivilStatus = Me.CivilStatus}
     End Function
 End Class

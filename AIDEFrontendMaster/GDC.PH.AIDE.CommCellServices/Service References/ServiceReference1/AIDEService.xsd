@@ -466,6 +466,7 @@
       <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Other_Phone" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Permission" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Permission_ID" type="xs:int" />
       <xs:element minOccurs="0" name="Position" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ShiftStatus" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Ws_EMP_ID" nillable="true" type="xs:string" />
