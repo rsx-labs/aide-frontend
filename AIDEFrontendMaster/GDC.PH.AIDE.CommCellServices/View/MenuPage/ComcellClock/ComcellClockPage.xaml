@@ -300,8 +300,9 @@
 
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.1*"/>
-                <RowDefinition Height="7.5*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -322,54 +323,49 @@
                 </Grid>
             </Grid>
             <Grid Grid.Row="1" >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="6*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" Background="#FFAFCACD">
-                    
-                        
-                    
-                    <Viewbox Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                        <TextBlock x:Name="ComcellDay" Text="{Binding objectComcellDayOnly, Mode=TwoWay}" Foreground="White">
-                        <TextBlock.LayoutTransform>
-                            <RotateTransform Angle="270"/>
-                        </TextBlock.LayoutTransform>
-                    </TextBlock>
-                    </Viewbox>
-                    
-                </Grid>
+                <!--<Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="12*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition Width="12*"/>
+                </Grid.ColumnDefinitions>-->
 
 
-                <Grid Grid.Column="1" x:Name="GridAlarm" Background="White">
-                    
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="6*" />
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0" Background="#FF727272">
-                        
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0" >
-                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock x:Name="Facilitator" Foreground="White" Text="" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-                                <TextBlock Text="( Facilitator )" FontStyle="Italic" FontSize="9" Foreground="Gainsboro" HorizontalAlignment="Center" Background="Transparent" VerticalAlignment="Bottom"/>
-                            </StackPanel>
+                <Grid x:Name="GridAlarm" Background="#FF727272" RenderTransformOrigin="0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="49*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="65*"/>
+                    </Grid.ColumnDefinitions>
 
-                        </Grid>
-                        <Rectangle Stroke="Transparent" Grid.ColumnSpan="2" Width="2" Height="auto" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
-                        <Grid Grid.Column="1">
-                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock x:Name="MinutesTaker" Foreground="White" Text="" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-                                <TextBlock Text="( Minutes Taker )" FontStyle="Italic" FontSize="9" Foreground="Gainsboro" HorizontalAlignment="Center" Background="Transparent" VerticalAlignment="Bottom"/>
-                            </StackPanel>
-                        </Grid>
+
+                    <Grid Grid.Column="0" >
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Width="Auto" Height="Auto">
+                            <TextBlock x:Name="Facilitator" Foreground="White" Text="" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="11" Margin="0,0,0,0"/>
+                            <TextBlock Text="( Facilitator )" FontStyle="Italic" FontSize="9" Foreground="Gainsboro" HorizontalAlignment="Center" Background="Transparent" VerticalAlignment="Bottom" Margin="0,0,0,0" Width="58"/>
+                        </StackPanel>
                     </Grid>
-                    
-                    <Grid Grid.Row="1">
+                    <Grid Grid.Column="1" >
+                        <Rectangle Stroke="Transparent" Width="2" Height="auto" Fill="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" Width="Auto" Height="Auto">
+                            <TextBlock x:Name="MinutesTaker" Foreground="White" Text="" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="11" Margin="0,0,0,0"/>
+                            <TextBlock Text="( Minutes Taker )" FontStyle="Italic" FontSize="9" Foreground="Gainsboro" HorizontalAlignment="Center" Background="Transparent" VerticalAlignment="Bottom" Margin="0,0,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                    <!--<Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Background="#FF727272" RenderTransformOrigin="0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="4*"/>
+                        </Grid.RowDefinitions>
+
+                    </Grid>-->
+
+
+                    <Grid Grid.Row="2" Visibility="Collapsed">
                         <Image Source="..\..\..\Assets\Button\ClockBG.png"></Image>
                         <Grid  Margin="30">
 
@@ -439,12 +435,21 @@
                             </Style.Triggers>
                         </Style>
                     </Grid.Style>-->
-           
+
 
                 </Grid>
-                
+
             </Grid>
-            
+            <Grid Grid.Row="2" Background="#FFAFCACD">
+                <Viewbox Margin="2" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                    <TextBlock x:Name="ComcellDay" Text="{Binding objectComcellDayOnly, Mode=TwoWay}" Foreground="White">
+                        <TextBlock.LayoutTransform>
+                            <RotateTransform Angle="0"/>
+                        </TextBlock.LayoutTransform>
+                    </TextBlock>
+                </Viewbox>
+            </Grid>
+
         </Grid>
     </Border>
 </Page>

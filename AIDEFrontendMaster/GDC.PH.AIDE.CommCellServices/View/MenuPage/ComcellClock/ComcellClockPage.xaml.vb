@@ -165,7 +165,7 @@ Class ComcellClockPage
 
     Private Sub GetComcellDay()
         Dim dayconvert As String = GetDayValue(comcellClockVM.objectComcellClockSet.CLOCK_DAY)
-        comcellClockVM.objectComcellDayOnly = dayconvert
+        comcellClockVM.objectComcellDayOnly = dayconvert & " " & _comcellclock.Clock_Hour.ToString() & ":" & _comcellclock.Clock_Minute.ToString().PadLeft(2, "0") & _comcellclock.MIDDAY
     End Sub
 
     Private Function GetDayValue(ByVal daycount As Integer) As String
@@ -233,7 +233,14 @@ Class ComcellClockPage
 
 #Region "Events"
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
-        comcellFrame.Navigate(New ComcellClockAddPage(profile, Me.comcellFrame, _window, ComcellClockModel))
+
+        Dim window As MainWindow = DirectCast(_window, MainWindow)
+        Dim addframe As Frame = window.AddFrame
+        addframe.Visibility = Visibility.Visible
+        addframe.Navigate(New ComcellClockAddPage(profile, comcellFrame, addframe, _window, ComcellClockModel))
+        window.MenuGrid.Opacity = 0.3
+        window.MenuGrid.IsEnabled = False
+        'comcellFrame.Visibility = Visibility.Hidden
     End Sub
 
     'Private Sub StopBtn_Click(sender As Object, e As RoutedEventArgs)
