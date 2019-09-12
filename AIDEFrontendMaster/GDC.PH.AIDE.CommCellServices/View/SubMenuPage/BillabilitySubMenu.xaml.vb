@@ -20,20 +20,8 @@ Class BillabilitySubMenu
         pFrame.Navigate(New BillabilityPage(profile, pFrame))
     End Sub
 
-    Private Sub VacationLeave_Click(sender As Object, e As RoutedEventArgs)
-        pFrame.Navigate(New BillabilityVacationLeavePage(profile, pFrame))
-    End Sub
-
-    Private Sub SickLeave_Click(sender As Object, e As RoutedEventArgs)
-        pFrame.Navigate(New BillabilitySickLeavePage(profile, pFrame))
-    End Sub
-
     Private Sub Billables_Click(sender As Object, e As RoutedEventArgs)
         pFrame.Navigate(New BillablesPage(profile, pFrame))
-    End Sub
-
-    Private Sub Weekly_Click(sender As Object, e As RoutedEventArgs)
-        pFrame.Navigate(New WeeklyReportPage(pFrame, profile.Emp_ID, profile.Email_Address, addframe, menugrid, submenuframe))
     End Sub
 
 End Class

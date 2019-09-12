@@ -737,7 +737,9 @@ Class SkillsMatrixManagerPage
 
     End Sub
     Private Sub DgSkillList_Loaded(sender As Object, e As RoutedEventArgs) Handles dgSkillList.Loaded
-        dgSkillList.Columns.Item(0).Visibility = Visibility.Collapsed
+        If dgSkillList.Columns.Count > 0 Then
+            dgSkillList.Columns.Item(0).Visibility = Visibility.Collapsed
+        End If
     End Sub
 
 #End Region

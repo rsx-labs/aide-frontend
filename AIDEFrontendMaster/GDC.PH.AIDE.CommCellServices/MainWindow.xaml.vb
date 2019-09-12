@@ -168,7 +168,9 @@ Class MainWindow
 
     Public Sub LoadSideBar()
         AttendanceFrame.Navigate(New AttendanceDashBoard(PagesFrame, profile))
-        CommendationFrame.Navigate(New CommendationDashBoard(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, profile.Email_Address, profile, CommendationFrame))
+        genericFrame.Navigate(New _3CDashboard(email, PagesFrame, AddFrame, MenuGrid, SubMenuFrame, profile))
+        'CommendationFrame.Navigate(New CommendationDashBoard(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, profile.Email_Address, profile, CommendationFrame))
+        BirthdayFrame.Navigate(New BirthdayDashboard(profile.Email_Address))
         ComcellClockFrame.Navigate(New ComcellClockPage(profile, ComcellClockFrame, Me))
     End Sub
 
@@ -415,7 +417,7 @@ Class MainWindow
 
     Private Sub TaskBtn_Click(sender As Object, e As RoutedEventArgs)
         PagesFrame.Navigate(New TaskAdminPage(PagesFrame, Me, profile.Emp_ID, email, AddFrame, MenuGrid, SubMenuFrame))
-        SubMenuFrame.Navigate(New BlankSubMenu())
+        SubMenuFrame.Navigate(New TaskSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, Me))
         LoadSideBar()
     End Sub
 
@@ -424,8 +426,7 @@ Class MainWindow
         empID = profile.Emp_ID
 
         PagesFrame.Navigate(New ResourcePlannerPage(profile, PagesFrame, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame))
-        SubMenuFrame.Navigate(New BlankSubMenu())
-        LoadSideBar()
+        SubMenuFrame.Navigate(New AttendanceSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame))
     End Sub
 
     Private Sub AssetsBtn_Click(sender As Object, e As RoutedEventArgs)

@@ -168,6 +168,7 @@
     </ApplicationDefinition>
     <Compile Include="BindingProxy.vb" />
     <Compile Include="DataProviderService\ActionListDBProvider.vb" />
+    <Compile Include="DataProviderService\KPITargetDBProvider.vb" />
     <Compile Include="DataProviderService\AnnouncementDBProvider.vb" />
     <Compile Include="DataProviderService\AssetsDBProvider.vb" />
     <Compile Include="DataProviderService\AttendanceListDBProvider.vb" />
@@ -205,6 +206,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Model\ActionModel.vb" />
+    <Compile Include="Model\KPITargetsModel.vb" />
     <Compile Include="Model\AnnouncementModel.vb" />
     <Compile Include="Model\AssetsModel.vb" />
     <Compile Include="Model\AttendanceModel.vb" />
@@ -245,6 +247,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ActionListViewModel.vb" />
+    <Compile Include="ViewModel\KPITargetsViewModel.vb" />
     <Compile Include="ViewModel\AnnouncementListViewModel.vb" />
     <Compile Include="ViewModel\AssetsViewModel.vb" />
     <Compile Include="ViewModel\AttendanceListViewModel.vb" />
@@ -400,6 +403,12 @@
     <Compile Include="View\MenuPage\Home\HomePage.xaml.vb">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MenuPage\KPITargets\KPITargetsAddPage.xaml.vb">
+      <DependentUpon>KPITargetsAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\KPITargets\KPITargetsUpdatePage.xaml.vb">
+      <DependentUpon>KPITargetsUpdatePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MenuPage\Late\LatePage.xaml.vb">
       <DependentUpon>LatePage.xaml</DependentUpon>
     </Compile>
@@ -411,6 +420,9 @@
     </Compile>
     <Compile Include="View\MenuPage\LessonLearnt\LessonLearntUpdatePage.xaml.vb">
       <DependentUpon>LessonLearntUpdatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\KPITargets\KPITargetsPage.xaml.vb">
+      <DependentUpon>KPITargetsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\Resource Planner\ResourcePlannerAddPage.xaml.vb">
       <DependentUpon>ResourcePlannerAddPage.xaml</DependentUpon>
@@ -501,6 +513,12 @@
     </Compile>
     <Compile Include="View\SubMenuPage\AssetsSubMenuPage.xaml.vb">
       <DependentUpon>AssetsSubMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SubMenuPage\AttendanceSubMenuPage.xaml.vb">
+      <DependentUpon>AttendanceSubMenuPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SubMenuPage\TaskSubMenuPage.xaml.vb">
+      <DependentUpon>TaskSubMenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SubMenuPage\BillabilitySubMenu.xaml.vb">
       <DependentUpon>BillabilitySubMenu.xaml</DependentUpon>
@@ -693,6 +711,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\MenuPage\KPITargets\KPITargetsAddPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\KPITargets\KPITargetsUpdatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\MenuPage\Late\LatePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -708,6 +734,10 @@
     <Page Include="View\MenuPage\LessonLearnt\LessonLearntUpdatePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\KPITargets\KPITargetsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MenuPage\Resource Planner\ResourcePlannerAddPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -826,6 +856,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\SubMenuPage\AssetsSubMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SubMenuPage\AttendanceSubMenuPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SubMenuPage\TaskSubMenuPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
