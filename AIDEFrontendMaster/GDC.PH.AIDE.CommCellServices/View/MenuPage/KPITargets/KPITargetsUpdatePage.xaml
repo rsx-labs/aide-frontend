@@ -1,0 +1,140 @@
+﻿<Page x:Class="KPITargetsUpdatePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      Title="KPITargetsUpdatePage">
+    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height=".5*" />
+                <RowDefinition Height="6*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Viewbox HorizontalAlignment="Left">
+                        <TextBlock Text="Update KPI Targets" Margin="5" Foreground="DimGray"/>
+                    </Viewbox>
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <Viewbox Margin="10" HorizontalAlignment="Right">
+                        <Button x:Name="btnBack"  Style="{DynamicResource ButtonBack}" Click="btnBack_Click">
+                            <Viewbox>
+                                <TextBlock Text="Back"  Foreground="White" Margin="10"/>
+                            </Viewbox>
+                        </Button>
+                    </Viewbox>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="1" Background="Gray">
+                <Viewbox>
+                    <TextBlock Foreground="White" Margin="10" Text="Please fill up all required fields."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Viewbox>
+            </Grid>
+
+            <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}" >
+                <Grid Margin="10,5,10,5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Border Margin="10,10,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                            <TextBox Background="Transparent" 
+                                     x:Name="txtTitle" 
+                                     TextWrapping="Wrap" 
+                                     FontSize="12"
+                                     MaxLines="255" 
+                                     BorderThickness="0"
+                                     HorizontalContentAlignment="Center" 
+                                     VerticalContentAlignment="Center" 
+                                     Text="{Binding KPITargetsSet.Subject, Mode=TwoWay}"/>
+                        </Border>
+
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="KPI title *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=txtTitle}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <TextBlock x:Name="txtlabelTitle" Width="120" TextAlignment="Center" Margin="10" Text="Title" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=txtTitle}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Border Margin="5,10,10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                            <RichTextBox Margin="10" Foreground="DimGray" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" x:Name="txtKPIDescription">
+                                <FlowDocument>
+                                    <Paragraph TextAlignment="Justify">
+                                        <Run Foreground="DimGray" Name="runname"/>
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                        </Border>
+
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Write KPI description *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=runname}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <TextBlock x:Name="txtlabelMessage" Width="120" TextAlignment="Center" Margin="10" Text="Message" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=runname}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnUpdate" Margin="5,5,10,10" HorizontalAlignment="Stretch" Click="btnKPITargetUpdate_Click">
+                            <TextBlock Text="UPDATE" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Page>

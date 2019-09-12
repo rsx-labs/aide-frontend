@@ -3709,6 +3709,149 @@ Namespace ServiceReference1
     
     <System.Diagnostics.DebuggerStepThroughAttribute(),  _
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="KPITargets", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
+     System.SerializableAttribute()>  _
+    Partial Public Class KPITargets
+        Inherits Object
+        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+        
+        <System.NonSerializedAttribute()>  _
+        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private DateCreatedField As Date
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private DescriptionField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FYEndField As Date
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FYStartField As Date
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private KPI_IdField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private KPI_ReferenceNoField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SubjectField As String
+        
+        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
+        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
+            Get
+                Return Me.extensionDataField
+            End Get
+            Set
+                Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property DateCreated() As Date
+            Get
+                Return Me.DateCreatedField
+            End Get
+            Set
+                If (Me.DateCreatedField.Equals(value) <> true) Then
+                    Me.DateCreatedField = value
+                    Me.RaisePropertyChanged("DateCreated")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Description() As String
+            Get
+                Return Me.DescriptionField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.DescriptionField, value) <> true) Then
+                    Me.DescriptionField = value
+                    Me.RaisePropertyChanged("Description")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FYEnd() As Date
+            Get
+                Return Me.FYEndField
+            End Get
+            Set
+                If (Me.FYEndField.Equals(value) <> true) Then
+                    Me.FYEndField = value
+                    Me.RaisePropertyChanged("FYEnd")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FYStart() As Date
+            Get
+                Return Me.FYStartField
+            End Get
+            Set
+                If (Me.FYStartField.Equals(value) <> true) Then
+                    Me.FYStartField = value
+                    Me.RaisePropertyChanged("FYStart")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property KPI_Id() As Integer
+            Get
+                Return Me.KPI_IdField
+            End Get
+            Set
+                If (Me.KPI_IdField.Equals(value) <> true) Then
+                    Me.KPI_IdField = value
+                    Me.RaisePropertyChanged("KPI_Id")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property KPI_ReferenceNo() As String
+            Get
+                Return Me.KPI_ReferenceNoField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.KPI_ReferenceNoField, value) <> true) Then
+                    Me.KPI_ReferenceNoField = value
+                    Me.RaisePropertyChanged("KPI_ReferenceNo")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Subject() As String
+            Get
+                Return Me.SubjectField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SubjectField, value) <> true) Then
+                    Me.SubjectField = value
+                    Me.RaisePropertyChanged("Subject")
+                End If
+            End Set
+        End Property
+        
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        
+        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
+            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
+            If (Not (propertyChanged) Is Nothing) Then
+                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
+            End If
+        End Sub
+    End Class
+    
+    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
      System.Runtime.Serialization.DataContractAttribute(Name:="SuccessRegister", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
      System.SerializableAttribute()>  _
     Partial Public Class SuccessRegister
@@ -8600,6 +8743,30 @@ Namespace ServiceReference1
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllStatus", ReplyAction:="http://tempuri.org/IAideService/GetAllStatusResponse")>  _
         Function GetAllStatusAsync(ByVal statusName As String) As System.Threading.Tasks.Task(Of ServiceReference1.StatusList())
         
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/InsertKPITarget", ReplyAction:="http://tempuri.org/IAideService/InsertKPITargetResponse")>  _
+        Function InsertKPITarget(ByVal kpiTarget As ServiceReference1.KPITargets) As Boolean
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/InsertKPITarget", ReplyAction:="http://tempuri.org/IAideService/InsertKPITargetResponse")>  _
+        Function InsertKPITargetAsync(ByVal kpiTarget As ServiceReference1.KPITargets) As System.Threading.Tasks.Task(Of Boolean)
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/UpdatePITarget", ReplyAction:="http://tempuri.org/IAideService/UpdatePITargetResponse")>  _
+        Function UpdatePITarget(ByVal kpiTarget As ServiceReference1.KPITargets) As Boolean
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/UpdatePITarget", ReplyAction:="http://tempuri.org/IAideService/UpdatePITargetResponse")>  _
+        Function UpdatePITargetAsync(ByVal kpiTarget As ServiceReference1.KPITargets) As System.Threading.Tasks.Task(Of Boolean)
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetKPITargets", ReplyAction:="http://tempuri.org/IAideService/GetKPITargetsResponse")>  _
+        Function GetKPITargets(ByVal Id As Integer) As ServiceReference1.KPITargets()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetKPITargets", ReplyAction:="http://tempuri.org/IAideService/GetKPITargetsResponse")>  _
+        Function GetKPITargetsAsync(ByVal Id As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.KPITargets())
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllKPITargets", ReplyAction:="http://tempuri.org/IAideService/GetAllKPITargetsResponse")>  _
+        Function GetAllKPITargets(ByVal FiscalYear As Date) As ServiceReference1.KPITargets()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllKPITargets", ReplyAction:="http://tempuri.org/IAideService/GetAllKPITargetsResponse")>  _
+        Function GetAllKPITargetsAsync(ByVal FiscalYear As Date) As System.Threading.Tasks.Task(Of ServiceReference1.KPITargets())
+        
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/ViewSuccessRegisterByEmpID", ReplyAction:="http://tempuri.org/IAideService/ViewSuccessRegisterByEmpIDResponse")>  _
         Function ViewSuccessRegisterByEmpID(ByVal email As String) As ServiceReference1.SuccessRegister()
         
@@ -9425,6 +9592,8 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DivisionList)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.StatusList())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.StatusList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPITargets)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPITargets())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Nickname())),  _
@@ -9651,6 +9820,38 @@ Namespace ServiceReference1
         
         Public Function GetAllStatusAsync(ByVal statusName As String) As System.Threading.Tasks.Task(Of ServiceReference1.StatusList()) Implements ServiceReference1.IAideService.GetAllStatusAsync
             Return MyBase.Channel.GetAllStatusAsync(statusName)
+        End Function
+        
+        Public Function InsertKPITarget(ByVal kpiTarget As ServiceReference1.KPITargets) As Boolean Implements ServiceReference1.IAideService.InsertKPITarget
+            Return MyBase.Channel.InsertKPITarget(kpiTarget)
+        End Function
+        
+        Public Function InsertKPITargetAsync(ByVal kpiTarget As ServiceReference1.KPITargets) As System.Threading.Tasks.Task(Of Boolean) Implements ServiceReference1.IAideService.InsertKPITargetAsync
+            Return MyBase.Channel.InsertKPITargetAsync(kpiTarget)
+        End Function
+        
+        Public Function UpdatePITarget(ByVal kpiTarget As ServiceReference1.KPITargets) As Boolean Implements ServiceReference1.IAideService.UpdatePITarget
+            Return MyBase.Channel.UpdatePITarget(kpiTarget)
+        End Function
+        
+        Public Function UpdatePITargetAsync(ByVal kpiTarget As ServiceReference1.KPITargets) As System.Threading.Tasks.Task(Of Boolean) Implements ServiceReference1.IAideService.UpdatePITargetAsync
+            Return MyBase.Channel.UpdatePITargetAsync(kpiTarget)
+        End Function
+        
+        Public Function GetKPITargets(ByVal Id As Integer) As ServiceReference1.KPITargets() Implements ServiceReference1.IAideService.GetKPITargets
+            Return MyBase.Channel.GetKPITargets(Id)
+        End Function
+        
+        Public Function GetKPITargetsAsync(ByVal Id As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.KPITargets()) Implements ServiceReference1.IAideService.GetKPITargetsAsync
+            Return MyBase.Channel.GetKPITargetsAsync(Id)
+        End Function
+        
+        Public Function GetAllKPITargets(ByVal FiscalYear As Date) As ServiceReference1.KPITargets() Implements ServiceReference1.IAideService.GetAllKPITargets
+            Return MyBase.Channel.GetAllKPITargets(FiscalYear)
+        End Function
+        
+        Public Function GetAllKPITargetsAsync(ByVal FiscalYear As Date) As System.Threading.Tasks.Task(Of ServiceReference1.KPITargets()) Implements ServiceReference1.IAideService.GetAllKPITargetsAsync
+            Return MyBase.Channel.GetAllKPITargetsAsync(FiscalYear)
         End Function
         
         Public Function ViewSuccessRegisterByEmpID(ByVal email As String) As ServiceReference1.SuccessRegister() Implements ServiceReference1.IAideService.ViewSuccessRegisterByEmpID
