@@ -168,6 +168,7 @@
     </ApplicationDefinition>
     <Compile Include="BindingProxy.vb" />
     <Compile Include="DataProviderService\ActionListDBProvider.vb" />
+    <Compile Include="DataProviderService\KPISummaryDBProvider.vb" />
     <Compile Include="DataProviderService\KPITargetDBProvider.vb" />
     <Compile Include="DataProviderService\AnnouncementDBProvider.vb" />
     <Compile Include="DataProviderService\AssetsDBProvider.vb" />
@@ -206,6 +207,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Model\ActionModel.vb" />
+    <Compile Include="Model\KPISummaryModel.vb" />
     <Compile Include="Model\KPITargetsModel.vb" />
     <Compile Include="Model\AnnouncementModel.vb" />
     <Compile Include="Model\AssetsModel.vb" />
@@ -247,6 +249,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ActionListViewModel.vb" />
+    <Compile Include="ViewModel\KPISummaryViewModel.vb" />
     <Compile Include="ViewModel\KPITargetsViewModel.vb" />
     <Compile Include="ViewModel\AnnouncementListViewModel.vb" />
     <Compile Include="ViewModel\AssetsViewModel.vb" />
@@ -402,6 +405,9 @@
     </Compile>
     <Compile Include="View\MenuPage\Home\HomePage.xaml.vb">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\KPISummary\KPISummaryPage.xaml.vb">
+      <DependentUpon>KPISummaryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\KPITargets\KPITargetsAddPage.xaml.vb">
       <DependentUpon>KPITargetsAddPage.xaml</DependentUpon>
@@ -708,6 +714,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MenuPage\Home\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\KPISummary\KPISummaryPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

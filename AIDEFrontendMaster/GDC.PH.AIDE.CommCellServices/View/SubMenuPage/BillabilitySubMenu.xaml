@@ -79,5 +79,20 @@
                 </Grid>
             </Grid>
         </Button>
+
+        <Button Name="KPISummary" Margin="2" Grid.Column="2" Style="{DynamicResource RoundCorner}" Click="KPISummary_Click">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="70*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/BillabilityIcon.png"/>
+                </Grid>
+                <Grid Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Foreground="White" Text="KPI Summary"></TextBlock>
+                </Grid>
+            </Grid>
+        </Button>
     </Grid>
 </Page>

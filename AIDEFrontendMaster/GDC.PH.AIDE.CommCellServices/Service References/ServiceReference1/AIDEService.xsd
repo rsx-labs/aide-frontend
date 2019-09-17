@@ -428,6 +428,28 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfKPITargets" nillable="true" type="tns:ArrayOfKPITargets" />
+  <xs:complexType name="KPISummary">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DatePosted" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FYEnd" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FYStart" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="KPIActual" type="xs:double" />
+      <xs:element minOccurs="0" name="KPIOverall" type="xs:double" />
+      <xs:element minOccurs="0" name="KPITarget" type="xs:double" />
+      <xs:element minOccurs="0" name="KPI_Id" type="xs:int" />
+      <xs:element minOccurs="0" name="KPI_Month" type="xs:short" />
+      <xs:element minOccurs="0" name="KPI_Reference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="KPISummary" nillable="true" type="tns:KPISummary" />
+  <xs:complexType name="ArrayOfKPISummary">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KPISummary" nillable="true" type="tns:KPISummary" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKPISummary" nillable="true" type="tns:ArrayOfKPISummary" />
   <xs:complexType name="ArrayOfSuccessRegister">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="SuccessRegister" nillable="true" type="tns:SuccessRegister" />
