@@ -270,7 +270,7 @@ Class ResourcePlannerPage
                     dict.Add("Employee Name", iResource.Emp_Name)
 
                     While iResource.Date_Entry.ToString("yyyy-MM-dd") > dateFirst
-                        If dateFirst.DayOfWeek <> DayOfWeek.Saturday And dateFirst.DayOfWeek <> DayOfWeek.Sunday Then
+                        If dateFirst.DayOfWeek <> DayOfWeek.Saturday Or dateFirst.DayOfWeek <> DayOfWeek.Sunday Then
                             abbrDay = setDayOfWeekAbbr(dateFirst.DayOfWeek.ToString())
                             dict.Add(dateFirst.Day.ToString() + Environment.NewLine + abbrDay, "")
                         End If
@@ -285,7 +285,7 @@ Class ResourcePlannerPage
                         dateFirst = DateAdd(DateInterval.Day, 1, dateFirst)
                     End If
                     While iResource.Date_Entry.ToString("yyyy-MM-dd") <> dateFirst
-                        If dateFirst.DayOfWeek <> DayOfWeek.Saturday And dateFirst.DayOfWeek <> DayOfWeek.Sunday Then
+                        If dateFirst.DayOfWeek <> DayOfWeek.Saturday Or dateFirst.DayOfWeek <> DayOfWeek.Sunday Then
                             abbrDay = setDayOfWeekAbbr(dateFirst.DayOfWeek.ToString())
                             dict.Add(dateFirst.Day.ToString() + Environment.NewLine + abbrDay, "")
                         End If
