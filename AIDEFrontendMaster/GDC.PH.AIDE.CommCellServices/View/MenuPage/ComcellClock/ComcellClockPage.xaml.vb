@@ -240,7 +240,8 @@ Class ComcellClockPage
         addframe.Navigate(New ComcellClockAddPage(profile, comcellFrame, addframe, _window, ComcellClockModel))
         window.MenuGrid.Opacity = 0.3
         window.MenuGrid.IsEnabled = False
-        'comcellFrame.Visibility = Visibility.Hidden
+        addframe.Visibility = Visibility.Visible
+        addframe.Margin = New Thickness(150, 60, 150, 60)
     End Sub
 
     'Private Sub StopBtn_Click(sender As Object, e As RoutedEventArgs)

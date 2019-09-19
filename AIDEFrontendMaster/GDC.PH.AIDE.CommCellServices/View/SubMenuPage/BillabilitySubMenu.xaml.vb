@@ -25,7 +25,7 @@ Class BillabilitySubMenu
     End Sub
 
     Private Sub KPISummary_Click(sender As Object, e As RoutedEventArgs)
-        pFrame.Navigate(New KPISummaryPage(profile, pFrame))
+        pFrame.Navigate(New KPISummaryPage(profile, pFrame, addframe, menugrid, submenuframe))
     End Sub
 
 End Class

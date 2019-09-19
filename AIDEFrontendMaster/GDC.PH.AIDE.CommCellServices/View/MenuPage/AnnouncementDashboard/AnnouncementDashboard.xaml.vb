@@ -150,7 +150,7 @@ Class AnnouncementDashboard
         menugrid.Opacity = 0.3
         submenuframe.IsEnabled = False
         submenuframe.Opacity = 0.3
-        addframe.Margin = New Thickness(200, 100, 200, 100)
+        addframe.Margin = New Thickness(150, 60, 150, 60)
         addframe.Visibility = Visibility.Visible
     End Sub
 
@@ -195,7 +195,7 @@ Class AnnouncementDashboard
                     menugrid.Opacity = 0.3
                     submenuframe.IsEnabled = False
                     submenuframe.Opacity = 0.3
-                    addframe.Margin = New Thickness(200, 100, 200, 100)
+                    addframe.Margin = New Thickness(150, 60, 150, 60)
                     addframe.Visibility = Visibility.Visible
                 End If
             End If

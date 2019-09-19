@@ -1092,7 +1092,7 @@
 
                                             <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Name="txtProjCD" TextWrapping="Wrap" Text="{Binding ACTION_MESSAGE, Mode=TwoWay}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12"/>
                                         </Border>
-                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter project code *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter project code *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -1104,7 +1104,7 @@
                                                 </Style>
                                             </TextBlock.Style>
                                         </TextBlock>
-                                        <TextBlock x:Name="txtlabelProjectCD" Width="120" TextAlignment="Center" Margin="5" Text="Project Code" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                        <TextBlock x:Name="txtlabelProjectCD" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Project Code" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -1123,7 +1123,7 @@
 
                                         <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Name="txtProjName" TextWrapping="Wrap" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12"/>
                                     </Border>
-                                    <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter project name *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                    <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter project name *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -1135,7 +1135,7 @@
                                             </Style>
                                         </TextBlock.Style>
                                     </TextBlock>
-                                    <TextBlock x:Name="txtlabelProjectName" Width="120" TextAlignment="Center" Margin="5" Text="Project Name" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                    <TextBlock x:Name="txtlabelProjectName" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Project Name" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Visible"/>
@@ -1178,11 +1178,11 @@
                             <Grid Grid.Column="0">
 
                                 <Grid Grid.Column="0">
-                                    <ComboBox Style="{DynamicResource StyleComboBox}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="cbCategory" Margin="5">
+                                    <ComboBox Style="{DynamicResource StyleComboBox}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="cbCategory" Margin="5,0,5,0">
                                         <ComboBoxItem Content="Project"/>
                                         <ComboBoxItem Content="Task"/>
                                     </ComboBox>
-                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select category" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select category" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -1194,7 +1194,7 @@
                                                 </Style>
                                             </TextBlock.Style>
                                         </TextBlock>
-                                        <TextBlock x:Name="txtlabelCategory" Width="120" TextAlignment="Center" Margin="5" Text="Selected Category" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                        <TextBlock x:Name="txtlabelCategory" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Selected Category" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -1211,11 +1211,11 @@
                             <Grid Grid.Column="1">
 
                                 <Grid Grid.Column="1">
-                                    <ComboBox Style="{DynamicResource StyleComboBox}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="cbBillability" Margin="5">
+                                    <ComboBox Style="{DynamicResource StyleComboBox}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="cbBillability" Margin="5,0,5,0">
                                         <ComboBoxItem Content="Internal"/>
                                         <ComboBoxItem Content="External"/>
                                     </ComboBox>
-                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select billability *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select billability *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -1227,7 +1227,7 @@
                                                 </Style>
                                             </TextBlock.Style>
                                         </TextBlock>
-                                        <TextBlock x:Name="txtlabelBillability" Width="120" TextAlignment="Center" Margin="5" Text="Selected Billability" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                        <TextBlock x:Name="txtlabelBillability" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Selected Billability" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>

@@ -81,8 +81,8 @@
                                         
                                         <Grid Grid.Row="0" Margin="10,10,10,10">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="7.5*"/>
-                                                <ColumnDefinition Width="2.5*"/>
+                                                <ColumnDefinition Width="7*"/>
+                                                <ColumnDefinition Width="4*"/>
                                             </Grid.ColumnDefinitions>
                                             
                                             <Grid Grid.Column="0">
@@ -99,7 +99,7 @@
                                                 <Border Background="White" BorderThickness="0" CornerRadius="0,0,15,15" >
 
                                                     <Grid Grid.Column="0">
-                                                        <TextBlock Margin="10,10,10,10" x:Name="KPITargetsMessage" TextAlignment="Justify" TextWrapping="Wrap" Height="0" Foreground="DimGray" FontSize="11" Text="{Binding Description}" HorizontalAlignment="Left" TextTrimming="WordEllipsis"  VerticalAlignment="Center"/>
+                                                        <TextBlock Margin="10,10,10,10" x:Name="KPITargetsMessage" TextAlignment="Justify" TextWrapping="Wrap" Height="Auto" Foreground="DimGray" FontSize="11" Text="{Binding Description}" HorizontalAlignment="Left" TextTrimming="None"  VerticalAlignment="Center" />
                                                     </Grid>
                                                 </Border>
                                             </Grid>
@@ -108,12 +108,12 @@
                                 </StackPanel>
                             </Border>
                             
-                            <DataTemplate.Triggers>
-                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}" Value="False">
+                            <!--<DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}" Value="True">
                                     <Setter TargetName="KPITargetsMessage" Property="Height" Value="auto"/>
                                     <Setter TargetName="KPITargetsMessage" Property="TextTrimming" Value="None"/>
                                 </DataTrigger>
-                            </DataTemplate.Triggers>
+                            </DataTemplate.Triggers>-->
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

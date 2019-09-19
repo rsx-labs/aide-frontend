@@ -73,7 +73,7 @@ Public Class SuccessRegisterPage
         _menugrid.Opacity = 0.3
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(150, 100, 150, 100)
+        _addframe.Margin = New Thickness(150, 60, 150, 60)
         _addframe.Visibility = Visibility.Visible
     End Sub
 
@@ -98,7 +98,7 @@ Public Class SuccessRegisterPage
                 _menugrid.Opacity = 0.3
                 _submenuframe.IsEnabled = False
                 _submenuframe.Opacity = 0.3
-                _addframe.Margin = New Thickness(150, 100, 150, 100)
+                _addframe.Margin = New Thickness(150, 60, 150, 60)
                 _addframe.Visibility = Visibility.Visible
             End If
         End If

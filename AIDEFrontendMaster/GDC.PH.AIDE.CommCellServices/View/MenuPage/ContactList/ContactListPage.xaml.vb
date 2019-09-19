@@ -308,6 +308,7 @@ Public Class ContactListPage
                     Next
 
                     addframe.Navigate(New UpdateContactListPage(contactList, mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+                    addframe.Margin = New Thickness(150, 60, 150, 60)
                     LoadUpdateScreen()
 
                 Else
@@ -320,6 +321,7 @@ Public Class ContactListPage
                         Next
 
                         addframe.Navigate(New UpdateContactListPage(contactList, mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+                        addframe.Margin = New Thickness(150, 60, 150, 60)
                         LoadUpdateScreen()
 
                     Else
@@ -501,7 +503,7 @@ Public Class ContactListPage
         submenuframe.IsEnabled = False
         submenuframe.Opacity = 0.3
         addframe.Visibility = Visibility.Visible
-        addframe.Margin = New Thickness(100, 80, 100, 80)
+        addframe.Margin = New Thickness(150, 60, 150, 60)
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click

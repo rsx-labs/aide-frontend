@@ -10,9 +10,9 @@
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height=".5*" />
-                <RowDefinition Height="7*" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
@@ -86,7 +86,7 @@
                             <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Name="Act_Message" TextWrapping="Wrap" Text="{Binding ACTION_MESSAGE, Mode=TwoWay}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12"/>
                         </Border>
                         
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter action message *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter action message *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -98,8 +98,8 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        
-                        <TextBlock x:Name="txtlabelActionMessage" Width="120" TextAlignment="Center" Margin="5" Text="Message" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+
+                        <TextBlock x:Name="txtlabelActionMessage" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Message" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Visible"/>
@@ -118,7 +118,7 @@
                             <TextBox FontSize="12" Template="{DynamicResource TextBoxBaseControlTemplate}" Name="Act_AssignedAll" IsEnabled="False" BorderThickness="0" />
                         </Border>
                         
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Assigned employee below *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Assigned employee below *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -130,8 +130,8 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        
-                        <TextBlock x:Name="txtlabelAssignee" Width="120" TextAlignment="Center" Margin="5" Text="Assigned Employee" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+
+                        <TextBlock x:Name="txtlabelAssignee" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Assigned Employee" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Visible"/>
@@ -158,7 +158,7 @@
                                       SelectedValuePath="First_Name" DisplayMemberPath="Employee_Name" 
                                       ItemsSource="{Binding NicknameList}"/>
                             
-                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select employee" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select employee" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -170,8 +170,8 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            
-                            <TextBlock x:Name="txtlabelSelectedAssignee" Width="120" TextAlignment="Center" Margin="5" Text="Selected Employee" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+
+                            <TextBlock x:Name="txtlabelSelectedAssignee" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Selected Employee" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -203,7 +203,7 @@
                             <DatePicker Style="{DynamicResource styleDatePickerfrom}" Name="Act_DueDate" Text="{Binding DUE_DATE,StringFormat=MM/dd/yyyy ,Mode=TwoWay}"/>
                         </Border>
                         
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select due date *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select due date *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -215,8 +215,8 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        
-                        <TextBlock x:Name="txtlabelDueDate" Width="120" TextAlignment="Center" Margin="5" Text="Due Date" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+
+                        <TextBlock x:Name="txtlabelDueDate" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Due Date" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Visible"/>

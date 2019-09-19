@@ -7,13 +7,17 @@
       Title="AnnouncementDashboardUpdatePage">
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="181*"/>
+                <ColumnDefinition Width="125*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height=".5*" />
-                <RowDefinition Height="6*" />
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*"/>
                     <ColumnDefinition Width="1*"/>
@@ -36,18 +40,18 @@
                 </Grid>
             </Grid>
 
-            <Grid Grid.Row="1" Background="Gray">
+            <Grid Grid.Row="1" Background="Gray" Grid.ColumnSpan="2">
                 <Viewbox>
                     <TextBlock Foreground="White" Margin="10" Text="Please fill up all required fields."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Viewbox>
             </Grid>
 
-            <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}" >
+            <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}" Grid.ColumnSpan="2" >
                 <Grid Margin="10,5,10,5">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0">
@@ -63,7 +67,7 @@
                                      Text="{Binding ObjectAnnouncement.TITLE, Mode=TwoWay}"/>
                         </Border>
 
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Announcement title *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Announcement title *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -76,7 +80,7 @@
                             </TextBlock.Style>
                         </TextBlock>
 
-                        <TextBlock x:Name="txtlabelTitle" Width="120" TextAlignment="Center" Margin="10" Text="Title" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                        <TextBlock x:Name="txtlabelTitle" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Title" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Visible"/>
@@ -101,7 +105,7 @@
                             </RichTextBox>
                         </Border>
 
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Write announcement message *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Write announcement message *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -114,7 +118,7 @@
                             </TextBlock.Style>
                         </TextBlock>
 
-                        <TextBlock x:Name="txtlabelMessage" Width="120" TextAlignment="Center" Margin="10" Text="Message" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                        <TextBlock x:Name="txtlabelMessage" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Message" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Visible"/>

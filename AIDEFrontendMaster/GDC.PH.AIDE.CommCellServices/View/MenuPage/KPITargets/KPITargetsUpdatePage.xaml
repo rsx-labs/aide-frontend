@@ -8,9 +8,9 @@
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height=".5*" />
-                <RowDefinition Height="6*" />
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
@@ -45,9 +45,9 @@
             <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}" >
                 <Grid Margin="10,5,10,5">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="50"/>
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0">
@@ -63,7 +63,7 @@
                                      Text="{Binding KPITargetsSet.Subject, Mode=TwoWay}"/>
                         </Border>
 
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="KPI title *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="KPI title *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,5,5,5" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -76,7 +76,7 @@
                             </TextBlock.Style>
                         </TextBlock>
 
-                        <TextBlock x:Name="txtlabelTitle" Width="120" TextAlignment="Center" Margin="10" Text="Title" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                        <TextBlock x:Name="txtlabelTitle" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Title" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Visible"/>
@@ -101,7 +101,7 @@
                             </RichTextBox>
                         </Border>
 
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Write KPI description *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Write KPI description *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -114,7 +114,7 @@
                             </TextBlock.Style>
                         </TextBlock>
 
-                        <TextBlock x:Name="txtlabelMessage" Width="120" TextAlignment="Center" Margin="10" Text="Message" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                        <TextBlock x:Name="txtlabelMessage" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Message" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Visible"/>

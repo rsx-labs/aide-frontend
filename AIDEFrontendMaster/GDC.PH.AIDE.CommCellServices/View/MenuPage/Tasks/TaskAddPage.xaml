@@ -359,9 +359,9 @@
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height=".5*" />
-                <RowDefinition Height="9*" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
@@ -416,8 +416,8 @@
                                              x:Name="txtRefID" 
                                              Template="{DynamicResource TextBoxBaseControlTemplate}"/>
                                 </Border>
-                                
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter reference ID *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter reference ID *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,5,5,5" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -430,7 +430,7 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                                 
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5" Text="Incident ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Incident ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>
@@ -450,7 +450,7 @@
                                     <TextBox Text="{Binding NewTasks.IncDescr, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtIncDescr"/>
                                 </Border>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter description *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter description *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -463,7 +463,7 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                                 
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5" Text="Description" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Description" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>
@@ -482,7 +482,7 @@
                                     <TextBox  Text="{Binding NewTasks.EffortEst, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtEffortEst"/>
                                 </Border>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter estimate effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter estimate effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -495,7 +495,7 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                                 
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5" Text="Estimated Effort" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Estimated Effort" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>
@@ -514,7 +514,7 @@
                                     <TextBox Text="{Binding NewTasks.ActEffort, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEffortEst"/>
                                 </Border>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter actual effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter actual effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -526,8 +526,8 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5" Text="Actual Effort" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Actual Effort" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>
@@ -541,31 +541,31 @@
                                 </TextBlock>
                             </Grid>
 
-                            <TextBlock Width="120" TextAlignment="Center" Margin="5" Text="Weekly Effort" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=txtActualEfforEstWk}" Value="">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                            
+                          
                             <Grid Grid.Row="4">
                                 <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                                     <TextBox Text="{Binding NewTasks.ActEffortWk, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEfforEstWk"/>
                                 </Border>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter weekly effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter weekly effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Text, ElementName=txtActualEfforEstWk}" Value="">
                                                     <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Weekly Effort" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtActualEfforEstWk}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -583,7 +583,7 @@
                                           Style="{DynamicResource StyleComboBox}"
                                           x:Name="cbPhase"/>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select phase *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select phase *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -595,8 +595,8 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5" Text="Phase" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Phase" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>
@@ -617,7 +617,7 @@
                                            SelectedValuePath="Key"
                                            x:Name="cbStatus" Margin="0,5,5,5" Style="{DynamicResource StyleComboBox}"/>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a status *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a status *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -629,8 +629,8 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5" Text="Status" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Status" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>
@@ -649,7 +649,7 @@
                                     <TextBox Text="{Binding NewTasks.Comments, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtComments"/>
                                 </Border>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter comments" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter comments" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -661,8 +661,8 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5" Text="Remarks" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Remarks" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>
@@ -701,7 +701,7 @@
                                           Margin="5,5,0,5"
                                           Style="{DynamicResource StyleComboBox}"/>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a project *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a project *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -713,8 +713,8 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5" Text="Project" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Project" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>
@@ -742,7 +742,7 @@
                                           Margin="5,5,0,5"
                                           x:Name="cbCategory" Style="{DynamicResource StyleComboBox}"/>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a category *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select a category *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -754,8 +754,8 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5" Text="Category" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Category" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>
@@ -777,7 +777,7 @@
                                           Margin="5,5,0,5"
                                           x:Name="cbSeverity" Style="{DynamicResource StyleComboBox}"/>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select severity" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select severity" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -789,8 +789,8 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5" Text="Severity" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Severity" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>
@@ -812,7 +812,7 @@
                                           Margin="5,5,0,5" Style="{DynamicResource StyleComboBox}"
                                           x:Name="cbRework"/>
                                 
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Is this a rework?" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Is this a rework?" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -824,8 +824,8 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5" Text="Rework" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Rework" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>
@@ -840,13 +840,13 @@
                             </Grid>
                             
                             <Grid Grid.Row="4">
-                                <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                    <DatePicker Loaded="DatePicker_Loaded" Text="12" Margin="2" SelectedDate="{Binding NewTasks.DateStarted, Mode=TwoWay}"
+                                <Border Margin="5,0,5,0" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <DatePicker Loaded="DatePicker_Loaded" Text="9" Margin="0" SelectedDate="{Binding NewTasks.DateStarted, Mode=TwoWay}"
                                                 Name="dpStartDate" IsEnabled="True" Style="{DynamicResource styleDatePickerfrom}">
                                     </DatePicker>
                                 </Border>
-                                
-                                <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select start date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+
+                                <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select start date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray" FontSize="12">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -858,8 +858,8 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5" Text="Date Started" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Date Started" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>
@@ -874,14 +874,14 @@
                             </Grid>
                             
                             <Grid Grid.Row="5">
-                                <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                    <DatePicker Loaded="DatePicker_Loaded" Text="12" Margin="2" 
+                                <Border Margin="5,0,5,0" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <DatePicker Loaded="DatePicker_Loaded" Text="9" Margin="0" 
                                                 SelectedDate="{Binding NewTasks.TargetDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 x:Name="dpTargetDate" Style="{DynamicResource styleDatePickerfrom}">
                                     </DatePicker>
                                 </Border>
-                                
-                                <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select target date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+
+                                <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select target date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray" FontSize="12">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -893,8 +893,8 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5" Text="Target Date" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Target Date" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>
@@ -909,14 +909,14 @@
                             </Grid>
                             
                             <Grid Grid.Row="6">
-                                <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                    <DatePicker Loaded="DatePicker_Loaded" Text="12" Margin="2" 
+                                <Border Margin="5,0,5,0" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <DatePicker Loaded="DatePicker_Loaded" Text="9" Margin="0" 
                                                 SelectedDate="{Binding NewTasks.CompltdDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 Name="dpCompltdDate" Style="{DynamicResource styleDatePickerfrom}">
                                     </DatePicker>
                                 </Border>
                                 
-                                <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select completed date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                                <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select completed date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray" FontSize="12">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -928,8 +928,8 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5" Text="Date Completed" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Date Completed" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>

@@ -89,7 +89,7 @@ Class ViewProjectUI
         _menugrid.Opacity = 0.3
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(50, 80, 50, 80)
+        _addframe.Margin = New Thickness(150, 60, 150, 60)
         _addframe.Visibility = Visibility.Visible
     End Sub
 #End Region
