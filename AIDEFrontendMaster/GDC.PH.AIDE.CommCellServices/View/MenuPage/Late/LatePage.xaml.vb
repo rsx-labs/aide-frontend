@@ -30,7 +30,7 @@ Public Class LatePage
     Dim displayDataMonthly As Integer = 1
     Dim displayDataFiscalYear As Integer = 2
     Dim checkStatus As Integer
-    Dim year As Integer = Date.Now.Year
+    Dim year As Integer
     Dim day As Integer
     Dim startYear As Integer = 2019 'Default Start Year
 #End Region
@@ -220,12 +220,12 @@ Public Class LatePage
     End Sub
 #End Region
 
-    Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
+    Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
         year = cbYear.SelectedValue
         LoadStackLateFY()
     End Sub
 
-    Private Sub cbMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbMonth.SelectionChanged
+    Private Sub cbMonth_DropDownClosed(sender As Object, e As EventArgs) Handles cbMonth.DropDownClosed
         month = cbMonth.SelectedValue
         LoadStackLate()
     End Sub
