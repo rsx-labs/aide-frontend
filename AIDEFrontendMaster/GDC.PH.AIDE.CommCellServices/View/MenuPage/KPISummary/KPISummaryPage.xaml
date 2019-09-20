@@ -424,7 +424,9 @@
                     </Grid>
                     <Grid Grid.Column="2">
                         <Viewbox HorizontalAlignment="Center" Margin="0,3,0,5">
-                            <Image Source="..\..\..\Assets\Button\addnew.png" />
+                            <Button x:Name="btnCreate"  Style="{DynamicResource ButtonAdd}" Click="btnCreate_Click">
+
+                            </Button>
                         </Viewbox>
 
                     </Grid>

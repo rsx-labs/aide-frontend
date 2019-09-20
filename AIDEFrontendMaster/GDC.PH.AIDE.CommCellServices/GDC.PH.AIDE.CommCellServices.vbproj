@@ -406,6 +406,9 @@
     <Compile Include="View\MenuPage\Home\HomePage.xaml.vb">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MenuPage\KPISummary\KPISummaryAddPage.xaml.vb">
+      <DependentUpon>KPISummaryAddPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MenuPage\KPISummary\KPISummaryPage.xaml.vb">
       <DependentUpon>KPISummaryPage.xaml</DependentUpon>
     </Compile>
@@ -714,6 +717,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MenuPage\Home\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\KPISummary\KPISummaryAddPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -19,28 +19,34 @@ Public Class KPISummaryPage
     Private client As AideServiceClient
     Private _KPISummaryDBProvider As New KPISummaryDBProvider
     Private _KPISummaryVM As New KPISummaryViewModel
-    Private mainFrame As Frame
-    Private profile As Profile
+    Private _mainFrame As Frame
+    Private _profile As Profile
+    Private _menugrid As Grid
+    Private _addFrame As Frame
+    Private _submenuFrame As Frame
 
-    Dim month As Integer = Date.Now.Month
+    Dim _month As Integer = Date.Now.Month
     Dim displayData As Integer
-    Dim year As Integer
+    Dim _year As Integer
 #End Region
 
-    Public Sub New(_profile As Profile, mFrame As Frame)
-        Me.profile = _profile
-        Me.mainFrame = mFrame
+    Public Sub New(_profile As Profile, mFrame As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame)
+        Me._profile = _profile
+        Me._mainFrame = mFrame
+        Me._menugrid = menugrid
+        Me._addFrame = addframe
+        Me._submenuFrame = submenuframe
         Me.InitializeComponent()
 
-        month = Date.Now.Month
-        year = Date.Now.Year
+        _month = Date.Now.Month
+        _year = Date.Now.Year
 
         LoadMonth()
         LoadYears()
         LoadData()
 
-        cbMonth.SelectedValue = month
-        cbYear.SelectedValue = year
+        cbMonth.SelectedValue = _month
+        cbYear.SelectedValue = _year
     End Sub
 
 #Region "Private Methods"
@@ -88,8 +94,8 @@ Public Class KPISummaryPage
     Private Sub LoadData()
         LoadKPISummary()
         LoadKPISummaryTable()
-        lblKPISummary.Content = "Monthly KPI Summary for FY " + year.ToString
-        lblKPISummaryChart.Content = "Monthly KPI Summary for FY " + year.ToString
+        lblKPISummary.Content = "Monthly KPI Summary for FY " + _year.ToString
+        lblKPISummaryChart.Content = "Monthly KPI Summary for FY " + _year.ToString
     End Sub
 
     Private Sub LoadKPISummary()
@@ -284,12 +290,12 @@ Public Class KPISummaryPage
 #Region "Private Functions"
 
     Private Sub cbMonth_DropDownClosed(sender As Object, e As EventArgs) Handles cbMonth.DropDownClosed
-        month = cbMonth.SelectedValue
+        _month = cbMonth.SelectedValue
         'LoadData()
     End Sub
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
-        year = cbYear.SelectedValue
+        _year = cbYear.SelectedValue
         'LoadData()
     End Sub
 
@@ -314,6 +320,18 @@ Public Class KPISummaryPage
 
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
 
+    End Sub
+
+    Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
+        _addFrame.Navigate(New KPISummaryAddPage(Me._profile, Me._mainFrame, Me._addFrame, Me._menugrid, Me._submenuFrame))
+        _mainFrame.IsEnabled = False
+        _mainFrame.Opacity = 0.3
+        _menugrid.IsEnabled = False
+        _menugrid.Opacity = 0.3
+        _submenuFrame.IsEnabled = False
+        _submenuFrame.Opacity = 0.3
+        _addFrame.Visibility = Visibility.Visible
+        _addFrame.Margin = New Thickness(150, 60, 150, 60)
     End Sub
 #End Region
 
