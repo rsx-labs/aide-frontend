@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Public Class KPITargetsModel
     Private _Id As Integer
+    Private _EmpId As Integer
     Private _fystart As Date
     Private _fyend As Date
     Private _KPI_refNo As String
@@ -13,6 +14,7 @@ Public Class KPITargetsModel
 
     Public Sub New(ByVal kpiTarget As KPITargetSet)
         Me.ID = kpiTarget._ID
+        Me.EmployeeID = kpiTarget._EmployeeID
         Me.FYStart = kpiTarget._FYStart
         Me.FYEnd = kpiTarget._FYEnd
         Me.KPIReferenceNo = kpiTarget._KPI_RefNo
@@ -28,6 +30,16 @@ Public Class KPITargetsModel
         Set(value As Integer)
             _Id = value
             OnPropertyChanged("ID")
+        End Set
+    End Property
+
+    Public Property EmployeeID As Integer
+        Get
+            Return _EmpId
+        End Get
+        Set(value As Integer)
+            _EmpId = value
+            OnPropertyChanged("EmployeeID")
         End Set
     End Property
 

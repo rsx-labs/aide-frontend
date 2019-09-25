@@ -47,6 +47,13 @@ Public Class KPISummaryPage
 
         cbMonth.SelectedValue = _month
         cbYear.SelectedValue = _year
+
+        dgKPISummary.SelectionMode = DataGridSelectionMode.Single
+        dgKPISummary.SelectionUnit = DataGridSelectionUnit.Cell
+
+        If _profile.Permission_ID = 1 Then
+            btnCreate.Visibility = Windows.Visibility.Visible
+        End If
     End Sub
 
 #Region "Private Methods"
@@ -113,7 +120,7 @@ Public Class KPISummaryPage
                 FYStart = Convert.ToDateTime((Date.Now.Year - 1).ToString() + "-" + "04-01")
                 FYEnd = Convert.ToDateTime(Date.Now.Year.ToString() + "-" + "03-31")
             End If
-            Dim lstKPISummary = client.GetKPISummaryList(FYStart, FYEnd)
+            Dim lstKPISummary = client.GetKPISummaryList(Me._profile.Emp_ID, FYStart, FYEnd)
             Dim lstKPISummaryModel As New ObservableCollection(Of KPISummaryModel)
             Dim kpiSummaryVM As New KPISummaryViewModel()
             Dim kpi1 As New ChartValues(Of Double)()
@@ -133,7 +140,7 @@ Public Class KPISummaryPage
             Dim monthName(lstKPISummary.Length) As String
             Dim x As Integer = 0
             Dim y As Integer = 0
-            'Dim z As Integer = 0
+
             For Each iSummary As KPISummaryData In _KPISummaryDBProvider.GetAllKPISummary()
                 x = x + 1
                 If x = 1 Then
@@ -224,29 +231,44 @@ Public Class KPISummaryPage
                 curYear = Date.Now.Year - 1
             End If
 
+
             If kpiName <> iSummary._subject Then
                 x = x + 1
+
                 If x = 1 Then
                     overallValue = iSummary.KPI_Overall * 100
                     If Not dict.ContainsKey("KPI") Then
                         dict = New Dictionary(Of String, String)()
+                        dict.Add("EMP_ID", iSummary._EmployeeID)
+                        dict.Add("KPI_REF", iSummary._KPI_RefNo)
+                        dict.Add("FY_START", iSummary._FYStart)
+                        dict.Add("FY_END", iSummary._FYEnd)
                         dict.Add("KPI", iSummary._subject)
                     End If
-                    dict.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), (iSummary.KPI_Actual * 100).ToString())
+
+                    dict.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), (iSummary.KPI_Target * 100).ToString() + " | " + (iSummary.KPI_Actual * 100).ToString())
                 ElseIf x = 2 Then
                     overallValue = overallValue + (iSummary.KPI_Overall * 100)
                     If Not dict2.ContainsKey("KPI") Then
                         dict2 = New Dictionary(Of String, String)()
+                        dict2.Add("EMP_ID", iSummary._EmployeeID)
+                        dict2.Add("KPI_REF", iSummary._KPI_RefNo)
+                        dict2.Add("FY_START", iSummary._FYStart)
+                        dict2.Add("FY_END", iSummary._FYEnd)
                         dict2.Add("KPI", iSummary._subject)
                     End If
-                    dict2.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), (iSummary.KPI_Actual * 100).ToString())
+                    dict2.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), (iSummary.KPI_Target * 100).ToString() + " | " + (iSummary.KPI_Actual * 100).ToString())
                 ElseIf x = 3 Then
                     overallValue = (overallValue + (iSummary.KPI_Overall * 100)) / 3
                     If Not dict3.ContainsKey("KPI") Then
                         dict3 = New Dictionary(Of String, String)()
+                        dict3.Add("EMP_ID", iSummary._EmployeeID)
+                        dict3.Add("KPI_REF", iSummary._KPI_RefNo)
+                        dict3.Add("FY_START", iSummary._FYStart)
+                        dict3.Add("FY_END", iSummary._FYEnd)
                         dict3.Add("KPI", iSummary._subject)
                     End If
-                    dict3.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), (iSummary.KPI_Actual * 100).ToString())
+                    dict3.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), (iSummary.KPI_Target * 100).ToString() + " | " + (iSummary.KPI_Actual * 100).ToString())
                     dict4.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), Math.Round(overallValue, 2).ToString())
                     x = 0
                 End If
@@ -333,6 +355,54 @@ Public Class KPISummaryPage
         _addFrame.Visibility = Visibility.Visible
         _addFrame.Margin = New Thickness(150, 60, 150, 60)
     End Sub
+
+
+    Private Sub dgKPISummary_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles dgKPISummary.MouseDoubleClick
+
+        If _profile.Permission_ID = 1 Then
+            If (dgKPISummary.Items.Count > 0) Then
+                'Dim collKPISummary As ObservableCollection(Of KPISummaryData) = _KPISummaryDBProvider.GetAllKPISummary()
+                Dim columnIndex As Integer = dgKPISummary.CurrentColumn.DisplayIndex
+                Dim selectedItem As String = dgKPISummary.CurrentCell.Item(columnIndex)
+                Dim kpi As New KPISummary
+                Dim strCell As String() = selectedItem.Split("|")
+                If strCell.Count > 0 Then
+                    kpi.KPITarget = strCell.GetValue(0)
+                    kpi.KPIActual = strCell.GetValue(1)
+                    kpi.EmployeeID = dgKPISummary.CurrentCell.Item(0)
+                    kpi.KPI_Reference = dgKPISummary.CurrentCell.Item(1)
+                    kpi.FYStart = dgKPISummary.CurrentCell.Item(2)
+                    kpi.FYEnd = dgKPISummary.CurrentCell.Item(3)
+                    kpi.Subject = dgKPISummary.CurrentCell.Item(4)
+                    kpi.KPI_Month = Convert.ToDateTime(dgKPISummary.CurrentColumn.Header).Month
+
+                    _addFrame.Navigate(New KPISummaryAddPage(Me._profile, Me._mainFrame, Me._addFrame, Me._menugrid, Me._submenuFrame, kpi))
+                    _mainFrame.IsEnabled = False
+                    _mainFrame.Opacity = 0.3
+                    _menugrid.IsEnabled = False
+                    _menugrid.Opacity = 0.3
+                    _submenuFrame.IsEnabled = False
+                    _submenuFrame.Opacity = 0.3
+                    _addFrame.Visibility = Visibility.Visible
+                    _addFrame.Margin = New Thickness(150, 60, 150, 60)
+
+                End If
+
+            End If
+        End If
+
+    End Sub
+
+    Private Sub dgKPISummary_Loaded(sender As Object, e As RoutedEventArgs) Handles dgKPISummary.Loaded
+        If dgKPISummary.Items.Count > 0 Then
+            dgKPISummary.Columns(0).Visibility = Visibility.Collapsed
+            dgKPISummary.Columns(1).Visibility = Visibility.Collapsed
+            dgKPISummary.Columns(2).Visibility = Visibility.Collapsed
+            dgKPISummary.Columns(3).Visibility = Visibility.Collapsed
+        End If
+    End Sub
+
+
 #End Region
 
 End Class

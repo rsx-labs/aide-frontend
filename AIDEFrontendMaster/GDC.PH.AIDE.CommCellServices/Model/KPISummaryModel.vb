@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Public Class KPISummaryModel
     Private _Id As Integer
+    Private _EmpId As Integer
     Private _fystart As Date
     Private _fyend As Date
     Private _KPI_refNo As String
@@ -17,6 +18,7 @@ Public Class KPISummaryModel
 
     Public Sub New(ByVal _kpiSummary As KPISummaryData)
         Me.ID = _kpiSummary._ID
+        Me.EmployeeID = _kpiSummary._EmployeeID
         Me.FYStart = _kpiSummary._FYStart
         Me.FYEnd = _kpiSummary._FYEnd
         Me.Month = _kpiSummary._Month
@@ -39,6 +41,15 @@ Public Class KPISummaryModel
         End Set
     End Property
 
+    Public Property EmployeeID As Integer
+        Get
+            Return _EmpId
+        End Get
+        Set(value As Integer)
+            _EmpId = value
+            OnPropertyChanged("EmployeeID")
+        End Set
+    End Property
     Public Property FYStart As Date
         Get
             Return _fystart

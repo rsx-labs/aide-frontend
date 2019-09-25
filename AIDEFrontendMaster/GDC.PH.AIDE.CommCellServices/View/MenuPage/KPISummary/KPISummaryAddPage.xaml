@@ -939,19 +939,19 @@
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=cbYear}" Value="">
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbKPI}" Value="">
                                             <Setter Property="Visibility" Value="Visible"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBlock x:Name="txtlabelKPI" Width="120" TextAlignment="Center" Margin="5,10,5,5" Text="Year" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                        <TextBlock x:Name="txtlabelKPI" Width="120" TextAlignment="Center" Margin="5,10,5,5" Text="KPI" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Visible"/>
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=cbYear}" Value="">
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbKPI}" Value="">
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -966,7 +966,7 @@
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
                             <Border Margin="2.5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                <TextBox MaxLength="2" BorderBrush="Transparent" Background="Transparent" MinWidth="70" BorderThickness="0" Template="{DynamicResource TextBoxBaseControlTemplate}" Name="txtTarget" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12" PreviewTextInput="txtTarget_PreviewTextInput"/>
+                                <TextBox MaxLength="6" BorderBrush="Transparent" Background="Transparent" MinWidth="70" BorderThickness="0" Template="{DynamicResource TextBoxBaseControlTemplate}" Name="txtTarget" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12" PreviewTextInput="txtTarget_PreviewTextInput" />
                             </Border>
                             <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Target *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                                 <TextBlock.Style>
@@ -996,7 +996,7 @@
                         </Grid>
                         <Grid Grid.Column="1">
                             <Border Margin="0,5,2.5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                <TextBox MaxLength="2" BorderBrush="Transparent" Background="Transparent" MinWidth="70" BorderThickness="0" Template="{DynamicResource TextBoxBaseControlTemplate}" Name="txtActual" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12" PreviewTextInput="txtActual_PreviewTextInput"/>
+                                <TextBox MaxLength="6" BorderBrush="Transparent" Background="Transparent" MinWidth="70" BorderThickness="0" Template="{DynamicResource TextBoxBaseControlTemplate}" Name="txtActual" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12" PreviewTextInput="txtActual_PreviewTextInput"/>
                             </Border>
 
                             <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Actual *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
@@ -1011,7 +1011,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelActual" TextAlignment="Center" Margin="5" Text="Minutes" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                            <TextBlock x:Name="txtlabelActual" TextAlignment="Center" Margin="5" Text="Actual" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>

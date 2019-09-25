@@ -68,7 +68,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
+        <Style TargetType="{x:Type DataGridCell}">
+            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="90 | 100 | -0.10">
+                    <Setter Property="Background" Value="Red"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Key="StyleComboBox" TargetType="{x:Type ComboBox}">
 
             <Setter Property="SnapsToDevicePixels" Value="true"/>
@@ -176,7 +183,7 @@
             <GradientStop Color="#FFFFD1FF" Offset="0.0"/>
             <GradientStop Color="#FFC4FFF4" Offset="1.0"/>
         </LinearGradientBrush>
-        
+
         <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
             <Border Background="{TemplateBinding Background}" 
                     x:Name="Bd" BorderBrush="#FFA4A4A4"
@@ -197,7 +204,7 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-        
+
         <!-- Scroll -->
         <SolidColorBrush x:Key="StandardBorderBrush" Color="#888" />
         <SolidColorBrush x:Key="StandardBackgroundBrush" Color="Black" />
@@ -220,7 +227,7 @@
                 </GradientStopCollection>
             </GradientBrush.GradientStops>
         </LinearGradientBrush>
-        
+
         <LinearGradientBrush x:Key="StandardBrush" StartPoint="0,0" EndPoint="0,1">
             <GradientBrush.GradientStops>
                 <GradientStopCollection>
@@ -229,7 +236,7 @@
                 </GradientStopCollection>
             </GradientBrush.GradientStops>
         </LinearGradientBrush>
-        
+
         <LinearGradientBrush x:Key="PressedBrush" StartPoint="0,0" EndPoint="0,1">
             <GradientBrush.GradientStops>
                 <GradientStopCollection>
@@ -264,7 +271,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <Style x:Key="ScrollBarPageButton" TargetType="{x:Type RepeatButton}">
             <Setter Property="Visibility" Value="Hidden"/>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -279,7 +286,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="OverridesDefaultStyle" Value="true"/>
@@ -317,7 +324,7 @@
                 <RepeatButton Grid.Row="3" Style="{StaticResource ScrollBarLineButton}" Height="18" Command="ScrollBar.LineDownCommand" Content="M 0 0 L 4 4 L 8 0 Z"/>
             </Grid>
         </ControlTemplate>
-        
+
         <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -341,9 +348,9 @@
                 <RepeatButton Grid.Column="3" Style="{StaticResource ScrollBarLineButton}" Width="18" Command="ScrollBar.LineRightCommand" Content="M 0 0 L 4 4 L 0 8 Z"/>
             </Grid>
         </ControlTemplate>
-        
-        
-        
+
+
+
         <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
             <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="OverridesDefaultStyle" Value="true"/>
@@ -360,8 +367,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
-        
+
+
 
         <Style x:Key="FavsScrollViewer" TargetType="{x:Type ScrollViewer}">
             <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -398,51 +405,46 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="1*"/>
-
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
-                    
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="12*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-                        <Viewbox HorizontalAlignment="Center" Margin="0,3,0,5">
-                            <Image Source="..\..\..\Assets\Button\NonBillableLogo.png" />
-                        </Viewbox>
+                    <Viewbox HorizontalAlignment="Center" Margin="0,3,0,5">
+                        <Image Source="..\..\..\Assets\Button\NonBillableLogo.png" />
+                    </Viewbox>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Viewbox HorizontalAlignment="Left">
+                        <TextBlock TextWrapping="Wrap" Padding="0" Text="KPI Summary" Margin="0,7,0,7" Foreground="DimGray"/>
+                    </Viewbox>
+                </Grid>
+                <Grid Grid.Column="2">
+                    <Viewbox HorizontalAlignment="Center" Margin="0,3,0,5">
+                        <Button x:Name="btnCreate"  Style="{DynamicResource ButtonAdd}" Click="btnCreate_Click" Visibility="Visible">
 
-                    </Grid>
+                        </Button>
+                    </Viewbox>
 
-                    <Grid Grid.Column="1">
-                        <Viewbox HorizontalAlignment="Left">
-                            <TextBlock TextWrapping="Wrap" Padding="0" Text="KPI Summary" Margin="0,7,0,7" Foreground="DimGray"/>
-                        </Viewbox>
-                    </Grid>
-                    <Grid Grid.Column="2">
-                        <Viewbox HorizontalAlignment="Center" Margin="0,3,0,5">
-                            <Button x:Name="btnCreate"  Style="{DynamicResource ButtonAdd}" Click="btnCreate_Click">
-
-                            </Button>
-                        </Viewbox>
-
-                    </Grid>
                 </Grid>
             </Grid>
             <Grid Grid.Row="1" Background="#FFFBFBFB">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="4*"/>
-                    
+                    <ColumnDefinition Width="1.0*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="5.5*"/>
+
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Margin="10,10,5,10"/>
-                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Month" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                <Grid Grid.Column="0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="53*"/>
+                        <ColumnDefinition Width="19*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Fiscal Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray"/>
+                    <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Margin="10,10,-58,-3" Visibility="Collapsed" Grid.ColumnSpan="2"/>
+                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Month" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray" Visibility="Collapsed" Margin="36,14,17,13">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -516,7 +518,7 @@
                         </Grid.ColumnDefinitions>
                         <Grid Grid.ColumnSpan="2">
                             <Viewbox>
-                            <Label Name="lblKPISummaryChart"
+                                <Label Name="lblKPISummaryChart"
                            HorizontalContentAlignment="Center"
                            FontSize="13" 
                            FontStyle="Italic"
@@ -528,10 +530,10 @@
                         <Grid Grid.Column="1">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <Grid>
-                                    
+
                                 </Grid>
                                 <Grid>
-                                    
+
                                 </Grid>
                             </StackPanel>
                         </Grid>
@@ -566,7 +568,7 @@
 
                     <Grid Grid.Row="0">
                         <Viewbox>
-                        <Label Name="lblKPISummary"
+                            <Label Name="lblKPISummary"
                        HorizontalContentAlignment="Center"
                        FontSize="13"
                        FontStyle="Italic"
@@ -595,7 +597,9 @@
                                          Foreground="White"
                                          FontWeight="Normal"                               
                                          IsReadOnly="True"
-                                  
+                                         SelectionMode="Single"
+                                         SelectionUnit="Cell"
+                                        IsSynchronizedWithCurrentItem="True"
                                          CanUserSortColumns="False"
                                   
                                         >
@@ -619,8 +623,8 @@
                     </Grid>
                 </Grid>
             </Grid>
-            
-            
+
+
         </Grid>
     </Border>
 </Page>

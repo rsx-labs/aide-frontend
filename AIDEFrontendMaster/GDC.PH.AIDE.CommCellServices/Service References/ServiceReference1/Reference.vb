@@ -3725,6 +3725,9 @@ Namespace ServiceReference1
         Private DescriptionField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private EmployeeIdField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private FYEndField As Date
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
@@ -3771,6 +3774,19 @@ Namespace ServiceReference1
                 If (Object.ReferenceEquals(Me.DescriptionField, value) <> true) Then
                     Me.DescriptionField = value
                     Me.RaisePropertyChanged("Description")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property EmployeeId() As Integer
+            Get
+                Return Me.EmployeeIdField
+            End Get
+            Set
+                If (Me.EmployeeIdField.Equals(value) <> true) Then
+                    Me.EmployeeIdField = value
+                    Me.RaisePropertyChanged("EmployeeId")
                 End If
             End Set
         End Property
@@ -3868,6 +3884,9 @@ Namespace ServiceReference1
         Private DescriptionField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private EmployeeIdField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private FYEndField As Date
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
@@ -3926,6 +3945,19 @@ Namespace ServiceReference1
                 If (Object.ReferenceEquals(Me.DescriptionField, value) <> true) Then
                     Me.DescriptionField = value
                     Me.RaisePropertyChanged("Description")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property EmployeeId() As Integer
+            Get
+                Return Me.EmployeeIdField
+            End Get
+            Set
+                If (Me.EmployeeIdField.Equals(value) <> true) Then
+                    Me.EmployeeIdField = value
+                    Me.RaisePropertyChanged("EmployeeId")
                 End If
             End Set
         End Property
@@ -8969,10 +9001,10 @@ Namespace ServiceReference1
         Function GetKPITargetsAsync(ByVal Id As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.KPITargets())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllKPITargets", ReplyAction:="http://tempuri.org/IAideService/GetAllKPITargetsResponse")>  _
-        Function GetAllKPITargets(ByVal FiscalYear As Date) As ServiceReference1.KPITargets()
+        Function GetAllKPITargets(ByVal EmpId As Integer, ByVal FiscalYear As Date) As ServiceReference1.KPITargets()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllKPITargets", ReplyAction:="http://tempuri.org/IAideService/GetAllKPITargetsResponse")>  _
-        Function GetAllKPITargetsAsync(ByVal FiscalYear As Date) As System.Threading.Tasks.Task(Of ServiceReference1.KPITargets())
+        Function GetAllKPITargetsAsync(ByVal EmpId As Integer, ByVal FiscalYear As Date) As System.Threading.Tasks.Task(Of ServiceReference1.KPITargets())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/InsertKPISummary", ReplyAction:="http://tempuri.org/IAideService/InsertKPISummaryResponse")>  _
         Function InsertKPISummary(ByVal kpi As ServiceReference1.KPISummary) As Boolean
@@ -8987,16 +9019,16 @@ Namespace ServiceReference1
         Function UpdateKPISummaryAsync(ByVal kpi As ServiceReference1.KPISummary) As System.Threading.Tasks.Task(Of Boolean)
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetKPISummaryList", ReplyAction:="http://tempuri.org/IAideService/GetKPISummaryListResponse")>  _
-        Function GetKPISummaryList(ByVal FY_Start As Date, ByVal FY_End As Date) As ServiceReference1.KPISummary()
+        Function GetKPISummaryList(ByVal EmpId As Integer, ByVal FY_Start As Date, ByVal FY_End As Date) As ServiceReference1.KPISummary()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetKPISummaryList", ReplyAction:="http://tempuri.org/IAideService/GetKPISummaryListResponse")>  _
-        Function GetKPISummaryListAsync(ByVal FY_Start As Date, ByVal FY_End As Date) As System.Threading.Tasks.Task(Of ServiceReference1.KPISummary())
+        Function GetKPISummaryListAsync(ByVal EmpId As Integer, ByVal FY_Start As Date, ByVal FY_End As Date) As System.Threading.Tasks.Task(Of ServiceReference1.KPISummary())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetKPISummaryListMonthly", ReplyAction:="http://tempuri.org/IAideService/GetKPISummaryListMonthlyResponse")>  _
-        Function GetKPISummaryListMonthly(ByVal FY_Start As Date, ByVal FY_End As Date, ByVal Month As Short) As ServiceReference1.KPISummary()
+        Function GetKPISummaryListMonthly(ByVal EmpId As Integer, ByVal FY_Start As Date, ByVal FY_End As Date, ByVal Month As Short, ByVal KPIRef As String) As ServiceReference1.KPISummary()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetKPISummaryListMonthly", ReplyAction:="http://tempuri.org/IAideService/GetKPISummaryListMonthlyResponse")>  _
-        Function GetKPISummaryListMonthlyAsync(ByVal FY_Start As Date, ByVal FY_End As Date, ByVal Month As Short) As System.Threading.Tasks.Task(Of ServiceReference1.KPISummary())
+        Function GetKPISummaryListMonthlyAsync(ByVal EmpId As Integer, ByVal FY_Start As Date, ByVal FY_End As Date, ByVal Month As Short, ByVal KPIRef As String) As System.Threading.Tasks.Task(Of ServiceReference1.KPISummary())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/ViewSuccessRegisterByEmpID", ReplyAction:="http://tempuri.org/IAideService/ViewSuccessRegisterByEmpIDResponse")>  _
         Function ViewSuccessRegisterByEmpID(ByVal email As String) As ServiceReference1.SuccessRegister()
@@ -10079,12 +10111,12 @@ Namespace ServiceReference1
             Return MyBase.Channel.GetKPITargetsAsync(Id)
         End Function
         
-        Public Function GetAllKPITargets(ByVal FiscalYear As Date) As ServiceReference1.KPITargets() Implements ServiceReference1.IAideService.GetAllKPITargets
-            Return MyBase.Channel.GetAllKPITargets(FiscalYear)
+        Public Function GetAllKPITargets(ByVal EmpId As Integer, ByVal FiscalYear As Date) As ServiceReference1.KPITargets() Implements ServiceReference1.IAideService.GetAllKPITargets
+            Return MyBase.Channel.GetAllKPITargets(EmpId, FiscalYear)
         End Function
         
-        Public Function GetAllKPITargetsAsync(ByVal FiscalYear As Date) As System.Threading.Tasks.Task(Of ServiceReference1.KPITargets()) Implements ServiceReference1.IAideService.GetAllKPITargetsAsync
-            Return MyBase.Channel.GetAllKPITargetsAsync(FiscalYear)
+        Public Function GetAllKPITargetsAsync(ByVal EmpId As Integer, ByVal FiscalYear As Date) As System.Threading.Tasks.Task(Of ServiceReference1.KPITargets()) Implements ServiceReference1.IAideService.GetAllKPITargetsAsync
+            Return MyBase.Channel.GetAllKPITargetsAsync(EmpId, FiscalYear)
         End Function
         
         Public Function InsertKPISummary(ByVal kpi As ServiceReference1.KPISummary) As Boolean Implements ServiceReference1.IAideService.InsertKPISummary
@@ -10103,20 +10135,20 @@ Namespace ServiceReference1
             Return MyBase.Channel.UpdateKPISummaryAsync(kpi)
         End Function
         
-        Public Function GetKPISummaryList(ByVal FY_Start As Date, ByVal FY_End As Date) As ServiceReference1.KPISummary() Implements ServiceReference1.IAideService.GetKPISummaryList
-            Return MyBase.Channel.GetKPISummaryList(FY_Start, FY_End)
+        Public Function GetKPISummaryList(ByVal EmpId As Integer, ByVal FY_Start As Date, ByVal FY_End As Date) As ServiceReference1.KPISummary() Implements ServiceReference1.IAideService.GetKPISummaryList
+            Return MyBase.Channel.GetKPISummaryList(EmpId, FY_Start, FY_End)
         End Function
         
-        Public Function GetKPISummaryListAsync(ByVal FY_Start As Date, ByVal FY_End As Date) As System.Threading.Tasks.Task(Of ServiceReference1.KPISummary()) Implements ServiceReference1.IAideService.GetKPISummaryListAsync
-            Return MyBase.Channel.GetKPISummaryListAsync(FY_Start, FY_End)
+        Public Function GetKPISummaryListAsync(ByVal EmpId As Integer, ByVal FY_Start As Date, ByVal FY_End As Date) As System.Threading.Tasks.Task(Of ServiceReference1.KPISummary()) Implements ServiceReference1.IAideService.GetKPISummaryListAsync
+            Return MyBase.Channel.GetKPISummaryListAsync(EmpId, FY_Start, FY_End)
         End Function
         
-        Public Function GetKPISummaryListMonthly(ByVal FY_Start As Date, ByVal FY_End As Date, ByVal Month As Short) As ServiceReference1.KPISummary() Implements ServiceReference1.IAideService.GetKPISummaryListMonthly
-            Return MyBase.Channel.GetKPISummaryListMonthly(FY_Start, FY_End, Month)
+        Public Function GetKPISummaryListMonthly(ByVal EmpId As Integer, ByVal FY_Start As Date, ByVal FY_End As Date, ByVal Month As Short, ByVal KPIRef As String) As ServiceReference1.KPISummary() Implements ServiceReference1.IAideService.GetKPISummaryListMonthly
+            Return MyBase.Channel.GetKPISummaryListMonthly(EmpId, FY_Start, FY_End, Month, KPIRef)
         End Function
         
-        Public Function GetKPISummaryListMonthlyAsync(ByVal FY_Start As Date, ByVal FY_End As Date, ByVal Month As Short) As System.Threading.Tasks.Task(Of ServiceReference1.KPISummary()) Implements ServiceReference1.IAideService.GetKPISummaryListMonthlyAsync
-            Return MyBase.Channel.GetKPISummaryListMonthlyAsync(FY_Start, FY_End, Month)
+        Public Function GetKPISummaryListMonthlyAsync(ByVal EmpId As Integer, ByVal FY_Start As Date, ByVal FY_End As Date, ByVal Month As Short, ByVal KPIRef As String) As System.Threading.Tasks.Task(Of ServiceReference1.KPISummary()) Implements ServiceReference1.IAideService.GetKPISummaryListMonthlyAsync
+            Return MyBase.Channel.GetKPISummaryListMonthlyAsync(EmpId, FY_Start, FY_End, Month, KPIRef)
         End Function
         
         Public Function ViewSuccessRegisterByEmpID(ByVal email As String) As ServiceReference1.SuccessRegister() Implements ServiceReference1.IAideService.ViewSuccessRegisterByEmpID

@@ -74,6 +74,7 @@ Class KPITargetsAddPage
             Dim textRange As New TextRange(txtDescription.Document.ContentStart, txtDescription.Document.ContentEnd)
             If Not IsNothing(textRange.Text) Or Not kpiTarget.Subject = Nothing Then
                 _kpitargets.KPI_Id = "0"
+                _kpitargets.EmployeeId = Me.profile.Emp_ID
                 _kpitargets.Description = textRange.Text
                 _kpitargets.Subject = kpiTarget.Subject
                 _kpitargets.DateCreated = Date.Now

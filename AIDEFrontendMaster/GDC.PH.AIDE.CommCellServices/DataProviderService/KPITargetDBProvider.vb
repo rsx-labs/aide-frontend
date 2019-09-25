@@ -14,6 +14,7 @@ Public Class KPITargetDBProvider
 
     Public Sub SetKPITargets(ByRef kpiTargets As KPITargets)
         Dim kpi As New KPITargetSet With {._ID = kpiTargets.KPI_Id,
+                                            ._EmployeeID = kpiTargets.EmployeeId,
                                                 ._FYStart = kpiTargets.FYStart,
                                                 ._FYEnd = kpiTargets.FYEnd,
                                                   ._KPI_RefNo = kpiTargets.KPI_ReferenceNo,
@@ -28,6 +29,7 @@ End Class
 
 Public Class KPITargetSet
     Property _ID As Integer
+    Property _EmployeeID As Integer
     Property _FYStart As Date
     Property _FYEnd As Date
     Property _KPI_RefNo As String

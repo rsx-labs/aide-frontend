@@ -14,6 +14,7 @@ Public Class KPISummaryDBProvider
 
     Public Sub SetKPISummary(ByRef kpiSummary As KPISummary)
         Dim kpi As New KPISummaryData With {._ID = kpiSummary.KPI_Id,
+                                                ._EmployeeID = kpiSummary.EmployeeId,
                                                 ._FYStart = kpiSummary.FYStart,
                                                 ._FYEnd = kpiSummary.FYEnd,
                                                 ._Month = kpiSummary.KPI_Month,
@@ -32,6 +33,7 @@ End Class
 
 Public Class KPISummaryData
     Property _ID As Integer
+    Property _EmployeeID As Integer
     Property _FYStart As Date
     Property _FYEnd As Date
     Property _Month As Short

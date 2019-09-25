@@ -361,6 +361,7 @@
   <xs:element name="GetAllKPITargets">
     <xs:complexType>
       <xs:sequence>
+        <xs:element minOccurs="0" name="EmpId" type="xs:int" />
         <xs:element minOccurs="0" name="FiscalYear" type="xs:dateTime" />
       </xs:sequence>
     </xs:complexType>
@@ -403,6 +404,7 @@
   <xs:element name="GetKPISummaryList">
     <xs:complexType>
       <xs:sequence>
+        <xs:element minOccurs="0" name="EmpId" type="xs:int" />
         <xs:element minOccurs="0" name="FY_Start" type="xs:dateTime" />
         <xs:element minOccurs="0" name="FY_End" type="xs:dateTime" />
       </xs:sequence>
@@ -418,9 +420,11 @@
   <xs:element name="GetKPISummaryListMonthly">
     <xs:complexType>
       <xs:sequence>
+        <xs:element minOccurs="0" name="EmpId" type="xs:int" />
         <xs:element minOccurs="0" name="FY_Start" type="xs:dateTime" />
         <xs:element minOccurs="0" name="FY_End" type="xs:dateTime" />
         <xs:element minOccurs="0" name="Month" type="xs:short" />
+        <xs:element minOccurs="0" name="KPIRef" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

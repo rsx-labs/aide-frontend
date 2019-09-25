@@ -414,6 +414,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="DateCreated" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmployeeId" type="xs:int" />
       <xs:element minOccurs="0" name="FYEnd" type="xs:dateTime" />
       <xs:element minOccurs="0" name="FYStart" type="xs:dateTime" />
       <xs:element minOccurs="0" name="KPI_Id" type="xs:int" />
@@ -432,6 +433,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="DatePosted" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmployeeId" type="xs:int" />
       <xs:element minOccurs="0" name="FYEnd" type="xs:dateTime" />
       <xs:element minOccurs="0" name="FYStart" type="xs:dateTime" />
       <xs:element minOccurs="0" name="KPIActual" type="xs:double" />

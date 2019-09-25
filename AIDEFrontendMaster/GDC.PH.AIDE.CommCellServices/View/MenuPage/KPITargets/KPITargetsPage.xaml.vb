@@ -84,7 +84,7 @@ Class KPITargetsPage
         Try
             If InitializeService() Then
                 Dim fiscalYear As Date = Date.Now()
-                _lstKPITargets = _client.GetAllKPITargets(fiscalYear)
+                _lstKPITargets = _client.GetAllKPITargets(Me._currentEmployeeID, fiscalYear)
                 LoadKPITargets()
                 DisplayPagingInfo()
             End If
@@ -185,6 +185,7 @@ Class KPITargetsPage
                     For Each kpi As KPITargetsModel In paginatedCollection
                         If CType(KPITargetsLV.SelectedItem, KPITargetsModel).ID = kpi.ID Then
                             kpiTargetsList.ID = kpi.ID
+                            kpiTargetsList.EmployeeID = kpi.EmployeeID
                             kpiTargetsList.KPIReferenceNo = kpi.KPIReferenceNo
                             kpiTargetsList.FYStart = kpi.FYStart
                             kpiTargetsList.FYEnd = kpi.FYEnd

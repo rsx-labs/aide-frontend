@@ -102,6 +102,7 @@ Class KPITargetsUpdatePage
             If textRange.Text = Nothing Or _kpiTargetModel.Subject = Nothing Then
             Else
                 _kpiTargets.KPI_Id = _kpiTargetModel.ID
+                _kpiTargets.EmployeeId = _kpiTargetModel.EmployeeID
                 _kpiTargets.KPI_ReferenceNo = _kpiTargetModel.KPIReferenceNo
                 _kpiTargets.FYStart = _kpiTargetModel.FYStart
                 _kpiTargets.FYEnd = _kpiTargetModel.FYEnd

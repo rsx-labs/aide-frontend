@@ -237,7 +237,7 @@
 
                     </Grid>
                 </Grid>
-                <Grid Grid.Column="0" Grid.Row="2" x:Name="grdUpdate">
+                <Grid Grid.Column="0" Grid.Row="2" x:Name="grdUpdate" Height="60" VerticalAlignment="Top">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20"/>
                         <RowDefinition Height="40"/>
