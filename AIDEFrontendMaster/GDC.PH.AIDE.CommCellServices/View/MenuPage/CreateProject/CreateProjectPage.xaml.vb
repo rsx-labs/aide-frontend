@@ -104,7 +104,7 @@ Class CreateProjectPage
     Public Sub SetData()
         Try
             If InitializeService() Then
-                Dim displayStatus As Integer = 0
+                Dim displayStatus As Integer = 1
                 lstProj = client.GetProjectList(_empID, displayStatus)
                 LoadProjectList()
                 DisplayPagingInfo()
@@ -185,7 +185,7 @@ Class CreateProjectPage
             Projects.Billability = billabiltiy
             client.CreateProject(Projects)
             _ProjectDBProvider._myprojectlist.Clear()
-            lstProj = client.GetProjectList(_empID, 0)
+            lstProj = client.GetProjectList(_empID, 1)
             LoadProjectList()
             ClearSelection()
             txtSearch.Text = String.Empty
@@ -226,7 +226,7 @@ Class CreateProjectPage
 
             paginatedCollection = New PaginatedObservableCollection(Of ProjectModel)(pagingRecordPerPage)
 
-            Dim items = From i In lstProj Where i.ProjectName.ToLower.Contains(input.ToLower) Or i.ProjectID.ToString.ToLower.Contains(input.ToLower)
+            Dim items = From i In lstProj Where i.ProjectName.ToLower.Contains(input.ToLower) Or i.ProjectCode.ToString.ToLower.Contains(input.ToLower)
             Dim searchProjects = New ObservableCollection(Of Project)(items)
 
             For Each objProject As Project In searchProjects
