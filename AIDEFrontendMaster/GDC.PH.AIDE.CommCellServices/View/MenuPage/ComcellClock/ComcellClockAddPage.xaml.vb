@@ -112,7 +112,7 @@ Class ComcellClockAddPage
                         comcellFrame.Navigate(New ComcellClockPage(profile, Me.comcellFrame, Me._window))
                     End If
                 Else
-                    MsgBox("Please check time entry. Hours input should not exceed 24. Minutes input should not exceed 59.", MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("Please check your time entry. Input hours should not exceed to 12 and Input Minutes should not exceed to 59.", MsgBoxStyle.Exclamation, "AIDE")
                 End If
             Else
                 MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
