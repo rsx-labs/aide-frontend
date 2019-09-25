@@ -120,14 +120,15 @@ Public Class AssetsListPage
                 assetsModel.DATE_PURCHASED = CType(lv_assetList.SelectedItem, AssetsModel).DATE_PURCHASED
                 assetsModel.STATUS = CType(lv_assetList.SelectedItem, AssetsModel).STATUS
                 assetsModel.OTHER_INFO = CType(lv_assetList.SelectedItem, AssetsModel).OTHER_INFO
-                _addframe.Navigate(New AssetsAddPage(assetsModel, frame, profile, _addframe, _menugrid, _submenuframe))
+                assetsModel.FULL_NAME = CType(lv_assetList.SelectedItem, AssetsModel).FULL_NAME
+                _addframe.Navigate(New AssetsUpdatePage(assetsModel, frame, profile, _addframe, _menugrid, _submenuframe))
                 frame.IsEnabled = False
                 frame.Opacity = 0.3
                 _menugrid.IsEnabled = False
                 _menugrid.Opacity = 0.3
                 _submenuframe.IsEnabled = False
                 _submenuframe.Opacity = 0.3
-                _addframe.Margin = New Thickness(150, 80, 150, 80)
+                _addframe.Margin = New Thickness(150, 130, 150, 130)
                 _addframe.Visibility = Visibility.Visible
             End If
         End If

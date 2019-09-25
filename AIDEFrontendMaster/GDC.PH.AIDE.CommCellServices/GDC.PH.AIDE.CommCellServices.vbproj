@@ -325,6 +325,9 @@
     <Compile Include="View\MenuPage\Assets\AssetsListPage.xaml.vb">
       <DependentUpon>AssetsListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MenuPage\Assets\AssetsUpdatePage.xaml.vb">
+      <DependentUpon>AssetsUpdatePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MenuPage\AssignedProjects\NewProject.xaml.vb">
       <DependentUpon>NewProject.xaml</DependentUpon>
     </Compile>
@@ -592,6 +595,10 @@
     <Page Include="View\MenuPage\Assets\AssetsListPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Assets\AssetsUpdatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MenuPage\AssignedProjects\NewProject.xaml">
       <SubType>Designer</SubType>
