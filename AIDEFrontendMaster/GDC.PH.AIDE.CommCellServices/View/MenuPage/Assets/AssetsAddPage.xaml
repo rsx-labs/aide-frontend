@@ -871,9 +871,9 @@
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height=".5*" />
-                <RowDefinition Height="7*" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -926,7 +926,7 @@
                                 <TextBox Visibility="Hidden" x:Name="txtID" IsReadOnly="True" TextWrapping="Wrap" Template="{DynamicResource TextBoxBaseControlTemplate}"  MaxLines="255" 
                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
-                            <TextBlock Visibility="Hidden" FontSize="12" IsHitTestVisible="False" Text="Enter asset ID" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock Visibility="Hidden" FontSize="12" IsHitTestVisible="False" Text="Enter asset ID" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -941,10 +941,10 @@
                             
                         </Grid>
                         <Grid Grid.Row="0">
-                            <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                <DatePicker x:Name="dateInput" Style="{DynamicResource styleDatePickerfrom}" BorderBrush="Transparent" Margin="2" />
+                            <Border Margin="5,0,5,0" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                <DatePicker x:Name="dateInput" Style="{DynamicResource styleDatePickerfrom}" BorderBrush="Transparent" Margin="0" />
                             </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select date assigned" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select date assigned" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -956,7 +956,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelAssignDate" Width="120" TextAlignment="Center" Margin="5" Text="Date Assigned" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock x:Name="txtlabelAssignDate" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Date Assigned" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -975,7 +975,7 @@
                                 <TextBox x:Name="txtCreatedBy" TextWrapping="Wrap" Template="{DynamicResource TextBoxBaseControlTemplate}" IsReadOnly="True"
                              MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Created by" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Created by" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -987,7 +987,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelCreatedBy" Width="120" TextAlignment="Center" Margin="5" Text="Created by" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock x:Name="txtlabelCreatedBy" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Created by" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1003,7 +1003,7 @@
                         <Grid Grid.Row="2">
                             <ComboBox x:Name="cbAssetType" IsReadOnly="True" VerticalContentAlignment="Center" Margin="0,5,5,5"
                           SelectedValuePath="ASSET_ID" Style="{DynamicResource StyleComboBox}" DisplayMemberPath="ASSET_DESC" ItemsSource="{Binding AssetTypeList}"/>
-                            <TextBlock x:Name="cbAssetWaterMark" FontSize="12" IsHitTestVisible="False" Text="Select an asset *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock x:Name="cbAssetWaterMark" FontSize="12" IsHitTestVisible="False" Text="Select an asset *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1015,7 +1015,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelAssetType" Width="120" TextAlignment="Center" Margin="5" Text="Asset Type" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock x:Name="txtlabelAssetType" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Asset Type" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1031,7 +1031,7 @@
                         <Grid Grid.Row="3">
                             <ComboBox x:Name="cbAssetManufacturer" Style="{DynamicResource StyleComboBox}" Margin="0,5,5,5" IsReadOnly="True" VerticalContentAlignment="Center"
                           SelectedValuePath="ASSET_ID" DisplayMemberPath="MANUFACTURER" ItemsSource="{Binding AssetManufacturerList}"/>
-                            <TextBlock x:Name="cbassetmanufacturerwatermark" FontSize="12" IsHitTestVisible="False" Text="Select manufacturer" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock x:Name="cbassetmanufacturerwatermark" FontSize="12" IsHitTestVisible="False" Text="Select manufacturer" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1043,7 +1043,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelManufacturer" Width="120" TextAlignment="Center" Margin="5" Text="Manufacturer" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock x:Name="txtlabelManufacturer" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Manufacturer" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1061,7 +1061,7 @@
 
                                 <TextBox x:Name="txtModel" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center"/>
                             </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter model no." VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter model no." VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1073,7 +1073,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelModel" Width="120" TextAlignment="Center" Margin="5" Text="Model No." Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock x:Name="txtlabelModel" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Model No." Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1101,7 +1101,7 @@
 
                                 <TextBox x:Name="txtSerial" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center"/>
                             </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter serial no." VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter serial no." VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1113,7 +1113,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelSerial" Width="120" TextAlignment="Center" Margin="5" Text="Serial No." Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock x:Name="txtlabelSerial" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Serial No." Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1131,7 +1131,7 @@
 
                                 <TextBox x:Name="txtAssetTag" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center"/>
                             </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter asset tag *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter asset tag *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1143,7 +1143,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelAssetTag" Width="120" TextAlignment="Center" Margin="5" Text="Asset Tag" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock x:Name="txtlabelAssetTag" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Asset Tag" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1159,7 +1159,7 @@
                         <Grid Grid.Row="2">
                             <ComboBox x:Name="cbNickname" Margin="5,5,0,5" IsReadOnly="True" Style="{DynamicResource StyleComboBox}" VerticalContentAlignment="Center"
                           SelectedValuePath="Emp_ID" DisplayMemberPath="Employee_Name" ItemsSource="{Binding NicknameList}"/>
-                            <TextBlock x:Name="cbNickNameWaterMark" FontSize="12" IsHitTestVisible="False" Text="Whom to assign? *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock x:Name="cbNickNameWaterMark" FontSize="12" IsHitTestVisible="False" Text="Whom to assign? *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1171,7 +1171,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelAssignedto" Width="120" TextAlignment="Center" Margin="5" Text="Assigned to" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock x:Name="txtlabelAssignedto" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Assigned to" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1189,7 +1189,7 @@
 
                                 <TextBox x:Name="txtOtherInfo" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center"/>
                             </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter additional info" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter additional info" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1201,7 +1201,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelAdditionalInfo" Width="120" TextAlignment="Center" Margin="5" Text="Additional Info" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock x:Name="txtlabelAdditionalInfo" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Additional Info" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>

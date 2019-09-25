@@ -9,11 +9,11 @@
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="8">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.10*" />
-                <RowDefinition Height="0.32*" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="0.05*" />
-                <RowDefinition Height="0.48*" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="150" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
@@ -116,7 +116,7 @@
                                       ItemsSource="{Binding ProjectList}" 
                                       DisplayMemberPath="ProjectName" 
                                       SelectedValuePath="ProjectID"/>
-                            <TextBlock IsHitTestVisible="False" Text="Select a project *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock IsHitTestVisible="False" Text="Select a project *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>

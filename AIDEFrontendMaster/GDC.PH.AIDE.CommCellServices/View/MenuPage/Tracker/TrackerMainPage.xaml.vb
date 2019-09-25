@@ -305,7 +305,7 @@ Class SabaLearningMainPage
         submenuframe.IsEnabled = False
         submenuframe.Opacity = 0.3
         addframe.Visibility = Visibility.Visible
-        addframe.Margin = New Thickness(200, 100, 200, 100)
+        addframe.Margin = New Thickness(150, 60, 150, 60)
     End Sub
 #End Region
 

@@ -113,9 +113,11 @@ Class HomePage
 #Region "Functions"
 
     Public Sub LoadAllDashBoard()
-        dashboardframeBday.Navigate(New BirthdayDashboard(email))
-        dashboardframeBday2.Navigate(New _3CDashboard(email, mainFrame, _addframe, _menugrid, _submenuframe, profile))
-        dashboardframeAnnouncement.Navigate(New AnnouncementDashboard(mainFrame, empID, _addframe, _menugrid, _submenuframe, email, profile))
+        genericFrame1.Navigate(New KPITargetsPage(mainFrame, _addframe, _menugrid, _submenuframe, profile.Permission_ID, empID, email, profile))
+        'dashboardframeBday2.Navigate(New _3CDashboard(email, mainFrame, _addframe, _menugrid, _submenuframe, profile))
+        genericFrame2.Navigate(New AnnouncementDashboard(mainFrame, empID, _addframe, _menugrid, _submenuframe, email, profile))
+        genericFrame3.Navigate(New CommendationDashBoard(mainFrame, profile.Position, profile.Emp_ID, _addframe, _menugrid, _submenuframe, profile.Email_Address, profile, genericFrame3))
+
         'dashboardframeBday3.Navigate(New BirthdayDashboard(email))
     End Sub
 

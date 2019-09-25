@@ -65,8 +65,8 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="18*"/>
-                <ColumnDefinition Width="64*"/>
-                <ColumnDefinition Width="18*"/>
+                <ColumnDefinition Width="62*"/>
+                <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
             <Grid x:Name="AttendanceGrid" Grid.Column="0" Margin="0,5,5,5">
 
@@ -176,7 +176,7 @@
                                         <Image Margin="0,10,10,10" Source="Assets/Menu/BillabilityIcon.png"/>
                                     </Grid>
                                     <Grid Grid.Column="1" VerticalAlignment="Center">
-                                        <TextBlock Foreground="White" Text="Billability"></TextBlock>
+                                        <TextBlock Foreground="White" Text="Productivity"></TextBlock>
                                     </Grid>
                                 </Grid>
                             </Button>
@@ -270,14 +270,18 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="4*"/>
-                        <RowDefinition Height="2.5*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="1.5*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <Frame x:Name="CommendationFrame" Margin="5,5,0,5" NavigationUIVisibility="Hidden" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                        <Frame x:Name="genericFrame" Margin="5,5,0,5" NavigationUIVisibility="Hidden" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </Grid>
                     <Grid Grid.Row="1">
-                        <Frame x:Name="ComcellClockFrame" Margin="5,5,0,5" NavigationUIVisibility="Hidden" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                        <Frame x:Name="BirthdayFrame" Margin="5,5,0,5" NavigationUIVisibility="Hidden" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                    </Grid>
+                    <Grid Grid.Row="2" Margin="0,0,0,0">
+                        <Frame x:Name="ComcellClockFrame" Margin="5,5,5,5" NavigationUIVisibility="Hidden" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </Grid>
                 </Grid>
 

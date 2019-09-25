@@ -461,14 +461,14 @@ Class SkillsMatrixManagerPage
     '    End Try
     'End Sub
 
-    Private Sub btnEditMySkill_Click(sender As Object, e As RoutedEventArgs) Handles btnEditMySkill.Click
-        'txtSearch.Text = Nothing
-        bClick = True
-        _SkillDBProvider._splist.Clear()
-        LoadSkillsProf()
-        EnableControls()
-        grdUpdate.Visibility = Visibility.Visible
-    End Sub
+    'Private Sub btnEditMySkill_Click(sender As Object, e As RoutedEventArgs) Handles btnEditMySkill.Click
+    '    'txtSearch.Text = Nothing
+    '    bClick = True
+    '    _SkillDBProvider._splist.Clear()
+    '    LoadSkillsProf()
+    '    EnableControls()
+    '    grdUpdate.Visibility = Visibility.Visible
+    'End Sub
 
     Private Sub btnAddUpdate_Click(sender As Object, e As RoutedEventArgs) Handles btnAddUpdate.Click
         Try
@@ -569,7 +569,6 @@ Class SkillsMatrixManagerPage
 
     Private Sub btnViewEmp_Click(sender As Object, e As RoutedEventArgs) Handles btnViewEmp.Click
         LoadSkillsList()
-        ViewAllEmployee()
         LoadProfile()
 
         DisableControls()
@@ -577,6 +576,7 @@ Class SkillsMatrixManagerPage
         'txtSearch.Text = String.Empty
         btnPrint.Visibility = Windows.Visibility.Visible
         grdUpdate.Visibility = Visibility.Collapsed
+        dgSkillList.Columns.Item(0).Visibility = Visibility.Collapsed
     End Sub
 
     Private Sub cbProjectList_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbProjectList.SelectionChanged
@@ -737,7 +737,9 @@ Class SkillsMatrixManagerPage
 
     End Sub
     Private Sub DgSkillList_Loaded(sender As Object, e As RoutedEventArgs) Handles dgSkillList.Loaded
-        dgSkillList.Columns.Item(0).Visibility = Visibility.Collapsed
+        If dgSkillList.Columns.Count > 0 Then
+            dgSkillList.Columns.Item(0).Visibility = Visibility.Collapsed
+        End If
     End Sub
 
 #End Region

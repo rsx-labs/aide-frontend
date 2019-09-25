@@ -9,6 +9,7 @@ Class ComcellClockAddPage
 #Region "Fields"
     Private empID As Integer
     Private comcellFrame As Frame
+    Private _addframe As Frame
     Private aide As ServiceReference1.AideServiceClient
     Private _comcellclock As New ComcellClock
     Private comcellClockVM As New ComcellClockViewModel
@@ -19,12 +20,13 @@ Class ComcellClockAddPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_profile As Profile, com_cellframe As Frame, winx As Window, _ComcellClockModel As ComcellClockModel)
+    Public Sub New(_profile As Profile, com_cellframe As Frame, addframe As Frame, winx As Window, _ComcellClockModel As ComcellClockModel)
         ' This call is required by the designer.
         InitializeComponent()
         Me.profile = _profile
         Me.empID = profile.Emp_ID
         Me.comcellFrame = com_cellframe
+        Me._addframe = addframe
         Me._window = winx
         Me.comcellClockModel = _ComcellClockModel
         populateDayCB()
@@ -175,7 +177,13 @@ Class ComcellClockAddPage
 
 #Region "Events"
     Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
+        Dim window As MainWindow = DirectCast(_window, MainWindow)
         comcellFrame.Navigate(New ComcellClockPage(profile, Me.comcellFrame, _window))
+        window.MenuGrid.IsEnabled = True
+        window.MenuGrid.Opacity = 1
+        comcellFrame.IsEnabled = True
+        comcellFrame.Opacity = 1
+        _addframe.Visibility = Visibility.Hidden
     End Sub
 
     Private Sub UpdateBtn_Click(sender As Object, e As RoutedEventArgs)

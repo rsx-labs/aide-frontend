@@ -653,15 +653,23 @@
                     
                     
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="4*"/>
-                   
+                        <ColumnDefinition Width="3.5*"/>
+                        <ColumnDefinition Width="3.5*"/>
+                        <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <Frame x:Name="dashboardframeAnnouncement" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                        <Frame x:Name="genericFrame1" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
                         </Frame>
                     </Grid>
                     <Grid Grid.Column="1">
+                        <Frame x:Name="genericFrame2" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                        </Frame>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <Frame x:Name="genericFrame3" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                        </Frame>
+                    </Grid>
+                    <!--<Grid Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="5*"/>
                             <RowDefinition Height="5*"/>
@@ -676,10 +684,10 @@
                             <Frame x:Name="dashboardframeBday2" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
                             </Frame>
                         </Grid>
-                    </Grid>
+                    </Grid>-->
 
-                    <Frame x:Name="dashboardframeBday3" Visibility="Hidden" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
-                    </Frame>
+                    <!--<Frame x:Name="dashboardframeBday3" Visibility="Hidden" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                    </Frame>-->
 
                     <!--Commendation-->
                     <!--<Grid Grid.Column="1" Grid.Row="0" Margin="5">

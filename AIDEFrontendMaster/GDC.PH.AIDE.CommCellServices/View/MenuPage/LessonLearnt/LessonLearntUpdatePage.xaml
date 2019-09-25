@@ -868,9 +868,9 @@
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height=".5*" />
-                <RowDefinition Height="6*" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
@@ -942,7 +942,7 @@
                              Text="{Binding lessonLearntViewModel.SelectedLessonLearnt.Problem, Mode=TwoWay}" 
                              VerticalContentAlignment="Center"  HorizontalContentAlignment="Center"/>
                         </Border>
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter problem encountered *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter problem encountered *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -954,7 +954,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBlock x:Name="txtlabelProblem" Width="120" TextAlignment="Center" Margin="5" Text="Problem Encountered" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                        <TextBlock x:Name="txtlabelProblem" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Problem Encountered" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Visible"/>
@@ -974,7 +974,7 @@
                              Text="{Binding lessonLearntViewModel.SelectedLessonLearnt.Resolution, Mode=TwoWay}" 
                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                         </Border>
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter resolution *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter resolution *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -986,7 +986,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBlock x:Name="txtlabelResolution" Width="120" TextAlignment="Center" Margin="5" Text="Resolution" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                        <TextBlock x:Name="txtlabelResolution" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Resolution" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Visible"/>
@@ -1005,7 +1005,7 @@
                                 ItemsSource="{Binding Path=actionViewModel.objectActionSet}" 
                               DisplayMemberPath="REF_NO" 
                               Text="{Binding lessonLearntViewModel.SelectedLessonLearnt.ActionNo, Mode=TwoWay}"/>
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select action no." VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select action no." VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -1017,7 +1017,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBlock x:Name="txtlabelAction" Width="120" TextAlignment="Center" Margin="5" Text="Action Selected" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                        <TextBlock x:Name="txtlabelAction" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Action Selected" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Visible"/>

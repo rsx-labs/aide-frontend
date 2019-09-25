@@ -402,7 +402,7 @@ Public Class AssetsInventoryListPage
                 _menugrid.Opacity = 0.3
                 _submenuframe.IsEnabled = False
                 _submenuframe.Opacity = 0.3
-                _addframe.Margin = New Thickness(150, 50, 150, 50)
+                _addframe.Margin = New Thickness(150, 60, 150, 60)
                 _addframe.Visibility = Visibility.Visible
             End If
         End If
@@ -437,7 +437,7 @@ Public Class AssetsInventoryListPage
                         _menugrid.Opacity = 0.3
                         _submenuframe.IsEnabled = False
                         _submenuframe.Opacity = 0.3
-                        _addframe.Margin = New Thickness(150, 50, 150, 50)
+                        _addframe.Margin = New Thickness(150, 60, 150, 60)
                         _addframe.Visibility = Visibility.Visible
                     End If
                 End If

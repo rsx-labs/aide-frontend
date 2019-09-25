@@ -144,20 +144,19 @@
                 <Grid Grid.Row="1" Background="#FFFBFBFB">
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="99*"/>
                             <ColumnDefinition Width="355*"/>
                             <ColumnDefinition Width="360*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Grid Grid.Column="0" Margin="5">
+                        <!--<Grid Grid.Column="0" Margin="5">
                             <Button x:Name="btnEditMySkill" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource RoundCornerUpdate}">
                                 <Viewbox>
                                     <TextBlock Text="Edit My Skills" TextWrapping="Wrap" Margin="10"/>
                                 </Viewbox>
                             </Button>
-                        </Grid>
-                        <Grid Grid.Column="1" Grid.ColumnSpan="2">
-                            <Border BorderBrush="Gainsboro" CornerRadius="10" BorderThickness="1" Margin="0,10,30,5">
+                        </Grid>-->
+                        <Grid Grid.Column="0" Grid.ColumnSpan="2">
+                            <Border BorderBrush="Gainsboro" CornerRadius="10" BorderThickness="1" Margin="30,10,30,5">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>

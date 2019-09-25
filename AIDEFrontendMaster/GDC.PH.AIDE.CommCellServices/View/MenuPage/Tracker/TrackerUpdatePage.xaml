@@ -869,9 +869,9 @@
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height=".5*" />
-                <RowDefinition Height="7*" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
@@ -918,7 +918,7 @@
 
                             <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Name="Saba_Title" TextWrapping="Wrap" Text="{Binding TITLE, Mode=TwoWay}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12"/>
                         </Border>
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter tracker title *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter tracker title *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -932,12 +932,12 @@
                         </TextBlock>
                     </Grid>
                     <Grid Grid.Row="1">
-                        <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                        <Border Margin="5,0,5,0" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
                             <DatePicker BorderThickness="0" Style="{DynamicResource styleDatePickerfrom}" x:Name="dtDate"  Text="{Binding END_DATE, Mode=TwoWay, StringFormat=dd-mm-yyyy}" 
-                                Margin="2" FontSize="12" BorderBrush="Transparent"/>
+                                Margin="0" FontSize="12" BorderBrush="Transparent"/>
                         </Border>
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select due date *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select due date *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>

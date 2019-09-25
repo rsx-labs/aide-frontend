@@ -72,7 +72,7 @@ Class CommendationViewPage
         _menugrid.Opacity = 1
         _submenuframe.IsEnabled = True
         _submenuframe.Opacity = 1
-
+        _addframe.Margin = New Thickness(150, 60, 150, 60)
         _addframe.Visibility = Visibility.Hidden
     End Sub
 
