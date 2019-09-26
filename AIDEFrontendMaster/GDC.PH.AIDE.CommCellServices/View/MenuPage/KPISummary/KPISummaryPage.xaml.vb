@@ -223,7 +223,7 @@ Public Class KPISummaryPage
         Dim curYear As Integer = 0
         Dim dfmi As System.Globalization.DateTimeFormatInfo = New Globalization.DateTimeFormatInfo()
 
-        dict4.Add("KPI", "Overall")
+
         For Each iSummary As KPISummaryData In _KPISummaryDBProvider.GetAllKPISummary()
             If iSummary._Month >= 4 Then
                 curYear = Date.Now.Year
@@ -269,6 +269,10 @@ Public Class KPISummaryPage
                         dict3.Add("KPI", iSummary._subject)
                     End If
                     dict3.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), (iSummary.KPI_Target * 100).ToString() + " | " + (iSummary.KPI_Actual * 100).ToString())
+
+                    If Not dict4.ContainsKey("KPI") Then
+                        dict4.Add("KPI", "Overall")
+                    End If
                     dict4.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), Math.Round(overallValue, 2).ToString())
                     x = 0
                 End If
@@ -395,10 +399,12 @@ Public Class KPISummaryPage
 
     Private Sub dgKPISummary_Loaded(sender As Object, e As RoutedEventArgs) Handles dgKPISummary.Loaded
         If dgKPISummary.Items.Count > 0 Then
-            dgKPISummary.Columns(0).Visibility = Visibility.Collapsed
-            dgKPISummary.Columns(1).Visibility = Visibility.Collapsed
-            dgKPISummary.Columns(2).Visibility = Visibility.Collapsed
-            dgKPISummary.Columns(3).Visibility = Visibility.Collapsed
+            If dgKPISummary.Columns.Count > 0 Then
+                dgKPISummary.Columns(0).Visibility = Visibility.Collapsed
+                dgKPISummary.Columns(1).Visibility = Visibility.Collapsed
+                dgKPISummary.Columns(2).Visibility = Visibility.Collapsed
+                dgKPISummary.Columns(3).Visibility = Visibility.Collapsed
+            End If
         End If
     End Sub
 
