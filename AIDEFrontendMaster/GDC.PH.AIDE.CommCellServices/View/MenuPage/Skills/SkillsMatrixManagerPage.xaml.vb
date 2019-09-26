@@ -558,6 +558,7 @@ Class SkillsMatrixManagerPage
                     ClearSelection()
                     LoadSkillsProf()
 
+                    lblLastReviewed.Text = dgSkillList.CurrentCell.Item(11)
                     btnPrint.Visibility = Windows.Visibility.Hidden
                     grdUpdate.Visibility = Visibility.Visible
                 End If
@@ -703,7 +704,7 @@ Class SkillsMatrixManagerPage
         rbProfLvl2.Foreground = Brushes.Black
         rbProfLvl3.Foreground = Brushes.Black
         rbProfLvl4.Foreground = Brushes.Black
-        lblLastReviewed.Text = String.Empty
+        'lblLastReviewed.Text = String.Empty
     End Sub
 
     Public Sub ClearFields()
