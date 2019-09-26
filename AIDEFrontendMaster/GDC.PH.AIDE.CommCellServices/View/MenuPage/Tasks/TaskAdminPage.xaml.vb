@@ -328,7 +328,7 @@ Class TaskAdminPage
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
         Dim totalRecords As Integer = lstTasks.Length
 
-        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+        If totalRecords > ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
             paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
