@@ -161,21 +161,27 @@ Class _3CDashboard
             .Values = New ChartValues(Of ObservableValue) From {
                 New ObservableValue(PastdueDate)
             },
-            .DataLabels = True, .Fill = New BrushConverter().ConvertFromString("#FFFF3838")
+            .DataLabels = True, .Fill = New BrushConverter().ConvertFromString("#FFFF3838"),
+            .FontSize = 12,
+            .Foreground = Brushes.Black
         },
         New PieSeries With {
             .Title = "Due today and open",
             .Values = New ChartValues(Of ObservableValue) From {
                 New ObservableValue(DuetodayDate)
             },
-            .DataLabels = True, .Fill = New BrushConverter().ConvertFromString("#FFFDD652")
+            .DataLabels = True, .Fill = New BrushConverter().ConvertFromString("#FFFDD652"),
+            .FontSize = 12,
+            .Foreground = Brushes.Black
         },
         New PieSeries With {
             .Title = "Open",
             .Values = New ChartValues(Of ObservableValue) From {
                 New ObservableValue(CompletedDate)
             },
-            .DataLabels = True, .Fill = New BrushConverter().ConvertFromString("#FF3EFF6A")
+            .DataLabels = True, .Fill = New BrushConverter().ConvertFromString("#FF3EFF6A"),
+            .FontSize = 12,
+            .Foreground = Brushes.Black
         }
     }
         DataContext = Me
