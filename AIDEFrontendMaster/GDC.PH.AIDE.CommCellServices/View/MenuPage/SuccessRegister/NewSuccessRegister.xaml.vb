@@ -213,33 +213,37 @@ Class NewSuccessRegister
 
 
     Private Sub btnRemovedEmployee_Click(sender As Object, e As RoutedEventArgs) Handles btnRemovedEmployee.Click
-        e.Handled = True
-        If txtSRWhosInvolve.Text = String.Empty Then
-            MsgBox("Textbox is empty", MsgBoxStyle.Exclamation, "AIDE")
-        Else
-            Dim txtBox As String = txtSRWhosInvolve.Text
-            Dim cbBox As String = String.Empty
-            Dim ifYes As Integer = txtBox.IndexOf(comboAddEmployee.SelectedValue)
-
-            If ifYes <> -1 Then
-                If ifYes <> 0 Then
-                    cbBox = ", " & comboAddEmployee.SelectedValue
-                    Dim ifYesAgain As Integer = txtBox.IndexOf(cbBox)
-                    txtSRWhosInvolve.Text = txtSRWhosInvolve.Text.Remove(ifYesAgain, cbBox.Length)
-                Else
-                    cbBox = comboAddEmployee.SelectedValue & ", "
-
-                    If txtBox.Length <> comboAddEmployee.SelectedValue.Length Then
-                        cbBox = txtSRWhosInvolve.Text & ", "
-                    Else
-                        cbBox = txtSRWhosInvolve.Text
-                    End If
-                    txtSRWhosInvolve.Text = txtBox.Remove(ifYes, cbBox.Length)
-                End If
+        Try
+            e.Handled = True
+            If txtSRWhosInvolve.Text = String.Empty Then
+                MsgBox("Textbox is empty", MsgBoxStyle.Exclamation, "AIDE")
             Else
-                MsgBox("Entry already removed", MsgBoxStyle.Exclamation, "AIDE")
+                Dim txtBox As String = txtSRWhosInvolve.Text
+                Dim cbBox As String = String.Empty
+                Dim ifYes As Integer = txtBox.IndexOf(comboAddEmployee.SelectedValue)
+
+                If ifYes <> -1 Then
+                    If ifYes <> 0 Then
+                        cbBox = ", " & comboAddEmployee.SelectedValue
+                        Dim ifYesAgain As Integer = txtBox.IndexOf(cbBox)
+                        txtSRWhosInvolve.Text = txtSRWhosInvolve.Text.Remove(ifYesAgain, cbBox.Length)
+                    Else
+                        If txtBox.Length = comboAddEmployee.SelectedValue.Length Then
+                            cbBox = txtSRWhosInvolve.Text
+                        Else
+                            cbBox = comboAddEmployee.SelectedValue & ", "
+                        End If
+                        txtSRWhosInvolve.Text = txtBox.Remove(ifYes, cbBox.Length)
+
+                        cbBox = comboAddEmployee.SelectedValue & ", "
+                    End If
+                Else
+                    MsgBox("Entry already removed", MsgBoxStyle.Exclamation, "AIDE")
+                End If
             End If
-        End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 #End Region
 
