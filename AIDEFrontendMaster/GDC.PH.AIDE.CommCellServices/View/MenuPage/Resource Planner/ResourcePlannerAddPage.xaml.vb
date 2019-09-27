@@ -195,7 +195,7 @@ Class ResourcePlannerAddPage
     Public Sub LoadCategory()
         Try
             InitializeService()
-            Dim lstresource As ResourcePlanner() = client.GetStatusResourcePlanner()
+            Dim lstresource As ResourcePlanner() = client.GetStatusResourcePlanner(profile.Emp_ID)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
 
             For Each objResource As ResourcePlanner In lstresource
