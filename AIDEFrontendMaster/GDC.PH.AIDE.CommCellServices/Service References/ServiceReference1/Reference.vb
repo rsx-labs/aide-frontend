@@ -9209,10 +9209,10 @@ Namespace ServiceReference1
         Function ViewEmpResourcePlannerAsync(ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.ResourcePlanner())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetStatusResourcePlanner", ReplyAction:="http://tempuri.org/IAideService/GetStatusResourcePlannerResponse")>  _
-        Function GetStatusResourcePlanner() As ServiceReference1.ResourcePlanner()
+        Function GetStatusResourcePlanner(ByVal empID As Integer) As ServiceReference1.ResourcePlanner()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetStatusResourcePlanner", ReplyAction:="http://tempuri.org/IAideService/GetStatusResourcePlannerResponse")>  _
-        Function GetStatusResourcePlannerAsync() As System.Threading.Tasks.Task(Of ServiceReference1.ResourcePlanner())
+        Function GetStatusResourcePlannerAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.ResourcePlanner())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetResourcePlannerByEmpID", ReplyAction:="http://tempuri.org/IAideService/GetResourcePlannerByEmpIDResponse")>  _
         Function GetResourcePlannerByEmpID(ByVal empID As Integer, ByVal deptID As Integer, ByVal month As Integer, ByVal year As Integer) As ServiceReference1.ResourcePlanner()
@@ -10399,12 +10399,12 @@ Namespace ServiceReference1
             Return MyBase.Channel.ViewEmpResourcePlannerAsync(email)
         End Function
         
-        Public Function GetStatusResourcePlanner() As ServiceReference1.ResourcePlanner() Implements ServiceReference1.IAideService.GetStatusResourcePlanner
-            Return MyBase.Channel.GetStatusResourcePlanner
+        Public Function GetStatusResourcePlanner(ByVal empID As Integer) As ServiceReference1.ResourcePlanner() Implements ServiceReference1.IAideService.GetStatusResourcePlanner
+            Return MyBase.Channel.GetStatusResourcePlanner(empID)
         End Function
         
-        Public Function GetStatusResourcePlannerAsync() As System.Threading.Tasks.Task(Of ServiceReference1.ResourcePlanner()) Implements ServiceReference1.IAideService.GetStatusResourcePlannerAsync
-            Return MyBase.Channel.GetStatusResourcePlannerAsync
+        Public Function GetStatusResourcePlannerAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.ResourcePlanner()) Implements ServiceReference1.IAideService.GetStatusResourcePlannerAsync
+            Return MyBase.Channel.GetStatusResourcePlannerAsync(empID)
         End Function
         
         Public Function GetResourcePlannerByEmpID(ByVal empID As Integer, ByVal deptID As Integer, ByVal month As Integer, ByVal year As Integer) As ServiceReference1.ResourcePlanner() Implements ServiceReference1.IAideService.GetResourcePlannerByEmpID
