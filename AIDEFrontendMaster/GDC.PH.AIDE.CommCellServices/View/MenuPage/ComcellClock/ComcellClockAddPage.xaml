@@ -562,7 +562,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelSelectedDay" TextAlignment="Center" Margin="5" Text="Day" Padding="5,0,5,3" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                            <TextBlock x:Name="txtlabelDay" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Day" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -600,7 +600,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelSelectedHour" TextAlignment="Center" Margin="5" Text="Hours" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                            <TextBlock x:Name="txtlabelHours" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Hours" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -660,7 +660,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelSelectedMinute" TextAlignment="Center" Margin="5" Text="Minutes" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                            <TextBlock x:Name="txtlabelSelectedMinute" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Minutes" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -694,7 +694,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBlock x:Name="txtlabelSelectedExtension" TextAlignment="Center" Margin="5" Text="Midday" Padding="5,0,5,3" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                        <TextBlock x:Name="txtlabelSelectedExtension" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Midday" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Visible"/>
