@@ -13,7 +13,7 @@ Imports System.Printing
 '       JOHN HARVEY SANCHEZ     '
 '''''''''''''''''''''''''''''''''
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
-Class WeeklyReportPage
+Class WeeklyTeamStatusReportPage
     Implements ServiceReference1.IAideServiceCallback
 
 #Region "Paging Declarations"
@@ -23,6 +23,7 @@ Class WeeklyReportPage
     Dim pagingRecordPerPage As Integer = 10
     Dim currentPage As Integer
     Dim lastPage As Integer
+    Dim totalRecords As Integer
 
     Private Enum PagingMode
         _First = 1
@@ -45,27 +46,24 @@ Class WeeklyReportPage
     Private month As Integer
     Private year As Integer
 
-    Private displayMonth As String
-
     Dim dateToday As Date = Date.Today
     Dim daySatDiff As Integer = Today.DayOfWeek - DayOfWeek.Saturday
     Dim saturday As Date = Today.AddDays(-daySatDiff)
     Dim lastWeekSaturday As Date = saturday.AddDays(-14)
 
+    Dim selectedValue As Integer
+    Dim weekID As Integer
+
     Dim dayFriDiff As Integer = Today.DayOfWeek - DayOfWeek.Friday
     Dim friday As Date = Today.AddDays(-dayFriDiff)
     Dim lastWeekFriday As Date = friday.AddDays(-7)
 
-    Dim isManager As Integer = 1
     Dim statusID As Integer = 14
+    Dim lstWeeklyTeamStatusReport As WeeklyTeamStatusReport()
+
     Dim lstWeekRange As WeekRange()
-    Dim lstMissingReports As ContactList()
-    Dim lstWeeklyReports As ObservableCollection(Of WeekRangeModel) = New ObservableCollection(Of WeekRangeModel)
-
     Dim listWeeklyReportStatus As New ObservableCollection(Of WeeklyReportStatusModel)
-
-    Dim weeklyReportCollection As PaginatedObservableCollection(Of WeekRangeModel) = New PaginatedObservableCollection(Of WeekRangeModel)(pagingRecordPerPage)
-    Dim missingReportCollection As PaginatedObservableCollection(Of ContactListModel) = New PaginatedObservableCollection(Of ContactListModel)(pagingRecordPerPage)
+    Dim weeklyTeamStatusReportCollection As PaginatedObservableCollection(Of WeeklyTeamStatusReportModel) = New PaginatedObservableCollection(Of WeeklyTeamStatusReportModel)(pagingRecordPerPage)
 
     Dim weeklyReportDBProvider As New WeeklyReportDBProvider
     Dim weekRangeViewModel As New WeekRangeViewModel
@@ -83,22 +81,26 @@ Class WeeklyReportPage
         Me.submenuframe = _submenuframe
         Me.profile = _profile
 
-        month = lastWeekSaturday.Month
-        year = lastWeekSaturday.Year
+        selectedValue = -1
 
-        LoadMonth()
-        LoadYears()
+        InitializeData()
+    End Sub
 
-        LoadStatusData()
-        SetWeeklyReports()
-        SetMissingReports()
+    Public Sub New(_mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _weekRangeID As Integer)
+        InitializeComponent()
+        InitializeService()
+        Me.email = _profile.Email_Address
+        Me.mainFrame = _mainFrame
+        Me.empID = _profile.Emp_ID
+        Me.addframe = _addframe
+        Me.menugrid = _menugrid
+        Me.submenuframe = _submenuframe
+        Me.profile = _profile
+        Me.weekID = _weekRangeID
 
-        cbMonth.SelectedValue = month
-        cbYear.SelectedValue = year
+        selectedValue = _weekRangeID
 
-        If Not profile.Permission_ID = isManager Then
-            btnTeamReports.Visibility = Windows.Visibility.Hidden
-        End If
+        InitializeData()
     End Sub
 
     Public Function InitializeService() As Boolean
@@ -113,6 +115,21 @@ Class WeeklyReportPage
         End Try
         Return bInitialize
     End Function
+
+    Public Sub InitializeData()
+        month = lastWeekSaturday.Month
+        year = lastWeekSaturday.Year
+
+        LoadMonth()
+        LoadYears()
+        LoadWeeks()
+
+        LoadStatusData()
+        SetWeeklyTeamStatusReports()
+
+        cbMonth.SelectedValue = month
+        cbYear.SelectedValue = year
+    End Sub
 
 #End Region
 
@@ -136,79 +153,44 @@ Class WeeklyReportPage
         End Try
     End Sub
 
-    Public Sub SetWeeklyReports()
+    Public Sub SetWeeklyTeamStatusReports()
         Try
             If InitializeService() Then
-                lstWeekRange = AideServiceClient.GetWeeklyReportsByEmpID(empID, month, year)
-                LoadWeeklyReports()
-            End If
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
-    End Sub
+                lstWeeklyTeamStatusReport = AideServiceClient.GetWeeklyTeamStatusReport(empID, month, year, selectedValue)
+                LoadWeeklyTeamStatusReports()
 
-    Private Sub LoadWeeklyReports()
-        Try
-            weeklyReportCollection.Clear()
-            weeklyReportDBProvider.GetWeekRangeList().Clear()
-
-            For Each objWeeklyReport As WeekRange In lstWeekRange
-                weeklyReportDBProvider.SetWeekRangeList(objWeeklyReport)
-            Next
-
-            For Each weekRange As MyWeekRange In weeklyReportDBProvider.GetWeekRangeList()
-                weeklyReportCollection.Add(New WeekRangeModel With {
-                                            .StartWeek = weekRange.StartWeek,
-                                            .EndWeek = weekRange.EndWeek,
-                                            .DateSubmitted = weekRange.DateSubmitted,
-                                            .Status = weekRange.Status,
-                                            .StatusDesc = getStatusValue(weekRange.Status),
-                                            .WeekRangeID = weekRange.WeekRangeID
-                                         })
-            Next
-
-            dgWeeklyReports.ItemsSource = weeklyReportCollection
-
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-    End Sub
-
-    Public Sub SetMissingReports()
-        Try
-            lstMissingReports = AideServiceClient.GetMissingReportsByEmpID(empID, lastWeekSaturday)
-            If lstMissingReports.Count > 0 Then
-                LoadMissingReports()
+                totalRecords = lstWeeklyTeamStatusReport.Length
                 DisplayPagingInfo()
-                lblText.Visibility = Windows.Visibility.Hidden
-            Else
-                dgMissingReports.Visibility = Windows.Visibility.Hidden
-                spNavigationArrows.Visibility = Windows.Visibility.Hidden
-                lblText.Visibility = Windows.Visibility.Visible
             End If
-
-            lblMissingReportsWeek.Content = lastWeekSaturday.ToShortDateString + " - " + lastWeekFriday.ToShortDateString + " Missing Reports"
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
     End Sub
 
-    Private Sub LoadMissingReports()
+    Private Sub LoadWeeklyTeamStatusReports()
         Try
-            Dim contactListDBProvider As New ContactListDBProvider
-            Dim contactListVM As New ContactListViewModel()
+            weeklyTeamStatusReportCollection = New PaginatedObservableCollection(Of WeeklyTeamStatusReportModel)(pagingRecordPerPage)
+            weeklyReportDBProvider.GetWeeklyTeamStatusReportList().Clear()
 
-            For Each objContacts As ContactList In lstMissingReports
-                contactListDBProvider.SetMyContactList(objContacts)
+            For Each objWeeklyTeamStatusReport As WeeklyTeamStatusReport In lstWeeklyTeamStatusReport
+                weeklyReportDBProvider.SetWeeklyTeamStatusReportList(objWeeklyTeamStatusReport)
             Next
 
-            For Each contacts As MyContactList In contactListDBProvider.GetMyContactList()
-                missingReportCollection.Add(New ContactListModel(contacts))
+            For Each weeklyTeamStatusReport As MyWeeklyTeamStatusReport In weeklyReportDBProvider.GetWeeklyTeamStatusReportList()
+                weeklyTeamStatusReportCollection.Add(New WeeklyTeamStatusReportModel With {.WeekRangeID = weeklyTeamStatusReport.WeekRangeID,
+                                                                                           .EmployeeID = weeklyTeamStatusReport.EmployeeID,
+                                                                                           .EmployeeName = weeklyTeamStatusReport.EmployeeName,
+                                                                                           .TotalHours = weeklyTeamStatusReport.TotalHours,
+                                                                                           .Status = weeklyTeamStatusReport.Status,
+                                                                                           .StatusDesc = getStatusValue(weeklyTeamStatusReport.Status),
+                                                                                           .DateSubmitted = weeklyTeamStatusReport.DateSubmitted
+                                                                                          })
             Next
 
-            dgMissingReports.ItemsSource = missingReportCollection
-            currentPage = missingReportCollection.CurrentPage + 1
-            lastPage = Math.Ceiling(lstMissingReports.Length / pagingRecordPerPage)
+            dgWeeklyTeamStatusReports.ItemsSource = weeklyTeamStatusReportCollection
+
+            currentPage = weeklyTeamStatusReportCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(lstWeeklyTeamStatusReport.Length / pagingRecordPerPage)
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -244,28 +226,59 @@ Class WeeklyReportPage
         End Try
     End Sub
 
+    Private Sub LoadWeeks()
+        ' Load Items for Week Range Combobox
+        Try
+            ' Clear combo box data
+            cbDateRange.DataContext = Nothing
+            weeklyReportDBProvider.GetWeekRangeList().Clear()
+
+            Dim listWeekRange As New ObservableCollection(Of WeekRangeModel)
+            weekRangeViewModel = New WeekRangeViewModel
+
+            lstWeekRange = AideServiceClient.GetWeekRangeByMonthYear(profile.Emp_ID, month, year)
+
+            For Each objWeekRange As WeekRange In lstWeekRange
+                weeklyReportDBProvider.SetWeekRangeList(objWeekRange)
+            Next
+
+            For Each weekRange As MyWeekRange In weeklyReportDBProvider.GetWeekRangeList()
+                listWeekRange.Add(New WeekRangeModel(weekRange))
+
+                If lastWeekSaturday = weekRange.StartWeek Then
+                    If selectedValue = -1 Then
+                        selectedValue = weekRange.WeekRangeID
+                    End If
+                End If
+
+                weekID = weekRange.WeekRangeID
+            Next
+
+            ' Set selectedValue to last week of month
+            If selectedValue = -1 Then
+                selectedValue = weekID
+            End If
+
+            weekRangeViewModel.WeekRangeList = listWeekRange
+            cbDateRange.DataContext = weekRangeViewModel
+            cbDateRange.SelectedValue = selectedValue
+        Catch ex As SystemException
+            AideServiceClient.Abort()
+        End Try
+    End Sub
+
 #End Region
 
 #Region "Events"
-    Private Sub btnAddReport_Click(sender As Object, e As RoutedEventArgs) Handles btnAddReport.Click
-        addframe.Navigate(New WeeklyReportAddPage(mainFrame, profile, addframe, menugrid, submenuframe))
-        mainFrame.IsEnabled = False
-        mainFrame.Opacity = 0.3
-        menugrid.IsEnabled = False
-        menugrid.Opacity = 0.3
-        submenuframe.IsEnabled = False
-        submenuframe.Opacity = 0.3
-        addframe.Margin = New Thickness(5, 0, 5, 0)
-        addframe.Visibility = Visibility.Visible
-    End Sub
-
-    Private Sub dgWeeklyReports_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles dgWeeklyReports.MouseDoubleClick
-        If dgWeeklyReports.SelectedIndex <> -1 Then
-            If dgWeeklyReports.SelectedItem IsNot Nothing Then
+    Private Sub dgWeeklyTeamStatusReports_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles dgWeeklyTeamStatusReports.MouseDoubleClick
+        If dgWeeklyTeamStatusReports.SelectedIndex <> -1 Then
+            If dgWeeklyTeamStatusReports.SelectedItem IsNot Nothing Then
                 Dim weekRangeID As Integer
-                weekRangeID = CType(dgWeeklyReports.SelectedItem, WeekRangeModel).WeekRangeID
+                Dim empID As Integer
+                weekRangeID = CType(dgWeeklyTeamStatusReports.SelectedItem, WeeklyTeamStatusReportModel).WeekRangeID
+                empID = CType(dgWeeklyTeamStatusReports.SelectedItem, WeeklyTeamStatusReportModel).EmployeeID
 
-                addframe.Navigate(New WeeklyReportUpdatePage(weekRangeID, mainFrame, profile, addframe, menugrid, submenuframe))
+                addframe.Navigate(New WeeklyEmployeeStatusReportPage(mainFrame, profile, empID, weekRangeID, addframe, menugrid, submenuframe))
                 mainFrame.IsEnabled = False
                 mainFrame.Opacity = 0.3
                 menugrid.IsEnabled = False
@@ -279,48 +292,37 @@ Class WeeklyReportPage
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
-        Dim totalRecords As Integer = lstMissingReports.Length
+        Dim totalRecords As Integer = lstWeeklyTeamStatusReport.Length
 
-        If totalRecords >= ((missingReportCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
-            missingReportCollection.CurrentPage = missingReportCollection.CurrentPage + 1
-            currentPage = missingReportCollection.CurrentPage + 1
+        If totalRecords >= ((weeklyTeamStatusReportCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+            weeklyTeamStatusReportCollection.CurrentPage = weeklyTeamStatusReportCollection.CurrentPage + 1
+            currentPage = weeklyTeamStatusReportCollection.CurrentPage + 1
             lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
         End If
         DisplayPagingInfo()
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
-        missingReportCollection.CurrentPage = missingReportCollection.CurrentPage - 1
+        weeklyTeamStatusReportCollection.CurrentPage = weeklyTeamStatusReportCollection.CurrentPage - 1
         If currentPage > 1 Then
             currentPage -= 1
         End If
         DisplayPagingInfo()
     End Sub
-#End Region
 
-#Region "Paging"
-    Private Sub DisplayPagingInfo()
-        ' If there has no data found
-        If lstMissingReports.Length = 0 Then
-            txtPageNo.Text = "No Results Found "
-            GUISettingsOff()
-        Else
-            txtPageNo.Text = "page " & currentPage & " of " & lastPage
-            GUISettingsOn()
-        End If
+    Private Sub btnMyReports_Click(sender As Object, e As RoutedEventArgs) Handles btnMyReports.Click
+        mainFrame.Navigate(New WeeklyReportPage(mainFrame, profile, addframe, menugrid, submenuframe))
     End Sub
-#End Region
 
-#Region "Events"
     Private Sub GUISettingsOff()
-        dgWeeklyReports.Visibility = Windows.Visibility.Hidden
+        dgWeeklyTeamStatusReports.Visibility = Windows.Visibility.Hidden
 
         btnPrev.IsEnabled = False
         btnNext.IsEnabled = False
     End Sub
 
     Private Sub GUISettingsOn()
-        dgWeeklyReports.Visibility = Windows.Visibility.Visible
+        dgWeeklyTeamStatusReports.Visibility = Windows.Visibility.Visible
 
         btnPrev.IsEnabled = True
         btnNext.IsEnabled = True
@@ -328,26 +330,35 @@ Class WeeklyReportPage
 
     Private Sub cbMonth_DropDownClosed(sender As Object, e As EventArgs) Handles cbMonth.DropDownClosed
         month = cbMonth.SelectedValue
-        SetWeeklyReports()
+        selectedValue = -1
+        LoadWeeks()
+        SetWeeklyTeamStatusReports()
     End Sub
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
         year = cbYear.SelectedValue
-        SetWeeklyReports()
+        selectedValue = -1
+        LoadWeeks()
+        SetWeeklyTeamStatusReports()
     End Sub
 
-    Private Sub tcWeeklyReports_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles tcWeeklyReports.SelectionChanged
-        If tcWeeklyReports.SelectedIndex = 0 Then
-            btnAddReport.Visibility = Windows.Visibility.Visible
-        ElseIf tcWeeklyReports.SelectedIndex = 1 Then
-            btnAddReport.Visibility = Windows.Visibility.Hidden
+    Private Sub cbDateRange_DropDownClosed(sender As Object, e As EventArgs) Handles cbDateRange.DropDownClosed
+        selectedValue = cbDateRange.SelectedValue
+        SetWeeklyTeamStatusReports()
+    End Sub
+#End Region
+
+#Region "Paging"
+    Private Sub DisplayPagingInfo()
+        ' If there has no data found
+        If lstWeeklyTeamStatusReport.Length = 0 Then
+            txtPageNo.Text = "No Results Found "
+            GUISettingsOff()
+        Else
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
+            GUISettingsOn()
         End If
     End Sub
-
-    Private Sub btnTeamReports_Click(sender As Object, e As RoutedEventArgs) Handles btnTeamReports.Click
-        mainFrame.Navigate(New WeeklyTeamStatusReportPage(mainFrame, profile, addframe, menugrid, submenuframe))
-    End Sub
-
 #End Region
 
 #Region "Functions"

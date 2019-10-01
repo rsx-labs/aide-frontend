@@ -239,6 +239,7 @@
     <Compile Include="Model\TasksSpModel.vb" />
     <Compile Include="Model\ViewProjectModel.vb" />
     <Compile Include="Model\WeeklyReportModel.vb" />
+    <Compile Include="Model\WeeklyTeamStatusReportModel.vb" />
     <Compile Include="Model\WeekRangeModel.vb" />
     <Compile Include="Model\WorkplaceAuditModel.vb" />
     <Compile Include="PaginatedObservableCollection.vb" />
@@ -478,8 +479,14 @@
     <Compile Include="View\MenuPage\Tracker\TrackerViewPage.xaml.vb">
       <DependentUpon>TrackerViewPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MenuPage\Weekly Report\WeeklyEmployeeStatusReportPage.xaml.vb">
+      <DependentUpon>WeeklyEmployeeStatusReportPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MenuPage\Weekly Report\WeeklyReportAddPage.xaml.vb">
       <DependentUpon>WeeklyReportAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Weekly Report\WeeklyTeamStatusReportPage.xaml.vb">
+      <DependentUpon>WeeklyTeamStatusReportPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\Weekly Report\WeeklyReportPage.xaml.vb">
       <DependentUpon>WeeklyReportPage.xaml</DependentUpon>
@@ -819,7 +826,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\MenuPage\Weekly Report\WeeklyEmployeeStatusReportPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\MenuPage\Weekly Report\WeeklyReportAddPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Weekly Report\WeeklyTeamStatusReportPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

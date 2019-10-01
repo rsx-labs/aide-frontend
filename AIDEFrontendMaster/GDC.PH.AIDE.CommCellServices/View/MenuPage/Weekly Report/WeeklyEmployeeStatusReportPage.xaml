@@ -1,0 +1,74 @@
+﻿<Page x:Class="WeeklyEmployeeStatusReportPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      Height="Auto" Width="Auto"
+      Title="WeeklyEmployeeStatusReportPage">
+    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="8">
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="450" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.82*"/>
+                    <ColumnDefinition Width="0.18*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Viewbox HorizontalAlignment="Left">
+                        <TextBlock Text="Weekly Report" Margin="5" Foreground="DimGray"/>
+                    </Viewbox>
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <Viewbox Margin="10" HorizontalAlignment="Right">
+                        <Button Name="btnBack" Click="btnBack_Click" Style="{DynamicResource ButtonBack}" >
+                            <Viewbox>
+                                <TextBlock Text="Back"  Foreground="White" Margin="10"/>
+                            </Viewbox>
+                        </Button>
+                    </Viewbox>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="1" Background="{DynamicResource GradientDesign}" Width="Auto">
+                <DataGrid x:Name="dgWeeklyReport" 
+                          IsReadOnly="True" 
+                          Background="White"
+                          AutoGenerateColumns="False" 
+                          HorizontalScrollBarVisibility="Auto" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Project" Width="75" Binding="{Binding ProjectDesc}"/>
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Project ID" Width="75" Binding="{Binding ProjectID}" Visibility="Hidden" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Rework" Width="60" Binding="{Binding ReworkDesc}"  />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="ReworkID" Width="60" Binding="{Binding Rework}" Visibility="Hidden"/>
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Reference ID" Width="100" Binding="{Binding RefID}"  />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Description" Width="250" Binding="{Binding Subject}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Severity" Width="100" Binding="{Binding SeverityDesc}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Severity ID" Width="100" Binding="{Binding Severity}" Visibility="Hidden" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Category" Width="100" Binding="{Binding IncidentDesc}"  />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Category ID" Width="100" Binding="{Binding IncidentType}" Visibility="Hidden" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Phase" Width="100" Binding="{Binding PhaseDesc}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Phase ID" Width="100" Binding="{Binding Phase}" Visibility="Hidden" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="100" Binding="{Binding StatusDesc}"/>
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status ID" Width="100" Binding="{Binding Status}"  Visibility="Hidden" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Start Date" Width="100" Binding="{Binding DateStarted, StringFormat='MM/dd/yyyy'}"/>
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Target Date" Width="100" Binding="{Binding DateTarget, StringFormat='MM/dd/yyyy'}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Completed Date" Width="100" Binding="{Binding DateFinished, StringFormat='MM/dd/yyyy'}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Created" Width="100" Binding="{Binding DateCreated, StringFormat='MM/dd/yyyy'}" Visibility="Hidden" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Effort Estimate (in Hrs)" Width="110" Binding="{Binding EffortEst}"/>
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Actual Effort for the Week (in Hrs)" Width="120" Binding="{Binding ActualEffortWk}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Actual Effort (in Hrs)" Width="100" Binding="{Binding ActualEffort}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Comments" Width="250" Binding="{Binding Comments}" />
+                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Inbound Contacts" Width="90" Binding="{Binding InboundContacts}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Grid>
+    </Border>
+</Page>

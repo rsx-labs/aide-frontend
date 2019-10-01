@@ -6,6 +6,7 @@ Public Class WeeklyReportDBProvider
     Private _weeklyReportList As New ObservableCollection(Of MyWeeklyReport)
     Private _weeklyReportStatusList As New ObservableCollection(Of MyWeeklyReportStatusList)
     Private _weekRangeList As New ObservableCollection(Of MyWeekRange)
+    Private _weeklyTeamStatusReportList As New ObservableCollection(Of MyWeeklyTeamStatusReport)
 
     Public Sub SetWeekRangeList(ByVal weekRange As WeekRange)
         Dim objWeekRange As MyWeekRange = New MyWeekRange With {.WeekRangeID = weekRange.WeekRangeID,
@@ -43,6 +44,16 @@ Public Class WeeklyReportDBProvider
         _weeklyReportList.Add(_objWeeklyReport)
     End Sub
 
+    Public Sub SetWeeklyTeamStatusReportList(ByVal weeklyTeamStatusReport As WeeklyTeamStatusReport)
+        Dim objWeeklyTeamStatusReport As MyWeeklyTeamStatusReport = New MyWeeklyTeamStatusReport With {.WeekRangeID = weeklyTeamStatusReport.WeekRangeID,
+                                                                                                       .EmployeeID = weeklyTeamStatusReport.EmployeeID,
+                                                                                                       .EmployeeName = weeklyTeamStatusReport.EmployeeName,
+                                                                                                       .TotalHours = weeklyTeamStatusReport.TotalHours,
+                                                                                                       .Status = weeklyTeamStatusReport.Status,
+                                                                                                       .DateSubmitted = weeklyTeamStatusReport.DateSubmitted}
+        _weeklyTeamStatusReportList.Add(objWeeklyTeamStatusReport)
+    End Sub
+
     Public Sub SetMyWeeklyReportStatusList(ByVal _status As StatusGroup)
         Dim status As New MyWeeklyReportStatusList
         status.Key = _status.Status
@@ -56,6 +67,10 @@ Public Class WeeklyReportDBProvider
 
     Public Function GetWeeklyReportList() As ObservableCollection(Of MyWeeklyReport)
         Return _weeklyReportList
+    End Function
+
+    Public Function GetWeeklyTeamStatusReportList() As ObservableCollection(Of MyWeeklyTeamStatusReport)
+        Return _weeklyTeamStatusReportList
     End Function
 
     Public Function GetWeeklyReportStatusList() As ObservableCollection(Of MyWeeklyReportStatusList)
@@ -84,6 +99,16 @@ Public Class MyWeeklyReport
     Public Property ActEffortWk As Double
     Public Property Comment As String
     Public Property InboundContacts As Short
+End Class
+
+Public Class MyWeeklyTeamStatusReport
+    Public Property WeekRangeID As Integer
+    Public Property EmployeeID As Integer
+    Public Property EmployeeName As String
+    Public Property TotalHours As Double
+    Public Property Status As Short
+    Public Property DateSubmitted As Date
+    Public Property DateRange As String
 End Class
 
 Public Class MyWeekRange
