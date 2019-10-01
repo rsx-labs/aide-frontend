@@ -79,7 +79,6 @@ Class WeeklyReportAddPage
         Me.empID = _profile.Emp_ID
         Me.profile = _profile
 
-        dgWeeklyReport.ItemsSource = lstWeeklyReportsData
         GenerateWeekRange()
         LoadData()
         PopulateWeeklyReportData() ' Get data for the tasks that are not completed yet
@@ -113,6 +112,10 @@ Class WeeklyReportAddPage
 
     Private Sub PopulateWeeklyReportData()
         Try
+            ' Reset Data
+            lstWeeklyReportsData = New ObservableCollection(Of WeeklyReportModel)
+            weeklyReportDBProvider.GetWeeklyReportList().Clear()
+
             Dim lstWeeklyReport As WeeklyReport() = AideServiceClient.GetTasksDataByEmpID(cbDateRange.SelectedValue, empID)
 
             For Each objWeeklyReport As WeeklyReport In lstWeeklyReport
@@ -148,6 +151,8 @@ Class WeeklyReportAddPage
                                             .InboundContacts = weeklyReport.InboundContacts
                                          })
             Next
+
+            dgWeeklyReport.ItemsSource = lstWeeklyReportsData
 
             If lstWeeklyReportsData.Count > 0 Then
                 btnSave.IsEnabled = True
@@ -343,23 +348,23 @@ Class WeeklyReportAddPage
         End If
     End Sub
 
-    'Private Sub cbDateRange_DropDownClosed(sender As Object, e As EventArgs) Handles cbDateRange.DropDownClosed
-    '    If Not selectedValue = cbDateRange.SelectedValue Then
-    '        If lstWeeklyReportsData.Count > 0 Then
-    '            Dim result As Integer = MsgBox("Changing Period Date will delete input data?", MsgBoxStyle.YesNo, "AIDE")
+    Private Sub cbDateRange_DropDownClosed(sender As Object, e As EventArgs) Handles cbDateRange.DropDownClosed
+        If Not selectedValue = cbDateRange.SelectedValue Then
+            If lstWeeklyReportsData.Count > 0 Then
+                Dim result As Integer = MsgBox("Changing Period Date will delete input data?", MsgBoxStyle.YesNo, "AIDE")
 
-    '            If result = vbYes Then
-    '                selectedValue = cbDateRange.SelectedValue
-    '                lstWeeklyReportsData.Clear()
-    '                btnSubmit.IsEnabled = False
-    '            Else
-    '                cbDateRange.SelectedValue = selectedValue
-    '            End If
-    '        Else
-    '            selectedValue = cbDateRange.SelectedValue
-    '        End If
-    '    End If
-    'End Sub
+                If result = vbYes Then
+                    selectedValue = cbDateRange.SelectedValue
+                    PopulateWeeklyReportData()
+                    btnSubmit.IsEnabled = False
+                Else
+                    cbDateRange.SelectedValue = selectedValue
+                End If
+            Else
+                selectedValue = cbDateRange.SelectedValue
+            End If
+        End If
+    End Sub
 
     Private Sub btnAdd_Click(sender As Object, e As RoutedEventArgs) Handles btnAdd.Click
         Try
