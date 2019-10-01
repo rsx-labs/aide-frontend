@@ -53,6 +53,12 @@
                     <ColumnDefinition Width="0.6*"/>
                 </Grid.ColumnDefinitions>
 
+                <Grid Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                    <Button x:Name="btnTeamReports" Width="150" Height="35"  VerticalAlignment="Center" Margin="10,0,0,0" Style="{DynamicResource RoundCornerUpdate}" HorizontalContentAlignment="Center">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="View Team Status Report"></TextBlock>
+                    </Button>
+                </Grid>
+                
                 <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.34*"/>

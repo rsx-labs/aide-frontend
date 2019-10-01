@@ -17,6 +17,7 @@ Class WeeklyReportUpdatePage
     Private menugrid As Grid
     Private submenuframe As Frame
     Private empID As Integer
+    Private profile As Profile
 
     Dim weekRangeID As Integer
     Dim incidentTypeID As Integer = 2
@@ -64,18 +65,19 @@ Class WeeklyReportUpdatePage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_weekRangeID As Integer, _empID As Integer, _frame As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_weekRangeID As Integer, _frame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         ' This call is required by the designer.
         InitializeComponent()
         InitializeService()
         ' Add any initialization after the InitializeComponent() call.
-        email = _email
+        email = _profile.Email_Address
         Me.frame = _frame
         Me.addframe = _addframe
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
-        Me.empID = _empID
+        Me.empID = _profile.Emp_ID
         Me.weekRangeID = _weekRangeID
+        Me.profile = _profile
 
         dgWeeklyReport.ItemsSource = lstWeeklyReportsData
         LoadData()
@@ -798,7 +800,7 @@ Class WeeklyReportUpdatePage
     End Function
 
     Private Sub ExitPage()
-        frame.Navigate(New WeeklyReportPage(frame, empID, email, addframe, menugrid, submenuframe))
+        frame.Navigate(New WeeklyReportPage(frame, Profile, addframe, menugrid, submenuframe))
         frame.IsEnabled = True
         frame.Opacity = 1
         menugrid.IsEnabled = True

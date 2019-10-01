@@ -18,12 +18,11 @@ Class TaskSubMenuPage
     End Sub
 
     Private Sub Task_Click(sender As Object, e As RoutedEventArgs)
-        pFrame.Navigate(New BillabilityPage(profile, pFrame))
         pFrame.Navigate(New TaskAdminPage(pFrame, currentWindow, profile.Emp_ID, profile.Email_Address, addframe, menugrid, submenuframe))
     End Sub
 
     Private Sub Weekly_Click(sender As Object, e As RoutedEventArgs)
-        pFrame.Navigate(New WeeklyReportPage(pFrame, profile.Emp_ID, profile.Email_Address, addframe, menugrid, submenuframe))
+        pFrame.Navigate(New WeeklyReportPage(pFrame, profile, addframe, menugrid, submenuframe))
     End Sub
 
 End Class

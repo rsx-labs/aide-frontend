@@ -237,6 +237,24 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ContactList" nillable="true" type="tns:ContactList" />
+  <xs:complexType name="ArrayOfWeeklyTeamStatusReport">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WeeklyTeamStatusReport" nillable="true" type="tns:WeeklyTeamStatusReport" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWeeklyTeamStatusReport" nillable="true" type="tns:ArrayOfWeeklyTeamStatusReport" />
+  <xs:complexType name="WeeklyTeamStatusReport">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DateRange" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateSubmitted" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EmployeeID" type="xs:int" />
+      <xs:element minOccurs="0" name="EmployeeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" type="xs:short" />
+      <xs:element minOccurs="0" name="TotalHours" type="xs:double" />
+      <xs:element minOccurs="0" name="WeekRangeID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WeeklyTeamStatusReport" nillable="true" type="tns:WeeklyTeamStatusReport" />
   <xs:complexType name="AuditSched">
     <xs:sequence>
       <xs:element minOccurs="0" name="AUDIT_SCHED_ID" type="xs:int" />

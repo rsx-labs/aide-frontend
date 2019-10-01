@@ -1,0 +1,169 @@
+﻿<Page x:Class="WeeklyTeamStatusReportPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      Height="Auto" Width="Auto"
+      Title="WeeklyReportPage">
+
+    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.10*"/>
+                <RowDefinition Height="0.10*"/>
+                <RowDefinition Height="0.70*"/>
+                <RowDefinition Height="0.10*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Background="white">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.9*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.08*"/>
+                        <ColumnDefinition Width="0.92*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
+                            <Image Source="..\..\..\Assets\Button\AssetsLogo.png" />
+                        </Viewbox>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Viewbox HorizontalAlignment="Left">
+                            <TextBlock TextWrapping="Wrap" Padding="0" Text="Team Status Weekly Report" Margin="0,7,0,7" Foreground="DimGray"/>
+                        </Viewbox>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="1" Background="#FFFBFBFB" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                    <Button x:Name="btnMyReports" Width="150" Height="35"  VerticalAlignment="Center" Margin="10,0,0,0" Style="{DynamicResource RoundCornerUpdate}" HorizontalContentAlignment="Center">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="View My Reports"></TextBlock>
+                    </Button>
+                </Grid>
+                
+                <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.15*"/>
+                        <ColumnDefinition Width="0.17*"/>
+                        <ColumnDefinition Width="0.2*"/>
+                        <ColumnDefinition Width="0.17*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0" VerticalAlignment="Center">
+                        <Label>Search By</Label>
+                    </Grid>
+
+                    <Grid Grid.Column="1" Margin="0,0,5,0">
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Height="30" Width="120" />
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Month" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+
+                    <Grid Grid.Column="2" Margin="0,0,5,0">
+                        <ComboBox ItemsSource="{Binding Path=WeekRangeList}" 
+                                  DisplayMemberPath="DateRange" 
+                                  SelectedValuePath="WeekRangeID"
+                                  Width="210"
+                                  Style="{DynamicResource StyleComboBox}"
+                                  x:Name="cbDateRange"/>
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Week Range" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbDateRange}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                    
+                    <Grid Grid.Column="3" Margin="0,0,5,0">
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Height="30" />
+                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbYear}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="2" HorizontalAlignment="Center" Margin="0,10,0,0">
+                <Grid>
+                    <DataGrid x:Name="dgWeeklyTeamStatusReports" 
+                                      AutoGenerateColumns="False" 
+                                      Background="Transparent" 
+                                      BorderBrush="Gainsboro" 
+                                      BorderThickness="2"
+                                      IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee ID" Width="100" Binding="{Binding EmployeeID}" Visibility="Hidden" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Employee Name" Width="200" Binding="{Binding EmployeeName}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Total Hours" Width="110" Binding="{Binding TotalHours}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="130" Binding="{Binding StatusDesc}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Submitted" Width="150" Binding="{Binding DateSubmitted, StringFormat=d}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Week Range ID" Width="150" Binding="{Binding WeekRangeID}" Visibility="Hidden" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="1">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Height="30" Width="30"
+                                                x:Name="btnPrev" 
+                                                Style="{DynamicResource ButtonPageBack}" 
+                                                BorderBrush="{x:Null}" >
+                        </Button>
+                        <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" x:Name="txtPageNo" Margin="5,0,5,0" Foreground="DimGray" FontSize="10"/>
+                        <Button Height="30" Width="30"
+                                                x:Name="btnNext" 
+                                                Style="{DynamicResource ButtonPageNext}" 
+                                                BorderBrush="{x:Null}">
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Page>
