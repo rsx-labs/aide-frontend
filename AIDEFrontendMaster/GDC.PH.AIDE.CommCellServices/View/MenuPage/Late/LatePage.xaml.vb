@@ -33,6 +33,8 @@ Public Class LatePage
     Dim year As Integer
     Dim day As Integer
     Dim startYear As Integer = 2019 'Default Start Year
+    Dim monthHeader As String = "Late for the Month of"
+    Dim yearHeader As String = "Late for the Fiscal Year"
 #End Region
 
     Public Sub New(_mainframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
@@ -42,7 +44,7 @@ Public Class LatePage
 
         month = Date.Now.Month
         year = Date.Now.Year
-        lblMonthLate.Content = lblMonthLate.Content + " " + MonthName(month)
+        lblMonthLate.Content = monthHeader + " " + MonthName(month)
         SetTitle()
         LoadMonth()
         LoadYears()
@@ -74,9 +76,9 @@ Public Class LatePage
         Dim prevYear As Integer = year - 1
 
         If Date.Now.Month >= 4 Then
-            lblYear.Content = lblYear.Content + " " + year.ToString + "-" + nextYear.ToString
+            lblYear.Content = yearHeader + " " + year.ToString + "-" + nextYear.ToString
         Else
-            lblYear.Content = lblYear.Content + " " + year.ToString + "-" + nextYear.ToString
+            lblYear.Content = yearHeader + " " + year.ToString + "-" + nextYear.ToString
         End If
     End Sub
 
@@ -223,10 +225,12 @@ Public Class LatePage
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
         year = cbYear.SelectedValue
         LoadStackLateFY()
+        lblYear.Content = yearHeader + " " + cbYear.SelectedItem.Text
     End Sub
 
     Private Sub cbMonth_DropDownClosed(sender As Object, e As EventArgs) Handles cbMonth.DropDownClosed
         month = cbMonth.SelectedValue
         LoadStackLate()
+        lblMonthLate.Content = monthHeader + " " + cbMonth.SelectedItem.Text
     End Sub
 End Class
