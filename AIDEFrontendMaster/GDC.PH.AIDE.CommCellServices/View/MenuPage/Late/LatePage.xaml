@@ -259,7 +259,7 @@
 
                 <Grid Grid.Column="0">
                     <Label Name="lblMonthLate"
-                       Content="Late for the Month of"
+                       Content=""
                        HorizontalContentAlignment="Center"
                        FontSize="15"
                        VerticalAlignment="Center" 
