@@ -7,6 +7,7 @@ Public Class ResourcePlannerDBProvider
     Private _AllcategoryList As ObservableCollection(Of myResourceList)
     Private _emprpList As ObservableCollection(Of myResourceList)
     Private _AllemprpList As ObservableCollection(Of myResourceList)
+    Public _AllLeavesList As ObservableCollection(Of myResourceList)
     Public _splist As ObservableCollection(Of myResourceList)
 
     Sub New()
@@ -15,6 +16,7 @@ Public Class ResourcePlannerDBProvider
         _AllemprpList = New ObservableCollection(Of myResourceList)
         _categoryList = New ObservableCollection(Of myResourceList)
         _AllcategoryList = New ObservableCollection(Of myResourceList)
+        _AllLeavesList = New ObservableCollection(Of myResourceList)
         _splist = New ObservableCollection(Of myResourceList)
     End Sub
 
@@ -88,6 +90,18 @@ Public Class ResourcePlannerDBProvider
         _splist.Add(_Resourceobj)
     End Sub
 
+    Public Sub SetAllLeavesList(ByVal resourceLst As ResourcePlanner)
+        Dim _Resourceobj As myResourceList = New myResourceList With {.startDate = resourceLst.StartDate,
+                                                                      .endDate = resourceLst.EndDate,
+                                                                      .duration = resourceLst.Duration,
+                                                                     .statuscd = resourceLst.StatusCD}
+        _AllLeavesList.Add(_Resourceobj)
+    End Sub
+
+    Public Function GetAllLeavesList()
+        Return _AllLeavesList
+    End Function
+
     Public Function GetNonBillableList()
         Return _splist
     End Function
@@ -108,4 +122,8 @@ Public Class myResourceList
     Public holidayHours As Double
     Public vlHours As Double
     Public slHours As Double
+    Public startDate As Date
+    Public endDate As Date
+    Public duration As Double
+    Public statuscd As Integer
 End Class
