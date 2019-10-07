@@ -460,4 +460,15 @@ Class ResourcePlannerPage
     End Sub
 #End Region
 
+    Private Sub btnManage_Click(sender As Object, e As RoutedEventArgs)
+        _addframe.Navigate(New BillabilityManagerVLLeavePage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
+        mainFrame.IsEnabled = False
+        mainFrame.Opacity = 0.3
+        _menugrid.IsEnabled = False
+        _menugrid.Opacity = 0.3
+        _submenuframe.IsEnabled = False
+        _submenuframe.Opacity = 0.3
+        _addframe.Margin = New Thickness(100, 60, 100, 60)
+        _addframe.Visibility = Visibility.Visible
+    End Sub
 End Class

@@ -41,6 +41,8 @@ Public Class ResourcePlannerModel
         Me._endDate = rawResourceList.endDate
         Me._durations = rawResourceList.duration.ToString()
         Me._leaveStatus = StatusLeave
+        Me._status = rawResourceList.Status
+        Me._desc = rawResourceList.Desc
     End Sub
 
     Public Property EMP_ID As Integer

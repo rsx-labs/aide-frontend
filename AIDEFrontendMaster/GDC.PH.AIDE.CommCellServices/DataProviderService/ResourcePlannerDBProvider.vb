@@ -94,7 +94,9 @@ Public Class ResourcePlannerDBProvider
         Dim _Resourceobj As myResourceList = New myResourceList With {.startDate = resourceLst.StartDate,
                                                                       .endDate = resourceLst.EndDate,
                                                                       .duration = resourceLst.Duration,
-                                                                     .statuscd = resourceLst.StatusCD}
+                                                                     .statuscd = resourceLst.StatusCD,
+                                                                     .Status = resourceLst.Status,
+                                                                     .Desc = resourceLst.DESCR}
         _AllLeavesList.Add(_Resourceobj)
     End Sub
 
