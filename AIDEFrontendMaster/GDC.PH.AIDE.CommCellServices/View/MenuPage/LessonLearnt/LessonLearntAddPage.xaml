@@ -839,44 +839,39 @@
 
             <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}">
                 <Grid Margin="10,5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
+                    <Grid Grid.Row="0">
+                        <Border Margin="0,5" CornerRadius="15" BorderThickness="3,3,3,3">
+                            <Border.BorderBrush>
+                                <DrawingBrush Viewport="0,0,10,10" ViewportUnits="Absolute" TileMode="Tile">
+                                    <DrawingBrush.Drawing>
+                                        <DrawingGroup>
+                                            <GeometryDrawing Brush="DimGray">
+                                                <GeometryDrawing.Geometry>
+                                                    <GeometryGroup>
+                                                        <RectangleGeometry Rect="0,0,50,50"/>
+                                                        <RectangleGeometry Rect="50,50,50,50"/>
 
-
-                    <Border Margin="0,5" CornerRadius="15" BorderThickness="3,3,3,3">
-                        <Border.BorderBrush>
-                            <DrawingBrush Viewport="0,0,10,10" ViewportUnits="Absolute" TileMode="Tile">
-                                <DrawingBrush.Drawing>
-                                    <DrawingGroup>
-                                        <GeometryDrawing Brush="DimGray">
-                                            <GeometryDrawing.Geometry>
-                                                <GeometryGroup>
-                                                    <RectangleGeometry Rect="0,0,50,50"/>
-                                                    <RectangleGeometry Rect="50,50,50,50"/>
-
-                                                    <RectangleGeometry Rect="50,50,50,50"/>
-                                                </GeometryGroup>
-                                            </GeometryDrawing.Geometry>
-                                        </GeometryDrawing>
-                                    </DrawingGroup>
-                                </DrawingBrush.Drawing>
-                            </DrawingBrush>
-                        </Border.BorderBrush>
-
-
-                        <Viewbox>
-
-                            <TextBlock TextWrapping="Wrap" Foreground="White" Name="Lesson_Reference" Margin="10" Text="{Binding lessonLearntViewModel.SelectedLessonLearnt.ReferenceNo, Mode=TwoWay}"/>
-                        </Viewbox>
-                    </Border>
-
-                </Grid>
+                                                        <RectangleGeometry Rect="50,50,50,50"/>
+                                                    </GeometryGroup>
+                                                </GeometryDrawing.Geometry>
+                                            </GeometryDrawing>
+                                        </DrawingGroup>
+                                    </DrawingBrush.Drawing>
+                                </DrawingBrush>
+                            </Border.BorderBrush>
+                            <Viewbox>
+                                <TextBlock TextWrapping="Wrap" Foreground="White" Name="Lesson_Reference" Margin="10" Text="{Binding lessonLearntViewModel.SelectedLessonLearnt.ReferenceNo, Mode=TwoWay}"/>
+                            </Viewbox>
+                        </Border>
+                    </Grid>
                     <Grid Grid.Row="1">
                         <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                             <TextBox Name="Problem_Encountered" TextWrapping="Wrap" 
@@ -942,8 +937,8 @@
                     </Grid>
                     <Grid Grid.Row="3">
                         <ComboBox Margin="0,5" Name="Action_No" Style="{DynamicResource StyleComboBox}"
-                              ItemsSource="{Binding Path=actionViewModel.objectActionSet}" DisplayMemberPath="REF_NO" 
-                              Text="{Binding lessonLearntViewModel.SelectedLessonLearnt.ActionNo, Mode=TwoWay}"/>
+                              ItemsSource="{Binding Path=actionViewModel.objectActionSet}" DisplayMemberPath="REF_NO"
+                              SelectedValuePath="ACTION_MESSAGE"/>
                         <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select action no." VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -970,15 +965,40 @@
                         </TextBlock>
                     </Grid>
                     <Grid Grid.Row="4">
+                        <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                            <TextBox Name="ActionDesc" TextWrapping="Wrap" IsEnabled="False"
+                             MaxLines="255" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                        </Border>
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Action Message" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=ActionDesc}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock x:Name="txtlabelActionDesc" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Action Message" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=ActionDesc}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                    <Grid Grid.Row="5">
                         <Button Style="{DynamicResource RoundCorner}" x:Name="btnCreate" Click="btnCreate_Click" Margin="0,5">
-                            
-                                <TextBlock Text="CREATE" TextWrapping="Wrap" Margin="5"/>
-                           
+                            <TextBlock Text="CREATE" TextWrapping="Wrap" Margin="5"/>
                         </Button>
                     </Grid>
-
-    
-
             </Grid>
         </Grid>
         </Grid>

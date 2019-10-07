@@ -91,7 +91,7 @@ Public Class AttendanceDashBoard
                 For Each rawUser As myAttendanceList In aemployeeListDBProvider.GetAllEmpRPList()
                     setStatus = rawUser.Status
                     SetCategory(rawUser)
-                    SetCategoryDisplay(rawUser)
+                    'SetCategoryDisplay(rawUser)
                     lstAEmployeeList.Add(New AttendanceModel(rawUser))
                 Next
 
