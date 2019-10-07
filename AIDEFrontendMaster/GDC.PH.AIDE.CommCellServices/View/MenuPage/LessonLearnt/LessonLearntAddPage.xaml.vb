@@ -175,6 +175,16 @@ Class LessonLearntAddPage
         End Try
     End Sub
 
+    Private Sub ClearValues()
+        lessonLearntModel.Problem = ""
+        lessonLearntModel.Resolution = ""
+        lessonLearntModel.ActionNo = ""
+
+        CreateReferenceNo()
+    End Sub
+#End Region
+
+#Region "Events"
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
         Try
             ' Get all the data in DataContext
@@ -221,12 +231,8 @@ Class LessonLearntAddPage
         _addframe.Visibility = Visibility.Hidden
     End Sub
 
-    Private Sub ClearValues()
-        lessonLearntModel.Problem = ""
-        lessonLearntModel.Resolution = ""
-        lessonLearntModel.ActionNo = ""
-
-        CreateReferenceNo()
+    Private Sub Action_No_DropDownClosed(sender As Object, e As EventArgs) Handles Action_No.DropDownClosed
+        ActionDesc.Text = Action_No.SelectedValue
     End Sub
 #End Region
 
