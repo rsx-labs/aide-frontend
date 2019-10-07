@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="DashboardEmployee" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>UI_AIDE_CommCellServices.ServiceReference1.DashboardEmployee, Service References.ServiceReference1.Reference.vb.dll, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>UI_AIDE_CommCellServices.ServiceReference1.DashboardEmployee, Service References.ServiceReference1.Reference.vb, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

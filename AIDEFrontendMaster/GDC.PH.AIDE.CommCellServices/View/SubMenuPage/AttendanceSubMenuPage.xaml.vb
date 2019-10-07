@@ -23,7 +23,7 @@ Class AttendanceSubMenuPage
     End Sub
 
     Private Sub VacationLeave_Click(sender As Object, e As RoutedEventArgs)
-        pFrame.Navigate(New BillabilityVacationLeavePage(profile, pFrame))
+        pFrame.Navigate(New BillabilityVacationLeavePage(profile, pFrame, addframe, menugrid, submenuframe, AttendanceFrame))
     End Sub
 
     Private Sub SickLeave_Click(sender As Object, e As RoutedEventArgs)

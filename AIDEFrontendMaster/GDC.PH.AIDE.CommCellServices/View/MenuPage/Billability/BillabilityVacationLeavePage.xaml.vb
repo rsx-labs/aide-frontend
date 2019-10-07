@@ -20,6 +20,10 @@ Public Class BillabilityVacationLeavePage
     Private _ResourceViewModel As New ResourcePlannerViewModel
     Private mainFrame As Frame
     Private profile As Profile
+    Private _addframe As Frame
+    Private _menugrid As Grid
+    Private _submenuframe As Frame
+    Private _attendanceFrame As Frame
 
     Dim month As Integer = Date.Now.Month
     Dim displayFiscalYear As Integer = 3
@@ -28,9 +32,13 @@ Public Class BillabilityVacationLeavePage
     Dim day As Integer
 #End Region
 
-    Public Sub New(_profile As Profile, mFrame As Frame)
+    Public Sub New(_profile As Profile, mFrame As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame, attendanceFrame As Frame)
         Me.profile = _profile
         Me.mainFrame = mFrame
+        Me._addframe = addframe
+        Me._menugrid = menugrid
+        Me._submenuframe = submenuframe
+        Me._attendanceFrame = attendanceFrame
         Me.InitializeComponent()
 
         month = Date.Now.Month
@@ -190,4 +198,15 @@ Public Class BillabilityVacationLeavePage
     End Sub
 #End Region
 
+    Private Sub btnManage_Click(sender As Object, e As RoutedEventArgs)
+        _addframe.Navigate(New BillabilityManagerVLLeavePage(profile, mainFrame, _addframe, _menugrid, _submenuframe, _attendanceFrame))
+        mainFrame.IsEnabled = False
+        mainFrame.Opacity = 0.3
+        _menugrid.IsEnabled = False
+        _menugrid.Opacity = 0.3
+        _submenuframe.IsEnabled = False
+        _submenuframe.Opacity = 0.3
+        _addframe.Margin = New Thickness(100, 60, 100, 60)
+        _addframe.Visibility = Visibility.Visible
+    End Sub
 End Class

@@ -8,6 +8,7 @@ Public Class ResourcePlannerViewModel
     Private _category As New ObservableCollection(Of ResourcePlannerModel)
     Private _filterCategory As New ObservableCollection(Of ResourcePlannerModel)
     Private _resourceListLeaveCredits As New ObservableCollection(Of ResourcePlannerModel)
+    Private _allLeavesList As New ObservableCollection(Of ResourcePlannerModel)
 
     Public Property ResourceList As ObservableCollection(Of ResourcePlannerModel)
         Get
@@ -86,6 +87,16 @@ Public Class ResourcePlannerViewModel
         Set(value As ObservableCollection(Of ResourcePlannerModel))
             _resourceListLeaveCredits = value
             NotifyPropertyChanged("ResourceListVLMonthLy")
+        End Set
+    End Property
+
+    Public Property AllLeavesList As ObservableCollection(Of ResourcePlannerModel)
+        Get
+            Return _allLeavesList
+        End Get
+        Set(value As ObservableCollection(Of ResourcePlannerModel))
+            _allLeavesList = value
+            NotifyPropertyChanged("AllLeavesList")
         End Set
     End Property
 

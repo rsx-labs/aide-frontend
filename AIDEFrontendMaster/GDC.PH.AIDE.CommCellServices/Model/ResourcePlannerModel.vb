@@ -11,6 +11,11 @@ Public Class ResourcePlannerModel
     Private _desc As String
     Private _EmpImage As String
     Private _dateEntry As DateTime
+    Private _startDate As DateTime
+    Private _endDate As DateTime
+    Private _durations As String
+    Private _leaveStatus As String
+    Private _statusCD As Integer
 
     Public Sub New()
 
@@ -23,6 +28,19 @@ Public Class ResourcePlannerModel
         Me._status = rawResourceList.Status
         Me._EmpImage = rawResourceList.Emp_Image
         Me._dateEntry = rawResourceList.Date_Entry
+    End Sub
+
+    Public Sub New(ByVal rawResourceList As myResourceList, ByVal StatusLeave As String)
+        Me._empID = rawResourceList.Emp_ID
+        Me._EmpName = rawResourceList.Emp_Name
+        Me._desc = rawResourceList.Desc
+        Me._status = rawResourceList.Status
+        Me._EmpImage = rawResourceList.Emp_Image
+        Me._dateEntry = rawResourceList.Date_Entry
+        Me._startDate = rawResourceList.startDate
+        Me._endDate = rawResourceList.endDate
+        Me._durations = rawResourceList.duration.ToString()
+        Me._leaveStatus = StatusLeave
     End Sub
 
     Public Property EMP_ID As Integer
@@ -92,6 +110,61 @@ Public Class ResourcePlannerModel
         Set(value As ChartValues(Of Double))
             _usedVL = value
             NotifyPropertyChanged("UsedVL")
+        End Set
+    End Property
+
+    Public Property START_DATE As DateTime
+        Get
+            Return _startDate
+        End Get
+        Set(value As DateTime)
+            _startDate = value
+            NotifyPropertyChanged("START_DATE")
+        End Set
+    End Property
+
+    Public Property END_DATE As DateTime
+        Get
+            Return _endDate
+        End Get
+        Set(value As DateTime)
+            _endDate = value
+            NotifyPropertyChanged("END_DATE")
+        End Set
+    End Property
+
+    Public Property DURATIONS As String
+        Get
+            If Convert.ToDouble(_durations) > 1 Then
+                Return _durations + " days"
+            Else
+                Return _durations + " day"
+            End If
+
+        End Get
+        Set(value As String)
+            _durations = value
+            NotifyPropertyChanged("DURATIONS")
+        End Set
+    End Property
+
+    Public Property LEAVE_STATUS As String
+        Get
+            Return _leaveStatus
+        End Get
+        Set(value As String)
+            _leaveStatus = value
+            NotifyPropertyChanged("LEAVE_STATUS")
+        End Set
+    End Property
+
+    Public Property STATUS_CD As Integer
+        Get
+            Return _statusCD
+        End Get
+        Set(value As Integer)
+            _statusCD = value
+            NotifyPropertyChanged("STATUS_CD")
         End Set
     End Property
 

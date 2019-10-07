@@ -163,6 +163,24 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DashboardTaskSummaryTotals" nillable="true" type="tns:DashboardTaskSummaryTotals" />
+  <xs:complexType name="ArrayOfWeekRange">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WeekRange" nillable="true" type="tns:WeekRange" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWeekRange" nillable="true" type="tns:ArrayOfWeekRange" />
+  <xs:complexType name="WeekRange">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DateRange" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateSubmitted" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EmployeeID" type="xs:int" />
+      <xs:element minOccurs="0" name="EndWeek" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StartWeek" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Status" type="xs:short" />
+      <xs:element minOccurs="0" name="WeekRangeID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WeekRange" nillable="true" type="tns:WeekRange" />
   <xs:complexType name="ArrayOfWeeklyReport">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="WeeklyReport" nillable="true" type="tns:WeeklyReport" />
@@ -597,11 +615,15 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="DESCR" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DateEntry" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Duration" type="xs:double" />
       <xs:element minOccurs="0" name="EmpID" type="xs:int" />
+      <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="HalfBalance" type="xs:double" />
       <xs:element minOccurs="0" name="Image_Path" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Status" type="xs:double" />
+      <xs:element minOccurs="0" name="StatusCD" type="xs:int" />
       <xs:element minOccurs="0" name="TotalBalance" type="xs:double" />
       <xs:element minOccurs="0" name="UsedLeaves" type="xs:double" />
       <xs:element minOccurs="0" name="dateFrom" type="xs:dateTime" />
@@ -698,24 +720,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ComcellClock" nillable="true" type="tns:ComcellClock" />
-  <xs:complexType name="WeekRange">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="DateRange" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DateSubmitted" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="EmployeeID" type="xs:int" />
-      <xs:element minOccurs="0" name="EndWeek" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="StartWeek" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Status" type="xs:short" />
-      <xs:element minOccurs="0" name="WeekRangeID" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="WeekRange" nillable="true" type="tns:WeekRange" />
-  <xs:complexType name="ArrayOfWeekRange">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="WeekRange" nillable="true" type="tns:WeekRange" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfWeekRange" nillable="true" type="tns:ArrayOfWeekRange" />
   <xs:complexType name="Action">
     <xs:sequence>
       <xs:element minOccurs="0" name="Act_Assignee" type="xs:int" />
