@@ -1035,8 +1035,9 @@
                                             <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="Red" Opacity="0.5" />
                                         </DataGrid.Resources>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Start date" Binding="{Binding START_DATE, StringFormat=MM/dd/yyyy}" Width="2*"  />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="End date" Binding="{Binding END_DATE, StringFormat=MM/dd/yyyy}" Width="2*"  />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Start date" Binding="{Binding START_DATE, StringFormat=MM/dd/yyyy}" Width="1.5*"  />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="End date" Binding="{Binding END_DATE, StringFormat=MM/dd/yyyy}" Width="1.5*"  />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Leave type" Binding="{Binding Descr}" Width="2*"  />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Durations" Binding="{Binding DURATIONS}" Width="1*"  />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Binding="{Binding LEAVE_STATUS}" Width="1.5*"  />
                                             <DataGridTemplateColumn Header="" Width=".5*" >
@@ -1151,8 +1152,9 @@
                                             <SolidColorBrush x:Key="SystemColors.HighlightBrushKey" Color="Red" Opacity="0.5" />
                                         </DataGrid.Resources>
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Start date" Binding="{Binding START_DATE, StringFormat=MM/dd/yyyy}" Width="2*"  />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="End date" Binding="{Binding END_DATE, StringFormat=MM/dd/yyyy}" Width="2*"  />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Start date" Binding="{Binding START_DATE, StringFormat=MM/dd/yyyy}" Width="1.5*"  />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="End date" Binding="{Binding END_DATE, StringFormat=MM/dd/yyyy}" Width="1.5*"  />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Leave type" Binding="{Binding Descr}" Width="2*"  />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Durations" Binding="{Binding DURATIONS}" Width="1*"  />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Binding="{Binding LEAVE_STATUS}" Width="1.5*"  />
 

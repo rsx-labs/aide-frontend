@@ -169,7 +169,7 @@ Public Class BillabilityManagerVLLeavePage
             LeaveService.EndDate = CType(lv_ActiveLeaves.SelectedItem, ResourcePlannerModel).END_DATE
             LeaveService.EmpID = Me.profile.Emp_ID
 
-            client.UpdateLeaves(LeaveService, 0, 4)
+            client.UpdateLeaves(LeaveService, 0, CType(lv_ActiveLeaves.SelectedItem, ResourcePlannerModel).Status)
             Return True
         Else
             Return False
@@ -181,7 +181,7 @@ Public Class BillabilityManagerVLLeavePage
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext1.Click
         Dim totalRecords As Integer = lstresource.Length
 
-        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+        If totalRecords > ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
             paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
@@ -200,7 +200,7 @@ Public Class BillabilityManagerVLLeavePage
     Private Sub btnNext_Click2(sender As Object, e As RoutedEventArgs) Handles btnNext2.Click
         Dim totalRecords As Integer = lstresource.Length
 
-        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+        If totalRecords > ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
             paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
@@ -216,7 +216,7 @@ Public Class BillabilityManagerVLLeavePage
         DisplayPagingInfo()
     End Sub
     Private Sub backbtn_Click(sender As Object, e As RoutedEventArgs) Handles btnCCancel.Click
-        mainFrame.Navigate(New BillabilityVacationLeavePage(profile, mainFrame, _addframe, _menugrid, _submenuframe, _attendanceFrame))
+        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, _attendanceFrame))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         _menugrid.IsEnabled = True
