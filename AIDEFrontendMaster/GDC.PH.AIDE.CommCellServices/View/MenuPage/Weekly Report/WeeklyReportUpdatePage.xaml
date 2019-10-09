@@ -24,7 +24,7 @@
 
                 <Grid Grid.Column="0">
                     <Viewbox HorizontalAlignment="Left">
-                        <TextBlock Text="Add Weekly Report" Margin="5" Foreground="DimGray"/>
+                        <TextBlock Text="Update Weekly Report" Margin="5" Foreground="DimGray"/>
                     </Viewbox>
                 </Grid>
 
