@@ -10,9 +10,9 @@
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.11*"/>
-                <RowDefinition Height="0.11*"/>
-                <RowDefinition Height="0.78*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="1.3*"/>
+                <RowDefinition Height="11*"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0" Background="white">
@@ -49,29 +49,29 @@
 
             <Grid Grid.Row="1" Background="#FFFBFBFB" >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.4*"/>
-                    <ColumnDefinition Width="0.6*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
 
-                <Grid Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" >
-                    <Button x:Name="btnTeamReports" Width="150" Height="35"  VerticalAlignment="Center" Margin="10,0,0,0" Style="{DynamicResource RoundCornerUpdate}" HorizontalContentAlignment="Center">
+                <Grid Grid.Column="0" HorizontalAlignment="Left" >
+                    <Button x:Name="btnTeamReports" Margin="10" Style="{DynamicResource RoundCornerUpdate}">
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="View Team Status Report"></TextBlock>
                     </Button>
                 </Grid>
                 
-                <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" >
+                <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.34*"/>
                         <ColumnDefinition Width="0.33*"/>
                         <ColumnDefinition Width="0.33*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Column="0" VerticalAlignment="Center">
+                    <Grid Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right">
                         <Label>Search By</Label>
                     </Grid>
 
                     <Grid Grid.Column="1" Margin="0,0,5,0">
-                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Height="30" Width="120" />
+                        <ComboBox Margin="10" Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" />
                         <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Month" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -87,7 +87,7 @@
                     </Grid>
 
                     <Grid Grid.Column="2" Margin="0,0,5,0">
-                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Height="30" />
+                        <ComboBox Style="{DynamicResource StyleComboBox}" Margin="10" x:Name="cbYear" />
                         <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">

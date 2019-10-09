@@ -1543,5 +1543,14 @@
     <Resource Include="Assets\Contributors\Jester.png" />
     <Resource Include="Assets\Contributors\Nell.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icon\BugLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icon\TaskLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icon\EnhLogo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
