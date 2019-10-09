@@ -363,6 +363,17 @@ Public Class WeeklyReportModel
             NotifyPropertyChanged("Comments")
         End Set
     End Property
+    Public ReadOnly Property IncidentImagePath As String
+        Get
+            If _incType = 1 Then
+                Return "..\..\..\Assets\Icon\EnhLogo.png"
+            ElseIf _incType = 2 Then
+                Return "..\..\..\Assets\Icon\BugLogo.png"
+            Else
+                Return "..\..\..\Assets\Icon\TaskLogo.png"
+            End If
+        End Get
+    End Property
 
     Public Property InboundContacts As String
         Get
