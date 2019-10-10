@@ -571,7 +571,7 @@ Class SkillsMatrixManagerPage
     Private Sub btnViewEmp_Click(sender As Object, e As RoutedEventArgs) Handles btnViewEmp.Click
         LoadSkillsList()
         LoadProfile()
-
+        ClearControl()
         DisableControls()
         bClick = False
         'txtSearch.Text = String.Empty
