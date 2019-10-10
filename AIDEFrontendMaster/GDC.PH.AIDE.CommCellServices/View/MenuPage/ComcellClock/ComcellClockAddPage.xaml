@@ -507,13 +507,13 @@
             </Style.Triggers>
         </Style>
     </Page.Resources>
-    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="0,0,0,15" >
+    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15" >
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="250"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="7*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Height="50">
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="8*"/>
                     <ColumnDefinition Width="2*"/>
@@ -537,10 +537,10 @@
             <Grid Grid.Row="2" Background="{DynamicResource GradientDesign2}">
                 <Grid Margin="10,5">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
                     </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>

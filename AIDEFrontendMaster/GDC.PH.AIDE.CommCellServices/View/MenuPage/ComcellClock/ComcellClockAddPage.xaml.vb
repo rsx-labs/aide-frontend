@@ -181,8 +181,12 @@ Class ComcellClockAddPage
         comcellFrame.Navigate(New ComcellClockPage(profile, Me.comcellFrame, _window))
         window.MenuGrid.IsEnabled = True
         window.MenuGrid.Opacity = 1
+        window.PagesFrame.Opacity = 1
+        window.PagesFrame.IsEnabled = True
         comcellFrame.IsEnabled = True
         comcellFrame.Opacity = 1
+        window.SubMenuFrame.Opacity = 1
+        window.SubMenuFrame.IsEnabled = True
         _addframe.Visibility = Visibility.Hidden
     End Sub
 

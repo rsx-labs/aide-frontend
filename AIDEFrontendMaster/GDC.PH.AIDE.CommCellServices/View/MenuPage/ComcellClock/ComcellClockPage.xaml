@@ -332,9 +332,9 @@
 
                 <Grid x:Name="GridAlarm" Background="#FF727272" RenderTransformOrigin="0,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="49*"/>
+                        <ColumnDefinition Width="50*"/>
                         <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="65*"/>
+                        <ColumnDefinition Width="50*"/>
                     </Grid.ColumnDefinitions>
 
 
