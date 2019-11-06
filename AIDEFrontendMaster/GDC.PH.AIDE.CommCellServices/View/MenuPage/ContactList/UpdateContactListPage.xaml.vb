@@ -438,9 +438,7 @@ Class UpdateContactListPage
             e.Handled = True
             contactVM.ContactProfile = DataContext
             Dim contactList As New ContactList
-            If contactVM.ContactProfile.EMP_ID = 0 Then
-
-            Else
+            If contactVM.ContactProfile.EMP_ID <> 0 Then
                 contactList.EmpID = contactVM.ContactProfile.EMP_ID
                 contactList.LAST_NAME = contactVM.ContactProfile.LAST_NAME
                 contactList.FIRST_NAME = contactVM.ContactProfile.FIRST_NAME
@@ -467,8 +465,8 @@ Class UpdateContactListPage
                 contactList.MARITAL_STATUS_ID = contactVM.ContactProfile.MARITAL_STATUS_ID
                 contactList.POSITION_ID = contactVM.ContactProfile.POSITION_ID
                 contactList.PERMISSION_GROUP_ID = contactVM.ContactProfile.PERMISSION_GROUP_ID
-                contactList.DEPARTMENT_ID = 0
-                contactList.DIVISION_ID = 0
+                contactList.DEPARTMENT_ID = contactVM.ContactProfile.DEPARTMENT_ID
+                contactList.DIVISION_ID = contactVM.ContactProfile.DIVISION_ID
                 contactList.OLD_EMP_ID = old_empid
 
                 If MsgBox("Are you sure you want to continue? Employee will be removed from the lists.", vbYesNo, "AIDE") = vbYes Then
