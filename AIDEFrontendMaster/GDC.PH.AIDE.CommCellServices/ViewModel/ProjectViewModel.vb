@@ -422,9 +422,14 @@ Public Class ProjectViewModel
                 objassign.EndPeriod = x.DateFinished
                 _assign.Add(objassign)
             Next
+
             If _assign.Count = 0 Then
                 MsgBox("No Assigned Project yet, Please Select Employee to Assign Project!", MsgBoxStyle.Information)
             Else
+                If _assign(0).ProjectID = 0 Then
+                    MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
+                    Exit Sub
+                End If
                 _AideServiceClient.CreateAssignedProject(_assign.ToArray())
                 MsgBox("Assigned Project Successfully Created!", MsgBoxStyle.Information)
             End If
