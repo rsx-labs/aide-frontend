@@ -8,7 +8,7 @@ Imports System.ServiceModel
 Imports System.Windows.Xps
 Imports System.Windows.Xps.Packaging
 Imports System.Printing
-Imports System.Windows
+
 
 Class ResourcePlannerPage
     Implements IAideServiceCallback
@@ -51,6 +51,13 @@ Class ResourcePlannerPage
         MonthLabel.Text = SetMonths() + " " + year.ToString()
         LoadMonth()
         LoadAllEmpResourcePlanner()
+        cbDisplayMonth.Text = SetMonths()
+        cbDisplayMonth.SelectedValue = "11"
+        LoadYears()
+        cbYear.SelectedValue = year
+
+
+      
     End Sub
 
     Public Function InitializeService() As Boolean
@@ -66,6 +73,18 @@ Class ResourcePlannerPage
         Return bInitialize
     End Function
 
+    Public Sub LoadYears()
+        Try
+            cbYear.DisplayMemberPath = "Text"
+            cbYear.SelectedValuePath = "Value"
+            For i As Integer = 2019 To DateTime.Today.Year
+                Dim nextYear As Integer = i + 1
+                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
+            Next
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
 #Region "ICallback Functions"
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
@@ -239,7 +258,10 @@ Class ResourcePlannerPage
         Try
             InitializeService()
             _ResourceDBProvider._splist.Clear()
-            Dim lstresource As ResourcePlanner() = client.GetAllEmpResourcePlanner(profile.Email_Address, month, Date.Now.Year)
+            If year = 0 Then
+                year = Date.Now.Year
+            End If
+            Dim lstresource As ResourcePlanner() = client.GetAllEmpResourcePlanner(profile.Email_Address, month, year)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
 
             Dim emp_id As Integer
@@ -252,7 +274,7 @@ Class ResourcePlannerPage
             Next
 
 
-            Dim dateFirstSTR As String = month.ToString + "/1/" + Date.Now.Year.ToString
+            Dim dateFirstSTR As String = month.ToString + "/1/" + year.ToString
             Dim dateFirst As Date = Date.Parse(dateFirstSTR)
             For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
                 resourcelist.Add(New ResourcePlannerModel(iResource))
@@ -264,7 +286,7 @@ Class ResourcePlannerPage
                     If emp_id > 0 Then
                         it.Add(dict)
                     End If
-                    dateFirstSTR = month.ToString + "/1/" + Date.Now.Year.ToString
+                    dateFirstSTR = month.ToString + "/1/" + year.ToString
                     dateFirst = Date.Parse(dateFirstSTR)
                     dict = New Dictionary(Of String, String)()
                     dict.Add("Employee Name", iResource.Emp_Name)
@@ -407,12 +429,63 @@ Class ResourcePlannerPage
     '    cbFilterCategory.Text = String.Empty
     '    LoadAllEmpResourcePlanner()
     'End Sub
+
+
+    Private Function SetDisplayMonthYr(SelectedMonth As String)
+        Dim dpsplaymonthYr As String = ""
+        Dim newYr As String = ""
+        If year = 0 Then
+            year = Date.Now.Year
+        End If
+
+        newYr = (year + 1).ToString()
+        Select Case SelectedMonth
+            Case "1"
+                dpsplaymonthYr = "January " + (year + 1).ToString()
+            Case "2"
+                dpsplaymonthYr = "Febuary " + (year + 1).ToString()
+            Case "3"
+                dpsplaymonthYr = "March " + (year + 1).ToString()
+            Case "4"
+                dpsplaymonthYr = "April " + year.ToString()
+            Case "5"
+                dpsplaymonthYr = "May" + year.ToString()
+            Case "6"
+                dpsplaymonthYr = "June " + year.ToString()
+            Case "7"
+                dpsplaymonthYr = "July " + year.ToString()
+            Case "8"
+                dpsplaymonthYr = "August " + year.ToString()
+            Case "9"
+                dpsplaymonthYr = "September " + year.ToString()
+            Case "10"
+                dpsplaymonthYr = "October " + year.ToString()
+            Case "11"
+                dpsplaymonthYr = "November " + year.ToString()
+            Case "12"
+                dpsplaymonthYr = "December " + year.ToString()
+        End Select
+        Return dpsplaymonthYr
+    End Function
+
 #End Region
 
 #Region "Button/Event"
     Private Sub cbDisplayMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbDisplayMonth.SelectionChanged
         month = cbDisplayMonth.SelectedValue
-        MonthLabel.Text = SetMonths() + " " + year.ToString()
+        year = cbYear.SelectedValue
+        If year = 0 Then
+            year = Date.Now.Year
+        End If
+        MonthLabel.Text = SetDisplayMonthYr(month)
+        LoadAllEmpResourcePlanner()
+    End Sub
+
+
+    Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
+        month = cbDisplayMonth.SelectedValue
+        year = cbYear.SelectedValue
+        MonthLabel.Text = SetDisplayMonthYr(month)
         LoadAllEmpResourcePlanner()
     End Sub
 
