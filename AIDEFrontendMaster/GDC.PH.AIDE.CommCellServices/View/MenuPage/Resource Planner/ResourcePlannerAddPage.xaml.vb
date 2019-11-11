@@ -37,6 +37,7 @@ Class ResourcePlannerAddPage
         Me.InitializeComponent()
         LoadData()
         LoadCategory()
+        LoadSchedule()
     End Sub
 #End Region
 
@@ -175,6 +176,16 @@ Class ResourcePlannerAddPage
 
     Public Sub InsertResourcePlanner()
         Dim Resource As New ResourcePlanner
+        If cbSchedule.Text = "Morning".Trim.ToString() Then
+            dtpFrom.SelectedDate = dtpFrom.SelectedDate.Value.AddHours(0).AddMinutes(0).AddSeconds(0)
+            dtpTo.SelectedDate = dtpTo.SelectedDate.Value.AddHours(13).AddMinutes(59).AddSeconds(59)
+        ElseIf cbSchedule.Text = "Aternoon" Then
+            dtpFrom.SelectedDate = dtpFrom.SelectedDate.Value.AddHours(14).AddMinutes(0).AddSeconds(0)
+            dtpTo.SelectedDate = dtpTo.SelectedDate.Value.AddHours(23).AddMinutes(59).AddSeconds(59)
+        Else
+            dtpFrom.SelectedDate = dtpFrom.SelectedDate.Value.AddHours(0).AddMinutes(0).AddSeconds(0)
+            dtpTo.SelectedDate = dtpTo.SelectedDate.Value.AddHours(23).AddMinutes(59).AddSeconds(59)
+        End If
         Resource.NAME = ""
         Resource.DESCR = ""
         Resource.Image_Path = ""
@@ -182,13 +193,13 @@ Class ResourcePlannerAddPage
         Resource.dateFrom = dtpFrom.SelectedDate
         Resource.dateTo = dtpTo.SelectedDate
         Resource.Status = cbCategory.SelectedValue
-        If profile.Emp_ID <> txtEmpID.Text Then
-            client.InsertResourcePlanner(Resource)
-        Else
-            client.UpdateResourcePlanner(Resource)
-        End If
-        'client.InsertResourcePlanner(Resource)
-        _ResourceDBProvider._splist.Clear()
+        'If profile.Emp_ID <> txtEmpID.Text Then
+        client.InsertResourcePlanner(Resource)
+            'Else
+            '    client.UpdateResourcePlanner(Resource)
+            'End If
+            'client.InsertResourcePlanner(Resource)
+            _ResourceDBProvider._splist.Clear()
         MsgBox("Successfully applied " & cbCategory.Text, MsgBoxStyle.Information, "AIDE")
     End Sub
 
@@ -255,6 +266,17 @@ Class ResourcePlannerAddPage
         End If
         Return Nothing
     End Function
+
+    Public Sub LoadSchedule()
+        Try
+            cbSchedule.DisplayMemberPath = "Text"
+            cbSchedule.SelectedValuePath = "Value"
+            cbSchedule.Items.Add(New With {.Text = "Morning"})
+            cbSchedule.Items.Add(New With {.Text = "Afternoon"})
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
 #End Region
 
 #Region "ICallBack Functions"

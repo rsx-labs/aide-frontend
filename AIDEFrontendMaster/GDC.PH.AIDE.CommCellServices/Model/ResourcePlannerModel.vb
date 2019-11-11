@@ -6,7 +6,7 @@ Public Class ResourcePlannerModel
 
     Private _empID As Integer
     Private _EmpName As String
-    Private _status As Double
+    Private _status As String
     Private _usedVL As ChartValues(Of Double)
     Private _desc As String
     Private _EmpImage As String
@@ -65,11 +65,11 @@ Public Class ResourcePlannerModel
         End Set
     End Property
 
-    Public Property Status As Double
+    Public Property Status As String
         Get
             Return _status
         End Get
-        Set(value As Double)
+        Set(value As String)
             _status = value
             NotifyPropertyChanged("Status")
         End Set
