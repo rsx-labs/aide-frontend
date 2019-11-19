@@ -477,7 +477,7 @@
                    
                     <Grid Grid.Column="2">
                         <Viewbox Margin="10,15">
-                            <Button Style="{DynamicResource RoundCorner}" x:Name="btnAssign" Width="auto" Height="auto" >
+                            <Button Style="{DynamicResource RoundCorner}" x:Name="btnAssign" Width="auto" Height="auto" Visibility="Collapsed">
                                 
                                     <TextBlock Text="Assign" Foreground="White" Margin="6" Padding="5,0"/>
                                 

@@ -1319,7 +1319,7 @@
                         </Grid>
                         <Grid Grid.Row="4">
                             <Button Style="{DynamicResource RoundCorner1 }" Command="{Binding CreateCommand}"  Margin="0,5,5,5" >
-                                <TextBlock Text="ASSIGN EMPLOYEE(S)" TextWrapping="Wrap" Margin="5"/>
+                                <TextBlock Text="SAVE" TextWrapping="Wrap" Margin="5"/>
                             </Button>
                         </Grid>
                         <Grid Grid.Row="5">
@@ -1352,7 +1352,7 @@
                       Width="auto" BorderBrush="Transparent" 
                       ItemsSource="{Binding EmployeeLists}" 
                       SelectedItem="{Binding SelectedEmployees}"
-                      SelectedValuePath="Key">
+                      SelectedValuePath="Key" x:Name="grdEmployees">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Name" Width="1*" Binding="{Binding Name}" IsReadOnly="True"/>
 
@@ -1390,7 +1390,7 @@
                       Width="auto" BorderBrush="Transparent" 
                       ItemsSource="{Binding AssignedEmployeeLists}" 
                       SelectedItem="{Binding SelectedAssignedEmployees}"
-                      SelectedValuePath="Key">
+                      SelectedValuePath="Key" x:Name="grdAssigned">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Width="*" ElementStyle="{StaticResource ColumnElementStyle}" Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
                                         <DataGridTemplateColumn Width="*" Header="Start Date">

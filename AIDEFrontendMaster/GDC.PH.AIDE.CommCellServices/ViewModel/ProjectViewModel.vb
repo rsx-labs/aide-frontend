@@ -61,8 +61,11 @@ Public Class ProjectViewModel
         End Try
 
         AddMode = True
-        RemoveMode = False
+
+        RemoveMode = True
+
         ClearMode = False
+
         InitializeService()
     End Sub
 
@@ -424,20 +427,27 @@ Public Class ProjectViewModel
             Next
 
             If _assign.Count = 0 Then
-                MsgBox("No Assigned Project yet, Please Select Employee to Assign Project!", MsgBoxStyle.Information)
+                If SelectedProject.ProjectID > 0 Then
+                    _AideServiceClient.DeleteAllAssignedProject(SelectedProject.ProjectID)
+                    MsgBox("Assigned employee(s) to selected project deleted successfully!", MsgBoxStyle.Information)
+                Else
+                    MsgBox("No Assigned Project yet, Please Select Employee to Assign Project!", MsgBoxStyle.Information)
+                End If
             Else
                 If _assign(0).ProjectID = 0 Then
                     MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
                     Exit Sub
+
                 End If
+                _AideServiceClient.DeleteAllAssignedProject(SelectedProject.ProjectID)
                 _AideServiceClient.CreateAssignedProject(_assign.ToArray())
-                MsgBox("Assigned Project Successfully Created!", MsgBoxStyle.Information)
+                MsgBox("Assigned Project Successfully saved!", MsgBoxStyle.Information)
             End If
 
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
-        Clear()
+        'Clear()
     End Sub
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
