@@ -46,6 +46,9 @@ Class CreateProjectPage
         _profile = profile
         _empID = _profile.Emp_ID
         InitializeComponent()
+        If _profile.Permission_ID = 1 Then
+            grdCreate.Visibility = Visibility.Visible
+        End If
         SetData()
     End Sub
 #End Region

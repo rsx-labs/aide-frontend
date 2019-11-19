@@ -43,6 +43,9 @@ Class ViewProjectUI
         Me._submenuframe = _submenuframe
         Me._empID = profile.Emp_ID
         LoadProjectList()
+        If _profile.Permission_ID = 1 Then
+            btnAssign.Visibility = Visibility.Visible
+        End If
     End Sub
 #End Region
 
