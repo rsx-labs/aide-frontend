@@ -163,24 +163,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DashboardTaskSummaryTotals" nillable="true" type="tns:DashboardTaskSummaryTotals" />
-  <xs:complexType name="ArrayOfWeekRange">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="WeekRange" nillable="true" type="tns:WeekRange" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfWeekRange" nillable="true" type="tns:ArrayOfWeekRange" />
-  <xs:complexType name="WeekRange">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="DateRange" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DateSubmitted" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="EmployeeID" type="xs:int" />
-      <xs:element minOccurs="0" name="EndWeek" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="StartWeek" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Status" type="xs:short" />
-      <xs:element minOccurs="0" name="WeekRangeID" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="WeekRange" nillable="true" type="tns:WeekRange" />
   <xs:complexType name="ArrayOfWeeklyReport">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="WeeklyReport" nillable="true" type="tns:WeeklyReport" />
@@ -211,6 +193,24 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="WeeklyReport" nillable="true" type="tns:WeeklyReport" />
+  <xs:complexType name="WeekRange">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DateRange" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateSubmitted" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EmployeeID" type="xs:int" />
+      <xs:element minOccurs="0" name="EndWeek" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StartWeek" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Status" type="xs:short" />
+      <xs:element minOccurs="0" name="WeekRangeID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WeekRange" nillable="true" type="tns:WeekRange" />
+  <xs:complexType name="ArrayOfWeekRange">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WeekRange" nillable="true" type="tns:WeekRange" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfWeekRange" nillable="true" type="tns:ArrayOfWeekRange" />
   <xs:complexType name="ArrayOfContactList">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="ContactList" nillable="true" type="tns:ContactList" />
@@ -488,12 +488,17 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfKPISummary" nillable="true" type="tns:ArrayOfKPISummary" />
-  <xs:complexType name="ArrayOfSuccessRegister">
+  <xs:complexType name="LessonLearnt">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="SuccessRegister" nillable="true" type="tns:SuccessRegister" />
+      <xs:element minOccurs="0" name="ActionNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmpID" type="xs:int" />
+      <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Problem" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReferenceNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Resolution" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfSuccessRegister" nillable="true" type="tns:ArrayOfSuccessRegister" />
+  <xs:element name="LessonLearnt" nillable="true" type="tns:LessonLearnt" />
   <xs:complexType name="SuccessRegister">
     <xs:sequence>
       <xs:element minOccurs="0" name="AdditionalInformation" nillable="true" type="xs:string" />
@@ -506,6 +511,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SuccessRegister" nillable="true" type="tns:SuccessRegister" />
+  <xs:complexType name="ArrayOfSuccessRegister">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SuccessRegister" nillable="true" type="tns:SuccessRegister" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSuccessRegister" nillable="true" type="tns:ArrayOfSuccessRegister" />
   <xs:complexType name="ArrayOfNickname">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Nickname" nillable="true" type="tns:Nickname" />
@@ -622,7 +633,7 @@
       <xs:element minOccurs="0" name="Image_Path" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="NAME" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Status" type="xs:double" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StatusCD" type="xs:int" />
       <xs:element minOccurs="0" name="TotalBalance" type="xs:double" />
       <xs:element minOccurs="0" name="UsedLeaves" type="xs:double" />
@@ -854,6 +865,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AssignedProject" nillable="true" type="tns:AssignedProject" />
+  <xs:complexType name="ArrayOfAssignedProject">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AssignedProject" nillable="true" type="tns:AssignedProject" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAssignedProject" nillable="true" type="tns:ArrayOfAssignedProject" />
   <xs:complexType name="ArrayOfViewProject">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="ViewProject" nillable="true" type="tns:ViewProject" />
@@ -870,12 +887,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ViewProject" nillable="true" type="tns:ViewProject" />
-  <xs:complexType name="ArrayOfAssignedProject">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="AssignedProject" nillable="true" type="tns:AssignedProject" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfAssignedProject" nillable="true" type="tns:ArrayOfAssignedProject" />
   <xs:complexType name="ArrayOfStatusGroup">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="StatusGroup" nillable="true" type="tns:StatusGroup" />
@@ -977,15 +988,4 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfLessonLearnt" nillable="true" type="tns:ArrayOfLessonLearnt" />
-  <xs:complexType name="LessonLearnt">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ActionNo" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="EmpID" type="xs:int" />
-      <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Problem" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ReferenceNo" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Resolution" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="LessonLearnt" nillable="true" type="tns:LessonLearnt" />
 </xs:schema>
