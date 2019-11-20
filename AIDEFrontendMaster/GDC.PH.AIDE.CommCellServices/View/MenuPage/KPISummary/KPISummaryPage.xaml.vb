@@ -1,16 +1,9 @@
-﻿Imports UI_AIDE_CommCellServices.ServiceReference1
-Imports System.Reflection
-Imports System.IO
-Imports System.Diagnostics
+﻿Imports System.Collections.ObjectModel
+Imports System.Data
 Imports System.ServiceModel
-Imports System.Collections.ObjectModel
-Imports System.Windows.Xps.Packaging
-Imports System.Windows.Xps
-Imports System.Printing
-Imports System.Drawing.Printing
 Imports LiveCharts
 Imports LiveCharts.Wpf
-Imports System.Data
+Imports UI_AIDE_CommCellServices.ServiceReference1
 
 Public Class KPISummaryPage
     Implements IAideServiceCallback
@@ -114,7 +107,7 @@ Public Class KPISummaryPage
             Dim FYStart As Date
             Dim FYEnd As Date
             If _year < Date.Now.Year Then
-                FYStart = Convert.ToDateTime(_year.ToString() + "-" + "04-01"))
+                FYStart = Convert.ToDateTime(_year.ToString() + "-" + "04-01")
                 FYEnd = Convert.ToDateTime((_year + 1).ToString() + "-" + "03-31")
             Else
                 If Date.Now.Month >= 4 Then
@@ -139,37 +132,49 @@ Public Class KPISummaryPage
             Dim kpi2Name As String = ""
             Dim kpi3Name As String = ""
             Dim overallValue As Double = 0
-            For Each objSummary As KPISummary In lstKPISummary
-                _KPISummaryDBProvider.SetKPISummary(objSummary)
-            Next
 
-            Dim monthName(lstKPISummary.Length) As String
-            Dim x As Integer = 0
-            Dim y As Integer = 0
+            Dim monthName(12) As String
 
-            For Each iSummary As KPISummaryData In _KPISummaryDBProvider.GetAllKPISummary()
-                x = x + 1
-                If x = 1 Then
-                    kpi1.Add(iSummary.KPI_Actual * 100)
-                    kpi1Name = iSummary._subject
-                    monthName(y) = dfmi.GetMonthName(iSummary._Month)
-                    y = y + 1
-                    overallValue = iSummary.KPI_Overall * 100
-                ElseIf x = 2 Then
-                    kpi2.Add(iSummary.KPI_Actual * 100)
-                    kpi2Name = iSummary._subject
-                    overallValue = overallValue + (iSummary.KPI_Overall * 100)
-                ElseIf x = 3 Then
-                    kpi3.Add(iSummary.KPI_Actual * 100)
-                    kpi3Name = iSummary._subject
-                    x = 0
-                    overallValue = (overallValue + (iSummary.KPI_Overall * 100)) / 3
-                    overallKPI.Add(Math.Round(overallValue, 2))
-                End If
-            Next
+            If lstKPISummary.Length > 0 Then
+                For Each objSummary As KPISummary In lstKPISummary
+                    _KPISummaryDBProvider.SetKPISummary(objSummary)
+                Next
 
+                Dim x As Integer = 0
+                Dim y As Integer = 0
+
+                For Each iSummary As KPISummaryData In _KPISummaryDBProvider.GetAllKPISummary()
+                    x = x + 1
+                    If x = 1 Then
+                        kpi1.Add(iSummary.KPI_Actual * 100)
+                        kpi1Name = iSummary._subject
+                        monthName(y) = dfmi.GetMonthName(iSummary._Month)
+                        y = y + 1
+                        overallValue = iSummary.KPI_Overall * 100
+                    ElseIf x = 2 Then
+                        kpi2.Add(iSummary.KPI_Actual * 100)
+                        kpi2Name = iSummary._subject
+                        overallValue = overallValue + (iSummary.KPI_Overall * 100)
+                    ElseIf x = 3 Then
+                        kpi3.Add(iSummary.KPI_Actual * 100)
+                        kpi3Name = iSummary._subject
+                        x = 0
+                        overallValue = (overallValue + (iSummary.KPI_Overall * 100)) / 3
+                        overallKPI.Add(Math.Round(overallValue, 2))
+                    End If
+                Next
+
+
+            Else
+                _KPISummaryDBProvider.KPISummaryDataList.Clear()
+            End If
+
+            Dim overallText As String = ""
+            If _KPISummaryDBProvider.KPISummaryDataList.Count > 0 Then
+                overallText = "Overall"
+            End If
             SeriesCollection = New SeriesCollection From {
-                New ColumnSeries With {
+            New ColumnSeries With {
                     .Values = kpi1,
                     .DataLabels = True,
                     .LabelsPosition = BarLabelPosition.Perpendicular,
@@ -196,16 +201,18 @@ Public Class KPISummaryPage
                 New LineSeries With {
                      .Values = overallKPI,
                     .DataLabels = True,
-                    .Title = "Overall",
+                    .Title = overallText,
                     .Fill = Brushes.Transparent,
                     .Foreground = Brushes.DarkGray
                 }
             }
 
+
             chartMonthSummary.Series = SeriesCollection
             chartMonthSummary.AxisX.First().Labels = monthName
             chartMonthSummary.AxisY.First().LabelFormatter = Function(value) value
             chartMonthSummary.AxisX.First().LabelsRotation = 135
+
 
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
@@ -229,63 +236,71 @@ Public Class KPISummaryPage
         Dim curYear As Integer = 0
         Dim dfmi As System.Globalization.DateTimeFormatInfo = New Globalization.DateTimeFormatInfo()
 
+        Dim kpiList As ObservableCollection(Of KPISummaryData) = _KPISummaryDBProvider.GetAllKPISummary()
 
-        For Each iSummary As KPISummaryData In _KPISummaryDBProvider.GetAllKPISummary()
-            If iSummary._Month >= 4 Then
-                curYear = Date.Now.Year
-            Else
-                curYear = Date.Now.Year - 1
-            End If
-
-
-            If kpiName <> iSummary._subject Then
-                x = x + 1
-
-                If x = 1 Then
-                    overallValue = iSummary.KPI_Overall * 100
-                    If Not dict.ContainsKey("KPI") Then
-                        dict = New Dictionary(Of String, String)()
-                        dict.Add("EMP_ID", iSummary._EmployeeID)
-                        dict.Add("KPI_REF", iSummary._KPI_RefNo)
-                        dict.Add("FY_START", iSummary._FYStart)
-                        dict.Add("FY_END", iSummary._FYEnd)
-                        dict.Add("KPI", iSummary._subject)
+        If kpiList.Count > 0 Then
+            For Each iSummary As KPISummaryData In kpiList
+                If _year < Date.Now.Year Then
+                    curYear = _year
+                Else
+                    If iSummary._Month >= 4 Then
+                        curYear = Date.Now.Year
+                    Else
+                        curYear = Date.Now.Year - 1
                     End If
-
-                    dict.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), (iSummary.KPI_Target * 100).ToString() + " | " + (iSummary.KPI_Actual * 100).ToString())
-                ElseIf x = 2 Then
-                    overallValue = overallValue + (iSummary.KPI_Overall * 100)
-                    If Not dict2.ContainsKey("KPI") Then
-                        dict2 = New Dictionary(Of String, String)()
-                        dict2.Add("EMP_ID", iSummary._EmployeeID)
-                        dict2.Add("KPI_REF", iSummary._KPI_RefNo)
-                        dict2.Add("FY_START", iSummary._FYStart)
-                        dict2.Add("FY_END", iSummary._FYEnd)
-                        dict2.Add("KPI", iSummary._subject)
-                    End If
-                    dict2.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), (iSummary.KPI_Target * 100).ToString() + " | " + (iSummary.KPI_Actual * 100).ToString())
-                ElseIf x = 3 Then
-                    overallValue = (overallValue + (iSummary.KPI_Overall * 100)) / 3
-                    If Not dict3.ContainsKey("KPI") Then
-                        dict3 = New Dictionary(Of String, String)()
-                        dict3.Add("EMP_ID", iSummary._EmployeeID)
-                        dict3.Add("KPI_REF", iSummary._KPI_RefNo)
-                        dict3.Add("FY_START", iSummary._FYStart)
-                        dict3.Add("FY_END", iSummary._FYEnd)
-                        dict3.Add("KPI", iSummary._subject)
-                    End If
-                    dict3.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), (iSummary.KPI_Target * 100).ToString() + " | " + (iSummary.KPI_Actual * 100).ToString())
-
-                    If Not dict4.ContainsKey("KPI") Then
-                        dict4.Add("KPI", "Overall")
-                    End If
-                    dict4.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), Math.Round(overallValue, 2).ToString())
-                    x = 0
                 End If
-            End If
 
-            kpiName = iSummary._subject
-        Next
+
+                If kpiName <> iSummary._subject Then
+                    x = x + 1
+
+                    If x = 1 Then
+                        overallValue = iSummary.KPI_Overall * 100
+                        If Not dict.ContainsKey("KPI") Then
+                            dict = New Dictionary(Of String, String)()
+                            dict.Add("EMP_ID", iSummary._EmployeeID)
+                            dict.Add("KPI_REF", iSummary._KPI_RefNo)
+                            dict.Add("FY_START", iSummary._FYStart)
+                            dict.Add("FY_END", iSummary._FYEnd)
+                            dict.Add("KPI", iSummary._subject)
+                        End If
+
+                        dict.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), (iSummary.KPI_Target * 100).ToString() + " | " + (iSummary.KPI_Actual * 100).ToString())
+                    ElseIf x = 2 Then
+                        overallValue = overallValue + (iSummary.KPI_Overall * 100)
+                        If Not dict2.ContainsKey("KPI") Then
+                            dict2 = New Dictionary(Of String, String)()
+                            dict2.Add("EMP_ID", iSummary._EmployeeID)
+                            dict2.Add("KPI_REF", iSummary._KPI_RefNo)
+                            dict2.Add("FY_START", iSummary._FYStart)
+                            dict2.Add("FY_END", iSummary._FYEnd)
+                            dict2.Add("KPI", iSummary._subject)
+                        End If
+                        dict2.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), (iSummary.KPI_Target * 100).ToString() + " | " + (iSummary.KPI_Actual * 100).ToString())
+                    ElseIf x = 3 Then
+                        overallValue = (overallValue + (iSummary.KPI_Overall * 100)) / 3
+                        If Not dict3.ContainsKey("KPI") Then
+                            dict3 = New Dictionary(Of String, String)()
+                            dict3.Add("EMP_ID", iSummary._EmployeeID)
+                            dict3.Add("KPI_REF", iSummary._KPI_RefNo)
+                            dict3.Add("FY_START", iSummary._FYStart)
+                            dict3.Add("FY_END", iSummary._FYEnd)
+                            dict3.Add("KPI", iSummary._subject)
+                        End If
+                        dict3.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), (iSummary.KPI_Target * 100).ToString() + " | " + (iSummary.KPI_Actual * 100).ToString())
+
+                        If Not dict4.ContainsKey("KPI") Then
+                            dict4.Add("KPI", "Overall")
+                        End If
+                        dict4.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), Math.Round(overallValue, 2).ToString())
+                        x = 0
+                    End If
+                End If
+
+                kpiName = iSummary._subject
+            Next
+        End If
+
         lstDict.Add(dict)
         lstDict.Add(dict2)
         lstDict.Add(dict3)
@@ -295,6 +310,13 @@ Public Class KPISummaryPage
         dgKPISummary.RowBackground = New SolidColorBrush(Colors.White)
 
         dgKPISummary.ItemsSource = table.AsDataView
+        If dgKPISummary.Columns.Count > 0 Then
+            dgKPISummary.Columns(0).Visibility = Visibility.Collapsed
+            dgKPISummary.Columns(1).Visibility = Visibility.Collapsed
+            dgKPISummary.Columns(2).Visibility = Visibility.Collapsed
+            dgKPISummary.Columns(3).Visibility = Visibility.Collapsed
+        End If
+
     End Sub
 
     Private Function ToDataTable(list As List(Of Dictionary(Of String, String))) As DataTable
