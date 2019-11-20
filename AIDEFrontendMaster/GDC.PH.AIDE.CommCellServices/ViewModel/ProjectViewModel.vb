@@ -349,6 +349,7 @@ Public Class ProjectViewModel
                     AssignedEmployeeLists.Add(rawEmployee)
                 End If
             Next
+            AssignedEmployeeLists = New ObservableCollection(Of EmployeeListModel)(AssignedEmployeeLists.OrderBy(Function(f) f.Name).ToList())
 
             For Each rawEmployee As EmployeeListModel In EmployeeLists
                 If SelectedEmployees.Name.Equals(rawEmployee.Name) Then
@@ -371,6 +372,7 @@ Public Class ProjectViewModel
             For Each rawEmployee As EmployeeListModel In AssignedEmployeeLists
                 EmployeeLists.Add(rawEmployee)
             Next
+            EmployeeLists = New ObservableCollection(Of EmployeeListModel)(EmployeeLists.OrderBy(Function(f) f.Name).ToList())
 
             AssignedEmployeeLists.Clear()
         Catch ex As Exception
@@ -389,12 +391,14 @@ Public Class ProjectViewModel
                     EmployeeLists.Add(rawEmployee)
                 End If
             Next
-
+            EmployeeLists = New ObservableCollection(Of EmployeeListModel)(EmployeeLists.OrderBy(Function(f) f.Name).ToList())
             For Each rawEmployee As EmployeeListModel In AssignedEmployeeLists
                 If SelectedAssignedEmployees.Name.Equals(rawEmployee.Name) Then
                     AssignedEmployeeLists.Remove(rawEmployee)
                 End If
             Next
+            AssignedEmployeeLists = New ObservableCollection(Of EmployeeListModel)(AssignedEmployeeLists.OrderBy(Function(f) f.Name).ToList())
+
         Catch ex As Exception
             Console.WriteLine(ex.Message)
         End Try

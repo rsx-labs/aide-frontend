@@ -228,6 +228,8 @@ Public Class NewProject
             For Each rawEmployee As EmployeeListModel In _ProjectViewModel.AssignedEmployeeLists
                 _ProjectViewModel.EmployeeLists.Add(rawEmployee)
             Next
+            _ProjectViewModel.EmployeeLists = New ObservableCollection(Of EmployeeListModel)(_ProjectViewModel.EmployeeLists.OrderBy(Function(f) f.Name).ToList())
+
             grdEmployees.Items.Refresh()
             _ProjectViewModel.AssignedEmployeeLists.Clear()
 

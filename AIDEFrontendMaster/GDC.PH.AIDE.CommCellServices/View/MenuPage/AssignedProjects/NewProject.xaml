@@ -1352,7 +1352,8 @@
                       Width="auto" BorderBrush="Transparent" 
                       ItemsSource="{Binding EmployeeLists}" 
                       SelectedItem="{Binding SelectedEmployees}"
-                      SelectedValuePath="Key" x:Name="grdEmployees">
+                      SelectedValuePath="Key" x:Name="grdEmployees"
+                                          >
                                     <DataGrid.Columns>
                                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Name" Width="1*" Binding="{Binding Name}" IsReadOnly="True"/>
 
