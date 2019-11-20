@@ -34,11 +34,11 @@ Public Class KPISummaryPage
         _month = Date.Now.Month
         _year = Date.Now.Year
 
-        LoadMonth()
+        'LoadMonth()
         LoadYears()
         LoadData()
 
-        cbMonth.SelectedValue = _month
+        'cbMonth.SelectedValue = _month
         cbYear.SelectedValue = _year
 
         dgKPISummary.SelectionMode = DataGridSelectionMode.Single
@@ -74,22 +74,22 @@ Public Class KPISummaryPage
         End Try
     End Sub
 
-    Public Sub LoadMonth()
-        cbMonth.DisplayMemberPath = "Text"
-        cbMonth.SelectedValuePath = "Value"
-        cbMonth.Items.Add(New With {.Text = "January", .Value = 1})
-        cbMonth.Items.Add(New With {.Text = "February", .Value = 2})
-        cbMonth.Items.Add(New With {.Text = "March", .Value = 3})
-        cbMonth.Items.Add(New With {.Text = "April", .Value = 4})
-        cbMonth.Items.Add(New With {.Text = "May", .Value = 5})
-        cbMonth.Items.Add(New With {.Text = "June", .Value = 6})
-        cbMonth.Items.Add(New With {.Text = "July", .Value = 7})
-        cbMonth.Items.Add(New With {.Text = "August", .Value = 8})
-        cbMonth.Items.Add(New With {.Text = "September", .Value = 9})
-        cbMonth.Items.Add(New With {.Text = "October", .Value = 10})
-        cbMonth.Items.Add(New With {.Text = "November", .Value = 11})
-        cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
-    End Sub
+    'Public Sub LoadMonth()
+    '    cbMonth.DisplayMemberPath = "Text"
+    '    cbMonth.SelectedValuePath = "Value"
+    '    cbMonth.Items.Add(New With {.Text = "January", .Value = 1})
+    '    cbMonth.Items.Add(New With {.Text = "February", .Value = 2})
+    '    cbMonth.Items.Add(New With {.Text = "March", .Value = 3})
+    '    cbMonth.Items.Add(New With {.Text = "April", .Value = 4})
+    '    cbMonth.Items.Add(New With {.Text = "May", .Value = 5})
+    '    cbMonth.Items.Add(New With {.Text = "June", .Value = 6})
+    '    cbMonth.Items.Add(New With {.Text = "July", .Value = 7})
+    '    cbMonth.Items.Add(New With {.Text = "August", .Value = 8})
+    '    cbMonth.Items.Add(New With {.Text = "September", .Value = 9})
+    '    cbMonth.Items.Add(New With {.Text = "October", .Value = 10})
+    '    cbMonth.Items.Add(New With {.Text = "November", .Value = 11})
+    '    cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
+    'End Sub
 
     Private Sub LoadData()
         LoadKPISummary()
@@ -343,10 +343,10 @@ Public Class KPISummaryPage
 
 #Region "Private Functions"
 
-    Private Sub cbMonth_DropDownClosed(sender As Object, e As EventArgs) Handles cbMonth.DropDownClosed
-        _month = cbMonth.SelectedValue
-        'LoadData()
-    End Sub
+    'Private Sub cbMonth_DropDownClosed(sender As Object, e As EventArgs) Handles cbMonth.DropDownClosed
+    '    _month = cbMonth.SelectedValue
+    '    'LoadData()
+    'End Sub
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
         _year = cbYear.SelectedValue
