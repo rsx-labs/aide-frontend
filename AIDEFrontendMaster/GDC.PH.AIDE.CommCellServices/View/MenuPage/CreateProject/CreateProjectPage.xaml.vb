@@ -207,7 +207,7 @@ Class CreateProjectPage
             GetBillability()
             GetCategory()
             Dim Projects As New Project
-            Projects.ProjectID = Convert.ToInt32(1)
+            Projects.ProjectID = CType(dgProjectList.SelectedItem, ProjectModel).ProjectID
             Projects.ProjectCode = txtProjCD.Text
             Projects.ProjectName = txtProjName.Text
             Projects.Category = category
