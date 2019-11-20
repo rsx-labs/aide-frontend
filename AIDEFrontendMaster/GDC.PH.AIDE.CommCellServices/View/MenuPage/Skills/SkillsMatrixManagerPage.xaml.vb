@@ -541,6 +541,10 @@ Class SkillsMatrixManagerPage
 
                 If isManager = True Or emp_ID = empID Then
                     Dim lstProfile As Profile = client.GetProfileInformation(emp_ID)
+
+                    If lstProfile Is Nothing Then
+                        Exit Sub
+                    End If
                     Dim profileList As New ObservableCollection(Of ProfileModel)
 
                     _ProfileDBProvider = New ProfileDBProvider
@@ -558,7 +562,7 @@ Class SkillsMatrixManagerPage
                     ClearSelection()
                     LoadSkillsProf()
 
-                    lblLastReviewed.Text = dgSkillList.CurrentCell.Item(11)
+                    lblLastReviewed.Text = dgSkillList.CurrentCell.Item(23)
                     btnPrint.Visibility = Windows.Visibility.Hidden
                     grdUpdate.Visibility = Visibility.Visible
                 End If
