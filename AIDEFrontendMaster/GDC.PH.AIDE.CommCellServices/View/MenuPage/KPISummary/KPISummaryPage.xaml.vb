@@ -113,13 +113,19 @@ Public Class KPISummaryPage
 
             Dim FYStart As Date
             Dim FYEnd As Date
-            If Date.Now.Month >= 4 Then
-                FYStart = Convert.ToDateTime(Date.Now.Year.ToString() + "-" + "04-01")
-                FYEnd = Convert.ToDateTime((Date.Now.Year + 1).ToString() + "-" + "03-31")
+            If _year < Date.Now.Year Then
+                FYStart = Convert.ToDateTime(_year.ToString() + "-" + "04-01"))
+                FYEnd = Convert.ToDateTime((_year + 1).ToString() + "-" + "03-31")
             Else
-                FYStart = Convert.ToDateTime((Date.Now.Year - 1).ToString() + "-" + "04-01")
-                FYEnd = Convert.ToDateTime(Date.Now.Year.ToString() + "-" + "03-31")
+                If Date.Now.Month >= 4 Then
+                    FYStart = Convert.ToDateTime(Date.Now.Year.ToString() + "-" + "04-01")
+                    FYEnd = Convert.ToDateTime((Date.Now.Year + 1).ToString() + "-" + "03-31")
+                Else
+                    FYStart = Convert.ToDateTime((Date.Now.Year - 1).ToString() + "-" + "04-01")
+                    FYEnd = Convert.ToDateTime(Date.Now.Year.ToString() + "-" + "03-31")
+                End If
             End If
+
             Dim lstKPISummary = client.GetKPISummaryList(Me._profile.Emp_ID, FYStart, FYEnd)
             Dim lstKPISummaryModel As New ObservableCollection(Of KPISummaryModel)
             Dim kpiSummaryVM As New KPISummaryViewModel()
@@ -322,7 +328,7 @@ Public Class KPISummaryPage
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
         _year = cbYear.SelectedValue
-        'LoadData()
+        LoadData()
     End Sub
 
 #End Region
