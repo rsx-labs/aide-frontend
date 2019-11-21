@@ -106,7 +106,7 @@ Class KPITargetsUpdatePage
                 _kpiTargets.KPI_ReferenceNo = _kpiTargetModel.KPIReferenceNo
                 _kpiTargets.FYStart = _kpiTargetModel.FYStart
                 _kpiTargets.FYEnd = _kpiTargetModel.FYEnd
-                _kpiTargets.Description = textRange.Text
+                _kpiTargets.Description = textRange.Text.Trim()
                 _kpiTargets.Subject = _kpiTargetModel.Subject
                 _kpiTargets.DateCreated = _kpiTargetModel.DateCreated
             End If

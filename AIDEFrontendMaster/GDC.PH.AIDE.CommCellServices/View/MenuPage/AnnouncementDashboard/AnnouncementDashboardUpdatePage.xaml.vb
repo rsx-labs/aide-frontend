@@ -27,7 +27,7 @@ Class AnnouncementDashboardUpdatePage
         InitializeComponent()
         announcementModel.ObjectAnnouncement = _annModel
         DataContext = announcementModel
-        txtAnnouncementMessage.AppendText(announcementModel.ObjectAnnouncement.MESSAGE)
+        txtAnnouncementMessage.AppendText(announcementModel.ObjectAnnouncement.MESSAGE.Trim())
         Me.empID = _empID
         Me.mainframe = _mainframe
         Me.addframe = _addframe
@@ -137,7 +137,7 @@ Class AnnouncementDashboardUpdatePage
             If textRange.Text = Nothing Or _announcementmodel.TITLE = Nothing Then
             Else
                 _announce.ANNOUNCEMENT_ID = _announcementmodel.ANNOUNCEMENT_ID
-                _announce.MESSAGE = textRange.Text
+                _announce.MESSAGE = textRange.Text.Trim()
                 _announce.TITLE = _announcementmodel.TITLE
                 _announce.END_DATE = DateTime.Today
                 _announce.EMP_ID = Me.empID
