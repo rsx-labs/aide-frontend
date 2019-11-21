@@ -59,6 +59,7 @@ Public Class ThreeC_Page
         Me._submenuframe = _submenuframe
 
         LoadConcernList(offsetVal, nextVal)
+
     End Sub
 
 
@@ -234,6 +235,8 @@ Public Class ThreeC_Page
         End If
     End Sub
 
+
+
     Private Sub ThreeC_DataGridView_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles ThreeC_DataGridView.LoadingRow
         Dim RowDataContaxt As ConcernModel = TryCast(e.Row.DataContext, ConcernModel)
         If RowDataContaxt IsNot Nothing Then
@@ -288,8 +291,8 @@ Public Class ThreeC_Page
         Dim offset As Integer = 0
         Dim nextVal As Integer = 10
         isSearchIsUsed = 2
-        If dtpTo.Text = String.Empty Then
-            MsgBox("Please Input Date To!", MsgBoxStyle.Critical, "AIDE")
+        If dtpTo.Text = String.Empty Or dtpFrom.Text = String.Empty Then
+            MsgBox("Please Complete date Selection.", MsgBoxStyle.Critical, "AIDE")
         Else
             LoadBetweenSearchDate(offset, nextVal, Me.DataContext())
             GetDateTimeNow(Me.DataContext())
@@ -610,9 +613,11 @@ Public Class ThreeC_Page
         If dtpFrom.Text IsNot String.Empty Then
             dtpTo.DisplayDateStart = dtpFrom.Text
             dtpTo.DisplayDateEnd = Date.MaxValue
-            dtpTo.IsEnabled = True
+
+
         End If
     End Sub
+
     Private Sub DisplayPagingInfo()
         ' If there has no data found
         If _lstConcern.Length = 0 Then
@@ -637,6 +642,11 @@ Public Class ThreeC_Page
         btnPrev.IsEnabled = True
         btnNext.IsEnabled = True
     End Sub
+
+
+
+
+
 #End Region
 
 End Class

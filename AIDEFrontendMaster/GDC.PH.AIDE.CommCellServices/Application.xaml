@@ -520,7 +520,7 @@
                                                VerticalContentAlignment="Center"
                                                Visibility="Visible"
                                                HorizontalAlignment="Stretch"
-                                               Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="0.5" Foreground="DimGray">
+                                               Style="{DynamicResource styleDatePickerTextBox}" IsReadOnly="True" Background="{x:Null}" BorderThickness="0.5" Foreground="DimGray">
                             </DatePickerTextBox>
                             
                             <Viewbox HorizontalAlignment="Right">
@@ -582,7 +582,7 @@
                                                Visibility="Visible"
                                                FontSize="10"
                                                HorizontalAlignment="Stretch"
-                                               Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="0.5" Foreground="DimGray">
+                                               Style="{DynamicResource styleDatePickerTextBox}" IsReadOnly="True" Background="{x:Null}" BorderThickness="0.5" Foreground="DimGray">
                             </DatePickerTextBox>
                             
                             <Viewbox HorizontalAlignment="Right">
@@ -631,7 +631,7 @@
             <Setter Property="BorderBrush" Value="Transparent"></Setter>
             <Setter Property="BorderThickness" Value="0"></Setter>
             <Setter Property="IsEnabled" Value="True"></Setter>
-            <Setter Property="IsReadOnly" Value="False"></Setter>
+            <Setter Property="IsReadOnly" Value="True"></Setter>
             <Setter Property="Foreground" Value="White"></Setter>
         </Style>
 
