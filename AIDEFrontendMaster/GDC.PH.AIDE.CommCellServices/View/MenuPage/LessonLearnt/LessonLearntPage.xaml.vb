@@ -109,10 +109,14 @@ Class LessonLearntPage
 
     Private Sub SearchProblemEncountered(ByVal search As String)
         Try
-            If Me.InitializeService() Then
-                lstLesson = client.GetLessonLearntByProblem(search, profile.Email_Address)
-                SetLists()
-                DisplayPagingInfo()
+            If Not search = String.Empty Then
+                If Me.InitializeService() Then
+                    lstLesson = client.GetLessonLearntByProblem(search, profile.Email_Address)
+                    SetLists()
+                    DisplayPagingInfo()
+                End If
+            Else
+                LoadLessonLearntList()
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
