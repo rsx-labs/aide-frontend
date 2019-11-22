@@ -58,6 +58,9 @@ Public Class AssetsInventoryAddPage
         Me.profile = _profile
         Me.assetsModel = _assetsModel
         Me.fromPage = _fromPage
+        If Me.fromPage = "Approval" Then
+            cbStatus.IsEnabled = True
+        End If
         tbSuccessForm.Text = "Update Assigned Assets"
         Me.pageDefinition = "Update"
         LoadData()
@@ -67,7 +70,16 @@ Public Class AssetsInventoryAddPage
         'ListOfManagers()
         ListOfAssetType()
         ListOfAssetManufacturer()
-        empId = Integer.Parse(txtEmpID.Text)
+
+        If fromPage = "Update" And profile.Permission_ID = 1 Then
+            txtEmpID.IsEnabled = True
+            txtEmpID.Text = String.Empty
+        Else
+            txtEmpID.Text = _assetsModel.EMP_ID
+            Integer.TryParse(txtEmpID.Text, empId)
+        End If
+        'If txtEmpID.Text = String.Empty Then
+
         If assetsModel.STATUS = 4 Then
             status = 2
         ElseIf assetsModel.STATUS = 3 Then
@@ -85,6 +97,7 @@ Public Class AssetsInventoryAddPage
             If CheckMissingField() Then
                 MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
             Else
+                Integer.TryParse(txtEmpID.Text, empId)
                 assets.EMP_ID = empId
                 assets.ASSET_ID = Integer.Parse(txtID.Text)
                 assets.DATE_ASSIGNED = Date.Parse(dateInput.SelectedDate)
@@ -97,7 +110,7 @@ Public Class AssetsInventoryAddPage
                 assets.STATUS = cbStatus.SelectedValue
                 assets.ASSIGNED_TO = 999 'USED JUST TO BE NOT NULL
 
-                If profile.Permission_ID = 1 AndAlso profile.Emp_ID = assets.EMP_ID Then
+                If profile.Permission_ID = 1 Then
                     assets.APPROVAL = 1
                 Else
                     assets.APPROVAL = 0
@@ -191,7 +204,7 @@ Public Class AssetsInventoryAddPage
         Try
             e.Handled = True
             approvalStatus = 1
-            empId = Integer.Parse(profile.Emp_ID)
+            Integer.TryParse(txtEmpID.Text, empId) 'Integer.Parse(profile.Emp_ID)
             If assetsModel.STATUS = 4 Then
                 status = 1
             ElseIf assetsModel.STATUS = 3 Then
@@ -269,7 +282,7 @@ Public Class AssetsInventoryAddPage
 
     Private Sub cbNickname_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbNickname.SelectionChanged
         txtEmpID.Text = cbNickname.SelectedValue
-        empId = Integer.Parse(txtEmpID.Text)
+        Integer.TryParse(txtEmpID.Text, empId)
     End Sub
 
     Private Sub cbStatus_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbStatus.SelectionChanged
@@ -316,7 +329,7 @@ Public Class AssetsInventoryAddPage
 
     Private Sub AssignEvents()
         If fromPage = "Approval" Then
-            cbStatus.IsEnabled = False
+            cbStatus.IsEnabled = True
             cbNickname.IsEnabled = False
         End If
         AddHandler btnApprove.Click, AddressOf btnApprove_Click
@@ -335,6 +348,7 @@ Public Class AssetsInventoryAddPage
     End Sub
 
     Public Sub LoadStatus()
+        cbStatus.IsEnabled = True
         cbStatus.DisplayMemberPath = "Text"
         cbStatus.SelectedValuePath = "Value"
         If profile.Permission_ID = 1 Then
@@ -344,7 +358,7 @@ Public Class AssetsInventoryAddPage
             cbStatus.Items.Add(New With {.Text = "Unassigned", .Value = 4})
             cbStatus.Items.Add(New With {.Text = "Assigned", .Value = 3})
         End If
-        
+
         If assetsModel.STATUS = 3 Then
             txtStatus.Text = "Partially Assigned"
         ElseIf assetsModel.STATUS = 4 Then
