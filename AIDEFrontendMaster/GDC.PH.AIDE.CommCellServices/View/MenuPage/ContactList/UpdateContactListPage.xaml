@@ -496,7 +496,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock x:Name="txtlabelNName" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="NickName" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                                        <TextBlock x:Name="txtlabelNName" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Nickname" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
