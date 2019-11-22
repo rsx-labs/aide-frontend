@@ -52,12 +52,12 @@ Class ResourcePlannerPage
         LoadMonth()
         LoadAllEmpResourcePlanner()
         cbDisplayMonth.Text = SetMonths()
-        cbDisplayMonth.SelectedValue = "11"
+        cbDisplayMonth.SelectedValue = month.ToString
         LoadYears()
         cbYear.SelectedValue = year
 
 
-      
+
     End Sub
 
     Public Function InitializeService() As Boolean
