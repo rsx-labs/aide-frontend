@@ -1145,6 +1145,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Border Margin="5,10,10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
@@ -1250,6 +1251,33 @@
                         </TextBlock>
                     </Grid>
                     <Grid Grid.Row="4">
+                        <ComboBox ItemsSource="{Binding ScheduleLst}" Style="{DynamicResource StyleComboBox}" SelectedValuePath="Schedule_Type" DisplayMemberPath="Schedule_Type" x:Name="cbSchedule" Margin="10,5,5,5"/>
+                        <TextBlock x:Name="txtSchedule" FontSize="12" IsHitTestVisible="False" Text="Select Schedule" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbSchedule}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock x:Name="txtScheduleType" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Leave Type" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbCategory}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                    <Grid Grid.Row="5">
                         <Button Style="{DynamicResource RoundCorner}" Margin="5,5,10,10" x:Name="btnCreateLeave"  >
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="CREATE" TextWrapping="Wrap" Margin="5"/>
                         </Button>

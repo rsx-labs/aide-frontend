@@ -25,7 +25,7 @@ Class ResourcePlannerPage
     Private profile As Profile
 
     Dim month As Integer = Date.Now.Month
-    Dim setStatus As Integer
+    Dim setStatus As String
     Dim displayStatus As String = String.Empty
     Dim status As Integer
     Dim img As String
@@ -280,7 +280,7 @@ Class ResourcePlannerPage
                 resourcelist.Add(New ResourcePlannerModel(iResource))
 
                 setStatus = iResource.Status
-                SetCategory()
+                ' SetCategory()
 
                 If emp_id <> iResource.Emp_ID Then
                     If emp_id > 0 Then
@@ -299,7 +299,7 @@ Class ResourcePlannerPage
                         dateFirst = DateAdd(DateInterval.Day, 1, dateFirst)
                     End While
                     abbrDay = setDayOfWeekAbbr(iResource.Date_Entry.DayOfWeek.ToString())
-                    dict.Add(iResource.Date_Entry.Day.ToString() + Environment.NewLine + abbrDay, displayStatus)
+                    dict.Add(iResource.Date_Entry.Day.ToString() + Environment.NewLine + abbrDay, iResource.Status)
                 End If
                 If emp_id = iResource.Emp_ID Then
                     abbrDay = setDayOfWeekAbbr(dateFirst.DayOfWeek.ToString())
@@ -314,7 +314,7 @@ Class ResourcePlannerPage
                         dateFirst = DateAdd(DateInterval.Day, 1, dateFirst)
                     End While
                     abbrDay = setDayOfWeekAbbr(iResource.Date_Entry.DayOfWeek.ToString())
-                    dict.Add(iResource.Date_Entry.Day.ToString() + Environment.NewLine + abbrDay, displayStatus)
+                    dict.Add(iResource.Date_Entry.Day.ToString() + Environment.NewLine + abbrDay, iResource.Status)
                 End If
                 emp_id = iResource.Emp_ID
             Next
