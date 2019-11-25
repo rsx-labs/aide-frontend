@@ -1037,7 +1037,7 @@
                 </Grid>
                
                 <Grid Grid.Column="3">
-                    <Button Style="{DynamicResource RoundCornerManage}" x:Name="btnManage" Margin="0,10,10,10" Click="btnManage_Click" HorizontalAlignment="Right">
+                    <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnManage" Margin="0,10,10,10" Click="btnManage_Click" HorizontalAlignment="Right">
 
                         <TextBlock Text="Manage leaves" TextWrapping="Wrap" Margin="5"/>
 
