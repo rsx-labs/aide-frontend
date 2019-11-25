@@ -764,11 +764,12 @@
 
                                 <Grid Grid.Row="5">
                                     <ComboBox ItemsSource="{Binding Path=WeekRangeList}" 
-                                      DisplayMemberPath="DateRange" 
-                                      SelectedValuePath="WeekRangeID"
-                                      Margin="2.5,2.5,0,2.5" 
-                                      Style="{DynamicResource StyleComboBox}"
-                                      x:Name="cbDateRange"/>
+                                              DisplayMemberPath="DateRange" 
+                                              SelectedValuePath="WeekRangeID"
+                                              Margin="2.5,2.5,0,2.5" 
+                                              Style="{DynamicResource StyleComboBox}"
+                                              IsEnabled="False" 
+                                              x:Name="cbDateRange"/>
                                     <TextBlock FontSize="12" IsHitTestVisible="False" Text="Period *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
