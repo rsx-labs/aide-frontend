@@ -90,7 +90,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Employee ID" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelEmpID" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Employee ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -122,7 +122,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="First Name" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelContactFName" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="First Name" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -154,7 +154,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Last Name" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelContactLName" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Last Name" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -187,8 +187,7 @@
                                                 </Style>
                                             </TextBlock.Style>
                                         </TextBlock>
-
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Middle Initial" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelContactMName" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Middle Initial" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -219,7 +218,7 @@
                                                 </Style>
                                             </TextBlock.Style>
                                         </TextBlock>
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Date of Birth" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelDOB" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Birth Date" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -249,7 +248,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Position" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelPosition" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Position" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -282,7 +281,7 @@
                                                 </Style>
                                             </TextBlock.Style>
                                         </TextBlock>
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Date Hired" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelDateHired" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Date Hired" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -312,7 +311,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Marital Status" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelStatus" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Status" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -342,7 +341,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Permission" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelPermission" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Permission" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -401,7 +400,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Workshift" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelShift" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Work Shift" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -497,7 +496,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Nickname" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelNName" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Nickname" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -529,7 +528,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Work Email" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelWEmail" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Work Email" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -561,7 +560,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Personal Email" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelPEmail" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Personal Email" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -594,7 +593,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Work Location" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelWLocation" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Work Location" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -656,7 +655,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Mobile Number" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelMobile" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Mobile Number" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -688,7 +687,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Local Number" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelLocal" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Local Number" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -722,7 +721,7 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Home Phone" Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+                                        <TextBlock x:Name="txtlabelPhone" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Home Phone" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
@@ -754,7 +753,8 @@
                                             </TextBlock.Style>
                                         </TextBlock>
 
-                                        <TextBlock TextAlignment="Center" Margin="5" Text="Other Phone " Padding="5,0,5,5" Background="Transparent" VerticalAlignment="Bottom" HorizontalAlignment="Center" Foreground="#FFC7C7C7" FontStyle="Italic" FontSize="10">
+
+                                        <TextBlock x:Name="txtlabelOtherPhone" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Other Phone" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                             <TextBlock.Style>
                                                 <Style TargetType="{x:Type TextBlock}">
                                                     <Setter Property="Visibility" Value="Visible"/>
