@@ -79,7 +79,7 @@ Class ResourcePlannerAddPage
                         InsertResourcePlanner()
                     End If
                 Else
-                    Dim ans = MsgBox("Are you sure you want to create a " & cbCategory.Text & " leave?", MsgBoxStyle.YesNo, "AIDE")
+                    Dim ans = MsgBox("Are you sure you want to file " & cbCategory.Text & "?", MsgBoxStyle.YesNo, "AIDE")
                     If ans = MsgBoxResult.Yes Then
                         InsertResourcePlanner()
                         dtpTo.IsEnabled = True
