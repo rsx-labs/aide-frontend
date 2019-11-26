@@ -84,9 +84,9 @@ Class ComcellClockPage
     Public Sub getTime()
         Dim actualTime As String
         Dim timer As DispatcherTimer = New DispatcherTimer(New TimeSpan(0, 0, 1), DispatcherPriority.Normal, Function()
-                                                                                                               
-                                                                                                                 Dim dateNow As DateTime = Format(DateTime.Now, "hh:mm tt")
-                                                                                                                 actualTime = DateTime.Now.DayOfWeek.ToString().ToUpper() + " " + dateNow.ToString("hh:mm tt")
+
+                                                                                                                 Dim dateNow As DateTime = Format(DateTime.Now, "h:mm tt")
+                                                                                                                 actualTime = DateTime.Now.DayOfWeek.ToString().ToUpper() + " " + dateNow.ToString("h:mm tt")
 
                                                                                                                  If TimeCheck(actualTime) Then
                                                                                                                      'alarmActive = True
