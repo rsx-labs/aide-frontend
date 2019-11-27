@@ -308,6 +308,8 @@ Class WeeklyReportUpdatePage
         Else
             btnSubmit.IsEnabled = False
         End If
+
+        tbTotalHours.Text = totalWeeklyHours.ToString
     End Sub
 #End Region
 
@@ -577,7 +579,10 @@ Class WeeklyReportUpdatePage
                 End Try
             End If
         End If
+    End Sub
 
+    Private Sub btnClear_Click(sender As Object, e As RoutedEventArgs) Handles btnClear.Click
+        ClearFields()
     End Sub
 
     Private Sub txtRefID_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtRefID.TextChanged
