@@ -315,6 +315,8 @@ Class WeeklyReportAddPage
         Else
             btnSubmit.IsEnabled = False
         End If
+
+        tbTotalHours.Text = totalWeeklyHours.ToString
     End Sub
 #End Region
 
@@ -463,6 +465,10 @@ Class WeeklyReportAddPage
             ClearFields()
             dgWeeklyReport.SelectedIndex = -1
         End If
+    End Sub
+
+    Private Sub btnClear_Click(sender As Object, e As RoutedEventArgs) Handles btnClear.Click
+        ClearFields()
     End Sub
 
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs)
