@@ -9346,10 +9346,10 @@ Namespace ServiceReference1
         Function SignOffAsync(ByVal EmployeeName As String) As System.Threading.Tasks.Task(Of Integer)
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/ViewContactListAll", ReplyAction:="http://tempuri.org/IAideService/ViewContactListAllResponse")>  _
-        Function ViewContactListAll(ByVal email As String, ByVal selection As Integer) As ServiceReference1.ContactList()
+        Function ViewContactListAll(ByVal empID As Integer, ByVal selection As Integer) As ServiceReference1.ContactList()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/ViewContactListAll", ReplyAction:="http://tempuri.org/IAideService/ViewContactListAllResponse")>  _
-        Function ViewContactListAllAsync(ByVal email As String, ByVal selection As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.ContactList())
+        Function ViewContactListAllAsync(ByVal empID As Integer, ByVal selection As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.ContactList())
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateContactListByEmpID")>  _
         Sub UpdateContactListByEmpID(ByVal contact As ServiceReference1.ContactList, ByVal selection As Integer)
@@ -10546,12 +10546,12 @@ Namespace ServiceReference1
             Return MyBase.Channel.SignOffAsync(EmployeeName)
         End Function
         
-        Public Function ViewContactListAll(ByVal email As String, ByVal selection As Integer) As ServiceReference1.ContactList() Implements ServiceReference1.IAideService.ViewContactListAll
-            Return MyBase.Channel.ViewContactListAll(email, selection)
+        Public Function ViewContactListAll(ByVal empID As Integer, ByVal selection As Integer) As ServiceReference1.ContactList() Implements ServiceReference1.IAideService.ViewContactListAll
+            Return MyBase.Channel.ViewContactListAll(empID, selection)
         End Function
         
-        Public Function ViewContactListAllAsync(ByVal email As String, ByVal selection As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.ContactList()) Implements ServiceReference1.IAideService.ViewContactListAllAsync
-            Return MyBase.Channel.ViewContactListAllAsync(email, selection)
+        Public Function ViewContactListAllAsync(ByVal empID As Integer, ByVal selection As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.ContactList()) Implements ServiceReference1.IAideService.ViewContactListAllAsync
+            Return MyBase.Channel.ViewContactListAllAsync(empID, selection)
         End Function
         
         Public Sub UpdateContactListByEmpID(ByVal contact As ServiceReference1.ContactList, ByVal selection As Integer) Implements ServiceReference1.IAideService.UpdateContactListByEmpID
