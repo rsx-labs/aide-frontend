@@ -653,7 +653,7 @@
   <xs:element name="ViewContactListAll">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="email" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="empID" type="xs:int" />
         <xs:element minOccurs="0" name="selection" type="xs:int" />
       </xs:sequence>
     </xs:complexType>

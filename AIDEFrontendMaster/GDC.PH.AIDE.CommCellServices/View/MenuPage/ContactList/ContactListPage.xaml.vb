@@ -39,6 +39,7 @@ Public Class ContactListPage
     Private mainFrame As Frame
     Private isEmpty As Boolean
     Private email As String
+    Private empID As Integer
     Private addframe As Frame
     Private menugrid As Grid
     Private submenuframe As Frame
@@ -57,6 +58,7 @@ Public Class ContactListPage
 
         InitializeComponent()
         Me.email = _profile.Email_Address
+        Me.empID = _profile.Emp_ID
         Me.mainFrame = mainFrame
         Me.addframe = _addframe
         Me.menugrid = _menugrid
@@ -105,17 +107,17 @@ Public Class ContactListPage
         Try
             If InitializeService() Then
                 If ContactsTC.SelectedIndex = 0 Then
-                    lstContacts = _AideService.ViewContactListAll(email, 0)
+                    lstContacts = _AideService.ViewContactListAll(empID, 0)
                     If profile.Permission_ID = 1 Then
                         btnCreate.Visibility = Windows.Visibility.Visible
                     End If
                     btnPrint.Visibility = Windows.Visibility.Visible
                 ElseIf ContactsTC.SelectedIndex = 1 Then
-                    lstContacts = _AideService.ViewContactListAll(email, 1)
+                    lstContacts = _AideService.ViewContactListAll(empID, 1)
                     btnPrint.Visibility = Windows.Visibility.Hidden
                     btnCreate.Visibility = Windows.Visibility.Hidden
                 Else
-                    lstContacts = _AideService.ViewContactListAll(email, 2)
+                    lstContacts = _AideService.ViewContactListAll(empID, 2)
                     btnPrint.Visibility = Windows.Visibility.Hidden
                     btnCreate.Visibility = Windows.Visibility.Hidden
                 End If
