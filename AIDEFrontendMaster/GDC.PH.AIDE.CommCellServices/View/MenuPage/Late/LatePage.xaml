@@ -206,7 +206,7 @@
                 </Grid>
                 
                 <Grid Grid.Column="1">
-                    <ComboBox  Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="5,5,10,5"/>
+                    <ComboBox  Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="5,5,10,5" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
                     <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Fiscal Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">

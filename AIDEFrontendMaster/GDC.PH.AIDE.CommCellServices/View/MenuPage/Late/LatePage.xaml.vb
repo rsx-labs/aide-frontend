@@ -35,6 +35,10 @@ Public Class LatePage
     Dim startYear As Integer = 2019 'Default Start Year
     Dim monthHeader As String = "Late for the Month of"
     Dim yearHeader As String = "Late for the Fiscal Year"
+
+    Dim lstFiscalYear As FiscalYear()
+    Dim commendationVM As New CommendationViewModel()
+    Dim fiscalyearVM As New SelectionListViewModel
 #End Region
 
     Public Sub New(_mainframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
@@ -47,7 +51,7 @@ Public Class LatePage
         lblMonthLate.Content = monthHeader + " " + MonthName(month)
         SetTitle()
         LoadMonth()
-        LoadYears()
+        SetData()
         LoadStackLateFY()
         LoadStackLate()
 
@@ -185,16 +189,35 @@ Public Class LatePage
         cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
     End Sub
 
-    Public Sub LoadYears()
+    Public Sub SetData()
         Try
-            cbYear.DisplayMemberPath = "Text"
-            cbYear.SelectedValuePath = "Value"
-            For i As Integer = startYear To DateTime.Today.Year
-                Dim nextYear As Integer = i + 1
-                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
-            Next
+            If InitializeService() Then
+
+                lstFiscalYear = client.GetAllFiscalYear()
+                LoadFiscalYear()
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Public Sub LoadFiscalYear()
+        Try
+            Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
+            Dim FYDBProvider As New SelectionListDBProvider
+
+            For Each objFiscal As FiscalYear In lstFiscalYear
+                FYDBProvider._setlistofFiscal(objFiscal)
+            Next
+
+            For Each rawUser As myFiscalYearSet In FYDBProvider._getobjFiscal()
+                lstFiscalYearList.Add(New FiscalYearModel(rawUser))
+            Next
+
+            fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
+            cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
 
@@ -223,9 +246,9 @@ Public Class LatePage
 #End Region
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
-        year = cbYear.SelectedValue
+        year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
         LoadStackLateFY()
-        lblYear.Content = yearHeader + " " + cbYear.SelectedItem.Text
+        lblYear.Content = yearHeader + " " + cbYear.SelectedValue.ToString()
     End Sub
 
     Private Sub cbMonth_DropDownClosed(sender As Object, e As EventArgs) Handles cbMonth.DropDownClosed

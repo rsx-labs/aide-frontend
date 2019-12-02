@@ -1138,6 +1138,52 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllFiscalYear_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllFiscalYear_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="dual_InsertKPITarget_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -6796,6 +6842,12 @@
   <wsdl:message name="IAideService_GetAllStatus_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllStatusResponse" />
   </wsdl:message>
+  <wsdl:message name="IAideService_GetAllFiscalYear_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllFiscalYear" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAllFiscalYear_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllFiscalYearResponse" />
+  </wsdl:message>
   <wsdl:message name="IAideService_InsertKPITarget_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertKPITarget" />
   </wsdl:message>
@@ -7635,6 +7687,10 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllStatus">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllStatus" message="tns:IAideService_GetAllStatus_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllStatusResponse" message="tns:IAideService_GetAllStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllFiscalYear">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllFiscalYear" message="tns:IAideService_GetAllFiscalYear_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllFiscalYearResponse" message="tns:IAideService_GetAllFiscalYear_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InsertKPITarget">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/InsertKPITarget" message="tns:IAideService_InsertKPITarget_InputMessage" />
@@ -8478,6 +8534,17 @@
       </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#dual_GetAllStatus_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllFiscalYear">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAllFiscalYear" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetAllFiscalYear_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetAllFiscalYear_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

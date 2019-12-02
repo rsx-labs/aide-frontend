@@ -24,6 +24,10 @@ Public Class BillabilityPage
     Dim month As Integer = Date.Now.Month
     Dim displayData As Integer
     Dim year As Integer
+
+    Dim lstFiscalYear As FiscalYear()
+    Dim commendationVM As New CommendationViewModel()
+    Dim fiscalyearVM As New SelectionListViewModel
 #End Region
 
     Public Sub New(_profile As Profile, mFrame As Frame)
@@ -35,7 +39,7 @@ Public Class BillabilityPage
         year = Date.Now.Year
 
         LoadMonth()
-        LoadYears()
+        SetData()
         LoadData()
 
         cbMonth.SelectedValue = month
@@ -57,13 +61,35 @@ Public Class BillabilityPage
         Return bInitialize
     End Function
 
-    Public Sub LoadYears()
+    Public Sub SetData()
         Try
-            For i As Integer = 2018 To DateTime.Today.Year
-                cbYear.Items.Add(i)
-            Next
+            If InitializeService() Then
+
+                lstFiscalYear = client.GetAllFiscalYear()
+                LoadFiscalYear()
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Public Sub LoadFiscalYear()
+        Try
+            Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
+            Dim FYDBProvider As New SelectionListDBProvider
+
+            For Each objFiscal As FiscalYear In lstFiscalYear
+                FYDBProvider._setlistofFiscal(objFiscal)
+            Next
+
+            For Each rawUser As myFiscalYearSet In FYDBProvider._getobjFiscal()
+                lstFiscalYearList.Add(New FiscalYearModel(rawUser))
+            Next
+
+            fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
+            cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
 
@@ -235,7 +261,7 @@ Public Class BillabilityPage
     End Sub
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
-        year = cbYear.SelectedValue
+        year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
         LoadData()
     End Sub
 
