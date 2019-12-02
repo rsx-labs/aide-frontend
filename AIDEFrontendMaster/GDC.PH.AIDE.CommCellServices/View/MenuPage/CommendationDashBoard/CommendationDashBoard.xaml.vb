@@ -33,8 +33,10 @@ Class CommendationDashBoard
 
     Dim lstBirthdayMonth As BirthdayList()
     Dim lstCommendation As Commendations()
-    Dim birthdayListVM As New BirthdayListViewModel()
+    Dim lstFiscalYear As FiscalYear()
     Dim commendationVM As New CommendationViewModel()
+    Dim fiscalyearVM As New SelectionListViewModel
+    Dim birthdayListVM As New BirthdayListViewModel()
     Dim startYear As Integer = 2018 'Default Start Year
 
     Private Enum PagingMode
@@ -65,7 +67,6 @@ Class CommendationDashBoard
         SetData()
         Me.DataContext = commendationVM
         LoadMonth()
-        LoadYears()
     End Sub
 
 #End Region
@@ -84,21 +85,10 @@ Class CommendationDashBoard
         Try
             If InitializeService() Then
                 lstCommendation = _AideService.GetCommendations(empID)
+                lstFiscalYear = _AideService.GetAllFiscalYear()
                 LoadCommendations()
+                LoadFiscalYear()
             End If
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
-    End Sub
-
-    Public Sub LoadYears()
-        Try
-            cbYear.DisplayMemberPath = "Text"
-            cbYear.SelectedValuePath = "Value"
-            For i As Integer = 2019 To DateTime.Today.Year
-                Dim nextYear As Integer = i + 1
-                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
-            Next
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -136,6 +126,26 @@ Class CommendationDashBoard
 
             commendationVM.CommendationList = lstCommendationList
             CommendationLV.ItemsSource = commendationVM.CommendationList
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Public Sub LoadFiscalYear()
+        Try
+            Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
+            Dim FYDBProvider As New SelectionListDBProvider
+
+            For Each objFiscal As FiscalYear In lstFiscalYear
+                FYDBProvider._setlistofFiscal(objFiscal)
+            Next
+
+            For Each rawUser As myFiscalYearSet In FYDBProvider._getobjFiscal()
+                lstFiscalYearList.Add(New FiscalYearModel(rawUser))
+            Next
+
+            fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
+            cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -226,7 +236,7 @@ Class CommendationDashBoard
     End Sub
 
     Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
-        year = cbYear.SelectedValue
+        year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
         LoadCommendationsBySearch()
     End Sub
 #End Region

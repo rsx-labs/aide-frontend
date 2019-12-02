@@ -446,6 +446,18 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="StatusList" nillable="true" type="tns:StatusList" />
+  <xs:complexType name="ArrayOfFiscalYear">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FiscalYear" nillable="true" type="tns:FiscalYear" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFiscalYear" nillable="true" type="tns:ArrayOfFiscalYear" />
+  <xs:complexType name="FiscalYear">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FISCAL_YEAR" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FiscalYear" nillable="true" type="tns:FiscalYear" />
   <xs:complexType name="KPITargets">
     <xs:sequence>
       <xs:element minOccurs="0" name="DateCreated" type="xs:dateTime" />

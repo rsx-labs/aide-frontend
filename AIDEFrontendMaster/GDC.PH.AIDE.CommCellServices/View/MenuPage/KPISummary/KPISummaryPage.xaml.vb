@@ -21,6 +21,10 @@ Public Class KPISummaryPage
     Dim _month As Integer = Date.Now.Month
     Dim displayData As Integer
     Dim _year As Integer
+
+    Dim lstFiscalYear As FiscalYear()
+    Dim commendationVM As New CommendationViewModel()
+    Dim fiscalyearVM As New SelectionListViewModel
 #End Region
 
     Public Sub New(_profile As Profile, mFrame As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame)
@@ -35,7 +39,7 @@ Public Class KPISummaryPage
         _year = Date.Now.Year
 
         'LoadMonth()
-        LoadYears()
+        SetData()
         LoadData()
 
         'cbMonth.SelectedValue = _month
@@ -64,13 +68,35 @@ Public Class KPISummaryPage
         Return bInitialize
     End Function
 
-    Public Sub LoadYears()
+    Public Sub SetData()
         Try
-            For i As Integer = 2018 To DateTime.Today.Year
-                cbYear.Items.Add(i)
-            Next
+            If InitializeService() Then
+
+                lstFiscalYear = client.GetAllFiscalYear()
+                LoadFiscalYear()
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Public Sub LoadFiscalYear()
+        Try
+            Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
+            Dim FYDBProvider As New SelectionListDBProvider
+
+            For Each objFiscal As FiscalYear In lstFiscalYear
+                FYDBProvider._setlistofFiscal(objFiscal)
+            Next
+
+            For Each rawUser As myFiscalYearSet In FYDBProvider._getobjFiscal()
+                lstFiscalYearList.Add(New FiscalYearModel(rawUser))
+            Next
+
+            fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
+            cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
 
@@ -106,17 +132,17 @@ Public Class KPISummaryPage
 
             Dim FYStart As Date
             Dim FYEnd As Date
-            If _year < Date.Now.Year Then
+            If Not _year = Nothing Then
                 FYStart = Convert.ToDateTime(_year.ToString() + "-" + "04-01")
                 FYEnd = Convert.ToDateTime((_year + 1).ToString() + "-" + "03-31")
-            Else
-                If Date.Now.Month >= 4 Then
-                    FYStart = Convert.ToDateTime(Date.Now.Year.ToString() + "-" + "04-01")
-                    FYEnd = Convert.ToDateTime((Date.Now.Year + 1).ToString() + "-" + "03-31")
-                Else
-                    FYStart = Convert.ToDateTime((Date.Now.Year - 1).ToString() + "-" + "04-01")
-                    FYEnd = Convert.ToDateTime(Date.Now.Year.ToString() + "-" + "03-31")
-                End If
+                'Else
+                '    If Date.Now.Month >= 4 Then
+                '        FYStart = Convert.ToDateTime(Date.Now.Year.ToString() + "-" + "04-01")
+                '        FYEnd = Convert.ToDateTime((Date.Now.Year + 1).ToString() + "-" + "03-31")
+                '    Else
+                '        FYStart = Convert.ToDateTime((Date.Now.Year - 1).ToString() + "-" + "04-01")
+                '        FYEnd = Convert.ToDateTime(Date.Now.Year.ToString() + "-" + "03-31")
+                '    End If
             End If
 
             Dim lstKPISummary = client.GetKPISummaryList(Me._profile.Emp_ID, FYStart, FYEnd)
@@ -349,7 +375,7 @@ Public Class KPISummaryPage
     'End Sub
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
-        _year = cbYear.SelectedValue
+        _year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
         LoadData()
     End Sub
 

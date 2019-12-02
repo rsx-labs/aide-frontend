@@ -69,6 +69,10 @@ Class WeeklyReportPage
 
     Dim weeklyReportDBProvider As New WeeklyReportDBProvider
     Dim weekRangeViewModel As New WeekRangeViewModel
+
+    Dim lstFiscalYear As FiscalYear()
+    Dim commendationVM As New CommendationViewModel()
+    Dim fiscalyearVM As New SelectionListViewModel
 #End Region
 
 #Region "Constructor"
@@ -87,7 +91,7 @@ Class WeeklyReportPage
         year = lastWeekSaturday.Year
 
         LoadMonth()
-        LoadYears()
+        SetData()
 
         LoadStatusData()
         SetWeeklyReports()
@@ -231,16 +235,35 @@ Class WeeklyReportPage
         cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
     End Sub
 
-    Private Sub LoadYears()
+    Public Sub SetData()
         Try
-            cbYear.DisplayMemberPath = "Text"
-            cbYear.SelectedValuePath = "Value"
-            For i As Integer = 2019 To DateTime.Today.Year
-                Dim nextYear As Integer = i + 1
-                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
-            Next
+            If InitializeService() Then
+
+                lstFiscalYear = AideServiceClient.GetAllFiscalYear()
+                LoadFiscalYear()
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Public Sub LoadFiscalYear()
+        Try
+            Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
+            Dim FYDBProvider As New SelectionListDBProvider
+
+            For Each objFiscal As FiscalYear In lstFiscalYear
+                FYDBProvider._setlistofFiscal(objFiscal)
+            Next
+
+            For Each rawUser As myFiscalYearSet In FYDBProvider._getobjFiscal()
+                lstFiscalYearList.Add(New FiscalYearModel(rawUser))
+            Next
+
+            fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
+            cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
 
@@ -332,7 +355,7 @@ Class WeeklyReportPage
     End Sub
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
-        year = cbYear.SelectedValue
+        year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
         SetWeeklyReports()
     End Sub
 

@@ -479,13 +479,13 @@
                             
                         </Grid>
                             <Grid Grid.Column="1">
-                                <ComboBox MinWidth="70" Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="5,10,10,10"/>
+                            <ComboBox MinWidth="70" Style="{DynamicResource StyleComboBox}" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR" x:Name="cbYear" Margin="5,10,10,10"/>
                                 <TextBlock FontSize="12" IsHitTestVisible="False" Text="Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
+                                            <DataTrigger Binding="{Binding Text, ElementName=cbYear}" Value="">
                                                     <Setter Property="Visibility" Value="Visible"/>
                                                 </DataTrigger>
                                             </Style.Triggers>

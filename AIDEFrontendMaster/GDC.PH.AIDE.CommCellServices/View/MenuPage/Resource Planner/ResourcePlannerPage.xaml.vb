@@ -23,6 +23,9 @@ Class ResourcePlannerPage
     Private _submenuframe As Frame
     Private attendanceFrame As Frame
     Private profile As Profile
+    Dim lstFiscalYear As FiscalYear()
+    Dim commendationVM As New CommendationViewModel()
+    Dim fiscalyearVM As New SelectionListViewModel
 
     Dim month As Integer = Date.Now.Month
     Dim setStatus As String
@@ -53,9 +56,8 @@ Class ResourcePlannerPage
         LoadAllEmpResourcePlanner()
         cbDisplayMonth.Text = SetMonths()
         cbDisplayMonth.SelectedValue = month.ToString
-        LoadYears()
         cbYear.SelectedValue = year
-
+        LoadFiscalYear()
 
 
     End Sub
@@ -73,18 +75,6 @@ Class ResourcePlannerPage
         Return bInitialize
     End Function
 
-    Public Sub LoadYears()
-        Try
-            cbYear.DisplayMemberPath = "Text"
-            cbYear.SelectedValuePath = "Value"
-            For i As Integer = 2019 To DateTime.Today.Year
-                Dim nextYear As Integer = i + 1
-                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
-            Next
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
-    End Sub
 #Region "ICallback Functions"
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
@@ -125,46 +115,28 @@ Class ResourcePlannerPage
         cbDisplayMonth.Items.Add(New With {.Text = "December", .Value = 12})
     End Sub
 
-    'Public Sub LoadCategory()
-    '    Try
-    '        InitializeService()
-    '        Dim lstresource As ResourcePlanner() = client.GetStatusResourcePlanner()
-    '        Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
+   
+    Public Sub LoadFiscalYear()
+        Try
+            Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
+            Dim FYDBProvider As New SelectionListDBProvider
 
-    '        For Each objResource As ResourcePlanner In lstresource
-    '            _ResourceDBProvider.SetCategoryList(objResource)
-    '        Next
+            lstFiscalYear = client.GetAllFiscalYear()
 
-    '        For Each iResource As myResourceList In _ResourceDBProvider.GetCategoryList()
-    '            resourcelist.Add(New ResourcePlannerModel(iResource))
-    '        Next
-    '        _ResourceViewModel.CategoryList = resourcelist
-    '        cbFilterCategory.DataContext = _ResourceViewModel
-    '    Catch ex As Exception
-    '        MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-    '    End Try
-    'End Sub
+            For Each objFiscal As FiscalYear In lstFiscalYear
+                FYDBProvider._setlistofFiscal(objFiscal)
+            Next
 
-    'Loades All Status
-    'Public Sub LoadAllCategory()
-    '    Try
-    '        InitializeService()
-    '        Dim lstresource As ResourcePlanner() = client.GetAllStatusResourcePlanner()
-    '        Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
+            For Each rawUser As myFiscalYearSet In FYDBProvider._getobjFiscal()
+                lstFiscalYearList.Add(New FiscalYearModel(rawUser))
+            Next
 
-    '        For Each objResource As ResourcePlanner In lstresource
-    '            _ResourceDBProvider.SetAllCategoryList(objResource)
-    '        Next
-
-    '        For Each iResource As myResourceList In _ResourceDBProvider.GetAllCategoryList()
-    '            resourcelist.Add(New ResourcePlannerModel(iResource))
-    '        Next
-    '        _ResourceViewModel.FilterCategoryList = resourcelist
-    '        cbFilterCategory.DataContext = _ResourceViewModel
-    '    Catch ex As Exception
-    '        MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-    '    End Try
-    'End Sub
+            fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
+            cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
 
     Public Sub SetCategory()
         If setStatus = 1 Then
@@ -473,7 +445,10 @@ Class ResourcePlannerPage
 #Region "Button/Event"
     Private Sub cbDisplayMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbDisplayMonth.SelectionChanged
         month = cbDisplayMonth.SelectedValue
-        year = cbYear.SelectedValue
+        If Not cbYear.SelectedValue Is Nothing Then
+            year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+        End If
+
         If year = 0 Then
             year = Date.Now.Year
         End If
@@ -484,7 +459,7 @@ Class ResourcePlannerPage
 
     Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
         month = cbDisplayMonth.SelectedValue
-        year = cbYear.SelectedValue
+        year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
         MonthLabel.Text = SetDisplayMonthYr(month)
         LoadAllEmpResourcePlanner()
     End Sub
