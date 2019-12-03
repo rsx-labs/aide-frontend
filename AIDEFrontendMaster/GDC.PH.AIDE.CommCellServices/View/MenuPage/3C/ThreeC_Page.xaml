@@ -107,7 +107,7 @@
                 
                 <Grid Grid.Column="2">
                     <Border Margin="10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
-                        <DatePicker Style="{DynamicResource styleDatePickerfrom}" BorderBrush="Transparent" Margin="2" FontSize="12" x:Name="dtpTo" Width="auto" Height="auto" IsEnabled="False"/>
+                        <DatePicker Style="{DynamicResource styleDatePickerto}" BorderBrush="Transparent" Margin="2" FontSize="12" x:Name="dtpTo" Width="auto" Height="auto"/>
                     </Border>
                     
                     <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select date to" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
