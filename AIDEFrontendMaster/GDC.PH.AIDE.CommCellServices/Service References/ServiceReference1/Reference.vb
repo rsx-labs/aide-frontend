@@ -9267,10 +9267,10 @@ Namespace ServiceReference1
         Function GetAllDepartmentAsync() As System.Threading.Tasks.Task(Of ServiceReference1.DepartmentList())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllDivision", ReplyAction:="http://tempuri.org/IAideService/GetAllDivisionResponse")>  _
-        Function GetAllDivision() As ServiceReference1.DivisionList()
+        Function GetAllDivision(ByVal DeptID As Integer) As ServiceReference1.DivisionList()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllDivision", ReplyAction:="http://tempuri.org/IAideService/GetAllDivisionResponse")>  _
-        Function GetAllDivisionAsync() As System.Threading.Tasks.Task(Of ServiceReference1.DivisionList())
+        Function GetAllDivisionAsync(ByVal DeptID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.DivisionList())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllStatus", ReplyAction:="http://tempuri.org/IAideService/GetAllStatusResponse")>  _
         Function GetAllStatus(ByVal statusName As String) As ServiceReference1.StatusList()
@@ -10433,12 +10433,12 @@ Namespace ServiceReference1
             Return MyBase.Channel.GetAllDepartmentAsync
         End Function
         
-        Public Function GetAllDivision() As ServiceReference1.DivisionList() Implements ServiceReference1.IAideService.GetAllDivision
-            Return MyBase.Channel.GetAllDivision
+        Public Function GetAllDivision(ByVal DeptID As Integer) As ServiceReference1.DivisionList() Implements ServiceReference1.IAideService.GetAllDivision
+            Return MyBase.Channel.GetAllDivision(DeptID)
         End Function
         
-        Public Function GetAllDivisionAsync() As System.Threading.Tasks.Task(Of ServiceReference1.DivisionList()) Implements ServiceReference1.IAideService.GetAllDivisionAsync
-            Return MyBase.Channel.GetAllDivisionAsync
+        Public Function GetAllDivisionAsync(ByVal DeptID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.DivisionList()) Implements ServiceReference1.IAideService.GetAllDivisionAsync
+            Return MyBase.Channel.GetAllDivisionAsync(DeptID)
         End Function
         
         Public Function GetAllStatus(ByVal statusName As String) As ServiceReference1.StatusList() Implements ServiceReference1.IAideService.GetAllStatus
