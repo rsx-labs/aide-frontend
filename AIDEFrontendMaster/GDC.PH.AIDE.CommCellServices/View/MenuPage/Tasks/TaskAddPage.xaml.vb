@@ -24,6 +24,9 @@ Class TaskAddPage
     Dim reworkID As Integer = 5
     Dim severityID As Integer = 13
 
+    Dim stsCmpltd As Integer = 3
+    Dim stsRtrnToTrge As Integer = 4
+
     Dim tasks As New Tasks
     Dim client As AideServiceClient
 
@@ -405,7 +408,7 @@ Class TaskAddPage
 
 #Region "Button/Events"
     Private Sub cbStatus_DropDownClosed(sender As Object, e As EventArgs) Handles cbStatus.DropDownClosed
-        If cbStatus.Text = "Completed" Or cbStatus.Text = "Returned to Triage" Then
+        If cbStatus.SelectedValue = stsCmpltd OrElse cbStatus.SelectedValue = stsRtrnToTrge Then
             dpTargetDate.SelectedDate = Date.Now
             dpCompltdDate.SelectedDate = Date.Now
         Else
@@ -469,6 +472,17 @@ Class TaskAddPage
         dpTargetDate.DisplayDateStart = dpStartDate.SelectedDate
     End Sub
 
+    Private Sub dpCompltdDate_SelectedDateChanged(sender As Object, e As SelectionChangedEventArgs)
+        If Not dpCompltdDate.Text = "" Then
+            Dim stsValue As Integer = stsCmpltd
+            If cbStatus.SelectedValue = stsRtrnToTrge Then
+                stsValue = stsRtrnToTrge
+            End If
+
+            tasks.Status = stsValue
+            cbStatus.SelectedValue = tasks.Status
+        End If
+    End Sub
 #End Region
 
 #Region "ICallBack Function"

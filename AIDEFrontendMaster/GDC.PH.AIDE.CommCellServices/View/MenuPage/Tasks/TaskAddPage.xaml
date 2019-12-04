@@ -291,8 +291,6 @@
             </Setter>
         </Style>
        
-     
-     
         <Style TargetType="TextBox">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
@@ -303,12 +301,14 @@
             <Setter Property="Foreground" Value="DimGray"/>
             <Setter Property="FontSize" Value="12"/>
         </Style>
+        
         <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
             <Setter Property="Margin" Value="5" />
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
+        
         <Style x:Key="buttonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="SteelBlue" />
             <Setter Property="Foreground" Value="White"/>
@@ -911,6 +911,7 @@
                             <Grid Grid.Row="6">
                                 <Border Margin="5,0,5,0" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                                     <DatePicker Loaded="DatePicker_Loaded" Text="9" Margin="0" 
+                                                SelectedDateChanged="dpCompltdDate_SelectedDateChanged"
                                                 SelectedDate="{Binding NewTasks.CompltdDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                 Name="dpCompltdDate" Style="{DynamicResource styleDatePickerfrom}">
                                     </DatePicker>
