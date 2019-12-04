@@ -6,220 +6,7 @@
       mc:Ignorable="d" 
       Height="Auto" Width="Auto"
       Title="TaskAdminPage">
-
     <Page.Resources>
-        <Style x:Key="RoundCorner" TargetType="{x:Type Button}">
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="1"/>
-            <Setter Property="Foreground" Value="White"></Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="15" Background="#FF09A0C1">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          TextElement.FontWeight="Bold">
-                                </ContentPresenter>
-                            </Border>
-
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="#FF005895"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="#FF09C2EA"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
-                            </Trigger>
-
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ButtonPrint" TargetType="{x:Type Button}">
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Image Name="buttonImage"
-                               Height="Auto"
-                               HorizontalAlignment="Right"
-                               Margin="1"
-                               Source="..\..\..\Assets\Button\Print.png"
-                               Stretch="Fill"
-                               VerticalAlignment="Stretch"
-                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
-                            <Image.Effect>
-                                <DropShadowEffect  Direction="290" Opacity="0.9" ShadowDepth="2" Color="LightGray"/>
-                            </Image.Effect>
-                        </Image>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\PrintClick.png"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="ButtonAdd" TargetType="{x:Type Button}">
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Image Name="buttonImage"
-                               Height="Auto"
-                               HorizontalAlignment="Right"
-                               Margin="1"
-                               Source="..\..\..\Assets\Button\addnew.png"
-                               Stretch="Fill"
-                               VerticalAlignment="Stretch"
-                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
-                            <!--<Image.Effect>
-                                <DropShadowEffect  Direction="270" Opacity="0.6" ShadowDepth=".5" Color="Gray"/>
-                            </Image.Effect>-->
-                        </Image>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\addnewclick.png"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-
-                </Setter.Value>
-            </Setter>
-
-        </Style>
-        <Style TargetType="{x:Type TextBox}">
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="Background" Value="White" />
-            <Setter Property="BorderBrush" Value="SteelBlue" />
-            <Setter Property="BorderThickness" Value="2" />
-            <Setter Property="FontFamily" Value="Segoe UI" />
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="Height" Value="auto" />
-            <Setter Property="Width" Value="auto" />
-            <Setter Property="Margin" Value="0,15,15,15"/>
-            <Setter Property="TextWrapping" Value="Wrap" />
-            <Setter Property="BorderBrush" Value="DimGray" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderBrush" Value="DimGray" />
-                    <Setter Property="BorderThickness" Value="2"/>
-                </Trigger>
-                <Trigger Property="IsFocused" Value="True">
-                    <Setter Property="BorderBrush" Value="LightGray" />
-                    <Setter Property="BorderThickness" Value="2"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="buttonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="SteelBlue" />
-            <Setter Property="FontFamily" Value="Segoe UI"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Template">
-
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-
-                        <Border Background="{TemplateBinding Background}" BorderBrush="#7a878c"  BorderThickness="2" CornerRadius="1">
-
-                            <ContentPresenter />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-
-                    <Setter Property="Background" Value="DimGray" />
-                    <Setter Property="BorderBrush" Value="SteelBlue" />
-                    <Setter Property="BorderThickness" Value="1" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="ButtonPageNext" TargetType="{x:Type Button}">
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Image Name="buttonImage"
-                               Height="Auto"
-                               HorizontalAlignment="Right"
-                               Margin="1"
-                               Source="..\..\..\Assets\Button\next.png"
-                               Stretch="Fill"
-                               VerticalAlignment="Stretch"
-                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
-                            <Image.Effect>
-                                <DropShadowEffect  Direction="290" Opacity="0.6" ShadowDepth="1" Color="LightGray"/>
-                            </Image.Effect>
-                        </Image>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\nextclick.png"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        
-        <Style x:Key="ButtonPageBack" TargetType="{x:Type Button}">
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Image Name="buttonImage"
-                               Height="Auto"
-                               HorizontalAlignment="Right"
-                               Margin="1"
-                               Source="..\..\..\Assets\Button\back.png"
-                               Stretch="Fill"
-                               VerticalAlignment="Stretch"
-                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
-                            <Image.Effect>
-                                <DropShadowEffect  Direction="290" Opacity="0.6" ShadowDepth="1" Color="LightGray"/>
-                            </Image.Effect>
-                        </Image>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\backclick.png"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="{x:Type Label}" x:Key="SideLabel">
-            <Setter Property="Foreground" Value="DimGray" />
-            <Setter Property="FontFamily" Value="Segoe UI" />
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="FontWeight" Value="Normal" />
-            <Setter Property="Height" Value="27" />
-            <Setter Property="Width" Value="100" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-        </Style>
-
         <Style TargetType="{x:Type Label}" x:Key="DateLabel">
             <Setter Property="Foreground" Value="White" />
             <Setter Property="Background" Value="#FF0B9FBF"/>
@@ -253,24 +40,6 @@
             <Setter Property="Height" Value="60" />
         </Style>
 
-        <Style x:Key="textblockStyle" TargetType="{x:Type TextBlock}">
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="FontWeight" Value="Normal"/>
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="FontFamily" Value="Segoe UI"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-        </Style>
-
-        <Style TargetType="{x:Type DatePicker}">
-            <Setter Property="Height" Value="23" />
-            <Setter Property="Width" Value="120" />
-            <Setter Property="BorderBrush" Value="DimGray" />
-            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-            <Setter Property="FontFamily" Value="Segoe UI"/>
-        </Style>
-
         <Style TargetType="{x:Type DataGrid}">
             <Setter Property="AutoGenerateColumns" Value="False" />
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -281,7 +50,6 @@
             <Setter Property="CanUserReorderColumns" Value="False"/>
             <Setter Property="RowBackground" Value="#7a878c"/>
             <Setter Property="BorderBrush" Value="white"/>
-
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="IsReadOnly" Value="True"/>
@@ -299,17 +67,13 @@
         <Style TargetType="{x:Type DataGridRow}">
             <Setter Property="Background" Value="white" />
             <Setter Property="Foreground" Value="#FF303030"/>
-
-
             <Style.Triggers>
-                <Trigger Property="IsMouseOver"
-                           Value="True">
-                    <Setter Property="Background"
-                               Value="LightGray" />
-
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightGray" />
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
         <Style TargetType="{x:Type DataGridColumnHeader}" x:Key="DataGridColumnHeaderOutStanding">
             <Setter Property="Background" Value="#FFFFD66D"/>
             <Setter Property="FontWeight" Value="Normal"/>
@@ -321,6 +85,7 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}" />
         </Style>
+        
         <Style TargetType="{x:Type DataGridColumnHeader}" x:Key="DataGridColumnHeaderNew">
             <Setter Property="Background" Value="#FF2D98F1"/>
             <Setter Property="FontWeight" Value="Normal"/>
@@ -332,6 +97,7 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}" />
         </Style>
+        
         <Style TargetType="{x:Type DataGridColumnHeader}" x:Key="DataGridColumnHeaderCompleted">
             <Setter Property="Background" Value="#FF61E461"/>
             <Setter Property="FontWeight" Value="Normal"/>
@@ -370,7 +136,6 @@
             <Setter Property="Foreground" Value="DimGray" />
             <Setter Property="BorderBrush" Value="Gray"/>
             <Setter Property="BorderThickness" Value=".5"/>
-
         </Style>
 
         <Style x:Key="ColumnElementStyle" TargetType="TextBlock">
@@ -432,7 +197,7 @@
                         <Button x:Name="btnPrint"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" Style="{DynamicResource ButtonPrint}" HorizontalContentAlignment="Center">
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Print"></TextBlock>
                         </Button>
-                        <Button x:Name="btnViewAll" Width="155" Height="35"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Style="{DynamicResource RoundCorner}" HorizontalContentAlignment="Center">
+                        <Button x:Name="btnViewAll" Width="155" Height="35"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Style="{DynamicResource RoundCornerUpdate}" HorizontalContentAlignment="Center">
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="View My Outstanding Tasks"></TextBlock>
                         </Button>
                     </StackPanel>
