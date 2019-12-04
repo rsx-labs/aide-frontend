@@ -237,6 +237,7 @@ Class SkillsMatrixManagerPage
         Try
             InitializeService()
             _SkillDBProvider.GetSkillProf.Clear()
+            grdUpdate.Visibility = Visibility.Collapsed
 
             Dim emp_id As String = ""
             Dim level As String
@@ -749,4 +750,7 @@ Class SkillsMatrixManagerPage
 
 #End Region
 
+    Private Sub dgSkillList_PreviewMouseWheel(sender As Object, e As MouseWheelEventArgs) Handles dgSkillList.PreviewMouseWheel
+        svSkillList.ScrollToVerticalOffset(svSkillList.VerticalOffset - e.Delta)
+    End Sub
 End Class
