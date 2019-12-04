@@ -156,7 +156,7 @@
                             </Button>
                         </Grid>-->
                         <Grid Grid.Column="0" Grid.ColumnSpan="2">
-                            <Border BorderBrush="Gainsboro" CornerRadius="10" BorderThickness="1" Margin="30,10,30,5">
+                            <Border BorderBrush="Gainsboro" CornerRadius="10" BorderThickness="1" Margin="10,10,10,5">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
@@ -177,7 +177,7 @@
                                         </Grid>
 
                                         <Grid Grid.Column="1">
-                                            <RadioButton VerticalContentAlignment="Center" Content="Has Received Training" x:Name="rbProfLvl1" GroupName="Prof" IsEnabled="False"  FontSize="11" VerticalAlignment="Center" />
+                                            <RadioButton VerticalContentAlignment="Center" Content="Has Received Training" x:Name="rbProfLvl1" GroupName="Prof" IsEnabled="False"  FontSize="10" VerticalAlignment="Center" />
                                         </Grid>
                                     </Grid>
 
@@ -194,7 +194,7 @@
                                         </Grid>
 
                                         <Grid Grid.Column="1" >
-                                            <RadioButton x:Name="rbProfLvl2" GroupName="Prof" IsEnabled="False" Content="Could Deliver Supported" FontSize="11" VerticalAlignment="Center"/>
+                                            <RadioButton x:Name="rbProfLvl2" GroupName="Prof" IsEnabled="False" Content="Could Deliver Supported" FontSize="10" VerticalAlignment="Center"/>
                                         </Grid>
                                     </Grid>
 
@@ -211,7 +211,7 @@
                                         </Grid>
 
                                         <Grid Grid.Column="1" >
-                                            <RadioButton x:Name="rbProfLvl3" GroupName="Prof" IsEnabled="False" Content="Could Deliver Unsupported" FontSize="11" VerticalAlignment="Center" />
+                                            <RadioButton x:Name="rbProfLvl3" GroupName="Prof" IsEnabled="False" Content="Could Deliver Unsupported" FontSize="10" VerticalAlignment="Center" />
                                         </Grid>
                                     </Grid>
 
@@ -228,7 +228,7 @@
                                         </Grid>
 
                                         <Grid Grid.Column="1">
-                                            <RadioButton x:Name="rbProfLvl4" GroupName="Prof" IsEnabled="False" Content="Subject Matter Expert" FontSize="11" VerticalAlignment="Center"/>
+                                            <RadioButton x:Name="rbProfLvl4" GroupName="Prof" IsEnabled="False" Content="Subject Matter Expert" FontSize="10" VerticalAlignment="Center"/>
                                         </Grid>
                                     </Grid>
                                 </Grid>
