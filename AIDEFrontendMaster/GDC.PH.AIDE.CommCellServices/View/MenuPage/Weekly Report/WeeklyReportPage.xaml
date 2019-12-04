@@ -10,9 +10,9 @@
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="1.8*"/>
-                <RowDefinition Height="11*"/>
+                <RowDefinition Height="0.112*"/>
+                <RowDefinition Height="0.088*"/>
+                <RowDefinition Height="0.80*"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0" Background="white">
@@ -41,7 +41,7 @@
                 </Grid>
 
                 <Grid Grid.Column="1">
-                    <Viewbox Margin="15">
+                    <Viewbox Margin="10">
                         <Button Style="{DynamicResource ButtonAdd}" x:Name="btnAddReport" BorderBrush="{x:Null}"/>
                     </Viewbox>
                 </Grid>
@@ -55,7 +55,7 @@
 
                 <Grid Grid.Column="0" HorizontalAlignment="Left" >
                     <Button x:Name="btnTeamReports" Margin="10" Style="{DynamicResource RoundCornerUpdate}">
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="View Team Status Report"></TextBlock>
+                        <TextBlock HorizontalAlignment="Center" Padding="10" VerticalAlignment="Center" Text="View Team Status Report"></TextBlock>
                     </Button>
                 </Grid>
                 
