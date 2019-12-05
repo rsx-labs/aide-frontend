@@ -182,6 +182,17 @@ Class LessonLearntAddPage
 
         CreateReferenceNo()
     End Sub
+
+    Private Sub ExitPage()
+        frame.Navigate(New LessonLearntPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
+        frame.IsEnabled = True
+        frame.Opacity = 1
+        _menugrid.IsEnabled = True
+        _menugrid.Opacity = 1
+        _submenuframe.IsEnabled = True
+        _submenuframe.Opacity = 1
+        _addframe.Visibility = Visibility.Hidden
+    End Sub
 #End Region
 
 #Region "Events"
@@ -201,14 +212,7 @@ Class LessonLearntAddPage
                             client.CreateLessonLearnt(lessonLearnt)
                             MsgBox("Successfully created", MsgBoxStyle.Information, "AIDE")
                             ClearValues()
-                            frame.Navigate(New LessonLearntPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
-                            frame.IsEnabled = True
-                            frame.Opacity = 1
-                            _menugrid.IsEnabled = True
-                            _menugrid.Opacity = 1
-                            _submenuframe.IsEnabled = True
-                            _submenuframe.Opacity = 1
-                            _addframe.Visibility = Visibility.Hidden
+                            ExitPage()
                         End If
                     Catch ex As Exception
                         MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
@@ -221,14 +225,7 @@ Class LessonLearntAddPage
     End Sub
 
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
-        frame.Navigate(New LessonLearntPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
-        frame.IsEnabled = True
-        frame.Opacity = 1
-        _menugrid.IsEnabled = True
-        _menugrid.Opacity = 1
-        _submenuframe.IsEnabled = True
-        _submenuframe.Opacity = 1
-        _addframe.Visibility = Visibility.Hidden
+        ExitPage()
     End Sub
 
     Private Sub Action_No_DropDownClosed(sender As Object, e As EventArgs) Handles Action_No.DropDownClosed
