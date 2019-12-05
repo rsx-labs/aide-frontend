@@ -226,6 +226,24 @@ Class ResourcePlannerPage
     '    End Try
     'End Sub
 
+    Private Function getSelectedMonth(Year As Integer, month As Integer)
+
+
+        Select Case month
+            Case 1
+                Year = Year + 1
+            Case 2
+                Year = Year + 1
+            Case 3
+                Year = Year + 1
+            Case Else
+                Year = Year
+        End Select
+
+
+        Return Year
+    End Function
+
     Public Sub LoadAllEmpResourcePlanner()
         Try
             InitializeService()
@@ -233,6 +251,8 @@ Class ResourcePlannerPage
             If year = 0 Then
                 year = Date.Now.Year
             End If
+
+
             Dim lstresource As ResourcePlanner() = client.GetAllEmpResourcePlanner(profile.Email_Address, month, year)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
 
@@ -246,7 +266,7 @@ Class ResourcePlannerPage
             Next
 
 
-            Dim dateFirstSTR As String = month.ToString + "/1/" + year.ToString
+            Dim dateFirstSTR As String = month.ToString + "/1/" + getSelectedMonth(year, month).ToString()
             Dim dateFirst As Date = Date.Parse(dateFirstSTR)
             For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
                 resourcelist.Add(New ResourcePlannerModel(iResource))
@@ -258,7 +278,7 @@ Class ResourcePlannerPage
                     If emp_id > 0 Then
                         it.Add(dict)
                     End If
-                    dateFirstSTR = month.ToString + "/1/" + year.ToString
+                    dateFirstSTR = month.ToString + "/1/" + getSelectedMonth(year, month).ToString()
                     dateFirst = Date.Parse(dateFirstSTR)
                     dict = New Dictionary(Of String, String)()
                     dict.Add("Employee Name", iResource.Emp_Name)
