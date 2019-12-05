@@ -320,28 +320,6 @@ Class UpdateContactListPage
 
 #End Region
 
-#Region "Service Methods"
-    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
-
-    End Sub
-
-    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
-
-    End Sub
-
-    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
-
-    End Sub
-
-    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
-
-    End Sub
-
-    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
-
-    End Sub
-#End Region
-
 #Region "Events"
     Private Sub btnCCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCCancel.Click
         mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
@@ -491,4 +469,27 @@ Class UpdateContactListPage
         End Try
     End Sub
 #End Region
+
+#Region "Service Methods"
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
+
+    End Sub
+
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
+
+    End Sub
+
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
+
+    End Sub
+
+    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
+
+    End Sub
+
+    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+
+    End Sub
+#End Region
+
 End Class
