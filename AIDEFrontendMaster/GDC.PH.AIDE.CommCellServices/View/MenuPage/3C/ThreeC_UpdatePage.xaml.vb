@@ -207,6 +207,17 @@ Class ThreeC_UpdatePage
         _insertSelectedAction.ACT_MESSAGE = getSelectedAction.GetSelectedAction.ACTION_REFERENCES
         Return _insertSelectedAction
     End Function
+
+    Private Sub ExitPage()
+        _frame.Navigate(New ThreeC_Page(_email, _frame, _addframe, _menugrid, _submenuframe))
+        _frame.IsEnabled = True
+        _frame.Opacity = 1
+        _menugrid.IsEnabled = True
+        _menugrid.Opacity = 1
+        _submenuframe.IsEnabled = True
+        _submenuframe.Opacity = 1
+        _addframe.Visibility = Visibility.Hidden
+    End Sub
 #End Region
 
 #Region "Notify Changes"
@@ -261,29 +272,11 @@ Class ThreeC_UpdatePage
         MsgBox("Successfully updated concern", MsgBoxStyle.Information)
         _AIDEClientService.Close()
 
-        _frame.Navigate(New ThreeC_Page(_email, _frame, _addframe, _menugrid, _submenuframe))
-        _frame.IsEnabled = True
-        _frame.Opacity = 1
-        _menugrid.IsEnabled = True
-        _menugrid.Opacity = 1
-        _submenuframe.IsEnabled = True
-        _submenuframe.Opacity = 1
-        _addframe.Visibility = Visibility.Hidden
+        ExitPage()
     End Sub
 
     Private Sub btnBackClick(sender As Object, e As RoutedEventArgs)
-        If MsgBox("Are you sure you want to go back to 3c's Home Page?", MsgBoxStyle.YesNo) = vbYes Then
-            _frame.Navigate(New ThreeC_Page(_email, _frame, _addframe, _menugrid, _submenuframe))
-            _frame.IsEnabled = True
-            _frame.Opacity = 1
-            _menugrid.IsEnabled = True
-            _menugrid.Opacity = 1
-            _submenuframe.IsEnabled = True
-            _submenuframe.Opacity = 1
-            _addframe.Visibility = Visibility.Hidden
-        Else
-            Return
-        End If
+        ExitPage()
     End Sub
 
     Private Sub btnSaveActionRef(sender As Object, e As RoutedEventArgs)
