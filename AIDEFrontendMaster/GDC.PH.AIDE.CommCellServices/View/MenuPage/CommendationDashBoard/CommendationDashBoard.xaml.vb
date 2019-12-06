@@ -29,7 +29,7 @@ Class CommendationDashBoard
     Private month As Integer = Date.Now.Month
     Private year As Integer = Date.Now.Year
     Private displayMonth As String
-
+    Private m_loaded As Boolean = False
 
     Dim lstBirthdayMonth As BirthdayList()
     Dim lstCommendation As Commendations()
@@ -67,6 +67,7 @@ Class CommendationDashBoard
         SetData()
         Me.DataContext = commendationVM
         LoadMonth()
+        m_loaded = True
     End Sub
 
 #End Region
@@ -109,6 +110,8 @@ Class CommendationDashBoard
         cbMonth.Items.Add(New With {.Text = "October", .Value = 10})
         cbMonth.Items.Add(New With {.Text = "November", .Value = 11})
         cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
+        cbMonth.SelectedIndex = Date.Now().Month - 1
+        cbYear.SelectedValue = Date.Now.Year() & "-" & (Date.Now.Year + 1).ToString()
     End Sub
 
     Public Sub LoadCommendations()
@@ -231,13 +234,18 @@ Class CommendationDashBoard
     End Sub
 
     Private Sub cbMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbMonth.SelectionChanged
-        month = cbMonth.SelectedValue
-        LoadCommendationsBySearch()
+        If m_loaded Then
+            month = cbMonth.SelectedValue
+            'cbYear.SelectedValue = Date.Now().Year.ToString() + "-" + (Date.Now().Year + 1).ToString()
+            LoadCommendationsBySearch()
+        End If
     End Sub
 
     Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
-        year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
-        LoadCommendationsBySearch()
+        If m_loaded Then
+            year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+            LoadCommendationsBySearch()
+        End If
     End Sub
 #End Region
 
