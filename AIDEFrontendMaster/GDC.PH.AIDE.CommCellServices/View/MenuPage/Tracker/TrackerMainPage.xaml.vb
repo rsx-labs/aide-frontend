@@ -281,8 +281,6 @@ Class SabaLearningMainPage
                 sabalearning.DATE_COMPLETED = CType(SabaLearningLV.SelectedItem, SabaLearningModel).DATE_COMPLETED
                 sabalearning.IMAGE_PATH = CType(SabaLearningLV.SelectedItem, SabaLearningModel).IMAGE_PATH
 
-
-
                 addframe.Navigate(New TrackerViewPage(sabalearning, mainframe, addframe, menugrid, submenuframe, profile))
                 mainframe.IsEnabled = False
                 mainframe.Opacity = 0.3
@@ -305,7 +303,7 @@ Class SabaLearningMainPage
         submenuframe.IsEnabled = False
         submenuframe.Opacity = 0.3
         addframe.Visibility = Visibility.Visible
-        addframe.Margin = New Thickness(150, 60, 150, 60)
+        addframe.Margin = New Thickness(150, 150, 150, 150)
     End Sub
 #End Region
 

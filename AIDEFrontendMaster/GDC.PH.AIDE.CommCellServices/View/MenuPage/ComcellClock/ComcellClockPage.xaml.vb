@@ -167,8 +167,12 @@ Class ComcellClockPage
     End Sub
 
     Private Sub GetComcellDay()
-        Dim dayconvert As String = GetDayValue(comcellClockVM.objectComcellClockSet.CLOCK_DAY)
-        comcellClockVM.objectComcellDayOnly = dayconvert & " " & _comcellclock.Clock_Hour.ToString() & ":" & _comcellclock.Clock_Minute.ToString().PadLeft(2, "0") & " " & _comcellclock.MIDDAY
+        Try
+            Dim dayconvert As String = GetDayValue(comcellClockVM.objectComcellClockSet.CLOCK_DAY)
+            comcellClockVM.objectComcellDayOnly = dayconvert & " " & _comcellclock.Clock_Hour.ToString() & ":" & _comcellclock.Clock_Minute.ToString().PadLeft(2, "0") & " " & _comcellclock.MIDDAY
+        Catch ex As Exception
+            ' Nothing to do
+        End Try
     End Sub
 
     Private Function GetDayValue(ByVal daycount As Integer) As String

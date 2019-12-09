@@ -40,7 +40,6 @@ Class CommendationUpdatePage
         Me.position = _position
         Me.commendFrame = _commendFrame
         Me.comboProject.Text = commendationVM._commendationModel.Project
-        txtCommendationID.Visibility = Windows.Visibility.Hidden
         LoadAllProjectName()
         AssignEvents(commendationVM._commendationModel.Reason)
         PopulateComboBoxUpdate(Me.projID)
@@ -53,8 +52,6 @@ Class CommendationUpdatePage
 
 
     Public Sub AssignEvents(Reason As String)
-        'txtCommendationID.Text = commendationModel.CommendID
-        'txtCommendationID.IsReadOnly = True
         'txtCommendationEmployees.Text = commendationModel.Employees
         'txtCommendationEmployees.IsReadOnly = True
         'txtSentBy.Text = commendationModel.SentBy

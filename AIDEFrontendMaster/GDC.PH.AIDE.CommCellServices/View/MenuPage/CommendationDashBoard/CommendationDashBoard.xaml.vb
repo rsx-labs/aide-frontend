@@ -207,7 +207,7 @@ Class CommendationDashBoard
                         commmendationList.SentBy = _comm.SentBy
                     End If
                 Next
-                '_addframe.Navigate(New CommendationViewPage(commmendationList, mainFrame, position, empID, _addframe, _menugrid, _submenuframe))
+
                 _addframe.Navigate(New CommendationUpdatePage(commmendationList, mainFrame, position, empID, _addframe, _menugrid, _submenuframe, Me.profile.Permission, Me.commendFrame, Me.profile))
                 mainFrame.IsEnabled = False
                 mainFrame.Opacity = 0.3
@@ -215,7 +215,7 @@ Class CommendationDashBoard
                 _menugrid.Opacity = 0.3
                 _submenuframe.IsEnabled = False
                 _submenuframe.Opacity = 0.3
-                _addframe.Margin = New Thickness(150, 60, 150, 60)
+                _addframe.Margin = New Thickness(140, 70, 140, 70)
                 _addframe.Visibility = Visibility.Visible
             End If
         End If
@@ -229,7 +229,7 @@ Class CommendationDashBoard
         _menugrid.Opacity = 0.3
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(150, 60, 150, 60)
+        _addframe.Margin = New Thickness(140, 70, 140, 70)
         _addframe.Visibility = Visibility.Visible
     End Sub
 
@@ -270,4 +270,5 @@ Class CommendationDashBoard
         Throw New NotImplementedException()
     End Sub
 #End Region
+
 End Class
