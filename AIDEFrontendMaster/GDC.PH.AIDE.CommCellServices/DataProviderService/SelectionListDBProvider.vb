@@ -8,6 +8,7 @@ Public Class SelectionListDBProvider
     Private _objDepartment As ObservableCollection(Of myDepartmentSet)
     Private _objDivision As ObservableCollection(Of myDivisionSet)
     Private _objStatus As ObservableCollection(Of myStatusSet)
+    Private _objFiscal As ObservableCollection(Of myFiscalYearSet)
 
     Public Sub New()
         _objLocation = New ObservableCollection(Of myLocationSet)
@@ -16,6 +17,7 @@ Public Class SelectionListDBProvider
         _objDepartment = New ObservableCollection(Of myDepartmentSet)
         _objDivision = New ObservableCollection(Of myDivisionSet)
         _objStatus = New ObservableCollection(Of myStatusSet)
+        _objFiscal = New ObservableCollection(Of myFiscalYearSet)
     End Sub
 
     Public Function _getobjLocation() As ObservableCollection(Of myLocationSet)
@@ -40,6 +42,10 @@ Public Class SelectionListDBProvider
 
     Public Function _getobjStatus() As ObservableCollection(Of myStatusSet)
         Return _objStatus
+    End Function
+
+    Public Function _getobjFiscal() As ObservableCollection(Of myFiscalYearSet)
+        Return _objFiscal
     End Function
 
     Public Function _setlistofLocation(ByRef obj As LocationList)
@@ -83,6 +89,13 @@ Public Class SelectionListDBProvider
         _objStatus.Add(_myobjSet)
         Return _myobjSet
     End Function
+
+    Public Function _setlistofFiscal(ByRef obj As FiscalYear)
+        Dim _myobjSet As New myFiscalYearSet With {._fiscalYear = obj.FISCAL_YEAR}
+
+        _objFiscal.Add(_myobjSet)
+        Return _myobjSet
+    End Function
 End Class
 
 Public Class myPositionSet
@@ -114,4 +127,8 @@ Public Class myLocationSet
     Property _locationID As Integer
     Property _location As String
     Property _onsiteFLg As Short
+End Class
+
+Public Class myFiscalYearSet
+    Property _fiscalYear As String
 End Class

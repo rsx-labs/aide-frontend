@@ -3995,6 +3995,53 @@ Namespace ServiceReference1
     
     <System.Diagnostics.DebuggerStepThroughAttribute(),  _
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="FiscalYear", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
+     System.SerializableAttribute()>  _
+    Partial Public Class FiscalYear
+        Inherits Object
+        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+        
+        <System.NonSerializedAttribute()>  _
+        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FISCAL_YEARField As String
+        
+        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
+        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
+            Get
+                Return Me.extensionDataField
+            End Get
+            Set
+                Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FISCAL_YEAR() As String
+            Get
+                Return Me.FISCAL_YEARField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FISCAL_YEARField, value) <> true) Then
+                    Me.FISCAL_YEARField = value
+                    Me.RaisePropertyChanged("FISCAL_YEAR")
+                End If
+            End Set
+        End Property
+        
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        
+        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
+            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
+            If (Not (propertyChanged) Is Nothing) Then
+                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
+            End If
+        End Sub
+    End Class
+    
+    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
      System.Runtime.Serialization.DataContractAttribute(Name:="KPITargets", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
      System.SerializableAttribute()>  _
     Partial Public Class KPITargets
@@ -9220,16 +9267,22 @@ Namespace ServiceReference1
         Function GetAllDepartmentAsync() As System.Threading.Tasks.Task(Of ServiceReference1.DepartmentList())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllDivision", ReplyAction:="http://tempuri.org/IAideService/GetAllDivisionResponse")>  _
-        Function GetAllDivision() As ServiceReference1.DivisionList()
+        Function GetAllDivision(ByVal DeptID As Integer) As ServiceReference1.DivisionList()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllDivision", ReplyAction:="http://tempuri.org/IAideService/GetAllDivisionResponse")>  _
-        Function GetAllDivisionAsync() As System.Threading.Tasks.Task(Of ServiceReference1.DivisionList())
+        Function GetAllDivisionAsync(ByVal DeptID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.DivisionList())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllStatus", ReplyAction:="http://tempuri.org/IAideService/GetAllStatusResponse")>  _
         Function GetAllStatus(ByVal statusName As String) As ServiceReference1.StatusList()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllStatus", ReplyAction:="http://tempuri.org/IAideService/GetAllStatusResponse")>  _
         Function GetAllStatusAsync(ByVal statusName As String) As System.Threading.Tasks.Task(Of ServiceReference1.StatusList())
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllFiscalYear", ReplyAction:="http://tempuri.org/IAideService/GetAllFiscalYearResponse")>  _
+        Function GetAllFiscalYear() As ServiceReference1.FiscalYear()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllFiscalYear", ReplyAction:="http://tempuri.org/IAideService/GetAllFiscalYearResponse")>  _
+        Function GetAllFiscalYearAsync() As System.Threading.Tasks.Task(Of ServiceReference1.FiscalYear())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/InsertKPITarget", ReplyAction:="http://tempuri.org/IAideService/InsertKPITargetResponse")>  _
         Function InsertKPITarget(ByVal kpiTarget As ServiceReference1.KPITargets) As Boolean
@@ -10108,6 +10161,8 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DivisionList)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.StatusList())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.StatusList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.FiscalYear())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.FiscalYear)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPITargets)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPITargets())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPISummary)),  _
@@ -10378,12 +10433,12 @@ Namespace ServiceReference1
             Return MyBase.Channel.GetAllDepartmentAsync
         End Function
         
-        Public Function GetAllDivision() As ServiceReference1.DivisionList() Implements ServiceReference1.IAideService.GetAllDivision
-            Return MyBase.Channel.GetAllDivision
+        Public Function GetAllDivision(ByVal DeptID As Integer) As ServiceReference1.DivisionList() Implements ServiceReference1.IAideService.GetAllDivision
+            Return MyBase.Channel.GetAllDivision(DeptID)
         End Function
         
-        Public Function GetAllDivisionAsync() As System.Threading.Tasks.Task(Of ServiceReference1.DivisionList()) Implements ServiceReference1.IAideService.GetAllDivisionAsync
-            Return MyBase.Channel.GetAllDivisionAsync
+        Public Function GetAllDivisionAsync(ByVal DeptID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.DivisionList()) Implements ServiceReference1.IAideService.GetAllDivisionAsync
+            Return MyBase.Channel.GetAllDivisionAsync(DeptID)
         End Function
         
         Public Function GetAllStatus(ByVal statusName As String) As ServiceReference1.StatusList() Implements ServiceReference1.IAideService.GetAllStatus
@@ -10392,6 +10447,14 @@ Namespace ServiceReference1
         
         Public Function GetAllStatusAsync(ByVal statusName As String) As System.Threading.Tasks.Task(Of ServiceReference1.StatusList()) Implements ServiceReference1.IAideService.GetAllStatusAsync
             Return MyBase.Channel.GetAllStatusAsync(statusName)
+        End Function
+        
+        Public Function GetAllFiscalYear() As ServiceReference1.FiscalYear() Implements ServiceReference1.IAideService.GetAllFiscalYear
+            Return MyBase.Channel.GetAllFiscalYear
+        End Function
+        
+        Public Function GetAllFiscalYearAsync() As System.Threading.Tasks.Task(Of ServiceReference1.FiscalYear()) Implements ServiceReference1.IAideService.GetAllFiscalYearAsync
+            Return MyBase.Channel.GetAllFiscalYearAsync
         End Function
         
         Public Function InsertKPITarget(ByVal kpiTarget As ServiceReference1.KPITargets) As Boolean Implements ServiceReference1.IAideService.InsertKPITarget

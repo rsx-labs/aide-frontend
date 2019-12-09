@@ -36,6 +36,10 @@ Public Class BillablesPage
 
     Dim lstWeekRange As WeekRange()
     Dim colorList As New List(Of System.Windows.Media.Brush)
+
+    Dim lstFiscalYear As FiscalYear()
+    Dim commendationVM As New CommendationViewModel()
+    Dim fiscalyearVM As New SelectionListViewModel
 #End Region
 
 #Region "Provider Declaration"
@@ -61,7 +65,7 @@ Public Class BillablesPage
 
         GenerateColors()
         LoadMonth()
-        LoadYears()
+        SetData()
         LoadWeeks()
 
         LoadDataWeekly()
@@ -264,16 +268,35 @@ Public Class BillablesPage
         cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
     End Sub
 
-    Private Sub LoadYears()
+    Public Sub SetData()
         Try
-            cbYear.DisplayMemberPath = "Text"
-            cbYear.SelectedValuePath = "Value"
-            For i As Integer = startYear To DateTime.Today.Year
-                Dim nextYear As Integer = i + 1
-                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
-            Next
+            If InitializeService() Then
+
+                lstFiscalYear = client.GetAllFiscalYear()
+                LoadFiscalYear()
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Public Sub LoadFiscalYear()
+        Try
+            Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
+            Dim FYDBProvider As New SelectionListDBProvider
+
+            For Each objFiscal As FiscalYear In lstFiscalYear
+                FYDBProvider._setlistofFiscal(objFiscal)
+            Next
+
+            For Each rawUser As myFiscalYearSet In FYDBProvider._getobjFiscal()
+                lstFiscalYearList.Add(New FiscalYearModel(rawUser))
+            Next
+
+            fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
+            cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
 
@@ -366,7 +389,7 @@ Public Class BillablesPage
     End Sub
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
-        year = cbYear.SelectedValue
+        year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
         cCanvas.Children.Clear()
         LoadWeeks()
         LoadDataWeekly()

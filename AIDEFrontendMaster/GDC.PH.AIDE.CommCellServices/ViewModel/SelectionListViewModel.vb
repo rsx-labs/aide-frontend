@@ -11,6 +11,7 @@ Public Class SelectionListViewModel
     Private _objDivisionSet As New ObservableCollection(Of DivisionModel)
     Private _objMaritalSet As New ObservableCollection(Of MaritalModel)
     Private _objWorkShiftSet As New ObservableCollection(Of WorkShiftModel)
+    Private _objFiscalYearSet As New ObservableCollection(Of FiscalYearModel)
     Private _selectionListDB As New SelectionListDBProvider
 
     Sub New()
@@ -39,6 +40,9 @@ Public Class SelectionListViewModel
         Next
         For Each _myStatusSet As myStatusSet In _selectionListDB._getobjStatus
             _objWorkShiftSet.Add(New WorkShiftModel(_myStatusSet))
+        Next
+        For Each _myFiscalYearSet As myFiscalYearSet In _selectionListDB._getobjFiscal
+            _objFiscalYearSet.Add(New FiscalYearModel(_myFiscalYearSet))
         Next
     End Sub
 
@@ -109,6 +113,16 @@ Public Class SelectionListViewModel
         Set(value As ObservableCollection(Of WorkShiftModel))
             _objWorkShiftSet = value
             NotifyPropertyChanged("ObjectWorkShiftSet")
+        End Set
+    End Property
+
+    Public Property ObjectFiscalYearSet As ObservableCollection(Of FiscalYearModel)
+        Get
+            Return _objFiscalYearSet
+        End Get
+        Set(value As ObservableCollection(Of FiscalYearModel))
+            _objFiscalYearSet = value
+            NotifyPropertyChanged("ObjectFiscalYearSet")
         End Set
     End Property
 
