@@ -38,6 +38,7 @@ Class ResourcePlannerAddPage
         LoadData()
         LoadCategory()
         LoadSchedule()
+        cbSchedule.IsEnabled = False
     End Sub
 #End Region
 
@@ -128,6 +129,11 @@ Class ResourcePlannerAddPage
     End Sub
 
     Private Sub cbCategory_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbCategory.SelectionChanged
+        If cbCategory.SelectedValue = 5 Or cbCategory.SelectedValue = 6 Or cbCategory.SelectedValue = 9 Or cbCategory.SelectedValue = 12 Or cbCategory.SelectedValue = 14 Then
+            cbSchedule.IsEnabled = True
+        Else
+            cbSchedule.IsEnabled = False
+        End If
         If cbCategory.SelectedValue = 3 Or cbCategory.SelectedValue = 5 Then
             dtpFrom.DisplayDateStart = Date.MinValue
             dtpFrom.DisplayDateEnd = Date.Today
@@ -135,6 +141,9 @@ Class ResourcePlannerAddPage
             dtpFrom.DisplayDateStart = Date.Today
             dtpFrom.DisplayDateEnd = Date.MaxValue
         End If
+
+
+
         dtpFrom.IsEnabled = True
     End Sub
 #End Region
