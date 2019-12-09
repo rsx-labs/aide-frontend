@@ -28,6 +28,9 @@ Public Class ThreeC_Page
     Private isSearchIsUsed As Integer = 0
     Private isDateBetweenUsed As Integer = 0
 
+    Private offsetVal As Integer = 0
+    Private nextVal As Integer = 100
+
     Private startRowIndex As Integer
     Private lastRowIndex As Integer
     Private pagingPageIndex As Integer
@@ -46,8 +49,6 @@ Public Class ThreeC_Page
     End Enum
 
     Public Sub New(email As String, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
-        Dim offsetVal As Integer = 0
-        Dim nextVal As Integer = 100
         Dim clear As New ConcernViewModel
 
         InitializeComponent()
@@ -65,7 +66,6 @@ Public Class ThreeC_Page
     ''DISPLAY to DATAGIRD VIEW
     Public Sub LoadConcernList(offSet As Integer, NextVal As Integer)
         Try
-
             If InitializeService() Then
                 _lstConcern = _AIDEClientService.selectAllConcern(email, offSet, NextVal)
                 SetLists()
@@ -193,28 +193,26 @@ Public Class ThreeC_Page
 
     ''SEARCH FILTER DATE
     Private Sub btnFilter(sender As Object, e As RoutedEventArgs)
-        Dim offset As Integer = 0
-        Dim nextVal As Integer = 10
         isSearchIsUsed = 2
         If dtpTo.Text = String.Empty Or dtpFrom.Text = String.Empty Then
             MsgBox("Please Complete date Selection.", MsgBoxStyle.Critical, "AIDE")
         Else
-            LoadBetweenSearchDate(offset, nextVal, Me.DataContext())
+            LoadBetweenSearchDate(offsetVal, nextVal, Me.DataContext())
             GetDateTimeNow(Me.DataContext())
         End If
     End Sub
 
     Private Sub SetLists()
         Try
-            paginatedCollection.Clear()
+            paginatedCollection = New PaginatedObservableCollection(Of ConcernModel)(pagingRecordPerPage)
             Dim _concernViewModel As New ConcernViewModel
-            Dim MyConcernDBProvider As New ConcernDBProvider
+            Dim concernDBProvider As New ConcernDBProvider
 
             For Each objConcern As Concern In _lstConcern
-                MyConcernDBProvider.SetConcernList(objConcern)
+                concernDBProvider.SetConcernList(objConcern)
             Next
 
-            For Each iConcern As MyConcern In MyConcernDBProvider.GetConcernList()
+            For Each iConcern As MyConcern In concernDBProvider.GetConcernList()
                 paginatedCollection.Add(New ConcernModel(iConcern))
             Next
 
@@ -274,6 +272,14 @@ Public Class ThreeC_Page
         End If
     End Sub
 
+    Private Sub dtpFrom_KeyUp(sender As Object, e As KeyEventArgs) Handles dtpFrom.KeyUp
+        ReloadConcernList(e)
+    End Sub
+
+    Private Sub dtpTo_KeyUp(sender As Object, e As KeyEventArgs) Handles dtpTo.KeyUp
+        ReloadConcernList(e)
+    End Sub
+
     Private Sub DisplayPagingInfo()
         ' If there has no data found
         If _lstConcern.Length = 0 Then
@@ -299,6 +305,13 @@ Public Class ThreeC_Page
         btnNext.IsEnabled = True
     End Sub
 
+    Private Sub ReloadConcernList(e)
+        If e.Key = Key.Back Then
+            If dtpFrom.Text Is String.Empty AndAlso dtpTo.Text Is String.Empty Then
+                LoadConcernList(offsetVal, nextVal)
+            End If
+        End If
+    End Sub
 #End Region
 
 #Region "NotifyChanges"
