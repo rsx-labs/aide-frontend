@@ -56,24 +56,8 @@
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0">
-                        <Border Margin="0,5" CornerRadius="15" BorderThickness="3,3,3,3">
-                            <Border.BorderBrush>
-                                <DrawingBrush Viewport="0,0,10,10" ViewportUnits="Absolute" TileMode="Tile">
-                                    <DrawingBrush.Drawing>
-                                        <DrawingGroup>
-                                            <GeometryDrawing Brush="DimGray">
-                                                <GeometryDrawing.Geometry>
-                                                    <GeometryGroup>
-                                                        <RectangleGeometry Rect="0,0,50,50"/>
-                                                        <RectangleGeometry Rect="50,50,50,50"/>
-                                                        <RectangleGeometry Rect="50,50,50,50"/>
-                                                    </GeometryGroup>
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                        </DrawingGroup>
-                                    </DrawingBrush.Drawing>
-                                </DrawingBrush>
-                            </Border.BorderBrush>
+                        <Border Margin="0,5" CornerRadius="15" BorderThickness="3" BorderBrush="white">
+                            
 
                             <Viewbox>
                                 <TextBlock TextWrapping="Wrap" 
