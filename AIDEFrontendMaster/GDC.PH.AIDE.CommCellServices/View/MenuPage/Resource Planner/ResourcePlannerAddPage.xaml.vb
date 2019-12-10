@@ -188,7 +188,7 @@ Class ResourcePlannerAddPage
         If cbSchedule.Text = "Morning".Trim.ToString() Then
             dtpFrom.SelectedDate = dtpFrom.SelectedDate.Value.AddHours(0).AddMinutes(0).AddSeconds(0)
             dtpTo.SelectedDate = dtpTo.SelectedDate.Value.AddHours(13).AddMinutes(59).AddSeconds(59)
-        ElseIf cbSchedule.Text = "Aternoon" Then
+        ElseIf cbSchedule.Text = "Afternoon" Then
             dtpFrom.SelectedDate = dtpFrom.SelectedDate.Value.AddHours(14).AddMinutes(0).AddSeconds(0)
             dtpTo.SelectedDate = dtpTo.SelectedDate.Value.AddHours(23).AddMinutes(59).AddSeconds(59)
         Else
