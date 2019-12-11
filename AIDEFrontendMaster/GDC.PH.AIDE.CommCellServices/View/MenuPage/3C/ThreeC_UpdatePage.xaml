@@ -205,7 +205,7 @@
                         </Grid>
                         <Grid Grid.Row="5">
                             <Button Style="{DynamicResource RoundCornerUpdate}" Margin="0,5,5,5"
-                                    x:Name="btnReload"  Click="btnSaveClick" >
+                                    x:Name="btnUpdate" Click="btnUpdateClick" >
                                 <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="7"/>
                             </Button>
                         </Grid>
@@ -227,11 +227,8 @@
                         
                         <Grid Grid.Row="1">
                             <Border Margin="5,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                <DataGrid AlternationCount="2" Background="Transparent" AutoGenerateColumns="False" x:Name="lv" Margin="0" 
-                                          Width="auto" BorderBrush="Transparent" 
-                                          ItemsSource="{Binding ListOfActionInConcern}" 
-                                          SelectedItem="{Binding GetSelectedAction}"
-                                          SelectedValuePath="Key">
+                                <DataGrid AlternationCount="2" Background="Transparent" AutoGenerateColumns="False" x:Name="lvActionRef" Margin="0" 
+                                          Width="auto" BorderBrush="Transparent">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Ref. No." Width="*" Binding="{Binding ACTREF}" IsReadOnly="True"/>
                                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Action Ref."  Width="*" Binding="{Binding ACTION_REFERENCES}" IsReadOnly="True"/>
@@ -242,7 +239,7 @@
                         
                         <Grid Grid.Row="2">
                             <Viewbox HorizontalAlignment="Right" Margin="5">
-                                <Button Style="{DynamicResource ButtonMinus}" Click="btnRemoveSelectedAction"/>
+                                <Button x:Name="btnRemoveAction" Style="{DynamicResource ButtonMinus}" Click="btnRemoveSelectedAction"/>
                             </Viewbox>
                         </Grid>
                     </Grid>
@@ -269,10 +266,7 @@
                             <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                                 <DataGrid AlternationCount="2" Background="Transparent" 
                                           AutoGenerateColumns="False" x:Name="lvACtion" Margin="0" 
-                                          Width="auto" BorderBrush="Transparent" 
-                                          ItemsSource="{Binding listAction}" 
-                                          SelectedItem="{Binding GetSelectedAction}"
-                                          SelectedValuePath="Key">
+                                          Width="auto" BorderBrush="Transparent">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Action Message"  Width="1*" Binding="{Binding ACT_MESSAGE}" IsReadOnly="True"/>
                                     </DataGrid.Columns>
@@ -282,10 +276,10 @@
                         
                         <Grid Grid.Row="2">
                             <Viewbox Margin="5,5,0,5" HorizontalAlignment="Right">
-                                <Button Style="{DynamicResource ButtonAdd}" Click="btnSaveActionRef">
-                                    <Viewbox>
+                                <Button x:Name="btnAddAction" Style="{DynamicResource ButtonAdd}" Click="btnSaveActionRef">
+                                    <!--<Viewbox>
                                         <TextBlock Text="Add" TextWrapping="Wrap" Margin="5"/>
-                                    </Viewbox>
+                                    </Viewbox>-->
                                 </Button>
                             </Viewbox>
                         </Grid>
