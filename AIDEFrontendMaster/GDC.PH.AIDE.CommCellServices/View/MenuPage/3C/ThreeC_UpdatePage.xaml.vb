@@ -20,18 +20,15 @@ Class ThreeC_UpdatePage
     Private _menugrid As Grid
     Private _addframe As Frame
     Private _submenuframe As Frame
-    Private _AIDEClientService As ServiceReference1.AideServiceClient
-    Private _GetRefID As String
+    Private AIDEClientService As ServiceReference1.AideServiceClient
+    Private getRefID As String
     Private isSearchTextIsUsed As Integer = 0
 
-
     Public Sub New(getPassedSelectedData As ConcernViewModel, _frame As Frame, email As String, _menugrid As Grid, _submenuframe As Frame, _addframe As Frame)
-        Dim countMe As Integer = 0
         ' This call is required by the designer.
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-
         Me._frame = _frame
         Me._menugrid = _menugrid
         Me._email = email
@@ -40,23 +37,19 @@ Class ThreeC_UpdatePage
         Me.objData = getPassedSelectedData
 
         'Load Selected Concern from ThreeC Page
-        loadselected()
-
+        LoadSelectedConcern()
     End Sub
 
 #Region "Initialize Service"
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
         Try
-            'DisplayText("Opening client service...")
             Dim Context As InstanceContext = New InstanceContext(Me)
-            _AIDEClientService = New AideServiceClient(Context)
-            _AIDEClientService.Open()
+            AIDEClientService = New AideServiceClient(Context)
+            AIDEClientService.Open()
             bInitialize = True
-            'DisplayText("Service opened successfully...")
-            'Return True
         Catch ex As SystemException
-            _AIDEClientService.Abort()
+            AIDEClientService.Abort()
         End Try
         Return bInitialize
     End Function
@@ -64,7 +57,7 @@ Class ThreeC_UpdatePage
 
 #Region "Methods"
     'Set selected Concern from ThreeCPage
-    Private Sub loadselected()
+    Private Sub LoadSelectedConcern()
         InitializeService()
 
         Dim _newProvider As New ConcernDBProvider
@@ -83,8 +76,7 @@ Class ThreeC_UpdatePage
 
         If isSearchTextIsUsed = 0 Then
             ''LISTVIEW CHOICES OF ACTION TO ADD IN CONCERN BOX
-
-            Dim lstConcern As Concern() = _AIDEClientService.GetListOfACtion(_concern.RefID, _email)
+            Dim lstConcern As Concern() = AIDEClientService.GetListOfACtion(_concern.RefID, _email)
             Dim lstConcernList As New ObservableCollection(Of ConcernModel)
 
             For Each objConcern As Concern In lstConcern
@@ -97,7 +89,7 @@ Class ThreeC_UpdatePage
             _newViewModel.listAction = lstConcernList
         Else
             'DISPLAY LIST OF ACTION VIA SEARCH
-            Dim lstConcern As Concern() = _AIDEClientService.GetSearchAction(_GetRefID, txtSearchAction.Text, _email)
+            Dim lstConcern As Concern() = AIDEClientService.GetSearchAction(getRefID, txtSearchAction.Text, _email)
             Dim lstConcernList As New ObservableCollection(Of ConcernModel)
 
             For Each objConcern As Concern In lstConcern
@@ -111,8 +103,9 @@ Class ThreeC_UpdatePage
         End If
 
         ''DISPLAY MY ACTION REFERENCE in LISTVIEW
-        Dim getRefID As String = _concern.RefID
-        Dim lstConcernAction As Concern() = _AIDEClientService.GetListOfACtionsReferences(getRefID)
+        getRefID = _concern.RefID
+
+        Dim lstConcernAction As Concern() = AIDEClientService.GetListOfACtionsReferences(getRefID)
         Dim lstConcernListAction As New ObservableCollection(Of ConcernModel)
 
         For Each objConcern As Concern In lstConcernAction
@@ -125,7 +118,6 @@ Class ThreeC_UpdatePage
 
         _newViewModel.ListOfActionInConcern = lstConcernListAction
         Me.DataContext = _newViewModel
-        _GetRefID = _concern.RefID
     End Sub
 
     'INSERT TO CONCERN EACH SELECTED ACTION REF
@@ -169,7 +161,7 @@ Class ThreeC_UpdatePage
         _newViewModel.SelectedConcern = New ConcernModel(_newProvider.GetSelectedConcern())
 
         ''DISPLAY LIST OF ACTION
-        lstConcern = _AIDEClientService.GetListOfACtion(_concern.RefID, _email)
+        lstConcern = AIDEClientService.GetListOfACtion(_concern.RefID, _email)
         lstConcernList = New ObservableCollection(Of ConcernModel)
 
         For Each objConcern As Concern In lstConcern
@@ -184,7 +176,7 @@ Class ThreeC_UpdatePage
 
         ''DISPLAY MY ACTION REFERENCE in LISTVIEW
         getRefID = _concern.RefID
-        lstConcernAction = _AIDEClientService.GetListOfACtionsReferences(getRefID)
+        lstConcernAction = AIDEClientService.GetListOfACtionsReferences(getRefID)
         lstConcernListAction = New ObservableCollection(Of ConcernModel)
 
         For Each objConcern As Concern In lstConcernAction
@@ -250,10 +242,10 @@ Class ThreeC_UpdatePage
             MsgBox("Please select an item first!", MsgBoxStyle.Exclamation, "AIDE")
         Else
             If MsgBox("Are you sure you want to remove?", MsgBoxStyle.Question + vbYesNo, "AIDE") = vbYes Then
-                _AIDEClientService.insertAndDeleteSelectedAction(DeleteSectedActionReference(Me.DataContext()))
+                AIDEClientService.insertAndDeleteSelectedAction(DeleteSectedActionReference(Me.DataContext()))
                 getSelectecDATE(Me.DataContext())
                 MsgBox("Successfully remove action reference in concern", MsgBoxStyle.Information, "AIDE")
-                _AIDEClientService.Close()
+                AIDEClientService.Close()
                 Return
             End If
         End If
@@ -261,16 +253,16 @@ Class ThreeC_UpdatePage
 
     Private Sub txtSearchAction_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearchAction.TextChanged
         isSearchTextIsUsed = 1
-        loadselected()
+        LoadSelectedConcern()
     End Sub
 
     Private Sub btnSaveClick(sender As Object, e As RoutedEventArgs)
         InitializeService()
         ''UPDATE SELECTED ACTION
-        _AIDEClientService.UpdateSelectedConcern(UpdateSelectedConcern(Me.DataContext()))
+        AIDEClientService.UpdateSelectedConcern(UpdateSelectedConcern(Me.DataContext()))
         getSelectecDATE(Me.DataContext())
         MsgBox("Successfully updated concern", MsgBoxStyle.Information)
-        _AIDEClientService.Close()
+        AIDEClientService.Close()
 
         ExitPage()
     End Sub
@@ -285,10 +277,10 @@ Class ThreeC_UpdatePage
         If lvACtion.SelectedIndex = -1 Then
             MsgBox("Please select an item first.")
         Else
-            _AIDEClientService.insertAndDeleteSelectedAction(InsertSelectedAction(Me.DataContext()))
+            AIDEClientService.insertAndDeleteSelectedAction(InsertSelectedAction(Me.DataContext()))
             getSelectecDATE(Me.DataContext())
             MsgBox("Successfully added new action reference in concern", MsgBoxStyle.Information)
-            _AIDEClientService.Close()
+            AIDEClientService.Close()
         End If
     End Sub
 #End Region

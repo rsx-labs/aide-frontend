@@ -186,7 +186,7 @@ Class LessonLearntPage
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
         _addframe.Visibility = Visibility.Visible
-        _addframe.Margin = New Thickness(150, 60, 150, 60)
+        _addframe.Margin = New Thickness(50, 50, 50, 50)
     End Sub
 
     Private Sub dgLessonLearnt_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles dgLessonLearnt.MouseDoubleClick

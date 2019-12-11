@@ -1595,6 +1595,117 @@ Namespace ServiceReference1
     
     <System.Diagnostics.DebuggerStepThroughAttribute(),  _
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="ComcellClock", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
+     System.SerializableAttribute()>  _
+    Partial Public Class ComcellClock
+        Inherits Object
+        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+        
+        <System.NonSerializedAttribute()>  _
+        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private Clock_DayField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private Clock_HourField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private Clock_MinuteField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private Emp_IDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private MIDDAYField As String
+        
+        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
+        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
+            Get
+                Return Me.extensionDataField
+            End Get
+            Set
+                Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Clock_Day() As Integer
+            Get
+                Return Me.Clock_DayField
+            End Get
+            Set
+                If (Me.Clock_DayField.Equals(value) <> true) Then
+                    Me.Clock_DayField = value
+                    Me.RaisePropertyChanged("Clock_Day")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Clock_Hour() As Integer
+            Get
+                Return Me.Clock_HourField
+            End Get
+            Set
+                If (Me.Clock_HourField.Equals(value) <> true) Then
+                    Me.Clock_HourField = value
+                    Me.RaisePropertyChanged("Clock_Hour")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Clock_Minute() As Integer
+            Get
+                Return Me.Clock_MinuteField
+            End Get
+            Set
+                If (Me.Clock_MinuteField.Equals(value) <> true) Then
+                    Me.Clock_MinuteField = value
+                    Me.RaisePropertyChanged("Clock_Minute")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Emp_ID() As Integer
+            Get
+                Return Me.Emp_IDField
+            End Get
+            Set
+                If (Me.Emp_IDField.Equals(value) <> true) Then
+                    Me.Emp_IDField = value
+                    Me.RaisePropertyChanged("Emp_ID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property MIDDAY() As String
+            Get
+                Return Me.MIDDAYField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.MIDDAYField, value) <> true) Then
+                    Me.MIDDAYField = value
+                    Me.RaisePropertyChanged("MIDDAY")
+                End If
+            End Set
+        End Property
+        
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        
+        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
+            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
+            If (Not (propertyChanged) Is Nothing) Then
+                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
+            End If
+        End Sub
+    End Class
+    
+    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
      System.Runtime.Serialization.DataContractAttribute(Name:="WeeklyReport", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
      System.SerializableAttribute()>  _
     Partial Public Class WeeklyReport
@@ -6604,117 +6715,6 @@ Namespace ServiceReference1
     
     <System.Diagnostics.DebuggerStepThroughAttribute(),  _
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
-     System.Runtime.Serialization.DataContractAttribute(Name:="ComcellClock", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
-     System.SerializableAttribute()>  _
-    Partial Public Class ComcellClock
-        Inherits Object
-        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
-        
-        <System.NonSerializedAttribute()>  _
-        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private Clock_DayField As Integer
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private Clock_HourField As Integer
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private Clock_MinuteField As Integer
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private Emp_IDField As Integer
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private MIDDAYField As String
-        
-        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
-        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
-            Get
-                Return Me.extensionDataField
-            End Get
-            Set
-                Me.extensionDataField = value
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property Clock_Day() As Integer
-            Get
-                Return Me.Clock_DayField
-            End Get
-            Set
-                If (Me.Clock_DayField.Equals(value) <> true) Then
-                    Me.Clock_DayField = value
-                    Me.RaisePropertyChanged("Clock_Day")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property Clock_Hour() As Integer
-            Get
-                Return Me.Clock_HourField
-            End Get
-            Set
-                If (Me.Clock_HourField.Equals(value) <> true) Then
-                    Me.Clock_HourField = value
-                    Me.RaisePropertyChanged("Clock_Hour")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property Clock_Minute() As Integer
-            Get
-                Return Me.Clock_MinuteField
-            End Get
-            Set
-                If (Me.Clock_MinuteField.Equals(value) <> true) Then
-                    Me.Clock_MinuteField = value
-                    Me.RaisePropertyChanged("Clock_Minute")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property Emp_ID() As Integer
-            Get
-                Return Me.Emp_IDField
-            End Get
-            Set
-                If (Me.Emp_IDField.Equals(value) <> true) Then
-                    Me.Emp_IDField = value
-                    Me.RaisePropertyChanged("Emp_ID")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property MIDDAY() As String
-            Get
-                Return Me.MIDDAYField
-            End Get
-            Set
-                If (Object.ReferenceEquals(Me.MIDDAYField, value) <> true) Then
-                    Me.MIDDAYField = value
-                    Me.RaisePropertyChanged("MIDDAY")
-                End If
-            End Set
-        End Property
-        
-        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-        
-        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
-            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
-            If (Not (propertyChanged) Is Nothing) Then
-                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
-            End If
-        End Sub
-    End Class
-    
-    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
-     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
      System.Runtime.Serialization.DataContractAttribute(Name:="Action", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
      System.SerializableAttribute()>  _
     Partial Public Class Action
@@ -9128,6 +9128,18 @@ Namespace ServiceReference1
      System.ServiceModel.ServiceContractAttribute(ConfigurationName:="ServiceReference1.IAideService", CallbackContract:=GetType(ServiceReference1.IAideServiceCallback), SessionMode:=System.ServiceModel.SessionMode.Required)>  _
     Public Interface IAideService
         
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/UpdateComcellClock", ReplyAction:="http://tempuri.org/IAideService/UpdateComcellClockResponse")>  _
+        Sub UpdateComcellClock(ByVal obj As ServiceReference1.ComcellClock)
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/UpdateComcellClock", ReplyAction:="http://tempuri.org/IAideService/UpdateComcellClockResponse")>  _
+        Function UpdateComcellClockAsync(ByVal obj As ServiceReference1.ComcellClock) As System.Threading.Tasks.Task
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/CreateWeeklyReport")>  _
+        Sub CreateWeeklyReport(ByVal weeklyReport() As ServiceReference1.WeeklyReport, ByVal weeklyReportXref As ServiceReference1.WeekRange)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/CreateWeeklyReport")>  _
+        Function CreateWeeklyReportAsync(ByVal weeklyReport() As ServiceReference1.WeeklyReport, ByVal weeklyReportXref As ServiceReference1.WeekRange) As System.Threading.Tasks.Task
+        
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateWeeklyReport")>  _
         Sub UpdateWeeklyReport(ByVal weeklyReport() As ServiceReference1.WeeklyReport, ByVal weeklyReportXref As ServiceReference1.WeekRange)
         
@@ -9331,6 +9343,18 @@ Namespace ServiceReference1
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetKPISummaryListMonthly", ReplyAction:="http://tempuri.org/IAideService/GetKPISummaryListMonthlyResponse")>  _
         Function GetKPISummaryListMonthlyAsync(ByVal EmpId As Integer, ByVal FY_Start As Date, ByVal FY_End As Date, ByVal Month As Short, ByVal KPIRef As String) As System.Threading.Tasks.Task(Of ServiceReference1.KPISummary())
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetLessonLearntList", ReplyAction:="http://tempuri.org/IAideService/GetLessonLearntListResponse")>  _
+        Function GetLessonLearntList(ByVal email As String) As ServiceReference1.LessonLearnt()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetLessonLearntList", ReplyAction:="http://tempuri.org/IAideService/GetLessonLearntListResponse")>  _
+        Function GetLessonLearntListAsync(ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.LessonLearnt())
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetLessonLearntByProblem", ReplyAction:="http://tempuri.org/IAideService/GetLessonLearntByProblemResponse")>  _
+        Function GetLessonLearntByProblem(ByVal search As String, ByVal email As String) As ServiceReference1.LessonLearnt()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetLessonLearntByProblem", ReplyAction:="http://tempuri.org/IAideService/GetLessonLearntByProblemResponse")>  _
+        Function GetLessonLearntByProblemAsync(ByVal search As String, ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.LessonLearnt())
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/CreateLessonLearnt")>  _
         Sub CreateLessonLearnt(ByVal lessonLearnt As ServiceReference1.LessonLearnt)
@@ -9704,18 +9728,6 @@ Namespace ServiceReference1
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetClockTimeByEmployee", ReplyAction:="http://tempuri.org/IAideService/GetClockTimeByEmployeeResponse")>  _
         Function GetClockTimeByEmployeeAsync(ByVal empid As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.ComcellClock)
         
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/UpdateComcellClock", ReplyAction:="http://tempuri.org/IAideService/UpdateComcellClockResponse")>  _
-        Sub UpdateComcellClock(ByVal obj As ServiceReference1.ComcellClock)
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/UpdateComcellClock", ReplyAction:="http://tempuri.org/IAideService/UpdateComcellClockResponse")>  _
-        Function UpdateComcellClockAsync(ByVal obj As ServiceReference1.ComcellClock) As System.Threading.Tasks.Task
-        
-        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/CreateWeeklyReport")>  _
-        Sub CreateWeeklyReport(ByVal weeklyReport() As ServiceReference1.WeeklyReport, ByVal weeklyReportXref As ServiceReference1.WeekRange)
-        
-        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/CreateWeeklyReport")>  _
-        Function CreateWeeklyReportAsync(ByVal weeklyReport() As ServiceReference1.WeeklyReport, ByVal weeklyReportXref As ServiceReference1.WeekRange) As System.Threading.Tasks.Task
-        
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertActionList")>  _
         Sub InsertActionList(ByVal _Action As ServiceReference1.Action)
         
@@ -9728,11 +9740,23 @@ Namespace ServiceReference1
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetActionListByMessage", ReplyAction:="http://tempuri.org/IAideService/GetActionListByMessageResponse")>  _
         Function GetActionListByMessageAsync(ByVal _Message As String, ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.Action())
         
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetActionListByActionNo", ReplyAction:="http://tempuri.org/IAideService/GetActionListByActionNoResponse")>  _
+        Function GetActionListByActionNo(ByVal actionNo As String, ByVal empID As Integer) As ServiceReference1.Action()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetActionListByActionNo", ReplyAction:="http://tempuri.org/IAideService/GetActionListByActionNoResponse")>  _
+        Function GetActionListByActionNoAsync(ByVal actionNo As String, ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Action())
+        
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetActionSummary", ReplyAction:="http://tempuri.org/IAideService/GetActionSummaryResponse")>  _
         Function GetActionSummary(ByVal email As String) As ServiceReference1.Action()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetActionSummary", ReplyAction:="http://tempuri.org/IAideService/GetActionSummaryResponse")>  _
         Function GetActionSummaryAsync(ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.Action())
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetLessonLearntListOfActionSummary", ReplyAction:="http://tempuri.org/IAideService/GetLessonLearntListOfActionSummaryResponse")>  _
+        Function GetLessonLearntListOfActionSummary(ByVal empID As Integer) As ServiceReference1.Action()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetLessonLearntListOfActionSummary", ReplyAction:="http://tempuri.org/IAideService/GetLessonLearntListOfActionSummaryResponse")>  _
+        Function GetLessonLearntListOfActionSummaryAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Action())
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateActionList")>  _
         Sub UpdateActionList(ByVal _Action As ServiceReference1.Action)
@@ -10087,18 +10111,6 @@ Namespace ServiceReference1
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAssetManufacturer", ReplyAction:="http://tempuri.org/IAideService/GetAssetManufacturerResponse")>  _
         Function GetAssetManufacturerAsync() As System.Threading.Tasks.Task(Of ServiceReference1.Assets())
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetLessonLearntList", ReplyAction:="http://tempuri.org/IAideService/GetLessonLearntListResponse")>  _
-        Function GetLessonLearntList(ByVal email As String) As ServiceReference1.LessonLearnt()
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetLessonLearntList", ReplyAction:="http://tempuri.org/IAideService/GetLessonLearntListResponse")>  _
-        Function GetLessonLearntListAsync(ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.LessonLearnt())
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetLessonLearntByProblem", ReplyAction:="http://tempuri.org/IAideService/GetLessonLearntByProblemResponse")>  _
-        Function GetLessonLearntByProblem(ByVal search As String, ByVal email As String) As ServiceReference1.LessonLearnt()
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetLessonLearntByProblem", ReplyAction:="http://tempuri.org/IAideService/GetLessonLearntByProblemResponse")>  _
-        Function GetLessonLearntByProblemAsync(ByVal search As String, ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.LessonLearnt())
     End Interface
     
     <System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")>  _
@@ -10131,6 +10143,7 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.TaskSummary)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ComcellClock)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeeklyReport())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeeklyReport)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeekRange)),  _
@@ -10167,6 +10180,7 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPITargets())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPISummary)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPISummary())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LessonLearnt())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LessonLearnt)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister())),  _
@@ -10189,7 +10203,6 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SabaLearning)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Comcell)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Comcell())),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ComcellClock)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MyAttendance)),  _
@@ -10213,8 +10226,7 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Commendations)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Commendations())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Assets)),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Assets())),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LessonLearnt()))>  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Assets()))>  _
         Sub NotifyUpdate(ByVal objData As Object)
     End Interface
     
@@ -10248,6 +10260,22 @@ Namespace ServiceReference1
         Public Sub New(ByVal callbackInstance As System.ServiceModel.InstanceContext, ByVal binding As System.ServiceModel.Channels.Binding, ByVal remoteAddress As System.ServiceModel.EndpointAddress)
             MyBase.New(callbackInstance, binding, remoteAddress)
         End Sub
+        
+        Public Sub UpdateComcellClock(ByVal obj As ServiceReference1.ComcellClock) Implements ServiceReference1.IAideService.UpdateComcellClock
+            MyBase.Channel.UpdateComcellClock(obj)
+        End Sub
+        
+        Public Function UpdateComcellClockAsync(ByVal obj As ServiceReference1.ComcellClock) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateComcellClockAsync
+            Return MyBase.Channel.UpdateComcellClockAsync(obj)
+        End Function
+        
+        Public Sub CreateWeeklyReport(ByVal weeklyReport() As ServiceReference1.WeeklyReport, ByVal weeklyReportXref As ServiceReference1.WeekRange) Implements ServiceReference1.IAideService.CreateWeeklyReport
+            MyBase.Channel.CreateWeeklyReport(weeklyReport, weeklyReportXref)
+        End Sub
+        
+        Public Function CreateWeeklyReportAsync(ByVal weeklyReport() As ServiceReference1.WeeklyReport, ByVal weeklyReportXref As ServiceReference1.WeekRange) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.CreateWeeklyReportAsync
+            Return MyBase.Channel.CreateWeeklyReportAsync(weeklyReport, weeklyReportXref)
+        End Function
         
         Public Sub UpdateWeeklyReport(ByVal weeklyReport() As ServiceReference1.WeeklyReport, ByVal weeklyReportXref As ServiceReference1.WeekRange) Implements ServiceReference1.IAideService.UpdateWeeklyReport
             MyBase.Channel.UpdateWeeklyReport(weeklyReport, weeklyReportXref)
@@ -10519,6 +10547,22 @@ Namespace ServiceReference1
         
         Public Function GetKPISummaryListMonthlyAsync(ByVal EmpId As Integer, ByVal FY_Start As Date, ByVal FY_End As Date, ByVal Month As Short, ByVal KPIRef As String) As System.Threading.Tasks.Task(Of ServiceReference1.KPISummary()) Implements ServiceReference1.IAideService.GetKPISummaryListMonthlyAsync
             Return MyBase.Channel.GetKPISummaryListMonthlyAsync(EmpId, FY_Start, FY_End, Month, KPIRef)
+        End Function
+        
+        Public Function GetLessonLearntList(ByVal email As String) As ServiceReference1.LessonLearnt() Implements ServiceReference1.IAideService.GetLessonLearntList
+            Return MyBase.Channel.GetLessonLearntList(email)
+        End Function
+        
+        Public Function GetLessonLearntListAsync(ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.LessonLearnt()) Implements ServiceReference1.IAideService.GetLessonLearntListAsync
+            Return MyBase.Channel.GetLessonLearntListAsync(email)
+        End Function
+        
+        Public Function GetLessonLearntByProblem(ByVal search As String, ByVal email As String) As ServiceReference1.LessonLearnt() Implements ServiceReference1.IAideService.GetLessonLearntByProblem
+            Return MyBase.Channel.GetLessonLearntByProblem(search, email)
+        End Function
+        
+        Public Function GetLessonLearntByProblemAsync(ByVal search As String, ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.LessonLearnt()) Implements ServiceReference1.IAideService.GetLessonLearntByProblemAsync
+            Return MyBase.Channel.GetLessonLearntByProblemAsync(search, email)
         End Function
         
         Public Sub CreateLessonLearnt(ByVal lessonLearnt As ServiceReference1.LessonLearnt) Implements ServiceReference1.IAideService.CreateLessonLearnt
@@ -11017,22 +11061,6 @@ Namespace ServiceReference1
             Return MyBase.Channel.GetClockTimeByEmployeeAsync(empid)
         End Function
         
-        Public Sub UpdateComcellClock(ByVal obj As ServiceReference1.ComcellClock) Implements ServiceReference1.IAideService.UpdateComcellClock
-            MyBase.Channel.UpdateComcellClock(obj)
-        End Sub
-        
-        Public Function UpdateComcellClockAsync(ByVal obj As ServiceReference1.ComcellClock) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateComcellClockAsync
-            Return MyBase.Channel.UpdateComcellClockAsync(obj)
-        End Function
-        
-        Public Sub CreateWeeklyReport(ByVal weeklyReport() As ServiceReference1.WeeklyReport, ByVal weeklyReportXref As ServiceReference1.WeekRange) Implements ServiceReference1.IAideService.CreateWeeklyReport
-            MyBase.Channel.CreateWeeklyReport(weeklyReport, weeklyReportXref)
-        End Sub
-        
-        Public Function CreateWeeklyReportAsync(ByVal weeklyReport() As ServiceReference1.WeeklyReport, ByVal weeklyReportXref As ServiceReference1.WeekRange) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.CreateWeeklyReportAsync
-            Return MyBase.Channel.CreateWeeklyReportAsync(weeklyReport, weeklyReportXref)
-        End Function
-        
         Public Sub InsertActionList(ByVal _Action As ServiceReference1.Action) Implements ServiceReference1.IAideService.InsertActionList
             MyBase.Channel.InsertActionList(_Action)
         End Sub
@@ -11049,12 +11077,28 @@ Namespace ServiceReference1
             Return MyBase.Channel.GetActionListByMessageAsync(_Message, email)
         End Function
         
+        Public Function GetActionListByActionNo(ByVal actionNo As String, ByVal empID As Integer) As ServiceReference1.Action() Implements ServiceReference1.IAideService.GetActionListByActionNo
+            Return MyBase.Channel.GetActionListByActionNo(actionNo, empID)
+        End Function
+        
+        Public Function GetActionListByActionNoAsync(ByVal actionNo As String, ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Action()) Implements ServiceReference1.IAideService.GetActionListByActionNoAsync
+            Return MyBase.Channel.GetActionListByActionNoAsync(actionNo, empID)
+        End Function
+        
         Public Function GetActionSummary(ByVal email As String) As ServiceReference1.Action() Implements ServiceReference1.IAideService.GetActionSummary
             Return MyBase.Channel.GetActionSummary(email)
         End Function
         
         Public Function GetActionSummaryAsync(ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.Action()) Implements ServiceReference1.IAideService.GetActionSummaryAsync
             Return MyBase.Channel.GetActionSummaryAsync(email)
+        End Function
+        
+        Public Function GetLessonLearntListOfActionSummary(ByVal empID As Integer) As ServiceReference1.Action() Implements ServiceReference1.IAideService.GetLessonLearntListOfActionSummary
+            Return MyBase.Channel.GetLessonLearntListOfActionSummary(empID)
+        End Function
+        
+        Public Function GetLessonLearntListOfActionSummaryAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Action()) Implements ServiceReference1.IAideService.GetLessonLearntListOfActionSummaryAsync
+            Return MyBase.Channel.GetLessonLearntListOfActionSummaryAsync(empID)
         End Function
         
         Public Sub UpdateActionList(ByVal _Action As ServiceReference1.Action) Implements ServiceReference1.IAideService.UpdateActionList
@@ -11527,22 +11571,6 @@ Namespace ServiceReference1
         
         Public Function GetAssetManufacturerAsync() As System.Threading.Tasks.Task(Of ServiceReference1.Assets()) Implements ServiceReference1.IAideService.GetAssetManufacturerAsync
             Return MyBase.Channel.GetAssetManufacturerAsync
-        End Function
-        
-        Public Function GetLessonLearntList(ByVal email As String) As ServiceReference1.LessonLearnt() Implements ServiceReference1.IAideService.GetLessonLearntList
-            Return MyBase.Channel.GetLessonLearntList(email)
-        End Function
-        
-        Public Function GetLessonLearntListAsync(ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.LessonLearnt()) Implements ServiceReference1.IAideService.GetLessonLearntListAsync
-            Return MyBase.Channel.GetLessonLearntListAsync(email)
-        End Function
-        
-        Public Function GetLessonLearntByProblem(ByVal search As String, ByVal email As String) As ServiceReference1.LessonLearnt() Implements ServiceReference1.IAideService.GetLessonLearntByProblem
-            Return MyBase.Channel.GetLessonLearntByProblem(search, email)
-        End Function
-        
-        Public Function GetLessonLearntByProblemAsync(ByVal search As String, ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.LessonLearnt()) Implements ServiceReference1.IAideService.GetLessonLearntByProblemAsync
-            Return MyBase.Channel.GetLessonLearntByProblemAsync(search, email)
         End Function
     End Class
 End Namespace
