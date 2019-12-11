@@ -14,18 +14,12 @@ Public Class ConcernViewModel
     Private _selectedConcern As New ConcernModel
     Private _generatedRefNo As New ConcernModel()
     Private _listOfActionModel As New ObservableCollection(Of ConcernModel)
-
-
     Private _listofActionInConcern As New ObservableCollection(Of ConcernModel)
-
     Private _getSelectedAction As New ConcernModel
     Private _getBetweenDate As New ConcernModel
 
-
     Sub New()
-
     End Sub
-
 
 #Region "Properties"
 

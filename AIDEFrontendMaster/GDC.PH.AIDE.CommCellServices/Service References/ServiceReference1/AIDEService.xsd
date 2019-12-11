@@ -163,6 +163,16 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DashboardTaskSummaryTotals" nillable="true" type="tns:DashboardTaskSummaryTotals" />
+  <xs:complexType name="ComcellClock">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Clock_Day" type="xs:int" />
+      <xs:element minOccurs="0" name="Clock_Hour" type="xs:int" />
+      <xs:element minOccurs="0" name="Clock_Minute" type="xs:int" />
+      <xs:element minOccurs="0" name="Emp_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="MIDDAY" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ComcellClock" nillable="true" type="tns:ComcellClock" />
   <xs:complexType name="ArrayOfWeeklyReport">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="WeeklyReport" nillable="true" type="tns:WeeklyReport" />
@@ -500,6 +510,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfKPISummary" nillable="true" type="tns:ArrayOfKPISummary" />
+  <xs:complexType name="ArrayOfLessonLearnt">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LessonLearnt" nillable="true" type="tns:LessonLearnt" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLessonLearnt" nillable="true" type="tns:ArrayOfLessonLearnt" />
   <xs:complexType name="LessonLearnt">
     <xs:sequence>
       <xs:element minOccurs="0" name="ActionNo" nillable="true" type="xs:string" />
@@ -733,16 +749,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfComcell" nillable="true" type="tns:ArrayOfComcell" />
-  <xs:complexType name="ComcellClock">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Clock_Day" type="xs:int" />
-      <xs:element minOccurs="0" name="Clock_Hour" type="xs:int" />
-      <xs:element minOccurs="0" name="Clock_Minute" type="xs:int" />
-      <xs:element minOccurs="0" name="Emp_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="MIDDAY" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ComcellClock" nillable="true" type="tns:ComcellClock" />
   <xs:complexType name="Action">
     <xs:sequence>
       <xs:element minOccurs="0" name="Act_Assignee" type="xs:int" />
@@ -994,10 +1000,4 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfAssets" nillable="true" type="tns:ArrayOfAssets" />
-  <xs:complexType name="ArrayOfLessonLearnt">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="LessonLearnt" nillable="true" type="tns:LessonLearnt" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfLessonLearnt" nillable="true" type="tns:ArrayOfLessonLearnt" />
 </xs:schema>
