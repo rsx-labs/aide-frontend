@@ -13,11 +13,12 @@ Class LessonLearntAddPage
     Public frame As Frame
     Public mainWindow As MainWindow
     Public email As String
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
+    Private addframe As Frame
+    Private menugrid As Grid
+    Private submenuframe As Frame
     Private profile As Profile
 
+    Dim lstActionList As New ObservableCollection(Of ActionModel)
     Dim lessonLearnt As New LessonLearnt
     Dim client As AideServiceClient
 #End Region
@@ -42,19 +43,18 @@ Class LessonLearntAddPage
 
         frame = _frame
         email = _email
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
-        Me.profile = _profile
+        addframe = _addframe
+        menugrid = _menugrid
+        submenuframe = _submenuframe
+        profile = _profile
 
         CreateReferenceNo()
-        GetActionReference()
+        GetActionLists()
         SetDataContext()
+        ConfigureButtons()
     End Sub
-#End Region
 
-#Region "Common Methods"
-    Public Function InitializeService() As Boolean
+    Private Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
         Try
             Dim Context As InstanceContext = New InstanceContext(Me)
@@ -66,37 +66,12 @@ Class LessonLearntAddPage
         End Try
         Return bInitialize
     End Function
-
-    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
-        If message <> String.Empty Then
-            MessageBox.Show(message)
-        End If
-    End Sub
-
-    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
-        If message <> String.Empty Then
-            MessageBox.Show(message)
-        End If
-    End Sub
-
-    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
-
-    End Sub
-
-    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
-
-    End Sub
-
-    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
-
-    End Sub
-
 #End Region
 
 #Region "Private Functions"
     Private Sub CreateReferenceNo()
         Try
-            If Me.InitializeService() Then
+            If InitializeService() Then
                 Dim refNo As String
                 Dim dateNow As String = Date.Today.ToString("MM/dd/yy")
                 Dim totalCount As Integer
@@ -118,11 +93,13 @@ Class LessonLearntAddPage
         End Try
     End Sub
 
-    Public Sub GetActionReference()
+    Public Sub GetActionLists()
         Try
-            If Me.InitializeService() Then
-                Dim lstAction As Action() = client.GetActionSummary(profile.Email_Address)
-                Dim lstActionList As New ObservableCollection(Of ActionModel)
+            If InitializeService() Then
+                lstActionList.Clear()
+                actionListProvider = New ActionListDBProvider
+
+                Dim lstAction As Action() = client.GetLessonLearntListOfActionSummary(profile.Emp_ID)
 
                 For Each objAction As Action In lstAction
                     actionListProvider._setlistofitems(objAction)
@@ -132,7 +109,7 @@ Class LessonLearntAddPage
                     lstActionList.Add(New ActionModel(iAction))
                 Next
 
-                actionViewModel.objectActionSet = lstActionList
+                lvAction.ItemsSource = lstActionList
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
@@ -141,31 +118,35 @@ Class LessonLearntAddPage
 
     Private Sub SetDataContext()
         lessonLearntViewModel.SelectedLessonLearnt = lessonLearntModel
-        Me.DataContext = New With {actionViewModel, lessonLearntViewModel}
+        Me.DataContext = lessonLearntViewModel
     End Sub
 
-    Private Sub GetDataContext(ByVal objects As Object)
+    Private Sub GetDataContext(ByVal objLessonLearnt As LessonLearntViewModel)
         Try
-            lessonLearnt.ReferenceNo = objects.lessonLearntViewModel.SelectedLessonLearnt.ReferenceNo
-            lessonLearnt.EmpID = objects.lessonLearntViewModel.SelectedLessonLearnt.EmployeeID
+            lessonLearnt.ReferenceNo = objLessonLearnt.SelectedLessonLearnt.ReferenceNo
+            lessonLearnt.EmpID = objLessonLearnt.SelectedLessonLearnt.EmployeeID
 
             ' Check if the Problem Encountered Field has a value
-            If Not IsNothing(objects.lessonLearntViewModel.SelectedLessonLearnt.Problem) Then
-                lessonLearnt.Problem = objects.lessonLearntViewModel.SelectedLessonLearnt.Problem.Trim
+            If Not IsNothing(objLessonLearnt.SelectedLessonLearnt.Problem) Then
+                lessonLearnt.Problem = objLessonLearnt.SelectedLessonLearnt.Problem.Trim
             Else
                 lessonLearnt.Problem = ""
             End If
 
             ' Check if the Resolution Field has a value
-            If Not IsNothing(objects.lessonLearntViewModel.SelectedLessonLearnt.Resolution) Then
-                lessonLearnt.Resolution = objects.lessonLearntViewModel.SelectedLessonLearnt.Resolution.Trim
+            If Not IsNothing(objLessonLearnt.SelectedLessonLearnt.Resolution) Then
+                lessonLearnt.Resolution = objLessonLearnt.SelectedLessonLearnt.Resolution.Trim
             Else
                 lessonLearnt.Resolution = ""
             End If
 
-            ' Check if the Action Number has a value
-            If Not IsNothing(objects.lessonLearntViewModel.SelectedLessonLearnt.ActionNo) Then
-                lessonLearnt.ActionNo = objects.lessonLearntViewModel.SelectedLessonLearnt.ActionNo
+            If lvActionRef.ItemsSource IsNot Nothing Then
+                Dim lstActionList As New ObservableCollection(Of ActionModel)
+                lstActionList = lvActionRef.ItemsSource
+
+                For Each objAction As ActionModel In lstActionList
+                    lessonLearnt.ActionNo = objAction.REF_NO
+                Next
             Else
                 lessonLearnt.ActionNo = ""
             End If
@@ -175,23 +156,37 @@ Class LessonLearntAddPage
         End Try
     End Sub
 
+    Private Sub ConfigureButtons()
+        If lstActionList.Count > 0 Then
+            btnAddAction.IsEnabled = True
+        Else
+            btnAddAction.IsEnabled = False
+        End If
+
+        If lvActionRef.ItemsSource IsNot Nothing Then
+            btnRemoveAction.IsEnabled = True
+        Else
+            btnRemoveAction.IsEnabled = False
+        End If
+    End Sub
+
     Private Sub ClearValues()
         lessonLearntModel.Problem = ""
         lessonLearntModel.Resolution = ""
-        lessonLearntModel.ActionNo = ""
+        lvActionRef.ItemsSource = Nothing
 
         CreateReferenceNo()
     End Sub
 
     Private Sub ExitPage()
-        frame.Navigate(New LessonLearntPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
+        frame.Navigate(New LessonLearntPage(frame, email, addframe, menugrid, submenuframe, profile))
         frame.IsEnabled = True
         frame.Opacity = 1
-        _menugrid.IsEnabled = True
-        _menugrid.Opacity = 1
-        _submenuframe.IsEnabled = True
-        _submenuframe.Opacity = 1
-        _addframe.Visibility = Visibility.Hidden
+        menugrid.IsEnabled = True
+        menugrid.Opacity = 1
+        submenuframe.IsEnabled = True
+        submenuframe.Opacity = 1
+        addframe.Visibility = Visibility.Hidden
     End Sub
 #End Region
 
@@ -224,12 +219,81 @@ Class LessonLearntAddPage
         End Try
     End Sub
 
+    Private Sub btnAddAction_Click(sender As Object, e As RoutedEventArgs) Handles btnAddAction.Click
+        'INSERT SELECTED ACTION
+        If lvAction.SelectedIndex = -1 Then
+            MsgBox("Please select an item first.")
+        Else
+            Dim selectedAction As ActionModel = lvAction.SelectedValue
+            Dim selectedActionList As New ObservableCollection(Of ActionModel)
+
+            GetActionLists()
+
+            For Each actionList In lstActionList
+                If actionList.REF_NO = selectedAction.REF_NO Then
+                    lstActionList.Remove(actionList)
+                    Exit For
+                End If
+            Next
+
+            selectedActionList.Add(selectedAction)
+            lvActionRef.ItemsSource = selectedActionList
+
+            ConfigureButtons()
+        End If
+    End Sub
+
+    Private Sub btnRemoveAction_Click(sender As Object, e As RoutedEventArgs) Handles btnRemoveAction.Click
+        GetActionLists()
+        lvActionRef.ItemsSource = Nothing
+    End Sub
+
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
         ExitPage()
     End Sub
 
-    Private Sub Action_No_DropDownClosed(sender As Object, e As EventArgs) Handles Action_No.DropDownClosed
-        ActionDesc.Text = Action_No.SelectedValue
+    Private Sub txtProblemEncountered_KeyDown(sender As Object, e As KeyEventArgs) Handles txtProblemEncountered.KeyDown
+        Dim textRange As New TextRange(txtProblemEncountered.Document.ContentStart, txtProblemEncountered.Document.ContentEnd)
+        If textRange.Text.Length >= 10 Then
+            e.Handled = False
+        End If
+    End Sub
+
+    Private Sub txtResolution_KeyDown(sender As Object, e As KeyEventArgs) Handles txtResolution.KeyDown
+        Dim textRange As New TextRange(txtResolution.Document.ContentStart, txtResolution.Document.ContentEnd)
+        If textRange.Text.Length >= 10 Then
+            e.Handled = False
+        End If
+    End Sub
+
+    'Private Sub Action_No_DropDownClosed(sender As Object, e As EventArgs) Handles Action_No.DropDownClosed
+    '    'ActionDesc.Text = Action_No.SelectedValue
+    'End Sub
+#End Region
+
+#Region "Common Methods"
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
+        If message <> String.Empty Then
+            MessageBox.Show(message)
+        End If
+    End Sub
+
+    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
+        If message <> String.Empty Then
+            MessageBox.Show(message)
+        End If
+    End Sub
+
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
+
+    End Sub
+
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
+
+    End Sub
+
+    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+
     End Sub
 #End Region
 
