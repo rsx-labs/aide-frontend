@@ -123,16 +123,6 @@ Class LessonLearntUpdatePage
         Me.DataContext = lessonLearntViewModel
     End Sub
 
-    Public Function UpdateSelectedConcern(getSelectedAction As ConcernViewModel)
-        Dim _updateSelectedConcern As New Concern
-        _updateSelectedConcern.Concerns = getSelectedAction.SelectedConcern.CONCERN
-        _updateSelectedConcern.RefID = getSelectedAction.SelectedConcern.REF_ID
-        _updateSelectedConcern.Cause = getSelectedAction.SelectedConcern.CAUSE
-        _updateSelectedConcern.CounterMeasure = getSelectedAction.SelectedConcern.COUNTERMEASURE
-        _updateSelectedConcern.Due_Date = getSelectedAction.SelectedConcern.DUE_DATE
-        Return _updateSelectedConcern
-    End Function
-
     Private Sub GetUpdatedData(objLessonLearnt As LessonLearntViewModel)
         Try
             Dim textProblem As New TextRange(txtProblemEncountered.Document.ContentStart, txtProblemEncountered.Document.ContentEnd)

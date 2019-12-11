@@ -1,9 +1,6 @@
 ﻿Imports UI_AIDE_CommCellServices.ServiceReference1
 Imports System.Collections.ObjectModel
 
-
-
-
 ''' <summary>
 ''' AUTHOR : GIANN CARLO CAMILO AND CHRISTIAN VALONDO
 ''' </summary>
@@ -18,14 +15,11 @@ Public Class ConcernDBProvider
     Private _concernActionReferenceList As ObservableCollection(Of MyActionReference)
 
     Public Sub New()
-
         _concernList = New ObservableCollection(Of MyConcern)
         _MyConcernRefNo = New MyGeneratedRefNo
         _concernActionlist = New ObservableCollection(Of MyConcern)
         _concernActionReferenceList = New ObservableCollection(Of MyActionReference)
-
     End Sub
-
 
     Public Function GetSelectedConcern() As MyConcern
         Return _setConcernText
@@ -39,9 +33,7 @@ Public Class ConcernDBProvider
     ''COMBO BOX
     Public Function GetConcernList() As ObservableCollection(Of MyConcern)
         Return _concernList
-
     End Function
-
 
     Public Function GetRefNo() As MyGeneratedRefNo
         Return _MyConcernRefNo
@@ -51,8 +43,6 @@ Public Class ConcernDBProvider
     Public Function GetConcernActionReferenceList() As ObservableCollection(Of MyActionReference)
         Return _concernActionReferenceList
     End Function
-
-
 
     ''BINDING TO LISTVIEW THE LIST OF ACTION TO CHOOSE TO ADD IN CONCERN
     Public Sub SetToComBoBox(ByVal _concern As Concern)
@@ -64,9 +54,6 @@ Public Class ConcernDBProvider
         _concernActionlist.Add(_concernObj)
     End Sub
 
-
-
-
     ''BINDING TO LISTVIEW THE ACTION REFERENCE
     Public Sub SetTollistViewActionReference(ByVal _concern As Concern)
         Dim _concernObj As MyActionReference = New MyActionReference() With {
@@ -75,11 +62,6 @@ Public Class ConcernDBProvider
            }
         _concernActionReferenceList.Add(_concernObj)
     End Sub
-
-
-
-
-
 
     ''BINDING TO DATAGRIDVIEW
     Public Sub SetConcernList(ByVal _concern As Concern)
@@ -96,8 +78,6 @@ Public Class ConcernDBProvider
         _concernList.Add(_concernObj)
     End Sub
 
-
-
     ''BINDING TO TEXT UPDATE
     Public Sub SetConcernText(ByVal _concern As Concern)
         _setConcernText.RefID = _concern.RefID
@@ -106,18 +86,12 @@ Public Class ConcernDBProvider
         _setConcernText.Due_Date = _concern.Due_Date
         _setConcernText.CounterMeasure = _concern.CounterMeasure
         _setConcernText.Act_Reference = _concern.Act_Reference
-
     End Sub
 
     ''BINDING TO GENERATEDREF NO TEXT
-
-
     Public Sub SetToMyRefNo(ByVal _concern As Concern)
         _MyConcernRefNo.GENERATEDREF_ID = _concern.GENERATEDREF_ID
-
     End Sub
-
-
 End Class
 
 ''' <summary>
