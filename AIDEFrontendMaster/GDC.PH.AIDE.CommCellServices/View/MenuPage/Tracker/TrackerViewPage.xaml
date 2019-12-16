@@ -1034,8 +1034,8 @@ xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
                     </Grid>
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1.2*"/>
+                            <RowDefinition Height="1.2*"/>
                             <RowDefinition Height="1*"/>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
@@ -1056,7 +1056,7 @@ xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelEndDate" Width="120" TextAlignment="Center" Margin="10" Text="Date Completed" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
+                            <TextBlock x:Name="txtlabelEndDate" Width="120" TextAlignment="Center" Margin="10" Text="Date Completed" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
