@@ -35,11 +35,11 @@
         </LinearGradientBrush>
     </Page.Resources>
     
-    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
+    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15,0,0,0">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="4.2*"/>
-                <RowDefinition Height="0.8*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             
             <Grid Grid.Row="0">
@@ -50,13 +50,13 @@
                 <Grid Grid.Column="1">
                     <lvc:PieChart x:Name="Chart" 
                                   Series="{Binding SeriesCollection}" 
-                                  LegendLocation="Right" InnerRadius="50" Margin="10">
+                                  LegendLocation="Bottom" InnerRadius="50" Margin="15">
                         <lvc:PieChart.ChartLegend>
-                            <lvc:DefaultLegend BulletSize="15" FontSize="12"></lvc:DefaultLegend>
+                            <lvc:DefaultLegend BulletSize="15" Margin="0,10,0,0" Foreground="DimGray" FontSize="12"></lvc:DefaultLegend>
                         </lvc:PieChart.ChartLegend>
                         
                         <lvc:PieChart.DataTooltip>
-                            <lvc:DefaultTooltip BulletSize="15" ></lvc:DefaultTooltip>
+                            <lvc:DefaultTooltip BulletSize="15"></lvc:DefaultTooltip>
                         </lvc:PieChart.DataTooltip>
                     </lvc:PieChart>
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -68,7 +68,7 @@
             </Grid>
             
             <Grid Grid.Row="1">
-                <Button Style="{DynamicResource RoundCornerGradientBlue}" Click="btnthreeC" Margin="20,5" Width="auto" Height="auto" >
+                <Button Style="{DynamicResource RoundCornerGradientBlue}" Click="btnthreeC" Margin="20,0,20,10" Width="auto" Height="auto" >
                     <TextBlock Text="Manage 3C" Foreground="White" Margin="6" />
                 </Button>
             </Grid>

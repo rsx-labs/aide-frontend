@@ -35,7 +35,7 @@
         </LinearGradientBrush>
     </Page.Resources>
     
-    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
+    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15,0,0,15">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="10*"/>
