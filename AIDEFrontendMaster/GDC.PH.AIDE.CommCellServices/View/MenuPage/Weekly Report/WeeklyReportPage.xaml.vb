@@ -51,7 +51,7 @@ Class WeeklyReportPage
     Dim daySatDiff As Integer = Today.DayOfWeek - DayOfWeek.Saturday
     Dim saturday As Date = Today.AddDays(-daySatDiff)
     Dim lastWeekSaturday As Date = saturday.AddDays(-14)
-
+    Dim monday As Date = lastWeekSaturday.AddDays(2)
     Dim dayFriDiff As Integer = Today.DayOfWeek - DayOfWeek.Friday
     Dim friday As Date = Today.AddDays(-dayFriDiff)
     Dim lastWeekFriday As Date = friday.AddDays(-7)
@@ -88,7 +88,12 @@ Class WeeklyReportPage
         Me.submenuframe = _submenuframe
         Me.profile = _profile
 
-        month = lastWeekSaturday.Month
+        If Not monday.Month = lastWeekSaturday.Month Then
+            month = monday.Month
+        Else
+            month = lastWeekSaturday.Month
+        End If
+
         year = lastWeekSaturday.Year
 
         LoadMonth()
