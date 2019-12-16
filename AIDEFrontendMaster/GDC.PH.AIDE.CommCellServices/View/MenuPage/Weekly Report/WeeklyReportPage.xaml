@@ -54,7 +54,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0" HorizontalAlignment="Left" >
-                    <Button x:Name="btnTeamReports" Margin="10" Style="{DynamicResource RoundCornerUpdate}">
+                    <Button x:Name="btnTeamReports" Margin="10" Style="{DynamicResource RoundCornerUpdate}" Visibility="Hidden">
                         <TextBlock HorizontalAlignment="Center" Padding="10" VerticalAlignment="Center" Text="View Team Status Report"></TextBlock>
                     </Button>
                 </Grid>
