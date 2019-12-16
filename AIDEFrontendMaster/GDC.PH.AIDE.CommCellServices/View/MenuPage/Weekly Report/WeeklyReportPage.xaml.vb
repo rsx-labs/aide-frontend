@@ -96,7 +96,7 @@ Class WeeklyReportPage
 
         year = lastWeekSaturday.Year
 
-            LoadMonth()
+        LoadMonth()
         SetData()
 
         LoadStatusData()
