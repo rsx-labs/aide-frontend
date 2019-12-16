@@ -57,6 +57,7 @@ Class WeeklyReportPage
     Dim lastWeekFriday As Date = friday.AddDays(-7)
 
     Dim isManager As Integer = 1
+    Dim isTeamLeader As Integer = 3
     Dim statusID As Integer = 14
     Dim lstWeekRange As WeekRange()
     Dim lstMissingReports As ContactList()
@@ -100,8 +101,8 @@ Class WeeklyReportPage
         cbMonth.SelectedValue = month
         cbYear.SelectedValue = year
 
-        If Not profile.Permission_ID = isManager Then
-            btnTeamReports.Visibility = Windows.Visibility.Hidden
+        If profile.Permission_ID = isManager OrElse profile.Permission_ID = isTeamLeader Then
+            btnTeamReports.Visibility = Windows.Visibility.Visible
         End If
     End Sub
 

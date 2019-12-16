@@ -9189,10 +9189,10 @@ Namespace ServiceReference1
         Function GetMissingReportsByEmpIDAsync(ByVal empID As Integer, ByVal currentDate As Date) As System.Threading.Tasks.Task(Of ServiceReference1.ContactList())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeeklyTeamStatusReport", ReplyAction:="http://tempuri.org/IAideService/GetWeeklyTeamStatusReportResponse")>  _
-        Function GetWeeklyTeamStatusReport(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal weekID As Integer) As ServiceReference1.WeeklyTeamStatusReport()
+        Function GetWeeklyTeamStatusReport(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal weekID As Integer, ByVal entryType As Integer) As ServiceReference1.WeeklyTeamStatusReport()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeeklyTeamStatusReport", ReplyAction:="http://tempuri.org/IAideService/GetWeeklyTeamStatusReportResponse")>  _
-        Function GetWeeklyTeamStatusReportAsync(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal weekID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeeklyTeamStatusReport())
+        Function GetWeeklyTeamStatusReportAsync(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal weekID As Integer, ByVal entryType As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeeklyTeamStatusReport())
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertAuditSched")>  _
         Sub InsertAuditSched(ByVal auditSched As ServiceReference1.AuditSched)
@@ -10341,12 +10341,12 @@ Namespace ServiceReference1
             Return MyBase.Channel.GetMissingReportsByEmpIDAsync(empID, currentDate)
         End Function
         
-        Public Function GetWeeklyTeamStatusReport(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal weekID As Integer) As ServiceReference1.WeeklyTeamStatusReport() Implements ServiceReference1.IAideService.GetWeeklyTeamStatusReport
-            Return MyBase.Channel.GetWeeklyTeamStatusReport(empID, month, year, weekID)
+        Public Function GetWeeklyTeamStatusReport(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal weekID As Integer, ByVal entryType As Integer) As ServiceReference1.WeeklyTeamStatusReport() Implements ServiceReference1.IAideService.GetWeeklyTeamStatusReport
+            Return MyBase.Channel.GetWeeklyTeamStatusReport(empID, month, year, weekID, entryType)
         End Function
         
-        Public Function GetWeeklyTeamStatusReportAsync(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal weekID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeeklyTeamStatusReport()) Implements ServiceReference1.IAideService.GetWeeklyTeamStatusReportAsync
-            Return MyBase.Channel.GetWeeklyTeamStatusReportAsync(empID, month, year, weekID)
+        Public Function GetWeeklyTeamStatusReportAsync(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal weekID As Integer, ByVal entryType As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeeklyTeamStatusReport()) Implements ServiceReference1.IAideService.GetWeeklyTeamStatusReportAsync
+            Return MyBase.Channel.GetWeeklyTeamStatusReportAsync(empID, month, year, weekID, entryType)
         End Function
         
         Public Sub InsertAuditSched(ByVal auditSched As ServiceReference1.AuditSched) Implements ServiceReference1.IAideService.InsertAuditSched

@@ -225,6 +225,7 @@
         <xs:element minOccurs="0" name="month" type="xs:int" />
         <xs:element minOccurs="0" name="year" type="xs:int" />
         <xs:element minOccurs="0" name="weekID" type="xs:int" />
+        <xs:element minOccurs="0" name="entryType" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

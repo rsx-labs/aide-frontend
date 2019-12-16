@@ -24,6 +24,7 @@ Class WeeklyTeamStatusReportPage
     Dim currentPage As Integer
     Dim lastPage As Integer
     Dim totalRecords As Integer
+    Dim EntryType As Integer = 0
 
     Private Enum PagingMode
         _First = 1
@@ -73,6 +74,7 @@ Class WeeklyTeamStatusReportPage
     Public Sub New(_mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         InitializeComponent()
         InitializeService()
+
         Me.email = _profile.Email_Address
         Me.mainFrame = _mainFrame
         Me.empID = _profile.Emp_ID
@@ -155,8 +157,12 @@ Class WeeklyTeamStatusReportPage
 
     Public Sub SetWeeklyTeamStatusReports()
         Try
+            If profile.Permission_ID <> 1 Then
+                EntryType = 1
+            End If
+
             If InitializeService() Then
-                lstWeeklyTeamStatusReport = AideServiceClient.GetWeeklyTeamStatusReport(empID, month, year, selectedValue)
+                lstWeeklyTeamStatusReport = AideServiceClient.GetWeeklyTeamStatusReport(empID, month, year, selectedValue, EntryType)
                 LoadWeeklyTeamStatusReports()
 
                 totalRecords = lstWeeklyTeamStatusReport.Length
@@ -278,7 +284,7 @@ Class WeeklyTeamStatusReportPage
                 weekRangeID = CType(dgWeeklyTeamStatusReports.SelectedItem, WeeklyTeamStatusReportModel).WeekRangeID
                 empID = CType(dgWeeklyTeamStatusReports.SelectedItem, WeeklyTeamStatusReportModel).EmployeeID
 
-                addframe.Navigate(New WeeklyEmployeeStatusReportPage(mainFrame, profile, empID, weekRangeID, addframe, menugrid, submenuframe))
+                addframe.Navigate(New WeeklyReportUpdatePage(weekRangeID, mainFrame, profile, addframe, menugrid, submenuframe, empID))
                 mainFrame.IsEnabled = False
                 mainFrame.Opacity = 0.3
                 menugrid.IsEnabled = False
