@@ -106,7 +106,6 @@ Public Class AssetsInventoryListPage
         Try
             Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
             Dim assetsDBProvider As New AssetsDBProvider
-            Dim assetsVM As New AssetsViewModel()
 
             paginatedCollection = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
 
@@ -165,7 +164,7 @@ Public Class AssetsInventoryListPage
 
             Dim items = From i In lstAssets Where i.ASSET_DESC.ToLower.Contains(input.ToLower) Or i.MANUFACTURER.ToLower.Contains(input.ToLower) _
                       Or i.MODEL_NO.ToLower.Contains(input.ToLower) Or i.SERIAL_NO.ToLower.Contains(input.ToLower) Or i.ASSET_TAG.ToLower.Contains(input.ToLower) _
-                      Or i.FULL_NAME.ToLower.Contains(input.ToLower)
+                      Or i.FULL_NAME.ToLower.Contains(input.ToLower) 'Or i.OTHER_INFO.ToLower.Contains(input.ToLower) 'Or i.STATUS_DESCR.ToLower.Contains(input.ToLower) 
             Dim searchAssets = New ObservableCollection(Of Assets)(items)
 
             For Each assets As Assets In searchAssets
@@ -376,7 +375,7 @@ Public Class AssetsInventoryListPage
         End If
     End Sub
 
-    Private Sub lv_assetInventoryListOwn_MouseDoubleClick(sender As Object, e As SelectionChangedEventArgs) Handles lv_assetInventoryListOwn.SelectionChanged
+    Private Sub lv_assetInventoryListOwn_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles lv_assetInventoryListOwn.SelectionChanged
         e.Handled = True
         If lv_assetInventoryListOwn.SelectedIndex <> -1 Then
 
@@ -409,10 +408,10 @@ Public Class AssetsInventoryListPage
 
     End Sub
 
-    Private Sub lv_assetInventoryList_MouseDoubleClick(sender As Object, e As SelectionChangedEventArgs) Handles lv_assetInventoryList.SelectionChanged
+    Private Sub lv_assetInventoryList_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles lv_assetInventoryList.SelectionChanged
         e.Handled = True
         If show = True Then
-            If lv_assetInventoryList.SelectedIndex <> -1 Then
+            If lv_assetInventoryList.SelectedIndex <> -1 And profile.Permission_ID = 3 Then 'allow only custodian to assign assets
                 If lv_assetInventoryList.SelectedItem IsNot Nothing Then
                     If CType(lv_assetInventoryList.SelectedItem, AssetsModel).STATUS <> 1 And CType(lv_assetInventoryList.SelectedItem, AssetsModel).EMP_ID <> profile.Emp_ID Then
                         Exit Sub
@@ -445,7 +444,7 @@ Public Class AssetsInventoryListPage
         End If
     End Sub
 
-    Private Sub lv_assetInventoryListUnapproved_MouseDoubleClick(sender As Object, e As SelectionChangedEventArgs) Handles lv_assetInventoryListUnapproved.SelectionChanged
+    Private Sub lv_assetInventoryListUnapproved_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles lv_assetInventoryListUnapproved.SelectionChanged
         e.Handled = True
         If lv_assetInventoryListUnapproved.SelectedIndex <> -1 Then
 
@@ -463,6 +462,7 @@ Public Class AssetsInventoryListPage
                 assetsModel.STATUS = CType(lv_assetInventoryListUnapproved.SelectedItem, AssetsModel).STATUS
                 assetsModel.OTHER_INFO = CType(lv_assetInventoryListUnapproved.SelectedItem, AssetsModel).OTHER_INFO
                 assetsModel.FULL_NAME = CType(lv_assetInventoryListUnapproved.SelectedItem, AssetsModel).FULL_NAME
+                assetsModel.PREVIOUS_ID = CType(lv_assetInventoryListUnapproved.SelectedItem, AssetsModel).PREVIOUS_ID
                 _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Approval", _addframe, _menugrid, _submenuframe))
                 frame.IsEnabled = False
                 frame.Opacity = 0.3

@@ -14,6 +14,7 @@ Public Class AssetsViewModel
     Public _assetHistoryList As New ObservableCollection(Of AssetsModel)
     Public _assetTypeList As New ObservableCollection(Of AssetsModel)
     Public _assetManufacturerList As New ObservableCollection(Of AssetsModel)
+    Public _assetManagerList As New ObservableCollection(Of AssetsModel)
 
     Public Property AssetList As ObservableCollection(Of AssetsModel)
         Get
@@ -62,6 +63,16 @@ Public Class AssetsViewModel
         Set(value As ObservableCollection(Of AssetsModel))
             _assetManufacturerList = value
             NotifyPropertyChanged("AssetManufacturerList")
+        End Set
+    End Property
+
+    Public Property AssetManagerList As ObservableCollection(Of AssetsModel)
+        Get
+            Return _assetManagerList
+        End Get
+        Set(value As ObservableCollection(Of AssetsModel))
+            _assetManagerList = value
+            NotifyPropertyChanged("AssetManagerList")
         End Set
     End Property
 

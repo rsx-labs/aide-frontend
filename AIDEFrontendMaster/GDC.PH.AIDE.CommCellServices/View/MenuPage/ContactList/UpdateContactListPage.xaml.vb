@@ -353,6 +353,7 @@ Class UpdateContactListPage
                 cbContactDivision.SelectedValue = Nothing OrElse _
                 contactVM.ContactProfile.EMAIL_ADDRESS = String.Empty OrElse _
                 contactVM.ContactProfile.CEL_NO = String.Empty OrElse _
+                contactVM.ContactProfile.EMAIL_ADDRESS2 = String.Empty OrElse _
                 cbContactLocation.SelectedValue = Nothing Then
                 MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
             Else

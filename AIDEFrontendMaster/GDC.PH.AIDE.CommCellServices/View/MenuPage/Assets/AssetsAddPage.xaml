@@ -1158,7 +1158,7 @@
                         </Grid>
                         <Grid Grid.Row="2">
                             <ComboBox x:Name="cbNickname" Margin="5,5,0,5" IsReadOnly="True" Style="{DynamicResource StyleComboBox}" VerticalContentAlignment="Center"
-                          SelectedValuePath="Emp_ID" DisplayMemberPath="Employee_Name" ItemsSource="{Binding NicknameList}"/>
+                          SelectedValuePath="EMP_ID" DisplayMemberPath="EMPLOYEE_NAME" ItemsSource="{Binding NicknameList}"/>
                             <TextBlock x:Name="cbNickNameWaterMark" FontSize="12" IsHitTestVisible="False" Text="Whom to assign? *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">

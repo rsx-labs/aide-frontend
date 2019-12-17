@@ -35,7 +35,7 @@ Public Class AssetsAddPage
         tbSuccessForm.Text = "Create new Asset"
         txtCreatedBy.Text = profile.Emp_ID
         AssignEvents()
-        ListOfManagers()
+        ListOfCustodians()
         ListOfAssetType()
         ListOfAssetManufacturer()
     End Sub
@@ -260,26 +260,26 @@ Public Class AssetsAddPage
         End If
     End Function
 
-    Public Sub ListOfManagers()
+    Public Sub ListOfCustodians()
         Try
             If InitializeService() Then
-                Dim lstNickname As Nickname() = client.GetAllManagers(profile.Emp_ID)
-                Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
-                Dim successRegisterDBProvider As New SuccessRegisterDBProvider
-                Dim nicknameVM As New NicknameViewModel()
+                Dim lstMangers As Assets() = client.GetAllAssetsCustodian(profile.Emp_ID)
+                Dim lstMangersList As New ObservableCollection(Of AssetsModel)
+                Dim assetsDBProvider As New AssetsDBProvider
+                Dim assetsVM As New AssetsViewModel()
 
-
-                For Each objLessonLearnt As Nickname In lstNickname
-                    successRegisterDBProvider.SetMyNickname(objLessonLearnt)
+                For Each objAssets As Assets In lstMangers
+                    assetsDBProvider.SetManagerList(objAssets)
                 Next
 
-                For Each rawUser As MyNickname In successRegisterDBProvider.GetMyNickname()
-                    lstNicknameList.Add(New NicknameModel(rawUser))
+                For Each rawUser As MyAssets In assetsDBProvider.GetManagerList()
+                    lstMangersList.Add(New AssetsModel(rawUser))
                 Next
-                nicknameVM.NicknameList = Nothing
-                cbNickname.ItemsSource = Nothing
-                nicknameVM.NicknameList = lstNicknameList
-                cbNickname.ItemsSource = nicknameVM.NicknameList
+
+                assetsVM.AssetManagerList = lstMangersList
+
+                cbNickname.DataContext = assetsVM
+                cbNickname.ItemsSource = assetsVM.AssetManagerList
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)

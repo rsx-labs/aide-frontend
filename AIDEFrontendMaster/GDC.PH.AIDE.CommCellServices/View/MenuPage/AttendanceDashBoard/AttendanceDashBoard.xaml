@@ -141,19 +141,16 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                 <Viewbox>
                                     <Image Source="..\..\..\Assets\Attendance\present.png" Margin="5"/>
                                 </Viewbox>
-
                                 <Viewbox Margin="5">
-                                <TextBlock Text="Is Present" VerticalAlignment="Center" FontSize="10"/>
+                                    <TextBlock Text="Is Present" VerticalAlignment="Center" FontSize="10"/>
                                 </Viewbox>
-
-                              
-
                             </StackPanel>
                         </Grid>
                         <Grid Grid.Column="1">
@@ -166,7 +163,16 @@
                                 </Viewbox>
                             </StackPanel>
                         </Grid>
-                       
+                        <Grid Grid.Column="2">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Viewbox>
+                                    <Image Source="..\..\..\Assets\Attendance\holiday.png" Margin="5"/>
+                                </Viewbox>
+                                <Viewbox Margin="5">
+                                    <TextBlock Text="Holiday" VerticalAlignment="Center" FontSize="10"/>
+                                </Viewbox>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
                     <Grid Grid.Row="2">
                         <Grid.ColumnDefinitions>
@@ -175,45 +181,31 @@
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                                               <Viewbox>
+                                <Viewbox>
                                     <Image Source="..\..\..\Assets\Attendance\vacation.png" Margin="5"/>
                                 </Viewbox>
                                 <Viewbox Margin="5">
                                     <TextBlock TextWrapping="WrapWithOverflow" VerticalAlignment="Center" Text="On Vacation/Other" FontSize="10"/>
                                 </Viewbox>
-
-
                             </StackPanel>
                         </Grid>
                         <Grid Grid.Column="1">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                               
                                 <Viewbox>
                                     <Image Source="..\..\..\Assets\Attendance\onsite.png" Margin="5"/>
                                 </Viewbox>
                                 <Viewbox Margin="5">
                                     <TextBlock Text="On Site @ Client" VerticalAlignment="Center" FontSize="10"/>
                                 </Viewbox>
-
-
                             </StackPanel>
                         </Grid>
-
-                       
                     </Grid>
-
-
                 </Grid>
             </Grid>
-            
-
-
-
         </Grid>
     </Border>
     <Page.Resources>
         <ResourceDictionary>
-
             <!-- Scroll -->
             <SolidColorBrush x:Key="StandardBorderBrush" Color="#888" />
             <SolidColorBrush x:Key="StandardBackgroundBrush" Color="Black" />

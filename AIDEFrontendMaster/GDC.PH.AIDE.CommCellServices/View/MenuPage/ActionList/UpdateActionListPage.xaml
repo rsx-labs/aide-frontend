@@ -135,7 +135,7 @@
                             <ComboBox Style="{DynamicResource StyleComboBox}" 
                                       x:Name="Act_AssigneeCB2" 
                                       Margin="0,5,2.5,5" 
-                                      SelectedValuePath="First_Name" DisplayMemberPath="Employee_Name" 
+                                      SelectedValuePath="First_Name" DisplayMemberPath="EMPLOYEE_NAME" 
                                       ItemsSource="{Binding NicknameList}"
                                       Text="{Binding NICK_NAME, Mode=TwoWay}" />
                             

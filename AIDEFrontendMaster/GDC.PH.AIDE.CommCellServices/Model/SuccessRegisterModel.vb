@@ -131,13 +131,13 @@ Public Class NicknameModel
     Private _firstName As String
     Private _employeename As String
 
-    Public Property Emp_ID As Integer
+    Public Property EMP_ID As Integer
         Get
             Return _empID
         End Get
         Set(value As Integer)
             _empID = value
-            NotifyPropertyChanged("Emp_ID")
+            NotifyPropertyChanged("EMP_ID")
         End Set
     End Property
 
@@ -161,13 +161,13 @@ Public Class NicknameModel
         End Set
     End Property
 
-    Public Property Employee_Name As String
+    Public Property EMPLOYEE_NAME As String
         Get
             Return _employeename
         End Get
         Set(value As String)
             _employeename = value
-            NotifyPropertyChanged("Employee_Name")
+            NotifyPropertyChanged("EMPLOYEE_NAME")
         End Set
     End Property
 

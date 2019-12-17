@@ -146,6 +146,8 @@ Public Class AttendanceDashBoard
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\present.png"
         ElseIf setStatus = 3 Or setStatus = 5 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\sick.png"
+        ElseIf setStatus = 7 Then
+            rawUser_.Display_Status = "..\..\..\Assets\Attendance\holiday.png"
         ElseIf setStatus = 4 Or setStatus = 6 Or setStatus = 8 Or setStatus = 9 Or setStatus = 10 Or setStatus = 12 Then
             rawUser_.Display_Status = "..\..\..\Assets\Attendance\vacation.png"
         End If

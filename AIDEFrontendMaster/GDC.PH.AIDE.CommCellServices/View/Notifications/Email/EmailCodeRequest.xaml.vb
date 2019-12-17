@@ -118,10 +118,8 @@ Class EmailCodeRequest
             Dim sentFrom As String = mcVM.objectMailConfigSet.SENDER_EMAIL
             Dim subject As String = mcVM.objectMailConfigSet.SUBJECT
             Dim body As String = mcVM.objectMailConfigSet.BODY + " " + codecombo.ToString()
-
-            MsgBox(mcVM.objectMailConfigSet.BODY + " " + codecombo.ToString(), MsgBoxStyle.Information, "AIDE")
-
             Dim client As SmtpClient = New SmtpClient()
+
             client.Port = mcVM.objectMailConfigSet.PORT
             client.Host = mcVM.objectMailConfigSet.HOST
             client.EnableSsl = CBool(mcVM.objectMailConfigSet.ENABLE_SSL)

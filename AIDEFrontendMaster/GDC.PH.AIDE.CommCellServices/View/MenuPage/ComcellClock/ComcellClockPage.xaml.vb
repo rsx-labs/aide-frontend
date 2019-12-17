@@ -84,9 +84,9 @@ Class ComcellClockPage
     Public Sub getTime()
         Dim actualTime As String
         Dim timer As DispatcherTimer = New DispatcherTimer(New TimeSpan(0, 0, 1), DispatcherPriority.Normal, Function()
-
-                                                                                                                 Dim dateNow As DateTime = Format(DateTime.Now, "h:mm tt")
-                                                                                                                 actualTime = DateTime.Now.DayOfWeek.ToString().ToUpper() + " " + dateNow.ToString("h:mm tt")
+                                                                                                               
+                                                                                                                 Dim dateNow As DateTime = Format(DateTime.Now, "hh:mm tt")
+                                                                                                                 actualTime = DateTime.Now.DayOfWeek.ToString().ToUpper() + " " + dateNow.ToString("hh:mm tt")
 
                                                                                                                  If TimeCheck(actualTime) Then
                                                                                                                      'alarmActive = True
@@ -171,7 +171,7 @@ Class ComcellClockPage
             Dim dayconvert As String = GetDayValue(comcellClockVM.objectComcellClockSet.CLOCK_DAY)
             comcellClockVM.objectComcellDayOnly = dayconvert & " " & _comcellclock.Clock_Hour.ToString() & ":" & _comcellclock.Clock_Minute.ToString().PadLeft(2, "0") & " " & _comcellclock.MIDDAY
         Catch ex As Exception
-            ' Nothing to do
+            MessageBox.Show(ex.Message)
         End Try
     End Sub
 

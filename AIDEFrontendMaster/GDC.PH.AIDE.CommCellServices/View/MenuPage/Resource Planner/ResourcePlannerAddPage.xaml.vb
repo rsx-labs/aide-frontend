@@ -194,12 +194,11 @@ Class ResourcePlannerAddPage
         Resource.dateFrom = dtpFrom.SelectedDate
         Resource.dateTo = dtpTo.SelectedDate
         Resource.Status = cbCategory.SelectedValue
-        'If profile.Emp_ID <> txtEmpID.Text Then
-        client.InsertResourcePlanner(Resource)
-            'Else
-            '    client.UpdateResourcePlanner(Resource)
-            'End If
-            'client.InsertResourcePlanner(Resource)
+        If profile.Emp_ID <> txtEmpID.Text Then
+            client.InsertResourcePlanner(Resource)
+        Else
+            client.UpdateResourcePlanner(Resource)
+        End If
             _ResourceDBProvider._splist.Clear()
         MsgBox("Successfully applied " & cbCategory.Text, MsgBoxStyle.Information, "AIDE")
     End Sub
