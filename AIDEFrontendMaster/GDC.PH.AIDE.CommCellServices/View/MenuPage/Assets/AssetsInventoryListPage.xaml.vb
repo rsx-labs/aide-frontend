@@ -411,7 +411,7 @@ Public Class AssetsInventoryListPage
     Private Sub lv_assetInventoryList_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles lv_assetInventoryList.SelectionChanged
         e.Handled = True
         If show = True Then
-            If lv_assetInventoryList.SelectedIndex <> -1 And profile.Permission_ID = 3 Then 'allow only custodian to assign assets
+            If lv_assetInventoryList.SelectedIndex <> -1 And profile.Permission_ID = 4 Then 'allow only custodian to assign assets
                 If lv_assetInventoryList.SelectedItem IsNot Nothing Then
                     If CType(lv_assetInventoryList.SelectedItem, AssetsModel).STATUS <> 1 And CType(lv_assetInventoryList.SelectedItem, AssetsModel).EMP_ID <> profile.Emp_ID Then
                         Exit Sub

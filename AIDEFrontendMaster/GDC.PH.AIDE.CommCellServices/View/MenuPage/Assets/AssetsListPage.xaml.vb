@@ -53,7 +53,7 @@ Public Class AssetsListPage
         Me._submenuframe = _submenuframe
         Assets.SelectedIndex = 0
 
-        If profile.Permission_ID = 3 Then 'Allow custodian only to add assets
+        If profile.Permission_ID = 4 Then 'Allow custodian only to add assets
             btnAdd.Visibility = Windows.Visibility.Visible
         End If
     End Sub
@@ -104,7 +104,7 @@ Public Class AssetsListPage
 
     Private Sub lv_assetList_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles lv_assetList.SelectionChanged
         e.Handled = True
-        If lv_assetList.SelectedIndex <> -1 And (profile.Permission_ID = 3 Or profile.Permission_ID = 1) Then
+        If lv_assetList.SelectedIndex <> -1 And (profile.Permission_ID = 4 Or profile.Permission_ID = 1) Then
             If lv_assetList.SelectedItem IsNot Nothing Then
                 Dim assetsModel As New AssetsModel
 
