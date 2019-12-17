@@ -103,6 +103,144 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_InsertComcellMeeting_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetComcellMeeting_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetComcellMeeting_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_UpdateComcellMeeting_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetClockTimeByEmployee_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetClockTimeByEmployee_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="dual_UpdateComcellClock_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -1599,6 +1737,190 @@
     </wsp:ExactlyOne>
   </wsp:Policy>
   <wsp:Policy wsu:Id="dual_GetKPISummaryListMonthly_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllAssetsHistoryBySearch_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllAssetsHistoryBySearch_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllAssetsInventoryBySearch_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllAssetsInventoryBySearch_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAssetDescription_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAssetDescription_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAssetManufacturer_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAssetManufacturer_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -3967,144 +4289,6 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_InsertComcellMeeting_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetComcellMeeting_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetComcellMeeting_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_UpdateComcellMeeting_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetClockTimeByEmployee_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetClockTimeByEmployee_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
   <wsp:Policy wsu:Id="dual_InsertActionList_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -6014,6 +6198,52 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllDeletedAssetsByEmpID_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllDeletedAssetsByEmpID_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="dual_GetMyAssets_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -6107,6 +6337,29 @@
     </wsp:ExactlyOne>
   </wsp:Policy>
   <wsp:Policy wsu:Id="dual_UpdateAssets_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_DeleteAsset_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -6336,6 +6589,98 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllManagersByDeptorDiv_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllManagersByDeptorDiv_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllAssetsCustodian_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllAssetsCustodian_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="dual_UpdateAssetsInventory_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -6429,190 +6774,6 @@
     </wsp:ExactlyOne>
   </wsp:Policy>
   <wsp:Policy wsu:Id="dual_GetAllAssetsHistory_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetAllAssetsHistoryBySearch_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetAllAssetsHistoryBySearch_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetAllAssetsInventoryBySearch_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetAllAssetsInventoryBySearch_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetAssetDescription_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetAssetDescription_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetAssetManufacturer_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetAssetManufacturer_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -6798,6 +6959,24 @@
   </wsdl:message>
   <wsdl:message name="IAideService2_DashboardGetTaskSummaryTotals_OutputMessage">
     <wsdl:part name="parameters" element="tns:DashboardGetTaskSummaryTotalsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_InsertComcellMeeting_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertComcellMeeting" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetComcellMeeting_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetComcellMeeting" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetComcellMeeting_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetComcellMeetingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_UpdateComcellMeeting_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateComcellMeeting" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetClockTimeByEmployee_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetClockTimeByEmployee" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetClockTimeByEmployee_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetClockTimeByEmployeeResponse" />
   </wsdl:message>
   <wsdl:message name="IAideService_UpdateComcellClock_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateComcellClock" />
@@ -6996,6 +7175,30 @@
   </wsdl:message>
   <wsdl:message name="IAideService_GetKPISummaryListMonthly_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetKPISummaryListMonthlyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAllAssetsHistoryBySearch_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAssetsHistoryBySearch" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAllAssetsHistoryBySearch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAssetsHistoryBySearchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAllAssetsInventoryBySearch_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAssetsInventoryBySearch" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAllAssetsInventoryBySearch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAssetsInventoryBySearchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAssetDescription_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssetDescription" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAssetDescription_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssetDescriptionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAssetManufacturer_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssetManufacturer" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAssetManufacturer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssetManufacturerResponse" />
   </wsdl:message>
   <wsdl:message name="IAideService_GetLessonLearntList_InputMessage">
     <wsdl:part name="parameters" element="tns:GetLessonLearntList" />
@@ -7303,24 +7506,6 @@
   <wsdl:message name="IAideService_GetAllSabaCourseByTitle_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllSabaCourseByTitleResponse" />
   </wsdl:message>
-  <wsdl:message name="IAideService_InsertComcellMeeting_InputMessage">
-    <wsdl:part name="parameters" element="tns:InsertComcellMeeting" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetComcellMeeting_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetComcellMeeting" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetComcellMeeting_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetComcellMeetingResponse" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_UpdateComcellMeeting_InputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateComcellMeeting" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetClockTimeByEmployee_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetClockTimeByEmployee" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetClockTimeByEmployee_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetClockTimeByEmployeeResponse" />
-  </wsdl:message>
   <wsdl:message name="IAideService_InsertActionList_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertActionList" />
   </wsdl:message>
@@ -7570,6 +7755,12 @@
   <wsdl:message name="IAideService_GetAllAssetsByEmpID_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllAssetsByEmpIDResponse" />
   </wsdl:message>
+  <wsdl:message name="IAideService_GetAllDeletedAssetsByEmpID_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllDeletedAssetsByEmpID" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAllDeletedAssetsByEmpID_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllDeletedAssetsByEmpIDResponse" />
+  </wsdl:message>
   <wsdl:message name="IAideService_GetMyAssets_InputMessage">
     <wsdl:part name="parameters" element="tns:GetMyAssets" />
   </wsdl:message>
@@ -7584,6 +7775,9 @@
   </wsdl:message>
   <wsdl:message name="IAideService_UpdateAssets_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateAssets" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_DeleteAsset_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAsset" />
   </wsdl:message>
   <wsdl:message name="IAideService_InsertAssetsInventory_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertAssetsInventory" />
@@ -7612,6 +7806,18 @@
   <wsdl:message name="IAideService_GetAllManagers_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllManagersResponse" />
   </wsdl:message>
+  <wsdl:message name="IAideService_GetAllManagersByDeptorDiv_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllManagersByDeptorDiv" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAllManagersByDeptorDiv_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllManagersByDeptorDivResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAllAssetsCustodian_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAssetsCustodian" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAllAssetsCustodian_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllAssetsCustodianResponse" />
+  </wsdl:message>
   <wsdl:message name="IAideService_UpdateAssetsInventory_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateAssetsInventory" />
   </wsdl:message>
@@ -7626,30 +7832,6 @@
   </wsdl:message>
   <wsdl:message name="IAideService_GetAllAssetsHistory_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAllAssetsHistoryResponse" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetAllAssetsHistoryBySearch_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllAssetsHistoryBySearch" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetAllAssetsHistoryBySearch_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllAssetsHistoryBySearchResponse" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetAllAssetsInventoryBySearch_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllAssetsInventoryBySearch" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetAllAssetsInventoryBySearch_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllAssetsInventoryBySearchResponse" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetAssetDescription_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetAssetDescription" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetAssetDescription_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetAssetDescriptionResponse" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetAssetManufacturer_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetAssetManufacturer" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetAssetManufacturer_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetAssetManufacturerResponse" />
   </wsdl:message>
   <wsdl:message name="IAideService_NotifySuccess_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifySuccess" />
@@ -7697,6 +7879,20 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType msc:usingSession="true" name="IAideService">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InsertComcellMeeting">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/InsertComcellMeeting" message="tns:IAideService_InsertComcellMeeting_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetComcellMeeting">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetComcellMeeting" message="tns:IAideService_GetComcellMeeting_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetComcellMeetingResponse" message="tns:IAideService_GetComcellMeeting_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateComcellMeeting">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/UpdateComcellMeeting" message="tns:IAideService_UpdateComcellMeeting_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetClockTimeByEmployee">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetClockTimeByEmployee" message="tns:IAideService_GetClockTimeByEmployee_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetClockTimeByEmployeeResponse" message="tns:IAideService_GetClockTimeByEmployee_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateComcellClock">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/UpdateComcellClock" message="tns:IAideService_UpdateComcellClock_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/UpdateComcellClockResponse" message="tns:IAideService_UpdateComcellClock_OutputMessage" />
@@ -7834,6 +8030,22 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetKPISummaryListMonthly">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetKPISummaryListMonthly" message="tns:IAideService_GetKPISummaryListMonthly_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetKPISummaryListMonthlyResponse" message="tns:IAideService_GetKPISummaryListMonthly_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllAssetsHistoryBySearch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllAssetsHistoryBySearch" message="tns:IAideService_GetAllAssetsHistoryBySearch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllAssetsHistoryBySearchResponse" message="tns:IAideService_GetAllAssetsHistoryBySearch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllAssetsInventoryBySearch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllAssetsInventoryBySearch" message="tns:IAideService_GetAllAssetsInventoryBySearch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllAssetsInventoryBySearchResponse" message="tns:IAideService_GetAllAssetsInventoryBySearch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAssetDescription">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAssetDescription" message="tns:IAideService_GetAssetDescription_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAssetDescriptionResponse" message="tns:IAideService_GetAssetDescription_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAssetManufacturer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAssetManufacturer" message="tns:IAideService_GetAssetManufacturer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAssetManufacturerResponse" message="tns:IAideService_GetAssetManufacturer_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetLessonLearntList">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetLessonLearntList" message="tns:IAideService_GetLessonLearntList_InputMessage" />
@@ -8057,20 +8269,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllSabaCourseByTitle" message="tns:IAideService_GetAllSabaCourseByTitle_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllSabaCourseByTitleResponse" message="tns:IAideService_GetAllSabaCourseByTitle_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InsertComcellMeeting">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/InsertComcellMeeting" message="tns:IAideService_InsertComcellMeeting_InputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetComcellMeeting">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetComcellMeeting" message="tns:IAideService_GetComcellMeeting_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetComcellMeetingResponse" message="tns:IAideService_GetComcellMeeting_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateComcellMeeting">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/UpdateComcellMeeting" message="tns:IAideService_UpdateComcellMeeting_InputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetClockTimeByEmployee">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetClockTimeByEmployee" message="tns:IAideService_GetClockTimeByEmployee_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetClockTimeByEmployeeResponse" message="tns:IAideService_GetClockTimeByEmployee_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InsertActionList">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/InsertActionList" message="tns:IAideService_InsertActionList_InputMessage" />
     </wsdl:operation>
@@ -8250,6 +8448,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllAssetsByEmpID" message="tns:IAideService_GetAllAssetsByEmpID_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllAssetsByEmpIDResponse" message="tns:IAideService_GetAllAssetsByEmpID_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllDeletedAssetsByEmpID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllDeletedAssetsByEmpID" message="tns:IAideService_GetAllDeletedAssetsByEmpID_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllDeletedAssetsByEmpIDResponse" message="tns:IAideService_GetAllDeletedAssetsByEmpID_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetMyAssets">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetMyAssets" message="tns:IAideService_GetMyAssets_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetMyAssetsResponse" message="tns:IAideService_GetMyAssets_OutputMessage" />
@@ -8260,6 +8462,9 @@
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateAssets">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/UpdateAssets" message="tns:IAideService_UpdateAssets_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="DeleteAsset">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/DeleteAsset" message="tns:IAideService_DeleteAsset_InputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InsertAssetsInventory">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/InsertAssetsInventory" message="tns:IAideService_InsertAssetsInventory_InputMessage" />
@@ -8280,6 +8485,14 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllManagers" message="tns:IAideService_GetAllManagers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllManagersResponse" message="tns:IAideService_GetAllManagers_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllManagersByDeptorDiv">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllManagersByDeptorDiv" message="tns:IAideService_GetAllManagersByDeptorDiv_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllManagersByDeptorDivResponse" message="tns:IAideService_GetAllManagersByDeptorDiv_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllAssetsCustodian">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllAssetsCustodian" message="tns:IAideService_GetAllAssetsCustodian_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllAssetsCustodianResponse" message="tns:IAideService_GetAllAssetsCustodian_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateAssetsInventory">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/UpdateAssetsInventory" message="tns:IAideService_UpdateAssetsInventory_InputMessage" />
     </wsdl:operation>
@@ -8292,22 +8505,6 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllAssetsHistory">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllAssetsHistory" message="tns:IAideService_GetAllAssetsHistory_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllAssetsHistoryResponse" message="tns:IAideService_GetAllAssetsHistory_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllAssetsHistoryBySearch">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllAssetsHistoryBySearch" message="tns:IAideService_GetAllAssetsHistoryBySearch_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllAssetsHistoryBySearchResponse" message="tns:IAideService_GetAllAssetsHistoryBySearch_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllAssetsInventoryBySearch">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllAssetsInventoryBySearch" message="tns:IAideService_GetAllAssetsInventoryBySearch_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllAssetsInventoryBySearchResponse" message="tns:IAideService_GetAllAssetsInventoryBySearch_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAssetDescription">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAssetDescription" message="tns:IAideService_GetAssetDescription_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAssetDescriptionResponse" message="tns:IAideService_GetAssetDescription_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAssetManufacturer">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAssetManufacturer" message="tns:IAideService_GetAssetManufacturer_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAssetManufacturerResponse" message="tns:IAideService_GetAssetManufacturer_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifySuccess">
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/NotifySuccess" message="tns:IAideService_NotifySuccess_OutputCallbackMessage" />
@@ -8394,6 +8591,42 @@
   <wsdl:binding name="dual" type="tns:IAideService">
     <wsp:PolicyReference URI="#dual_policy" />
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="InsertComcellMeeting">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/InsertComcellMeeting" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_InsertComcellMeeting_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="GetComcellMeeting">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetComcellMeeting" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetComcellMeeting_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetComcellMeeting_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateComcellMeeting">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/UpdateComcellMeeting" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_UpdateComcellMeeting_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="GetClockTimeByEmployee">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetClockTimeByEmployee" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetClockTimeByEmployee_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetClockTimeByEmployee_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="UpdateComcellClock">
       <soap12:operation soapAction="http://tempuri.org/IAideService/UpdateComcellClock" style="document" />
       <wsdl:input>
@@ -8763,6 +8996,50 @@
       </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#dual_GetKPISummaryListMonthly_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAssetsHistoryBySearch">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAllAssetsHistoryBySearch" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetAllAssetsHistoryBySearch_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetAllAssetsHistoryBySearch_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAssetsInventoryBySearch">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAllAssetsInventoryBySearch" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetAllAssetsInventoryBySearch_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetAllAssetsInventoryBySearch_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAssetDescription">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAssetDescription" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetAssetDescription_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetAssetDescription_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAssetManufacturer">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAssetManufacturer" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetAssetManufacturer_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetAssetManufacturer_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
@@ -9354,42 +9631,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="InsertComcellMeeting">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/InsertComcellMeeting" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_InsertComcellMeeting_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-    </wsdl:operation>
-    <wsdl:operation name="GetComcellMeeting">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetComcellMeeting" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetComcellMeeting_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetComcellMeeting_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UpdateComcellMeeting">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/UpdateComcellMeeting" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_UpdateComcellMeeting_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-    </wsdl:operation>
-    <wsdl:operation name="GetClockTimeByEmployee">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetClockTimeByEmployee" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetClockTimeByEmployee_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetClockTimeByEmployee_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="InsertActionList">
       <soap12:operation soapAction="http://tempuri.org/IAideService/InsertActionList" style="document" />
       <wsdl:input>
@@ -9866,6 +10107,17 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetAllDeletedAssetsByEmpID">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAllDeletedAssetsByEmpID" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetAllDeletedAssetsByEmpID_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetAllDeletedAssetsByEmpID_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetMyAssets">
       <soap12:operation soapAction="http://tempuri.org/IAideService/GetMyAssets" style="document" />
       <wsdl:input>
@@ -9892,6 +10144,13 @@
       <soap12:operation soapAction="http://tempuri.org/IAideService/UpdateAssets" style="document" />
       <wsdl:input>
         <wsp:PolicyReference URI="#dual_UpdateAssets_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAsset">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/DeleteAsset" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_DeleteAsset_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
@@ -9946,6 +10205,28 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetAllManagersByDeptorDiv">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAllManagersByDeptorDiv" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetAllManagersByDeptorDiv_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetAllManagersByDeptorDiv_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAssetsCustodian">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAllAssetsCustodian" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetAllAssetsCustodian_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetAllAssetsCustodian_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="UpdateAssetsInventory">
       <soap12:operation soapAction="http://tempuri.org/IAideService/UpdateAssetsInventory" style="document" />
       <wsdl:input>
@@ -9975,50 +10256,6 @@
       </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#dual_GetAllAssetsHistory_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetAllAssetsHistoryBySearch">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAllAssetsHistoryBySearch" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetAllAssetsHistoryBySearch_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetAllAssetsHistoryBySearch_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetAllAssetsInventoryBySearch">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAllAssetsInventoryBySearch" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetAllAssetsInventoryBySearch_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetAllAssetsInventoryBySearch_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetAssetDescription">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAssetDescription" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetAssetDescription_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetAssetDescription_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetAssetManufacturer">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAssetManufacturer" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetAssetManufacturer_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetAssetManufacturer_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
