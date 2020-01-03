@@ -88,6 +88,7 @@ Class ComcellMainPage
         Try
             If InitializeService() Then
                 lstComcell = _AideService.GetComcellMeeting(empID, year)
+                lstFiscalYear = _AideService.GetAllFiscalYear()
                 SetPaging(PagingMode._First)
             End If
         Catch ex As Exception
@@ -100,8 +101,6 @@ Class ComcellMainPage
             Dim lstComcellList As New ObservableCollection(Of ComcellModel)
             Dim ComcellDBProvider As New ComcellDBProvider
             Dim objComcell As New Comcell
-
-            lstFiscalYear = _AideService.GetAllFiscalYear()
 
             For i As Integer = startRowIndex To lastRowIndex
                 objComcell = lstComcell(i)
