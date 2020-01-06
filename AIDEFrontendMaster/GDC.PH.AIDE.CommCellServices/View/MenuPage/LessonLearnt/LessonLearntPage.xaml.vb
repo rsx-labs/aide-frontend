@@ -99,7 +99,7 @@ Class LessonLearntPage
         Try
             If Me.InitializeService Then
                 lstLesson = client.GetLessonLearntList(profile.Email_Address)
-                SetLists()
+                SetData()
                 DisplayPagingInfo()
             End If
         Catch ex As Exception
@@ -112,7 +112,7 @@ Class LessonLearntPage
             If Not search = String.Empty Then
                 If Me.InitializeService() Then
                     lstLesson = client.GetLessonLearntByProblem(search, profile.Email_Address)
-                    SetLists()
+                    SetData()
                     DisplayPagingInfo()
                 End If
             Else
@@ -123,11 +123,11 @@ Class LessonLearntPage
         End Try
     End Sub
 
-    Private Sub SetLists()
+    Private Sub SetData()
         Try
-            paginatedCollection.Clear()
-            Dim lstLessonLearnt As New ObservableCollection(Of LessonLearntModel)
             Dim lessonLearntDBProvider As New LessonLearntDBProvider
+
+            paginatedCollection = New PaginatedObservableCollection(Of LessonLearntModel)(pagingRecordPerPage)
 
             ' Set the MyLessonLearntList 
             For Each objLessonLearnt As LessonLearnt In lstLesson
@@ -135,83 +135,18 @@ Class LessonLearntPage
             Next
 
             ' Set the lstLessonLearnt
-            For Each iLessonLearnt As MyLessonLearntList In lessonLearntDBProvider.GetLessonLearntList()
-                paginatedCollection.Add(New LessonLearntModel(iLessonLearnt))
+            For Each lessonLearnt As MyLessonLearntList In lessonLearntDBProvider.GetLessonLearntList()
+                paginatedCollection.Add(New LessonLearntModel(lessonLearnt))
             Next
 
             dgLessonLearnt.ItemsSource = paginatedCollection
-            'LoadDataForPrint()
+
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(lstLesson.Length / pagingRecordPerPage)
+            'LoadDataForPrint()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
-    End Sub
-
-    Private Sub SetPaging(mode As Integer)
-        Try
-            Dim totalRecords As Integer = lstLesson.Length
-
-            Select Case mode
-                Case CInt(PagingMode._Next)
-                    ' Set the rows to be displayed if the total records is more than the (Record per Page * Page Index)
-                    If totalRecords > (pagingPageIndex * pagingRecordPerPage) Then
-
-                        ' Set the last row to be displayed if the total records is more than the (Record per Page * Page Index) + Record per Page
-                        If totalRecords >= ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) Then
-                            lastRowIndex = ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) - 1
-                        Else
-                            lastRowIndex = totalRecords - 1
-                        End If
-
-                        startRowIndex = pagingPageIndex * pagingRecordPerPage
-                        pagingPageIndex += 1
-                    Else
-                        startRowIndex = (pagingPageIndex - 1) * pagingRecordPerPage
-                        lastRowIndex = totalRecords - 1
-                    End If
-                    ' Bind data to the Data Grid
-                    SetLists()
-                    Exit Select
-                Case CInt(PagingMode._Previous)
-                    ' Set the Previous Page if the page index is greater than 1
-                    If pagingPageIndex > 1 Then
-                        pagingPageIndex -= 1
-
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-                        lastRowIndex = (pagingPageIndex * pagingRecordPerPage) - 1
-                        SetLists()
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._First)
-                    If totalRecords > pagingRecordPerPage Then
-                        pagingPageIndex = 2
-                        SetPaging(CInt(PagingMode._Previous))
-                    Else
-                        pagingPageIndex = 1
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-
-                        If Not totalRecords = 0 Then
-                            lastRowIndex = totalRecords - 1
-                            SetLists()
-                        Else
-                            lastRowIndex = 0
-                            Me.DataContext = Nothing
-                        End If
-
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._Last)
-                    pagingPageIndex = (lstLesson.Length / pagingRecordPerPage)
-                    SetPaging(CInt(PagingMode._Next))
-                    Exit Select
-            End Select
-
-            DisplayPagingInfo()
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-
     End Sub
 
     Private Sub DisplayPagingInfo()
@@ -241,7 +176,7 @@ Class LessonLearntPage
 
 #End Region
 
-#Region "Buttons"
+#Region "Events"
     Private Sub btnAddLessonLearnt_Click(sender As Object, e As RoutedEventArgs) Handles btnAddLessonLearnt.Click
         _addframe.Navigate(New LessonLearntAddPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
         frame.IsEnabled = False
@@ -251,7 +186,7 @@ Class LessonLearntPage
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
         _addframe.Visibility = Visibility.Visible
-        _addframe.Margin = New Thickness(150, 60, 150, 60)
+        _addframe.Margin = New Thickness(50, 50, 50, 50)
     End Sub
 
     Private Sub dgLessonLearnt_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles dgLessonLearnt.MouseDoubleClick
@@ -289,7 +224,7 @@ Class LessonLearntPage
         SearchProblemEncountered(txtSearch.Text.Trim)
     End Sub
 
-    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
         Dim totalRecords As Integer = lstLesson.Length
 
         If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
@@ -300,7 +235,7 @@ Class LessonLearntPage
         DisplayPagingInfo()
     End Sub
 
-    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
         paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
         If currentPage > 1 Then
             currentPage -= 1

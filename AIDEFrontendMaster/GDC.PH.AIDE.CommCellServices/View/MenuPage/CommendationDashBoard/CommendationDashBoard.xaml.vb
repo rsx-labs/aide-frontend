@@ -29,12 +29,14 @@ Class CommendationDashBoard
     Private month As Integer = Date.Now.Month
     Private year As Integer = Date.Now.Year
     Private displayMonth As String
-
+    Private m_loaded As Boolean = False
 
     Dim lstBirthdayMonth As BirthdayList()
     Dim lstCommendation As Commendations()
-    Dim birthdayListVM As New BirthdayListViewModel()
+    Dim lstFiscalYear As FiscalYear()
     Dim commendationVM As New CommendationViewModel()
+    Dim fiscalyearVM As New SelectionListViewModel
+    Dim birthdayListVM As New BirthdayListViewModel()
     Dim startYear As Integer = 2018 'Default Start Year
 
     Private Enum PagingMode
@@ -65,7 +67,7 @@ Class CommendationDashBoard
         SetData()
         Me.DataContext = commendationVM
         LoadMonth()
-        LoadYears()
+        m_loaded = True
     End Sub
 
 #End Region
@@ -84,21 +86,10 @@ Class CommendationDashBoard
         Try
             If InitializeService() Then
                 lstCommendation = _AideService.GetCommendations(empID)
+                lstFiscalYear = _AideService.GetAllFiscalYear()
                 LoadCommendations()
+                LoadFiscalYear()
             End If
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
-    End Sub
-
-    Public Sub LoadYears()
-        Try
-            cbYear.DisplayMemberPath = "Text"
-            cbYear.SelectedValuePath = "Value"
-            For i As Integer = 2019 To DateTime.Today.Year
-                Dim nextYear As Integer = i + 1
-                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
-            Next
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -119,6 +110,8 @@ Class CommendationDashBoard
         cbMonth.Items.Add(New With {.Text = "October", .Value = 10})
         cbMonth.Items.Add(New With {.Text = "November", .Value = 11})
         cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
+        cbMonth.SelectedIndex = Date.Now().Month - 1
+        cbYear.SelectedValue = Date.Now.Year() & "-" & (Date.Now.Year + 1).ToString()
     End Sub
 
     Public Sub LoadCommendations()
@@ -136,6 +129,26 @@ Class CommendationDashBoard
 
             commendationVM.CommendationList = lstCommendationList
             CommendationLV.ItemsSource = commendationVM.CommendationList
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Public Sub LoadFiscalYear()
+        Try
+            Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
+            Dim FYDBProvider As New SelectionListDBProvider
+
+            For Each objFiscal As FiscalYear In lstFiscalYear
+                FYDBProvider._setlistofFiscal(objFiscal)
+            Next
+
+            For Each rawUser As myFiscalYearSet In FYDBProvider._getobjFiscal()
+                lstFiscalYearList.Add(New FiscalYearModel(rawUser))
+            Next
+
+            fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
+            cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -194,7 +207,7 @@ Class CommendationDashBoard
                         commmendationList.SentBy = _comm.SentBy
                     End If
                 Next
-                '_addframe.Navigate(New CommendationViewPage(commmendationList, mainFrame, position, empID, _addframe, _menugrid, _submenuframe))
+
                 _addframe.Navigate(New CommendationUpdatePage(commmendationList, mainFrame, position, empID, _addframe, _menugrid, _submenuframe, Me.profile.Permission, Me.commendFrame, Me.profile))
                 mainFrame.IsEnabled = False
                 mainFrame.Opacity = 0.3
@@ -202,7 +215,7 @@ Class CommendationDashBoard
                 _menugrid.Opacity = 0.3
                 _submenuframe.IsEnabled = False
                 _submenuframe.Opacity = 0.3
-                _addframe.Margin = New Thickness(150, 60, 150, 60)
+                _addframe.Margin = New Thickness(140, 70, 140, 70)
                 _addframe.Visibility = Visibility.Visible
             End If
         End If
@@ -216,18 +229,23 @@ Class CommendationDashBoard
         _menugrid.Opacity = 0.3
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(150, 60, 150, 60)
+        _addframe.Margin = New Thickness(140, 70, 140, 70)
         _addframe.Visibility = Visibility.Visible
     End Sub
 
     Private Sub cbMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbMonth.SelectionChanged
-        month = cbMonth.SelectedValue
-        LoadCommendationsBySearch()
+        If m_loaded Then
+            month = cbMonth.SelectedValue
+            'cbYear.SelectedValue = Date.Now().Year.ToString() + "-" + (Date.Now().Year + 1).ToString()
+            LoadCommendationsBySearch()
+        End If
     End Sub
 
     Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
-        year = cbYear.SelectedValue
-        LoadCommendationsBySearch()
+        If m_loaded Then
+            year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+            LoadCommendationsBySearch()
+        End If
     End Sub
 #End Region
 
@@ -252,4 +270,5 @@ Class CommendationDashBoard
         Throw New NotImplementedException()
     End Sub
 #End Region
+
 End Class

@@ -15,7 +15,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Grid x:Name="Grid">
-                            <Border x:Name="border" CornerRadius="15" Background="DimGray">
+                            <Border x:Name="border" CornerRadius="10" Background="DimGray">
                                 <ContentPresenter HorizontalAlignment="Center"
                                                   VerticalAlignment="Center"
                                                   TextElement.FontWeight="Bold">
@@ -514,13 +514,13 @@
                             <DatePickerTextBox x:Name="PART_TextBox"
                                                BorderBrush="Transparent"
                                                TextAlignment="Center"
-                                               FontSize="10"
+                                               FontSize="11"
                                                HorizontalContentAlignment="Stretch"
                                                Padding="{TemplateBinding Padding}"
                                                VerticalContentAlignment="Center"
                                                Visibility="Visible"
                                                HorizontalAlignment="Stretch"
-                                               Style="{DynamicResource styleDatePickerTextBox}" IsReadOnly="True" Background="{x:Null}" BorderThickness="0.5" Foreground="DimGray">
+                                               Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="0.5" Foreground="DimGray">
                             </DatePickerTextBox>
                             
                             <Viewbox HorizontalAlignment="Right">
@@ -580,9 +580,9 @@
                                                Padding="{TemplateBinding Padding}"
                                                VerticalContentAlignment="Center"
                                                Visibility="Visible"
-                                               FontSize="10"
+                                               FontSize="11"
                                                HorizontalAlignment="Stretch"
-                                               Style="{DynamicResource styleDatePickerTextBox}" IsReadOnly="True" Background="{x:Null}" BorderThickness="0.5" Foreground="DimGray">
+                                               Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="0.5" Foreground="DimGray">
                             </DatePickerTextBox>
                             
                             <Viewbox HorizontalAlignment="Right">
@@ -631,7 +631,7 @@
             <Setter Property="BorderBrush" Value="Transparent"></Setter>
             <Setter Property="BorderThickness" Value="0"></Setter>
             <Setter Property="IsEnabled" Value="True"></Setter>
-            <Setter Property="IsReadOnly" Value="True"></Setter>
+            <Setter Property="IsReadOnly" Value="False"></Setter>
             <Setter Property="Foreground" Value="White"></Setter>
         </Style>
 

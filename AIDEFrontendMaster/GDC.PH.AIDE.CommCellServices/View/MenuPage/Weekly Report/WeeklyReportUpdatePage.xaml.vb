@@ -28,6 +28,7 @@ Class WeeklyReportUpdatePage
 
     Dim submitStatus As Integer = 3
     Dim workingStatus As Integer = 1
+    Dim entryType As Integer = 0
 
     Dim listProjects As New ObservableCollection(Of ProjectModel)
     Dim listReworkStatus As New ObservableCollection(Of ReworkStatusModel)
@@ -76,6 +77,25 @@ Class WeeklyReportUpdatePage
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
         Me.empID = _profile.Emp_ID
+        Me.weekRangeID = _weekRangeID
+        Me.profile = _profile
+
+        dgWeeklyReport.ItemsSource = lstWeeklyReportsData
+        LoadData()
+        LoadWeeklyReportData()
+    End Sub
+    Public Sub New(_weekRangeID As Integer, _frame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _empID As Integer)
+        ' This call is required by the designer.
+        InitializeComponent()
+        InitializeService()
+        entryType = 1
+        ' Add any initialization after the InitializeComponent() call.
+        email = _profile.Email_Address
+        Me.frame = _frame
+        Me.addframe = _addframe
+        Me.menugrid = _menugrid
+        Me.submenuframe = _submenuframe
+        Me.empID = _empID
         Me.weekRangeID = _weekRangeID
         Me.profile = _profile
 
@@ -308,12 +328,22 @@ Class WeeklyReportUpdatePage
         Else
             btnSubmit.IsEnabled = False
         End If
+
+        tbTotalHours.Text = totalWeeklyHours.ToString
     End Sub
 #End Region
 
 #Region "Events"
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs)
-        ExitPage()
+
+        Select Case entryType
+            Case 0
+                ExitPage()
+            Case 1
+                ExitPage2()
+        End Select
+
+
     End Sub
 
     Private Sub dgWeeklyReport_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles dgWeeklyReport.SelectionChanged
@@ -568,7 +598,12 @@ Class WeeklyReportUpdatePage
                         If InitializeService() Then
                             AideServiceClient.UpdateWeeklyReport(weeklyReport.ToArray, weeklyReportXref)
                             MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information)
-                            ExitPage()
+                            Select Case entryType
+                                Case 0
+                                    ExitPage()
+                                Case 1
+                                    ExitPage2()
+                            End Select
                         End If
                     End If
 
@@ -577,7 +612,10 @@ Class WeeklyReportUpdatePage
                 End Try
             End If
         End If
+    End Sub
 
+    Private Sub btnClear_Click(sender As Object, e As RoutedEventArgs) Handles btnClear.Click
+        ClearFields()
     End Sub
 
     Private Sub txtRefID_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtRefID.TextChanged
@@ -801,6 +839,17 @@ Class WeeklyReportUpdatePage
 
     Private Sub ExitPage()
         frame.Navigate(New WeeklyReportPage(frame, Profile, addframe, menugrid, submenuframe))
+        frame.IsEnabled = True
+        frame.Opacity = 1
+        menugrid.IsEnabled = True
+        menugrid.Opacity = 1
+        submenuframe.IsEnabled = True
+        submenuframe.Opacity = 1
+        addframe.Visibility = Visibility.Hidden
+    End Sub
+
+    Private Sub ExitPage2()
+        frame.Navigate(New WeeklyTeamStatusReportPage(frame, profile, addframe, menugrid, submenuframe, weekRangeID))
         frame.IsEnabled = True
         frame.Opacity = 1
         menugrid.IsEnabled = True

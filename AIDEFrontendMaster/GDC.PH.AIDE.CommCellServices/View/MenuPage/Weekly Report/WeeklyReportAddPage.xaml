@@ -834,17 +834,22 @@
                         <Button Style="{DynamicResource RoundCornerDelete}" x:Name="btnRemove" Margin="5,10,5,10" Width="80" IsEnabled="False"  >
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="REMOVE" TextWrapping="Wrap" Margin="5"/>
                         </Button>
-                        <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnUpdate" Margin="5,10,10,10" Width="80" IsEnabled="False"  >
+                        <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnUpdate" Margin="5,10,5,10" Width="80" IsEnabled="False"  >
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
+                        </Button>
+                        <Button Style="{DynamicResource RoundCorner}" x:Name="btnClear" Margin="5,10,0,10" Width="80">
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="CLEAR" TextWrapping="Wrap" Margin="5"/>
                         </Button>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Column="1">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock VerticalAlignment="Center" Text="Total Hours: "></TextBlock>
+                        <TextBlock VerticalAlignment="Center" FontSize="15" FontWeight="Bold" x:Name="tbTotalHours" ></TextBlock>
+                        
                         <Button Style="{DynamicResource RoundCornerCreate}" x:Name="btnSave" Margin="10,10,5,10" Width="80" IsEnabled="False" >
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="SAVE" TextWrapping="Wrap" Margin="5"/>
                         </Button>
-
                         <Button Style="{DynamicResource RoundCornerSubmit}" x:Name="btnSubmit" Margin="5,10,10,10" Width="80" IsEnabled="False" Background="#FFF3EE9E" >
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="SUBMIT" TextWrapping="Wrap" Margin="5"/>
                         </Button>

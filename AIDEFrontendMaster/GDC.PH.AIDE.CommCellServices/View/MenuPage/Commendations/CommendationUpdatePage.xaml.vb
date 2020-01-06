@@ -40,7 +40,6 @@ Class CommendationUpdatePage
         Me.position = _position
         Me.commendFrame = _commendFrame
         Me.comboProject.Text = commendationVM._commendationModel.Project
-        txtCommendationID.Visibility = Windows.Visibility.Hidden
         LoadAllProjectName()
         AssignEvents(commendationVM._commendationModel.Reason)
         PopulateComboBoxUpdate(Me.projID)
@@ -53,23 +52,25 @@ Class CommendationUpdatePage
 
 
     Public Sub AssignEvents(Reason As String)
-        'txtCommendationID.Text = commendationModel.CommendID
-        'txtCommendationID.IsReadOnly = True
         'txtCommendationEmployees.Text = commendationModel.Employees
         'txtCommendationEmployees.IsReadOnly = True
         'txtSentBy.Text = commendationModel.SentBy
         'txtSentBy.IsReadOnly = True
+
         txtCommendationReason.AppendText(Reason)
-        'txtCommendationReason.IsReadOnly = True
-        'dateInput.SelectedDate = commendationModel.DateSent
-        'dateInput.IsEnabled = False
+
         If Not Me.profiles.Permission_ID = 1 Then
             btnCommendationUpdate.Visibility = Windows.Visibility.Hidden
             comboAddEmployee.Visibility = Windows.Visibility.Hidden
             txtemployeeWM.Visibility = Windows.Visibility.Hidden
             txtlabelSelectedEmployee.Visibility = Windows.Visibility.Hidden
             btnCommendationAddEmployee.Visibility = Windows.Visibility.Hidden
-            ManagerAuthScreen.Visibility = Windows.Visibility.Visible
+            'ManagerAuthScreen.Visibility = Windows.Visibility.Visible
+            comboProject.IsEnabled = False
+            txtCommendationReason.IsReadOnly = True
+            txtSentBy.IsReadOnly = True
+            txtemployeeWM.IsEnabled = False
+            dateInput.IsEnabled = False
         End If
 
 

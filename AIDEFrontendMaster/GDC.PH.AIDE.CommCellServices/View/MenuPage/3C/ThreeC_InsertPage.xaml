@@ -56,25 +56,7 @@
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0">
-                        <Border Margin="0,5" CornerRadius="15" BorderThickness="3,3,3,3">
-                            <Border.BorderBrush>
-                                <DrawingBrush Viewport="0,0,10,10" ViewportUnits="Absolute" TileMode="Tile">
-                                    <DrawingBrush.Drawing>
-                                        <DrawingGroup>
-                                            <GeometryDrawing Brush="DimGray">
-                                                <GeometryDrawing.Geometry>
-                                                    <GeometryGroup>
-                                                        <RectangleGeometry Rect="0,0,50,50"/>
-                                                        <RectangleGeometry Rect="50,50,50,50"/>
-                                                        <RectangleGeometry Rect="50,50,50,50"/>
-                                                    </GeometryGroup>
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                        </DrawingGroup>
-                                    </DrawingBrush.Drawing>
-                                </DrawingBrush>
-                            </Border.BorderBrush>
-
+                        <Border Margin="0,5" CornerRadius="15" BorderThickness="3" BorderBrush="White">
                             <Viewbox>
                                 <TextBlock TextWrapping="Wrap" 
                                            Foreground="White" 
@@ -191,14 +173,14 @@
                     </Grid>
 
                     <Grid Grid.Row="4">
-                        <Border Margin="5,0,5,0" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                        <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                             <DatePicker BorderThickness="0" 
                                         Style="{DynamicResource styleDatePickerfrom}" 
                                         x:Name="dtDate"  Text="{Binding SelectedConcern.DUE_DATE, Mode=TwoWay, StringFormat=dd-mm-yyyy}" 
                                         Margin="0" FontSize="12" BorderBrush="Transparent"/>
                         </Border>
 
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray" >
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a date" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray" >
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -211,7 +193,7 @@
                             </TextBlock.Style>
                         </TextBlock>
 
-                        <TextBlock x:Name="txtlabelDate" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Date Created" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                        <TextBlock x:Name="txtlabelDate" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Due Date" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Visible"/>

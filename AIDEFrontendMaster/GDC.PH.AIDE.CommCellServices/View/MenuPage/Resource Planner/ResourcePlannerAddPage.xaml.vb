@@ -22,6 +22,7 @@ Class ResourcePlannerAddPage
     Private mainwindows As MainWindow
 
     Dim setStatus As Integer
+    Dim isHalfDay As Boolean
     Dim displayStatus As String = String.Empty
 
 #End Region
@@ -79,20 +80,16 @@ Class ResourcePlannerAddPage
                         InsertResourcePlanner()
                     End If
                 Else
-                    Dim ans = MsgBox("Are you sure you want to create a " & cbCategory.Text & " leave?", MsgBoxStyle.YesNo, "AIDE")
-                    If ans = MsgBoxResult.Yes Then
-                        InsertResourcePlanner()
-                        dtpTo.IsEnabled = True
-                        attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
-                        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
-                        mainFrame.IsEnabled = True
-                        mainFrame.Opacity = 1
-                        _menugrid.IsEnabled = True
-                        _menugrid.Opacity = 1
-                        _submenuframe.IsEnabled = True
-                        _submenuframe.Opacity = 1
-
-                        _addframe.Visibility = Visibility.Hidden
+                    If isHalfDay And cbSchedule.SelectedIndex = -1 Then
+                        MsgBox("Please fill all required fields!", MsgBoxStyle.Exclamation, "AIDE")
+                    Else
+                        Dim ans = MsgBox("Are you sure you want to file " & cbCategory.Text & "?", MsgBoxStyle.YesNo, "AIDE")
+                        If ans = MsgBoxResult.Yes Then
+                            InsertResourcePlanner()
+                            dtpTo.IsEnabled = True
+                            attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
+                            ExitPage()
+                        End If
                     End If
                 End If
             End If
@@ -111,15 +108,7 @@ Class ResourcePlannerAddPage
     End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCancel.Click
-        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
-        mainFrame.IsEnabled = True
-        mainFrame.Opacity = 1
-        _menugrid.IsEnabled = True
-        _menugrid.Opacity = 1
-        _submenuframe.IsEnabled = True
-        _submenuframe.Opacity = 1
-
-        _addframe.Visibility = Visibility.Hidden
+        ExitPage()
     End Sub
 
     Private Sub cbCategory_DropDownOpened(sender As Object, e As EventArgs) Handles cbCategory.DropDownOpened
@@ -131,9 +120,14 @@ Class ResourcePlannerAddPage
     Private Sub cbCategory_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbCategory.SelectionChanged
         If cbCategory.SelectedValue = 5 Or cbCategory.SelectedValue = 6 Or cbCategory.SelectedValue = 9 Or cbCategory.SelectedValue = 12 Or cbCategory.SelectedValue = 14 Then
             cbSchedule.IsEnabled = True
+            isHalfDay = True
+            txtSchedule.Text = "Select Schedule *"
         Else
             cbSchedule.IsEnabled = False
+            isHalfDay = False
+            txtSchedule.Text = "Select Schedule"
         End If
+
         If cbCategory.SelectedValue = 3 Or cbCategory.SelectedValue = 5 Then
             dtpFrom.DisplayDateStart = Date.MinValue
             dtpFrom.DisplayDateEnd = Date.Today
@@ -141,8 +135,6 @@ Class ResourcePlannerAddPage
             dtpFrom.DisplayDateStart = Date.Today
             dtpFrom.DisplayDateEnd = Date.MaxValue
         End If
-
-
 
         dtpFrom.IsEnabled = True
     End Sub
@@ -202,12 +194,11 @@ Class ResourcePlannerAddPage
         Resource.dateFrom = dtpFrom.SelectedDate
         Resource.dateTo = dtpTo.SelectedDate
         Resource.Status = cbCategory.SelectedValue
-        'If profile.Emp_ID <> txtEmpID.Text Then
-        client.InsertResourcePlanner(Resource)
-            'Else
-            '    client.UpdateResourcePlanner(Resource)
-            'End If
-            'client.InsertResourcePlanner(Resource)
+        If profile.Emp_ID <> txtEmpID.Text Then
+            client.InsertResourcePlanner(Resource)
+        Else
+            client.UpdateResourcePlanner(Resource)
+        End If
             _ResourceDBProvider._splist.Clear()
         MsgBox("Successfully applied " & cbCategory.Text, MsgBoxStyle.Information, "AIDE")
     End Sub
@@ -285,6 +276,17 @@ Class ResourcePlannerAddPage
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
+    End Sub
+
+    Private Sub ExitPage()
+        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
+        mainFrame.IsEnabled = True
+        mainFrame.Opacity = 1
+        _menugrid.IsEnabled = True
+        _menugrid.Opacity = 1
+        _submenuframe.IsEnabled = True
+        _submenuframe.Opacity = 1
+        _addframe.Visibility = Visibility.Hidden
     End Sub
 #End Region
 

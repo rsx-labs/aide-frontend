@@ -1202,9 +1202,9 @@
                         </Grid>
                         <Grid Grid.Row="2">
                             <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnSRUpdate" Margin="5,5,0,5" >
-                                <Viewbox>
-                                    <TextBlock Text="UPDATE" FontSize="14" TextWrapping="Wrap" Margin="5"/>
-                                </Viewbox>
+                           
+                                    <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
+                            
                             </Button>
                             <Button Style="{DynamicResource RoundCornerAdd}" x:Name="btnSRCreate" Margin="5,5,0,5" >
                                 

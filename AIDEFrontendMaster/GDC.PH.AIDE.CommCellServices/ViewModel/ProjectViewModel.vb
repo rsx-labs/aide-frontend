@@ -61,8 +61,11 @@ Public Class ProjectViewModel
         End Try
 
         AddMode = True
-        RemoveMode = False
+
+        RemoveMode = True
+
         ClearMode = False
+
         InitializeService()
     End Sub
 
@@ -346,6 +349,7 @@ Public Class ProjectViewModel
                     AssignedEmployeeLists.Add(rawEmployee)
                 End If
             Next
+            AssignedEmployeeLists = New ObservableCollection(Of EmployeeListModel)(AssignedEmployeeLists.OrderBy(Function(f) f.Name).ToList())
 
             For Each rawEmployee As EmployeeListModel In EmployeeLists
                 If SelectedEmployees.Name.Equals(rawEmployee.Name) Then
@@ -368,6 +372,7 @@ Public Class ProjectViewModel
             For Each rawEmployee As EmployeeListModel In AssignedEmployeeLists
                 EmployeeLists.Add(rawEmployee)
             Next
+            EmployeeLists = New ObservableCollection(Of EmployeeListModel)(EmployeeLists.OrderBy(Function(f) f.Name).ToList())
 
             AssignedEmployeeLists.Clear()
         Catch ex As Exception
@@ -386,12 +391,14 @@ Public Class ProjectViewModel
                     EmployeeLists.Add(rawEmployee)
                 End If
             Next
-
+            EmployeeLists = New ObservableCollection(Of EmployeeListModel)(EmployeeLists.OrderBy(Function(f) f.Name).ToList())
             For Each rawEmployee As EmployeeListModel In AssignedEmployeeLists
                 If SelectedAssignedEmployees.Name.Equals(rawEmployee.Name) Then
                     AssignedEmployeeLists.Remove(rawEmployee)
                 End If
             Next
+            AssignedEmployeeLists = New ObservableCollection(Of EmployeeListModel)(AssignedEmployeeLists.OrderBy(Function(f) f.Name).ToList())
+
         Catch ex As Exception
             Console.WriteLine(ex.Message)
         End Try
@@ -422,17 +429,29 @@ Public Class ProjectViewModel
                 objassign.EndPeriod = x.DateFinished
                 _assign.Add(objassign)
             Next
+
             If _assign.Count = 0 Then
-                MsgBox("No Assigned Project yet, Please Select Employee to Assign Project!", MsgBoxStyle.Information)
+                If SelectedProject.ProjectID > 0 Then
+                    _AideServiceClient.DeleteAllAssignedProject(SelectedProject.ProjectID)
+                    MsgBox("Assigned employee(s) to selected project deleted successfully!", MsgBoxStyle.Information)
+                Else
+                    MsgBox("No Assigned Project yet, Please Select Employee to Assign Project!", MsgBoxStyle.Information)
+                End If
             Else
+                If _assign(0).ProjectID = 0 Then
+                    MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
+                    Exit Sub
+
+                End If
+                _AideServiceClient.DeleteAllAssignedProject(SelectedProject.ProjectID)
                 _AideServiceClient.CreateAssignedProject(_assign.ToArray())
-                MsgBox("Assigned Project Successfully Created!", MsgBoxStyle.Information)
+                MsgBox("Assigned Project Successfully saved!", MsgBoxStyle.Information)
             End If
 
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
-        Clear()
+        'Clear()
     End Sub
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False

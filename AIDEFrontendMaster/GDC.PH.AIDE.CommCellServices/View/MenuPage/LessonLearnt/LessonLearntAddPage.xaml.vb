@@ -13,11 +13,12 @@ Class LessonLearntAddPage
     Public frame As Frame
     Public mainWindow As MainWindow
     Public email As String
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
+    Private addframe As Frame
+    Private menugrid As Grid
+    Private submenuframe As Frame
     Private profile As Profile
 
+    Dim lstActionList As New ObservableCollection(Of ActionModel)
     Dim lessonLearnt As New LessonLearnt
     Dim client As AideServiceClient
 #End Region
@@ -42,19 +43,18 @@ Class LessonLearntAddPage
 
         frame = _frame
         email = _email
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
-        Me.profile = _profile
+        addframe = _addframe
+        menugrid = _menugrid
+        submenuframe = _submenuframe
+        profile = _profile
 
         CreateReferenceNo()
-        GetActionReference()
+        GetActionLists()
         SetDataContext()
+        ConfigureButtons()
     End Sub
-#End Region
 
-#Region "Common Methods"
-    Public Function InitializeService() As Boolean
+    Private Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
         Try
             Dim Context As InstanceContext = New InstanceContext(Me)
@@ -66,7 +66,212 @@ Class LessonLearntAddPage
         End Try
         Return bInitialize
     End Function
+#End Region
 
+#Region "Private Functions"
+    Private Sub CreateReferenceNo()
+        Try
+            If InitializeService() Then
+                Dim refNo As String
+                Dim dateNow As String = Date.Today.ToString("MM/dd/yy")
+                Dim totalCount As Integer
+                Dim lstLesson As LessonLearnt() = client.GetLessonLearntList(profile.Email_Address)
+
+                totalCount = lstLesson.Length + 1
+
+                If totalCount < 10 Then
+                    refNo = "LL-" & dateNow & "-0" & totalCount
+                Else
+                    refNo = "LL-" & dateNow & "-" & totalCount
+                End If
+
+                lessonLearntModel.ReferenceNo = refNo
+                lessonLearntModel.EmployeeID = profile.Emp_ID
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Public Sub GetActionLists()
+        Try
+            If InitializeService() Then
+                lstActionList.Clear()
+                actionListProvider = New ActionListDBProvider
+
+                Dim lstAction As Action() = client.GetLessonLearntListOfActionSummary(profile.Emp_ID)
+
+                For Each objAction As Action In lstAction
+                    actionListProvider._setlistofitems(objAction)
+                Next
+
+                For Each iAction As myActionSet In actionListProvider._getobAction()
+                    lstActionList.Add(New ActionModel(iAction))
+                Next
+
+                lvAction.ItemsSource = lstActionList
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Private Sub SetDataContext()
+        lessonLearntViewModel.SelectedLessonLearnt = lessonLearntModel
+        Me.DataContext = lessonLearntViewModel
+    End Sub
+
+    Private Sub GetDataContext(ByVal objLessonLearnt As LessonLearntViewModel)
+        Try
+            lessonLearnt.ReferenceNo = objLessonLearnt.SelectedLessonLearnt.ReferenceNo
+            lessonLearnt.EmpID = objLessonLearnt.SelectedLessonLearnt.EmployeeID
+
+            ' Check if the Problem Encountered Field has a value
+            If Not IsNothing(objLessonLearnt.SelectedLessonLearnt.Problem) Then
+                lessonLearnt.Problem = objLessonLearnt.SelectedLessonLearnt.Problem.Trim
+            Else
+                lessonLearnt.Problem = ""
+            End If
+
+            ' Check if the Resolution Field has a value
+            If Not IsNothing(objLessonLearnt.SelectedLessonLearnt.Resolution) Then
+                lessonLearnt.Resolution = objLessonLearnt.SelectedLessonLearnt.Resolution.Trim
+            Else
+                lessonLearnt.Resolution = ""
+            End If
+
+            If lvActionRef.ItemsSource IsNot Nothing Then
+                Dim lstActionList As New ObservableCollection(Of ActionModel)
+                lstActionList = lvActionRef.ItemsSource
+
+                For Each objAction As ActionModel In lstActionList
+                    lessonLearnt.ActionNo = objAction.REF_NO
+                Next
+            Else
+                lessonLearnt.ActionNo = ""
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Private Sub ConfigureButtons()
+        If lstActionList.Count > 0 Then
+            btnAddAction.IsEnabled = True
+        Else
+            btnAddAction.IsEnabled = False
+        End If
+
+        If lvActionRef.ItemsSource IsNot Nothing Then
+            btnRemoveAction.IsEnabled = True
+        Else
+            btnRemoveAction.IsEnabled = False
+        End If
+    End Sub
+
+    Private Sub ClearValues()
+        lessonLearntModel.Problem = ""
+        lessonLearntModel.Resolution = ""
+        lvActionRef.ItemsSource = Nothing
+
+        CreateReferenceNo()
+    End Sub
+
+    Private Sub ExitPage()
+        frame.Navigate(New LessonLearntPage(frame, email, addframe, menugrid, submenuframe, profile))
+        frame.IsEnabled = True
+        frame.Opacity = 1
+        menugrid.IsEnabled = True
+        menugrid.Opacity = 1
+        submenuframe.IsEnabled = True
+        submenuframe.Opacity = 1
+        addframe.Visibility = Visibility.Hidden
+    End Sub
+#End Region
+
+#Region "Events"
+    Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
+        Try
+            ' Get all the data in DataContext
+            GetDataContext(Me.DataContext())
+
+            If lessonLearnt.Problem.Trim = String.Empty Or lessonLearnt.Resolution.Trim = String.Empty Then
+                MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
+            Else
+                Dim result As Integer = MsgBox("Are you sure you want to save?", MsgBoxStyle.YesNo, "AIDE")
+
+                If result = vbYes Then
+                    Try
+                        If Me.InitializeService Then
+                            client.CreateLessonLearnt(lessonLearnt)
+                            MsgBox("Successfully created", MsgBoxStyle.Information, "AIDE")
+                            ClearValues()
+                            ExitPage()
+                        End If
+                    Catch ex As Exception
+                        MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
+                    End Try
+                End If
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
+        End Try
+    End Sub
+
+    Private Sub btnAddAction_Click(sender As Object, e As RoutedEventArgs) Handles btnAddAction.Click
+        'INSERT SELECTED ACTION
+        If lvAction.SelectedIndex = -1 Then
+            MsgBox("Please select an item first.")
+        Else
+            Dim selectedAction As ActionModel = lvAction.SelectedValue
+            Dim selectedActionList As New ObservableCollection(Of ActionModel)
+
+            GetActionLists()
+
+            For Each actionList In lstActionList
+                If actionList.REF_NO = selectedAction.REF_NO Then
+                    lstActionList.Remove(actionList)
+                    Exit For
+                End If
+            Next
+
+            selectedActionList.Add(selectedAction)
+            lvActionRef.ItemsSource = selectedActionList
+
+            ConfigureButtons()
+        End If
+    End Sub
+
+    Private Sub btnRemoveAction_Click(sender As Object, e As RoutedEventArgs) Handles btnRemoveAction.Click
+        GetActionLists()
+        lvActionRef.ItemsSource = Nothing
+    End Sub
+
+    Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
+        ExitPage()
+    End Sub
+
+    Private Sub txtProblemEncountered_KeyDown(sender As Object, e As KeyEventArgs) Handles txtProblemEncountered.KeyDown
+        Dim textRange As New TextRange(txtProblemEncountered.Document.ContentStart, txtProblemEncountered.Document.ContentEnd)
+        If textRange.Text.Length >= 10 Then
+            e.Handled = False
+        End If
+    End Sub
+
+    Private Sub txtResolution_KeyDown(sender As Object, e As KeyEventArgs) Handles txtResolution.KeyDown
+        Dim textRange As New TextRange(txtResolution.Document.ContentStart, txtResolution.Document.ContentEnd)
+        If textRange.Text.Length >= 10 Then
+            e.Handled = False
+        End If
+    End Sub
+
+    'Private Sub Action_No_DropDownClosed(sender As Object, e As EventArgs) Handles Action_No.DropDownClosed
+    '    'ActionDesc.Text = Action_No.SelectedValue
+    'End Sub
+#End Region
+
+#Region "Common Methods"
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
         If message <> String.Empty Then
             MessageBox.Show(message)
@@ -89,150 +294,6 @@ Class LessonLearntAddPage
 
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
 
-    End Sub
-
-#End Region
-
-#Region "Private Functions"
-    Private Sub CreateReferenceNo()
-        Try
-            If Me.InitializeService() Then
-                Dim refNo As String
-                Dim dateNow As String = Date.Today.ToString("MM/dd/yy")
-                Dim totalCount As Integer
-                Dim lstLesson As LessonLearnt() = client.GetLessonLearntList(profile.Email_Address)
-
-                totalCount = lstLesson.Length + 1
-
-                If totalCount < 10 Then
-                    refNo = "LL-" & dateNow & "-0" & totalCount
-                Else
-                    refNo = "LL-" & dateNow & "-" & totalCount
-                End If
-
-                lessonLearntModel.ReferenceNo = refNo
-                lessonLearntModel.EmployeeID = profile.Emp_ID
-            End If
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-    End Sub
-
-    Public Sub GetActionReference()
-        Try
-            If Me.InitializeService() Then
-                Dim lstAction As Action() = client.GetActionSummary(profile.Email_Address)
-                Dim lstActionList As New ObservableCollection(Of ActionModel)
-
-                For Each objAction As Action In lstAction
-                    actionListProvider._setlistofitems(objAction)
-                Next
-
-                For Each iAction As myActionSet In actionListProvider._getobAction()
-                    lstActionList.Add(New ActionModel(iAction))
-                Next
-
-                actionViewModel.objectActionSet = lstActionList
-            End If
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-    End Sub
-
-    Private Sub SetDataContext()
-        lessonLearntViewModel.SelectedLessonLearnt = lessonLearntModel
-        Me.DataContext = New With {actionViewModel, lessonLearntViewModel}
-    End Sub
-
-    Private Sub GetDataContext(ByVal objects As Object)
-        Try
-            lessonLearnt.ReferenceNo = objects.lessonLearntViewModel.SelectedLessonLearnt.ReferenceNo
-            lessonLearnt.EmpID = objects.lessonLearntViewModel.SelectedLessonLearnt.EmployeeID
-
-            ' Check if the Problem Encountered Field has a value
-            If Not IsNothing(objects.lessonLearntViewModel.SelectedLessonLearnt.Problem) Then
-                lessonLearnt.Problem = objects.lessonLearntViewModel.SelectedLessonLearnt.Problem.Trim
-            Else
-                lessonLearnt.Problem = ""
-            End If
-
-            ' Check if the Resolution Field has a value
-            If Not IsNothing(objects.lessonLearntViewModel.SelectedLessonLearnt.Resolution) Then
-                lessonLearnt.Resolution = objects.lessonLearntViewModel.SelectedLessonLearnt.Resolution.Trim
-            Else
-                lessonLearnt.Resolution = ""
-            End If
-
-            ' Check if the Action Number has a value
-            If Not IsNothing(objects.lessonLearntViewModel.SelectedLessonLearnt.ActionNo) Then
-                lessonLearnt.ActionNo = objects.lessonLearntViewModel.SelectedLessonLearnt.ActionNo
-            Else
-                lessonLearnt.ActionNo = ""
-            End If
-
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-    End Sub
-
-    Private Sub ClearValues()
-        lessonLearntModel.Problem = ""
-        lessonLearntModel.Resolution = ""
-        lessonLearntModel.ActionNo = ""
-
-        CreateReferenceNo()
-    End Sub
-#End Region
-
-#Region "Events"
-    Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
-        Try
-            ' Get all the data in DataContext
-            GetDataContext(Me.DataContext())
-
-            If lessonLearnt.Problem.Trim = String.Empty Or lessonLearnt.Resolution.Trim = String.Empty Then
-                MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
-            Else
-                Dim result As Integer = MsgBox("Are you sure you want to save?", MsgBoxStyle.YesNo, "AIDE")
-
-                If result = vbYes Then
-                    Try
-                        If Me.InitializeService Then
-                            client.CreateLessonLearnt(lessonLearnt)
-                            MsgBox("Successfully created", MsgBoxStyle.Information, "AIDE")
-                            ClearValues()
-                            frame.Navigate(New LessonLearntPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
-                            frame.IsEnabled = True
-                            frame.Opacity = 1
-                            _menugrid.IsEnabled = True
-                            _menugrid.Opacity = 1
-                            _submenuframe.IsEnabled = True
-                            _submenuframe.Opacity = 1
-                            _addframe.Visibility = Visibility.Hidden
-                        End If
-                    Catch ex As Exception
-                        MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
-                    End Try
-                End If
-            End If
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
-        End Try
-    End Sub
-
-    Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
-        frame.Navigate(New LessonLearntPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
-        frame.IsEnabled = True
-        frame.Opacity = 1
-        _menugrid.IsEnabled = True
-        _menugrid.Opacity = 1
-        _submenuframe.IsEnabled = True
-        _submenuframe.Opacity = 1
-        _addframe.Visibility = Visibility.Hidden
-    End Sub
-
-    Private Sub Action_No_DropDownClosed(sender As Object, e As EventArgs) Handles Action_No.DropDownClosed
-        ActionDesc.Text = Action_No.SelectedValue
     End Sub
 #End Region
 
