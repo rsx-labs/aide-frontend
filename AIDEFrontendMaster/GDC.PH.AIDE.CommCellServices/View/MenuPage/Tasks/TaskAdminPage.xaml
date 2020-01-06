@@ -1,4 +1,4 @@
-﻿<Page x:Class="TaskAdminPage"
+<Page x:Class="TaskAdminPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -54,6 +54,8 @@
             <Setter Property="FontWeight" Value="Normal"/>
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="HeadersVisibility" Value="Column" />
+            <Setter Property="Height" Value="auto" />
+          
         </Style>
 
         <DataTemplate x:Key="RotateHeaderTemplate" >
@@ -152,7 +154,7 @@
                 <RowDefinition Height="1.5*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="10*"/>
-                <RowDefinition Height="1.*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0" Background="white">
@@ -201,319 +203,331 @@
             </Grid>
             
             <Grid Grid.Row="2">
+
                 <Grid x:Name="Task" HorizontalAlignment="Center">
-                    <StackPanel>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="60"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            
-                            <Grid Grid.Row="0">
+                    <ScrollViewer x:Name="svTasksSpList" Grid.Row="1" >
+                        <StackPanel>
+                            <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="60"/>
+                                    <RowDefinition Height="Auto"/>
+                                    
                                 </Grid.RowDefinitions>
-                                
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width=".205*"/>
-                                    <ColumnDefinition Width=".095*"/>
-                                    <ColumnDefinition Width=".14*"/>
-                                    <ColumnDefinition Width=".14*"/>
-                                    <ColumnDefinition Width=".14*"/>
-                                    <ColumnDefinition Width=".14*"/>
-                                    <ColumnDefinition Width=".14*"/>
+                                    <ColumnDefinition Width="800"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                
-                                <Grid Grid.Column="0" Grid.RowSpan="2">
-                                    <Label Style="{StaticResource DateLabel2}" FontSize="16" Content="Task Summary" />
-                                </Grid>
-                                
-                                <Grid Grid.Column="1" Grid.RowSpan="2">
-                                    <Label Style="{StaticResource DateLabel2}" Content="LAST WEEK" />
-                                </Grid>
-                                
-                                <!-- MONDAY COLUMN -->
-                                <Grid Grid.Column="2" Grid.Row="0">
-                                    <Label x:Name="lblMonday" Style="{StaticResource DateLabel}" Content="DD-MMM" />
-                                </Grid>
-                                <Grid Grid.Column="2" Grid.Row="1">
-                                    <Label Style="{StaticResource DateLabel}" Content="MONDAY" />
+
+                                <Grid Grid.Row="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width=".205*"/>
+                                        <ColumnDefinition Width=".095*"/>
+                                        <ColumnDefinition Width=".14*"/>
+                                        <ColumnDefinition Width=".14*"/>
+                                        <ColumnDefinition Width=".14*"/>
+                                        <ColumnDefinition Width=".14*"/>
+                                        <ColumnDefinition Width=".14*" x:Name="seventhColumn"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Column="0" Grid.RowSpan="2">
+                                        <Label Style="{StaticResource DateLabel2}" FontSize="16" Content="Task Summary" />
+                                    </Grid>
+
+                                    <Grid Grid.Column="1" Grid.RowSpan="2">
+                                        <Label Style="{StaticResource DateLabel2}" Content="LAST WEEK" />
+                                    </Grid>
+
+                                    <!-- MONDAY COLUMN -->
+                                    <Grid Grid.Column="2" Grid.Row="0">
+                                        <Label x:Name="lblMonday" Style="{StaticResource DateLabel}" Content="DD-MMM" />
+                                    </Grid>
+                                    <Grid Grid.Column="2" Grid.Row="1">
+                                        <Label Style="{StaticResource DateLabel}" Content="MONDAY" />
+                                    </Grid>
+
+                                    <!-- TUESDAY COLUMN -->
+                                    <Grid Grid.Column="3" Grid.Row="0">
+                                        <Label x:Name="lblTuesday" Style="{StaticResource DateLabel}" Content="DD-MMM" />
+                                    </Grid>
+                                    <Grid Grid.Column="3" Grid.Row="1">
+                                        <Label Style="{StaticResource DateLabel}" Content="TUESDAY" />
+                                    </Grid>
+
+                                    <!-- WEDNESDAY COLUMN -->
+                                    <Grid Grid.Column="4" Grid.Row="0">
+                                        <Label x:Name="lblWednesday" Style="{StaticResource DateLabel}" Content="DD-MMM" />
+                                    </Grid>
+                                    <Grid Grid.Column="4" Grid.Row="1">
+                                        <Label Style="{StaticResource DateLabel}" Content="WEDNESDAY" />
+                                    </Grid>
+
+                                    <!-- THURSDAY COLUMN -->
+                                    <Grid Grid.Column="5" Grid.Row="0">
+                                        <Label x:Name="lblThursday" Style="{StaticResource DateLabel}" Content="DD-MMM" />
+                                    </Grid>
+                                    <Grid Grid.Column="5" Grid.Row="1">
+                                        <Label Style="{StaticResource DateLabel}" Content="THURSDAY" />
+                                    </Grid>
+
+                                    <!-- FRIDAY COLUMN -->
+                                    <Grid Grid.Column="6" Grid.Row="0">
+                                        <Label x:Name="lblFriday" Style="{StaticResource DateLabel}" Content="DD-MMM" />
+                                    </Grid>
+                                    <Grid Grid.Column="6" Grid.Row="1">
+                                        <Label Style="{StaticResource DateLabel}" Content="FRIDAY" />
+                                    </Grid>
                                 </Grid>
 
-                                <!-- TUESDAY COLUMN -->
-                                <Grid Grid.Column="3" Grid.Row="0">
-                                    <Label x:Name="lblTuesday" Style="{StaticResource DateLabel}" Content="DD-MMM" />
-                                </Grid>
-                                <Grid Grid.Column="3" Grid.Row="1">
-                                    <Label Style="{StaticResource DateLabel}" Content="TUESDAY" />
-                                </Grid>
+                                <Grid Grid.Row="1">
 
-                                <!-- WEDNESDAY COLUMN -->
-                                <Grid Grid.Column="4" Grid.Row="0">
-                                    <Label x:Name="lblWednesday" Style="{StaticResource DateLabel}" Content="DD-MMM" />
-                                </Grid>
-                                <Grid Grid.Column="4" Grid.Row="1">
-                                    <Label Style="{StaticResource DateLabel}" Content="WEDNESDAY" />
-                                </Grid>
-
-                                <!-- THURSDAY COLUMN -->
-                                <Grid Grid.Column="5" Grid.Row="0">
-                                    <Label x:Name="lblThursday" Style="{StaticResource DateLabel}" Content="DD-MMM" />
-                                </Grid>
-                                <Grid Grid.Column="5" Grid.Row="1">
-                                    <Label Style="{StaticResource DateLabel}" Content="THURSDAY" />
-                                </Grid>
-
-                                <!-- FRIDAY COLUMN -->
-                                <Grid Grid.Column="6" Grid.Row="0">
-                                    <Label x:Name="lblFriday" Style="{StaticResource DateLabel}" Content="DD-MMM" />
-                                </Grid>
-                                <Grid Grid.Column="6" Grid.Row="1">
-                                    <Label Style="{StaticResource DateLabel}" Content="FRIDAY" />
-                                </Grid>
-                            </Grid>
-                            
-                            <Grid Grid.Row="1">
-                                <DataGrid x:Name="dgTask"
+                                    <StackPanel Name="spGrid"  Background="White" >
+                                        <DataGrid x:Name="dgTask"
                                           ItemsSource="{Binding TasksSpList}" 
                                           Background="Transparent"
                                           Foreground="Gray">
-                                    <DataGrid.Columns>
-                                        <!-- Employee Name-->
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="RESOURCES" Width="0.205*" Binding="{Binding EmployeeName}">
-                                            <DataGridTextColumn.HeaderStyle >
-                                                <Style TargetType="{x:Type DataGridColumnHeader }">
-                                                    <Setter Property="Background" Value="#FF0B9FBF"/>
-                                                    <Setter Property="FontWeight" Value="Normal"/>
-                                                    <Setter Property="FontFamily" Value="Segoe UI"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value="0"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                        <!-- Last Week -->
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Outstanding Tasks" Width="0.095*" Binding="{Binding LastWeekOutstanding}" >
-                                            <DataGridTextColumn.HeaderStyle>
-                                                <Style TargetType="DataGridColumnHeader">
-                                                    <Setter Property="Background" Value="#FF909191"/>
-                                                    <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value=".5"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                        <!-- Monday -->
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}"  Header=" # of Assigned Today" Width="0.047*" Binding="{Binding MonAt}" >
-                                            <DataGridTextColumn.HeaderStyle>
-                                                <Style TargetType="DataGridColumnHeader">
-                                                    <Setter Property="Background" Value="#FF2D98F1"/>
-                                                    <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value=".5"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}"  Header=" # of Completed Today" Width="0.047*" Binding="{Binding MonCt}" >
-                                            <DataGridTextColumn.HeaderStyle>
-                                                <Style TargetType="DataGridColumnHeader">
-                                                    <Setter Property="Background" Value="#FF61E461"/>
-                                                    <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value=".5"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Outstanding Tasks" Width="0.047*" Binding="{Binding MonOt}" >
-                                            <DataGridTextColumn.HeaderStyle>
-                                                <Style TargetType="DataGridColumnHeader">
-                                                    <Setter Property="Background" Value="#FFFFD66D"/>
-                                                    <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value=".5"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                        <!-- Tuesday -->
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Assigned Today" Width="0.047*" Binding="{Binding TueAt}" >
-                                            <DataGridTextColumn.HeaderStyle>
-                                                <Style TargetType="DataGridColumnHeader">
-                                                    <Setter Property="Background" Value="#FF2D98F1"/>
-                                                    <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value=".5"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Completed Today" Width="0.047*" Binding="{Binding TueCt}" >
-                                            <DataGridTextColumn.HeaderStyle>
-                                                <Style TargetType="DataGridColumnHeader">
-                                                    <Setter Property="Background" Value="#FF61E461"/>
-                                                    <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value=".5"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Outstanding Tasks" Width="0.047*" Binding="{Binding TueOt}" >
-                                            <DataGridTextColumn.HeaderStyle>
-                                                <Style TargetType="DataGridColumnHeader">
-                                                    <Setter Property="Background" Value="#FFFFD66D"/>
-                                                    <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value=".5"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                        <!-- Wednesday -->
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Assigned Today" Width="0.047*" Binding="{Binding WedAt}" >
-                                            <DataGridTextColumn.HeaderStyle>
-                                                <Style TargetType="DataGridColumnHeader">
-                                                    <Setter Property="Background" Value="#FF2D98F1"/>
-                                                    <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value=".5"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Completed Today" Width="0.047*" Binding="{Binding WedCt}" >
-                                            <DataGridTextColumn.HeaderStyle>
-                                                <Style TargetType="DataGridColumnHeader">
-                                                    <Setter Property="Background" Value="#FF61E461"/>
-                                                    <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value=".5"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Outstanding Tasks" Width="0.047*" Binding="{Binding WedOt}" >
-                                            <DataGridTextColumn.HeaderStyle>
-                                                <Style TargetType="DataGridColumnHeader">
-                                                    <Setter Property="Background" Value="#FFFFD66D"/>
-                                                    <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value=".5"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                        <!-- Thursday -->
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Assigned Today" Width="0.047*" Binding="{Binding ThuAt}" >
-                                            <DataGridTextColumn.HeaderStyle>
-                                                <Style TargetType="DataGridColumnHeader">
-                                                    <Setter Property="Background" Value="#FF2D98F1"/>
-                                                    <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value=".5"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Completed Today" Width="0.047*" Binding="{Binding ThuCt}" >
-                                            <DataGridTextColumn.HeaderStyle>
-                                                <Style TargetType="DataGridColumnHeader">
-                                                    <Setter Property="Background" Value="#FF61E461"/>
-                                                    <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value=".5"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}"  Header=" # of Outstanding Tasks" Width="0.047*" Binding="{Binding ThuOt}" >
-                                            <DataGridTextColumn.HeaderStyle>
-                                                <Style TargetType="DataGridColumnHeader">
-                                                    <Setter Property="Background" Value="#FFFFD66D"/>
-                                                    <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value=".5"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                        <!-- Friday -->
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Assigned Today" Width="0.047*" Binding="{Binding FriAt}" >
-                                            <DataGridTextColumn.HeaderStyle>
-                                                <Style TargetType="DataGridColumnHeader">
-                                                    <Setter Property="Background" Value="#FF2D98F1"/>
-                                                    <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value=".5"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Completed Today" Width="0.047*" Binding="{Binding FriCt}" >
-                                            <DataGridTextColumn.HeaderStyle>
-                                                <Style TargetType="DataGridColumnHeader">
-                                                    <Setter Property="Background" Value="#FF61E461"/>
-                                                    <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value=".5"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                        <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Outstanding Tasks" Width="0.047*" Binding="{Binding FriOt}" >
-                                            <DataGridTextColumn.HeaderStyle>
-                                                <Style TargetType="DataGridColumnHeader">
-                                                    <Setter Property="Background" Value="#FFFFD66D"/>
-                                                    <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
-                                                    <Setter Property="Foreground" Value="White"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                                    <Setter Property="Height" Value="150" />
-                                                    <Setter Property="BorderBrush" Value="white"/>
-                                                    <Setter Property="BorderThickness" Value="0"/>
-                                                </Style>
-                                            </DataGridTextColumn.HeaderStyle>
-                                        </DataGridTextColumn>
-                                    </DataGrid.Columns>
-                                </DataGrid>
+                                            <DataGrid.Columns>
+                                                <!-- Employee Name-->
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="RESOURCES" Width="0.205*" Binding="{Binding EmployeeName}">
+                                                    <DataGridTextColumn.HeaderStyle >
+                                                        <Style TargetType="{x:Type DataGridColumnHeader }">
+                                                            <Setter Property="Background" Value="#FF0B9FBF"/>
+                                                            <Setter Property="FontWeight" Value="Normal"/>
+                                                            <Setter Property="FontFamily" Value="Segoe UI"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value="0"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                                <!-- Last Week -->
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Outstanding Tasks" Width="0.095*" Binding="{Binding LastWeekOutstanding}" >
+                                                    <DataGridTextColumn.HeaderStyle>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                            <Setter Property="Background" Value="#FF909191"/>
+                                                            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value=".5"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                                <!-- Monday -->
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}"  Header=" # of Assigned Today" Width="0.047*" Binding="{Binding MonAt}" >
+                                                    <DataGridTextColumn.HeaderStyle>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                            <Setter Property="Background" Value="#FF2D98F1"/>
+                                                            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value=".5"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}"  Header=" # of Completed Today" Width="0.047*" Binding="{Binding MonCt}" >
+                                                    <DataGridTextColumn.HeaderStyle>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                            <Setter Property="Background" Value="#FF61E461"/>
+                                                            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value=".5"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Outstanding Tasks" Width="0.047*" Binding="{Binding MonOt}" >
+                                                    <DataGridTextColumn.HeaderStyle>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                            <Setter Property="Background" Value="#FFFFD66D"/>
+                                                            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value=".5"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                                <!-- Tuesday -->
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Assigned Today" Width="0.047*" Binding="{Binding TueAt}" >
+                                                    <DataGridTextColumn.HeaderStyle>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                            <Setter Property="Background" Value="#FF2D98F1"/>
+                                                            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value=".5"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Completed Today" Width="0.047*" Binding="{Binding TueCt}" >
+                                                    <DataGridTextColumn.HeaderStyle>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                            <Setter Property="Background" Value="#FF61E461"/>
+                                                            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value=".5"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Outstanding Tasks" Width="0.047*" Binding="{Binding TueOt}" >
+                                                    <DataGridTextColumn.HeaderStyle>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                            <Setter Property="Background" Value="#FFFFD66D"/>
+                                                            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value=".5"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                                <!-- Wednesday -->
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Assigned Today" Width="0.047*" Binding="{Binding WedAt}" >
+                                                    <DataGridTextColumn.HeaderStyle>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                            <Setter Property="Background" Value="#FF2D98F1"/>
+                                                            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value=".5"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Completed Today" Width="0.047*" Binding="{Binding WedCt}" >
+                                                    <DataGridTextColumn.HeaderStyle>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                            <Setter Property="Background" Value="#FF61E461"/>
+                                                            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value=".5"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Outstanding Tasks" Width="0.047*" Binding="{Binding WedOt}" >
+                                                    <DataGridTextColumn.HeaderStyle>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                            <Setter Property="Background" Value="#FFFFD66D"/>
+                                                            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value=".5"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                                <!-- Thursday -->
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Assigned Today" Width="0.047*" Binding="{Binding ThuAt}" >
+                                                    <DataGridTextColumn.HeaderStyle>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                            <Setter Property="Background" Value="#FF2D98F1"/>
+                                                            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value=".5"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Completed Today" Width="0.047*" Binding="{Binding ThuCt}" >
+                                                    <DataGridTextColumn.HeaderStyle>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                            <Setter Property="Background" Value="#FF61E461"/>
+                                                            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value=".5"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}"  Header=" # of Outstanding Tasks" Width="0.047*" Binding="{Binding ThuOt}" >
+                                                    <DataGridTextColumn.HeaderStyle>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                            <Setter Property="Background" Value="#FFFFD66D"/>
+                                                            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value=".5"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                                <!-- Friday -->
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Assigned Today" Width="0.047*" Binding="{Binding FriAt}" >
+                                                    <DataGridTextColumn.HeaderStyle>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                            <Setter Property="Background" Value="#FF2D98F1"/>
+                                                            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value=".5"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Completed Today" Width="0.047*" Binding="{Binding FriCt}" >
+                                                    <DataGridTextColumn.HeaderStyle>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                            <Setter Property="Background" Value="#FF61E461"/>
+                                                            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value=".5"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header=" # of Outstanding Tasks" Width="0.047*" Binding="{Binding FriOt}" >
+                                                    <DataGridTextColumn.HeaderStyle>
+                                                        <Style TargetType="DataGridColumnHeader">
+                                                            <Setter Property="Background" Value="#FFFFD66D"/>
+                                                            <Setter Property="ContentTemplate" Value="{StaticResource RotateHeaderTemplate}"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                                            <Setter Property="Height" Value="150" />
+                                                            <Setter Property="BorderBrush" Value="white"/>
+                                                            <Setter Property="BorderThickness" Value="0"/>
+                                                        </Style>
+                                                    </DataGridTextColumn.HeaderStyle>
+                                                </DataGridTextColumn>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </StackPanel>
+
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
                 </Grid>
             </Grid>
             <Grid Grid.Row="3" Background="White">
