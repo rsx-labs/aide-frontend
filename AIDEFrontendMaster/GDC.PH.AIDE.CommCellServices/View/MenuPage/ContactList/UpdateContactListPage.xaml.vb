@@ -48,7 +48,7 @@ Class UpdateContactListPage
         ProcessUIAccess()
         AssignEvents()
         textLimits()
-        LoadAllCB()
+        LoadAllCB(contactModel)
         loadUI(contactModel)
     End Sub
 #End Region
@@ -62,12 +62,12 @@ Class UpdateContactListPage
         Return False
     End Function
 
-    Public Sub LoadAllCB()
+    Public Sub LoadAllCB(contactmod As ContactListModel)
         LoadLocation()
         LoadJobPosition()
         LoadPermission()
         LoadDepartment()
-        LoadDivision()
+        LoadDivision(contactmod.DEPARTMENT_ID)
         LoadMaritalStatus()
         LoadWorkShift()
     End Sub
@@ -211,10 +211,10 @@ Class UpdateContactListPage
         End Try
     End Sub
 
-    Public Sub LoadDivision()
+    Public Sub LoadDivision(ByVal DeptID As Integer)
         Try
             If InitializeService() Then
-                Dim lstDivision As DivisionList() = client.GetAllDivision()
+                Dim lstDivision As DivisionList() = client.GetAllDivision(DeptID)
                 Dim lstDivisionList As New ObservableCollection(Of DivisionModel)
                 Dim selectionDBProvider As New SelectionListDBProvider
                 Dim selectionListVM As New SelectionListViewModel()
@@ -231,6 +231,7 @@ Class UpdateContactListPage
 
                 cbContactDivision.DataContext = selectionListVM
                 cbContactDivision.ItemsSource = selectionListVM.ObjectDivisionSet
+
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -318,28 +319,6 @@ Class UpdateContactListPage
         Return bInitialize
     End Function
 
-#End Region
-
-#Region "Service Methods"
-    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
-
-    End Sub
-
-    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
-
-    End Sub
-
-    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
-
-    End Sub
-
-    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
-
-    End Sub
-
-    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
-
-    End Sub
 #End Region
 
 #Region "Events"
@@ -438,9 +417,7 @@ Class UpdateContactListPage
             e.Handled = True
             contactVM.ContactProfile = DataContext
             Dim contactList As New ContactList
-            If contactVM.ContactProfile.EMP_ID = 0 Then
-
-            Else
+            If contactVM.ContactProfile.EMP_ID <> 0 Then
                 contactList.EmpID = contactVM.ContactProfile.EMP_ID
                 contactList.LAST_NAME = contactVM.ContactProfile.LAST_NAME
                 contactList.FIRST_NAME = contactVM.ContactProfile.FIRST_NAME
@@ -467,8 +444,8 @@ Class UpdateContactListPage
                 contactList.MARITAL_STATUS_ID = contactVM.ContactProfile.MARITAL_STATUS_ID
                 contactList.POSITION_ID = contactVM.ContactProfile.POSITION_ID
                 contactList.PERMISSION_GROUP_ID = contactVM.ContactProfile.PERMISSION_GROUP_ID
-                contactList.DEPARTMENT_ID = 0
-                contactList.DIVISION_ID = 0
+                contactList.DEPARTMENT_ID = contactVM.ContactProfile.DEPARTMENT_ID
+                contactList.DIVISION_ID = contactVM.ContactProfile.DIVISION_ID
                 contactList.OLD_EMP_ID = old_empid
 
                 If MsgBox("Are you sure you want to continue? Employee will be removed from the lists.", vbYesNo, "AIDE") = vbYes Then
@@ -493,5 +470,39 @@ Class UpdateContactListPage
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
         End Try
     End Sub
+
+    Private Sub cbContactDivision_DropDownOpened(sender As Object, e As EventArgs) Handles cbContactDivision.DropDownOpened
+        Dim SelectedDivision As Integer
+        SelectedDivision = cbContactDivision.SelectedValue
+        If cbContactDepartment.SelectedValue = Nothing Then
+            MsgBox("Please select a department first. Thank you.", vbInformation, "AIDE")
+        Else
+            LoadDivision(cbContactDepartment.SelectedValue)
+            cbContactDivision.SelectedValue = SelectedDivision
+        End If
+    End Sub
 #End Region
+
+#Region "Service Methods"
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
+
+    End Sub
+
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
+
+    End Sub
+
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
+
+    End Sub
+
+    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
+
+    End Sub
+
+    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+
+    End Sub
+#End Region
+
 End Class

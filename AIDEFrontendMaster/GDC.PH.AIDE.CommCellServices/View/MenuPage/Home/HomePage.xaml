@@ -653,20 +653,20 @@
                     
                     
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3.5*"/>
-                        <ColumnDefinition Width="3.5*"/>
-                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <Frame x:Name="genericFrame1" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                        <Frame x:Name="genericFrame1" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,5,10">
                         </Frame>
                     </Grid>
                     <Grid Grid.Column="1">
-                        <Frame x:Name="genericFrame2" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                        <Frame x:Name="genericFrame2" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,10,5,10">
                         </Frame>
                     </Grid>
                     <Grid Grid.Column="2">
-                        <Frame x:Name="genericFrame3" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                        <Frame x:Name="genericFrame3" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,10,10,10">
                         </Frame>
                     </Grid>
                     <!--<Grid Grid.Column="1">

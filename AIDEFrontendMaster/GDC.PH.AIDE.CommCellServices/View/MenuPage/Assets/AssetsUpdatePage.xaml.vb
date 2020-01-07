@@ -15,7 +15,7 @@ Public Class AssetsUpdatePage
     Private _addframe As Frame
     Private _menugrid As Grid
     Private _submenuframe As Frame
-
+    Dim status As Integer
 #End Region
 
 #Region "Constructor"
@@ -31,7 +31,7 @@ Public Class AssetsUpdatePage
         Me._submenuframe = _submenuframe
         tbSuccessForm.Text = "Update Asset"
         dateInput.IsEnabled = False
-        LoadData()
+        SetData()
         AssignEvents()
     End Sub
 
@@ -47,6 +47,7 @@ Public Class AssetsUpdatePage
             Else
                 assets.ASSET_ID = txtID.Text
                 assets.EMP_ID = assetsModel.EMP_ID
+                assets.TRANSFER_ID = cbManager.SelectedValue
                 assets.ASSET_DESC = assetsModel.ASSET_DESC
                 assets.MANUFACTURER = assetsModel.MANUFACTURER
                 assets.MODEL_NO = txtModel.Text
@@ -55,6 +56,8 @@ Public Class AssetsUpdatePage
                 assets.DATE_PURCHASED = dateInput.SelectedDate
                 assets.OTHER_INFO = txtOtherInfo.Text
                 assets.ASSIGNED_TO = 999
+                assets.STATUS = status
+                assets.PREVIOUS_ID = assetsModel.EMP_ID
                 Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
                 If result = 1 Then
                     If InitializeService() Then
@@ -95,22 +98,35 @@ Public Class AssetsUpdatePage
     Private Sub btnDelete_Click(sender As Object, e As RoutedEventArgs) Handles btnDelete.Click
         Try
             e.Handled = True
+            Dim assets As New Assets
             If txtID.Text = String.Empty Then
                 MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
             Else
+                assets.ASSET_ID = txtID.Text
+                assets.EMP_ID = assetsModel.EMP_ID
+                assets.ASSET_DESC = assetsModel.ASSET_DESC
+                assets.MANUFACTURER = assetsModel.MANUFACTURER
+                assets.MODEL_NO = txtModel.Text
+                assets.SERIAL_NO = txtSerial.Text
+                assets.ASSET_TAG = txtAssetTag.Text
+                assets.DATE_PURCHASED = dateInput.SelectedDate
+                assets.OTHER_INFO = txtOtherInfo.Text
+                assets.ASSIGNED_TO = 999
                 Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
                 If result = 1 Then
-                    client.DeleteSuccessRegisterBySuccessID(CUInt(txtID.Text))
-                    ClearFields()
-                    mainFrame.Navigate(New AssetsListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
-                    mainFrame.IsEnabled = True
-                    mainFrame.Opacity = 1
-                    _menugrid.IsEnabled = True
-                    _menugrid.Opacity = 1
-                    _submenuframe.IsEnabled = True
-                    _submenuframe.Opacity = 1
+                    If InitializeService() Then
+                        client.DeleteAsset(assets)
+                        ClearFields()
+                        mainFrame.Navigate(New AssetsListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
+                        mainFrame.IsEnabled = True
+                        mainFrame.Opacity = 1
+                        _menugrid.IsEnabled = True
+                        _menugrid.Opacity = 1
+                        _submenuframe.IsEnabled = True
+                        _submenuframe.Opacity = 1
 
-                    _addframe.Visibility = Visibility.Hidden
+                        _addframe.Visibility = Visibility.Hidden
+                    End If
                 Else
                     Exit Sub
                 End If
@@ -127,6 +143,22 @@ Public Class AssetsUpdatePage
             dateInput.SelectedDate = Date.Now
         Else
             Exit Sub
+        End If
+    End Sub
+
+    Private Sub cbDepartment_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbDepartment.SelectionChanged
+        LoadDivision()
+    End Sub
+
+    Private Sub cbDivision_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbDivision.SelectionChanged
+        ListOfManagers()
+    End Sub
+
+    Private Sub cbManager_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbManager.SelectionChanged
+        If cbManager.SelectedValue = Nothing Then
+            status = assetsModel.STATUS
+        Else
+            status = 4 'This means the asset is transferred so we need to set the status to 1 - Unassigned
         End If
     End Sub
 #End Region
@@ -146,18 +178,110 @@ Public Class AssetsUpdatePage
         dateInput.Text = String.Empty
     End Sub
 
+    Public Sub SetData()
+        Try
+            If InitializeService() Then
+                LoadDepartment()
+            End If
+            LoadData()
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
     Private Sub LoadData()
         btnCreate.Visibility = System.Windows.Visibility.Collapsed
         btnUpdate.Visibility = System.Windows.Visibility.Visible
-        btnDelete.Visibility = System.Windows.Visibility.Collapsed
+
+        If assetsModel.STATUS = 1 And profile.Permission_ID = 1 Then ' Show only when asset is unassigned and user is manager level
+            dateInput.IsEnabled = False
+            txtCreatedBy.IsEnabled = False
+            txtModel.IsEnabled = False
+            txtSerial.IsEnabled = False
+            txtAssetTag.IsEnabled = False
+            btnDelete.Visibility = System.Windows.Visibility.Visible
+            TransferAsset.Visibility = Windows.Visibility.Visible
+        End If
+
         txtID.Text = assetsModel.ASSET_ID
         txtCreatedBy.Text = assetsModel.FULL_NAME
-
         txtModel.Text = assetsModel.MODEL_NO
         txtSerial.Text = assetsModel.SERIAL_NO
         txtAssetTag.Text = assetsModel.ASSET_TAG
         txtOtherInfo.Text = assetsModel.OTHER_INFO
         dateInput.Text = assetsModel.DATE_PURCHASED
+    End Sub
+
+    Public Sub LoadDepartment()
+        Try
+            Dim lstDepartment As DepartmentList() = client.GetAllDepartment()
+            Dim lstDepartmentList As New ObservableCollection(Of DepartmentModel)
+            Dim selectionDBProvider As New SelectionListDBProvider
+            Dim selectionListVM As New SelectionListViewModel()
+
+            For Each objdepartment As DepartmentList In lstDepartment
+                selectionDBProvider._setlistofDepartment(objdepartment)
+            Next
+
+            For Each rawUser As myDepartmentSet In selectionDBProvider._getobjDepartment()
+                lstDepartmentList.Add(New DepartmentModel(rawUser))
+            Next
+
+            selectionListVM.ObjectDepartmentSet = lstDepartmentList
+
+            cbDepartment.DataContext = selectionListVM
+            cbDepartment.ItemsSource = selectionListVM.ObjectDepartmentSet
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Public Sub LoadDivision()
+        Try
+            Dim lstDivision As DivisionList() = client.GetAllDivision(cbDepartment.SelectedValue)
+            Dim lstDivisionList As New ObservableCollection(Of DivisionModel)
+            Dim selectionDBProvider As New SelectionListDBProvider
+            Dim selectionListVM As New SelectionListViewModel()
+
+            For Each objdivision As DivisionList In lstDivision
+                selectionDBProvider._setlistofDivision(objdivision)
+            Next
+
+            For Each rawUser As myDivisionSet In selectionDBProvider._getobjDivision()
+                lstDivisionList.Add(New DivisionModel(rawUser))
+            Next
+
+            selectionListVM.ObjectDivisionSet = lstDivisionList
+
+            cbDivision.DataContext = selectionListVM
+            cbDivision.ItemsSource = selectionListVM.ObjectDivisionSet
+
+            If lstDivision.Count = 0 Then
+                ListOfManagers()
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Public Sub ListOfManagers()
+        Dim lstMangers As Assets() = client.GetAllManagersByDeptorDiv(cbDepartment.SelectedValue, cbDivision.SelectedValue)
+        Dim lstMangersList As New ObservableCollection(Of AssetsModel)
+        Dim assetsDBProvider As New AssetsDBProvider
+        Dim assetsVM As New AssetsViewModel()
+
+        For Each objAssets As Assets In lstMangers
+            assetsDBProvider.SetManagerList(objAssets)
+        Next
+
+        For Each rawUser As MyAssets In assetsDBProvider.GetManagerList()
+            lstMangersList.Add(New AssetsModel(rawUser))
+        Next
+
+        assetsVM.AssetManagerList = lstMangersList
+
+        cbManager.DataContext = assetsVM
+        cbManager.ItemsSource = assetsVM.AssetManagerList
     End Sub
 
     Public Function InitializeService() As Boolean
@@ -211,4 +335,5 @@ Public Class AssetsUpdatePage
 
     End Sub
 #End Region
+
 End Class

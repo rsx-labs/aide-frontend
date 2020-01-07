@@ -56,24 +56,7 @@
                     </Grid.RowDefinitions>
                     
                     <Grid Grid.Row="0">
-                        <Border Margin="0,5" CornerRadius="15" BorderThickness="3,3,3,3">
-                            <Border.BorderBrush>
-                                <DrawingBrush Viewport="0,0,10,10" ViewportUnits="Absolute" TileMode="Tile">
-                                    <DrawingBrush.Drawing>
-                                        <DrawingGroup>
-                                            <GeometryDrawing Brush="DimGray">
-                                                <GeometryDrawing.Geometry>
-                                                    <GeometryGroup>
-                                                        <RectangleGeometry Rect="0,0,50,50"/>
-                                                        <RectangleGeometry Rect="50,50,50,50"/>
-                                                        <RectangleGeometry Rect="50,50,50,50"/>
-                                                    </GeometryGroup>
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                        </DrawingGroup>
-                                    </DrawingBrush.Drawing>
-                                </DrawingBrush>
-                            </Border.BorderBrush>
+                        <Border Margin="0,5" CornerRadius="15" BorderThickness="3" BorderBrush="White">                   
 
                             <Viewbox>
                                 <TextBlock TextWrapping="Wrap" Name="Act_Reference" Foreground="White" Margin="10" Text="{Binding REF_NO, Mode=TwoWay}"/>
@@ -155,7 +138,7 @@
                         <Grid Grid.Column="0">
                             <ComboBox FontSize="12" Style="{DynamicResource StyleComboBox}" 
                                       Name="Act_AssigneeCB" Margin="0,5,2.5,5" 
-                                      SelectedValuePath="First_Name" DisplayMemberPath="Employee_Name" 
+                                      SelectedValuePath="First_Name" DisplayMemberPath="EMPLOYEE_NAME" 
                                       ItemsSource="{Binding NicknameList}"/>
                             
                             <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select employee" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">

@@ -43,7 +43,7 @@
                     </Viewbox>
                 </Grid>
                 <Grid Grid.Column="2">
-                    <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Height="30" Margin="5,5,5,5"/>
+                    <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Height="30" Margin="5,5,5,5" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
                     <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">

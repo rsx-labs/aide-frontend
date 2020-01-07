@@ -1,8 +1,12 @@
 ﻿Imports System.Collections.ObjectModel
+Imports System.ComponentModel
 Imports UI_AIDE_CommCellServices.ServiceReference1
 
 Public Class KPISummaryDBProvider
+    Implements INotifyPropertyChanged
+
     Private _colKPISummary As ObservableCollection(Of KPISummaryData)
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
 
     Public Sub New()
         _colKPISummary = New ObservableCollection(Of KPISummaryData)
@@ -29,6 +33,18 @@ Public Class KPISummaryDBProvider
         _colKPISummary.Add(kpi)
     End Sub
 
+    Public Property KPISummaryDataList As ObservableCollection(Of KPISummaryData)
+        Get
+            Return _colKPISummary
+        End Get
+        Set(value As ObservableCollection(Of KPISummaryData))
+            _colKPISummary = value
+            NotifyPropertyChanged("KPISummaryDataList")
+        End Set
+    End Property
+    Private Sub NotifyPropertyChanged(ByVal propertyName As String)
+        RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+    End Sub
 End Class
 
 Public Class KPISummaryData

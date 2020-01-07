@@ -1000,13 +1000,13 @@
                     </Grid>
                 </Border>-->
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.5*"/>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="1">
-                    <ComboBox Name="cbDisplayMonth" Margin="10" Style="{DynamicResource StyleComboBox}" />
+                    <ComboBox Name="cbDisplayMonth" Margin="10,10,10,10" Style="{DynamicResource StyleComboBox}" />
                     <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a month" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
@@ -1020,8 +1020,24 @@
                         </TextBlock.Style>
                     </TextBlock>
                 </Grid>
+                <Grid Grid.Column="2">
+                    <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="30,10,10,10" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
+                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Fiscal Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=cbYear}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+               
                 <Grid Grid.Column="3">
-                    <Button Style="{DynamicResource RoundCornerManage}" x:Name="btnManage" Margin="0,10,10,10" Click="btnManage_Click" HorizontalAlignment="Right">
+                    <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnManage" Margin="0,10,10,10" Click="btnManage_Click" HorizontalAlignment="Right">
 
                         <TextBlock Text="Manage leaves" TextWrapping="Wrap" Margin="5"/>
 

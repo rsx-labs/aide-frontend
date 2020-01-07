@@ -162,8 +162,7 @@ Class _3CDashboard
                 New ObservableValue(PastdueDate)
             },
             .DataLabels = True, .Fill = New BrushConverter().ConvertFromString("#FFFF3838"),
-            .FontSize = 12,
-            .Foreground = Brushes.Black
+            .FontSize = 12
         },
         New PieSeries With {
             .Title = "Due today and open",
@@ -171,8 +170,7 @@ Class _3CDashboard
                 New ObservableValue(DuetodayDate)
             },
             .DataLabels = True, .Fill = New BrushConverter().ConvertFromString("#FFFDD652"),
-            .FontSize = 12,
-            .Foreground = Brushes.Black
+            .FontSize = 12
         },
         New PieSeries With {
             .Title = "Open",
@@ -180,8 +178,7 @@ Class _3CDashboard
                 New ObservableValue(CompletedDate)
             },
             .DataLabels = True, .Fill = New BrushConverter().ConvertFromString("#FF3EFF6A"),
-            .FontSize = 12,
-            .Foreground = Brushes.Black
+            .FontSize = 12
         }
     }
         DataContext = Me

@@ -41,7 +41,6 @@ Class CommendationAddPage
         Me.email = _email
         btnCommendationCreate.Visibility = System.Windows.Visibility.Visible
         tbSuccessForm.Text = "Create Commendation"
-        txtCommendationID.Visibility = Windows.Visibility.Hidden
         'lblCommID.Visibility = Windows.Visibility.Hidden
         'AssignEvents()
         LoadAllProjectName()
@@ -148,8 +147,6 @@ Class CommendationAddPage
 #Region "Functions"
     Public Sub AssignEvents()
         tbSuccessForm.Text = "View Commendation"
-        txtCommendationID.Text = commendationModel.CommendID
-        txtCommendationID.IsReadOnly = True
         txtCommendationEmployees.Text = commendationModel.Employees
         txtCommendationEmployees.IsReadOnly = True
         txtSentBy.Text = commendationModel.SentBy

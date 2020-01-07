@@ -10,10 +10,10 @@
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="1.3*"/>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="0.11*"/>
+                <RowDefinition Height="0.10*"/>
+                <RowDefinition Height="0.71*"/>
+                <RowDefinition Height="0.08*"/>
             </Grid.RowDefinitions>
             
             <Grid Grid.Row="0" Background="White">
@@ -107,7 +107,7 @@
                 
                 <Grid Grid.Column="2">
                     <Border Margin="10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
-                        <DatePicker Style="{DynamicResource styleDatePickerfrom}" BorderBrush="Transparent" Margin="2" FontSize="12" x:Name="dtpTo" Width="auto" Height="auto" IsEnabled="False"/>
+                        <DatePicker Style="{DynamicResource styleDatePickerto}" BorderBrush="Transparent" Margin="2" FontSize="12" x:Name="dtpTo" Width="auto" Height="auto"/>
                     </Border>
                     
                     <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select date to" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
@@ -154,30 +154,31 @@
             
             <Grid Grid.Row="3" Background="White">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width=".8*"/>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="0.32*"/>
+                    <ColumnDefinition Width="0.36*"/>
+                    <ColumnDefinition Width="0.32*"/>
                 </Grid.ColumnDefinitions>
                 
                 <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
+                    
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.5*"/>
+                        <RowDefinition Height="0.5*"/>
                     </Grid.RowDefinitions>
                     
-                    <Grid Grid.Row="0">
+                    <Grid Grid.Column="0" Grid.Row="0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="10*"/>
-                            <ColumnDefinition Width="30*"/>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="10*"/>
-                            <ColumnDefinition Width="35*"/>
-                            <ColumnDefinition Width="30*"/>
+                            <ColumnDefinition Width="0.2*"/>
+                            <ColumnDefinition Width="0.8*"/>
                         </Grid.ColumnDefinitions>
                         
                         <Grid Grid.Column="0">
                             <Viewbox>
-                                <Label HorizontalAlignment="Left" Background="White" BorderBrush="DimGray" BorderThickness="1" Margin="5"></Label>
+                                <Label HorizontalAlignment="Left" Background="White" BorderBrush="DimGray" BorderThickness="1" Margin="5"/>
                             </Viewbox>
                         </Grid>
                         
@@ -186,32 +187,14 @@
                                 <Label Foreground="DimGray" Content="Open/Close" VerticalAlignment="Center"/>
                             </Viewbox>
                         </Grid>
-                        
-                        <Grid Grid.Column="2"/>
-
-                        <Grid Grid.Column="3">
-                            <Viewbox>
-                                <Label HorizontalAlignment="Left" Background="#FFFDECCE" BorderBrush="DimGray" Margin="5"></Label>
-                            </Viewbox>
-                        </Grid>
-                        
-                        <Grid Grid.Column="4">
-                            <Viewbox HorizontalAlignment="Left">
-                                <Label Foreground="DimGray" Content="Due date today and Open" VerticalAlignment="Center"/>
-                            </Viewbox>
-                        </Grid>
                     </Grid>
-                    
-                    <Grid Grid.Row="1">
+
+                    <Grid  Grid.Column="0" Grid.Row="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="10*"/>
-                            <ColumnDefinition Width="30*"/>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="10*"/>
-                            <ColumnDefinition Width="35*"/>
-                            <ColumnDefinition Width="30*"/>
+                            <ColumnDefinition Width="0.2*"/>
+                            <ColumnDefinition Width="0.8*"/>
                         </Grid.ColumnDefinitions>
-                        
+
                         <Grid Grid.Column="0">
                             <Viewbox>
                                 <Label BorderBrush="DimGray"  HorizontalAlignment="Left" Background="#CCFFD8D8" Margin="5"></Label>
@@ -223,51 +206,46 @@
                                 <Label Foreground="DimGray" Content="Overdue and Open" VerticalAlignment="Center"/>
                             </Viewbox>
                         </Grid>
+                    </Grid>
+
+                    <Grid Grid.Column="1" Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.2*"/>
+                            <ColumnDefinition Width="0.8*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <Viewbox>
+                                <Label HorizontalAlignment="Left" Background="#FFFDECCE" BorderBrush="DimGray" Margin="5"></Label>
+                            </Viewbox>
+                        </Grid>
                         
-                        <Grid Grid.Column="2"/>
-
-                        <Grid Grid.Column="3"/>
-
-                        <Grid Grid.Column="4"/>
+                        <Grid Grid.Column="1">
+                            <Viewbox HorizontalAlignment="Left">
+                                <Label Foreground="DimGray" Content="Due date today and Open" VerticalAlignment="Center"/>
+                            </Viewbox>
+                        </Grid>
                     </Grid>
                 </Grid>
 
                 <Grid Grid.Column="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Grid Grid.Column="0">
-                        <Button Height="auto" Width="auto"  
-                                Margin="5"
-                                x:Name="btnPrev" Style="{DynamicResource ButtonPageBack}" BorderBrush="{x:Null}" />
-                    </Grid>
-
-                    <Grid Grid.Column="1">
-                        <TextBlock TextWrapping="Wrap" Padding="0" x:Name="txtPageNo" Margin="0,10,0,7" Foreground="DimGray" FontSize="9"/>
-                    </Grid>
-
-                    <Grid Grid.Column="2">
-                        <Button Height="auto" Width="auto" Margin="5" 
-                                x:Name="btnNext" Style="{DynamicResource ButtonPageNext}" BorderBrush="{x:Null}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Height="30" Width="30"
+                                x:Name="btnPrev" 
+                                Style="{DynamicResource ButtonPageBack}" 
+                                BorderBrush="{x:Null}" >
                         </Button>
-                    </Grid>
+                        <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" x:Name="txtPageNo" Margin="5,0,5,0" Foreground="DimGray" FontSize="10"/>
+                        <Button Height="30" Width="30"
+                                x:Name="btnNext" 
+                                Style="{DynamicResource ButtonPageNext}" 
+                                BorderBrush="{x:Null}">
+                        </Button>
+                    </StackPanel>
                 </Grid>
-                
-                <Grid Grid.Column="2" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width=".3*"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Grid Grid.Column="0"/>
 
-                    <Grid Grid.Column="1">
-                        <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" />
-                    </Grid>
+                <Grid Grid.Column="2" >
+                    <Button Style="{StaticResource ButtonPrint}" x:Name="btnPrint" Margin="0,0,10,0" Content="Print" HorizontalAlignment="Right" Width="40" Height="30" VerticalAlignment="Center" />
                 </Grid>
             </Grid>
         </Grid>

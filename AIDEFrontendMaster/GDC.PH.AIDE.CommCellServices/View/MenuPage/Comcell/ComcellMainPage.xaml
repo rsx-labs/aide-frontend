@@ -854,7 +854,7 @@
                                     <ColumnDefinition Width="26*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <ComboBox Grid.ColumnSpan="1" Style="{DynamicResource StyleComboBox}" MinWidth="140" Height="30" x:Name="cbYear" Margin="10"/>
+                                <ComboBox Grid.ColumnSpan="1" Style="{DynamicResource StyleComboBox}" MinWidth="140" Height="30" x:Name="cbYear" Margin="10" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
                                 <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
                                     <Viewbox Margin="15,15,0,15">
                                         <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png"/>

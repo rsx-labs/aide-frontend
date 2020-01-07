@@ -16,7 +16,6 @@ Imports System.Printing
 Public Class ThreeC_Page
     Implements ServiceReference1.IAideServiceCallback
 
-
     Public _AIDEClientService As ServiceReference1.AideServiceClient
     Private email As String
     Private _frame As Frame
@@ -29,6 +28,9 @@ Public Class ThreeC_Page
     Private isSearchIsUsed As Integer = 0
     Private isDateBetweenUsed As Integer = 0
 
+    Private offsetVal As Integer = 0
+    Private nextVal As Integer = 100
+
     Private startRowIndex As Integer
     Private lastRowIndex As Integer
     Private pagingPageIndex As Integer
@@ -36,6 +38,7 @@ Public Class ThreeC_Page
     Private currentPage As Integer
     Private lastPage As Integer
     Private _lstConcern As Concern()
+
     Dim paginatedCollection As PaginatedObservableCollection(Of ConcernModel) = New PaginatedObservableCollection(Of ConcernModel)(pagingRecordPerPage)
 
     Private Enum PagingMode
@@ -46,8 +49,6 @@ Public Class ThreeC_Page
     End Enum
 
     Public Sub New(email As String, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
-        Dim offsetVal As Integer = 0
-        Dim nextVal As Integer = 100
         Dim clear As New ConcernViewModel
 
         InitializeComponent()
@@ -61,41 +62,16 @@ Public Class ThreeC_Page
         LoadConcernList(offsetVal, nextVal)
     End Sub
 
-
 #Region "Methods"
     ''DISPLAY to DATAGIRD VIEW
     Public Sub LoadConcernList(offSet As Integer, NextVal As Integer)
         Try
-
             If InitializeService() Then
                 _lstConcern = _AIDEClientService.selectAllConcern(email, offSet, NextVal)
                 SetLists()
                 DisplayPagingInfo()
             End If
-            'Dim _GetAllConcernDBProvider As New ConcernDBProvider
-            'Dim _concernViewModel As New ConcernViewModel
-
-            '_lstConcern = _AIDEClientService.selectAllConcern(email, offSet, NextVal)
-            'Dim lstConcernList As New ObservableCollection(Of ConcernModel)
-
-            'For Each objConcern As Concern In _lstConcern
-            '    _GetAllConcernDBProvider.SetConcernList(objConcern)
-            'Next
-
-            'For Each iConcern As MyConcern In _GetAllConcernDBProvider.GetConcernList()
-
-            '    lstConcernList.Add(New ConcernModel(iConcern))
-            '    paginatedCollection.Add(New ConcernModel(iConcern))
-
-            'Next
-
-            'currentPage = paginatedCollection.CurrentPage + 1
-            'lastPage = Math.Ceiling(_lstConcern.Length / pagingRecordPerPage)
-
-            '_concernViewModel.ConcernList = paginatedCollection 'lstConcernList
-            'Me.DataContext = _concernViewModel
-
-            'max = _lstConcern.Count
+            
         Catch ex As SystemException
             MsgBox(ex.Message)
             _AIDEClientService.Abort()
@@ -104,33 +80,12 @@ Public Class ThreeC_Page
 
     ''resultSearch
     Private Sub retrieveSearch(offSet As Integer, NextVal As Integer)
-        'Dim _newProvider As New ConcernDBProvider
-        'Dim _newViewModel As New ConcernViewModel
         Try
             If InitializeService() Then
                 _lstConcern = _AIDEClientService.GetResultSearch(email, txtSearch.Text, offSet, NextVal)
                 SetLists()
                 DisplayPagingInfo()
             End If
-
-            'Dim lstConcernList As New ObservableCollection(Of ConcernModel)
-
-            'For Each objConcern As Concern In _lstConcern
-            '    _newProvider.SetConcernList(objConcern)
-            'Next
-
-            'For Each iConcern As MyConcern In _newProvider.GetConcernList()
-            '    lstConcernList.Add(New ConcernModel(iConcern))
-            '    paginatedCollection.Add(New ConcernModel(iConcern))
-            'Next
-
-
-            'currentPage = paginatedCollection.CurrentPage + 1
-            'lastPage = Math.Ceiling(_lstConcern.Length / pagingRecordPerPage)
-
-            '_newViewModel.ConcernList = paginatedCollection 'lstConcernList
-            'max = _lstConcern.Count
-            'Me.DataContext = _newViewModel
         Catch ex As SystemException
             MsgBox(ex.Message)
             _AIDEClientService.Abort()
@@ -140,34 +95,11 @@ Public Class ThreeC_Page
     ''DISPLAY to DATAGIRD VIEW WITH DATE SEARCH
     Public Sub LoadBetweenSearchDate(offSet As Integer, NextVal As Integer, _concerngetDate As ConcernViewModel)
         Try
-            'Dim _GetAllConcernDBProvider As New ConcernDBProvider
-            'Dim _concernViewModel As New ConcernViewModel
             If InitializeService() Then
                 _lstConcern = _AIDEClientService.GetBetweenSearchConcern(email, offSet, NextVal, dtpFrom.SelectedDate, dtpTo.SelectedDate)
                 SetLists()
                 DisplayPagingInfo()
             End If
-
-            'Dim lstConcernList As New ObservableCollection(Of ConcernModel)
-
-            'For Each objConcern As Concern In _lstConcern
-            '    _GetAllConcernDBProvider.SetConcernList(objConcern)
-            'Next
-
-            'For Each iConcern As MyConcern In _GetAllConcernDBProvider.GetConcernList()
-
-            '    lstConcernList.Add(New ConcernModel(iConcern))
-            '    paginatedCollection.Add(New ConcernModel(iConcern))
-            'Next
-
-
-            'currentPage = paginatedCollection.CurrentPage + 1
-            'lastPage = Math.Ceiling(_lstConcern.Length / pagingRecordPerPage)
-
-            '_concernViewModel.ConcernList = lstConcernList
-            'Me.DataContext = _concernViewModel
-
-            'max = _lstConcern.Count
         Catch ex As SystemException
             MsgBox(ex.Message)
             _AIDEClientService.Abort()
@@ -196,28 +128,6 @@ Public Class ThreeC_Page
         End Try
         Return bInitialize
     End Function
-#End Region
-
-#Region "NotifyChanges"
-    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
-
-    End Sub
-
-    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
-
-    End Sub
-
-    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
-
-    End Sub
-
-    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
-
-    End Sub
-
-    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
-
-    End Sub
 #End Region
 
 #Region "Buttons/Text - Events"
@@ -250,8 +160,7 @@ Public Class ThreeC_Page
     'NAVIGATE TO UPDATE PAGE
     Private Sub ThreeC_DataGridView_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles ThreeC_DataGridView.MouseDoubleClick
 
-        If ThreeC_DataGridView.SelectedIndex = -1 Then
-        Else
+        If Not ThreeC_DataGridView.SelectedIndex = -1 Then
             If CType(ThreeC_DataGridView.SelectedItem, ConcernModel).STATUS = "CLOSED" Then
                 MsgBox("Cannot Edit/Update this Concern. Closed Already", MsgBoxStyle.Exclamation + vbCritical, "CLOSED")
             Else
@@ -266,7 +175,6 @@ Public Class ThreeC_Page
                 _addframe.Margin = New Thickness(50, 50, 50, 50)
             End If
         End If
-        LoadConcernList(0, 10)
     End Sub
 
     ''NAVIGATE
@@ -285,110 +193,39 @@ Public Class ThreeC_Page
 
     ''SEARCH FILTER DATE
     Private Sub btnFilter(sender As Object, e As RoutedEventArgs)
-        Dim offset As Integer = 0
-        Dim nextVal As Integer = 10
         isSearchIsUsed = 2
-        If dtpTo.Text = String.Empty Then
-            MsgBox("Please Input Date To!", MsgBoxStyle.Critical, "AIDE")
+        If dtpTo.Text = String.Empty Or dtpFrom.Text = String.Empty Then
+            MsgBox("Please Complete date Selection.", MsgBoxStyle.Critical, "AIDE")
         Else
-            LoadBetweenSearchDate(offset, nextVal, Me.DataContext())
+            LoadBetweenSearchDate(offsetVal, nextVal, Me.DataContext())
             GetDateTimeNow(Me.DataContext())
         End If
     End Sub
 
     Private Sub SetLists()
         Try
-            paginatedCollection.Clear()
+            paginatedCollection = New PaginatedObservableCollection(Of ConcernModel)(pagingRecordPerPage)
             Dim _concernViewModel As New ConcernViewModel
-            'Dim lstConcernlist As New ObservableCollection(Of ConcernModel)
-            Dim MyConcernDBProvider As New ConcernDBProvider
-
-            'For Each iConcern As MyConcern In MyConcernDBProvider.GetConcernList()
-            '    lstConcernlist.Add(New ConcernModel(iConcern))
-            'Next
+            Dim concernDBProvider As New ConcernDBProvider
 
             For Each objConcern As Concern In _lstConcern
-                MyConcernDBProvider.SetConcernList(objConcern)
+                concernDBProvider.SetConcernList(objConcern)
             Next
 
-            For Each iConcern As MyConcern In MyConcernDBProvider.GetConcernList()
+            For Each iConcern As MyConcern In concernDBProvider.GetConcernList()
                 paginatedCollection.Add(New ConcernModel(iConcern))
             Next
 
             _concernViewModel.ConcernList = paginatedCollection
             Me.DataContext = _concernViewModel
 
-            'ThreeC_DataGridView.ItemsSource = paginatedCollection
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(_lstConcern.Length / pagingRecordPerPage)
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
-    Private Sub SetPaging(mode As Integer)
-        Try
-            Dim totalRecords As Integer = _lstConcern.Length
 
-            Select Case mode
-                Case CInt(PagingMode._Next)
-                    ' Set the rows to be displayed if the total records is more than the (Record per Page * Page Index)
-                    If totalRecords > (pagingPageIndex * pagingRecordPerPage) Then
-
-                        ' Set the last row to be displayed if the total records is more than the (Record per Page * Page Index) + Record per Page
-                        If totalRecords >= ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) Then
-                            lastRowIndex = ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) - 1
-                        Else
-                            lastRowIndex = totalRecords - 1
-                        End If
-
-                        startRowIndex = pagingPageIndex * pagingRecordPerPage
-                        pagingPageIndex += 1
-                    Else
-                        startRowIndex = (pagingPageIndex - 1) * pagingRecordPerPage
-                        lastRowIndex = totalRecords - 1
-                    End If
-                    ' Bind data to the Data Grid
-                    SetLists()
-                    Exit Select
-                Case CInt(PagingMode._Previous)
-                    ' Set the Previous Page if the page index is greater than 1
-                    If pagingPageIndex > 1 Then
-                        pagingPageIndex -= 1
-
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-                        lastRowIndex = (pagingPageIndex * pagingRecordPerPage) - 1
-                        SetLists()
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._First)
-                    If totalRecords > pagingRecordPerPage Then
-                        pagingPageIndex = 2
-                        SetPaging(CInt(PagingMode._Previous))
-                    Else
-                        pagingPageIndex = 1
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-
-                        If Not totalRecords = 0 Then
-                            lastRowIndex = totalRecords - 1
-                            SetLists()
-                        Else
-                            lastRowIndex = 0
-                            Me.DataContext = Nothing
-                        End If
-
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._Last)
-                    pagingPageIndex = (_lstConcern.Length / pagingRecordPerPage)
-                    SetPaging(CInt(PagingMode._Next))
-                    Exit Select
-            End Select
-
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
-        End Try
-
-    End Sub
     'PAGE NAVIAGTION -NEXT
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
         Dim totalRecords As Integer = _lstConcern.Length
@@ -399,114 +236,8 @@ Public Class ThreeC_Page
             lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
         End If
         DisplayPagingInfo()
-        'If isSearchIsUsed = 1 Then
-        '    Try
-        '        Dim resultPerPage As Integer = 10
-        '        Dim startResult As Integer
-
-        '        If max <= 9 Then
-        '            MsgBox("No more data to retrieve", MsgBoxStyle.Information + vbCritical, "No Data Found")
-        '            txtSearch.Focusable = True
-
-        '        Else
-        '            If incVal <> max - 2 Then
-
-        '                incVal = incVal + 1
-
-        '                startResult = incVal * resultPerPage
-
-
-        '            Else
-        '                If max Then
-
-        '                    Return
-        '                End If
-        '            End If
-        '            retrieveSearch(startResult, resultPerPage)
-        '        End If
-        '    Catch ex As Exception
-        '        MsgBox(ex.Message)
-        '    End Try
-
-
-
-        'ElseIf isDateBetweenUsed = 2 Then ''DISPLAY VIA BETWEEN DATE
-
-        '    Try
-
-        '        Dim resultPerPage As Integer = 10
-        '        Dim startResult As Integer
-
-
-        '        If max <= 9 Then
-        '            MsgBox("No more data to retrieve", MsgBoxStyle.Information + vbCritical, "No Data Found")
-        '            txtSearch.Focusable = True
-
-        '        Else
-
-        '            If incVal <> max - 2 Then
-
-        '                incVal = incVal + 1
-
-        '                startResult = incVal * resultPerPage
-
-        '            Else
-        '                If max Then
-
-        '                    Return
-        '                End If
-        '            End If
-        '            LoadBetweenSearchDate(startResult, resultPerPage, Me.DataContext())
-        '        End If
-
-
-
-        '    Catch ex As Exception
-        '        MsgBox(ex.Message)
-        '    End Try
-
-
-
-
-
-        'Else ''normal load 
-        '    Try
-
-        '        Dim resultPerPage As Integer = 10
-        '        Dim startResult As Integer
-
-
-        '        If max <= 9 Then
-        '            MsgBox("No more data to retrieve", MsgBoxStyle.Information + vbCritical, "No Data Found")
-        '            txtSearch.Focusable = True
-
-        '        Else
-
-        '            If incVal <> max - 2 Then
-
-        '                incVal = incVal + 1
-
-        '                startResult = incVal * resultPerPage
-
-        '            Else
-        '                If max Then
-
-        '                    Return
-        '                End If
-        '            End If
-        '            LoadConcernList(startResult, resultPerPage)
-        '        End If
-
-
-
-        '    Catch ex As Exception
-        '        MsgBox(ex.Message)
-        '    End Try
-
-        'End If
-
+        
         GetDateTimeNow(Me.DataContext())
-
     End Sub
 
     'PAGE NAVIGATION BACK
@@ -517,80 +248,8 @@ Public Class ThreeC_Page
             currentPage -= 1
         End If
         DisplayPagingInfo()
-        'If isSearchIsUsed = 1 Then '' FILTER NEXT VIA SEARCH TEXTBOX
-        '    Try
-
-        '        Dim resultPerPage As Integer = 10
-        '        Dim startResult As Integer
-
-
-        '        If incVal = 0 Then
-        '            Return
-        '        ElseIf incVal > 0 Then
-        '            incVal = incVal - 1
-        '            startResult = incVal * resultPerPage
-        '        End If
-        '        retrieveSearch(startResult, resultPerPage)
-
-
-        '    Catch ex As Exception
-        '        MsgBox(ex.Message)
-        '    End Try
-
-        'ElseIf isDateBetweenUsed = 2 Then  ''DISPLAYING VIA BETWEEN DATES
-
-
-        '    Try
-
-        '        Dim resultPerPage As Integer = 10
-        '        Dim startResult As Integer
-
-
-        '        If incVal = 0 Then
-        '            Return
-        '        ElseIf incVal > 0 Then
-        '            incVal = incVal - 1
-        '            startResult = incVal * resultPerPage
-        '        End If
-        '        LoadBetweenSearchDate(startResult, resultPerPage, Me.DataContext())
-
-
-        '    Catch ex As Exception
-        '        MsgBox(ex.Message)
-        '    End Try
-
-        'Else ''NO FILTER DISPLAYING DATA
-
-        '    Try
-
-        '        Dim resultPerPage As Integer = 10
-        '        Dim startResult As Integer
-
-
-        '        If incVal = 0 Then
-        '            Return
-        '        ElseIf incVal > 0 Then
-        '            incVal = incVal - 1
-        '            startResult = incVal * resultPerPage
-        '        End If
-        '        LoadConcernList(startResult, resultPerPage)
-
-
-        '    Catch ex As Exception
-        '        MsgBox(ex.Message)
-        '    End Try
-
-
-        'End If
+        
         GetDateTimeNow(Me.DataContext())
-    End Sub
-
-    Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._First))
-    End Sub
-
-    Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Last))
     End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As RoutedEventArgs) Handles btnPrint.Click
@@ -610,9 +269,17 @@ Public Class ThreeC_Page
         If dtpFrom.Text IsNot String.Empty Then
             dtpTo.DisplayDateStart = dtpFrom.Text
             dtpTo.DisplayDateEnd = Date.MaxValue
-            dtpTo.IsEnabled = True
         End If
     End Sub
+
+    Private Sub dtpFrom_KeyUp(sender As Object, e As KeyEventArgs) Handles dtpFrom.KeyUp
+        ReloadConcernList(e)
+    End Sub
+
+    Private Sub dtpTo_KeyUp(sender As Object, e As KeyEventArgs) Handles dtpTo.KeyUp
+        ReloadConcernList(e)
+    End Sub
+
     Private Sub DisplayPagingInfo()
         ' If there has no data found
         If _lstConcern.Length = 0 Then
@@ -636,6 +303,36 @@ Public Class ThreeC_Page
 
         btnPrev.IsEnabled = True
         btnNext.IsEnabled = True
+    End Sub
+
+    Private Sub ReloadConcernList(e)
+        If e.Key = Key.Back Then
+            If dtpFrom.Text Is String.Empty AndAlso dtpTo.Text Is String.Empty Then
+                LoadConcernList(offsetVal, nextVal)
+            End If
+        End If
+    End Sub
+#End Region
+
+#Region "NotifyChanges"
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
+
+    End Sub
+
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
+
+    End Sub
+
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
+
+    End Sub
+
+    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
+
+    End Sub
+
+    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+
     End Sub
 #End Region
 

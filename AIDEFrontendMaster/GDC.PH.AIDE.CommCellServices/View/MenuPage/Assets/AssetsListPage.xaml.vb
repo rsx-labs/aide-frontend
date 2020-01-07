@@ -51,16 +51,16 @@ Public Class AssetsListPage
         Me._addframe = _addframe
         Me._menugrid = _menugrid
         Me._submenuframe = _submenuframe
-        SetData()
+        Assets.SelectedIndex = 0
+
+        If profile.Permission_ID = 4 Then 'Allow custodian only to add assets
+            btnAdd.Visibility = Windows.Visibility.Visible
+        End If
     End Sub
 #End Region
 
 #Region "EVENTS"
     Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
-
-    End Sub
-
-    Private Sub txtSearch_TextChanged_1(sender As Object, e As TextChangedEventArgs)
         SetDataForSearch(txtSearch.Text)
     End Sub
 
@@ -86,7 +86,6 @@ Public Class AssetsListPage
         End If
     End Sub
 
-
     Private Sub btnPrint_Click(sender As Object, e As RoutedEventArgs) Handles btnPrint.Click
         Dim dialog As PrintDialog = New PrintDialog()
         If lv_assetList.HasItems Then
@@ -103,10 +102,9 @@ Public Class AssetsListPage
         End If
     End Sub
 
-    Private Sub lv_assetList_MouseDoubleClick_1(sender As Object, e As MouseButtonEventArgs)
+    Private Sub lv_assetList_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles lv_assetList.SelectionChanged
         e.Handled = True
-        If lv_assetList.SelectedIndex <> -1 Then
-
+        If lv_assetList.SelectedIndex <> -1 And (profile.Permission_ID = 4 Or profile.Permission_ID = 1) Then
             If lv_assetList.SelectedItem IsNot Nothing Then
                 Dim assetsModel As New AssetsModel
 
@@ -121,6 +119,7 @@ Public Class AssetsListPage
                 assetsModel.STATUS = CType(lv_assetList.SelectedItem, AssetsModel).STATUS
                 assetsModel.OTHER_INFO = CType(lv_assetList.SelectedItem, AssetsModel).OTHER_INFO
                 assetsModel.FULL_NAME = CType(lv_assetList.SelectedItem, AssetsModel).FULL_NAME
+
                 _addframe.Navigate(New AssetsUpdatePage(assetsModel, frame, profile, _addframe, _menugrid, _submenuframe))
                 frame.IsEnabled = False
                 frame.Opacity = 0.3
@@ -133,6 +132,39 @@ Public Class AssetsListPage
             End If
         End If
     End Sub
+
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
+        Dim totalRecords As Integer = lstAssets.Length
+
+        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+            paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+        End If
+        DisplayPagingInfo()
+    End Sub
+
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
+        paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
+        If currentPage > 1 Then
+            currentPage -= 1
+        End If
+        DisplayPagingInfo()
+    End Sub
+
+    Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
+        SetPaging(CInt(PagingMode._First))
+    End Sub
+
+    Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
+        SetPaging(CInt(PagingMode._Last))
+    End Sub
+
+    Private Sub Assets_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles Assets.SelectionChanged
+        paginatedCollection.Clear()
+        SetData()
+    End Sub
+
 #End Region
 
 #Region "METHODS"
@@ -140,8 +172,13 @@ Public Class AssetsListPage
     Public Sub SetData()
         Try
             If InitializeService() Then
-                lstAssets = _AideService.GetAllAssetsByEmpID(profile.Emp_ID)
-                btnPrint.Visibility = Windows.Visibility.Hidden
+                If Assets.SelectedIndex = 0 Then
+                    lstAssets = _AideService.GetAllAssetsByEmpID(profile.Emp_ID)
+                    btnPrint.Visibility = Windows.Visibility.Hidden
+                Else
+                    lstAssets = _AideService.GetAllDeletedAssetsByEmpID(profile.Emp_ID)
+                    btnPrint.Visibility = Windows.Visibility.Hidden
+                End If
                 LoadData()
                 DisplayPagingInfo()
             End If
@@ -152,9 +189,11 @@ Public Class AssetsListPage
 
     Public Sub LoadData()
         Try
-            paginatedCollection.Clear()
+            'paginatedCollection.Clear()
             Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
             Dim assetsDBProvider As New AssetsDBProvider
+
+            paginatedCollection = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
 
             For Each objAssets As Assets In lstAssets
                 assetsDBProvider.SetAssetList(objAssets)
@@ -164,7 +203,11 @@ Public Class AssetsListPage
                 paginatedCollection.Add(New AssetsModel(assetList))
             Next
 
-            lv_assetList.ItemsSource = paginatedCollection
+            If Assets.SelectedIndex = 0 Then
+                lv_assetList.ItemsSource = paginatedCollection
+            Else
+                lv_assetDeletedList.ItemsSource = paginatedCollection
+            End If
             'LoadDataForPrint()
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(lstAssets.Length / pagingRecordPerPage)
@@ -181,7 +224,7 @@ Public Class AssetsListPage
 
             Dim items = From i In lstAssets Where i.ASSET_DESC.ToLower.Contains(input.ToLower) Or i.MANUFACTURER.ToLower.Contains(input.ToLower) _
                       Or i.MODEL_NO.ToLower.Contains(input.ToLower) Or i.SERIAL_NO.ToLower.Contains(input.ToLower) Or i.ASSET_TAG.ToLower.Contains(input.ToLower) _
-                      Or i.FULL_NAME.ToLower.Contains(input.ToLower)
+                      Or i.FULL_NAME.ToLower.Contains(input.ToLower) Or i.OTHER_INFO.ToLower.Contains(input.ToLower)  'Or i.STATUS_DESCR.ToLower.Contains(input.ToLower) 
             Dim searchAssets = New ObservableCollection(Of Assets)(items)
 
             For Each assets As Assets In searchAssets
@@ -218,6 +261,7 @@ Public Class AssetsListPage
         Return bInitialize
     End Function
 
+    
     Private Sub SetPaging(mode As Integer)
         Try
             Dim totalRecords As Integer = lstAssets.Length
@@ -308,32 +352,7 @@ Public Class AssetsListPage
         btnNext.IsEnabled = True
     End Sub
 
-    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
-        Dim totalRecords As Integer = lstAssets.Length
-
-        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
-            paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
-            currentPage = paginatedCollection.CurrentPage + 1
-            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
-        End If
-        DisplayPagingInfo()
-    End Sub
-
-    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
-        paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
-        If currentPage > 1 Then
-            currentPage -= 1
-        End If
-        DisplayPagingInfo()
-    End Sub
-
-    Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._First))
-    End Sub
-
-    Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Last))
-    End Sub
+    
 #End Region
 
 #Region "ICallBack Function"

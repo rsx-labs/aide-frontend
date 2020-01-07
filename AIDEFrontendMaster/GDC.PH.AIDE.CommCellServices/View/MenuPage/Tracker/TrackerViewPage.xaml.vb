@@ -275,7 +275,7 @@ Class TrackerViewPage
         submenuframe.IsEnabled = False
         submenuframe.Opacity = 0.3
         addframe.Visibility = Visibility.Visible
-        addframe.Margin = New Thickness(200, 100, 200, 100)
+        addframe.Margin = New Thickness(150, 150, 150, 150)
     End Sub
 
     Private Sub btnCCancel_Click(sender As Object, e As RoutedEventArgs)

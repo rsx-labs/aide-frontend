@@ -89,6 +89,10 @@ Class TaskAdminPage
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
 
     End Sub
+
+    Private Sub svTasksSpList_PreviewMouseWheel(sender As Object, e As MouseWheelEventArgs) Handles dgTask.PreviewMouseWheel
+        svTasksSpList.ScrollToVerticalOffset(svTasksSpList.VerticalOffset - e.Delta)
+    End Sub
 #End Region
 
     Dim _outstanding As Integer
@@ -334,6 +338,7 @@ Class TaskAdminPage
             lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
         End If
         DisplayPagingInfo()
+
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
@@ -342,6 +347,7 @@ Class TaskAdminPage
             currentPage -= 1
         End If
         DisplayPagingInfo()
+
     End Sub
 
     Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)

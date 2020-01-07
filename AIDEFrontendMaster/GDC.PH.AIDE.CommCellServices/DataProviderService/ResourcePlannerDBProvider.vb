@@ -70,7 +70,7 @@ Public Class ResourcePlannerDBProvider
                                                              .Emp_Name = resourceLst.NAME,
                                                              .Date_Entry = resourceLst.DateEntry,
                                                              .Status = resourceLst.Status,
-                                                             .UsedVL = resourceLst.Status,
+                                                             .UsedVL = resourceLst.UsedLeaves,
                                                              .TotalBalance = resourceLst.TotalBalance,
                                                              .HalfBalance = resourceLst.HalfBalance}
         _splist.Add(_Resourceobj)
@@ -114,7 +114,7 @@ End Class
 Public Class myResourceList
     Public Emp_ID As Integer
     Public Emp_Name As String
-    Public Status As Double
+    Public Status As String
     Public UsedVL As Double
     Public HalfBalance As Double
     Public TotalBalance As Double

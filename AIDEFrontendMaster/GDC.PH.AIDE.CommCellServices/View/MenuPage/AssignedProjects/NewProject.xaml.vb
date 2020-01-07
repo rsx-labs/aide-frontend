@@ -151,6 +151,34 @@ Public Class NewProject
         Me.DataContext = _setSelectedProject
         Return _setSelectedProject
     End Function
+
+    Private Sub LoadAssignedEmployees()
+        Dim projID As Integer = CType(cbProjectName.SelectedItem, ProjectModel).ProjectID
+        Dim lstAssignedEmployees As Object = _AideServiceClient.GetAssignedProjects(projID)
+        If Not IsNothing(lstAssignedEmployees) Then
+            For Each assigned As AssignedProject In lstAssignedEmployees
+
+                For Each rawEmployee As EmployeeListModel In _EmployeeListViewModel.EmployeeList
+                    If rawEmployee.EmpID = assigned.EmployeeID Then
+                        rawEmployee.DateStarted = assigned.StartPeriod
+                        rawEmployee.DateFinished = assigned.EndPeriod
+                        _ProjectViewModel.AssignedEmployeeLists.Add(rawEmployee)
+
+                        Exit For
+                    End If
+                Next
+
+                For Each rawEmployee As EmployeeListModel In _ProjectViewModel.EmployeeLists
+                    If rawEmployee.EmpID = assigned.EmployeeID Then
+                        '_EmployeeListViewModel.EmployeeList.Remove(rawEmployee)
+                        _ProjectViewModel.EmployeeLists.Remove(rawEmployee)
+                        _ProjectViewModel.RemoveMode = True
+                        Exit For
+                    End If
+                Next
+            Next
+        End If
+    End Sub
 #End Region
 
 #Region "Events"
@@ -167,7 +195,10 @@ Public Class NewProject
     End Sub
 
     Private Sub cbProjectName_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbProjectName.SelectionChanged
+
+        ResetEmployeeList()
         LoadAllProjectNameByID()
+        LoadAssignedEmployees()
     End Sub
 #End Region
 
@@ -190,6 +221,19 @@ Public Class NewProject
 
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
 
+    End Sub
+
+    Private Sub ResetEmployeeList()
+        If _ProjectViewModel.AssignedEmployeeLists.Count > 0 Then
+            For Each rawEmployee As EmployeeListModel In _ProjectViewModel.AssignedEmployeeLists
+                _ProjectViewModel.EmployeeLists.Add(rawEmployee)
+            Next
+            _ProjectViewModel.EmployeeLists = New ObservableCollection(Of EmployeeListModel)(_ProjectViewModel.EmployeeLists.OrderBy(Function(f) f.Name).ToList())
+
+            grdEmployees.Items.Refresh()
+            _ProjectViewModel.AssignedEmployeeLists.Clear()
+
+        End If
     End Sub
 #End Region
 

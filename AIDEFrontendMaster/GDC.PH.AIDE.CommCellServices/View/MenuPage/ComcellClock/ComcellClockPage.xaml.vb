@@ -84,7 +84,10 @@ Class ComcellClockPage
     Public Sub getTime()
         Dim actualTime As String
         Dim timer As DispatcherTimer = New DispatcherTimer(New TimeSpan(0, 0, 1), DispatcherPriority.Normal, Function()
-                                                                                                                 actualTime = DateTime.Now.DayOfWeek.ToString().ToUpper() + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString()
+                                                                                                               
+                                                                                                                 Dim dateNow As DateTime = Format(DateTime.Now, "hh:mm tt")
+                                                                                                                 actualTime = DateTime.Now.DayOfWeek.ToString().ToUpper() + " " + dateNow.ToString("hh:mm tt")
+
                                                                                                                  If TimeCheck(actualTime) Then
                                                                                                                      'alarmActive = True
                                                                                                                      Dim winwin As New ComcellClockWindow
@@ -164,8 +167,12 @@ Class ComcellClockPage
     End Sub
 
     Private Sub GetComcellDay()
-        Dim dayconvert As String = GetDayValue(comcellClockVM.objectComcellClockSet.CLOCK_DAY)
-        comcellClockVM.objectComcellDayOnly = dayconvert & " " & _comcellclock.Clock_Hour.ToString() & ":" & _comcellclock.Clock_Minute.ToString().PadLeft(2, "0") & _comcellclock.MIDDAY
+        Try
+            Dim dayconvert As String = GetDayValue(comcellClockVM.objectComcellClockSet.CLOCK_DAY)
+            comcellClockVM.objectComcellDayOnly = dayconvert & " " & _comcellclock.Clock_Hour.ToString() & ":" & _comcellclock.Clock_Minute.ToString().PadLeft(2, "0") & " " & _comcellclock.MIDDAY
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
     End Sub
 
     Private Function GetDayValue(ByVal daycount As Integer) As String
@@ -187,7 +194,7 @@ Class ComcellClockPage
 
     Public Function TimeCheck(timenow As String) As Boolean
         TimeCheck = False
-        If timenow = comcellClockVM.objectComcellSetAlarm Then
+        If timenow = comcellClockVM.objectComcellDayOnly Then
             TimeCheck = True
         End If
     End Function

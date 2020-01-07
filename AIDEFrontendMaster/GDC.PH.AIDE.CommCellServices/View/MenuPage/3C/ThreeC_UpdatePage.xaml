@@ -9,9 +9,9 @@
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height=".5*" />
-                <RowDefinition Height="7*" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             
             <Grid Grid.Row="0">
@@ -58,24 +58,7 @@
                         </Grid.RowDefinitions>
                         
                         <Grid Grid.Row="0">
-                            <Border Margin="0,5,5,5" CornerRadius="15" BorderThickness="3,3,3,3">
-                                <Border.BorderBrush>
-                                    <DrawingBrush Viewport="0,0,10,10" ViewportUnits="Absolute" TileMode="Tile">
-                                        <DrawingBrush.Drawing>
-                                            <DrawingGroup>
-                                                <GeometryDrawing Brush="DimGray">
-                                                    <GeometryDrawing.Geometry>
-                                                        <GeometryGroup>
-                                                            <RectangleGeometry Rect="0,0,50,50"/>
-                                                            <RectangleGeometry Rect="50,50,50,50"/>
-                                                            <RectangleGeometry Rect="50,50,50,50"/>
-                                                        </GeometryGroup>
-                                                    </GeometryDrawing.Geometry>
-                                                </GeometryDrawing>
-                                            </DrawingGroup>
-                                        </DrawingBrush.Drawing>
-                                    </DrawingBrush>
-                                </Border.BorderBrush>
+                            <Border Margin="0,5,5,5" CornerRadius="15" BorderThickness="3" BorderBrush="White">
                                 <Viewbox>
                                     <TextBlock TextWrapping="Wrap" Foreground="White" Margin="10" 
                                                x:Name="txtRefID" 
@@ -190,11 +173,11 @@
                         </Grid>
                         
                         <Grid Grid.Row="4">
-                            <Border Margin="5,0,5,0" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+                            <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
                                 <DatePicker Style="{DynamicResource styleDatePickerfrom}" x:Name="dtDate" BorderBrush="Transparent" Margin="0" FontSize="12" Text="{Binding SelectedConcern.DUE_DATE, Mode=TwoWay}" />
                             </Border>
                             
-                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a date *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
+                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a date *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -222,7 +205,7 @@
                         </Grid>
                         <Grid Grid.Row="5">
                             <Button Style="{DynamicResource RoundCornerUpdate}" Margin="0,5,5,5"
-                                    x:Name="btnReload"  Click="btnSaveClick" >
+                                    x:Name="btnUpdate" Click="btnUpdateClick" >
                                 <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="7"/>
                             </Button>
                         </Grid>
@@ -244,11 +227,8 @@
                         
                         <Grid Grid.Row="1">
                             <Border Margin="5,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                <DataGrid AlternationCount="2" Background="Transparent" AutoGenerateColumns="False" x:Name="lv" Margin="0" 
-                                          Width="auto" BorderBrush="Transparent" 
-                                          ItemsSource="{Binding ListOfActionInConcern}" 
-                                          SelectedItem="{Binding GetSelectedAction}"
-                                          SelectedValuePath="Key">
+                                <DataGrid AlternationCount="2" Background="Transparent" AutoGenerateColumns="False" x:Name="lvActionRef" Margin="0" 
+                                          Width="auto" BorderBrush="Transparent">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Ref. No." Width="*" Binding="{Binding ACTREF}" IsReadOnly="True"/>
                                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Action Ref."  Width="*" Binding="{Binding ACTION_REFERENCES}" IsReadOnly="True"/>
@@ -259,7 +239,7 @@
                         
                         <Grid Grid.Row="2">
                             <Viewbox HorizontalAlignment="Right" Margin="5">
-                                <Button Style="{DynamicResource ButtonMinus}" Click="btnRemoveSelectedAction"/>
+                                <Button x:Name="btnRemoveAction" Style="{DynamicResource ButtonMinus}" Click="btnRemoveSelectedAction"/>
                             </Viewbox>
                         </Grid>
                     </Grid>
@@ -286,10 +266,7 @@
                             <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                                 <DataGrid AlternationCount="2" Background="Transparent" 
                                           AutoGenerateColumns="False" x:Name="lvACtion" Margin="0" 
-                                          Width="auto" BorderBrush="Transparent" 
-                                          ItemsSource="{Binding listAction}" 
-                                          SelectedItem="{Binding GetSelectedAction}"
-                                          SelectedValuePath="Key">
+                                          Width="auto" BorderBrush="Transparent">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Action Message"  Width="1*" Binding="{Binding ACT_MESSAGE}" IsReadOnly="True"/>
                                     </DataGrid.Columns>
@@ -299,10 +276,10 @@
                         
                         <Grid Grid.Row="2">
                             <Viewbox Margin="5,5,0,5" HorizontalAlignment="Right">
-                                <Button Style="{DynamicResource ButtonAdd}" Click="btnSaveActionRef">
-                                    <Viewbox>
+                                <Button x:Name="btnAddAction" Style="{DynamicResource ButtonAdd}" Click="btnSaveActionRef">
+                                    <!--<Viewbox>
                                         <TextBlock Text="Add" TextWrapping="Wrap" Margin="5"/>
-                                    </Viewbox>
+                                    </Viewbox>-->
                                 </Button>
                             </Viewbox>
                         </Grid>

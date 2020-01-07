@@ -8,6 +8,7 @@ Public Class AssetsDBProvider
     Private _assetsHistoryList As ObservableCollection(Of MyAssets)
     Private _assetsTypeList As ObservableCollection(Of MyAssets)
     Private _assetsManufacturerList As ObservableCollection(Of MyAssets)
+    Private _assetsManagerList As ObservableCollection(Of MyAssets)
     Private client As AideServiceClient
     Private UNASSIGNED As String = "Unassigned"
     Private ASSIGNED As String = "Assigned"
@@ -22,6 +23,7 @@ Public Class AssetsDBProvider
         _assetsHistoryList = New ObservableCollection(Of MyAssets)
         _assetsTypeList = New ObservableCollection(Of MyAssets)
         _assetsManufacturerList = New ObservableCollection(Of MyAssets)
+        _assetsManagerList = New ObservableCollection(Of MyAssets)
     End Sub
 
     Public Function GetAssetList() As ObservableCollection(Of MyAssets)
@@ -42,6 +44,10 @@ Public Class AssetsDBProvider
 
     Public Function GetAssetManufacturerList() As ObservableCollection(Of MyAssets)
         Return _assetsManufacturerList
+    End Function
+
+    Public Function GetManagerList() As ObservableCollection(Of MyAssets)
+        Return _assetsManagerList
     End Function
 
     Public Sub SetAssetList(ByVal _assets As Assets)
@@ -79,7 +85,9 @@ Public Class AssetsDBProvider
             .OTHER_INFO = _assets.OTHER_INFO,
             .STATUS = _assets.STATUS,
             .STATUS_DESCR = Status_Descr,
-            .DATE_DESCR = Date_Descr
+            .DATE_DESCR = Date_Descr,
+            .PREVIOUS_ID = _assets.PREVIOUS_ID,
+            .PREVIOUS_OWNER = _assets.PREVIOUS_OWNER
         }
         _assetsList.Add(_objectAsset)
     End Sub
@@ -131,11 +139,12 @@ Public Class AssetsDBProvider
             .STATUS_DESCR = Status_Descr,
             .APPROVAL = _assets.APPROVAL,
             .DATE_DESCR = Date_Descr,
-            .ISAPPROVED = isApprove
+            .ISAPPROVED = isApprove,
+            .PREVIOUS_ID = _assets.PREVIOUS_ID,
+            .PREVIOUS_OWNER = _assets.PREVIOUS_OWNER
         }
         _assetsInventoryList.Add(_objectAsset)
     End Sub
-
 
     Public Sub SetAssetHistoryList(ByVal _assets As Assets)
         Dim _objectAsset As MyAssets = New MyAssets With {
@@ -175,11 +184,25 @@ Public Class AssetsDBProvider
         }
         _assetsManufacturerList.Add(_objectAsset)
     End Sub
+
+    Public Sub SetManagerList(ByVal _assets As Assets)
+
+        Dim _objectAsset As MyAssets = New MyAssets With {
+            .EMP_ID = _assets.EMP_ID,
+            .FIRST_NAME = _assets.First_Name,
+            .NICK_NAME = _assets.Nick_Name,
+            .EMPLOYEE_NAME = _assets.Employee_Name
+        }
+        _assetsManagerList.Add(_objectAsset)
+    End Sub
+
 End Class
 
 Public Class MyAssets
     Public Property ASSET_ID As Integer
     Public Property EMP_ID As Integer
+    Public Property PREVIOUS_ID As Integer
+    Public Property PREVIOUS_OWNER As String
     Public Property ASSET_DESC As String
     Public Property MANUFACTURER As String
     Public Property MODEL_NO As String
@@ -198,4 +221,7 @@ Public Class MyAssets
     Public Property APPROVAL As Integer
     Public Property ISAPPROVED As Boolean
     Public Property TABLE_NAME As String
+    Public Property NICK_NAME As String
+    Public Property FIRST_NAME As String
+    Public Property EMPLOYEE_NAME As String
 End Class

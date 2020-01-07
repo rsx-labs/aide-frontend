@@ -24,6 +24,9 @@ Public Class BillabilityVacationLeavePage
     Private _menugrid As Grid
     Private _submenuframe As Frame
     Private _attendanceFrame As Frame
+    Dim lstFiscalYear As FiscalYear()
+    Dim commendationVM As New CommendationViewModel()
+    Dim fiscalyearVM As New SelectionListViewModel
 
     Dim month As Integer = Date.Now.Month
     Dim displayFiscalYear As Integer = 3
@@ -43,8 +46,7 @@ Public Class BillabilityVacationLeavePage
 
         month = Date.Now.Month
         year = Date.Now.Year
-
-        LoadYears()
+        SetData()
         LoadData()
 
         cbYear.SelectedValue = year
@@ -77,16 +79,35 @@ Public Class BillabilityVacationLeavePage
         End If
     End Sub
 
-    Public Sub LoadYears()
+    Public Sub SetData()
         Try
-            cbYear.DisplayMemberPath = "Text"
-            cbYear.SelectedValuePath = "Value"
-            For i As Integer = 2019 To DateTime.Today.Year
-                Dim nextYear As Integer = i + 1
-                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
-            Next
+            If InitializeService() Then
+
+                lstFiscalYear = client.GetAllFiscalYear()
+                LoadFiscalYear()
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Public Sub LoadFiscalYear()
+        Try
+            Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
+            Dim FYDBProvider As New SelectionListDBProvider
+
+            For Each objFiscal As FiscalYear In lstFiscalYear
+                FYDBProvider._setlistofFiscal(objFiscal)
+            Next
+
+            For Each rawUser As myFiscalYearSet In FYDBProvider._getobjFiscal()
+                lstFiscalYearList.Add(New FiscalYearModel(rawUser))
+            Next
+
+            fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
+            cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
 
@@ -169,7 +190,7 @@ Public Class BillabilityVacationLeavePage
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
         If Not cbYear.SelectedIndex = -1 Then
-            year = cbYear.SelectedValue
+            year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
             LoadData()
         End If
     End Sub

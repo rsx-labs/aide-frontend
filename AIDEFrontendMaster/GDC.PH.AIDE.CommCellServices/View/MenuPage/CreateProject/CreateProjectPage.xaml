@@ -1069,10 +1069,10 @@
                     <RowDefinition Height="1.2*"/>
                     <RowDefinition Height="2.8*"/>
                 </Grid.RowDefinitions>
-                <Border CornerRadius="15" Margin="5" BorderBrush="Gainsboro" BorderThickness="1">
-                <Grid Grid.Row="0" Margin="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
+                <Border CornerRadius="15" Margin="5" BorderBrush="Gainsboro" BorderThickness="1" x:Name="grdCreate" Visibility="Collapsed" >
+                <Grid Grid.Row="0" Margin="5" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
@@ -1261,7 +1261,7 @@
                         <DataGrid Background="Transparent" x:Name="dgProjectList" ItemsSource="{Binding ProjectList}" BorderBrush="Transparent" AutoGenerateColumns="False" IsReadOnly="True" CanUserResizeColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Project ID" Binding="{Binding ProjectID}" Width="0.25*" Visibility="Collapsed"/>
-                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Project Code" Binding="{Binding ProjectCode}" Width="0.25*"/>
+                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Project Code" Binding="{Binding ProjectCode}" Width="0.25*" Visibility="Collapsed"/>
                                 <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Project Name" Binding="{Binding ProjectName}" Width="0.5*"/>
                                 <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Billability" Binding="{Binding Billability}" Width="0.25*"/>
                             </DataGrid.Columns>

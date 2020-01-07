@@ -206,36 +206,7 @@
             </Setter>
         </Style>
         <!-- end of scroll -->
-        <Style x:Key="ButtonAdd" TargetType="{x:Type Button}">
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Image Name="buttonImage"
-                               Height="Auto"
-                               HorizontalAlignment="Right"
-                               Margin="1"
-                               Source="..\..\..\Assets\Button\addnewdb.png"
-                               Stretch="Fill"
-                               VerticalAlignment="Stretch"
-                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
-                            <!--<Image.Effect>
-                                <DropShadowEffect  Direction="270" Opacity="0.6" ShadowDepth=".5" Color="Gray"/>
-                            </Image.Effect>-->
-                        </Image>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="buttonImage"
-                                        Property="Source"
-                                        Value="..\..\..\Assets\Button\addnewdbclick.png"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-
-                </Setter.Value>
-            </Setter>
-
-        </Style>
+        
         <LinearGradientBrush x:Key="GradientDesign" MappingMode="RelativeToBoundingBox" >
             <!--<RadialGradientBrush.RelativeTransform>
                     <TransformGroup>
@@ -417,7 +388,7 @@
         </Style>
 
     </Page.Resources>
-    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15,0,0,0">
+    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="0,15,15,0">
         <Grid>
             <!--<Grid.Effect>
         <DropShadowEffect Color="#FFD6D6D6" Direction="240" Opacity="0.5" ShadowDepth="5"/>
@@ -479,13 +450,13 @@
                             
                         </Grid>
                             <Grid Grid.Column="1">
-                                <ComboBox MinWidth="70" Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="5,10,10,10"/>
+                            <ComboBox MinWidth="70" Style="{DynamicResource StyleComboBox}" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR" x:Name="cbYear" Margin="5,10,10,10"/>
                                 <TextBlock FontSize="12" IsHitTestVisible="False" Text="Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
+                                            <DataTrigger Binding="{Binding Text, ElementName=cbYear}" Value="">
                                                     <Setter Property="Visibility" Value="Visible"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -501,78 +472,81 @@
 
 
                 </Grid>
-                <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}">
+                <Grid Grid.Row="2">
+                    <Grid>
 
+                        <Border Background="{DynamicResource GradientDesign}" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="0,0,15,0">
 
-                    <ListView Background="Transparent"  Margin="5" MouseDoubleClick="CommendationLV_MouseDoubleClick" ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" x:Name="CommendationLV" ItemsSource="{Binding CommendationList}" Height="auto" Width="auto" BorderBrush="{x:Null}" SelectionMode="Single" Foreground="#FF07B9B1" TextOptions.TextFormattingMode="Display" AllowDrop="True" BorderThickness="0" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListView Background="Transparent"  Margin="5" MouseDoubleClick="CommendationLV_MouseDoubleClick" ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" x:Name="CommendationLV" ItemsSource="{Binding CommendationList}" Height="auto" Width="auto" BorderBrush="{x:Null}" SelectionMode="Single" Foreground="#FF07B9B1" TextOptions.TextFormattingMode="Display" AllowDrop="True" BorderThickness="0" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Border Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Margin="3">
-                                    <StackPanel VerticalAlignment="Stretch" Margin="7">
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Margin="3">
+                                        <StackPanel VerticalAlignment="Stretch" Margin="7">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="*"/>
 
-                                            </Grid.RowDefinitions>
-                                            <Grid Grid.Row="0">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="58*"/>
-                                                    <ColumnDefinition Width="42*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Grid Grid.Column="0">
-                                                    
-                                                    <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Employees}" FontSize="12" FontWeight="Bold" Foreground="Teal"/>
-                                                    
-                                                </Grid>
-                                                <Grid Grid.Column="1">
-
-                                                    <TextBlock TextWrapping="WrapWithOverflow" FontSize="12" Text="{Binding DateSent, StringFormat=MM/dd/yyyy}" TextAlignment="Right" VerticalAlignment="Center" Foreground="Gray" FontStyle="Italic" />
-
-                                                </Grid>
-
-                                            </Grid>
-                                            <Grid Grid.Row="1">
-
-                                                <Grid>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="50*"/>
-                                                        <ColumnDefinition Width="50*"/>
-
+                                                        <ColumnDefinition Width="58*"/>
+                                                        <ColumnDefinition Width="42*"/>
                                                     </Grid.ColumnDefinitions>
                                                     <Grid Grid.Column="0">
-                                                        
-                                                        <TextBlock Foreground="Black" FontSize="12" Text="{Binding Project}" HorizontalAlignment="Left"  VerticalAlignment="Center" />
-                                                        
+
+                                                        <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Employees}" FontSize="12" FontWeight="Bold" Foreground="Teal"/>
+
                                                     </Grid>
                                                     <Grid Grid.Column="1">
-                                                        
-                                                        <TextBlock TextWrapping="WrapWithOverflow" Foreground="Black" FontSize="12" Text="{Binding SentBy}" HorizontalAlignment="Right"  VerticalAlignment="Center" />
-                                                        
+
+                                                        <TextBlock TextWrapping="WrapWithOverflow" FontSize="12" Text="{Binding DateSent, StringFormat=MM/dd/yyyy}" TextAlignment="Right" VerticalAlignment="Center" Foreground="Gray" FontStyle="Italic" />
+
                                                     </Grid>
+
+                                                </Grid>
+                                                <Grid Grid.Row="1">
+
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="50*"/>
+                                                            <ColumnDefinition Width="50*"/>
+
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Column="0">
+
+                                                            <TextBlock Foreground="Black" FontSize="12" Text="{Binding Project}" HorizontalAlignment="Left"  VerticalAlignment="Center" />
+
+                                                        </Grid>
+                                                        <Grid Grid.Column="1">
+
+                                                            <TextBlock TextWrapping="WrapWithOverflow" Foreground="Black" FontSize="12" Text="{Binding SentBy}" HorizontalAlignment="Right"  VerticalAlignment="Center" />
+
+                                                        </Grid>
+
+                                                    </Grid>
+
+                                                </Grid>
+                                                <Grid Grid.Row="2" Margin="0,5,0,0">
+
+                                                    <TextBlock Height="30" FontWeight="Normal" FontSize="10"  TextWrapping="Wrap" Foreground="DimGray" Text="{Binding Reason}" TextTrimming="WordEllipsis" TextAlignment="Justify"  VerticalAlignment="Center" />
 
                                                 </Grid>
 
                                             </Grid>
-                                            <Grid Grid.Row="2" Margin="0,5,0,0">
 
-                                                <TextBlock Height="30" FontWeight="Normal" FontSize="10"  TextWrapping="Wrap" Foreground="DimGray" Text="{Binding Reason}" TextTrimming="WordEllipsis" TextAlignment="Justify"  VerticalAlignment="Center" />
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
 
-                                            </Grid>
-                                          
-                                        </Grid>
-
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-
-                    </ListView>
-
-
+                        </ListView>
+                    </Border>
+                    </Grid>
                 </Grid>
+                
             </Grid>
 
 

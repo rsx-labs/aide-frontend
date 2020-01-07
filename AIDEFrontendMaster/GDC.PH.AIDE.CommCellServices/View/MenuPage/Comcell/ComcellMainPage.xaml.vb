@@ -24,7 +24,9 @@ Class ComcellMainPage
     Dim lstComcell As Comcell()
     Dim ComcellVM As New ComcellViewModel()
 
-
+    Dim lstFiscalYear As FiscalYear()
+    Dim commendationVM As New CommendationViewModel()
+    Dim fiscalyearVM As New SelectionListViewModel
 
 #End Region
 
@@ -59,10 +61,9 @@ Class ComcellMainPage
             btnCreate.Visibility = Windows.Visibility.Visible
         End If
 
-        year = Date.Now.Year
-        cbYear.SelectedValue = year
-        LoadYears()
+        LoadYear()
         SetData()
+        LoadFiscalYear()
 
     End Sub
 
@@ -87,6 +88,7 @@ Class ComcellMainPage
         Try
             If InitializeService() Then
                 lstComcell = _AideService.GetComcellMeeting(empID, year)
+                lstFiscalYear = _AideService.GetAllFiscalYear()
                 SetPaging(PagingMode._First)
             End If
         Catch ex As Exception
@@ -94,12 +96,21 @@ Class ComcellMainPage
         End Try
     End Sub
 
+    Public Sub LoadYear()
+        If Today.DayOfYear() <= CDate(Today.Year().ToString + "-03-31").DayOfYear Then
+            cbYear.SelectedValue = (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
+        Else
+            cbYear.SelectedValue = (Date.Now.Year).ToString() + "-" + (Date.Now.Year + 1).ToString()
+        End If
+
+        year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+    End Sub
+
     Public Sub LoadComcell()
         Try
             Dim lstComcellList As New ObservableCollection(Of ComcellModel)
             Dim ComcellDBProvider As New ComcellDBProvider
             Dim objComcell As New Comcell
-
 
             For i As Integer = startRowIndex To lastRowIndex
                 objComcell = lstComcell(i)
@@ -118,16 +129,23 @@ Class ComcellMainPage
         End Try
     End Sub
 
-    Public Sub LoadYears()
+    Public Sub LoadFiscalYear()
         Try
-            cbYear.DisplayMemberPath = "Text"
-            cbYear.SelectedValuePath = "Value"
-            For i As Integer = startYear To DateTime.Today.Year
-                Dim nextYear As Integer = i + 1
-                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
+            Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
+            Dim FYDBProvider As New SelectionListDBProvider
+
+            For Each objFiscal As FiscalYear In lstFiscalYear
+                FYDBProvider._setlistofFiscal(objFiscal)
             Next
+
+            For Each rawUser As myFiscalYearSet In FYDBProvider._getobjFiscal()
+                lstFiscalYearList.Add(New FiscalYearModel(rawUser))
+            Next
+
+            fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
+            cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
 
@@ -238,7 +256,7 @@ Class ComcellMainPage
     End Sub
 
     Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
-        year = cbYear.SelectedValue
+        year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
         SetData()
     End Sub
 #End Region

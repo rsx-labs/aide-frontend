@@ -51,12 +51,13 @@ Class WeeklyReportPage
     Dim daySatDiff As Integer = Today.DayOfWeek - DayOfWeek.Saturday
     Dim saturday As Date = Today.AddDays(-daySatDiff)
     Dim lastWeekSaturday As Date = saturday.AddDays(-14)
-
+    Dim monday As Date = lastWeekSaturday.AddDays(2)
     Dim dayFriDiff As Integer = Today.DayOfWeek - DayOfWeek.Friday
     Dim friday As Date = Today.AddDays(-dayFriDiff)
     Dim lastWeekFriday As Date = friday.AddDays(-7)
 
     Dim isManager As Integer = 1
+    Dim isTeamLeader As Integer = 3
     Dim statusID As Integer = 14
     Dim lstWeekRange As WeekRange()
     Dim lstMissingReports As ContactList()
@@ -69,6 +70,10 @@ Class WeeklyReportPage
 
     Dim weeklyReportDBProvider As New WeeklyReportDBProvider
     Dim weekRangeViewModel As New WeekRangeViewModel
+
+    Dim lstFiscalYear As FiscalYear()
+    Dim commendationVM As New CommendationViewModel()
+    Dim fiscalyearVM As New SelectionListViewModel
 #End Region
 
 #Region "Constructor"
@@ -83,11 +88,16 @@ Class WeeklyReportPage
         Me.submenuframe = _submenuframe
         Me.profile = _profile
 
-        month = lastWeekSaturday.Month
+        If Not monday.Month = lastWeekSaturday.Month Then
+            month = monday.Month
+        Else
+            month = lastWeekSaturday.Month
+        End If
+
         year = lastWeekSaturday.Year
 
         LoadMonth()
-        LoadYears()
+        SetData()
 
         LoadStatusData()
         SetWeeklyReports()
@@ -96,8 +106,8 @@ Class WeeklyReportPage
         cbMonth.SelectedValue = month
         cbYear.SelectedValue = year
 
-        If Not profile.Permission_ID = isManager Then
-            btnTeamReports.Visibility = Windows.Visibility.Hidden
+        If profile.Permission_ID = isManager OrElse profile.Permission_ID = isTeamLeader Then
+            btnTeamReports.Visibility = Windows.Visibility.Visible
         End If
     End Sub
 
@@ -231,16 +241,35 @@ Class WeeklyReportPage
         cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
     End Sub
 
-    Private Sub LoadYears()
+    Public Sub SetData()
         Try
-            cbYear.DisplayMemberPath = "Text"
-            cbYear.SelectedValuePath = "Value"
-            For i As Integer = 2019 To DateTime.Today.Year
-                Dim nextYear As Integer = i + 1
-                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
-            Next
+            If InitializeService() Then
+
+                lstFiscalYear = AideServiceClient.GetAllFiscalYear()
+                LoadFiscalYear()
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+
+    Public Sub LoadFiscalYear()
+        Try
+            Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
+            Dim FYDBProvider As New SelectionListDBProvider
+
+            For Each objFiscal As FiscalYear In lstFiscalYear
+                FYDBProvider._setlistofFiscal(objFiscal)
+            Next
+
+            For Each rawUser As myFiscalYearSet In FYDBProvider._getobjFiscal()
+                lstFiscalYearList.Add(New FiscalYearModel(rawUser))
+            Next
+
+            fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
+            cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
 
@@ -332,7 +361,7 @@ Class WeeklyReportPage
     End Sub
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
-        year = cbYear.SelectedValue
+        year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
         SetWeeklyReports()
     End Sub
 

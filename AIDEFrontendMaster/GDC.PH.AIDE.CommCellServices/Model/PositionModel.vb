@@ -289,3 +289,31 @@ Public Class LocationModel
         RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(name))
     End Sub
 End Class
+
+Public Class FiscalYearModel
+
+    Private _fiscalYear As String
+
+    Public Sub New()
+    End Sub
+
+    Public Sub New(ByVal _myFiscalYearSet As myFiscalYearSet)
+        _fiscalYear = _myFiscalYearSet._fiscalYear
+    End Sub
+
+    Public Property FISCAL_YEAR As String
+        Get
+            Return _fiscalYear
+        End Get
+        Set(value As String)
+            _fiscalYear = value
+            OnPropertyChanged("FISCAL_YEAR")
+        End Set
+    End Property
+
+    Public Event PropertyChanged As PropertyChangedEventHandler
+
+    Protected Sub OnPropertyChanged(name As String)
+        RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(name))
+    End Sub
+End Class

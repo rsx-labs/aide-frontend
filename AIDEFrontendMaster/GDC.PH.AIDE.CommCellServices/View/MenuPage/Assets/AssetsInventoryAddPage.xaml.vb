@@ -31,22 +31,6 @@ Public Class AssetsInventoryAddPage
 #End Region
 
 #Region "Constructor"
-
-    'Public Sub New(mainFrame As Frame, _profile As Profile)
-
-    '    InitializeComponent()
-    '    Me.mainFrame = mainFrame
-    '    Me.profile = _profile
-    '    Me.pageDefinition = "Create"
-    '    tbSuccessForm.Text = "ASSIGN NEW ASSET"
-    '    btnCreate.Visibility = System.Windows.Visibility.Visible
-    '    btnUpdate.Visibility = System.Windows.Visibility.Hidden
-    '    btnDelete.Visibility = System.Windows.Visibility.Hidden
-    '    cbStatus.Visibility = System.Windows.Visibility.Visible
-    '    AssignEvents()
-    '    PopulateComboBoxAssetID()
-    'End Sub
-
     Public Sub New(_assetsModel As AssetsModel, mainFrame As Frame, _profile As Profile, _fromPage As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
 
         InitializeComponent()
@@ -58,19 +42,34 @@ Public Class AssetsInventoryAddPage
         Me.profile = _profile
         Me.assetsModel = _assetsModel
         Me.fromPage = _fromPage
+        If Me.fromPage = "Approval" Then
+            cbStatus.IsEnabled = True
+        End If
         tbSuccessForm.Text = "Update Assigned Assets"
         Me.pageDefinition = "Update"
         LoadData()
         LoadStatus()
         AssignEvents()
         PopulateComboBoxAssetID()
-        'ListOfManagers()
+        'ListOfCustodians()
         ListOfAssetType()
         ListOfAssetManufacturer()
-        empId = Integer.Parse(txtEmpID.Text)
-        If assetsModel.STATUS = 4 Then
+
+        If fromPage = "Update" And profile.Permission_ID = 1 Then
+            txtEmpID.IsEnabled = True
+            txtEmpID.Text = String.Empty
+        Else
+            txtEmpID.Text = _assetsModel.EMP_ID
+            Integer.TryParse(txtEmpID.Text, empId)
+        End If
+
+        If assetsModel.STATUS = 4 And assetsModel.PREVIOUS_ID <> 0 Then
+            status = 1
+        ElseIf assetsModel.STATUS = 3 And assetsModel.PREVIOUS_ID <> 0 Then
+            status = 1
+        ElseIf assetsModel.STATUS = 4 Then
             status = 2
-        ElseIf assetsModel.STATUS = 3 Then
+        ElseIf assetsModel.STATUS = 3 And assetsModel.PREVIOUS_ID = 0 Then
             status = 1
         End If
     End Sub
@@ -85,6 +84,7 @@ Public Class AssetsInventoryAddPage
             If CheckMissingField() Then
                 MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
             Else
+                Integer.TryParse(txtEmpID.Text, empId)
                 assets.EMP_ID = empId
                 assets.ASSET_ID = Integer.Parse(txtID.Text)
                 assets.DATE_ASSIGNED = Date.Parse(dateInput.SelectedDate)
@@ -96,8 +96,9 @@ Public Class AssetsInventoryAddPage
                 assets.ASSET_TAG = txtAssetTag.Text
                 assets.STATUS = cbStatus.SelectedValue
                 assets.ASSIGNED_TO = 999 'USED JUST TO BE NOT NULL
-
-                If profile.Permission_ID = 1 AndAlso profile.Emp_ID = assets.EMP_ID Then
+                assets.PREVIOUS_ID = assetsModel.EMP_ID
+                assets.TRANSFER_ID = cbNickname.SelectedValue
+                If profile.Permission_ID = 1 Then
                     assets.APPROVAL = 1
                 Else
                     assets.APPROVAL = 0
@@ -177,10 +178,11 @@ Public Class AssetsInventoryAddPage
         Try
             e.Handled = True
             If status = 2 Or status = 3 Then
-                approvalStatus = 1
+                approvalStatus = 5 'Approved
             ElseIf status = 1 Or status = 4 Then
-                approvalStatus = 2
+                approvalStatus = 6
             End If
+            empId = assetsModel.PREVIOUS_ID
             Approval()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
@@ -190,8 +192,8 @@ Public Class AssetsInventoryAddPage
     Private Sub btnApprove_Click(sender As Object, e As RoutedEventArgs) Handles btnApprove.Click
         Try
             e.Handled = True
-            approvalStatus = 1
-            empId = Integer.Parse(profile.Emp_ID)
+            approvalStatus = 5
+            Integer.TryParse(txtEmpID.Text, empId) 'Integer.Parse(profile.Emp_ID)
             If assetsModel.STATUS = 4 Then
                 status = 1
             ElseIf assetsModel.STATUS = 3 Then
@@ -269,12 +271,19 @@ Public Class AssetsInventoryAddPage
 
     Private Sub cbNickname_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbNickname.SelectionChanged
         txtEmpID.Text = cbNickname.SelectedValue
-        empId = Integer.Parse(txtEmpID.Text)
+        Integer.TryParse(txtEmpID.Text, empId)
+    End Sub
+
+    Private Sub cbStatus_DropDownOpened(sender As Object, e As EventArgs) Handles cbStatus.DropDownOpened
+        txtEmpName.Text = "Select employee *"
+        txtEmpID.Clear()
     End Sub
 
     Private Sub cbStatus_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbStatus.SelectionChanged
         PopulateComboBoxAssignedTo()
     End Sub
+
+
 #End Region
 
 #Region "Functions"
@@ -316,7 +325,7 @@ Public Class AssetsInventoryAddPage
 
     Private Sub AssignEvents()
         If fromPage = "Approval" Then
-            cbStatus.IsEnabled = False
+            cbStatus.IsEnabled = True
             cbNickname.IsEnabled = False
         End If
         AddHandler btnApprove.Click, AddressOf btnApprove_Click
@@ -335,6 +344,7 @@ Public Class AssetsInventoryAddPage
     End Sub
 
     Public Sub LoadStatus()
+        cbStatus.IsEnabled = True
         cbStatus.DisplayMemberPath = "Text"
         cbStatus.SelectedValuePath = "Value"
         If profile.Permission_ID = 1 Then
@@ -344,7 +354,7 @@ Public Class AssetsInventoryAddPage
             cbStatus.Items.Add(New With {.Text = "Unassigned", .Value = 4})
             cbStatus.Items.Add(New With {.Text = "Assigned", .Value = 3})
         End If
-        
+
         If assetsModel.STATUS = 3 Then
             txtStatus.Text = "Partially Assigned"
         ElseIf assetsModel.STATUS = 4 Then
@@ -364,7 +374,6 @@ Public Class AssetsInventoryAddPage
             btnUpdate.Visibility = Windows.Visibility.Collapsed
             btnApprove.Visibility = Windows.Visibility.Visible
             btnDisapprove.Visibility = Windows.Visibility.Visible
-            'btnCancel.Visibility = Windows.Visibility.Visible
         Else
             If profile.Permission_ID = 1 Then
                 btnUpdate.Visibility = Windows.Visibility.Visible
@@ -418,12 +427,7 @@ Public Class AssetsInventoryAddPage
     End Function
 
     Public Function CheckMissingField() As Boolean
-        If cbAssetType.Text = String.Empty AndAlso _
-               txtAssetTag.Text = String.Empty AndAlso _
-                txtAssetType.Text = String.Empty AndAlso _
-                cbStatus.Text = String.Empty AndAlso _
-                cbNickname.Text = String.Empty AndAlso _
-               cbAssetManufacturer.Text = String.Empty Then
+        If txtEmpID.Text = String.Empty Then
             Return True
         Else
             Return False
@@ -433,28 +437,20 @@ Public Class AssetsInventoryAddPage
     Public Sub PopulateComboBoxAssignedTo()
         Try
             If InitializeService() Then
-                If profile.Permission = "User level" Then ' User
+                If profile.Permission_ID = 2 Then ' User
                     If cbStatus.SelectedIndex = 1 Then ' Assigned
                         txtEmpID.Text = profile.Emp_ID
                         cbNickname.IsEnabled = False
                     Else ' Unassigned
-                        txtEmpID.Clear()
                         cbNickname.IsEnabled = True
-                        ListOfManagers()
+                        ListOfCustodians()
                     End If
-                Else ' Manager
+                Else ' Manager or Custodian
                     If cbStatus.SelectedIndex = 1 Then ' Assigned
                         ListOfAllUser()
-                        'txtAssignedToBorder.Visibility = Windows.Visibility.Visible
-                        'txtAssignedTo.Visibility = Windows.Visibility.Visible
-                        'txtlabelAssignedto.Visibility = Windows.Visibility.Visible
-                        'cbNickname.Visibility = Windows.Visibility.Collapsed
                     Else ' Unassigned
-                        ListOfManagers()
-                        'txtAssignedToBorder.Visibility = Windows.Visibility.Collapsed
-                        'txtAssignedTo.Visibility = Windows.Visibility.Collapsed
-                        'txtlabelAssignedto.Visibility = Windows.Visibility.Collapsed
-                        'cbNickname.Visibility = Windows.Visibility.Visible
+                        cbNickname.IsEnabled = True
+                        ListOfCustodians()
                     End If
                 End If
             End If
@@ -463,22 +459,24 @@ Public Class AssetsInventoryAddPage
         End Try
     End Sub
 
-    Public Sub ListOfManagers()
-        lstNickname = client.GetAllManagers(profile.Emp_ID)
-        Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
-        Dim successRegisterDBProvider As New SuccessRegisterDBProvider
+    Public Sub ListOfCustodians()
+        Dim lstMangers As Assets() = client.GetAllAssetsCustodian(profile.Emp_ID)
+        Dim lstMangersList As New ObservableCollection(Of AssetsModel)
+        Dim assetsDBProvider As New AssetsDBProvider
+        Dim assetsVM As New AssetsViewModel()
 
-        For Each objLessonLearnt As Nickname In lstNickname
-            successRegisterDBProvider.SetMyNickname(objLessonLearnt)
+        For Each objAssets As Assets In lstMangers
+            assetsDBProvider.SetManagerList(objAssets)
         Next
 
-        For Each rawUser As MyNickname In successRegisterDBProvider.GetMyNickname()
-            lstNicknameList.Add(New NicknameModel(rawUser))
+        For Each rawUser As MyAssets In assetsDBProvider.GetManagerList()
+            lstMangersList.Add(New AssetsModel(rawUser))
         Next
-        nicknameVM.NicknameList = Nothing
-        cbNickname.ItemsSource = Nothing
-        nicknameVM.NicknameList = lstNicknameList
-        cbNickname.ItemsSource = nicknameVM.NicknameList
+
+        assetsVM.AssetManagerList = lstMangersList
+
+        cbNickname.DataContext = assetsVM
+        cbNickname.ItemsSource = assetsVM.AssetManagerList
     End Sub
 
     Public Sub ListOfAllUser()

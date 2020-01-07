@@ -9,6 +9,8 @@ Public Class AssetsModel
 #Region "FIELDS"
     Public _asset_id As Integer
     Public _emp_id As Integer
+    Public _previous_id As Integer
+    Public _previous_owner As String
     Public _asset_desc As String
     Public _manufacturer As String
     Public _model_no As String
@@ -27,6 +29,9 @@ Public Class AssetsModel
     Public _approval As Integer
     Public _isapproved As Boolean
     Public _table_name As String
+    Public _firstName As String
+    Public _nickName As String
+    Public _employeeName As String
 #End Region
 
 #Region "CONSTRUCTOR"
@@ -54,6 +59,11 @@ Public Class AssetsModel
         Me.APPROVAL = rawAssets.APPROVAL
         Me.ISAPPROVED = rawAssets.ISAPPROVED
         Me.TABLE_NAME = rawAssets.TABLE_NAME
+        Me.EMPLOYEE_NAME = rawAssets.EMPLOYEE_NAME
+        Me.FIRST_NAME = rawAssets.FIRST_NAME
+        Me.NICK_NAME = rawAssets.NICK_NAME
+        Me.PREVIOUS_ID = rawAssets.PREVIOUS_ID
+        Me.PREVIOUS_OWNER = rawAssets.PREVIOUS_OWNER
     End Sub
 #End Region
 
@@ -76,6 +86,26 @@ Public Class AssetsModel
         Set(value As Integer)
             _emp_id = value
             NotifyPropertyChanged("EMP_ID")
+        End Set
+    End Property
+
+    Public Property PREVIOUS_ID As Integer
+        Get
+            Return _previous_id
+        End Get
+        Set(value As Integer)
+            _previous_id = value
+            NotifyPropertyChanged("PREVIOUS_ID")
+        End Set
+    End Property
+
+    Public Property PREVIOUS_OWNER As String
+        Get
+            Return _previous_owner
+        End Get
+        Set(value As String)
+            _previous_owner = value
+            NotifyPropertyChanged("PREVIOUS_OWNER")
         End Set
     End Property
 
@@ -256,6 +286,36 @@ Public Class AssetsModel
         Set(value As String)
             _table_name = value
             NotifyPropertyChanged("TABLE_NAME")
+        End Set
+    End Property
+
+    Public Property EMPLOYEE_NAME As String
+        Get
+            Return _employeeName
+        End Get
+        Set(value As String)
+            _employeeName = value
+            NotifyPropertyChanged("EMPLOYEE_NAME")
+        End Set
+    End Property
+
+    Public Property FIRST_NAME As String
+        Get
+            Return _firstName
+        End Get
+        Set(value As String)
+            _firstName = value
+            NotifyPropertyChanged("FIRST_NAME")
+        End Set
+    End Property
+
+    Public Property NICK_NAME As String
+        Get
+            Return _nickName
+        End Get
+        Set(value As String)
+            _nickName = value
+            NotifyPropertyChanged("NICK_NAME")
         End Set
     End Property
 
