@@ -411,37 +411,43 @@ Public Class KPISummaryPage
 
     Private Sub dgKPISummary_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles dgKPISummary.MouseDoubleClick
 
-        If _profile.Permission_ID = 1 Then
-            If (dgKPISummary.Items.Count > 0) Then
-                'Dim collKPISummary As ObservableCollection(Of KPISummaryData) = _KPISummaryDBProvider.GetAllKPISummary()
-                Dim columnIndex As Integer = dgKPISummary.CurrentColumn.DisplayIndex
-                Dim selectedItem As String = dgKPISummary.CurrentCell.Item(columnIndex)
-                Dim kpi As New KPISummary
-                Dim strCell As String() = selectedItem.Split("|")
-                If strCell.Count > 0 Then
-                    kpi.KPITarget = strCell.GetValue(0)
-                    kpi.KPIActual = strCell.GetValue(1)
-                    kpi.EmployeeID = dgKPISummary.CurrentCell.Item(0)
-                    kpi.KPI_Reference = dgKPISummary.CurrentCell.Item(1)
-                    kpi.FYStart = dgKPISummary.CurrentCell.Item(2)
-                    kpi.FYEnd = dgKPISummary.CurrentCell.Item(3)
-                    kpi.Subject = dgKPISummary.CurrentCell.Item(4)
-                    kpi.KPI_Month = Convert.ToDateTime(dgKPISummary.CurrentColumn.Header).Month
+        Try
+            Dim columnIndex As Integer = dgKPISummary.SelectedCells.SingleOrDefault.Column.DisplayIndex
+            Dim selectedItem As String = dgKPISummary.CurrentCell.Item(columnIndex).ToString()
+            If selectedItem <> String.Empty Then
+                If _profile.Permission_ID = 1 Then
+                    If (dgKPISummary.Items.Count > 0) Then
+                        'Dim collKPISummary As ObservableCollection(Of KPISummaryData) = _KPISummaryDBProvider.GetAllKPISummary()
+                        Dim kpi As New KPISummary
+                        Dim strCell As String() = selectedItem.Split("|")
+                        If strCell.Count > 0 Then
+                            kpi.KPITarget = strCell.GetValue(0)
+                            kpi.KPIActual = strCell.GetValue(1)
+                            kpi.EmployeeId = dgKPISummary.CurrentCell.Item(0)
+                            kpi.KPI_Reference = dgKPISummary.CurrentCell.Item(1)
+                            kpi.FYStart = dgKPISummary.CurrentCell.Item(2)
+                            kpi.FYEnd = dgKPISummary.CurrentCell.Item(3)
+                            kpi.Subject = dgKPISummary.CurrentCell.Item(4)
+                            kpi.KPI_Month = Convert.ToDateTime(dgKPISummary.CurrentColumn.Header).Month
 
-                    _addFrame.Navigate(New KPISummaryAddPage(Me._profile, Me._mainFrame, Me._addFrame, Me._menugrid, Me._submenuFrame, kpi))
-                    _mainFrame.IsEnabled = False
-                    _mainFrame.Opacity = 0.3
-                    _menugrid.IsEnabled = False
-                    _menugrid.Opacity = 0.3
-                    _submenuFrame.IsEnabled = False
-                    _submenuFrame.Opacity = 0.3
-                    _addFrame.Visibility = Visibility.Visible
-                    _addFrame.Margin = New Thickness(150, 60, 150, 60)
+                            _addFrame.Navigate(New KPISummaryAddPage(Me._profile, Me._mainFrame, Me._addFrame, Me._menugrid, Me._submenuFrame, kpi))
+                            _mainFrame.IsEnabled = False
+                            _mainFrame.Opacity = 0.3
+                            _menugrid.IsEnabled = False
+                            _menugrid.Opacity = 0.3
+                            _submenuFrame.IsEnabled = False
+                            _submenuFrame.Opacity = 0.3
+                            _addFrame.Visibility = Visibility.Visible
+                            _addFrame.Margin = New Thickness(150, 60, 150, 60)
 
+                        End If
+
+                    End If
                 End If
-
             End If
-        End If
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 
