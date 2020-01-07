@@ -432,46 +432,13 @@
             <Grid Grid.Row="1" Background="#FFFBFBFB">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.5*"/>
-                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="5.0*"/>
 
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Fiscal Year" VerticalAlignment="Center" HorizontalAlignment="Left" Foreground="DarkGray" Grid.ColumnSpan="1" Margin="5" Width="100"/>
-                    <!--<ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Margin="10,10,-58,-3" Visibility="Collapsed" Grid.ColumnSpan="2"/>
-                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Month" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray" Visibility="Collapsed" Margin="36,14,17,13">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>-->
-                    <!--<ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" MinWidth="85" Margin="0,0,5,0"/>
-                    <TextBlock Margin="0,0,5,0" FontSize="11" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>-->
-                </Grid>
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="0">
                     <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="5,10,10,10" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
-                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Fiscal Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Visibility" Value="Collapsed"/>

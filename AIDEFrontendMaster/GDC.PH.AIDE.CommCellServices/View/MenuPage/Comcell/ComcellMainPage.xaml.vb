@@ -61,10 +61,10 @@ Class ComcellMainPage
             btnCreate.Visibility = Windows.Visibility.Visible
         End If
 
-        year = Date.Now.Year
-        cbYear.SelectedValue = year
+        LoadYear()
         SetData()
         LoadFiscalYear()
+
     End Sub
 
 #End Region
@@ -94,6 +94,16 @@ Class ComcellMainPage
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
+    End Sub
+
+    Public Sub LoadYear()
+        If Today.DayOfYear() <= CDate(Today.Year().ToString + "-03-31").DayOfYear Then
+            cbYear.SelectedValue = (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
+        Else
+            cbYear.SelectedValue = (Date.Now.Year).ToString() + "-" + (Date.Now.Year + 1).ToString()
+        End If
+
+        year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
     End Sub
 
     Public Sub LoadComcell()

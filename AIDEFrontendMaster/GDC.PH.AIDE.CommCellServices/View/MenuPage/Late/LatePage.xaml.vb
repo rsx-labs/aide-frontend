@@ -56,7 +56,6 @@ Public Class LatePage
         LoadStackLate()
 
         cbMonth.SelectedValue = month
-        cbYear.SelectedValue = year
     End Sub
 
 #Region "Private Methods"
@@ -82,7 +81,7 @@ Public Class LatePage
         If Date.Now.Month >= 4 Then
             lblYear.Content = yearHeader + " " + year.ToString + "-" + nextYear.ToString
         Else
-            lblYear.Content = yearHeader + " " + year.ToString + "-" + nextYear.ToString
+            lblYear.Content = yearHeader + " " + prevYear.ToString + "-" + year.ToString
         End If
     End Sub
 
@@ -187,6 +186,14 @@ Public Class LatePage
         cbMonth.Items.Add(New With {.Text = "October", .Value = 10})
         cbMonth.Items.Add(New With {.Text = "November", .Value = 11})
         cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
+
+        If Today.DayOfYear() <= CDate(Today.Year().ToString + "-03-31").DayOfYear Then
+            cbYear.SelectedValue = (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
+        Else
+            cbYear.SelectedValue = (Date.Now.Year).ToString() + "-" + (Date.Now.Year + 1).ToString()
+        End If
+
+        year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
     End Sub
 
     Public Sub SetData()

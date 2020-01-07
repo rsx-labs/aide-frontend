@@ -36,14 +36,13 @@ Public Class KPISummaryPage
         Me.InitializeComponent()
 
         _month = Date.Now.Month
-        _year = Date.Now.Year
 
-        'LoadMonth()
+        LoadFY()
         SetData()
         LoadData()
 
         'cbMonth.SelectedValue = _month
-        cbYear.SelectedValue = _year
+
 
         dgKPISummary.SelectionMode = DataGridSelectionMode.Single
         dgKPISummary.SelectionUnit = DataGridSelectionUnit.Cell
@@ -100,22 +99,15 @@ Public Class KPISummaryPage
         End Try
     End Sub
 
-    'Public Sub LoadMonth()
-    '    cbMonth.DisplayMemberPath = "Text"
-    '    cbMonth.SelectedValuePath = "Value"
-    '    cbMonth.Items.Add(New With {.Text = "January", .Value = 1})
-    '    cbMonth.Items.Add(New With {.Text = "February", .Value = 2})
-    '    cbMonth.Items.Add(New With {.Text = "March", .Value = 3})
-    '    cbMonth.Items.Add(New With {.Text = "April", .Value = 4})
-    '    cbMonth.Items.Add(New With {.Text = "May", .Value = 5})
-    '    cbMonth.Items.Add(New With {.Text = "June", .Value = 6})
-    '    cbMonth.Items.Add(New With {.Text = "July", .Value = 7})
-    '    cbMonth.Items.Add(New With {.Text = "August", .Value = 8})
-    '    cbMonth.Items.Add(New With {.Text = "September", .Value = 9})
-    '    cbMonth.Items.Add(New With {.Text = "October", .Value = 10})
-    '    cbMonth.Items.Add(New With {.Text = "November", .Value = 11})
-    '    cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
-    'End Sub
+    Public Sub LoadFY()
+        If Today.DayOfYear() <= CDate(Today.Year().ToString + "-03-31").DayOfYear Then
+            cbYear.SelectedValue = (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
+        Else
+            cbYear.SelectedValue = (Date.Now.Year).ToString() + "-" + (Date.Now.Year + 1).ToString()
+        End If
+
+        _year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+    End Sub
 
     Private Sub LoadData()
         LoadKPISummary()
@@ -375,8 +367,10 @@ Public Class KPISummaryPage
     'End Sub
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
-        _year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
-        LoadData()
+        If Not _year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4)) Then
+            _year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+            LoadData()
+        End If
     End Sub
 
 #End Region
