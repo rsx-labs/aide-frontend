@@ -160,8 +160,39 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                             </Grid>
-                            
+
                             <Grid Grid.Row="3">
+                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                                    <TextBox Text="{Binding NewTasks.ActEffortWk, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEfforEstWk"/>
+                                </Border>
+
+                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter weekly effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtActualEfforEstWk}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Weekly Effort Hrs" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtActualEfforEstWk}" Value="">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                            
+                            <Grid Grid.Row="4">
                                 <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                                     <TextBox Text="{Binding NewTasks.ActEffort, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEffortEst"/>
                                 </Border>
@@ -179,44 +210,12 @@
                                     </TextBlock.Style>
                                 </TextBlock>
 
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Actual Effort" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Actual Effort Hrs" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Text, ElementName=txtActualEffortEst}" Value="">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </Grid>
-
-                          
-                            <Grid Grid.Row="4">
-                                <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                    <TextBox Text="{Binding NewTasks.ActEffortWk, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEfforEstWk"/>
-                                </Border>
-                                
-                                <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter weekly effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=txtActualEfforEstWk}" Value="">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Weekly Effort" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=txtActualEfforEstWk}" Value="">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -314,7 +313,7 @@
                                     </TextBlock.Style>
                                 </TextBlock>
 
-                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Remarks" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                                <TextBlock Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Comments" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>

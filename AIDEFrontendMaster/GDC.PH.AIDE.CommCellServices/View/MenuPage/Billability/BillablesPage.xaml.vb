@@ -23,6 +23,10 @@ Public Class BillablesPage
     Dim weekID As Integer
     Dim month As Integer = Date.Now.Month
     Dim year As Integer
+
+    Dim startFiscalYear As Integer
+    Dim endFiscalYear As Integer
+
     Dim displayOption As Integer = 1 'Weekly is the Default Display Options
     Dim startYear As Integer = 2019 'Default Start Year
     Dim selectedValue As Integer
@@ -33,6 +37,7 @@ Public Class BillablesPage
     Dim daySatDiff As Integer = Today.DayOfWeek - DayOfWeek.Saturday
     Dim saturday As Date = Today.AddDays(-daySatDiff)
     Dim lastWeekSaturday As Date = saturday.AddDays(-14)
+    Dim monday As Date = lastWeekSaturday.AddDays(2)
 
     Dim lstWeekRange As WeekRange()
     Dim colorList As New List(Of System.Windows.Media.Brush)
@@ -60,19 +65,15 @@ Public Class BillablesPage
         Me.InitializeComponent()
         InitializeService()
 
-        month = lastWeekSaturday.Month
-        year = lastWeekSaturday.Year
-
         GenerateColors()
         LoadMonth()
-        SetData()
-        LoadWeeks()
+        LoadYear()
 
+        SetFiscalYear()
+
+        LoadWeeks()
         LoadDataWeekly()
         LoadDataMonthly()
-
-        cbMonth.SelectedValue = month
-        cbYear.SelectedValue = year
     End Sub
 
 #Region "Sub Procedures"
@@ -161,7 +162,7 @@ Public Class BillablesPage
             billabilityDBProvider.GetBillabilityList.Clear()
             totalMonthly = 0
 
-            Dim lstresource As BillableHours() = client.GetBillableHoursByMonth(profile.Emp_ID, month, year, cbDateRange.SelectedValue)
+            Dim lstresource As BillableHours() = client.GetBillableHoursByMonth(profile.Emp_ID, month, startFiscalYear, cbDateRange.SelectedValue)
 
             For Each objBillables As BillableHours In lstresource
                 billabilityDBProvider.SetBillabilityList(objBillables)
@@ -222,7 +223,7 @@ Public Class BillablesPage
             Dim listWeekRange As New ObservableCollection(Of WeekRangeModel)
             weekRangeViewModel = New WeekRangeViewModel
 
-            lstWeekRange = client.GetWeekRangeByMonthYear(profile.Emp_ID, month, year)
+            lstWeekRange = client.GetWeekRangeByMonthYear(profile.Emp_ID, month, startFiscalYear)
 
             For Each objWeekRange As WeekRange In lstWeekRange
                 weeklyReportDBProvider.SetWeekRangeList(objWeekRange)
@@ -239,7 +240,7 @@ Public Class BillablesPage
             Next
 
             ' Set selectedValue to last week of month
-            If selectedValue = -1 Then
+            If selectedValue = -1 AndAlso lstWeekRange.Count > 0 Then
                 selectedValue = weekID
             End If
 
@@ -268,10 +269,9 @@ Public Class BillablesPage
         cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
     End Sub
 
-    Public Sub SetData()
+    Public Sub LoadYear()
         Try
             If InitializeService() Then
-
                 lstFiscalYear = client.GetAllFiscalYear()
                 LoadFiscalYear()
             End If
@@ -295,6 +295,33 @@ Public Class BillablesPage
 
             fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Private Sub SetFiscalYear()
+        Try
+            If Not monday.Month = lastWeekSaturday.Month Then
+                month = monday.Month
+            Else
+                month = lastWeekSaturday.Month
+            End If
+
+            ' Set last week year
+            year = lastWeekSaturday.Year
+
+            If month >= 4 Then
+                startFiscalYear = year
+                endFiscalYear = year + 1
+            Else
+                startFiscalYear = year - 1
+                endFiscalYear = year
+            End If
+
+            cbMonth.SelectedValue = month
+            cbYear.SelectedValue = startFiscalYear & "-" & endFiscalYear
+
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -389,7 +416,7 @@ Public Class BillablesPage
     End Sub
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
-        year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+        startFiscalYear = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
         cCanvas.Children.Clear()
         LoadWeeks()
         LoadDataWeekly()

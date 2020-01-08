@@ -21,9 +21,9 @@ Public Class BillabilityPage
     Private mainFrame As Frame
     Private profile As Profile
 
-    Dim month As Integer = Date.Now.Month
-    Dim displayData As Integer
+    Dim month As Integer
     Dim year As Integer
+    Dim displayData As Integer
 
     Dim lstFiscalYear As FiscalYear()
     Dim commendationVM As New CommendationViewModel()
@@ -35,15 +35,11 @@ Public Class BillabilityPage
         Me.mainFrame = mFrame
         Me.InitializeComponent()
 
-        month = Date.Now.Month
-        year = Date.Now.Year
-
         LoadMonth()
-        SetData()
-        LoadData()
+        LoadYear()
 
-        cbMonth.SelectedValue = month
-        cbYear.SelectedValue = year
+        SetFiscalYear()
+        LoadData()
     End Sub
 
 #Region "Private Methods"
@@ -61,10 +57,9 @@ Public Class BillabilityPage
         Return bInitialize
     End Function
 
-    Public Sub SetData()
+    Public Sub LoadYear()
         Try
             If InitializeService() Then
-
                 lstFiscalYear = client.GetAllFiscalYear()
                 LoadFiscalYear()
             End If
@@ -108,6 +103,25 @@ Public Class BillabilityPage
         cbMonth.Items.Add(New With {.Text = "October", .Value = 10})
         cbMonth.Items.Add(New With {.Text = "November", .Value = 11})
         cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
+    End Sub
+
+    Private Sub SetFiscalYear()
+        Try
+            month = Date.Now.Month
+
+            cbMonth.SelectedValue = month
+
+            If Today.DayOfYear() <= CDate(Today.Year().ToString + "-03-31").DayOfYear Then
+                cbYear.SelectedValue = (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
+            Else
+                cbYear.SelectedValue = (Date.Now.Year).ToString() + "-" + (Date.Now.Year + 1).ToString()
+            End If
+
+            year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
     End Sub
 
     Private Sub LoadData()
@@ -253,7 +267,7 @@ Public Class BillabilityPage
 
 #End Region
 
-#Region "Private Functions"
+#Region "Events"
 
     Private Sub cbMonth_DropDownClosed(sender As Object, e As EventArgs) Handles cbMonth.DropDownClosed
         month = cbMonth.SelectedValue

@@ -338,7 +338,6 @@ Class TaskAdminPage
             lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
         End If
         DisplayPagingInfo()
-
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
@@ -347,7 +346,6 @@ Class TaskAdminPage
             currentPage -= 1
         End If
         DisplayPagingInfo()
-
     End Sub
 
     Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)

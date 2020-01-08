@@ -9,13 +9,14 @@
 
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
+            
             <Grid.RowDefinitions>
+                <RowDefinition Height="0.112*"/>
                 <RowDefinition Height="0.10*"/>
-                <RowDefinition Height="0.10*"/>
-                <RowDefinition Height="0.70*"/>
+                <RowDefinition Height="0.698*"/>
                 <RowDefinition Height="0.10*"/>
             </Grid.RowDefinitions>
-
+            
             <Grid Grid.Row="0" Background="white">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.9*"/>
@@ -104,7 +105,7 @@
                     </Grid>
                     
                     <Grid Grid.Column="3" Margin="0,0,5,0">
-                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Height="30" />
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear"/>
                         <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">

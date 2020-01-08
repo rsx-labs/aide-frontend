@@ -46,21 +46,28 @@ Class WeeklyTeamStatusReportPage
     Private empID As Integer
     Private month As Integer
     Private year As Integer
+    Private startFiscalYear As Integer
+    Private endFiscalYear As Integer
 
     Dim dateToday As Date = Date.Today
+    Dim monday As DateTime = Today.AddDays((Today.DayOfWeek - DayOfWeek.Monday) * -1)
+    Dim currentWeekSaturday As DateTime = monday.AddDays(-2)
+
     Dim daySatDiff As Integer = Today.DayOfWeek - DayOfWeek.Saturday
     Dim saturday As Date = Today.AddDays(-daySatDiff)
     Dim lastWeekSaturday As Date = saturday.AddDays(-14)
-
-    Dim selectedValue As Integer
-    Dim weekID As Integer
 
     Dim dayFriDiff As Integer = Today.DayOfWeek - DayOfWeek.Friday
     Dim friday As Date = Today.AddDays(-dayFriDiff)
     Dim lastWeekFriday As Date = friday.AddDays(-7)
 
+    Dim selectedValue As Integer
+    Dim weekID As Integer
+
     Dim statusID As Integer = 14
     Dim lstWeeklyTeamStatusReport As WeeklyTeamStatusReport()
+
+    Dim lstFiscalYear As FiscalYear()
 
     Dim lstWeekRange As WeekRange()
     Dim listWeeklyReportStatus As New ObservableCollection(Of WeeklyReportStatusModel)
@@ -68,6 +75,8 @@ Class WeeklyTeamStatusReportPage
 
     Dim weeklyReportDBProvider As New WeeklyReportDBProvider
     Dim weekRangeViewModel As New WeekRangeViewModel
+
+    Dim fiscalyearVM As New SelectionListViewModel
 #End Region
 
 #Region "Constructor"
@@ -119,18 +128,14 @@ Class WeeklyTeamStatusReportPage
     End Function
 
     Public Sub InitializeData()
-        month = lastWeekSaturday.Month
-        year = lastWeekSaturday.Year
-
         LoadMonth()
-        LoadYears()
-        LoadWeeks()
+        LoadYear()
 
+        SetFiscalYear()
+
+        LoadWeeks()
         LoadStatusData()
         SetWeeklyTeamStatusReports()
-
-        cbMonth.SelectedValue = month
-        cbYear.SelectedValue = year
     End Sub
 
 #End Region
@@ -162,7 +167,7 @@ Class WeeklyTeamStatusReportPage
             End If
 
             If InitializeService() Then
-                lstWeeklyTeamStatusReport = AideServiceClient.GetWeeklyTeamStatusReport(empID, month, year, selectedValue, EntryType)
+                lstWeeklyTeamStatusReport = AideServiceClient.GetWeeklyTeamStatusReport(empID, month, startFiscalYear, selectedValue, EntryType)
                 LoadWeeklyTeamStatusReports()
 
                 totalRecords = lstWeeklyTeamStatusReport.Length
@@ -219,14 +224,12 @@ Class WeeklyTeamStatusReportPage
         cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
     End Sub
 
-    Private Sub LoadYears()
+    Public Sub LoadYear()
         Try
-            cbYear.DisplayMemberPath = "Text"
-            cbYear.SelectedValuePath = "Value"
-            For i As Integer = 2019 To DateTime.Today.Year
-                Dim nextYear As Integer = i + 1
-                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
-            Next
+            If InitializeService() Then
+                lstFiscalYear = AideServiceClient.GetAllFiscalYear()
+                LoadFiscalYear()
+            End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -242,7 +245,7 @@ Class WeeklyTeamStatusReportPage
             Dim listWeekRange As New ObservableCollection(Of WeekRangeModel)
             weekRangeViewModel = New WeekRangeViewModel
 
-            lstWeekRange = AideServiceClient.GetWeekRangeByMonthYear(profile.Emp_ID, month, year)
+            lstWeekRange = AideServiceClient.GetWeekRangeByMonthYear(profile.Emp_ID, month, startFiscalYear)
 
             For Each objWeekRange As WeekRange In lstWeekRange
                 weeklyReportDBProvider.SetWeekRangeList(objWeekRange)
@@ -251,17 +254,25 @@ Class WeeklyTeamStatusReportPage
             For Each weekRange As MyWeekRange In weeklyReportDBProvider.GetWeekRangeList()
                 listWeekRange.Add(New WeekRangeModel(weekRange))
 
-                If lastWeekSaturday = weekRange.StartWeek Then
+                'If monday.Month = dateToday.Month Then
+                If currentWeekSaturday = weekRange.StartWeek Then
                     If selectedValue = -1 Then
                         selectedValue = weekRange.WeekRangeID
                     End If
                 End If
+                'Else
+                '    If lastWeekSaturday = weekRange.StartWeek Then
+                '        If selectedValue = -1 Then
+                '            selectedValue = weekRange.WeekRangeID
+                '        End If
+                '    End If
+                'End If
 
                 weekID = weekRange.WeekRangeID
             Next
 
             ' Set selectedValue to last week of month
-            If selectedValue = -1 Then
+            If selectedValue = -1 AndAlso lstWeekRange.Count > 0 Then
                 selectedValue = weekID
             End If
 
@@ -270,6 +281,55 @@ Class WeeklyTeamStatusReportPage
             cbDateRange.SelectedValue = selectedValue
         Catch ex As SystemException
             AideServiceClient.Abort()
+        End Try
+    End Sub
+
+    Public Sub LoadFiscalYear()
+        Try
+            Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
+            Dim FYDBProvider As New SelectionListDBProvider
+
+            For Each objFiscalYear As FiscalYear In lstFiscalYear
+                FYDBProvider._setlistofFiscal(objFiscalYear)
+            Next
+
+            For Each rawFiscalYear As myFiscalYearSet In FYDBProvider._getobjFiscal()
+                lstFiscalYearList.Add(New FiscalYearModel(rawFiscalYear))
+            Next
+
+            fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
+            cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Public Sub SetFiscalYear()
+        Try
+            If monday.Month = dateToday.Month Then
+                month = dateToday.Month
+                year = dateToday.Year
+            Else
+                month = monday.Month
+                year = lastWeekSaturday.Year
+            End If
+
+            If month >= 4 Then
+                startFiscalYear = year
+                endFiscalYear = year + 1
+            Else
+                startFiscalYear = year - 1
+                endFiscalYear = year
+            End If
+
+            cbYear.DisplayMemberPath = "FISCAL_YEAR"
+            cbYear.SelectedValuePath = "FISCAL_YEAR"
+
+            cbMonth.SelectedValue = month
+            cbYear.SelectedValue = startFiscalYear & "-" & endFiscalYear
+
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
 
@@ -342,7 +402,7 @@ Class WeeklyTeamStatusReportPage
     End Sub
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
-        year = cbYear.SelectedValue
+        startFiscalYear = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
         selectedValue = -1
         LoadWeeks()
         SetWeeklyTeamStatusReports()
