@@ -91,6 +91,7 @@ Class SabaLearningMainPage
             Dim lstSabaLearningList As New ObservableCollection(Of SabaLearningModel)
             Dim sabalearningDBProvider As New SabaLearningDBProvider
             Dim percentFinished As String
+            paginatedCollection = New PaginatedObservableCollection(Of SabaLearningModel)(pagingRecordPerPage)
 
             For Each objTracker As SabaLearning In lstSabaLearning
                 percentFinished = SetData2(objTracker.SABA_ID)
