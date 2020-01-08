@@ -9,7 +9,7 @@ Public Class ResourcePlannerDBProvider
     Private _AllemprpList As ObservableCollection(Of myResourceList)
     Public _AllLeavesList As ObservableCollection(Of myResourceList)
     Public _splist As ObservableCollection(Of myResourceList)
-
+    Public _palist As ObservableCollection(Of myResourceList)
     Sub New()
         _resourceList = New ObservableCollection(Of myResourceList)
         _emprpList = New ObservableCollection(Of myResourceList)
@@ -18,6 +18,7 @@ Public Class ResourcePlannerDBProvider
         _AllcategoryList = New ObservableCollection(Of myResourceList)
         _AllLeavesList = New ObservableCollection(Of myResourceList)
         _splist = New ObservableCollection(Of myResourceList)
+        _palist = New ObservableCollection(Of myResourceList)
     End Sub
 
     Public Sub SetResourceList(ByVal resourceLst As ResourcePlanner)
@@ -106,6 +107,16 @@ Public Class ResourcePlannerDBProvider
 
     Public Function GetNonBillableList()
         Return _splist
+    End Function
+
+    Public Sub SetPerfectAttendanceList(ByVal resourceLst As ResourcePlanner)
+        Dim _Resourceobj As myResourceList = New myResourceList With {.Emp_ID = resourceLst.EmpID}
+        _palist.Add(_Resourceobj)
+
+    End Sub
+
+    Public Function GetPerfectAttendanceList()
+        Return _palist
     End Function
 
 End Class

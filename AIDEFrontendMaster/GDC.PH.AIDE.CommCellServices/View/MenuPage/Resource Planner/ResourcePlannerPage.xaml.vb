@@ -16,6 +16,7 @@ Class ResourcePlannerPage
 #Region "Fields"
     Private client As AideServiceClient
     Private _ResourceDBProvider As New ResourcePlannerDBProvider
+    Private _ResourcePADBProvider As New ResourcePlannerDBProvider
     Private _ResourceViewModel As New ResourcePlannerViewModel
     Private mainFrame As Frame
     Private _addframe As Frame
@@ -38,6 +39,7 @@ Class ResourcePlannerPage
     Dim year As Integer
     Dim day As Integer
     Dim displayOption As Integer = 1 'Weekly is the Default Display Options
+    Dim perfectAttendanceID As Integer
 #End Region
 
     Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _attendanceFrame As Frame)
@@ -58,8 +60,6 @@ Class ResourcePlannerPage
         cbDisplayMonth.SelectedValue = month.ToString
         cbYear.SelectedValue = year
         LoadFiscalYear()
-
-
     End Sub
 
     Public Function InitializeService() As Boolean
@@ -115,7 +115,6 @@ Class ResourcePlannerPage
         cbDisplayMonth.Items.Add(New With {.Text = "December", .Value = 12})
     End Sub
 
-   
     Public Sub LoadFiscalYear()
         Try
             Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
@@ -227,8 +226,6 @@ Class ResourcePlannerPage
     'End Sub
 
     Private Function getSelectedMonth(Year As Integer, month As Integer)
-
-
         Select Case month
             Case 1
                 Year = Year + 1
@@ -239,8 +236,6 @@ Class ResourcePlannerPage
             Case Else
                 Year = Year
         End Select
-
-
         Return Year
     End Function
 
@@ -248,15 +243,17 @@ Class ResourcePlannerPage
         Try
             InitializeService()
             _ResourceDBProvider._splist.Clear()
+            _ResourcePADBProvider._palist.Clear()
             If year = 0 Then
                 year = Date.Now.Year
             End If
 
-
+            Dim currentDate As DateTime = DateTime.Now
             Dim lstresource As ResourcePlanner() = client.GetAllEmpResourcePlanner(profile.Email_Address, month, year)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
-
             Dim emp_id As Integer
+            Dim bool As Boolean
+            Dim count As Integer = 0
             Dim abbrDay As String = String.Empty
             Dim it As New List(Of Dictionary(Of String, String))()
             Dim dict As New Dictionary(Of String, String)()
@@ -265,15 +262,13 @@ Class ResourcePlannerPage
                 _ResourceDBProvider.SetAllEmpRPList(objResource)
             Next
 
-
             Dim dateFirstSTR As String = month.ToString + "/1/" + getSelectedMonth(year, month).ToString()
             Dim dateFirst As Date = Date.Parse(dateFirstSTR)
             For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
                 resourcelist.Add(New ResourcePlannerModel(iResource))
-
+                bool = False
                 setStatus = iResource.Status
                 ' SetCategory()
-
                 If emp_id <> iResource.Emp_ID Then
                     If emp_id > 0 Then
                         it.Add(dict)
@@ -281,7 +276,43 @@ Class ResourcePlannerPage
                     dateFirstSTR = month.ToString + "/1/" + getSelectedMonth(year, month).ToString()
                     dateFirst = Date.Parse(dateFirstSTR)
                     dict = New Dictionary(Of String, String)()
-                    dict.Add("Employee Name", iResource.Emp_Name)
+
+                    If cbDisplayMonth.SelectedValue <> currentDate.Month Then
+                        _ResourcePADBProvider._palist.Clear()
+
+                        Dim perfectAttendancelstresource As ResourcePlanner() = client.GetAllPerfectAttendance(profile.Email_Address, month, year)
+                        Dim resourcePAlist As New ObservableCollection(Of ResourcePlannerModel)
+
+                        If perfectAttendancelstresource.Length = 0 Then
+                            dict.Add("Employee Name", iResource.Emp_Name)
+                        Else
+                            For Each objResource As ResourcePlanner In perfectAttendancelstresource
+                                _ResourcePADBProvider.SetPerfectAttendanceList(objResource)
+                            Next
+
+                            For Each iPAResource As myResourceList In _ResourcePADBProvider.GetPerfectAttendanceList()
+                                resourcePAlist.Add(New ResourcePlannerModel(iPAResource))
+
+                                If dict.ContainsValue((iResource.Emp_Name)) And Not it.Count = 0 Then
+                                    If Not it.Item(count - 1).ContainsValue(iResource.Emp_Name) And dict.ContainsValue((iResource.Emp_Name)) Then
+                                        dict.Clear()
+                                    End If
+                                End If
+
+                                If iPAResource.Emp_ID = iResource.Emp_ID Then
+                                    dict.Add("Employee Name", iResource.Emp_Name + " ★")
+                                    bool = True
+                                Else
+                                    If Not dict.ContainsValue((iResource.Emp_Name)) And Not bool Then
+                                        dict.Add("Employee Name", iResource.Emp_Name)
+                                    End If
+                                End If
+                            Next
+                            count += 1
+                        End If
+                    Else
+                        dict.Add("Employee Name", iResource.Emp_Name)
+                    End If
 
                     While iResource.Date_Entry.ToString("yyyy-MM-dd") > dateFirst
                         If dateFirst.DayOfWeek <> DayOfWeek.Saturday Or dateFirst.DayOfWeek <> DayOfWeek.Sunday Then
@@ -314,9 +345,7 @@ Class ResourcePlannerPage
             Dim table As DataTable = New DataTable
             table = ToDataTable(it)
             dgResourcePlanner.RowBackground = New SolidColorBrush(Colors.White)
-
             dgResourcePlanner.ItemsSource = table.AsDataView
-
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
