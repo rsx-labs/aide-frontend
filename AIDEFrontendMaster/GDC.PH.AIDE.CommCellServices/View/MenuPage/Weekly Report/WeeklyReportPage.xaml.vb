@@ -44,17 +44,19 @@ Class WeeklyReportPage
     Private empID As Integer
     Private month As Integer
     Private year As Integer
-
+    Private startFiscalYear As Integer
+    Private endFiscalYear As Integer
     Private displayMonth As String
 
     Dim dateToday As Date = Date.Today
+
     Dim daySatDiff As Integer = Today.DayOfWeek - DayOfWeek.Saturday
     Dim saturday As Date = Today.AddDays(-daySatDiff)
-    Dim lastWeekSaturday As Date = saturday.AddDays(-14)
-    Dim monday As Date = lastWeekSaturday.AddDays(2)
+    Dim lastWeekSaturday As Date = saturday.AddDays(-14) 'For Missing reports label
+
     Dim dayFriDiff As Integer = Today.DayOfWeek - DayOfWeek.Friday
     Dim friday As Date = Today.AddDays(-dayFriDiff)
-    Dim lastWeekFriday As Date = friday.AddDays(-7)
+    Dim lastWeekFriday As Date = friday.AddDays(-7) ' For Missing reports label
 
     Dim isManager As Integer = 1
     Dim isTeamLeader As Integer = 3
@@ -88,23 +90,13 @@ Class WeeklyReportPage
         Me.submenuframe = _submenuframe
         Me.profile = _profile
 
-        If Not monday.Month = lastWeekSaturday.Month Then
-            month = monday.Month
-        Else
-            month = lastWeekSaturday.Month
-        End If
-
-        year = lastWeekSaturday.Year
-
         LoadMonth()
-        SetData()
-
+        LoadYear()
         LoadStatusData()
+
+        SetFiscalYear()
         SetWeeklyReports()
         SetMissingReports()
-
-        cbMonth.SelectedValue = month
-        cbYear.SelectedValue = year
 
         If profile.Permission_ID = isManager OrElse profile.Permission_ID = isTeamLeader Then
             btnTeamReports.Visibility = Windows.Visibility.Visible
@@ -149,7 +141,7 @@ Class WeeklyReportPage
     Public Sub SetWeeklyReports()
         Try
             If InitializeService() Then
-                lstWeekRange = AideServiceClient.GetWeeklyReportsByEmpID(empID, month, year)
+                lstWeekRange = AideServiceClient.GetWeeklyReportsByEmpID(empID, month, startFiscalYear)
                 LoadWeeklyReports()
             End If
         Catch ex As Exception
@@ -241,10 +233,9 @@ Class WeeklyReportPage
         cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
     End Sub
 
-    Public Sub SetData()
+    Public Sub LoadYear()
         Try
             If InitializeService() Then
-
                 lstFiscalYear = AideServiceClient.GetAllFiscalYear()
                 LoadFiscalYear()
             End If
@@ -268,11 +259,39 @@ Class WeeklyReportPage
 
             fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
+
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
 
+    Private Sub SetFiscalYear()
+        Try
+            Dim monday As DateTime = Today.AddDays((Today.DayOfWeek - DayOfWeek.Monday) * -1)
+
+            If monday.Month = dateToday.Month Then
+                month = dateToday.Month
+                year = dateToday.Year
+            Else
+                month = monday.Month
+                year = lastWeekSaturday.Year
+            End If
+
+            If month >= 4 Then
+                startFiscalYear = year
+                endFiscalYear = year + 1
+            Else
+                startFiscalYear = year - 1
+                endFiscalYear = year
+            End If
+
+            cbMonth.SelectedValue = month
+            cbYear.SelectedValue = startFiscalYear & "-" & endFiscalYear
+
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
 #End Region
 
 #Region "Events"
@@ -361,7 +380,7 @@ Class WeeklyReportPage
     End Sub
 
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
-        year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+        startFiscalYear = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
         SetWeeklyReports()
     End Sub
 

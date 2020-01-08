@@ -44,12 +44,9 @@ Public Class BillabilityVacationLeavePage
         Me._attendanceFrame = attendanceFrame
         Me.InitializeComponent()
 
-        month = Date.Now.Month
-        year = Date.Now.Year
-        SetData()
+        LoadYear()
+        SetFiscalYear()
         LoadData()
-
-        cbYear.SelectedValue = year
     End Sub
 
 #Region "Private Methods"
@@ -68,21 +65,28 @@ Public Class BillabilityVacationLeavePage
     End Function
 
     Private Sub SetTitle()
-
-        Dim nextYear As Integer = year + 1
-        Dim prevYear As Integer = year - 1
-
-        If Date.Now.Month >= 4 Then
-            lblYear.Content = "Vacation Leave For Fiscal Year " + year.ToString + "-" + nextYear.ToString
-        Else
-            lblYear.Content = "Vacation Leave For Fiscal Year " + prevYear.ToString + "-" + year.ToString
-        End If
+        lblYear.Content = "Vacation Leave For Fiscal Year " + cbYear.SelectedValue
     End Sub
 
-    Public Sub SetData()
+    Public Sub SetFiscalYear()
+        Try
+            month = Date.Now.Month
+
+            If Today.DayOfYear() <= CDate(Today.Year().ToString + "-03-31").DayOfYear Then
+                cbYear.SelectedValue = (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
+            Else
+                cbYear.SelectedValue = (Date.Now.Year).ToString() + "-" + (Date.Now.Year + 1).ToString()
+            End If
+
+            year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Public Sub LoadYear()
         Try
             If InitializeService() Then
-
                 lstFiscalYear = client.GetAllFiscalYear()
                 LoadFiscalYear()
             End If

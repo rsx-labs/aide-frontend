@@ -38,6 +38,7 @@ Class WeeklyReportAddPage
 
     Dim lstWeekRange As WeekRange()
     Dim lstWeeklyReportsData As ObservableCollection(Of WeeklyReportModel) = New ObservableCollection(Of WeeklyReportModel)
+    Dim lstRemoveWeeklyReportData As ObservableCollection(Of WeeklyReportModel) = New ObservableCollection(Of WeeklyReportModel)
 
     Dim dateToday As Date = Date.Today
     Dim daySatDiff As Integer = Today.DayOfWeek - DayOfWeek.Saturday
@@ -148,7 +149,9 @@ Class WeeklyReportAddPage
                                             .ActualEffort = weeklyReport.ActEffort,
                                             .ActualEffortWk = weeklyReport.ActEffortWk,
                                             .Comments = weeklyReport.Comment,
-                                            .InboundContacts = weeklyReport.InboundContacts
+                                            .InboundContacts = weeklyReport.InboundContacts,
+                                            .ProjectCode = weeklyReport.ProjectCode,
+                                            .TaskID = weeklyReport.TaskID
                                          })
             Next
 
@@ -417,6 +420,7 @@ Class WeeklyReportAddPage
 
     Private Sub btnRemove_Click(sender As Object, e As RoutedEventArgs) Handles btnRemove.Click
         Dim selectedItem = dgWeeklyReport.SelectedItem
+        lstRemoveWeeklyReportData.Add(selectedItem)
 
         If selectedItem IsNot Nothing Then
             lstWeeklyReportsData.RemoveAt(dgWeeklyReport.SelectedIndex)
@@ -476,71 +480,91 @@ Class WeeklyReportAddPage
     End Sub
 
     Private Sub btnSubmit_Click(sender As Object, e As RoutedEventArgs) Handles btnSubmit.Click
-        If lstWeeklyReportsData.Count > 0 Then
+        If cbDateRange.SelectedIndex = -1 Then
+            If cbDateRange.SelectedIndex = -1 Then
+                MsgBox("Please select a Date Range", MsgBoxStyle.Critical, "AIDE")
+                cbDateRange.Focus()
+            End If
+        Else
+            If lstWeeklyReportsData.Count > 0 Then
+                Dim deletedWeeklyReport As New List(Of WeeklyReport)
+                Dim weeklyReport As New List(Of WeeklyReport)
+                Dim weeklyReportXref As New WeekRange
 
-            Dim weeklyReport As New List(Of WeeklyReport)
-            Dim weeklyReportXref As New WeekRange
+                Try
+                    weeklyReportXref.WeekRangeID = cbDateRange.SelectedValue
+                    weeklyReportXref.EmployeeID = empID
+                    weeklyReportXref.Status = submitStatus
+                    weeklyReportXref.DateSubmitted = Date.Now
 
-            Try
-                weeklyReportXref.WeekRangeID = cbDateRange.SelectedValue
-                weeklyReportXref.EmployeeID = empID
-                weeklyReportXref.Status = submitStatus
-                weeklyReportXref.DateSubmitted = Date.Now
+                    For Each reports In lstWeeklyReportsData
 
-                For Each reports In lstWeeklyReportsData
+                        Dim objReports As New WeeklyReport
+                        objReports.WeekRangeID = cbDateRange.SelectedValue
+                        objReports.EmpID = reports.EmpID
+                        objReports.ProjectID = reports.ProjectID
+                        objReports.Rework = reports.Rework
+                        objReports.ReferenceID = reports.RefID
+                        objReports.Subject = reports.Subject
+                        objReports.Severity = reports.Severity
+                        objReports.IncidentType = reports.IncidentType
+                        objReports.Phase = reports.Phase
+                        objReports.Status = reports.Status
+                        objReports.EffortEst = reports.EffortEst
+                        objReports.ActualEffort = reports.ActualEffort
+                        objReports.ActualEffortWk = reports.ActualEffortWk
+                        objReports.Comments = reports.Comments
+                        objReports.ProjCode = reports.ProjectCode
+                        objReports.TaskID = reports.TaskID
 
-                    Dim objReports As New WeeklyReport
-                    objReports.WeekRangeID = cbDateRange.SelectedValue
-                    objReports.EmpID = reports.EmpID
-                    objReports.ProjectID = reports.ProjectID
-                    objReports.Rework = reports.Rework
-                    objReports.ReferenceID = reports.RefID
-                    objReports.Subject = reports.Subject
-                    objReports.Severity = reports.Severity
-                    objReports.IncidentType = reports.IncidentType
-                    objReports.Phase = reports.Phase
-                    objReports.Status = reports.Status
-                    objReports.EffortEst = reports.EffortEst
-                    objReports.ActualEffort = reports.ActualEffort
-                    objReports.ActualEffortWk = reports.ActualEffortWk
-                    objReports.Comments = reports.Comments
+                        If reports.DateStarted IsNot String.Empty Then
+                            objReports.DateStarted = reports.DateStarted
+                        End If
 
-                    If reports.DateStarted IsNot String.Empty Then
-                        objReports.DateStarted = reports.DateStarted
-                    End If
+                        If reports.DateTarget IsNot String.Empty Then
+                            objReports.DateTarget = reports.DateTarget
+                        End If
 
-                    If reports.DateTarget IsNot String.Empty Then
-                        objReports.DateTarget = reports.DateTarget
-                    End If
+                        If reports.DateFinished IsNot String.Empty Then
+                            objReports.DateFinished = reports.DateFinished
+                        End If
 
-                    If reports.DateFinished IsNot String.Empty Then
-                        objReports.DateFinished = reports.DateFinished
-                    End If
+                        If reports.InboundContacts IsNot String.Empty Then
+                            objReports.InboundContacts = reports.InboundContacts
+                        End If
 
-                    If reports.InboundContacts IsNot String.Empty Then
-                        objReports.InboundContacts = reports.InboundContacts
-                    End If
+                        weeklyReport.Add(objReports)
+                    Next
 
-                    weeklyReport.Add(objReports)
-                Next
+                    ' Get remove weekly report data
+                    For Each reports In lstRemoveWeeklyReportData
+                        Dim objReports As New WeeklyReport
+                        objReports.WeekID = reports.WeekID
+                        objReports.WeekRangeID = reports.WeekRangeID
+                        objReports.EmpID = reports.EmpID
+                        objReports.TaskID = reports.TaskID
 
-                If totalWeeklyHours < 40 Then
-                    MsgBox("Insufficient Actual Effort Hours [Total:" + totalWeeklyHours.ToString + "]", MsgBoxStyle.Critical, "AIDE")
-                Else
-                    Dim result As Integer = MsgBox("Submit Weekly Report for the week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
+                        deletedWeeklyReport.Add(objReports)
+                    Next
 
-                    If result = vbYes Then
-                        If InitializeService() Then
-                            AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, weeklyReportXref)
-                            MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information, "AIDE")
-                            ExitPage()
+                    If totalWeeklyHours < 40 Then
+                        MsgBox("Insufficient Actual Effort Hours [Total:" + totalWeeklyHours.ToString + "]", MsgBoxStyle.Critical, "AIDE")
+                    Else
+                        Dim result As Integer = MsgBox("Submit Weekly Report for the week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
+
+                        If result = vbYes Then
+                            If InitializeService() Then
+                                AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, deletedWeeklyReport.ToArray, weeklyReportXref)
+                                MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information, "AIDE")
+                                ExitPage()
+                            End If
                         End If
                     End If
-                End If
 
-            Catch ex As Exception
-                MsgBox(ex.Message)
-            End Try
+                Catch ex As Exception
+                    MsgBox(ex.Message)
+                End Try
+            End If
         End If
     End Sub
 
@@ -552,6 +576,7 @@ Class WeeklyReportAddPage
             End If
         Else
             If lstWeeklyReportsData.Count > 0 Then
+                Dim deletedWeeklyReport As New List(Of WeeklyReport)
                 Dim weeklyReport As New List(Of WeeklyReport)
                 Dim weeklyReportXref As New WeekRange
 
@@ -576,6 +601,8 @@ Class WeeklyReportAddPage
                         objReports.ActualEffort = reports.ActualEffort
                         objReports.ActualEffortWk = reports.ActualEffortWk
                         objReports.Comments = reports.Comments
+                        objReports.ProjCode = reports.ProjectCode
+                        objReports.TaskID = reports.TaskID
 
                         If reports.DateStarted IsNot String.Empty Then
                             objReports.DateStarted = reports.DateStarted
@@ -596,11 +623,22 @@ Class WeeklyReportAddPage
                         weeklyReport.Add(objReports)
                     Next
 
+                    ' Get remove weekly report data
+                    For Each reports In lstRemoveWeeklyReportData
+                        Dim objReports As New WeeklyReport
+                        objReports.WeekID = reports.WeekID
+                        objReports.WeekRangeID = reports.WeekRangeID
+                        objReports.EmpID = reports.EmpID
+                        objReports.TaskID = reports.TaskID
+
+                        deletedWeeklyReport.Add(objReports)
+                    Next
+
                     Dim result As Integer = MsgBox("Save Weekly Report for the week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
 
                     If result = vbYes Then
                         If InitializeService() Then
-                            AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, weeklyReportXref)
+                            AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, deletedWeeklyReport.ToArray, weeklyReportXref)
                             MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information)
                             ExitPage()
                         End If
@@ -852,6 +890,8 @@ Class WeeklyReportAddPage
         txtActualEffort.Text = String.Empty
         txtActualEffortWk.Text = String.Empty
         txtInboundContacts.Text = String.Empty
+
+        dgWeeklyReport.SelectedIndex = -1
     End Sub
 
     Private Sub ExitPage()

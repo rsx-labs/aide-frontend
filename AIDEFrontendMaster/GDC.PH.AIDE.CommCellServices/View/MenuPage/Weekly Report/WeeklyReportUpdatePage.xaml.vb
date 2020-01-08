@@ -39,6 +39,7 @@ Class WeeklyReportUpdatePage
 
     Dim lstWeekRange As WeekRange()
     Dim lstWeeklyReportsData As ObservableCollection(Of WeeklyReportModel) = New ObservableCollection(Of WeeklyReportModel)
+    Dim lstRemoveWeeklyReportData As ObservableCollection(Of WeeklyReportModel) = New ObservableCollection(Of WeeklyReportModel)
 
     Dim dateToday As Date = Date.Today
     Dim daySatDiff As Integer = Today.DayOfWeek - DayOfWeek.Saturday
@@ -256,7 +257,7 @@ Class WeeklyReportUpdatePage
 
     Private Sub LoadWeeklyReportData()
         Try
-            Dim lstWeeklyReport As WeeklyReport() = AideServiceClient.GetWeeklyReportsByWeekRangeID(weekRangeID, empID)
+            Dim lstWeeklyReport As WeeklyReport() = AideServiceClient.GetWeeklyReportsByWeekRangeID(weekRangeID, dateToday, empID)
             For Each objWeeklyReport As WeeklyReport In lstWeeklyReport
                 weeklyReportDBProvider.SetWeeklyReportList(objWeeklyReport)
             Next
@@ -287,7 +288,9 @@ Class WeeklyReportUpdatePage
                                             .ActualEffort = weeklyReport.ActEffort,
                                             .ActualEffortWk = weeklyReport.ActEffortWk,
                                             .Comments = weeklyReport.Comment,
-                                            .InboundContacts = weeklyReport.InboundContacts
+                                            .InboundContacts = weeklyReport.InboundContacts,
+                                            .ProjectCode = weeklyReport.ProjectCode,
+                                            .TaskID = weeklyReport.TaskID
                                          })
             Next
 
@@ -335,15 +338,12 @@ Class WeeklyReportUpdatePage
 
 #Region "Events"
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs)
-
         Select Case entryType
             Case 0
                 ExitPage()
             Case 1
                 ExitPage2()
         End Select
-
-
     End Sub
 
     Private Sub dgWeeklyReport_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles dgWeeklyReport.SelectionChanged
@@ -419,6 +419,7 @@ Class WeeklyReportUpdatePage
 
     Private Sub btnRemove_Click(sender As Object, e As RoutedEventArgs) Handles btnRemove.Click
         Dim selectedItem = dgWeeklyReport.SelectedItem
+        lstRemoveWeeklyReportData.Add(selectedItem)
 
         If selectedItem IsNot Nothing Then
             lstWeeklyReportsData.RemoveAt(dgWeeklyReport.SelectedIndex)
@@ -471,6 +472,7 @@ Class WeeklyReportUpdatePage
     Private Sub btnSubmit_Click(sender As Object, e As RoutedEventArgs) Handles btnSubmit.Click
         If lstWeeklyReportsData.Count > 0 Then
 
+            Dim deletedWeeklyReport As New List(Of WeeklyReport)
             Dim weeklyReport As New List(Of WeeklyReport)
             Dim weeklyReportXref As New WeekRange
 
@@ -515,7 +517,21 @@ Class WeeklyReportUpdatePage
                         objReports.InboundContacts = reports.InboundContacts
                     End If
 
+                    objReports.ProjCode = reports.ProjectCode
+                    objReports.TaskID = reports.TaskID
+
                     weeklyReport.Add(objReports)
+                Next
+
+                ' Get remove weekly report data
+                For Each reports In lstRemoveWeeklyReportData
+                    Dim objReports As New WeeklyReport
+                    objReports.WeekID = reports.WeekID
+                    objReports.WeekRangeID = reports.WeekRangeID
+                    objReports.EmpID = reports.EmpID
+                    objReports.TaskID = reports.TaskID
+
+                    deletedWeeklyReport.Add(objReports)
                 Next
 
                 If totalWeeklyHours < 40 Then
@@ -525,7 +541,7 @@ Class WeeklyReportUpdatePage
 
                     If result = vbYes Then
                         If InitializeService() Then
-                            AideServiceClient.UpdateWeeklyReport(weeklyReport.ToArray, weeklyReportXref)
+                            AideServiceClient.UpdateWeeklyReport(weeklyReport.ToArray, deletedWeeklyReport.ToArray, weeklyReportXref)
                             MsgBox("Weekly Report Successfully Updated!", MsgBoxStyle.Information)
                             ExitPage()
                         End If
@@ -546,6 +562,7 @@ Class WeeklyReportUpdatePage
             End If
         Else
             If lstWeeklyReportsData.Count > 0 Then
+                Dim deletedWeeklyReport As New List(Of WeeklyReport)
                 Dim weeklyReport As New List(Of WeeklyReport)
                 Dim weeklyReportXref As New WeekRange
 
@@ -589,15 +606,29 @@ Class WeeklyReportUpdatePage
                             objReports.InboundContacts = reports.InboundContacts
                         End If
 
+                        objReports.ProjCode = reports.ProjectCode
+                        objReports.TaskID = reports.TaskID
+
                         weeklyReport.Add(objReports)
+                    Next
+
+                    ' Get remove weekly report data
+                    For Each reports In lstRemoveWeeklyReportData
+                        Dim objReports As New WeeklyReport
+                        objReports.WeekID = reports.WeekID
+                        objReports.WeekRangeID = reports.WeekRangeID
+                        objReports.EmpID = reports.EmpID
+                        objReports.TaskID = reports.TaskID
+
+                        deletedWeeklyReport.Add(objReports)
                     Next
 
                     Dim result As Integer = MsgBox("Save Weekly Report for the week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
 
                     If result = vbYes Then
                         If InitializeService() Then
-                            AideServiceClient.UpdateWeeklyReport(weeklyReport.ToArray, weeklyReportXref)
-                            MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information)
+                            AideServiceClient.UpdateWeeklyReport(weeklyReport.ToArray, deletedWeeklyReport.ToArray, weeklyReportXref)
+                            MsgBox("Weekly Report Successfully Updated!", MsgBoxStyle.Information)
                             Select Case entryType
                                 Case 0
                                     ExitPage()
@@ -817,6 +848,8 @@ Class WeeklyReportUpdatePage
         txtActualEffort.Text = String.Empty
         txtActualEffortWk.Text = String.Empty
         txtInboundContacts.Text = String.Empty
+
+        dgWeeklyReport.SelectedIndex = -1
     End Sub
 
     Private Function FindVisualChild(Of T)(ByVal depencencyObject As DependencyObject) As T

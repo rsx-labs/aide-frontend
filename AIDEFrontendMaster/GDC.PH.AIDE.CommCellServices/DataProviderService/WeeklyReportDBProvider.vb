@@ -39,7 +39,9 @@ Public Class WeeklyReportDBProvider
                                                      .ActEffort = _weeklyReport.ActualEffort,
                                                      .ActEffortWk = _weeklyReport.ActualEffortWk,
                                                      .Comment = _weeklyReport.Comments,
-                                                     .InboundContacts = _weeklyReport.InboundContacts
+                                                     .InboundContacts = _weeklyReport.InboundContacts,
+                                                     .ProjectCode = _weeklyReport.ProjCode,
+                                                     .TaskID = _weeklyReport.TaskID
                                                      }
         _weeklyReportList.Add(_objWeeklyReport)
     End Sub
@@ -99,6 +101,8 @@ Public Class MyWeeklyReport
     Public Property ActEffortWk As Double
     Public Property Comment As String
     Public Property InboundContacts As Short
+    Public Property ProjectCode As Integer
+    Public Property TaskID As Integer
 End Class
 
 Public Class MyWeeklyTeamStatusReport

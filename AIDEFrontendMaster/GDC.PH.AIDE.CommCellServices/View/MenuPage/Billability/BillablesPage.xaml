@@ -27,22 +27,30 @@
             
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.08*"/>
-                    <ColumnDefinition Width="0.70*"/>
-                    <ColumnDefinition Width="0.22*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="0.2*"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <Grid Grid.Column="0">
-                    <Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
-                        <Image Source="..\..\..\Assets\Button\BillabilityLogo.png" />
-                    </Viewbox>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.09*"/>
+                        <ColumnDefinition Width="0.91*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Grid Grid.Column="0">
+                        <Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
+                            <Image Source="..\..\..\Assets\Button\BillabilityLogo.png" />
+                        </Viewbox>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Viewbox HorizontalAlignment="Left">
+                            <TextBlock TextWrapping="Wrap" Padding="0" Text="Billable Hours" Margin="0,7,0,7" Foreground="DimGray"/>
+                        </Viewbox>
+                    </Grid>
                 </Grid>
+                
                 <Grid Grid.Column="1">
-                    <Viewbox HorizontalAlignment="Left">
-                        <TextBlock TextWrapping="Wrap" Padding="0" Text="Billable Hours" Margin="0,7,0,7" Foreground="DimGray"/>
-                    </Viewbox>
-                </Grid>
-                <Grid Grid.Column="2">
                     <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Height="30" Margin="5,5,5,5" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
                     <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                         <TextBlock.Style>

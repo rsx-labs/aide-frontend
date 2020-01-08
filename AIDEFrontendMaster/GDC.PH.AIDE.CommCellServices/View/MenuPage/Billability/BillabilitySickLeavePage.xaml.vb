@@ -20,6 +20,7 @@ Public Class BillabilitySickLeavePage
     Private _ResourceViewModel As New ResourcePlannerViewModel
     Private mainFrame As Frame
     Private profile As Profile
+
     Dim lstFiscalYear As FiscalYear()
     Dim commendationVM As New CommendationViewModel()
     Dim fiscalyearVM As New SelectionListViewModel
@@ -36,12 +37,9 @@ Public Class BillabilitySickLeavePage
         Me.mainFrame = mFrame
         Me.InitializeComponent()
 
-        month = Date.Now.Month
-        year = Date.Now.Year
-        SetData()
+        LoadYear()
+        SetFiscalYear()
         LoadData()
-
-        cbYear.SelectedValue = year
     End Sub
 
 #Region "Private Methods"
@@ -60,20 +58,29 @@ Public Class BillabilitySickLeavePage
     End Function
 
     Private Sub SetTitle()
-        Dim nextYear As Integer = year + 1
-        Dim prevYear As Integer = year - 1
-
-        If Date.Now.Month >= 4 Then
-            lblYear.Content = "Sick Leave For Fiscal Year " + year.ToString + "-" + nextYear.ToString
-        Else
-            lblYear.Content = "Sick Leave For Fiscal Year " + year.ToString + "-" + nextYear.ToString
-        End If
+        lblYear.Content = "Sick Leave For Fiscal Year " + cbYear.SelectedValue
     End Sub
 
-    Public Sub SetData()
+    Public Sub SetFiscalYear()
+        Try
+            month = Date.Now.Month
+
+            If Today.DayOfYear() <= CDate(Today.Year().ToString + "-03-31").DayOfYear Then
+                cbYear.SelectedValue = (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
+            Else
+                cbYear.SelectedValue = (Date.Now.Year).ToString() + "-" + (Date.Now.Year + 1).ToString()
+            End If
+
+            year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Public Sub LoadYear()
         Try
             If InitializeService() Then
-
                 lstFiscalYear = client.GetAllFiscalYear()
                 LoadFiscalYear()
             End If

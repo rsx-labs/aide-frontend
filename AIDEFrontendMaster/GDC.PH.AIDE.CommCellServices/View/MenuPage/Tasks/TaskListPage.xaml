@@ -77,8 +77,8 @@
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Target Date" Width="90" Binding="{Binding TargetDate, StringFormat='MM/dd/yyyy'}" />
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Completed Date" Width="90" Binding="{Binding CompltdDate, StringFormat='MM/dd/yyyy'}" />
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Effort Estimate" Width="90" Binding="{Binding EffortEst}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Actual Effort for the Week" Width="100" Binding="{Binding ActEffortEstWk}" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Actual Effort (hrs)" Width="88" Binding="{Binding ActEffortEst}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Actual Effort for the Week" Width="100" Binding="{Binding ActEffortWk}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Actual Effort (hrs)" Width="88" Binding="{Binding ActEffort}" />
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Phase" Width="100" Binding="{Binding PhaseDesc}" />
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="100" Binding="{Binding StatusDesc}" />
                         </DataGrid.Columns>

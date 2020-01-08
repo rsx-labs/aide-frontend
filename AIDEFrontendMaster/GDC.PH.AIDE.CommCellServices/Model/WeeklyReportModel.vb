@@ -12,9 +12,11 @@ Public Class WeeklyReportModel
     Private _actualEffort As Double
     Private _actualEffortWk As Double
 
+    Private _taskID As Integer
     Private _wkRangeID As Integer
     Private _refID As String
     Private _projID As Integer
+    Private _projCode As Integer
     Private _empID As Integer
 
     Private _subject As String
@@ -58,6 +60,8 @@ Public Class WeeklyReportModel
         Me.ActualEffortWk = aRawTasks.ActEffortWk
         Me.Comments = aRawTasks.Comment
         Me.InboundContacts = aRawTasks.InboundContacts
+        Me.ProjectCode = aRawTasks.ProjectCode
+        Me.TaskID = aRawTasks.TaskID
     End Sub
 
     Public Function ToMyTasks() As MyWeeklyReport
@@ -81,7 +85,9 @@ Public Class WeeklyReportModel
                                        .ActEffort = Me.ActualEffort,
                                        .ActEffortWk = Me.ActualEffortWk,
                                        .Comment = Me.Comments,
-                                       .InboundContacts = Me.InboundContacts}
+                                       .InboundContacts = Me.InboundContacts,
+                                       .ProjectCode = Me.ProjectCode,
+                                       .TaskID = Me.TaskID}
     End Function
 
     Public Property WeekID As Integer
@@ -391,6 +397,26 @@ Public Class WeeklyReportModel
                 _inboundContacts = CInt(value)
             End If
             NotifyPropertyChanged("InboundContacts")
+        End Set
+    End Property
+
+    Public Property ProjectCode As Integer
+        Get
+            Return _projCode
+        End Get
+        Set(value As Integer)
+            _projCode = value
+            NotifyPropertyChanged("ProjectCode")
+        End Set
+    End Property
+
+    Public Property TaskID As Integer
+        Get
+            Return _taskID
+        End Get
+        Set(value As Integer)
+            _taskID = value
+            NotifyPropertyChanged("TaskID")
         End Set
     End Property
 

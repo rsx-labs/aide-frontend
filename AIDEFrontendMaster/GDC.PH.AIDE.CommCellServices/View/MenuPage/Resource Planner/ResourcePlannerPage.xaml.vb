@@ -8,8 +8,6 @@ Imports System.ServiceModel
 Imports System.Windows.Xps
 Imports System.Windows.Xps.Packaging
 Imports System.Printing
-
-
 Class ResourcePlannerPage
     Implements IAideServiceCallback
 
@@ -51,15 +49,11 @@ Class ResourcePlannerPage
         Me.attendanceFrame = _attendanceFrame
         Me.InitializeComponent()
 
-        month = Date.Now.Month
-        year = Date.Now.Year
-        MonthLabel.Text = SetMonths() + " " + year.ToString()
         LoadMonth()
+        LoadYear()
+        SetFiscalYear()
+
         LoadAllEmpResourcePlanner()
-        cbDisplayMonth.Text = SetMonths()
-        cbDisplayMonth.SelectedValue = month.ToString
-        cbYear.SelectedValue = year
-        LoadFiscalYear()
     End Sub
 
     Public Function InitializeService() As Boolean
@@ -74,28 +68,6 @@ Class ResourcePlannerPage
         End Try
         Return bInitialize
     End Function
-
-#Region "ICallback Functions"
-    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
-
-    End Sub
-
-    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
-
-    End Sub
-
-    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
-
-    End Sub
-
-    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
-
-    End Sub
-
-    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
-
-    End Sub
-#End Region
 
 #Region "Methods"
     Public Sub LoadMonth()
@@ -115,12 +87,21 @@ Class ResourcePlannerPage
         cbDisplayMonth.Items.Add(New With {.Text = "December", .Value = 12})
     End Sub
 
+    Public Sub LoadYear()
+        Try
+            If InitializeService() Then
+                lstFiscalYear = client.GetAllFiscalYear()
+                LoadFiscalYear()
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
     Public Sub LoadFiscalYear()
         Try
             Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
             Dim FYDBProvider As New SelectionListDBProvider
-
-            lstFiscalYear = client.GetAllFiscalYear()
 
             For Each objFiscal As FiscalYear In lstFiscalYear
                 FYDBProvider._setlistofFiscal(objFiscal)
@@ -132,6 +113,25 @@ Class ResourcePlannerPage
 
             fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
+
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+    Public Sub SetFiscalYear()
+        Try
+            month = Date.Now.Month
+
+            If Today.DayOfYear() <= CDate(Today.Year().ToString + "-03-31").DayOfYear Then
+                cbYear.Text = (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
+            Else
+                cbYear.Text = (Date.Now.Year).ToString() + "-" + (Date.Now.Year + 1).ToString()
+            End If
+
+            year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+
+            cbDisplayMonth.SelectedValue = month
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -225,18 +225,14 @@ Class ResourcePlannerPage
     '    End Try
     'End Sub
 
-    Private Function getSelectedMonth(Year As Integer, month As Integer)
-        Select Case month
-            Case 1
-                Year = Year + 1
-            Case 2
-                Year = Year + 1
-            Case 3
-                Year = Year + 1
-            Case Else
-                Year = Year
-        End Select
-        Return Year
+    Private Function getSelectedMonth(year As Integer, month As Integer)
+        If month < 4 Then
+            year = year + 1
+        Else
+            year = year
+        End If
+
+        Return year
     End Function
 
     Public Sub LoadAllEmpResourcePlanner()
@@ -244,9 +240,7 @@ Class ResourcePlannerPage
             InitializeService()
             _ResourceDBProvider._splist.Clear()
             _ResourcePADBProvider._palist.Clear()
-            If year = 0 Then
-                year = Date.Now.Year
-            End If
+            
 
             Dim currentDate As DateTime = DateTime.Now
             Dim lstresource As ResourcePlanner() = client.GetAllEmpResourcePlanner(profile.Email_Address, month, year)
@@ -414,100 +408,49 @@ Class ResourcePlannerPage
     '    LoadAllEmpResourcePlanner()
     'End Sub
 
-    Public Function SetMonths()
-
-        Select Case month
-            Case "1"
-                displayMonth = "January"
-            Case "2"
-                displayMonth = "Febuary"
-            Case "3"
-                displayMonth = "March"
-            Case "4"
-                displayMonth = "April"
-            Case "5"
-                displayMonth = "May"
-            Case "6"
-                displayMonth = "June"
-            Case "7"
-                displayMonth = "July"
-            Case "8"
-                displayMonth = "August"
-            Case "9"
-                displayMonth = "September"
-            Case "10"
-                displayMonth = "October"
-            Case "11"
-                displayMonth = "November"
-            Case "12"
-                displayMonth = "December"
-        End Select
-        Return displayMonth
-    End Function
-
     'Private Sub btnViewAll_Click(sender As Object, e As RoutedEventArgs) Handles btnViewAll.Click
     '    txtDisplayMonth.Text = String.Empty
     '    cbFilterCategory.Text = String.Empty
     '    LoadAllEmpResourcePlanner()
     'End Sub
 
+    Private Function SetDisplayMonthYr(selectedMonth As Integer)
+        Dim displayMonth As String = ""
+        Dim newYear As Integer
 
-    Private Function SetDisplayMonthYr(SelectedMonth As String)
-        Dim dpsplaymonthYr As String = ""
-        Dim newYr As String = ""
-        If year = 0 Then
-            year = Date.Now.Year
+        If selectedMonth < 4 Then
+            newYear = year + 1
+        Else
+            newYear = year
         End If
 
-        newYr = (year + 1).ToString()
-        Select Case SelectedMonth
-            Case "1"
-                dpsplaymonthYr = "January " + (year + 1).ToString()
-            Case "2"
-                dpsplaymonthYr = "Febuary " + (year + 1).ToString()
-            Case "3"
-                dpsplaymonthYr = "March " + (year + 1).ToString()
-            Case "4"
-                dpsplaymonthYr = "April " + year.ToString()
-            Case "5"
-                dpsplaymonthYr = "May" + year.ToString()
-            Case "6"
-                dpsplaymonthYr = "June " + year.ToString()
-            Case "7"
-                dpsplaymonthYr = "July " + year.ToString()
-            Case "8"
-                dpsplaymonthYr = "August " + year.ToString()
-            Case "9"
-                dpsplaymonthYr = "September " + year.ToString()
-            Case "10"
-                dpsplaymonthYr = "October " + year.ToString()
-            Case "11"
-                dpsplaymonthYr = "November " + year.ToString()
-            Case "12"
-                dpsplaymonthYr = "December " + year.ToString()
-        End Select
-        Return dpsplaymonthYr
+        displayMonth = MonthName(selectedMonth) + " " + newYear.ToString
+       
+        Return displayMonth
     End Function
 
 #End Region
 
 #Region "Button/Event"
     Private Sub cbDisplayMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbDisplayMonth.SelectionChanged
-        month = cbDisplayMonth.SelectedValue
-        If Not cbYear.SelectedValue Is Nothing Then
+
+        If Not cbDisplayMonth.SelectedIndex = -1 Then
+            month = cbDisplayMonth.SelectedItem.Value
+        End If
+
+        If cbYear.SelectedValue IsNot Nothing Then
             year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
         End If
 
         If year = 0 Then
             year = Date.Now.Year
         End If
+
         MonthLabel.Text = SetDisplayMonthYr(month)
         LoadAllEmpResourcePlanner()
     End Sub
 
-
     Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
-        month = cbDisplayMonth.SelectedValue
         year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
         MonthLabel.Text = SetDisplayMonthYr(month)
         LoadAllEmpResourcePlanner()
@@ -555,7 +498,6 @@ Class ResourcePlannerPage
             dialog.PrintVisual(dgResourcePlanner, "Print Leave Credits")
         End If
     End Sub
-#End Region
 
     Private Sub btnManage_Click(sender As Object, e As RoutedEventArgs)
         _addframe.Navigate(New BillabilityManagerVLLeavePage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
@@ -568,4 +510,29 @@ Class ResourcePlannerPage
         _addframe.Margin = New Thickness(100, 60, 100, 60)
         _addframe.Visibility = Visibility.Visible
     End Sub
+
+#End Region
+
+#Region "ICallback Functions"
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
+
+    End Sub
+
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
+
+    End Sub
+
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
+
+    End Sub
+
+    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
+
+    End Sub
+
+    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+
+    End Sub
+#End Region
+
 End Class
