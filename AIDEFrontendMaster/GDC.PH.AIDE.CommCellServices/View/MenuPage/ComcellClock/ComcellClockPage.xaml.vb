@@ -25,6 +25,7 @@ Class ComcellClockPage
     Private ComcellVM As New ComcellViewModel
     Private profile As Profile
     Private ComcellClockModel As New ComcellClockModel
+
 #End Region
 
 #Region "Constructor"
@@ -84,17 +85,17 @@ Class ComcellClockPage
     Public Sub getTime()
         Dim actualTime As String
         Dim timer As DispatcherTimer = New DispatcherTimer(New TimeSpan(0, 0, 1), DispatcherPriority.Normal, Function()
-                                                                                                               
-                                                                                                                 Dim dateNow As DateTime = Format(DateTime.Now, "hh:mm tt")
-                                                                                                                 actualTime = DateTime.Now.DayOfWeek.ToString().ToUpper() + " " + dateNow.ToString("hh:mm tt")
+
+                                                                                                                 Dim dateNow As DateTime = Format(DateTime.Now, "hh:mm:ss tt")
+                                                                                                                 actualTime = DateTime.Now.DayOfWeek.ToString().ToUpper() + " " + dateNow.ToString("hh:mm:ss tt")
+
 
                                                                                                                  If TimeCheck(actualTime) Then
-                                                                                                                     'alarmActive = True
-                                                                                                                     Dim winwin As New ComcellClockWindow
-                                                                                                                     winwin.ShowDialog()
+                                                                                                                         'alarmActive = True
+                                                                                                                         Dim winwin As New ComcellClockWindow
+                                                                                                                         winwin.ShowDialog()
                                                                                                                      If _window.WindowState = WindowState.Minimized Then
                                                                                                                          _window.Show()
-
                                                                                                                      End If
                                                                                                                  End If
                                                                                                              End Function, Me.Dispatcher)
@@ -169,7 +170,7 @@ Class ComcellClockPage
     Private Sub GetComcellDay()
         Try
             Dim dayconvert As String = GetDayValue(comcellClockVM.objectComcellClockSet.CLOCK_DAY)
-            comcellClockVM.objectComcellDayOnly = dayconvert & " " & _comcellclock.Clock_Hour.ToString("00") & ":" & _comcellclock.Clock_Minute.ToString().PadLeft(2, "0") & " " & _comcellclock.MIDDAY
+            comcellClockVM.objectComcellDayOnly = dayconvert & " " & _comcellclock.Clock_Hour.ToString("00") & ":" & _comcellclock.Clock_Minute.ToString().PadLeft(2, "0") & ":00" & " " & _comcellclock.MIDDAY
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
