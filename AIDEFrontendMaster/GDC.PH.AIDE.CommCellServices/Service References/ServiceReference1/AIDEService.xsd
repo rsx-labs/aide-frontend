@@ -163,6 +163,23 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DashboardTaskSummaryTotals" nillable="true" type="tns:DashboardTaskSummaryTotals" />
+  <xs:complexType name="ArrayOfSabaLearning">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SabaLearning" nillable="true" type="tns:SabaLearning" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSabaLearning" nillable="true" type="tns:ArrayOfSabaLearning" />
+  <xs:complexType name="SabaLearning">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DATE_COMPLETED" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EMP_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="END_DATE" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IMAGE_PATH" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SABA_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="TITLE" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SabaLearning" nillable="true" type="tns:SabaLearning" />
   <xs:complexType name="Comcell">
     <xs:sequence>
       <xs:element minOccurs="0" name="COMCELL_ID" type="xs:int" />
@@ -214,12 +231,14 @@
       <xs:element minOccurs="0" name="InboundContacts" type="xs:short" />
       <xs:element minOccurs="0" name="IncidentType" type="xs:short" />
       <xs:element minOccurs="0" name="Phase" type="xs:short" />
+      <xs:element minOccurs="0" name="ProjCode" type="xs:int" />
       <xs:element minOccurs="0" name="ProjectID" type="xs:int" />
       <xs:element minOccurs="0" name="ReferenceID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Rework" type="xs:short" />
       <xs:element minOccurs="0" name="Severity" type="xs:short" />
       <xs:element minOccurs="0" name="Status" type="xs:short" />
       <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TaskID" type="xs:int" />
       <xs:element minOccurs="0" name="WeekID" type="xs:int" />
       <xs:element minOccurs="0" name="WeekRangeID" type="xs:int" />
     </xs:sequence>
@@ -767,23 +786,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Late" nillable="true" type="tns:Late" />
-  <xs:complexType name="ArrayOfSabaLearning">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="SabaLearning" nillable="true" type="tns:SabaLearning" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfSabaLearning" nillable="true" type="tns:ArrayOfSabaLearning" />
-  <xs:complexType name="SabaLearning">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="DATE_COMPLETED" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="EMP_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="END_DATE" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="IMAGE_PATH" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SABA_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="TITLE" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="SabaLearning" nillable="true" type="tns:SabaLearning" />
   <xs:complexType name="Action">
     <xs:sequence>
       <xs:element minOccurs="0" name="Act_Assignee" type="xs:int" />
