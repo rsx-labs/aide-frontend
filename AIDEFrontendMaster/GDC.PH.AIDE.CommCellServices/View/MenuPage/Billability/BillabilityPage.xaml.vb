@@ -128,8 +128,8 @@ Public Class BillabilityPage
         LoadNonBillMonthSummary()
         LoadNonBillMonth()
 
-        lblNonBill.Content = "Non-Billable Hours for " + MonthName(month) + " " + year.ToString
-        lblSummary.Content = "Non-Billable Hours Summary for " + MonthName(month) + " " + year.ToString
+        lblNonBill.Content = "Non-Billable Hours for " + MonthName(month) + " " + GetSelectedMonth(year, month).ToString
+        lblSummary.Content = "Non-Billable Hours Summary for " + MonthName(month) + " " + GetSelectedMonth(year, month).ToString
     End Sub
 
     Private Sub LoadNonBillMonthSummary()
@@ -265,6 +265,15 @@ Public Class BillabilityPage
         End Try
     End Sub
 
+    Private Function GetSelectedMonth(year As Integer, month As Integer)
+        If month < 4 Then
+            year = year + 1
+        Else
+            year = year
+        End If
+
+        Return year
+    End Function
 #End Region
 
 #Region "Events"
