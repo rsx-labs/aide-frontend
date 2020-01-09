@@ -1078,20 +1078,462 @@
                                          CanUserSortColumns="False"
                                   
                                         >
-                            <!--<DataGridTextColumn>
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
+                            <DataGrid.CellStyle>
+                                <Style TargetType="{x:Type DataGridCell}">
                                     <Style.Triggers>
-                                        <Trigger Property="Text" Value="Absent">
-                                            <Setter Property="Background" Value="Red"/>
-                                        </Trigger>
-                                        <Trigger Property="Text" Value="Present">
-                                            <Setter Property="Background" Value="Green"/>
-                                        </Trigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="P"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#42ff6b" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="L"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#42ff6b" />
+                                            <Setter Property="Foreground" Value="#f78e81" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="VL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="O"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#fff261" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="SL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="H"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#e9c1f7" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="EL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="OBA"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#fff261" />
+                                            <Setter Property="Foreground" Value="Black"   />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="OL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black"   />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="P/HSL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#42ff6b" />
+                                            <Setter Property="Foreground" Value="#f78e81"   />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="P/HVL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="black"   />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="P/HEL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="P/HOL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black"   />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="P/HOBA"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#fff261" />
+                                            <Setter Property="Foreground" Value="Black"   />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="L/HSL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#42ff6b" />
+                                            <Setter Property="Foreground" Value="#f78e81" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="L/HVL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#42ff6b" />
+                                            <Setter Property="Foreground" Value="#f78e81" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="L/HEL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#42ff6b" />
+                                            <Setter Property="Foreground" Value="#f78e81" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="L/HOL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#42ff6b" />
+                                            <Setter Property="Foreground" Value="#f78e81" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="L/HOBA"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#42ff6b" />
+                                            <Setter Property="Foreground" Value="#f78e81" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HVL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HVL/HSL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HVL/HVL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HVL/HEL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HVL/HOL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HVL/HOBA"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HVL/P"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="black"   />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HVL/O"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#fff261" />
+                                            <Setter Property="Foreground" Value="black"   />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HEL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HEL/HSL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HEL/HVL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                         
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HEL/HEL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HEL/HOL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HEL/HOBA"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HEL/P"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HEL/O"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black"   />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOL/HSL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOL/HVL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOL/HEL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOL/HOL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black"   />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOL/HOBA"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOL/P"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black"   />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOL/O"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#6dbbe8" />
+                                            <Setter Property="Foreground" Value="Black"   />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOBA"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOBA/HSL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOBA/HVL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOBA/HEL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOBA/HOL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOBA/HOBA"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOBA/P"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#fff261" />
+                                            <Setter Property="Foreground" Value="Black"   />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOBA/O"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#fff261" />
+                                            <Setter Property="Foreground" Value="Black"   />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/HSL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/HVL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/HEL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/HOL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/HOBA"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/P"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#42ff6b" />
+                                            <Setter Property="Foreground" Value="#f78e81"   />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/O"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#42ff6b" />
+                                            <Setter Property="Foreground" Value="#f78e81"   />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="O/HSL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#fff261" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="O/HVL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#fff261" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="O/HEL"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#fff261" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="O/HOL"/>
+                                               
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#fff261" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="O/HOBA"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#fff261" />
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>-->
+                            </DataGrid.CellStyle>
 
                         </DataGrid>
                     </Border>
