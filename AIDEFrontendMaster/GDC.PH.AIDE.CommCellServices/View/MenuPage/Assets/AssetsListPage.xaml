@@ -706,7 +706,7 @@
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Serial No." Width="100" Binding="{Binding SERIAL_NO}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Tag" Width="100" Binding="{Binding ASSET_TAG}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Created By" Width="90" Binding="{Binding FULL_NAME}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Purchased" Width="85" Binding="{Binding DATE_DESCR}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Purchased" Width="110" Binding="{Binding DATE_DESCR}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="85" Binding="{Binding STATUS_DESCR}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Other Info" Width="120" Binding="{Binding OTHER_INFO}" />
                                         </DataGrid.Columns>
@@ -749,7 +749,7 @@
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Serial No." Width="100" Binding="{Binding SERIAL_NO}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Tag" Width="100" Binding="{Binding ASSET_TAG}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Created By" Width="90" Binding="{Binding FULL_NAME}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Purchased" Width="85" Binding="{Binding DATE_DESCR}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Purchased" Width="110" Binding="{Binding DATE_DESCR}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="85" Binding="{Binding STATUS_DESCR}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Other Info" Width="120" Binding="{Binding OTHER_INFO}" />
                                         </DataGrid.Columns>

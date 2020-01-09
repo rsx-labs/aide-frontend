@@ -128,8 +128,8 @@ Public Class BillabilityPage
         LoadNonBillMonthSummary()
         LoadNonBillMonth()
 
-        lblNonBill.Content = "Non-Billable Hours for " + MonthName(month) + " " + GetSelectedMonth(year, month).ToString
-        lblSummary.Content = "Non-Billable Hours Summary for " + MonthName(month) + " " + GetSelectedMonth(year, month).ToString
+        lblNonBill.Content = "Non-Billable Hours for " + MonthName(month) + " " + cbYear.Text
+        lblSummary.Content = "Non-Billable Hours Summary for " + MonthName(month) + " " + cbYear.Text
     End Sub
 
     Private Sub LoadNonBillMonthSummary()

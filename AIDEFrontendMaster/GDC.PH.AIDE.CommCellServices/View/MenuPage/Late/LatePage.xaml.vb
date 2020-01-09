@@ -255,6 +255,7 @@ Public Class LatePage
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
         year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
         LoadStackLateFY()
+        LoadStackLate()
         lblYear.Content = yearHeader + " " + cbYear.SelectedValue.ToString()
     End Sub
 
