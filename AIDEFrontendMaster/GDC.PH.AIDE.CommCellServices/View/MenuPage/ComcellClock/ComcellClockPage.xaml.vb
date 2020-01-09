@@ -38,6 +38,7 @@ Class ComcellClockPage
         Me.profile = _profile
         Me.emp_ID = profile.Emp_ID
         Me._window = winx
+        year = getSelectedFY(year, monthToday)
         InitializeService()
         GetData()
         setclock()
@@ -112,7 +113,23 @@ Class ComcellClockPage
 
         End Try
     End Sub
+    Private Function getSelectedFY(Year As Integer, month As Integer)
 
+
+        Select Case month
+            Case 1
+                Year = Year - 1
+            Case 2
+                Year = Year - 1
+            Case 3
+                Year = Year - 1
+            Case Else
+                Year = Year
+        End Select
+
+
+        Return Year
+    End Function
     Private Sub LoadData()
         'Dim AlarmDate As String
         ComcellClockModel = New ComcellClockModel
