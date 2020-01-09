@@ -2,6 +2,7 @@
 Imports System.ServiceModel
 Imports UI_AIDE_CommCellServices.ServiceReference1
 Imports System.ComponentModel
+Imports System.Text.RegularExpressions
 
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class TaskAddPage
@@ -24,8 +25,12 @@ Class TaskAddPage
     Dim reworkID As Integer = 5
     Dim severityID As Integer = 13
 
+    Dim stsNotStarted As Integer = 1
+    Dim stsInPrgress As Integer = 2
     Dim stsCmpltd As Integer = 3
     Dim stsRtrnToTrge As Integer = 4
+    Dim stsWaitngForInfo As Integer = 5
+    Dim stsOnhold As Integer = 6
 
     Dim tasks As New Tasks
     Dim client As AideServiceClient
@@ -102,7 +107,7 @@ Class TaskAddPage
 
     Private Sub LoadControlsForUpdate()
         btnCreate.Visibility = Windows.Visibility.Collapsed
-        cboProject.Text = ProjectName
+        cbProject.Text = ProjectName
         cbCategory.SelectedValue = tasksViewModel.NewTasks.IncidentType
         cbPhase.SelectedValue = tasksViewModel.NewTasks.Phase
         cbRework.SelectedValue = tasksViewModel.NewTasks.Rework
@@ -232,7 +237,7 @@ Class TaskAddPage
             Next
 
             projectViewModel.ProjectList = listProjects
-            cboProject.DataContext = projectViewModel
+            cbProject.DataContext = projectViewModel
         Catch ex As Exception
             client.Abort()
         End Try
@@ -261,12 +266,12 @@ Class TaskAddPage
         Try
             tasks.TaskID = obj.NewTasks.TaskId
 
-            If IsNothing(cboProject.SelectedValue) Then
+            If IsNothing(cbProject.SelectedValue) Then
                 tasks.ProjectID = obj.NewTasks.ProjId
                 tasks.ProjectCode = obj.NewTasks.ProjId
             Else
-                tasks.ProjectID = cboProject.SelectedValue
-                tasks.ProjectCode = cboProject.SelectedValue
+                tasks.ProjectID = cbProject.SelectedValue
+                tasks.ProjectCode = cbProject.SelectedValue
             End If
 
             tasks.Rework = obj.NewTasks.Rework
@@ -340,20 +345,65 @@ Class TaskAddPage
         tasksModel.Severity = Nothing
         tasksModel.Rework = Nothing
 
-        cboProject.SelectedIndex = -1
+        cbProject.SelectedIndex = -1
     End Sub
 
-    Private Function FindMissingFields(obj As TasksViewModel) As Boolean
-        If txtRefID.Text = String.Empty Or
-           txtIncDescr.Text = String.Empty Or
-           cbPhase.Text = String.Empty Or
-           cbCategory.Text = String.Empty Or
-            cboProject.Text = String.Empty Or
-            cbStatus.Text = String.Empty Then
-            MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "FAILED")
-            Return True
+    Private Function ValidateFields() As Boolean
+        If txtRefID.Text = String.Empty Then
+            MsgBox("Please enter reference ID", MsgBoxStyle.Critical, "AIDE")
+            txtRefID.Focus()
+            Return False
         End If
-        Return False
+
+        If txtIncDescr.Text Is String.Empty Then
+            MsgBox("Please enter description", MsgBoxStyle.Critical, "AIDE")
+            txtIncDescr.Focus()
+            Return False
+        End If
+
+        If cbPhase.SelectedIndex = -1 Then
+            MsgBox("Please select phase", MsgBoxStyle.Critical, "AIDE")
+            cbPhase.Focus()
+            Return False
+        End If
+
+        If cbStatus.SelectedIndex = -1 Then
+            MsgBox("Please select status", MsgBoxStyle.Critical, "AIDE")
+            cbStatus.Focus()
+            Return False
+        End If
+
+        If cbProject.SelectedIndex = -1 Then
+            MsgBox("Please select a project", MsgBoxStyle.Critical, "AIDE")
+            cbProject.Focus()
+            Return False
+        End If
+
+        If cbCategory.SelectedIndex = -1 Then
+            MsgBox("Please select category", MsgBoxStyle.Critical, "AIDE")
+            cbCategory.Focus()
+            Return False
+        End If
+
+        If dpCompltdDate.Text IsNot String.Empty And dpStartDate.Text = String.Empty Then
+            MsgBox("Please enter start date", MsgBoxStyle.Critical, "AIDE")
+            dpStartDate.Focus()
+            Return False
+        End If
+
+        If (cbStatus.SelectedValue = stsInPrgress OrElse cbStatus.SelectedValue = stsWaitngForInfo OrElse cbStatus.SelectedValue = stsOnhold) And dpStartDate.Text Is String.Empty Then
+            MsgBox("Please enter start date", MsgBoxStyle.Critical, "AIDE")
+            dpStartDate.Focus()
+            Return False
+        End If
+
+        If cbStatus.SelectedValue = stsCmpltd And dpCompltdDate.Text Is String.Empty Then
+            MsgBox("Please enter completed date", MsgBoxStyle.Critical, "AIDE")
+            dpCompltdDate.Focus()
+            Return False
+        End If
+
+        Return True
     End Function
 
     'Private Sub dpStartDate_SelectedDateChanged(sender As Object, e As SelectionChangedEventArgs) Handles dpStartDate.SelectedDateChanged
@@ -404,16 +454,35 @@ Class TaskAddPage
         submenuframe.Opacity = 1
         addframe.Visibility = Visibility.Hidden
     End Sub
+
+    Private Sub NumberValidationTextBox(ByVal sender As Object, ByVal e As TextCompositionEventArgs)
+        Dim regex = New Regex("^[0-9]*(?:\.[0-9]*)?$")
+
+        If regex.IsMatch(e.Text) AndAlso Not (e.Text = "." AndAlso (CType(sender, TextBox)).Text.Contains(e.Text)) Then
+            e.Handled = False
+        Else
+            e.Handled = True
+        End If
+    End Sub
 #End Region
 
 #Region "Button/Events"
-    Private Sub cbStatus_DropDownClosed(sender As Object, e As EventArgs) Handles cbStatus.DropDownClosed
-        If cbStatus.SelectedValue = stsCmpltd OrElse cbStatus.SelectedValue = stsRtrnToTrge Then
-            dpTargetDate.SelectedDate = Date.Now
-            dpCompltdDate.SelectedDate = Date.Now
+    Private Sub cbStatus_SelectionChanged(sender As Object, e As EventArgs) Handles cbStatus.SelectionChanged
+        If Not cbStatus.SelectedValue = stsNotStarted Then
+            If Not txtStartDate.Text.Contains("*") Then
+                txtStartDate.Text = "Select start date *"
+            End If
+
+            If cbStatus.SelectedValue = stsCmpltd Or cbStatus.SelectedValue = stsRtrnToTrge Then
+                dpCompltdDate.SelectedDate = Date.Now
+                txtDateCompleted.Text = "Select completed date *"
+            Else
+                dpCompltdDate.Text = String.Empty
+                txtDateCompleted.Text = "Select completed date"
+            End If
         Else
+            txtStartDate.Text = "Select start date"
             dpCompltdDate.Text = String.Empty
-            dpTargetDate.Text = String.Empty
         End If
     End Sub
 
@@ -428,7 +497,7 @@ Class TaskAddPage
     End Sub
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
-        If Not FindMissingFields(Me.DataContext) Then
+        If ValidateFields() Then
             Try
                 Dim result As Integer = MsgBox("Are you sure you want to add task?", MsgBoxStyle.YesNo, "AIDE")
 
@@ -450,22 +519,24 @@ Class TaskAddPage
     End Sub
 
     Private Sub btnUpdate_Click(sender As Object, e As RoutedEventArgs) Handles btnUpdate.Click
-        Try
-            Dim result As Integer = MsgBox("Are you sure you want to Update?", MsgBoxStyle.YesNo, "AIDE")
-            If result = vbYes Then
-                If InitializeService() Then
-                    If GetDataContext(Me.DataContext) Then
-                        client.UpdateTask(tasks)
-                        MsgBox("Successfully updated", MsgBoxStyle.Information, "AIDE")
-                        ClearValues()
-                        frame.Navigate(New TaskListPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
-                        ExitPage()
+        If ValidateFields() Then
+            Try
+                Dim result As Integer = MsgBox("Are you sure you want to Update?", MsgBoxStyle.YesNo, "AIDE")
+                If result = vbYes Then
+                    If InitializeService() Then
+                        If GetDataContext(Me.DataContext) Then
+                            client.UpdateTask(tasks)
+                            MsgBox("Successfully updated", MsgBoxStyle.Information, "AIDE")
+                            ClearValues()
+                            frame.Navigate(New TaskListPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
+                            ExitPage()
+                        End If
                     End If
                 End If
-            End If
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
-        End Try
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
+            End Try
+        End If
     End Sub
 
     Private Sub dpTargetDate_CalendarOpened(sender As Object, e As RoutedEventArgs) Handles dpTargetDate.CalendarOpened
@@ -481,6 +552,14 @@ Class TaskAddPage
 
             tasks.Status = stsValue
             cbStatus.SelectedValue = tasks.Status
+
+            If Not txtStartDate.Text.Contains("*") Then
+                txtStartDate.Text = "Select start date *"
+            End If
+        Else
+            If cbStatus.SelectedValue = stsNotStarted Then
+                txtStartDate.Text = "Select start date"
+            End If
         End If
     End Sub
 #End Region
