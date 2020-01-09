@@ -299,7 +299,7 @@
 
                                 <Grid Grid.Row="2">
                                     <Border Margin="0,2.5,2.5,2.5" Background="White" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="8">
-                                        <TextBox  x:Name="txtRefID" 
+                                        <TextBox  x:Name="txtRefID" MaxLength="10"
                                          Template="{DynamicResource TextBoxBaseControlTemplate}"/>
                                     </Border>
                                     <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter a reference ID" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
@@ -330,7 +330,7 @@
 
                                 <Grid Grid.Row="3">
                                     <Border Margin="0,2.5,2.5,2.5" Background="White" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="8">
-                                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}"
+                                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" MaxLength="255"
                                          x:Name="txtSubject" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" />
                                     </Border>
                                     <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter description *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
@@ -533,7 +533,7 @@
 
                                 <Grid Grid.Row="4">
                                     <Border Margin="2.5,2.5,2.5,2.5" Background="White" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="8">
-                                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}"
+                                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" MaxLength="255"
                                          x:Name="txtComments" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
                                     </Border>
                                     <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter comments" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
@@ -638,7 +638,7 @@
                                 </Grid>
                                 <Grid Grid.Row="1">
                                     <Border Margin="2.5,2.5,0,2.5" Background="White" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="8">
-                                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtEffortEst" PreviewTextInput="NumberValidationTextBox" />
+                                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtEffortEst" PreviewTextInput="NumberValidationTextBox" MaxLength="8" />
                                     </Border>
                                     <TextBlock x:Name="txtEffort" FontSize="12" IsHitTestVisible="False" Text="Enter estimate effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                         <TextBlock.Style>
@@ -668,7 +668,7 @@
 
                                 <Grid Grid.Row="2">
                                     <Border Margin="2.5,2.5,0,2.5" Background="White" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="8">
-                                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEffortWk" PreviewTextInput="NumberValidationTextBox" />
+                                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEffortWk" PreviewTextInput="NumberValidationTextBox" MaxLength="8" />
                                     </Border>
                                     <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter actual effort for the week(hrs) *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                         <TextBlock.Style>
@@ -698,7 +698,7 @@
 
                                 <Grid Grid.Row="3">
                                     <Border Margin="2.5,2.5,0,2.5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="8">
-                                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEffort" PreviewTextInput="NumberValidationTextBox" />
+                                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEffort" PreviewTextInput="NumberValidationTextBox" MaxLength="8" />
                                     </Border>
                                     <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter actual effort(hrs) *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                         <TextBlock.Style>
@@ -728,7 +728,7 @@
 
                                 <Grid Grid.Row="4">
                                     <Border Margin="2.5,2.5,0,2.5" Background="White" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="8">
-                                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtInboundContacts" PreviewTextInput="NumberValidationTextBox" />
+                                        <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtInboundContacts" PreviewTextInput="NumberValidationTextBox" MaxLength="8" />
                                     </Border>
                                     <TextBlock FontSize="12" IsHitTestVisible="False" Text="Number of inbound contacts" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                         <TextBlock.Style>

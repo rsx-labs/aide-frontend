@@ -29,6 +29,13 @@ Class WeeklyReportAddPage
     Dim submitStatus As Integer = 3
     Dim workingStatus As Integer = 1
 
+    Dim stsNotStarted As Integer = 1
+    Dim stsInPrgress As Integer = 2
+    Dim stsCmpltd As Integer = 3
+    Dim stsRtrnToTrge As Integer = 4
+    Dim stsWaitngForInfo As Integer = 5
+    Dim stsOnhold As Integer = 6
+
     Dim listProjects As New ObservableCollection(Of ProjectModel)
     Dim listReworkStatus As New ObservableCollection(Of ReworkStatusModel)
     Dim listSeverityStatus As New ObservableCollection(Of SeverityStatusModel)
@@ -356,11 +363,12 @@ Class WeeklyReportAddPage
     Private Sub cbDateRange_DropDownClosed(sender As Object, e As EventArgs) Handles cbDateRange.DropDownClosed
         If Not selectedValue = cbDateRange.SelectedValue Then
             If lstWeeklyReportsData.Count > 0 Then
-                Dim result As Integer = MsgBox("Changing Period Date will delete input data?", MsgBoxStyle.YesNo, "AIDE")
+                Dim result As Integer = MsgBox("Changing period date will delete input data?", MsgBoxStyle.YesNo, "AIDE")
 
                 If result = vbYes Then
                     selectedValue = cbDateRange.SelectedValue
                     PopulateWeeklyReportData()
+                    ClearFields()
                     btnSubmit.IsEnabled = False
                 Else
                     cbDateRange.SelectedValue = selectedValue
@@ -482,7 +490,7 @@ Class WeeklyReportAddPage
     Private Sub btnSubmit_Click(sender As Object, e As RoutedEventArgs) Handles btnSubmit.Click
         If cbDateRange.SelectedIndex = -1 Then
             If cbDateRange.SelectedIndex = -1 Then
-                MsgBox("Please select a Date Range", MsgBoxStyle.Critical, "AIDE")
+                MsgBox("Please select a date range", MsgBoxStyle.Critical, "AIDE")
                 cbDateRange.Focus()
             End If
         Else
@@ -548,14 +556,14 @@ Class WeeklyReportAddPage
                     Next
 
                     If totalWeeklyHours < 40 Then
-                        MsgBox("Insufficient Actual Effort Hours [Total:" + totalWeeklyHours.ToString + "]", MsgBoxStyle.Critical, "AIDE")
+                        MsgBox("Insufficient actual effort hours [Total:" + totalWeeklyHours.ToString + "]", MsgBoxStyle.Critical, "AIDE")
                     Else
-                        Dim result As Integer = MsgBox("Submit Weekly Report for the week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
+                        Dim result As Integer = MsgBox("Submit weekly report for the week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
 
                         If result = vbYes Then
                             If InitializeService() Then
                                 AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, deletedWeeklyReport.ToArray, weeklyReportXref)
-                                MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information, "AIDE")
+                                MsgBox("Weekly report successfully created!", MsgBoxStyle.Information, "AIDE")
                                 ExitPage()
                             End If
                         End If
@@ -571,7 +579,7 @@ Class WeeklyReportAddPage
     Private Sub btnSave_Click(sender As Object, e As RoutedEventArgs) Handles btnSave.Click
         If cbDateRange.SelectedIndex = -1 Then
             If cbDateRange.SelectedIndex = -1 Then
-                MsgBox("Please select a Date Range", MsgBoxStyle.Critical, "AIDE")
+                MsgBox("Please select a date range", MsgBoxStyle.Critical, "AIDE")
                 cbDateRange.Focus()
             End If
         Else
@@ -634,12 +642,12 @@ Class WeeklyReportAddPage
                         deletedWeeklyReport.Add(objReports)
                     Next
 
-                    Dim result As Integer = MsgBox("Save Weekly Report for the week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
+                    Dim result As Integer = MsgBox("Save weekly report for the week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
 
                     If result = vbYes Then
                         If InitializeService() Then
                             AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, deletedWeeklyReport.ToArray, weeklyReportXref)
-                            MsgBox("Weekly Report Successfully Created!", MsgBoxStyle.Information)
+                            MsgBox("Weekly report successfully saved!", MsgBoxStyle.Information)
                             ExitPage()
                         End If
                     End If
@@ -669,50 +677,82 @@ Class WeeklyReportAddPage
     Private Sub txtRefID_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtRefID.TextChanged
         If txtRefID.Text IsNot String.Empty Then
             If Not txtIncidentType.Text.Contains("*") Then
-                txtIncidentType.Text = "Incident Type *"
+                txtIncidentType.Text = "Select a category *"
             End If
 
-            If Not txtTargetDate.Text.Contains("*") Then
-                txtTargetDate.Text = "Target Date *"
-            End If
+            'If Not txtTargetDate.Text.Contains("*") Then
+            '    txtTargetDate.Text = "Target date *"
+            'End If
 
             If Not txtEffort.Text.Contains("*") Then
-                txtEffort.Text = "Estimate Effort(hrs) *"
+                txtEffort.Text = "Estimate effort(hrs) *"
             End If
         Else
-            txtIncidentType.Text = "Incident Type"
-            txtTargetDate.Text = "Target Date"
-            txtEffort.Text = "Estimate Effort(hrs)"
+            txtIncidentType.Text = "Select a category"
+            'txtTargetDate.Text = "Target date"
+            txtEffort.Text = "Estimate effort(hrs)"
         End If
     End Sub
 
     Private Sub dpCompletedDate_SelectedDateChanged(sender As Object, e As SelectionChangedEventArgs) Handles dpCompletedDate.SelectedDateChanged
         If dpCompletedDate.Text IsNot String.Empty Then
+            Dim stsValue As Integer = stsCmpltd
+
+            If cbStatus.SelectedValue = stsRtrnToTrge Then
+                stsValue = stsRtrnToTrge
+            End If
+
+            cbStatus.SelectedValue = stsValue
+
             If Not txtStartDate.Text.Contains("*") Then
-                txtStartDate.Text = "Select Start Date *"
+                txtStartDate.Text = "Select start date *"
             End If
         Else
-            txtStartDate.Text = "Select Start Date"
+            If cbStatus.SelectedValue = stsNotStarted Then
+                txtStartDate.Text = "Select start date"
+            End If
         End If
+
     End Sub
 
     Private Sub cbIncidentType_DropDownClosed(sender As Object, e As EventArgs) Handles cbIncidentType.DropDownClosed
         If cbIncidentType.Text IsNot String.Empty Then
             If Not txtPhase.Text.Contains("*") Then
-                txtPhase.Text = "Phase *"
+                txtPhase.Text = "Select phase *"
             End If
         Else
-            txtPhase.Text = "Phase"
+            txtPhase.Text = "Select phase"
+        End If
+    End Sub
+
+    Private Sub cbIncidentType_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbIncidentType.SelectionChanged
+        If cbIncidentType.SelectedIndex = -1 Then
+            txtPhase.Text = "Select phase"
         End If
     End Sub
 
     Private Sub cbStatus_DropDownClosed(sender As Object, e As EventArgs) Handles cbStatus.DropDownClosed
-        If cbStatus.Text = "Completed" Then
-            If Not txtDateCompleted.Text.Contains("*") Then
-                txtDateCompleted.Text = "Select Completed Date *"
+        If Not cbStatus.SelectedValue = stsNotStarted Then
+            If Not txtStartDate.Text.Contains("*") Then
+                txtStartDate.Text = "Select start date *"
+            End If
+
+            If cbStatus.SelectedValue = stsCmpltd Or cbStatus.SelectedValue = stsRtrnToTrge Then
+                dpCompletedDate.SelectedDate = Date.Now
+                txtDateCompleted.Text = "Select completed date *"
+            Else
+                dpCompletedDate.Text = String.Empty
+                txtDateCompleted.Text = "Select completed date"
             End If
         Else
-            txtDateCompleted.Text = "Select Completed Date"
+            txtStartDate.Text = "Select start date"
+            dpCompletedDate.Text = String.Empty
+        End If
+    End Sub
+
+    Private Sub cbStatus_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbStatus.SelectionChanged
+        If cbStatus.SelectedIndex = -1 Then
+            txtStartDate.Text = "Select start date"
         End If
     End Sub
 
@@ -799,76 +839,83 @@ Class WeeklyReportAddPage
 
     Private Function ValidateFields(isValidate As Boolean)
         If cbDateRange.SelectedIndex = -1 Then
-            MsgBox("Please select a Date Range", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please select a date range", MsgBoxStyle.Critical, "AIDE")
             cbDateRange.Focus()
             Return False
         End If
 
         If cbProject.SelectedIndex = -1 Then
-            MsgBox("Please select a Project", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please select a project", MsgBoxStyle.Critical, "AIDE")
             cbProject.Focus()
             Return False
         End If
 
         If txtSubject.Text Is String.Empty Then
-            MsgBox("Please enter a Description", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter a description", MsgBoxStyle.Critical, "AIDE")
             txtSubject.Focus()
             Return False
         End If
 
         If txtRefID.Text IsNot String.Empty And cbIncidentType.SelectedIndex = -1 Then
-            MsgBox("Please select Incident Type", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please select a category", MsgBoxStyle.Critical, "AIDE")
             cbIncidentType.Focus()
             Return False
         End If
 
         If Not cbIncidentType.SelectedIndex = -1 And cbPhase.SelectedIndex = -1 Then
-            MsgBox("Please select a Phase", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please select phase", MsgBoxStyle.Critical, "AIDE")
             cbPhase.Focus()
             Return False
         End If
 
         If cbStatus.SelectedIndex = -1 Then
-            MsgBox("Please select a Status", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please select status", MsgBoxStyle.Critical, "AIDE")
             cbStatus.Focus()
             Return False
         End If
 
         If dpCompletedDate.Text IsNot String.Empty And dpStartDate.Text = String.Empty Then
-            MsgBox("Please enter Date Started", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter start date", MsgBoxStyle.Critical, "AIDE")
             dpStartDate.Focus()
             Return False
         End If
 
-        If dpCompletedDate.Text IsNot String.Empty And txtRefID.Text IsNot String.Empty And dpTargetDate.Text = String.Empty Then
-            MsgBox("Please enter Target Date", MsgBoxStyle.Critical, "AIDE")
-            dpTargetDate.Focus()
+        'If dpCompletedDate.Text IsNot String.Empty And txtRefID.Text IsNot String.Empty And dpTargetDate.Text = String.Empty Then
+        '    MsgBox("Please enter target date", MsgBoxStyle.Critical, "AIDE")
+        '    dpTargetDate.Focus()
+        '    Return False
+        'End If
+
+        If (cbStatus.SelectedValue = stsInPrgress OrElse cbStatus.SelectedValue = stsWaitngForInfo OrElse cbStatus.SelectedValue = stsOnhold) And dpStartDate.Text Is String.Empty Then
+            MsgBox("Please enter start date", MsgBoxStyle.Critical, "AIDE")
+            dpStartDate.Focus()
             Return False
         End If
 
-        If cbStatus.Text = "Completed" And dpCompletedDate.Text Is String.Empty Then
-            MsgBox("Please enter Date Finished", MsgBoxStyle.Critical, "AIDE")
+        If cbStatus.SelectedValue = stsCmpltd And dpCompletedDate.Text Is String.Empty Then
+            MsgBox("Please enter completed date", MsgBoxStyle.Critical, "AIDE")
             dpCompletedDate.Focus()
             Return False
         End If
 
         If txtEffortEst.Text Is String.Empty And txtRefID.Text IsNot String.Empty Then
-            MsgBox("Please enter Effort Estimate", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter estimate effort", MsgBoxStyle.Critical, "AIDE")
             txtEffortEst.Focus()
             Return False
         End If
 
+        If txtActualEffortWk.Text Is String.Empty Then
+            MsgBox("Please enter actual effort for the week", MsgBoxStyle.Critical, "AIDE")
+            txtActualEffortWk.Focus()
+            Return False
+        End If
+
         If txtActualEffort.Text Is String.Empty Then
-            MsgBox("Please enter Actual Effort", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter actual effort", MsgBoxStyle.Critical, "AIDE")
             txtActualEffort.Focus()
             Return False
         End If
 
-        If txtActualEffortWk.Text Is String.Empty Then
-            MsgBox("Please enter Actual Effort for the Week", MsgBoxStyle.Critical, "AIDE")
-            txtActualEffortWk.Focus()
-            Return False
-        End If
 
         Return True
     End Function

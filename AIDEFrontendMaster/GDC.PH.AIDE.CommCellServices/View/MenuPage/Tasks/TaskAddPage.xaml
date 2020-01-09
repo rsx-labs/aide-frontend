@@ -66,6 +66,7 @@
                                 <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                                     <TextBox Text="{Binding NewTasks.ReferenceID, Mode=TwoWay}"
                                              x:Name="txtRefID" 
+                                             MaxLength="10"
                                              Template="{DynamicResource TextBoxBaseControlTemplate}"/>
                                 </Border>
 
@@ -99,7 +100,7 @@
                             
                             <Grid Grid.Row="1">
                                 <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                    <TextBox Text="{Binding NewTasks.IncDescr, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtIncDescr"/>
+                                    <TextBox Text="{Binding NewTasks.IncDescr, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtIncDescr" MaxLength="255"/>
                                 </Border>
                                 
                                 <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter description *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
@@ -131,7 +132,7 @@
 
                             <Grid Grid.Row="2">
                                 <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                    <TextBox  Text="{Binding NewTasks.EffortEst, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtEffortEst"/>
+                                    <TextBox  Text="{Binding NewTasks.EffortEst, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtEffortEst" MaxLength="8" PreviewTextInput="NumberValidationTextBox"/>
                                 </Border>
                                 
                                 <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter estimate effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
@@ -163,7 +164,7 @@
 
                             <Grid Grid.Row="3">
                                 <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                    <TextBox Text="{Binding NewTasks.ActEffortWk, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEfforEstWk"/>
+                                    <TextBox Text="{Binding NewTasks.ActEffortWk, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEfforEstWk" MaxLength="8" PreviewTextInput="NumberValidationTextBox"/>
                                 </Border>
 
                                 <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter weekly effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
@@ -194,7 +195,7 @@
                             
                             <Grid Grid.Row="4">
                                 <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                    <TextBox Text="{Binding NewTasks.ActEffort, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEffortEst"/>
+                                    <TextBox Text="{Binding NewTasks.ActEffort, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtActualEffortEst" MaxLength="8" PreviewTextInput="NumberValidationTextBox"/>
                                 </Border>
                                 
                                 <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter actual effort(hrs)" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
@@ -297,7 +298,7 @@
                             
                             <Grid Grid.Row="7">
                                 <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                    <TextBox Text="{Binding NewTasks.Comments, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtComments"/>
+                                    <TextBox Text="{Binding NewTasks.Comments, Mode=TwoWay}" Template="{DynamicResource TextBoxBaseControlTemplate}" x:Name="txtComments" MaxLength="255"/>
                                 </Border>
                                 
                                 <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter comments" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray">
@@ -343,7 +344,7 @@
                             </Grid.RowDefinitions>
                             
                             <Grid Grid.Row="0">
-                                <ComboBox x:Name="cboProject"
+                                <ComboBox x:Name="cbProject"
                                           SelectedValue="{Binding NewTasks.ProjId, Mode=TwoWay}"
                                           ItemsSource="{Binding Path=ProjectList}" 
                                           DisplayMemberPath="ProjectName"
@@ -357,7 +358,7 @@
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=cboProject}" Value="">
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbProject}" Value="">
                                                     <Setter Property="Visibility" Value="Visible"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -370,7 +371,7 @@
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Visible"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=cboProject}" Value="">
+                                                <DataTrigger Binding="{Binding Text, ElementName=cbProject}" Value="">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -497,7 +498,7 @@
                                     </DatePicker>
                                 </Border>
 
-                                <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select start date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray" >
+                                <TextBlock Name="txtStartDate" Background="Transparent" IsHitTestVisible="False" Text="Select start date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray" >
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -568,7 +569,7 @@
                                     </DatePicker>
                                 </Border>
                                 
-                                <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select completed date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray" >
+                                <TextBlock Name="txtDateCompleted" Background="Transparent" IsHitTestVisible="False" Text="Select completed date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Foreground="DarkGray" >
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
