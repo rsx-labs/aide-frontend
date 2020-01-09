@@ -53,6 +53,9 @@ Class WeeklyReportUpdatePage
     Dim saturday As Date = Today.AddDays(-daySatDiff)
 
     Dim totalWeeklyHours As Decimal
+    Dim month As Integer
+    Dim year As Integer
+
 #End Region
 
 #Region "Provider Declaration"
@@ -92,13 +95,17 @@ Class WeeklyReportUpdatePage
         LoadData()
         LoadWeeklyReportData()
     End Sub
-    Public Sub New(_weekRangeID As Integer, _frame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _empID As Integer)
+
+    Public Sub New(_weekRangeID As Integer, _month As Integer, _year As Integer, _frame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _empID As Integer)
         ' This call is required by the designer.
         InitializeComponent()
         InitializeService()
         entryType = 1
         ' Add any initialization after the InitializeComponent() call.
         email = _profile.Email_Address
+        month = _month
+        year = _year
+
         Me.frame = _frame
         Me.addframe = _addframe
         Me.menugrid = _menugrid
@@ -927,7 +934,7 @@ Class WeeklyReportUpdatePage
     End Sub
 
     Private Sub ExitPage2()
-        frame.Navigate(New WeeklyTeamStatusReportPage(frame, profile, addframe, menugrid, submenuframe, weekRangeID))
+        frame.Navigate(New WeeklyTeamStatusReportPage(frame, profile, addframe, menugrid, submenuframe, weekRangeID, month, year))
         frame.IsEnabled = True
         frame.Opacity = 1
         menugrid.IsEnabled = True

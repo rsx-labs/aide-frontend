@@ -97,7 +97,7 @@ Class WeeklyTeamStatusReportPage
         InitializeData()
     End Sub
 
-    Public Sub New(_mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _weekRangeID As Integer)
+    Public Sub New(_mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _weekRangeID As Integer, _month As Integer, _year As Integer)
         InitializeComponent()
         InitializeService()
         Me.email = _profile.Email_Address
@@ -110,6 +110,8 @@ Class WeeklyTeamStatusReportPage
         Me.weekID = _weekRangeID
 
         selectedValue = _weekRangeID
+        month = _month
+        year = _year
 
         InitializeData()
     End Sub
@@ -306,20 +308,25 @@ Class WeeklyTeamStatusReportPage
 
     Public Sub SetFiscalYear()
         Try
-            If monday.Month = dateToday.Month Then
-                month = dateToday.Month
-                year = dateToday.Year
-            Else
-                month = monday.Month
-                year = lastWeekSaturday.Year
-            End If
+            If month = 0 Then
+                If monday.Month = dateToday.Month Then
+                    month = dateToday.Month
+                    year = dateToday.Year
+                Else
+                    month = monday.Month
+                    year = lastWeekSaturday.Year
+                End If
 
-            If month >= 4 Then
+                If month >= 4 Then
+                    startFiscalYear = year
+                    endFiscalYear = year + 1
+                Else
+                    startFiscalYear = year - 1
+                    endFiscalYear = year
+                End If
+            Else
                 startFiscalYear = year
                 endFiscalYear = year + 1
-            Else
-                startFiscalYear = year - 1
-                endFiscalYear = year
             End If
 
             cbYear.DisplayMemberPath = "FISCAL_YEAR"
@@ -344,7 +351,7 @@ Class WeeklyTeamStatusReportPage
                 weekRangeID = CType(dgWeeklyTeamStatusReports.SelectedItem, WeeklyTeamStatusReportModel).WeekRangeID
                 empID = CType(dgWeeklyTeamStatusReports.SelectedItem, WeeklyTeamStatusReportModel).EmployeeID
 
-                addframe.Navigate(New WeeklyReportUpdatePage(weekRangeID, mainFrame, profile, addframe, menugrid, submenuframe, empID))
+                addframe.Navigate(New WeeklyReportUpdatePage(weekRangeID, month, startFiscalYear, mainFrame, profile, addframe, menugrid, submenuframe, empID))
                 mainFrame.IsEnabled = False
                 mainFrame.Opacity = 0.3
                 menugrid.IsEnabled = False
