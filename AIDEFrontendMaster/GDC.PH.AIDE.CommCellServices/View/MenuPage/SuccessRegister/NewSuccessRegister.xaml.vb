@@ -102,7 +102,7 @@ Class NewSuccessRegister
         Try
             e.Handled = True
             Dim SuccessRegisters As New SuccessRegister
-            If txtSRDetails.Text = String.Empty Or dateInput.Text = String.Empty Or comboRaisedBy.SelectedValue = Nothing Or txtSRWhosInvolve.Text = String.Empty Then
+            If txtSRDetails.Text = String.Empty Or dateInput.Text = String.Empty Or comboRaisedBy.Text = Nothing Or txtSRWhosInvolve.Text = String.Empty Then
                 MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 SuccessRegisters.Emp_ID = comboRaisedBy.SelectedValue
