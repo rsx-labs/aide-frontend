@@ -345,7 +345,6 @@
                             
                             <Grid Grid.Row="0">
                                 <ComboBox x:Name="cbProject"
-                                          SelectedValue="{Binding NewTasks.ProjId, Mode=TwoWay}"
                                           ItemsSource="{Binding Path=ProjectList}" 
                                           DisplayMemberPath="ProjectName"
                                           SelectedValuePath="ProjectID"
