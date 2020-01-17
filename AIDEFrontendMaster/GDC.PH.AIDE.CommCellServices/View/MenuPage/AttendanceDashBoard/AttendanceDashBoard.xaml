@@ -24,7 +24,6 @@
                     </Viewbox>
                 </Grid>
                 <Grid Grid.Row="1" Background="#FFFBFBFB">
-
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="181*"/>
@@ -48,18 +47,10 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </StackPanel>
-
                     </Grid>
-                    <!--<TextBox Name="txtSearch" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="DimGray" FontSize="12" Margin="2,10,2,10" BorderThickness="1">
-
-                        </TextBox>-->
-                    
-
                 </Grid>
                 <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}">
-
                     <ListView Background="Transparent" Margin="5" ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" x:Name="StudInfoLV" ItemsSource="{Binding EmployeeListAttendance}" Height="auto" Width="auto" BorderBrush="{x:Null}" SelectionMode="Single" Foreground="#FF07B9B1" TextOptions.TextFormattingMode="Display" AllowDrop="True" BorderThickness="0" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Border Background="white" BorderBrush="Gainsboro" BorderThickness="2" CornerRadius="15" Margin="3">
@@ -89,28 +80,31 @@
                                                     <!--</Viewbox>-->
                                                 </Grid>
                                                 <Grid Grid.Column="1">
-
                                                     <Grid>
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="*"/>
                                                             <RowDefinition Height="*"/>
-
+                                                            <RowDefinition Height="*"/>
                                                         </Grid.RowDefinitions>
-                                                        <Grid Grid.Row="0">
-                                                           
+                                                        <Grid Grid.Row="0">                                                           
                                                             <TextBlock FontWeight="Bold" Margin="5,2" Text="{Binding EmpName}" HorizontalAlignment="Left" FontSize="12" VerticalAlignment="Bottom" Foreground="#FF227BA4" TextWrapping="WrapWithOverflow" />
                                                         </Grid>
-                                                        <Grid Grid.Row="1">
-                                                            
+                                                        <Grid Grid.Row="1">                                                            
                                                             <StackPanel Orientation="Horizontal">
                                                                 <TextBlock Foreground="DimGray" Margin="5,2" Text="{Binding EMP_ID}" HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />
-                                                                <TextBlock Foreground="DimGray" Margin="5,2" Text="{Binding DATE_ENTRY, StringFormat='hh:mm tt'}"  HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />
+                                                                <TextBlock Foreground="DimGray" Margin="1,2" Text="{Binding DATE_ENTRY, StringFormat='hh:mm tt'}"  HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />
+                                                                <!--<TextBlock Foreground="DimGray" Margin="1,2" Text="|" x:Name="lblDivider" HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />
+                                                                <TextBlock Foreground="DimGray" Margin="1,2" Text="{Binding LOGOFF_TIME, StringFormat='hh:mm tt'}"  HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />-->
                                                                 <TextBlock Foreground="Red" Margin="5,2" Text="{Binding Descr}"  HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />  
                                                             </StackPanel>
                                                         </Grid>
-
+                                                        <Grid Grid.Row="2">
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Foreground="DimGray" Margin="25.5,0" Text=""  HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />
+                                                                <TextBlock Foreground="DimGray" Margin="5,0" x:Name="lblLogoffTime" Text="{Binding LOGOFF_TIME, StringFormat='hh:mm tt'}"  HorizontalAlignment="Left" FontSize="10" VerticalAlignment="Top" />
+                                                            </StackPanel>
+                                                        </Grid>                                                        
                                                     </Grid>
-
                                                 </Grid>
                                                 <!--<Grid Grid.Column="2">
                                                     <Image VerticalAlignment="Top" HorizontalAlignment="Left" Source="{Binding DisplayStatus}" Width="20" Height="20" Margin="0,5,0,0"/>
