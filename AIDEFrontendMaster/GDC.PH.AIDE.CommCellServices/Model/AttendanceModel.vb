@@ -8,6 +8,7 @@ Public Class AttendanceModel
     Private _desc As String
     Private _EmpImage As String
     Private _dateEntry As DateTime
+    Private _logoffTime As String
     Private _displayStatus As String
 
     Public Sub New()
@@ -21,6 +22,7 @@ Public Class AttendanceModel
         Me._status = rawAttendanceList.Status
         Me._EmpImage = rawAttendanceList.Emp_Image
         Me._dateEntry = rawAttendanceList.Date_Entry
+        Me._logoffTime = rawAttendanceList.Logoff_Time
         Me._displayStatus = rawAttendanceList.Display_Status
     End Sub
 
@@ -89,6 +91,15 @@ Public Class AttendanceModel
         End Set
     End Property
 
+    Public Property LOGOFF_TIME As String
+        Get
+            Return _logoffTime
+        End Get
+        Set(value As String)
+            _logoffTime = value
+            NotifyPropertyChanged("LOGOFF_TIME")
+        End Set
+    End Property
 
     Public Property DisplayStatus As String
         Get

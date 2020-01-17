@@ -377,8 +377,6 @@ Class MainWindow
         'SubMenuFrame.Navigate(New AuditSchedSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
     End Sub
 
-
-
     Private Sub HomeBtn_Click(sender As Object, e As RoutedEventArgs) Handles HomeBtn.Click
         LoadSideBar()
         PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
@@ -386,7 +384,15 @@ Class MainWindow
     End Sub
 
     Private Sub ExitBtn_Click(sender As Object, e As RoutedEventArgs)
-        If MsgBox("Are you sure to quit?", vbInformation + MsgBoxStyle.YesNo, "AIDE") = vbYes Then
+        Dim result = MsgBox("Do you want to logoff?" & vbCrLf & vbCrLf &
+                            "Click YES to logoff" & vbCrLf &
+                            "Click NO to quit the application", vbQuestion + MsgBoxStyle.YesNoCancel, "AIDE")
+        If result = MsgBoxResult.Yes Then
+            If InitializeService() Then
+                aideClientService.InsertLogoffTime(profile.Emp_ID)
+                Environment.Exit(0)
+            End If
+        ElseIf result = MsgBoxResult.No Then
             Environment.Exit(0)
         End If
     End Sub

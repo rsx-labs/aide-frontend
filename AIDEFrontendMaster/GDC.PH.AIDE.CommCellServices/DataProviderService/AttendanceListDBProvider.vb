@@ -13,6 +13,7 @@ Public Class AttendanceListDBProvider
         Dim _Attendanceobj As myAttendanceList = New myAttendanceList With {.Emp_ID = attendanceLst.EmployeeID,
                                                              .Emp_Name = attendanceLst.Name,
                                                              .Date_Entry = attendanceLst.DateEntry,
+                                                             .Logoff_Time = attendanceLst.LogoffTime.ToString("hh:mm tt"),
                                                              .Status = attendanceLst.Status,
                                                              .Emp_Image = attendanceLst.Image_Path}
         _attlist.Add(_Attendanceobj)
@@ -33,5 +34,6 @@ Public Class myAttendanceList
     Public Desc As String
     Public Emp_Image As String
     Public Date_Entry As Date
+    Public Logoff_Time As String
     Public Display_Status As String
 End Class
