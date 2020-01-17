@@ -758,6 +758,7 @@
   <xs:complexType name="Announcements">
     <xs:sequence>
       <xs:element minOccurs="0" name="ANNOUNCEMENT_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="DELETED_FG" type="xs:int" />
       <xs:element minOccurs="0" name="EMP_ID" type="xs:int" />
       <xs:element minOccurs="0" name="END_DATE" type="xs:dateTime" />
       <xs:element minOccurs="0" name="MESSAGE" nillable="true" type="xs:string" />
