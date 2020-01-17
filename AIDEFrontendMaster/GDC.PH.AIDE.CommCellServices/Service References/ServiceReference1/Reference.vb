@@ -6969,6 +6969,9 @@ Namespace ServiceReference1
         Private ANNOUNCEMENT_IDField As Integer
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private DELETED_FGField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private EMP_IDField As Integer
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
@@ -6999,6 +7002,19 @@ Namespace ServiceReference1
                 If (Me.ANNOUNCEMENT_IDField.Equals(value) <> true) Then
                     Me.ANNOUNCEMENT_IDField = value
                     Me.RaisePropertyChanged("ANNOUNCEMENT_ID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property DELETED_FG() As Integer
+            Get
+                Return Me.DELETED_FGField
+            End Get
+            Set
+                If (Me.DELETED_FGField.Equals(value) <> true) Then
+                    Me.DELETED_FGField = value
+                    Me.RaisePropertyChanged("DELETED_FG")
                 End If
             End Set
         End Property

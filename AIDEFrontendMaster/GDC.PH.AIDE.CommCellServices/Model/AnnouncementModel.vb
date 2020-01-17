@@ -5,6 +5,7 @@ Public Class AnnouncementModel
     Private _title As String
     Private _message As String
     Private _dateposted As Date
+    Private _deletedfg As Integer
 
     Public Sub New()
     End Sub
@@ -58,6 +59,16 @@ Public Class AnnouncementModel
     End Property
 
     Public Property DATE_POSTED As Date
+        Get
+            Return _dateposted
+        End Get
+        Set(value As Date)
+            _dateposted = value
+            OnPropertyChanged("DATE_POSTED")
+        End Set
+    End Property
+
+    Public Property DELETED_FG As Date
         Get
             Return _dateposted
         End Get

@@ -117,6 +117,61 @@ Class AnnouncementDashboardUpdatePage
         End Try
     End Sub
 
+    Private Sub btnAnnouncementDelete_Click(sender As Object, e As RoutedEventArgs)
+        Try
+            InitializeService()
+            Dim textRange As New TextRange(txtAnnouncementMessage.Document.ContentStart, txtAnnouncementMessage.Document.ContentEnd)
+
+
+            If MsgBox("Are you sure you want to delete this announcement?", vbInformation + MsgBoxStyle.YesNo, "AIDE") = vbYes Then
+                Me.DataContext = announcementModel.ObjectAnnouncement
+                aide.UpdateAnnouncements(getDataDelete(Me.DataContext()))
+                MsgBox("Successfully deleted!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                _announce.TITLE = Nothing
+                _announce.MESSAGE = Nothing
+                _announce.END_DATE = Nothing
+                _announce.EMP_ID = Nothing
+
+                mainframe.Navigate(New HomePage(mainframe, profile.Position, empID, addframe, menugrid, submenuframe, email, profile))
+                mainframe.IsEnabled = True
+                mainframe.Opacity = 1
+                menugrid.IsEnabled = True
+                menugrid.Opacity = 1
+                submenuframe.IsEnabled = True
+                submenuframe.Opacity = 1
+
+                addframe.Visibility = Visibility.Hidden
+            End If
+
+            'If announcementModel.ObjectAnnouncement.TITLE = Nothing Or textRange.Text.Trim() = String.Empty Then
+            '    MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+            'Else
+            '    Me.DataContext = announcementModel.ObjectAnnouncement
+            '    aide.UpdateAnnouncements(getDataDelete(Me.DataContext()))
+            '    MsgBox("Successfully updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+            '    _announce.TITLE = Nothing
+            '    _announce.MESSAGE = Nothing
+            '    _announce.END_DATE = Nothing
+            '    _announce.EMP_ID = Nothing
+
+            '    mainframe.Navigate(New HomePage(mainframe, profile.Position, empID, addframe, menugrid, submenuframe, email, profile))
+            '    mainframe.IsEnabled = True
+            '    mainframe.Opacity = 1
+            '    menugrid.IsEnabled = True
+            '    menugrid.Opacity = 1
+            '    submenuframe.IsEnabled = True
+            '    submenuframe.Opacity = 1
+
+            '    addframe.Visibility = Visibility.Hidden
+            'End If
+        Catch ex As Exception
+            If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "AIDE") = vbYes Then
+                Environment.Exit(0)
+            Else
+            End If
+        End Try
+    End Sub
+
     'Public Sub BindMessage()
     '    Dim hasDocument As FlowDocument = New FlowDocument()
 
@@ -142,6 +197,29 @@ Class AnnouncementDashboardUpdatePage
                 _announce.END_DATE = DateTime.Today
                 _announce.EMP_ID = Me.empID
 
+            End If
+            Return _announce
+        Catch ex As Exception
+            If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "Error Encountered") = vbYes Then
+                Environment.Exit(0)
+            Else
+            End If
+            Return ex
+        End Try
+    End Function
+
+    Public Function getDataDelete(ByVal _announcementmodel As AnnouncementModel)
+        Try
+            InitializeService()
+            Dim textRange As New TextRange(txtAnnouncementMessage.Document.ContentStart, txtAnnouncementMessage.Document.ContentEnd)
+            If textRange.Text = Nothing Or _announcementmodel.TITLE = Nothing Then
+            Else
+                _announce.ANNOUNCEMENT_ID = _announcementmodel.ANNOUNCEMENT_ID
+                _announce.MESSAGE = textRange.Text.Trim()
+                _announce.TITLE = _announcementmodel.TITLE
+                _announce.END_DATE = DateTime.Today
+                _announce.EMP_ID = Me.empID
+                _announce.DELETED_FG = 1
             End If
             Return _announce
         Catch ex As Exception

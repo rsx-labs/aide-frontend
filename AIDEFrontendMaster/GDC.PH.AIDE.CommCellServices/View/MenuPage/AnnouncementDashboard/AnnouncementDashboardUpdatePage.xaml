@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
       Title="AnnouncementDashboardUpdatePage">
-    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
+    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15" Height="327">
         <Grid Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="181*"/>
@@ -13,7 +13,7 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -49,9 +49,10 @@
             <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}" Grid.ColumnSpan="2" >
                 <Grid Margin="10,5,10,5">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="100*"/>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="50*"/>
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0">
@@ -135,6 +136,12 @@
                     <Grid Grid.Row="2">
                         <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnAnnouncementUpdate" Margin="5,5,10,10" HorizontalAlignment="Stretch" Click="btnAnnouncementUpdate_Click">
                             <TextBlock Text="UPDATE" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                        </Button>
+                    </Grid>
+
+                    <Grid Grid.Row="3">
+                        <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnAnnouncementDelete" Margin="5,5,10,10" HorizontalAlignment="Stretch" Click="btnAnnouncementDelete_Click">
+                            <TextBlock Text="Delete" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
                         </Button>
                     </Grid>
                 </Grid>
