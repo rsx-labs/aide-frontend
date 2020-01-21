@@ -35,8 +35,8 @@ Class SabaLearningMainPage
     Private profile As Profile
 
     Dim lstSabaLearning As SabaLearning()
-    Dim lstSabaLearning2 As SabaLearning()
-    Dim SabaLearningListVM As New SabaLearningViewModel()
+    Dim totalRecords As Integer
+    Dim searchLearning = New ObservableCollection(Of SabaLearning)
     Dim paginatedCollection As PaginatedObservableCollection(Of SabaLearningModel) = New PaginatedObservableCollection(Of SabaLearningModel)(pagingRecordPerPage)
 #End Region
 
@@ -90,12 +90,10 @@ Class SabaLearningMainPage
         Try
             Dim lstSabaLearningList As New ObservableCollection(Of SabaLearningModel)
             Dim sabalearningDBProvider As New SabaLearningDBProvider
-            Dim percentFinished As String
             paginatedCollection = New PaginatedObservableCollection(Of SabaLearningModel)(pagingRecordPerPage)
 
             For Each objTracker As SabaLearning In lstSabaLearning
-                percentFinished = SetData2(objTracker.SABA_ID)
-                sabalearningDBProvider._setlistofitems(objTracker, percentFinished)
+                sabalearningDBProvider._setlistofitems(objTracker)
             Next
 
             For Each rawUser As mySabaLearningSet In sabalearningDBProvider._getobjSabaLearning()
@@ -122,34 +120,33 @@ Class SabaLearningMainPage
         End Try
     End Sub
 
-    Private Function SetData2(sabaid As Integer) As String
+    Public Sub SetDataForSearch(input As String)
         Try
-            Dim Completed As Integer
+            'Dim items
+            Dim sabaLearningDBProvider As New SabaLearningDBProvider
+            paginatedCollection = New PaginatedObservableCollection(Of SabaLearningModel)(pagingRecordPerPage)
 
-            If InitializeService() Then
-                lstSabaLearning2 = _AideService.GetAllSabaXref(profile.Emp_ID, sabaid)
-                Completed = checkCompleted(lstSabaLearning2)
-            End If
-            Return Completed.ToString() + "%"
+
+            Dim items = From i In lstSabaLearning Where i.TITLE.ToLower.Contains(input.ToLower)
+            searchLearning = New ObservableCollection(Of SabaLearning)(items)
+
+            For Each saba As SabaLearning In searchLearning
+                sabaLearningDBProvider._setlistofitems(saba)
+            Next
+
+            For Each mysaba As mySabaLearningSet In sabaLearningDBProvider._getobjSabaLearning()
+                paginatedCollection.Add(New SabaLearningModel(mysaba))
+            Next
+
+            totalRecords = searchLearning.Count
+            SabaLearningLV.ItemsSource = paginatedCollection
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+            DisplayPagingInfo()
         Catch ex As Exception
             MessageBox.Show(ex.Message)
-            Return String.Empty
         End Try
-
-    End Function
-
-    Private Function checkCompleted(sabalist As SabaLearning()) As Integer
-
-        For Each sabaitem As SabaLearning In sabalist
-            If Not sabaitem.DATE_COMPLETED = String.Empty Then
-                checkCompleted += 1
-            End If
-        Next
-
-        checkCompleted = (checkCompleted / sabalist.Count) * 100
-
-        Return checkCompleted
-    End Function
+    End Sub
 
     Private Sub SetPaging(mode As Integer)
         Try
@@ -263,11 +260,7 @@ Class SabaLearningMainPage
 
 #Region "Events"
     Private Sub SearchTextBox_TextChanged(sender As Object, e As TextChangedEventArgs)
-        If SearchTextBox.Text = String.Empty Then
-            SetData()
-        Else
-            LoadSabaCourseByTitle(SearchTextBox.Text)
-        End If
+        SetDataForSearch(SearchTextBox.Text)
     End Sub
 
     Private Sub SabaLearningLV_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
