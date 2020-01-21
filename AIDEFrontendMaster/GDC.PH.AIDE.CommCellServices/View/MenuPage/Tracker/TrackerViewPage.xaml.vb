@@ -132,7 +132,7 @@ Class TrackerViewPage
 
             For Each objsaba As SabaLearning In lstSabaLearning
                 If Not objsaba.DATE_COMPLETED = String.Empty Then
-                    sabalearningDBProvider._setlistofitems(objsaba, String.Empty)
+                    sabalearningDBProvider._setlistofitems(objsaba)
                     saba_completed += 1
                     If objsaba.EMP_ID = empID Then
                         isUpdated = True
@@ -162,7 +162,7 @@ Class TrackerViewPage
 
             For Each objsaba As SabaLearning In lstSabaLearning
                 If objsaba.DATE_COMPLETED = String.Empty Then
-                    sabalearningDBProvider._setlistofitems(objsaba, String.Empty)
+                    sabalearningDBProvider._setlistofitems(objsaba)
                     saba_not_completed += 1
                 End If
             Next
