@@ -89,7 +89,7 @@
                     <DataGrid Background="Transparent" x:Name="lv_successRegisterAll" 
                                                   ItemsSource="{Binding SuccessRegisterList}" 
                                                   CanUserResizeColumns="False" AutoGenerateColumns="False"
-                                                  Width="auto" BorderBrush="Transparent">
+                                                  Width="auto" BorderBrush="Transparent" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="ID" Width="2*" Binding="{Binding SuccessID}" />
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Created" Width="2*" Binding="{Binding DateInput, StringFormat=MM/dd/yyyy}" />
