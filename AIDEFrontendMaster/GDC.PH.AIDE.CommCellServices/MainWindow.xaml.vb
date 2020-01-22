@@ -133,12 +133,11 @@ Class MainWindow
 #Region "Common Methods"
 
     Private Sub InitializeData()
-        MsgBox("Welcome " & email, MsgBoxStyle.Information, "AIDE")
         SetEmployeeData()
         attendance()
-
         LoadVersionNo()
         LoadSideBar()
+        MsgBox("Welcome " & email, MsgBoxStyle.Information, "AIDE")
         PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
         SubMenuFrame.Navigate(New BlankSubMenu())
     End Sub
