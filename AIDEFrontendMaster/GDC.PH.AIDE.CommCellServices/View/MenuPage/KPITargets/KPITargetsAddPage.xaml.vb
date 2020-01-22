@@ -79,8 +79,7 @@ Class KPITargetsAddPage
                 _kpitargets.Subject = kpiTarget.Subject
                 _kpitargets.DateCreated = Date.Now
                 _kpitargets.KPI_ReferenceNo = Date.Now.Year.ToString()
-                _kpitargets.FYStart = Convert.ToDateTime(Date.Now.Year.ToString() & "-04-01")
-                _kpitargets.FYEnd = Convert.ToDateTime((Date.Now.Year + 1).ToString() & "-03-31")
+                LoadYear()
             End If
             Return _kpitargets
         Catch ex As Exception
@@ -91,6 +90,16 @@ Class KPITargetsAddPage
             Return ex
         End Try
     End Function
+
+    Public Sub LoadYear()
+        If Today.DayOfYear() <= CDate(Today.Year().ToString + "-03-31").DayOfYear Then
+            _kpitargets.FYStart = Convert.ToDateTime((Date.Now.Year - 1).ToString & "-04-01")
+            _kpitargets.FYEnd = Convert.ToDateTime(Date.Now.Year.ToString & "-03-31")
+        Else
+            _kpitargets.FYStart = Convert.ToDateTime((Date.Now.Year).ToString & "-04-01")
+            _kpitargets.FYEnd = Convert.ToDateTime((Date.Now.Year + 1).ToString & "-03-31")
+        End If
+    End Sub
 
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
