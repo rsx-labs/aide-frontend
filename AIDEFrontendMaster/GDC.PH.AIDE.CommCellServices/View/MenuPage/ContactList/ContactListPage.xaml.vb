@@ -111,14 +111,11 @@ Public Class ContactListPage
                     If profile.Permission_ID = 1 Then
                         btnCreate.Visibility = Windows.Visibility.Visible
                     End If
-                    btnPrint.Visibility = Windows.Visibility.Visible
                 ElseIf ContactsTC.SelectedIndex = 1 Then
                     lstContacts = _AideService.ViewContactListAll(empID, 1)
-                    btnPrint.Visibility = Windows.Visibility.Hidden
                     btnCreate.Visibility = Windows.Visibility.Hidden
                 Else
                     lstContacts = _AideService.ViewContactListAll(empID, 2)
-                    btnPrint.Visibility = Windows.Visibility.Hidden
                     btnCreate.Visibility = Windows.Visibility.Hidden
                 End If
 

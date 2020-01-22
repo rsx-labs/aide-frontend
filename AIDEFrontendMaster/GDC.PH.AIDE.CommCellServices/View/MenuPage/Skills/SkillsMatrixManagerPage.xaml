@@ -128,7 +128,7 @@
                                     <Label Name="lblResult" FontWeight="Bold" Foreground="Red" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,0">
-                                    <Button x:Name="btnPrint"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7" Style="{DynamicResource ButtonPrint}" HorizontalContentAlignment="Center">
+                                    <Button Visibility="Hidden" x:Name="btnPrint"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="7" Style="{DynamicResource ButtonPrint}" HorizontalContentAlignment="Center">
                                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Print"></TextBlock>
                                     </Button>
                                     <Button x:Name="btnViewEmp" Width="140" Height="35"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Style="{DynamicResource RoundCornerUpdate}" HorizontalContentAlignment="Center">

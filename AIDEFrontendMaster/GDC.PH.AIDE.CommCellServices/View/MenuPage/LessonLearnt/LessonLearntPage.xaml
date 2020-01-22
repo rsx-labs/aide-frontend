@@ -132,7 +132,7 @@
                 </Grid>
 
                 <Grid Grid.Column="2" >
-                    <Button Style="{StaticResource ButtonPrint}" x:Name="btnPrint" Margin="0,0,10,0" Content="Print" HorizontalAlignment="Right" Width="40" Height="30" VerticalAlignment="Center" />
+                    <Button Visibility="Hidden" Style="{StaticResource ButtonPrint}" x:Name="btnPrint" Margin="0,0,10,0" Content="Print" HorizontalAlignment="Right" Width="40" Height="30" VerticalAlignment="Center" />
                 </Grid>
             </Grid>
         </Grid>

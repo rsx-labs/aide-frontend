@@ -130,7 +130,6 @@ Public Class SuccessRegisterPage
         Try
             If InitializeService() Then
                 lstSuccess = _AideService.ViewSuccessRegisterAll(email)
-                btnPrint.Visibility = Windows.Visibility.Visible
                 LoadData()
                 DisplayPagingInfo()
             End If
