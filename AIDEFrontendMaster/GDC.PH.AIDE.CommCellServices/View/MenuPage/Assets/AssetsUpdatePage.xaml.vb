@@ -15,7 +15,8 @@ Public Class AssetsUpdatePage
     Private _addframe As Frame
     Private _menugrid As Grid
     Private _submenuframe As Frame
-    Dim status As Integer
+    Private status As Integer
+    Private empID As Integer = assetsModel.EMP_ID
 #End Region
 
 #Region "Constructor"
@@ -46,7 +47,7 @@ Public Class AssetsUpdatePage
                 MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 assets.ASSET_ID = txtID.Text
-                assets.EMP_ID = assetsModel.EMP_ID
+                assets.EMP_ID = empID
                 assets.TRANSFER_ID = cbManager.SelectedValue
                 assets.ASSET_DESC = assetsModel.ASSET_DESC
                 assets.MANUFACTURER = assetsModel.MANUFACTURER
@@ -201,6 +202,7 @@ Public Class AssetsUpdatePage
             txtAssetTag.IsEnabled = False
             btnDelete.Visibility = System.Windows.Visibility.Visible
             TransferAsset.Visibility = Windows.Visibility.Visible
+            empID = profile.Emp_ID
         End If
 
         txtID.Text = assetsModel.ASSET_ID
