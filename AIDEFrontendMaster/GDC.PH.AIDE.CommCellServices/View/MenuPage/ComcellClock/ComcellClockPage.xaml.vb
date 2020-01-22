@@ -189,7 +189,7 @@ Class ComcellClockPage
             Dim dayconvert As String = GetDayValue(comcellClockVM.objectComcellClockSet.CLOCK_DAY)
             comcellClockVM.objectComcellDayOnly = dayconvert & " " & _comcellclock.Clock_Hour.ToString("00") & ":" & _comcellclock.Clock_Minute.ToString().PadLeft(2, "0") & ":00" & " " & _comcellclock.MIDDAY
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("Please set comm. cell time", MsgBoxStyle.Critical, "AIDE")
         End Try
     End Sub
 
