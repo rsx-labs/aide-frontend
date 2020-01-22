@@ -950,29 +950,8 @@
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
 
                         </Grid.RowDefinitions>
-                        <Grid Grid.Row="4">
-                            <Border Visibility="Hidden" Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-
-                                <TextBox Visibility="Hidden" BorderThickness="0" x:Name="txtSRID" IsEnabled="False" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" MaxLines="255" 
-                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                            </Border>
-                            <TextBlock Visibility="Hidden" FontSize="12" IsHitTestVisible="False" Text="Success ID" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
-                                <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=txtSRID}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                            
-                        </Grid>
                         <Grid Grid.Row="0">
                             <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
@@ -1081,6 +1060,26 @@
                             </TextBlock>
                         </Grid>
                         <Grid Grid.Row="3">
+                            <Border Visibility="Hidden" Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+
+                                <TextBox Visibility="Hidden" BorderThickness="0" x:Name="txtSRID" IsEnabled="False" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" MaxLines="255" 
+                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                            </Border>
+                            <TextBlock Visibility="Hidden" FontSize="12" IsHitTestVisible="False" Text="Success ID" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtSRID}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+
+
                             <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
                                 <TextBox x:Name="txtSRWhosInvolve" Template="{DynamicResource TextBoxBaseControlTemplate}" IsEnabled="False" HorizontalContentAlignment="Center"/>
@@ -1110,10 +1109,6 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </Grid>
-                        <Grid Grid.Row="5">
-                            
-                        </Grid>
-
                     </Grid>
                     
                     <Grid Grid.Column="2">
@@ -1122,7 +1117,7 @@
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
+   
 
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
@@ -1219,8 +1214,7 @@
                                 
                             </Button>
                         </Grid>
-                        <Grid Grid.Row="4"></Grid>
-                        <Grid Grid.Row="5"></Grid>
+
                     </Grid>
                 
             </Grid>
