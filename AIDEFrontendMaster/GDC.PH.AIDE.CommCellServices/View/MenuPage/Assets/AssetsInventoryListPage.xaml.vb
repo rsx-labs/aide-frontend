@@ -275,10 +275,12 @@ Public Class AssetsInventoryListPage
         If lstAssets.Length = 0 Then
             txtPageNo.Text = "No Results Found "
             txtAllPageNo.Text = "No Results Found "
+            txtUnApprovePageNo.Text = "No Results Found "
             GUISettingsOff()
         Else
             txtPageNo.Text = "page " & currentPage & " of " & lastPage
             txtAllPageNo.Text = "page " & currentPage & " of " & lastPage
+            txtUnApprovePageNo.Text = "page " & currentPage & " of " & lastPage
             GUISettingsOn()
         End If
     End Sub
@@ -288,6 +290,8 @@ Public Class AssetsInventoryListPage
 
         btnPrev2.IsEnabled = False
         btnNext2.IsEnabled = False
+        btnPrev3.IsEnabled = False
+        btnNext3.IsEnabled = False
     End Sub
 
     Private Sub GUISettingsOn()
@@ -295,6 +299,8 @@ Public Class AssetsInventoryListPage
 
         btnPrev2.IsEnabled = True
         btnNext2.IsEnabled = True
+        btnPrev3.IsEnabled = True
+        btnNext3.IsEnabled = True
     End Sub
 #End Region
 
