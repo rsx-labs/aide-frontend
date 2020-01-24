@@ -16,7 +16,7 @@ Public Class AssetsUpdatePage
     Private _menugrid As Grid
     Private _submenuframe As Frame
     Private status As Integer
-    Private empID As Integer = assetsModel.EMP_ID
+    Private empID As Integer
 #End Region
 
 #Region "Constructor"
@@ -193,7 +193,7 @@ Public Class AssetsUpdatePage
     Private Sub LoadData()
         btnCreate.Visibility = System.Windows.Visibility.Collapsed
         btnUpdate.Visibility = System.Windows.Visibility.Visible
-
+        empID = assetsModel.EMP_ID
         If assetsModel.STATUS = 1 And profile.Permission_ID = 1 Then ' Show only when asset is unassigned and user is manager level
             dateInput.IsEnabled = False
             txtCreatedBy.IsEnabled = False
