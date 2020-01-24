@@ -322,14 +322,14 @@
                         </TabItem.Header>
                         
                         <Grid>
-                            <Grid Grid.Row="0" Margin="0">
-                                <Grid Grid.Row="0">
-                                    <Grid Margin="0">
-                                        <Label x:Name="lblPagingInfo3" />
-                                    </Grid>
-                                    
-                                    <Border Margin="0,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
-                                        <DataGrid x:Name="lv_assetInventoryListUnapproved" 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.9*"/>
+                                <RowDefinition Height="0.1*"/>
+                            </Grid.RowDefinitions>
+                            
+                            <Grid Grid.Row="0">                                    
+                                <Border Margin="0,0,0,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+                                   <DataGrid x:Name="lv_assetInventoryListUnapproved" 
                                                   Background="Transparent"
                                                   ItemsSource="{Binding AssetInventoryList}" 
                                                   AutoGenerateColumns="False" 
@@ -355,9 +355,34 @@
                                                 <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="90" Binding="{Binding STATUS_DESCR}" />
                                             </DataGrid.Columns>
                                         </DataGrid>
-                                    </Border>
-                                </Grid>
+                                </Border>
                             </Grid>
+
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.4*"/>
+                                        <ColumnDefinition Width="0.2*"/>
+                                        <ColumnDefinition Width="0.4*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Column="1">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button Height="30" Width="30"
+                                                x:Name="btnPrev3"
+                                                Click="btnPrev_Click" 
+                                                Style="{DynamicResource ButtonPageBack}" 
+                                                BorderBrush="{x:Null}" >
+                                            </Button>
+                                            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" x:Name="txtUnApprovePageNo" Margin="5,0,5,0" Foreground="DimGray" FontSize="10"/>
+                                            <Button Height="30" Width="30"
+                                                x:Name="btnNext3" 
+                                                Click="btnNext_Click" 
+                                                Style="{DynamicResource ButtonPageNext}" 
+                                                BorderBrush="{x:Null}">
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
                         </Grid>
                     </TabItem>
                 </TabControl>
