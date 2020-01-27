@@ -17,7 +17,7 @@ Class ProjectSubMenuPage
     End Sub
 
     Private Sub AssignedProject_Click(sender As Object, e As RoutedEventArgs)
-        _pFrame.Navigate(New ViewProjectUI(_pFrame, profile, _addframe, _menugrid, _submenuframe))
+        _pFrame.Navigate(New AssignedProjectMainPage(_pFrame, profile, _addframe, _menugrid, _submenuframe))
     End Sub
 
     Private Sub CreateProject_Click(sender As Object, e As RoutedEventArgs)
