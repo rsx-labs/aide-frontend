@@ -102,6 +102,9 @@ Public Class AttendanceDashBoard
                 For Each rawUser As myAttendanceList In aemployeeListDBProvider.GetAllEmpRPList()
                     setStatus = rawUser.Status
                     SetCategory(rawUser)
+                    If rawUser.Status = 11 Then 'For Late
+                        SetCategoryDisplay(rawUser)
+                    End If
 
                     d = rawUser.Logoff_Time
                     If d.Value = Nothing Then
