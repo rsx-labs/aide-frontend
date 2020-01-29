@@ -25,6 +25,7 @@ Class ComcellClockPage
     Private ComcellVM As New ComcellViewModel
     Private profile As Profile
     Private ComcellClockModel As New ComcellClockModel
+    Dim isServiceEnabled As Boolean
 
 #End Region
 
@@ -56,6 +57,7 @@ Class ComcellClockPage
             aide = New AideServiceClient(Context)
             aide.Open()
             bInitialize = True
+            isServiceEnabled = True
         Catch ex As SystemException
             aide.Abort()
         End Try
@@ -211,8 +213,27 @@ Class ComcellClockPage
     End Function
 
     Public Function TimeCheck(timenow As String) As Boolean
+
+        If isServiceEnabled Then
+            _comcellclock = aide.GetClockTimeByEmployee(Me.emp_ID)
+        Else
+            Try
+                If InitializeService() Then
+                    _comcellclock = aide.GetClockTimeByEmployee(Me.emp_ID)
+                    LoadData()
+                End If
+
+            Catch ex As Exception
+
+            End Try
+        End If
+
+
+        Dim UpdateComcellTime As String = [Enum].GetName(GetType(DayOfWeek), Convert.ToInt32(_comcellclock.Clock_Day)).ToString.Trim.ToUpper() & " " & _comcellclock.Clock_Hour.ToString("00") & ":" & _comcellclock.Clock_Minute.ToString().PadLeft(2, "0") & ":00" & " " & _comcellclock.MIDDAY
+
+
         TimeCheck = False
-        If timenow = comcellClockVM.objectComcellDayOnly Then
+        If timenow = UpdateComcellTime Then
             TimeCheck = True
         End If
     End Function
