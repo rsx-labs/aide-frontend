@@ -12,14 +12,15 @@ Public Class SabaLearningDBProvider
         Return _objSabaLearning
     End Function
 
-    Public Function _setlistofitems(ByRef sabalearning As SabaLearning, ByVal completedRate As String)
-        Dim _mySabaLearningSet As New mySabaLearningSet With {._sabaid = sabalearning.SABA_ID, _
-                                                  ._empid = sabalearning.EMP_ID, _
-                                                  ._title = sabalearning.TITLE, _
-                                                  ._enddate = sabalearning.END_DATE, _
-                                                  ._datecompleted = sabalearning.DATE_COMPLETED, _
-                                                  ._imagepath = sabalearning.IMAGE_PATH, _
-                                                  ._completepercent = completedRate}
+    Public Function _setlistofitems(ByRef sabalearning As SabaLearning)
+        Dim _mySabaLearningSet As New mySabaLearningSet With {._sabaid = sabalearning.SABA_ID,
+                                                  ._empid = sabalearning.EMP_ID,
+                                                  ._title = sabalearning.TITLE,
+                                                  ._enddate = sabalearning.END_DATE,
+                                                  ._datecompleted = sabalearning.DATE_COMPLETED,
+                                                  ._imagepath = sabalearning.IMAGE_PATH,
+                                                  ._totalenroll = sabalearning.TOTAL_ENROLL,
+                                                  ._totalcomplete = sabalearning.TOTAL_COMPLETED}
 
         _objSabaLearning.Add(_mySabaLearningSet)
         Return _mySabaLearningSet
@@ -34,4 +35,6 @@ Public Class mySabaLearningSet
     Property _datecompleted As String
     Property _imagepath As String
     Property _completepercent As String
+    Property _totalenroll As Integer
+    Property _totalcomplete As Integer
 End Class

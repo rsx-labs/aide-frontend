@@ -17,7 +17,8 @@ Public Class AnnouncementDBProvider
                                                 ._empid = announce.EMP_ID, _
                                                   ._message = announce.MESSAGE, _
                                                   ._title = announce.TITLE, _
-                                                  ._enddate = announce.END_DATE}
+                                                  ._enddate = announce.END_DATE, _
+                                                  ._deletedfg = announce.DELETED_FG}
 
         _objAnnouncement.Add(_myAnnouncementSet)
         Return _myAnnouncementSet
@@ -31,4 +32,5 @@ Public Class myAnnouncementSet
     Property _message As String
     Property _title As String
     Property _enddate As Date
+    Property _deletedfg As Integer
 End Class

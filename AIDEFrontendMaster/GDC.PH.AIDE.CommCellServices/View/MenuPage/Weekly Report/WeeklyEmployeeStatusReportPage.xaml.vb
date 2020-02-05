@@ -208,6 +208,8 @@ Class WeeklyEmployeeStatusReportPage
 
     Private Sub PopulateWeeklyReportData()
         Try
+            InitializeService()
+
             Dim lstWeeklyReport As WeeklyReport() = AideServiceClient.GetTasksDataByEmpID(weekRangeID, empID)
 
             For Each objWeeklyReport As WeeklyReport In lstWeeklyReport

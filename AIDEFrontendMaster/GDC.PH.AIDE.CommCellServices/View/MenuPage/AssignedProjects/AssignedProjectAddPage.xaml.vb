@@ -2,58 +2,64 @@
 Imports System.ServiceModel
 Imports System.Windows
 Imports UI_AIDE_CommCellServices.ServiceReference1
+<CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
+Class AssignedProjectAddPage
+    Implements IAideServiceCallback
 
-''' <summary>
-''' BY GIANN CARLO CAMILO / JHUNELL BARCENAS
-''' </summary>
-''' <remarks></remarks>
-
-<CallbackBehavior(
-ConcurrencyMode:=ConcurrencyMode.Single,
-UseSynchronizationContext:=False)>
-Public Class NewProject
-    Implements ServiceReference1.IAideServiceCallback
-
-
-#Region "Fields"
-    Private _AideServiceClient As ServiceReference1.AideServiceClient
-    Private _EmployeeListViewModel As New EmployeeListViewModel
+#Region "Declarations"
+    Private _aide As ServiceReference1.AideServiceClient
+    Private _employeeListVM As New EmployeeListViewModel
     Private _employeeList As New ObservableCollection(Of EmployeeModel)
-    Private _ProjectViewModel As New ProjectViewModel
-    Public email As String
-    Private _Frame As Frame
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
-    Private _empID As Integer
-    Private profile As Profile
-#End Region
+    Private _ProjectVM As New ProjectViewModel
+    Private _profile As Profile
 
+    Private _mainFrame As Frame
+    Private _addFrame As Frame
+    Private _subMenuFrame As Frame
+    Private _menuGrid As Grid
+
+    Public _email As String
+    Private _empID As Integer
+#End Region
 #Region "Constructor"
-    Public Sub New(_frame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_mainframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         ' This call is required by the designer.
         InitializeComponent()
-        profile = _profile
-        email = profile.Email_Address
-        Me._Frame = _frame
+        Me._profile = _profile
+        Me._email = _profile.Email_Address
+        Me._mainFrame = _mainframe
         ' Add any initialization after the InitializeComponent() call.
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
-        Me._empID = profile.Emp_ID
+        Me._addFrame = _addframe
+        Me._menuGrid = _menugrid
+        Me._subMenuFrame = _submenuframe
+        Me._empID = _profile.Emp_ID
         InitializeService()
         LoadEmployeeList()
         LoadAllProjectName()
     End Sub
 #End Region
-
 #Region "Methods"
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            'DisplayText("Opening client service...")
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            _aide = New AideServiceClient(Context)
+            _aide.Open()
+            bInitialize = True
+            'DisplayText("Service opened successfully...")
+            'Return True
+        Catch ex As SystemException
+            _aide.Abort()
+        End Try
+        Return bInitialize
+    End Function
     Public Sub LoadEmployeeList()
         Try
             Dim _EmployeeListDBProvider As New EmployeeListProvider
 
             Dim _Employee1DBProvider As New EmployeeProvider1
-            Dim lstEmployees As Employee() = _AideServiceClient.GetNicknameByDeptID(email)
+            Dim lstEmployees As Employee() = _aide.GetNicknameByDeptID(_email)
 
             For Each objEmployee As Employee In lstEmployees
                 _EmployeeListDBProvider.SetEmployeeList(objEmployee)
@@ -64,18 +70,18 @@ Public Class NewProject
             For Each iEmployee As MyEmployeeList In _EmployeeListDBProvider.GetEmployeeList()
                 lstEmployee.Add(New EmployeeListModel(iEmployee))
             Next
-            _EmployeeListViewModel.EmployeeList = lstEmployee
+            _employeeListVM.EmployeeList = lstEmployee
 
-            Me.DataContext = _EmployeeListViewModel
+            Me.DataContext = _employeeListVM
             'for create project
             Dim lstEmployee2 As New ObservableCollection(Of EmployeeListModel)
             For Each iEmployee2 As MyEmployeeList In _Employee1DBProvider.GetEmployeesLists()
                 lstEmployee2.Add(New EmployeeListModel(iEmployee2))
             Next
-            _ProjectViewModel.EmployeeLists = lstEmployee2
-            Me.DataContext = _ProjectViewModel
+            _ProjectVM.EmployeeLists = lstEmployee2
+            Me.DataContext = _ProjectVM
         Catch ex As SystemException
-            _AideServiceClient.Abort()
+            _aide.Abort()
         End Try
     End Sub
 
@@ -86,7 +92,7 @@ Public Class NewProject
             Dim _projectViewModel As New ProjectViewModel
 
             Dim displayStatus As Integer = 0
-            Dim lstProject As Project() = _AideServiceClient.GetAllListOfProject(_empID, displayStatus)
+            Dim lstProject As Project() = _aide.GetAllListOfProject(_empID, displayStatus)
             Dim lstProjectList As New ObservableCollection(Of ProjectModel)
 
             For Each objProject As Project In lstProject
@@ -102,25 +108,9 @@ Public Class NewProject
             cbProjectName.DataContext = _projectViewModel
         Catch ex As SystemException
             MsgBox(ex.Message)
-            _AideServiceClient.Abort()
+            _aide.Abort()
         End Try
     End Sub
-
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            'DisplayText("Opening client service...")
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            _AideServiceClient = New AideServiceClient(Context)
-            _AideServiceClient.Open()
-            bInitialize = True
-            'DisplayText("Service opened successfully...")
-            'Return True
-        Catch ex As SystemException
-            _AideServiceClient.Abort()
-        End Try
-        Return bInitialize
-    End Function
 
     Private Function LoadAllProjectNameByID()
         Dim _setSelectedProject As New ProjectViewModel
@@ -131,67 +121,77 @@ Public Class NewProject
         Dim getBillability As Integer = CType(cbProjectName.SelectedItem, ProjectModel).Billability
 
         If getCategory = 0 Then
-            _ProjectViewModel.SelectedProject.Category = "Task"
+            _ProjectVM.SelectedProject.Category = "Task"
         Else
-            _ProjectViewModel.SelectedProject.Category = "Project"
+            _ProjectVM.SelectedProject.Category = "Project"
         End If
 
-        _ProjectViewModel.SelectedProject.ProjectID = getID
-        _ProjectViewModel.SelectedProject.ProjectCode = getProjCd
+        _ProjectVM.SelectedProject.ProjectID = getID
+        _ProjectVM.SelectedProject.ProjectCode = getProjCd
 
 
         If getBillability = 0 Then
-            _ProjectViewModel.SelectedProject.Billability = "Internal"
+            _ProjectVM.SelectedProject.Billability = "Internal"
         Else
-            _ProjectViewModel.SelectedProject.Billability = "External"
+            _ProjectVM.SelectedProject.Billability = "External"
 
         End If
 
-        _setSelectedProject = _ProjectViewModel
+        _setSelectedProject = _ProjectVM
         Me.DataContext = _setSelectedProject
         Return _setSelectedProject
     End Function
 
     Private Sub LoadAssignedEmployees()
         Dim projID As Integer = CType(cbProjectName.SelectedItem, ProjectModel).ProjectID
-        Dim lstAssignedEmployees As Object = _AideServiceClient.GetAssignedProjects(projID)
+        Dim lstAssignedEmployees As Object = _aide.GetAssignedProjects(projID)
         If Not IsNothing(lstAssignedEmployees) Then
             For Each assigned As AssignedProject In lstAssignedEmployees
 
-                For Each rawEmployee As EmployeeListModel In _EmployeeListViewModel.EmployeeList
+                For Each rawEmployee As EmployeeListModel In _employeeListVM.EmployeeList
                     If rawEmployee.EmpID = assigned.EmployeeID Then
                         rawEmployee.DateStarted = assigned.StartPeriod
                         rawEmployee.DateFinished = assigned.EndPeriod
-                        _ProjectViewModel.AssignedEmployeeLists.Add(rawEmployee)
+                        _ProjectVM.AssignedEmployeeLists.Add(rawEmployee)
 
                         Exit For
                     End If
                 Next
 
-                For Each rawEmployee As EmployeeListModel In _ProjectViewModel.EmployeeLists
+                For Each rawEmployee As EmployeeListModel In _ProjectVM.EmployeeLists
                     If rawEmployee.EmpID = assigned.EmployeeID Then
                         '_EmployeeListViewModel.EmployeeList.Remove(rawEmployee)
-                        _ProjectViewModel.EmployeeLists.Remove(rawEmployee)
-                        _ProjectViewModel.RemoveMode = True
+                        _ProjectVM.EmployeeLists.Remove(rawEmployee)
+                        _ProjectVM.RemoveMode = True
                         Exit For
                     End If
                 Next
             Next
         End If
     End Sub
-#End Region
+    Private Sub ResetEmployeeList()
+        If _ProjectVM.AssignedEmployeeLists.Count > 0 Then
+            For Each rawEmployee As EmployeeListModel In _ProjectVM.AssignedEmployeeLists
+                _ProjectVM.EmployeeLists.Add(rawEmployee)
+            Next
+            _ProjectVM.EmployeeLists = New ObservableCollection(Of EmployeeListModel)(_ProjectVM.EmployeeLists.OrderBy(Function(f) f.Name).ToList())
 
+            grdEmployees.Items.Refresh()
+            _ProjectVM.AssignedEmployeeLists.Clear()
+
+        End If
+    End Sub
+#End Region
 #Region "Events"
     Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
-        _Frame.Navigate(New ViewProjectUI(_Frame, profile, _addframe, _menugrid, _submenuframe))
-
-        _Frame.IsEnabled = True
-        _Frame.Opacity = 1
-        _menugrid.IsEnabled = True
-        _menugrid.Opacity = 1
-        _submenuframe.IsEnabled = True
-        _submenuframe.Opacity = 1
-        _addframe.Visibility = Visibility.Hidden
+        _mainFrame.Navigate(New AssignedProjectMainPage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame))
+        _mainFrame.IsEnabled = True
+        _mainFrame.Opacity = 1
+        _menuGrid.IsEnabled = True
+        _menuGrid.Opacity = 1
+        _subMenuFrame.IsEnabled = True
+        _subMenuFrame.Opacity = 1
+        _addFrame.Visibility = Visibility.Hidden
     End Sub
 
     Private Sub cbProjectName_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbProjectName.SelectionChanged
@@ -201,40 +201,21 @@ Public Class NewProject
         LoadAssignedEmployees()
     End Sub
 #End Region
-
-#Region "INotfiy Methods"
-    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
-
-    End Sub
-
-    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
-
-    End Sub
-
-    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
-
-    End Sub
-
+#Region "Notification Methods"
     Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
-
+        Throw New NotImplementedException()
     End Sub
-
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
+        Throw New NotImplementedException()
+    End Sub
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
+        Throw New NotImplementedException()
+    End Sub
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
+        Throw New NotImplementedException()
+    End Sub
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
-
-    End Sub
-
-    Private Sub ResetEmployeeList()
-        If _ProjectViewModel.AssignedEmployeeLists.Count > 0 Then
-            For Each rawEmployee As EmployeeListModel In _ProjectViewModel.AssignedEmployeeLists
-                _ProjectViewModel.EmployeeLists.Add(rawEmployee)
-            Next
-            _ProjectViewModel.EmployeeLists = New ObservableCollection(Of EmployeeListModel)(_ProjectViewModel.EmployeeLists.OrderBy(Function(f) f.Name).ToList())
-
-            grdEmployees.Items.Refresh()
-            _ProjectViewModel.AssignedEmployeeLists.Clear()
-
-        End If
+        Throw New NotImplementedException()
     End Sub
 #End Region
-
 End Class

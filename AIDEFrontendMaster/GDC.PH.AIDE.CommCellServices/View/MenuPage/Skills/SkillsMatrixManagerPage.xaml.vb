@@ -564,7 +564,6 @@ Class SkillsMatrixManagerPage
                     LoadSkillsProf()
 
                     lblLastReviewed.Text = dgSkillList.CurrentCell.Item(23)
-                    btnPrint.Visibility = Windows.Visibility.Hidden
                     grdUpdate.Visibility = Visibility.Visible
                 End If
 
@@ -580,7 +579,6 @@ Class SkillsMatrixManagerPage
         DisableControls()
         bClick = False
         'txtSearch.Text = String.Empty
-        btnPrint.Visibility = Windows.Visibility.Visible
         grdUpdate.Visibility = Visibility.Collapsed
         dgSkillList.Columns.Item(0).Visibility = Visibility.Collapsed
     End Sub

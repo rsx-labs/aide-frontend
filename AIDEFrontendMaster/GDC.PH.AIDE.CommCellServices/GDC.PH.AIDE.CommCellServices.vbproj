@@ -158,7 +158,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="WpfAnimatedGif">
-      <HintPath>..\packages\WpfAnimatedGif.1.4.18\lib\net\WpfAnimatedGif.dll</HintPath>
+      <HintPath>..\packages\WpfAnimatedGif.1.4.18\WpfAnimatedGif.1.4.18\lib\net\WpfAnimatedGif.dll</HintPath>
     </Reference>
     <Reference Include="WPFToolkit">
       <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\WPFToolkit.dll</HintPath>
@@ -171,6 +171,7 @@
     </ApplicationDefinition>
     <Compile Include="BindingProxy.vb" />
     <Compile Include="DataProviderService\ActionListDBProvider.vb" />
+    <Compile Include="DataProviderService\AssignedProjectDBProvider.vb" />
     <Compile Include="DataProviderService\KPISummaryDBProvider.vb" />
     <Compile Include="DataProviderService\KPITargetDBProvider.vb" />
     <Compile Include="DataProviderService\AnnouncementDBProvider.vb" />
@@ -210,6 +211,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Model\ActionModel.vb" />
+    <Compile Include="Model\AssignedProjectModel.vb" />
     <Compile Include="Model\KPISummaryModel.vb" />
     <Compile Include="Model\KPITargetsModel.vb" />
     <Compile Include="Model\AnnouncementModel.vb" />
@@ -253,6 +255,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ActionListViewModel.vb" />
+    <Compile Include="ViewModel\AssignedProjectViewModel.vb" />
     <Compile Include="ViewModel\KPISummaryViewModel.vb" />
     <Compile Include="ViewModel\KPITargetsViewModel.vb" />
     <Compile Include="ViewModel\AnnouncementListViewModel.vb" />
@@ -338,11 +341,11 @@
     <Compile Include="View\MenuPage\Assets\AssetsUpdatePage.xaml.vb">
       <DependentUpon>AssetsUpdatePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MenuPage\AssignedProjects\NewProject.xaml.vb">
-      <DependentUpon>NewProject.xaml</DependentUpon>
+    <Compile Include="View\MenuPage\AssignedProjects\AssignedProjectAddPage.xaml.vb">
+      <DependentUpon>AssignedProjectAddPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MenuPage\AssignedProjects\ViewProjectUI.xaml.vb">
-      <DependentUpon>ViewProjectUI.xaml</DependentUpon>
+    <Compile Include="View\MenuPage\AssignedProjects\AssignedProjectMainPage.xaml.vb">
+      <DependentUpon>AssignedProjectMainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\AttendanceDashBoard\AttendanceDashBoard.xaml.vb">
       <DependentUpon>AttendanceDashBoard.xaml</DependentUpon>
@@ -643,11 +646,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MenuPage\AssignedProjects\NewProject.xaml">
+    <Page Include="View\MenuPage\AssignedProjects\AssignedProjectAddPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MenuPage\AssignedProjects\ViewProjectUI.xaml">
+    <Page Include="View\MenuPage\AssignedProjects\AssignedProjectMainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

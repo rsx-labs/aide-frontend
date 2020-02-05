@@ -18,6 +18,7 @@ Public Class AttendanceDashBoard
     Dim AttendanceListVM As New AttendanceListViewModel
     Dim setStatus As Integer
     Dim profile As Profile
+    Dim AEmployee As MyAttendance()
 #End Region
 
 #Region "Constructor"
@@ -48,8 +49,9 @@ Public Class AttendanceDashBoard
     Public Sub SetData()
         Try
             If InitializeService() Then
-                Dim AEmployee As MyAttendance() = _AideService.GetAttendanceToday(profile.Email_Address)
+                AEmployee = _AideService.GetAttendanceToday(profile.Email_Address)
 
+                Dim d As DateTime? = Nothing
                 Dim lstAEmployeeList As New ObservableCollection(Of AttendanceModel)
                 Dim aemployeeListDBProvider As New AttendanceListDBProvider
 
@@ -63,6 +65,12 @@ Public Class AttendanceDashBoard
                     If rawUser.Status = 11 Then 'For Late
                         SetCategoryDisplay(rawUser)
                     End If
+
+                    d = rawUser.Logoff_Time
+                    If d.Value = Nothing Then
+                        rawUser.Logoff_Time = ""
+                    End If
+
                     lstAEmployeeList.Add(New AttendanceModel(rawUser))
                 Next
 
@@ -76,30 +84,38 @@ Public Class AttendanceDashBoard
         End Try
     End Sub
 
-    Public Sub SetDataForSearch()
+    Public Sub SetDataForSearch(input As String)
         Try
             If InitializeService() Then
-                Dim AEmployee As MyAttendance() = _AideService.GetAttendanceTodayBySearch(profile.Email_Address, txtSearch.Text)
-
-                Dim lstAEmployeeList As New ObservableCollection(Of AttendanceModel)
+                Dim d As DateTime? = Nothing
                 Dim aemployeeListDBProvider As New AttendanceListDBProvider
+                Dim lstAEmployeeList As New ObservableCollection(Of AttendanceModel)
 
-                For Each objaemp As MyAttendance In AEmployee
+                Dim items = From i In AEmployee Where i.Name.ToLower.Contains(input.ToLower) Or i.EmployeeID.ToString.ToLower.Contains(input.ToLower)
+
+                Dim searchAssets = New ObservableCollection(Of MyAttendance)(items)
+
+                For Each objaemp As MyAttendance In searchAssets
                     aemployeeListDBProvider.SetAllAttendanceList(objaemp)
                 Next
 
                 For Each rawUser As myAttendanceList In aemployeeListDBProvider.GetAllEmpRPList()
                     setStatus = rawUser.Status
                     SetCategory(rawUser)
-                    'SetCategoryDisplay(rawUser)
+                    If rawUser.Status = 11 Then 'For Late
+                        SetCategoryDisplay(rawUser)
+                    End If
+
+                    d = rawUser.Logoff_Time
+                    If d.Value = Nothing Then
+                        rawUser.Logoff_Time = ""
+                    End If
+
                     lstAEmployeeList.Add(New AttendanceModel(rawUser))
                 Next
-
                 AttendanceListVM.EmployeeListAttendance = lstAEmployeeList
                 Me.DataContext = AttendanceListVM
-
             End If
-
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -160,7 +176,7 @@ Public Class AttendanceDashBoard
         If txtSearch.Text = String.Empty Then
             SetData()
         Else
-            SetDataForSearch()
+            SetDataForSearch(txtSearch.Text)
         End If
     End Sub
 

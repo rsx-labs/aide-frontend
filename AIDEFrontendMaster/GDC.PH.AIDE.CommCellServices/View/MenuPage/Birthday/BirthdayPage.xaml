@@ -707,7 +707,7 @@
                     <ColumnDefinition Width="0.4*"/>
                 </Grid.ColumnDefinitions>
 
-                <Grid Grid.Column="1" >
+                <Grid Grid.Column="1" Visibility="Collapsed" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.3*"/>
                         <ColumnDefinition Width="0.4*"/>
@@ -715,18 +715,18 @@
                     </Grid.ColumnDefinitions>
                     
                     <Grid Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" >
-                        <TextBlock Text="Print by" Margin="0,0,10,0"/>
+                        <TextBlock Visibility="Hidden" Text="Print by" Margin="0,0,10,0"/>
                     </Grid>
                     
                     <Grid Grid.Column="1" VerticalAlignment="Center" >
-                        <ComboBox x:Name="cbFilterDsiplay" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch"  VerticalAlignment="Center">
+                        <ComboBox Visibility="Hidden" x:Name="cbFilterDsiplay" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch"  VerticalAlignment="Center">
                             <ComboBoxItem Content="Month"/>
                             <ComboBoxItem Content="Year"/>
                         </ComboBox>
                     </Grid>
                     
                     <Grid Grid.Column="2" Width="50" VerticalAlignment="Center" >
-                        <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint" Content="Print" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Button Visibility="Hidden" Style="{DynamicResource ButtonPrint}" x:Name="btnPrint" Content="Print" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Grid>
                 </Grid>
             </Grid>

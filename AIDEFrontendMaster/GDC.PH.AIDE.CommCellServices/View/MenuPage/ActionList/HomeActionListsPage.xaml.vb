@@ -323,7 +323,7 @@ Class HomeActionListsPage
         Dim RowDataContaxt As ActionModel = TryCast(e.Row.DataContext, ActionModel)
         If RowDataContaxt IsNot Nothing Then
             If RowDataContaxt.DUE_DATE = DateTime.Now.ToString("yyyy-MM-dd") And RowDataContaxt.DATE_CLOSED = String.Empty Then
-                e.Row.Background = New SolidColorBrush(Colors.Goldenrod)
+                e.Row.Background = New BrushConverter().ConvertFrom("#FFFDECCE")
             ElseIf DateTime.Now.ToString("yyyy-MM-dd") > RowDataContaxt.DUE_DATE And RowDataContaxt.DATE_CLOSED = String.Empty Then
                 e.Row.Background = New BrushConverter().ConvertFrom("#CCFFD8D8")
             End If

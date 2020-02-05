@@ -163,12 +163,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DashboardTaskSummaryTotals" nillable="true" type="tns:DashboardTaskSummaryTotals" />
-  <xs:complexType name="ArrayOfSabaLearning">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="SabaLearning" nillable="true" type="tns:SabaLearning" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfSabaLearning" nillable="true" type="tns:ArrayOfSabaLearning" />
   <xs:complexType name="SabaLearning">
     <xs:sequence>
       <xs:element minOccurs="0" name="DATE_COMPLETED" nillable="true" type="xs:string" />
@@ -177,9 +171,17 @@
       <xs:element minOccurs="0" name="IMAGE_PATH" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SABA_ID" type="xs:int" />
       <xs:element minOccurs="0" name="TITLE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TOTAL_COMPLETED" type="xs:int" />
+      <xs:element minOccurs="0" name="TOTAL_ENROLL" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SabaLearning" nillable="true" type="tns:SabaLearning" />
+  <xs:complexType name="ArrayOfSabaLearning">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SabaLearning" nillable="true" type="tns:SabaLearning" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSabaLearning" nillable="true" type="tns:ArrayOfSabaLearning" />
   <xs:complexType name="Comcell">
     <xs:sequence>
       <xs:element minOccurs="0" name="COMCELL_ID" type="xs:int" />
@@ -758,6 +760,7 @@
   <xs:complexType name="Announcements">
     <xs:sequence>
       <xs:element minOccurs="0" name="ANNOUNCEMENT_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="DELETED_FG" type="xs:int" />
       <xs:element minOccurs="0" name="EMP_ID" type="xs:int" />
       <xs:element minOccurs="0" name="END_DATE" type="xs:dateTime" />
       <xs:element minOccurs="0" name="MESSAGE" nillable="true" type="xs:string" />
@@ -810,6 +813,7 @@
       <xs:element minOccurs="0" name="EmployeeID" type="xs:int" />
       <xs:element minOccurs="0" name="FridayVal" type="xs:short" />
       <xs:element minOccurs="0" name="Image_Path" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LogoffTime" type="xs:dateTime" />
       <xs:element minOccurs="0" name="MondayVal" type="xs:short" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Status" type="xs:int" />

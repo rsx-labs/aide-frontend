@@ -1622,6 +1622,12 @@ Namespace ServiceReference1
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private TITLEField As String
         
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private TOTAL_COMPLETEDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private TOTAL_ENROLLField As Integer
+        
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
             Get
@@ -1706,6 +1712,32 @@ Namespace ServiceReference1
                 If (Object.ReferenceEquals(Me.TITLEField, value) <> true) Then
                     Me.TITLEField = value
                     Me.RaisePropertyChanged("TITLE")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property TOTAL_COMPLETED() As Integer
+            Get
+                Return Me.TOTAL_COMPLETEDField
+            End Get
+            Set
+                If (Me.TOTAL_COMPLETEDField.Equals(value) <> true) Then
+                    Me.TOTAL_COMPLETEDField = value
+                    Me.RaisePropertyChanged("TOTAL_COMPLETED")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property TOTAL_ENROLL() As Integer
+            Get
+                Return Me.TOTAL_ENROLLField
+            End Get
+            Set
+                If (Me.TOTAL_ENROLLField.Equals(value) <> true) Then
+                    Me.TOTAL_ENROLLField = value
+                    Me.RaisePropertyChanged("TOTAL_ENROLL")
                 End If
             End Set
         End Property
@@ -6969,6 +7001,9 @@ Namespace ServiceReference1
         Private ANNOUNCEMENT_IDField As Integer
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private DELETED_FGField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private EMP_IDField As Integer
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
@@ -6999,6 +7034,19 @@ Namespace ServiceReference1
                 If (Me.ANNOUNCEMENT_IDField.Equals(value) <> true) Then
                     Me.ANNOUNCEMENT_IDField = value
                     Me.RaisePropertyChanged("ANNOUNCEMENT_ID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property DELETED_FG() As Integer
+            Get
+                Return Me.DELETED_FGField
+            End Get
+            Set
+                If (Me.DELETED_FGField.Equals(value) <> true) Then
+                    Me.DELETED_FGField = value
+                    Me.RaisePropertyChanged("DELETED_FG")
                 End If
             End Set
         End Property
@@ -7314,6 +7362,9 @@ Namespace ServiceReference1
         Private Image_PathField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private LogoffTimeField As Date
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private MondayValField As Short
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
@@ -7402,6 +7453,19 @@ Namespace ServiceReference1
                 If (Object.ReferenceEquals(Me.Image_PathField, value) <> true) Then
                     Me.Image_PathField = value
                     Me.RaisePropertyChanged("Image_Path")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property LogoffTime() As Date
+            Get
+                Return Me.LogoffTimeField
+            End Get
+            Set
+                If (Me.LogoffTimeField.Equals(value) <> true) Then
+                    Me.LogoffTimeField = value
+                    Me.RaisePropertyChanged("LogoffTime")
                 End If
             End Set
         End Property
@@ -9256,6 +9320,12 @@ Namespace ServiceReference1
      System.ServiceModel.ServiceContractAttribute(ConfigurationName:="ServiceReference1.IAideService", CallbackContract:=GetType(ServiceReference1.IAideServiceCallback), SessionMode:=System.ServiceModel.SessionMode.Required)>  _
     Public Interface IAideService
         
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/UpdateSabaXref", ReplyAction:="http://tempuri.org/IAideService/UpdateSabaXrefResponse")>  _
+        Sub UpdateSabaXref(ByVal obj As ServiceReference1.SabaLearning)
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/UpdateSabaXref", ReplyAction:="http://tempuri.org/IAideService/UpdateSabaXrefResponse")>  _
+        Function UpdateSabaXrefAsync(ByVal obj As ServiceReference1.SabaLearning) As System.Threading.Tasks.Task
+        
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllSabaCourseByTitle", ReplyAction:="http://tempuri.org/IAideService/GetAllSabaCourseByTitleResponse")>  _
         Function GetAllSabaCourseByTitle(ByVal message As String, ByVal empID As Integer) As ServiceReference1.SabaLearning()
         
@@ -9311,10 +9381,10 @@ Namespace ServiceReference1
         Function CreateWeekRangeAsync(ByVal weekRange As ServiceReference1.WeekRange) As System.Threading.Tasks.Task
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeekRange", ReplyAction:="http://tempuri.org/IAideService/GetWeekRangeResponse")>  _
-        Function GetWeekRange(ByVal currentDate As Date, ByVal empID As Integer) As ServiceReference1.WeekRange()
+        Function GetWeekRange(ByVal currentDate As Date, ByVal weekID As Integer, ByVal empID As Integer) As ServiceReference1.WeekRange()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeekRange", ReplyAction:="http://tempuri.org/IAideService/GetWeekRangeResponse")>  _
-        Function GetWeekRangeAsync(ByVal currentDate As Date, ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeekRange())
+        Function GetWeekRangeAsync(ByVal currentDate As Date, ByVal weekID As Integer, ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeekRange())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeekRangeByMonthYear", ReplyAction:="http://tempuri.org/IAideService/GetWeekRangeByMonthYearResponse")>  _
         Function GetWeekRangeByMonthYear(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer) As ServiceReference1.WeekRange()
@@ -9501,6 +9571,12 @@ Namespace ServiceReference1
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetKPISummaryListMonthly", ReplyAction:="http://tempuri.org/IAideService/GetKPISummaryListMonthlyResponse")>  _
         Function GetKPISummaryListMonthlyAsync(ByVal EmpId As Integer, ByVal FY_Start As Date, ByVal FY_End As Date, ByVal Month As Short, ByVal KPIRef As String) As System.Threading.Tasks.Task(Of ServiceReference1.KPISummary())
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllAssetsHistory", ReplyAction:="http://tempuri.org/IAideService/GetAllAssetsHistoryResponse")>  _
+        Function GetAllAssetsHistory(ByVal empID As Integer) As ServiceReference1.Assets()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllAssetsHistory", ReplyAction:="http://tempuri.org/IAideService/GetAllAssetsHistoryResponse")>  _
+        Function GetAllAssetsHistoryAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Assets())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllAssetsHistoryBySearch", ReplyAction:="http://tempuri.org/IAideService/GetAllAssetsHistoryBySearchResponse")>  _
         Function GetAllAssetsHistoryBySearch(ByVal empID As Integer, ByVal input As String) As ServiceReference1.Assets()
@@ -9880,12 +9956,6 @@ Namespace ServiceReference1
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/UpdateSabaCourses", ReplyAction:="http://tempuri.org/IAideService/UpdateSabaCoursesResponse")>  _
         Function UpdateSabaCoursesAsync(ByVal obj As ServiceReference1.SabaLearning) As System.Threading.Tasks.Task
         
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/UpdateSabaXref", ReplyAction:="http://tempuri.org/IAideService/UpdateSabaXrefResponse")>  _
-        Sub UpdateSabaXref(ByVal obj As ServiceReference1.SabaLearning)
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/UpdateSabaXref", ReplyAction:="http://tempuri.org/IAideService/UpdateSabaXrefResponse")>  _
-        Function UpdateSabaXrefAsync(ByVal obj As ServiceReference1.SabaLearning) As System.Threading.Tasks.Task
-        
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertActionList")>  _
         Sub InsertActionList(ByVal _Action As ServiceReference1.Action)
         
@@ -9945,6 +10015,12 @@ Namespace ServiceReference1
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateAttendance2")>  _
         Function UpdateAttendance2Async(ByVal empid As Integer, ByVal day As Integer, ByVal attstatus As Integer) As System.Threading.Tasks.Task
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertLogoffTime")>  _
+        Sub InsertLogoffTime(ByVal empid As Integer)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertLogoffTime")>  _
+        Function InsertLogoffTimeAsync(ByVal empid As Integer) As System.Threading.Tasks.Task
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertAttendance")>  _
         Sub InsertAttendance(ByVal _Attendance As ServiceReference1.AttendanceSummary)
@@ -10263,12 +10339,6 @@ Namespace ServiceReference1
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateAssetsInventoryCancel")>  _
         Function UpdateAssetsInventoryCancelAsync(ByVal assets As ServiceReference1.Assets) As System.Threading.Tasks.Task
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllAssetsHistory", ReplyAction:="http://tempuri.org/IAideService/GetAllAssetsHistoryResponse")>  _
-        Function GetAllAssetsHistory(ByVal empID As Integer) As ServiceReference1.Assets()
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllAssetsHistory", ReplyAction:="http://tempuri.org/IAideService/GetAllAssetsHistoryResponse")>  _
-        Function GetAllAssetsHistoryAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Assets())
     End Interface
     
     <System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")>  _
@@ -10301,8 +10371,8 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.TaskSummary)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals)),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SabaLearning())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SabaLearning)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SabaLearning())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Comcell)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Comcell())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ComcellClock)),  _
@@ -10419,6 +10489,14 @@ Namespace ServiceReference1
             MyBase.New(callbackInstance, binding, remoteAddress)
         End Sub
         
+        Public Sub UpdateSabaXref(ByVal obj As ServiceReference1.SabaLearning) Implements ServiceReference1.IAideService.UpdateSabaXref
+            MyBase.Channel.UpdateSabaXref(obj)
+        End Sub
+        
+        Public Function UpdateSabaXrefAsync(ByVal obj As ServiceReference1.SabaLearning) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateSabaXrefAsync
+            Return MyBase.Channel.UpdateSabaXrefAsync(obj)
+        End Function
+        
         Public Function GetAllSabaCourseByTitle(ByVal message As String, ByVal empID As Integer) As ServiceReference1.SabaLearning() Implements ServiceReference1.IAideService.GetAllSabaCourseByTitle
             Return MyBase.Channel.GetAllSabaCourseByTitle(message, empID)
         End Function
@@ -10491,12 +10569,12 @@ Namespace ServiceReference1
             Return MyBase.Channel.CreateWeekRangeAsync(weekRange)
         End Function
         
-        Public Function GetWeekRange(ByVal currentDate As Date, ByVal empID As Integer) As ServiceReference1.WeekRange() Implements ServiceReference1.IAideService.GetWeekRange
-            Return MyBase.Channel.GetWeekRange(currentDate, empID)
+        Public Function GetWeekRange(ByVal currentDate As Date, ByVal weekID As Integer, ByVal empID As Integer) As ServiceReference1.WeekRange() Implements ServiceReference1.IAideService.GetWeekRange
+            Return MyBase.Channel.GetWeekRange(currentDate, weekID, empID)
         End Function
         
-        Public Function GetWeekRangeAsync(ByVal currentDate As Date, ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeekRange()) Implements ServiceReference1.IAideService.GetWeekRangeAsync
-            Return MyBase.Channel.GetWeekRangeAsync(currentDate, empID)
+        Public Function GetWeekRangeAsync(ByVal currentDate As Date, ByVal weekID As Integer, ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeekRange()) Implements ServiceReference1.IAideService.GetWeekRangeAsync
+            Return MyBase.Channel.GetWeekRangeAsync(currentDate, weekID, empID)
         End Function
         
         Public Function GetWeekRangeByMonthYear(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer) As ServiceReference1.WeekRange() Implements ServiceReference1.IAideService.GetWeekRangeByMonthYear
@@ -10745,6 +10823,14 @@ Namespace ServiceReference1
         
         Public Function GetKPISummaryListMonthlyAsync(ByVal EmpId As Integer, ByVal FY_Start As Date, ByVal FY_End As Date, ByVal Month As Short, ByVal KPIRef As String) As System.Threading.Tasks.Task(Of ServiceReference1.KPISummary()) Implements ServiceReference1.IAideService.GetKPISummaryListMonthlyAsync
             Return MyBase.Channel.GetKPISummaryListMonthlyAsync(EmpId, FY_Start, FY_End, Month, KPIRef)
+        End Function
+        
+        Public Function GetAllAssetsHistory(ByVal empID As Integer) As ServiceReference1.Assets() Implements ServiceReference1.IAideService.GetAllAssetsHistory
+            Return MyBase.Channel.GetAllAssetsHistory(empID)
+        End Function
+        
+        Public Function GetAllAssetsHistoryAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Assets()) Implements ServiceReference1.IAideService.GetAllAssetsHistoryAsync
+            Return MyBase.Channel.GetAllAssetsHistoryAsync(empID)
         End Function
         
         Public Function GetAllAssetsHistoryBySearch(ByVal empID As Integer, ByVal input As String) As ServiceReference1.Assets() Implements ServiceReference1.IAideService.GetAllAssetsHistoryBySearch
@@ -11251,14 +11337,6 @@ Namespace ServiceReference1
             Return MyBase.Channel.UpdateSabaCoursesAsync(obj)
         End Function
         
-        Public Sub UpdateSabaXref(ByVal obj As ServiceReference1.SabaLearning) Implements ServiceReference1.IAideService.UpdateSabaXref
-            MyBase.Channel.UpdateSabaXref(obj)
-        End Sub
-        
-        Public Function UpdateSabaXrefAsync(ByVal obj As ServiceReference1.SabaLearning) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateSabaXrefAsync
-            Return MyBase.Channel.UpdateSabaXrefAsync(obj)
-        End Function
-        
         Public Sub InsertActionList(ByVal _Action As ServiceReference1.Action) Implements ServiceReference1.IAideService.InsertActionList
             MyBase.Channel.InsertActionList(_Action)
         End Sub
@@ -11337,6 +11415,14 @@ Namespace ServiceReference1
         
         Public Function UpdateAttendance2Async(ByVal empid As Integer, ByVal day As Integer, ByVal attstatus As Integer) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateAttendance2Async
             Return MyBase.Channel.UpdateAttendance2Async(empid, day, attstatus)
+        End Function
+        
+        Public Sub InsertLogoffTime(ByVal empid As Integer) Implements ServiceReference1.IAideService.InsertLogoffTime
+            MyBase.Channel.InsertLogoffTime(empid)
+        End Sub
+        
+        Public Function InsertLogoffTimeAsync(ByVal empid As Integer) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.InsertLogoffTimeAsync
+            Return MyBase.Channel.InsertLogoffTimeAsync(empid)
         End Function
         
         Public Sub InsertAttendance(ByVal _Attendance As ServiceReference1.AttendanceSummary) Implements ServiceReference1.IAideService.InsertAttendance
@@ -11761,14 +11847,6 @@ Namespace ServiceReference1
         
         Public Function UpdateAssetsInventoryCancelAsync(ByVal assets As ServiceReference1.Assets) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateAssetsInventoryCancelAsync
             Return MyBase.Channel.UpdateAssetsInventoryCancelAsync(assets)
-        End Function
-        
-        Public Function GetAllAssetsHistory(ByVal empID As Integer) As ServiceReference1.Assets() Implements ServiceReference1.IAideService.GetAllAssetsHistory
-            Return MyBase.Channel.GetAllAssetsHistory(empID)
-        End Function
-        
-        Public Function GetAllAssetsHistoryAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Assets()) Implements ServiceReference1.IAideService.GetAllAssetsHistoryAsync
-            Return MyBase.Channel.GetAllAssetsHistoryAsync(empID)
         End Function
     End Class
 End Namespace

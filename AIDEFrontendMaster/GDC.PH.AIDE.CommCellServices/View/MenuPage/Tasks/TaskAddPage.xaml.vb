@@ -107,7 +107,7 @@ Class TaskAddPage
 
     Private Sub LoadControlsForUpdate()
         btnCreate.Visibility = Windows.Visibility.Collapsed
-        cbProject.Text = ProjectName
+        cbProject.SelectedValue = tasksViewModel.NewTasks.ProjId
         cbCategory.SelectedValue = tasksViewModel.NewTasks.IncidentType
         cbPhase.SelectedValue = tasksViewModel.NewTasks.Phase
         cbRework.SelectedValue = tasksViewModel.NewTasks.Rework
@@ -125,7 +125,7 @@ Class TaskAddPage
     End Sub
 
     Private Sub LoadData()
-        Me.InitializeService()
+        InitializeService()
         CreateTaskID()
         SetEmployeeID()
 
@@ -230,9 +230,9 @@ Class TaskAddPage
             Next
 
             For Each myProjects As myProjectList In projectDBProvider.getProjectList()
-                If ProjectID = myProjects.Project_ID Then
-                    ProjectName = myProjects.Project_Name
-                End If
+                'If ProjectID = myProjects.Project_ID Then
+                '    ProjectName = myProjects.Project_Name
+                'End If
                 listProjects.Add(New ProjectModel(myProjects))
             Next
 
