@@ -240,47 +240,49 @@ Class WeeklyTeamStatusReportPage
     Private Sub LoadWeeks()
         ' Load Items for Week Range Combobox
         Try
-            ' Clear combo box data
-            cbDateRange.DataContext = Nothing
-            weeklyReportDBProvider.GetWeekRangeList().Clear()
+            If InitializeService() Then
+                ' Clear combo box data
+                cbDateRange.DataContext = Nothing
+                weeklyReportDBProvider.GetWeekRangeList().Clear()
 
-            Dim listWeekRange As New ObservableCollection(Of WeekRangeModel)
-            weekRangeViewModel = New WeekRangeViewModel
+                Dim listWeekRange As New ObservableCollection(Of WeekRangeModel)
+                weekRangeViewModel = New WeekRangeViewModel
 
-            lstWeekRange = AideServiceClient.GetWeekRangeByMonthYear(profile.Emp_ID, month, startFiscalYear)
+                lstWeekRange = AideServiceClient.GetWeekRangeByMonthYear(profile.Emp_ID, month, startFiscalYear)
 
-            For Each objWeekRange As WeekRange In lstWeekRange
-                weeklyReportDBProvider.SetWeekRangeList(objWeekRange)
-            Next
+                For Each objWeekRange As WeekRange In lstWeekRange
+                    weeklyReportDBProvider.SetWeekRangeList(objWeekRange)
+                Next
 
-            For Each weekRange As MyWeekRange In weeklyReportDBProvider.GetWeekRangeList()
-                listWeekRange.Add(New WeekRangeModel(weekRange))
+                For Each weekRange As MyWeekRange In weeklyReportDBProvider.GetWeekRangeList()
+                    listWeekRange.Add(New WeekRangeModel(weekRange))
 
-                'If monday.Month = dateToday.Month Then
-                If currentWeekSaturday = weekRange.StartWeek Then
-                    If selectedValue = -1 Then
-                        selectedValue = weekRange.WeekRangeID
+                    'If monday.Month = dateToday.Month Then
+                    If currentWeekSaturday = weekRange.StartWeek Then
+                        If selectedValue = -1 Then
+                            selectedValue = weekRange.WeekRangeID
+                        End If
                     End If
+                    'Else
+                    '    If lastWeekSaturday = weekRange.StartWeek Then
+                    '        If selectedValue = -1 Then
+                    '            selectedValue = weekRange.WeekRangeID
+                    '        End If
+                    '    End If
+                    'End If
+
+                    weekID = weekRange.WeekRangeID
+                Next
+
+                ' Set selectedValue to last week of month
+                If selectedValue = -1 AndAlso lstWeekRange.Count > 0 Then
+                    selectedValue = weekID
                 End If
-                'Else
-                '    If lastWeekSaturday = weekRange.StartWeek Then
-                '        If selectedValue = -1 Then
-                '            selectedValue = weekRange.WeekRangeID
-                '        End If
-                '    End If
-                'End If
 
-                weekID = weekRange.WeekRangeID
-            Next
-
-            ' Set selectedValue to last week of month
-            If selectedValue = -1 AndAlso lstWeekRange.Count > 0 Then
-                selectedValue = weekID
+                weekRangeViewModel.WeekRangeList = listWeekRange
+                cbDateRange.DataContext = weekRangeViewModel
+                cbDateRange.SelectedValue = selectedValue
             End If
-
-            weekRangeViewModel.WeekRangeList = listWeekRange
-            cbDateRange.DataContext = weekRangeViewModel
-            cbDateRange.SelectedValue = selectedValue
         Catch ex As SystemException
             AideServiceClient.Abort()
         End Try
