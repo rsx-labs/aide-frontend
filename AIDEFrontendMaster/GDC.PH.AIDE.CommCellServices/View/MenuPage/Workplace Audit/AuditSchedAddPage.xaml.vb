@@ -19,22 +19,33 @@ Class AuditSchedAddPage
     Private mode As String
     Private auditSchedID As Integer
     Private dsplyByDept = 2
+    Dim lstFiscalYear As FiscalYear()
+    Dim commendationVM As New CommendationViewModel()
+    Dim fiscalyearVM As New SelectionListViewModel
+    Dim month As Integer
+    Dim year As Integer
+    Dim lstAuditSchedMonth As WorkplaceAudit()
+    Private lstNicknameList As New ObservableCollection(Of NicknameModel)
+    Dim lstauditSched As AuditSched()
+    Dim auditSchedVM As New AuditSchedViewModel()
 #End Region
 
 #Region "Constructors"
     'Add Constructor
-    Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame)
+    Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame, _lstauditSched As AuditSched())
         Try
             Me._frame = mainframe
             Me._addframe = addframe
             Me._menugrid = menugrid
             Me._submenuframe = submenuframe
             Me.profile = _profile
+            Me.lstauditSched = _lstauditSched
             InitializeComponent()
+            LoadSChed()
             LoadMonth()
-            LoadYears()
             LoadEmpNickName()
             clearFields()
+            LoadauditSched()
             mode = "Add"
         Catch ex As Exception
             If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "Error Encountered") = vbYes Then
@@ -54,11 +65,16 @@ Class AuditSchedAddPage
             Me.AuditSchedModel = _auditSched
             Me.auditSchedID = AuditSchedModel.AUDIT_SCHED_ID
             InitializeComponent()
-            LoadControls()
+
+            LoadSChed()
             LoadMonth()
-            LoadYears()
+            LoadControls()
             LoadEmpNickName()
-            clearFields()
+            'clearFields()
+            cbYear.IsEnabled = False
+            cbMonth.IsEnabled = False
+            cbPeriodStart.IsEnabled = False
+
             mode = "Update"
         Catch ex As Exception
             If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "Error Encountered") = vbYes Then
@@ -82,25 +98,60 @@ Class AuditSchedAddPage
         End Try
         Return bInitialize
     End Function
+    Public Sub LoadauditSched()
+        Try
+            Dim lstauditSchedList As New ObservableCollection(Of AuditSchedModel)
+            Dim auditSchedDBProvider As New AuditSchedDBProvider
+            'Dim objauditSched As New AuditSched
+
+
+            For Each obj In lstauditSched.ToList
+
+                auditSchedDBProvider.SetMyAuditSched(obj)
+            Next
+
+            For Each rawUser As MyAuditSched In auditSchedDBProvider.GetMyAuditSched()
+                lstauditSchedList.Add(New AuditSchedModel(rawUser))
+            Next
+
+            auditSchedVM.AuditSchedList = lstauditSchedList
+
+            Me.DataContext = auditSchedVM
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
 
     Public Sub LoadControls()
-        txtHeader.Text = "Update Workplace Auditor"
-        txtBlockButton.Text = "Update"
-        txtBlockMonth.Text = AuditSchedModel.PERIOD_START.Month
-        txtBlockDaily.Text = AuditSchedModel.DAILY
-        txtBlockWeekly.Text = AuditSchedModel.WEEKLY
-        txtBlockMonthly.Text = AuditSchedModel.MONTHLY
-        txtBlockPeriodStart.Text = AuditSchedModel.PERIOD_START
-        txtBlockPeriodEnd.Text = AuditSchedModel.PERIOD_END
-        txtBlockYear.Text = AuditSchedModel.PERIOD_START.Year
+        Dim getmonth As String = ""
+        getmonth = txtBlockMonth.Text
+        Try
 
-        cbMonth.SelectedValue = txtBlockMonth.Text
-        cbPeriodStart.SelectedValue = txtBlockPeriodStart.Text
-        txtPeriodEnd.Text = txtBlockPeriodEnd.Text
-        cbDaily.SelectedValue = txtBlockDaily.Text
-        cbWeekly.SelectedValue = txtBlockWeekly.Text
-        cbMonthly.SelectedValue = txtBlockMonthly.Text
-        cbYear.SelectedValue = txtBlockYear.Text
+
+            txtHeader.Text = "Update Workplace Auditor"
+            txtBlockButton.Text = "Update"
+            txtBlockMonth.Text = GetSelectedMonth(AuditSchedModel.PERIOD_START.Month)
+
+            txtBlockPeriodStart.Text = AuditSchedModel.PERIOD_START
+            txtBlockPeriodEnd.Text = AuditSchedModel.PERIOD_END
+            txtBlockYear.Text = AuditSchedModel.PERIOD_START.Year
+
+
+            txtBlockDaily.Text = AuditSchedModel.DAILY
+            txtBlockWeekly.Text = AuditSchedModel.WEEKLY
+            txtBlockMonthly.Text = AuditSchedModel.MONTHLY
+
+            'cbMonth.SelectedValue = AuditSchedModel.PERIOD_START.Month
+            'cbPeriodStart.SelectedValue = txtBlockPeriodStart.Text
+            'txtPeriodEnd.Text = txtBlockPeriodEnd.Text
+            'cbDaily.SelectedValue = txtBlockDaily.Text
+            'cbWeekly.SelectedValue = txtBlockWeekly.Text
+            ''cbMonthly.SelectedValue = txtBlockMonth.Text
+            'cbYear.SelectedValue = txtBlockYear.Text
+        Catch ex As Exception
+            ex.Message.ToString()
+        End Try
     End Sub
 
     Public Sub LoadMonth()
@@ -119,6 +170,37 @@ Class AuditSchedAddPage
         cbMonth.Items.Add(New With {.Text = "November", .Value = 11})
         cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
     End Sub
+    Public Function GetSelectedMonth(month As String)
+        Select Case month
+            Case 1
+                month = "January"
+            Case 2
+                month = "February"
+            Case 3
+                month = "March"
+            Case 4
+                month = "April"
+            Case 5
+                month = "May"
+            Case 6
+                month = "June"
+            Case 7
+                month = "July"
+            Case 8
+                month = "August"
+            Case 9
+                month = "September"
+            Case 10
+                month = "October"
+            Case 11
+                month = "November"
+            Case 12
+                month = "December"
+        End Select
+
+
+        Return month
+    End Function
 
     Public Sub LoadYears()
         Try
@@ -133,11 +215,51 @@ Class AuditSchedAddPage
         End Try
     End Sub
 
+    Public Sub LoadYear()
+        Try
+            If InitializeService() Then
+                lstFiscalYear = aide.GetAllFiscalYear()
+                LoadFiscalYear()
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+    Public Sub LoadFiscalYear()
+        Try
+            Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
+            Dim FYDBProvider As New SelectionListDBProvider
+
+            For Each objFiscal As FiscalYear In lstFiscalYear
+                FYDBProvider._setlistofFiscal(objFiscal)
+            Next
+
+            For Each rawUser As myFiscalYearSet In FYDBProvider._getobjFiscal()
+                lstFiscalYearList.Add(New FiscalYearModel(rawUser))
+            Next
+
+            fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
+            cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+    Public Sub LoadSChed()
+        Try
+            If InitializeService() Then
+                lstAuditSchedMonth = aide.GetAuditSChed_Month(2, Date.Now.Year, Date.Now.Month)
+                LoadYear()
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
     Public Sub LoadEmpNickName()
         Try
             If InitializeService() Then
                 Dim lstNickname As Nickname() = aide.ViewNicknameByDeptID(profile.Email_Address, dsplyByDept)
-                Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
+
                 Dim successRegisterDBProvider As New SuccessRegisterDBProvider
                 Dim nicknameVM As New NicknameViewModel()
 
@@ -161,6 +283,7 @@ Class AuditSchedAddPage
     End Sub
 
     Public Sub GetAllMondayOfWeekPerMonth(ByVal month As Integer, ByVal year As Integer, ByVal dayOfWeek As DayOfWeek)
+        cbPeriodStart.ITEMS.Clear()
         Dim dates = New DateTime(year, month, 1)
 
         If dates.DayOfWeek <> dayOfWeek Then
@@ -177,6 +300,9 @@ Class AuditSchedAddPage
     End Sub
 
     Public Sub GetAllFridayOfWeek()
+        If cbPeriodStart.SelectedValue Is Nothing Then
+            Return
+        End If
         Dim selectedDate As DateTime = DateTime.Parse(cbPeriodStart.SelectedValue)
         Dim num_days As Integer = System.DayOfWeek.Friday - selectedDate.DayOfWeek
         If num_days < 0 Then num_days += 7
@@ -198,23 +324,25 @@ Class AuditSchedAddPage
         Try
             InitializeService()
             If mode = "Add" Then
-                If cbMonth.Text = Nothing Or cbDaily.Text = Nothing Or cbMonthly.Text = Nothing Or cbWeekly.Text = Nothing Or cbPeriodStart.Text = Nothing Or cbYear.Text = Nothing Then
+                If cbMonth.SelectedValue = Nothing Or cbDaily.SelectedValue = Nothing Or cbMonthly.SelectedValue = Nothing Or cbWeekly.SelectedValue = Nothing Or cbPeriodStart.SelectedValue = Nothing Or cbYear.SelectedValue.ToString.Substring(0, 4) = Nothing Then
                     MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
-                ElseIf cbDaily.Text = cbWeekly.Text Or cbDaily.Text = cbMonthly.Text Or cbWeekly.Text = cbMonthly.Text Then
+                ElseIf cbDaily.SelectedValue = cbWeekly.SelectedValue Or cbDaily.SelectedValue = cbMonthly.SelectedValue Or cbWeekly.SelectedValue = cbMonthly.SelectedValue Then
                     MsgBox("Selected Auditors are the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 Else
-                    MsgBox("Successfully Added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+
 
                     auditSched.EMP_ID = profile.Emp_ID
                     auditSched.PERIOD_START = cbPeriodStart.Text
                     auditSched.PERIOD_END = txtPeriodEnd.Text
-                    auditSched.DAILY = cbDaily.Text
-                    auditSched.WEEKLY = cbWeekly.Text
-                    auditSched.MONTHLY = cbMonthly.Text
-                    auditSched.YEAR = cbYear.SelectedValue
+                    auditSched.DAILY = cbDaily.SelectedValue
+                    auditSched.WEEKLY = cbWeekly.SelectedValue
+                    auditSched.MONTHLY = cbMonthly.SelectedValue
+                    auditSched.YEAR = cbYear.SelectedValue.ToString.Substring(0, 4)
 
-                    aide.InsertAuditSched(auditSched)
-
+                    Dim isMessageSuccessfuly As Boolean = aide.InsertAuditSched(auditSched)
+                    If isMessageSuccessfuly Then
+                        MsgBox("Successfully Added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                    End If
 
                     _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
                     _frame.IsEnabled = True
@@ -227,25 +355,57 @@ Class AuditSchedAddPage
                     _addframe.Visibility = Visibility.Hidden
                 End If
             Else
-                If cbMonth.Text = Nothing Or cbDaily.SelectedValue = Nothing Or cbMonthly.SelectedValue = Nothing Or cbWeekly.SelectedValue = Nothing Or cbPeriodStart.SelectedValue = Nothing Or txtBlockYear.Text = Nothing Then
-                    MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
-                ElseIf txtBlockDaily.Text = txtBlockWeekly.Text Or txtBlockDaily.Text = txtBlockMonthly.Text Or txtBlockWeekly.Text = txtBlockMonthly.Text Then
-                    MsgBox("Selected Auditors are the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
-                Else
-                    MsgBox("Successfully Updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
-
-                    auditSched.AUDIT_SCHED_ID = auditSchedID
-                    auditSched.PERIOD_START = cbPeriodStart.SelectedValue
-                    auditSched.PERIOD_END = txtBlockPeriodEnd.Text
-                    auditSched.DAILY = cbDaily.SelectedValue
-                    auditSched.WEEKLY = cbWeekly.SelectedValue
-                    auditSched.MONTHLY = cbMonthly.SelectedValue
-                    auditSched.YEAR = txtBlockYear.Text
-
-                    aide.UpdateAuditSched(auditSched)
+                'If cbMonth.Text = Nothing Or cbDaily.SelectedValue = Nothing Or cbMonthly.SelectedValue = Nothing Or cbWeekly.SelectedValue = Nothing Or cbPeriodStart.SelectedValue = Nothing Or txtBlockYear.Text = Nothing Then
+                '    MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                'If txtBlockDaily.Text = txtBlockWeekly.Text Or txtBlockDaily.Text = txtBlockMonthly.Text Or txtBlockWeekly.Text = txtBlockMonthly.Text Then
+                '        MsgBox("Selected Auditors are the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                '    Else
 
 
-                    _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
+                auditSched.AUDIT_SCHED_ID = auditSchedID
+                'auditSched.PERIOD_START = cbPeriodStart.SelectedValue
+                'auditSched.PERIOD_END = txtBlockPeriodEnd.Text
+
+                For Each obj In lstNicknameList.ToList
+                    If obj.Nick_Name = txtBlockDaily.Text.ToString.Trim() Then
+                        If cbDaily.SelectedValue Is Nothing Then
+                            cbDaily.SelectedValue = obj.EMP_ID
+                            auditSched.DAILY = cbDaily.SelectedValue
+                        Else
+                            auditSched.DAILY = cbDaily.SelectedValue
+                        End If
+                    End If
+                    If obj.Nick_Name = txtBlockWeekly.Text.ToString.Trim() Then
+                        If cbWeekly.SelectedValue Is Nothing Then
+                            cbWeekly.SelectedValue = obj.EMP_ID
+                            auditSched.WEEKLY = cbWeekly.SelectedValue
+                        Else
+
+                            auditSched.WEEKLY = cbWeekly.SelectedValue
+                        End If
+                    End If
+                    If obj.Nick_Name = txtBlockMonthly.Text.ToString.Trim() Then
+                        If cbMonthly.SelectedValue Is Nothing Then
+                            cbMonthly.SelectedValue = obj.EMP_ID
+                            auditSched.MONTHLY = cbMonthly.SelectedValue
+                        Else
+                            auditSched.MONTHLY = cbMonthly.SelectedValue
+                        End If
+                    End If
+                Next
+
+
+
+
+                'auditSched.YEAR = cbYear.SelectedValue.ToString.Substring(0, 4)
+
+
+                Dim isMessageSuccessfuly As Boolean = aide.UpdateAuditSched(auditSched)
+                If isMessageSuccessfuly Then
+                    MsgBox("Successfully Added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                End If
+
+                _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
                     _frame.IsEnabled = True
                     _frame.Opacity = 1
                     _menugrid.IsEnabled = True
@@ -255,7 +415,7 @@ Class AuditSchedAddPage
 
                     _addframe.Visibility = Visibility.Hidden
                 End If
-            End If
+            'End If
 
         Catch ex As Exception
             If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "AIDE") = vbYes Then
@@ -278,15 +438,28 @@ Class AuditSchedAddPage
     End Sub
 
     Private Sub cbPeriodStart_DropDownOpened(sender As Object, e As EventArgs) Handles cbPeriodStart.DropDownOpened
-        GetAllMondayOfWeekPerMonth(cbMonth.SelectedValue, cbYear.SelectedValue, DayOfWeek.Monday)
+
     End Sub
 
     Private Sub cbPeriodStart_DropDownClosed(sender As Object, e As EventArgs) Handles cbPeriodStart.DropDownClosed
-        GetAllFridayOfWeek()
+
+
+
     End Sub
 
     Private Sub cbMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbMonth.SelectionChanged
-        clearFields()
+        Dim getYr As Integer
+        getYr = cbYear.SelectedValue.ToString.Substring(0, 4)
+        cbPeriodStart.IsEnabled = True
+
+        If cbMonth.SelectedValue = 1 Then
+            getYr = getYr + 1
+        ElseIf cbMonth.SelectedValue = 2 Then
+            getYr = getYr + 1
+        ElseIf cbMonth.SelectedValue = 3 Then
+            getYr = getYr + 1
+        End If
+        GetAllMondayOfWeekPerMonth(cbMonth.SelectedValue, getYr, DayOfWeek.Monday)
     End Sub
 
     Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
@@ -314,7 +487,53 @@ Class AuditSchedAddPage
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
 
     End Sub
+
+    Private Sub cbDaily_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbDaily.SelectionChanged
+        Dim xe As String
+        xe = cbDaily.SelectedValue
+    End Sub
+
+    Private Sub cbMonthly_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbMonthly.SelectionChanged
+        Dim xe As String
+        xe = cbMonthly.SelectedValue
+    End Sub
+
+    Private Sub cbWeekly_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbWeekly.SelectionChanged
+        Dim xe As String
+        xe = cbWeekly.SelectedValue
+    End Sub
+
+    Private Sub cbPeriodStart_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbPeriodStart.SelectionChanged
+        Dim ifDuplicate As Boolean
+        If cbPeriodStart.SelectedValue Is Nothing Then
+            Return
+        Else
+            For Each obj In lstauditSched.ToList
+                If obj.PERIOD_START = cbPeriodStart.SelectedValue Then
+                    MsgBox(" Duplicate Entry", vbExclamation + vbCritical, "AuditSchedAddPage")
+                    ifDuplicate = True
+                    cbPeriodStart.SelectedValue = 0
+                    Return
+                End If
+            Next
+
+            For Each obj In lstauditSched.ToList
+                If Date.Parse(obj.PERIOD_START).Month = Date.Parse(cbPeriodStart.SelectedValue).Month Then
+                    For Each nickname In lstNicknameList.ToList
+                        If nickname.Nick_Name = obj.MONTHLY Then
+                            cbMonthly.SelectedValue = nickname.EMP_ID
+                            cbMonthly.IsEnabled = False
+                        End If
+                    Next
+
+                End If
+            Next
+            If ifDuplicate = False Then
+                GetAllFridayOfWeek()
+            End If
+        End If
+    End Sub
 #End Region
 
-    
+
 End Class

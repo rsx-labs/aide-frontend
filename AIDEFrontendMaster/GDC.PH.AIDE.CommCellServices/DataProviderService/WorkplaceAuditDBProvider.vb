@@ -25,9 +25,16 @@ Public Class WorkplaceAuditDBProvider
                 .FY_WEEK = _WorkplaceAudit.FY_WEEK,
                 .STATUS = _WorkplaceAudit.STATUS,
                 .DT_CHECKED = _WorkplaceAudit.DT_CHECKED,
+                 .DT_CHECK_FLG = _WorkplaceAudit.DT_CHECK_FLG,
                 .AUDIT_QUESTIONS = _WorkplaceAudit.AUDIT_QUESTIONS,
                 .OWNER = _WorkplaceAudit.OWNER,
-                .AUDIT_QUESTIONS_GROUP = _WorkplaceAudit.AUDIT_QUESTIONS_GROUP
+                .AUDIT_QUESTIONS_GROUP = _WorkplaceAudit.AUDIT_QUESTIONS_GROUP,
+                .AUDITSCHED_MONTH = _WorkplaceAudit.AUDITSCHED_MONTH,
+                .WEEKDAYS = _WorkplaceAudit.WEEKDAYS,
+                .NICKNAME = _WorkplaceAudit.NICKNAME,
+                .WEEKDATE = _WorkplaceAudit.WEEKDATE,
+                 .WEEKDATESCHED = _WorkplaceAudit.WEEKDATESCHED,
+                  .DATE_CHECKED = _WorkplaceAudit.DATE_CHECKED
                 }
 
         _WorkplaceAuditList.Add(_WorkplaceAuditObject)
@@ -41,8 +48,15 @@ Public Class MyWorkplaceAudit
     Property EMP_ID As Integer
     Property FY_WEEK As Integer
     Property STATUS As Integer
-    Property DT_CHECKED As DateTime
+    Property DT_CHECKED As String
+    Property DT_CHECK_FLG As Integer
     Property AUDIT_QUESTIONS As String
     Property OWNER As String
     Property AUDIT_QUESTIONS_GROUP As String
+    Property AUDITSCHED_MONTH As String
+    Property WEEKDAYS As String
+    Property NICKNAME As String
+    Property WEEKDATE As String
+    Property WEEKDATESCHED As String
+    Property DATE_CHECKED As String
 End Class

@@ -20,12 +20,13 @@ Class AuditSchedMainPage
     Private email As String
     Private profile As Profile
     Private year As Integer
+    Private month As Integer
     Private nextYear As Integer
 
     Dim lstauditSched As AuditSched()
     Dim auditSchedVM As New AuditSchedViewModel()
-
-
+    Dim lstFiscalYear As FiscalYear()
+    Dim fiscalyearVM As New SelectionListViewModel
 
 #End Region
 
@@ -61,8 +62,10 @@ Class AuditSchedMainPage
         End If
 
         year = Date.Now.Year
+        LoadYear()
+        SetFiscalYear()
         SetData()
-        LoadYears()
+
 
     End Sub
 
@@ -82,6 +85,16 @@ Class AuditSchedMainPage
         End Try
         Return bInitialize
     End Function
+    Public Sub LoadYear()
+        Try
+            If InitializeService() Then
+                lstFiscalYear = _AideService.GetAllFiscalYear()
+                LoadFiscalYear()
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
 
     Public Sub SetData()
         Try
@@ -117,21 +130,43 @@ Class AuditSchedMainPage
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
-
-    Public Sub LoadYears()
+    Public Sub LoadFiscalYear()
         Try
-            cbYear.DisplayMemberPath = "Text"
-            cbYear.SelectedValuePath = "Value"
-            For i As Integer = 2019 To DateTime.Today.Year
-                nextYear = i + 1
-                cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
+            Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
+            Dim FYDBProvider As New SelectionListDBProvider
+
+            For Each objFiscal As FiscalYear In lstFiscalYear
+                FYDBProvider._setlistofFiscal(objFiscal)
             Next
-            lblYear.Text = "FY: " + year.ToString + " - " + nextYear.ToString
+
+            For Each rawUser As myFiscalYearSet In FYDBProvider._getobjFiscal()
+                lstFiscalYearList.Add(New FiscalYearModel(rawUser))
+            Next
+
+            fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
+            cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
+
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
+    Public Sub SetFiscalYear()
+        Try
+            Month = Date.Now.Month
 
+            If Today.DayOfYear() <= CDate(Today.Year().ToString + "-03-31").DayOfYear Then
+                cbYear.Text = (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
+            Else
+                cbYear.Text = (Date.Now.Year).ToString() + "-" + (Date.Now.Year + 1).ToString()
+            End If
+
+            year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+
+            lblYear.Text = "FY: " + (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
     Private Sub SetPaging(mode As Integer)
         Try
             Dim totalRecords As Integer = lstauditSched.Length
@@ -201,33 +236,39 @@ Class AuditSchedMainPage
 
 #Region "Events"
     Private Sub AuditSched_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
-        e.Handled = True
-        If AuditSchedLV.SelectedIndex <> -1 Then
-            If AuditSchedLV.SelectedItem IsNot Nothing Then
-                Dim auditSched As New AuditSchedModel
-                auditSched.PERIOD_START = CType(AuditSchedLV.SelectedItem, AuditSchedModel).PERIOD_START
-                auditSched.PERIOD_END = CType(AuditSchedLV.SelectedItem, AuditSchedModel).PERIOD_END
-                auditSched.DAILY = CType(AuditSchedLV.SelectedItem, AuditSchedModel).DAILY
-                auditSched.WEEKLY = CType(AuditSchedLV.SelectedItem, AuditSchedModel).WEEKLY
-                auditSched.MONTHLY = CType(AuditSchedLV.SelectedItem, AuditSchedModel).MONTHLY
-                auditSched.AUDIT_SCHED_ID = CType(AuditSchedLV.SelectedItem, AuditSchedModel).AUDIT_SCHED_ID
-                auditSched.FY_START = CType(AuditSchedLV.SelectedItem, AuditSchedModel).FY_START
+        Try
 
-                addframe.Navigate(New AuditSchedAddPage(profile, mainframe, addframe, menugrid, submenuframe, auditSched))
-                mainframe.IsEnabled = False
-                mainframe.Opacity = 0.3
-                menugrid.IsEnabled = False
-                menugrid.Opacity = 0.3
-                submenuframe.IsEnabled = False
-                submenuframe.Opacity = 0.3
-                addframe.Visibility = Visibility.Visible
-                addframe.Margin = New Thickness(150, 60, 150, 60)
+
+            e.Handled = True
+            If AuditSchedLV.SelectedIndex <> -1 Then
+                If AuditSchedLV.SelectedItem IsNot Nothing Then
+                    Dim auditSched As New AuditSchedModel
+                    auditSched.PERIOD_START = CType(AuditSchedLV.SelectedItem, AuditSchedModel).PERIOD_START
+                    auditSched.PERIOD_END = CType(AuditSchedLV.SelectedItem, AuditSchedModel).PERIOD_END
+                    auditSched.DAILY = CType(AuditSchedLV.SelectedItem, AuditSchedModel).DAILY
+                    auditSched.WEEKLY = CType(AuditSchedLV.SelectedItem, AuditSchedModel).WEEKLY
+                    auditSched.MONTHLY = CType(AuditSchedLV.SelectedItem, AuditSchedModel).MONTHLY
+                    auditSched.AUDIT_SCHED_ID = CType(AuditSchedLV.SelectedItem, AuditSchedModel).AUDIT_SCHED_ID
+                    auditSched.FY_START = CType(AuditSchedLV.SelectedItem, AuditSchedModel).FY_START
+
+                    addframe.Navigate(New AuditSchedAddPage(profile, mainframe, addframe, menugrid, submenuframe, auditSched))
+                    mainframe.IsEnabled = False
+                    mainframe.Opacity = 0.3
+                    menugrid.IsEnabled = False
+                    menugrid.Opacity = 0.3
+                    submenuframe.IsEnabled = False
+                    submenuframe.Opacity = 0.3
+                    addframe.Visibility = Visibility.Visible
+                    addframe.Margin = New Thickness(150, 60, 150, 60)
+                End If
             End If
-        End If
+        Catch ex As Exception
+            ex.Message.ToString()
+        End Try
     End Sub
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
-        addframe.Navigate(New AuditSchedAddPage(profile, mainframe, addframe, menugrid, submenuframe))
+        addframe.Navigate(New AuditSchedAddPage(profile, mainframe, addframe, menugrid, submenuframe, lstauditSched))
         mainframe.IsEnabled = False
         mainframe.Opacity = 0.3
         menugrid.IsEnabled = False
@@ -239,7 +280,8 @@ Class AuditSchedMainPage
     End Sub
 
     Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
-        year = cbYear.SelectedValue
+        year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+        lblYear.Text = "FY: " + year.ToString + " - " + (year + 1).ToString
         SetData()
     End Sub
 

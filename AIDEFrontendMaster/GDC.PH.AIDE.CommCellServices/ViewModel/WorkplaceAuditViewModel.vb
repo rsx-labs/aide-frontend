@@ -12,10 +12,20 @@ Public Class WorkplaceAuditViewModel
     Implements INotifyPropertyChanged
 
     Private _dmvm As ObservableCollection(Of WorkplaceAuditModel)
+    Private _workPlaceAuditM As ObservableCollection(Of WorkplaceAuditModel)
 
     Public Sub New()
         _dmvm = New ObservableCollection(Of WorkplaceAuditModel)
     End Sub
+    Public Property WorkPlaceAuditLst As ObservableCollection(Of WorkplaceAuditModel)
+        Get
+            Return _workPlaceAuditM
+        End Get
+        Set(value As ObservableCollection(Of WorkplaceAuditModel))
+            _workPlaceAuditM = value
+            NotifyPropertyChanged("WorkPlaceAuditLst")
+        End Set
+    End Property
 
     Public Property DMVM As ObservableCollection(Of WorkplaceAuditModel)
         Get

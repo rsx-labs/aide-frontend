@@ -9,6 +9,7 @@ Public Class SelectionListDBProvider
     Private _objDivision As ObservableCollection(Of myDivisionSet)
     Private _objStatus As ObservableCollection(Of myStatusSet)
     Private _objFiscal As ObservableCollection(Of myFiscalYearSet)
+    Private _objAuditSchedMonth As ObservableCollection(Of myAuditSchedMonthSet)
 
     Public Sub New()
         _objLocation = New ObservableCollection(Of myLocationSet)
@@ -18,6 +19,7 @@ Public Class SelectionListDBProvider
         _objDivision = New ObservableCollection(Of myDivisionSet)
         _objStatus = New ObservableCollection(Of myStatusSet)
         _objFiscal = New ObservableCollection(Of myFiscalYearSet)
+        _objAuditSchedMonth = New ObservableCollection(Of myAuditSchedMonthSet)
     End Sub
 
     Public Function _getobjLocation() As ObservableCollection(Of myLocationSet)
@@ -46,6 +48,10 @@ Public Class SelectionListDBProvider
 
     Public Function _getobjFiscal() As ObservableCollection(Of myFiscalYearSet)
         Return _objFiscal
+    End Function
+
+    Public Function _getAuditSchedMonth() As ObservableCollection(Of myAuditSchedMonthSet)
+        Return _objAuditSchedMonth
     End Function
 
     Public Function _setlistofLocation(ByRef obj As LocationList)
@@ -96,6 +102,13 @@ Public Class SelectionListDBProvider
         _objFiscal.Add(_myobjSet)
         Return _myobjSet
     End Function
+    Public Function _setListOfAuditSchedMonth(ByRef obj As WorkplaceAudit)
+        Dim _myobjSet As New myAuditSchedMonthSet With {._auditSchedMonth = obj.AUDITSCHED_MONTH,
+                                                        ._fy_week = obj.FY_WEEK}
+
+        _objAuditSchedMonth.Add(_myobjSet)
+        Return _myobjSet
+    End Function
 End Class
 
 Public Class myPositionSet
@@ -131,4 +144,8 @@ End Class
 
 Public Class myFiscalYearSet
     Property _fiscalYear As String
+End Class
+Public Class myAuditSchedMonthSet
+    Property _auditSchedMonth As String
+    Property _fy_week As Integer
 End Class

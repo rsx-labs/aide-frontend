@@ -12,6 +12,7 @@ Public Class SelectionListViewModel
     Private _objMaritalSet As New ObservableCollection(Of MaritalModel)
     Private _objWorkShiftSet As New ObservableCollection(Of WorkShiftModel)
     Private _objFiscalYearSet As New ObservableCollection(Of FiscalYearModel)
+    Private _objAuditSchedMonthSet As New ObservableCollection(Of WorkplaceAuditModel)
     Private _selectionListDB As New SelectionListDBProvider
 
     Sub New()
@@ -123,6 +124,16 @@ Public Class SelectionListViewModel
         Set(value As ObservableCollection(Of FiscalYearModel))
             _objFiscalYearSet = value
             NotifyPropertyChanged("ObjectFiscalYearSet")
+        End Set
+    End Property
+
+    Public Property ObjectAuditSchedMonthSet As ObservableCollection(Of WorkplaceAuditModel)
+        Get
+            Return _objAuditSchedMonthSet
+        End Get
+        Set(value As ObservableCollection(Of WorkplaceAuditModel))
+            _objAuditSchedMonthSet = value
+            NotifyPropertyChanged("ObjectAuditSchedMonthSet")
         End Set
     End Property
 
