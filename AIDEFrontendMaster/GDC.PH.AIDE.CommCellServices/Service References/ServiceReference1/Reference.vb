@@ -9381,10 +9381,10 @@ Namespace ServiceReference1
         Function CreateWeekRangeAsync(ByVal weekRange As ServiceReference1.WeekRange) As System.Threading.Tasks.Task
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeekRange", ReplyAction:="http://tempuri.org/IAideService/GetWeekRangeResponse")>  _
-        Function GetWeekRange(ByVal currentDate As Date, ByVal empID As Integer) As ServiceReference1.WeekRange()
+        Function GetWeekRange(ByVal currentDate As Date, ByVal weekID As Integer, ByVal empID As Integer) As ServiceReference1.WeekRange()
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeekRange", ReplyAction:="http://tempuri.org/IAideService/GetWeekRangeResponse")>  _
-        Function GetWeekRangeAsync(ByVal currentDate As Date, ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeekRange())
+        Function GetWeekRangeAsync(ByVal currentDate As Date, ByVal weekID As Integer, ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeekRange())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeekRangeByMonthYear", ReplyAction:="http://tempuri.org/IAideService/GetWeekRangeByMonthYearResponse")>  _
         Function GetWeekRangeByMonthYear(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer) As ServiceReference1.WeekRange()
@@ -10569,12 +10569,12 @@ Namespace ServiceReference1
             Return MyBase.Channel.CreateWeekRangeAsync(weekRange)
         End Function
         
-        Public Function GetWeekRange(ByVal currentDate As Date, ByVal empID As Integer) As ServiceReference1.WeekRange() Implements ServiceReference1.IAideService.GetWeekRange
-            Return MyBase.Channel.GetWeekRange(currentDate, empID)
+        Public Function GetWeekRange(ByVal currentDate As Date, ByVal weekID As Integer, ByVal empID As Integer) As ServiceReference1.WeekRange() Implements ServiceReference1.IAideService.GetWeekRange
+            Return MyBase.Channel.GetWeekRange(currentDate, weekID, empID)
         End Function
         
-        Public Function GetWeekRangeAsync(ByVal currentDate As Date, ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeekRange()) Implements ServiceReference1.IAideService.GetWeekRangeAsync
-            Return MyBase.Channel.GetWeekRangeAsync(currentDate, empID)
+        Public Function GetWeekRangeAsync(ByVal currentDate As Date, ByVal weekID As Integer, ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeekRange()) Implements ServiceReference1.IAideService.GetWeekRangeAsync
+            Return MyBase.Channel.GetWeekRangeAsync(currentDate, weekID, empID)
         End Function
         
         Public Function GetWeekRangeByMonthYear(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer) As ServiceReference1.WeekRange() Implements ServiceReference1.IAideService.GetWeekRangeByMonthYear

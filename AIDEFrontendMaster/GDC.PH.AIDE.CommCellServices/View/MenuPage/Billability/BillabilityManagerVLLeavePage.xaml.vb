@@ -4,9 +4,9 @@ Imports System.IO
 Imports System.Diagnostics
 Imports System.ServiceModel
 Imports System.Collections.ObjectModel
+
 Public Class BillabilityManagerVLLeavePage
     Implements IAideServiceCallback
-
 
 #Region "Paging Declarations"
     Dim startRowIndex As Integer
@@ -16,7 +16,6 @@ Public Class BillabilityManagerVLLeavePage
     Dim currentPage As Integer
     Dim lastPage As Integer
 
-
     Private Enum PagingMode
         _First = 1
         _Next = 2
@@ -24,6 +23,7 @@ Public Class BillabilityManagerVLLeavePage
         _Last = 4
     End Enum
 #End Region
+
 #Region "Fields"
     Private client As AideServiceClient
     Private _ResourceDBProvider As New ResourcePlannerDBProvider
@@ -56,10 +56,7 @@ Public Class BillabilityManagerVLLeavePage
 
         month = Date.Now.Month
         year = Date.Now.Year
-
-
     End Sub
-
 
 #Region "Private Methods"
 
@@ -75,7 +72,6 @@ Public Class BillabilityManagerVLLeavePage
         End Try
         Return bInitialize
     End Function
-
 
     Private Sub LoadDataActive()
         Try
@@ -123,13 +119,6 @@ Public Class BillabilityManagerVLLeavePage
         End Try
     End Sub
 
-    Private Sub LoadDataVLYearly()
-        
-    End Sub
-
-    Public Sub assignEvents()
-
-    End Sub
     Private Sub GUISettingsOff()
         lv_ActiveLeaves.Visibility = Windows.Visibility.Hidden
         lv_leaveHistory.Visibility = Windows.Visibility.Hidden
@@ -169,7 +158,10 @@ Public Class BillabilityManagerVLLeavePage
             LeaveService.EndDate = CType(lv_ActiveLeaves.SelectedItem, ResourcePlannerModel).END_DATE
             LeaveService.EmpID = Me.profile.Emp_ID
 
-            client.UpdateLeaves(LeaveService, 0, CType(lv_ActiveLeaves.SelectedItem, ResourcePlannerModel).Status)
+            If InitializeService() Then
+                client.UpdateLeaves(LeaveService, 0, CType(lv_ActiveLeaves.SelectedItem, ResourcePlannerModel).Status)
+            End If
+
             Return True
         Else
             Return False
@@ -215,6 +207,7 @@ Public Class BillabilityManagerVLLeavePage
         End If
         DisplayPagingInfo()
     End Sub
+
     Private Sub backbtn_Click(sender As Object, e As RoutedEventArgs) Handles btnCCancel.Click
         mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, _attendanceFrame))
         mainFrame.IsEnabled = True
@@ -225,27 +218,6 @@ Public Class BillabilityManagerVLLeavePage
         _submenuframe.Opacity = 1
 
         _addframe.Visibility = Visibility.Hidden
-    End Sub
-#End Region
-
-    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
-
-    End Sub
-
-    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
-
-    End Sub
-
-    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
-
-    End Sub
-
-    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
-
-    End Sub
-
-    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
-
     End Sub
 
     Private Sub SR_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles SR.SelectionChanged
@@ -270,4 +242,29 @@ Public Class BillabilityManagerVLLeavePage
             End If
         End If
     End Sub
+
+#End Region
+
+#Region "Callback Functions"
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
+
+    End Sub
+
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
+
+    End Sub
+
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
+
+    End Sub
+
+    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
+
+    End Sub
+
+    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+
+    End Sub
+#End Region
+
 End Class

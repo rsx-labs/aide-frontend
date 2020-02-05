@@ -202,6 +202,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="currentDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="weekID" type="xs:int" />
         <xs:element minOccurs="0" name="empID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>

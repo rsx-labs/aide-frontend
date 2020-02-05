@@ -93,59 +93,60 @@ Public Class BillablesPage
 
     Public Sub LoadDataWeekly()
         Try
-            Dim nonBillable As Double
-            Dim billable As Double
-            Dim percentNonBillable As Double
-            Dim percentBillable As Double
+            If InitializeService() Then
+                Dim nonBillable As Double
+                Dim billable As Double
+                Dim percentNonBillable As Double
+                Dim percentBillable As Double
 
-            ' Reset Data
-            billabilityDBProvider.GetBillabilityList.Clear()
-            totalWeekly = 0
+                ' Reset Data
+                billabilityDBProvider.GetBillabilityList.Clear()
+                totalWeekly = 0
 
-            Dim lstresource As BillableHours() = client.GetBillableHoursByWeek(profile.Emp_ID, cbDateRange.SelectedValue)
+                Dim lstresource As BillableHours() = client.GetBillableHoursByWeek(profile.Emp_ID, cbDateRange.SelectedValue)
 
-            For Each objBillables As BillableHours In lstresource
-                billabilityDBProvider.SetBillabilityList(objBillables)
-            Next
+                For Each objBillables As BillableHours In lstresource
+                    billabilityDBProvider.SetBillabilityList(objBillables)
+                Next
 
-            Dim labelPoint As Func(Of ChartPoint, String) = Function(chartPoint) String.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
-            Dim cht_y_values As ChartValues(Of Double) = New ChartValues(Of Double)()
-            Dim series As SeriesCollection = New SeriesCollection()
-            Dim i As Integer = 0
-            Dim projectListName As New List(Of String)
+                Dim labelPoint As Func(Of ChartPoint, String) = Function(chartPoint) String.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
+                Dim cht_y_values As ChartValues(Of Double) = New ChartValues(Of Double)()
+                Dim series As SeriesCollection = New SeriesCollection()
+                Dim i As Integer = 0
+                Dim projectListName As New List(Of String)
 
-            For Each iBillability As MyBillability In billabilityDBProvider.GetBillabilityList()
-                totalWeekly = totalWeekly + iBillability.Hours
+                For Each iBillability As MyBillability In billabilityDBProvider.GetBillabilityList()
+                    totalWeekly = totalWeekly + iBillability.Hours
 
-                If iBillability.Status = 0 Then
-                    nonBillable = nonBillable + iBillability.Hours
-                Else
-                    billable = billable + iBillability.Hours
-                End If
+                    If iBillability.Status = 0 Then
+                        nonBillable = nonBillable + iBillability.Hours
+                    Else
+                        billable = billable + iBillability.Hours
+                    End If
 
-                Dim ps As PieSeries = New PieSeries With {
-                    .Title = iBillability.Name,
-                    .Values = New ChartValues(Of Double) From {
-                        Double.Parse(iBillability.Hours)
-                    },
-                    .DataLabels = False,
-                    .Fill = colorList(i)
-                }
-                projectListName.Add(iBillability.Name)
-                i = i + 1
-                series.Add(ps)
-            Next
+                    Dim ps As PieSeries = New PieSeries With {
+                        .Title = iBillability.Name,
+                        .Values = New ChartValues(Of Double) From {
+                            Double.Parse(iBillability.Hours)
+                        },
+                        .DataLabels = False,
+                        .Fill = colorList(i)
+                    }
+                    projectListName.Add(iBillability.Name)
+                    i = i + 1
+                    series.Add(ps)
+                Next
 
-            CreateEllipse(projectListName)
+                CreateEllipse(projectListName)
 
-            pieChartWeekly.Series = series
+                pieChartWeekly.Series = series
 
-            percentBillable = (billable / totalWeekly) * 100
-            percentNonBillable = (nonBillable / totalWeekly) * 100
+                percentBillable = (billable / totalWeekly) * 100
+                percentNonBillable = (nonBillable / totalWeekly) * 100
 
-            WNonBillableHours.Content = percentNonBillable.ToString("N2") + "%"
-            WBillableHours.Content = percentBillable.ToString("N2") + "%"
-
+                WNonBillableHours.Content = percentNonBillable.ToString("N2") + "%"
+                WBillableHours.Content = percentBillable.ToString("N2") + "%"
+            End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -153,60 +154,61 @@ Public Class BillablesPage
 
     Public Sub LoadDataMonthly()
         Try
-            Dim nonBillable As Double
-            Dim billable As Double
-            Dim percentNonBillable As Double
-            Dim percentBillable As Double
+            If InitializeService() Then
+                Dim nonBillable As Double
+                Dim billable As Double
+                Dim percentNonBillable As Double
+                Dim percentBillable As Double
 
-            ' Reset Data
-            billabilityDBProvider.GetBillabilityList.Clear()
-            totalMonthly = 0
+                ' Reset Data
+                billabilityDBProvider.GetBillabilityList.Clear()
+                totalMonthly = 0
 
-            Dim lstresource As BillableHours() = client.GetBillableHoursByMonth(profile.Emp_ID, month, startFiscalYear, cbDateRange.SelectedValue)
+                Dim lstresource As BillableHours() = client.GetBillableHoursByMonth(profile.Emp_ID, month, startFiscalYear, cbDateRange.SelectedValue)
 
-            For Each objBillables As BillableHours In lstresource
-                billabilityDBProvider.SetBillabilityList(objBillables)
-            Next
+                For Each objBillables As BillableHours In lstresource
+                    billabilityDBProvider.SetBillabilityList(objBillables)
+                Next
 
-            Dim labelPoint As Func(Of ChartPoint, String) = Function(chartPoint) String.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
-            Dim cht_y_values As ChartValues(Of Double) = New ChartValues(Of Double)()
-            Dim series As SeriesCollection = New SeriesCollection()
-            Dim i As Integer = 0
+                Dim labelPoint As Func(Of ChartPoint, String) = Function(chartPoint) String.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation)
+                Dim cht_y_values As ChartValues(Of Double) = New ChartValues(Of Double)()
+                Dim series As SeriesCollection = New SeriesCollection()
+                Dim i As Integer = 0
 
-            Dim projectListName As New List(Of String)
+                Dim projectListName As New List(Of String)
 
-            For Each iBillability As MyBillability In billabilityDBProvider.GetBillabilityList()
-                totalMonthly = totalMonthly + iBillability.Hours
+                For Each iBillability As MyBillability In billabilityDBProvider.GetBillabilityList()
+                    totalMonthly = totalMonthly + iBillability.Hours
 
-                If iBillability.Status = 0 Then
-                    nonBillable = nonBillable + iBillability.Hours
-                Else
-                    billable = billable + iBillability.Hours
-                End If
+                    If iBillability.Status = 0 Then
+                        nonBillable = nonBillable + iBillability.Hours
+                    Else
+                        billable = billable + iBillability.Hours
+                    End If
 
-                Dim ps As PieSeries = New PieSeries With {
-                    .Title = iBillability.Name,
-                    .Values = New ChartValues(Of Double) From {
-                        Double.Parse(iBillability.Hours)
-                    },
-                    .DataLabels = False,
-                    .Fill = colorList(i)
-                }
-                projectListName.Add(iBillability.Name)
-                i = i + 1
-                series.Add(ps)
-            Next
+                    Dim ps As PieSeries = New PieSeries With {
+                        .Title = iBillability.Name,
+                        .Values = New ChartValues(Of Double) From {
+                            Double.Parse(iBillability.Hours)
+                        },
+                        .DataLabels = False,
+                        .Fill = colorList(i)
+                    }
+                    projectListName.Add(iBillability.Name)
+                    i = i + 1
+                    series.Add(ps)
+                Next
 
-            CreateEllipse(projectListName)
+                CreateEllipse(projectListName)
 
-            pieChartMonth.Series = series
+                pieChartMonth.Series = series
 
-            percentBillable = (billable / totalMonthly) * 100
-            percentNonBillable = (nonBillable / totalMonthly) * 100
+                percentBillable = (billable / totalMonthly) * 100
+                percentNonBillable = (nonBillable / totalMonthly) * 100
 
-            MNonBillableHours.Content = percentNonBillable.ToString("N2") + "%"
-            MBillableHours.Content = percentBillable.ToString("N2") + "%"
-
+                MNonBillableHours.Content = percentNonBillable.ToString("N2") + "%"
+                MBillableHours.Content = percentBillable.ToString("N2") + "%"
+            End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -215,38 +217,40 @@ Public Class BillablesPage
     Private Sub LoadWeeks()
         ' Load Items for Week Range Combobox
         Try
-            ' Clear combo box data
-            cbDateRange.DataContext = Nothing
-            selectedValue = -1
-            weeklyReportDBProvider.GetWeekRangeList().Clear()
+            If InitializeService() Then
+                ' Clear combo box data
+                cbDateRange.DataContext = Nothing
+                selectedValue = -1
+                weeklyReportDBProvider.GetWeekRangeList().Clear()
 
-            Dim listWeekRange As New ObservableCollection(Of WeekRangeModel)
-            weekRangeViewModel = New WeekRangeViewModel
+                Dim listWeekRange As New ObservableCollection(Of WeekRangeModel)
+                weekRangeViewModel = New WeekRangeViewModel
 
-            lstWeekRange = client.GetWeekRangeByMonthYear(profile.Emp_ID, month, startFiscalYear)
+                lstWeekRange = client.GetWeekRangeByMonthYear(profile.Emp_ID, month, startFiscalYear)
 
-            For Each objWeekRange As WeekRange In lstWeekRange
-                weeklyReportDBProvider.SetWeekRangeList(objWeekRange)
-            Next
+                For Each objWeekRange As WeekRange In lstWeekRange
+                    weeklyReportDBProvider.SetWeekRangeList(objWeekRange)
+                Next
 
-            For Each weekRange As MyWeekRange In weeklyReportDBProvider.GetWeekRangeList()
-                listWeekRange.Add(New WeekRangeModel(weekRange))
+                For Each weekRange As MyWeekRange In weeklyReportDBProvider.GetWeekRangeList()
+                    listWeekRange.Add(New WeekRangeModel(weekRange))
 
-                If lastWeekSaturday = weekRange.StartWeek Then
-                    selectedValue = weekRange.WeekRangeID
+                    If lastWeekSaturday = weekRange.StartWeek Then
+                        selectedValue = weekRange.WeekRangeID
+                    End If
+
+                    weekID = weekRange.WeekRangeID
+                Next
+
+                ' Set selectedValue to last week of month
+                If selectedValue = -1 AndAlso lstWeekRange.Count > 0 Then
+                    selectedValue = weekID
                 End If
 
-                weekID = weekRange.WeekRangeID
-            Next
-
-            ' Set selectedValue to last week of month
-            If selectedValue = -1 AndAlso lstWeekRange.Count > 0 Then
-                selectedValue = weekID
+                weekRangeViewModel.WeekRangeList = listWeekRange
+                cbDateRange.DataContext = weekRangeViewModel
+                cbDateRange.SelectedValue = selectedValue
             End If
-
-            weekRangeViewModel.WeekRangeList = listWeekRange
-            cbDateRange.DataContext = weekRangeViewModel
-            cbDateRange.SelectedValue = selectedValue
         Catch ex As SystemException
             client.Abort()
         End Try

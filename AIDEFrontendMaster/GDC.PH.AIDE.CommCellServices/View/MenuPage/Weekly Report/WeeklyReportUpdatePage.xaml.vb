@@ -247,7 +247,7 @@ Class WeeklyReportUpdatePage
 
         ' Load Items for Week Range Combobox
         Try
-            lstWeekRange = AideServiceClient.GetWeekRange(Date.Now, 0)
+            lstWeekRange = AideServiceClient.GetWeekRange(Date.Now, weekRangeID, 0)
             Dim listWeekRange As New ObservableCollection(Of WeekRangeModel)
 
             For Each objWeekRange As WeekRange In lstWeekRange

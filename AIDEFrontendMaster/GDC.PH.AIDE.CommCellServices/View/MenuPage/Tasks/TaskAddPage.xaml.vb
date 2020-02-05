@@ -125,7 +125,7 @@ Class TaskAddPage
     End Sub
 
     Private Sub LoadData()
-        Me.InitializeService()
+        InitializeService()
         CreateTaskID()
         SetEmployeeID()
 

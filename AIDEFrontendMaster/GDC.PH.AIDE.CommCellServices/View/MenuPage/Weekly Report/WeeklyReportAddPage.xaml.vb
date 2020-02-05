@@ -124,51 +124,53 @@ Class WeeklyReportAddPage
             lstWeeklyReportsData = New ObservableCollection(Of WeeklyReportModel)
             weeklyReportDBProvider.GetWeeklyReportList().Clear()
 
-            Dim lstWeeklyReport As WeeklyReport() = AideServiceClient.GetTasksDataByEmpID(cbDateRange.SelectedValue, empID)
+            If InitializeService() Then
+                Dim lstWeeklyReport As WeeklyReport() = AideServiceClient.GetTasksDataByEmpID(cbDateRange.SelectedValue, empID)
 
-            For Each objWeeklyReport As WeeklyReport In lstWeeklyReport
-                weeklyReportDBProvider.SetWeeklyReportList(objWeeklyReport)
-            Next
+                For Each objWeeklyReport As WeeklyReport In lstWeeklyReport
+                    weeklyReportDBProvider.SetWeeklyReportList(objWeeklyReport)
+                Next
 
-            For Each weeklyReport As MyWeeklyReport In weeklyReportDBProvider.GetWeeklyReportList()
-                lstWeeklyReportsData.Add(New WeeklyReportModel With {
-                                            .WeekID = weeklyReport.WeekID,
-                                            .WeekRangeID = weeklyReport.WeekRangeID,
-                                            .ProjectID = weeklyReport.ProjectID,
-                                            .ProjectDesc = listProjects.Where(Function(x) x.ProjectID = weeklyReport.ProjectID).First().ProjectName,
-                                            .Rework = weeklyReport.Rework,
-                                            .ReworkDesc = getReworkValue(weeklyReport.Rework),
-                                            .RefID = weeklyReport.RefID,
-                                            .Subject = weeklyReport.Subject,
-                                            .Severity = weeklyReport.Severity,
-                                            .SeverityDesc = getSeverityValue(weeklyReport.Severity),
-                                            .IncidentType = weeklyReport.IncType,
-                                            .IncidentDesc = getIncidentValue(weeklyReport.IncType),
-                                            .EmpID = weeklyReport.EmpID,
-                                            .Phase = weeklyReport.Phase,
-                                            .PhaseDesc = getPhaseValue(weeklyReport.Phase),
-                                            .Status = weeklyReport.Status,
-                                            .StatusDesc = getStatusValue(weeklyReport.Status),
-                                            .DateStarted = weeklyReport.DateStarted,
-                                            .DateTarget = weeklyReport.DateTarget,
-                                            .DateFinished = weeklyReport.DateFinished,
-                                            .EffortEst = weeklyReport.EffortEst,
-                                            .ActualEffort = weeklyReport.ActEffort,
-                                            .ActualEffortWk = weeklyReport.ActEffortWk,
-                                            .Comments = weeklyReport.Comment,
-                                            .InboundContacts = weeklyReport.InboundContacts,
-                                            .ProjectCode = weeklyReport.ProjectCode,
-                                            .TaskID = weeklyReport.TaskID
-                                         })
-            Next
+                For Each weeklyReport As MyWeeklyReport In weeklyReportDBProvider.GetWeeklyReportList()
+                    lstWeeklyReportsData.Add(New WeeklyReportModel With {
+                                                .WeekID = weeklyReport.WeekID,
+                                                .WeekRangeID = weeklyReport.WeekRangeID,
+                                                .ProjectID = weeklyReport.ProjectID,
+                                                .ProjectDesc = listProjects.Where(Function(x) x.ProjectID = weeklyReport.ProjectID).First().ProjectName,
+                                                .Rework = weeklyReport.Rework,
+                                                .ReworkDesc = getReworkValue(weeklyReport.Rework),
+                                                .RefID = weeklyReport.RefID,
+                                                .Subject = weeklyReport.Subject,
+                                                .Severity = weeklyReport.Severity,
+                                                .SeverityDesc = getSeverityValue(weeklyReport.Severity),
+                                                .IncidentType = weeklyReport.IncType,
+                                                .IncidentDesc = getIncidentValue(weeklyReport.IncType),
+                                                .EmpID = weeklyReport.EmpID,
+                                                .Phase = weeklyReport.Phase,
+                                                .PhaseDesc = getPhaseValue(weeklyReport.Phase),
+                                                .Status = weeklyReport.Status,
+                                                .StatusDesc = getStatusValue(weeklyReport.Status),
+                                                .DateStarted = weeklyReport.DateStarted,
+                                                .DateTarget = weeklyReport.DateTarget,
+                                                .DateFinished = weeklyReport.DateFinished,
+                                                .EffortEst = weeklyReport.EffortEst,
+                                                .ActualEffort = weeklyReport.ActEffort,
+                                                .ActualEffortWk = weeklyReport.ActEffortWk,
+                                                .Comments = weeklyReport.Comment,
+                                                .InboundContacts = weeklyReport.InboundContacts,
+                                                .ProjectCode = weeklyReport.ProjectCode,
+                                                .TaskID = weeklyReport.TaskID
+                                             })
+                Next
 
-            dgWeeklyReport.ItemsSource = lstWeeklyReportsData
+                dgWeeklyReport.ItemsSource = lstWeeklyReportsData
 
-            If lstWeeklyReportsData.Count > 0 Then
-                btnSave.IsEnabled = True
-                GetTotalHours()
+                If lstWeeklyReportsData.Count > 0 Then
+                    btnSave.IsEnabled = True
+                    GetTotalHours()
+                End If
             End If
-
+            
         Catch ex As Exception
             AideServiceClient.Abort()
         End Try
@@ -286,7 +288,7 @@ Class WeeklyReportAddPage
 
         ' Load Items for Week Range Combobox
         Try
-            lstWeekRange = AideServiceClient.GetWeekRange(Date.Now, empID)
+            lstWeekRange = AideServiceClient.GetWeekRange(Date.Now, 0, empID)
             Dim listWeekRange As New ObservableCollection(Of WeekRangeModel)
 
             For Each objWeekRange As WeekRange In lstWeekRange
@@ -375,6 +377,9 @@ Class WeeklyReportAddPage
                 End If
             Else
                 selectedValue = cbDateRange.SelectedValue
+                PopulateWeeklyReportData()
+                ClearFields()
+                btnSubmit.IsEnabled = False
             End If
         End If
     End Sub
