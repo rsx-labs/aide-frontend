@@ -24,19 +24,19 @@ Class AuditSchedSubMenuPage
     End Sub
 
     Private Sub Daily_Click(sender As Object, e As RoutedEventArgs)
-        pageframe.Navigate(New DailyAuditPage())
+        pageframe.Navigate(New DailyAuditPage(pageframe, profile, addframe, menugrid, submenuframe))
     End Sub
 
     Private Sub Weekly_Click(sender As Object, e As RoutedEventArgs)
         'pageframe.Navigate(New AuditSchedMainPage(pageframe, profile, addframe, menugrid, submenuframe))
-        pageframe.Navigate(New WeeklyAuditPage())
+        pageframe.Navigate(New WeeklyAuditPage(pageframe, profile, addframe, menugrid, submenuframe))
     End Sub
 
     Private Sub Monthly_Click(sender As Object, e As RoutedEventArgs)
-        pageframe.Navigate(New MonthlyAuditPage())
+        pageframe.Navigate(New MonthlyAuditPage(pageframe, profile, addframe, menugrid, submenuframe))
     End Sub
 
     Private Sub Quarterly_Click(sender As Object, e As RoutedEventArgs)
-        pageframe.Navigate(New QuarterlyAuditPage())
+        pageframe.Navigate(New QuarterlyAuditPage(pageframe, profile, addframe, menugrid, submenuframe))
     End Sub
 End Class

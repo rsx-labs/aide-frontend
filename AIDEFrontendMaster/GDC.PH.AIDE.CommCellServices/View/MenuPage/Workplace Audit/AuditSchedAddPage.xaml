@@ -882,22 +882,7 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Margin="10,5,5,5"/>
-                        <TextBlock x:Name="txtBlockMonth" FontSize="12" IsHitTestVisible="False" Text="Select Month" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </Grid>
-                    <Grid Grid.Row="1">
-                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" IsEnabled="False" Margin="10,5,5,5"/>
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="10,5,5,5" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
                         <TextBlock x:Name="txtBlockYear" FontSize="12" IsHitTestVisible="False" Text="Select Fiscal Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -911,8 +896,23 @@
                             </TextBlock.Style>
                         </TextBlock>
                     </Grid>
+                    <Grid Grid.Row="1">
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" IsEnabled="True" Margin="10,5,5,5"  DisplayMemberPath="Text" SelectedValuePath="Value" />
+                        <TextBlock x:Name="txtBlockMonth" FontSize="12" IsHitTestVisible="False" Text="Select Month" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
                     <Grid Grid.Row="2">
-                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbPeriodStart" Margin="10,5,5,5" IsEnabled="False"/>
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbPeriodStart" Margin="10,5,5,5" IsEnabled="True"/>
                         <TextBlock x:Name="txtBlockPeriodStart" FontSize="12" IsHitTestVisible="False" Text="Select Period Start" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -944,7 +944,7 @@
                         </TextBlock>
                     </Grid>
                     <Grid Grid.Row="4">
-                        <ComboBox ItemsSource="{Binding NicknameList}" Style="{DynamicResource StyleComboBox}" SelectedValuePath="Nick_Name" DisplayMemberPath="Nick_Name" x:Name="cbDaily" Margin="10,5,5,5"/>
+                        <ComboBox ItemsSource="{Binding NicknameList}" Style="{DynamicResource StyleComboBox}" SelectedValuePath="EMP_ID" DisplayMemberPath="Nick_Name" x:Name="cbDaily" Margin="10,5,5,5"/>
                         <TextBlock x:Name="txtBlockDaily" FontSize="12" IsHitTestVisible="False" Text="Select Daily Auditor" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -959,7 +959,7 @@
                         </TextBlock>
                     </Grid>
                     <Grid Grid.Row="5">
-                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbWeekly" Margin="10,5,5,5" ItemsSource="{Binding NicknameList}" DisplayMemberPath="Nick_Name"/>
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbWeekly" Margin="10,5,5,5" ItemsSource="{Binding NicknameList}"  SelectedValuePath="EMP_ID" DisplayMemberPath="Nick_Name"/>
                         <TextBlock x:Name="txtBlockWeekly" FontSize="12" IsHitTestVisible="False" Text="Select Weekly Auditor" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -974,7 +974,7 @@
                         </TextBlock>
                     </Grid>
                     <Grid Grid.Row="6">
-                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonthly" Margin="10,5,5,5" ItemsSource="{Binding NicknameList}" DisplayMemberPath="Nick_Name"/>
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonthly" Margin="10,5,5,5" ItemsSource="{Binding NicknameList}" DisplayMemberPath="Nick_Name" SelectedValuePath="EMP_ID"/>
                         <TextBlock x:Name="txtBlockMonthly" FontSize="12" IsHitTestVisible="False" Text="Select Monthly Auditor" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">

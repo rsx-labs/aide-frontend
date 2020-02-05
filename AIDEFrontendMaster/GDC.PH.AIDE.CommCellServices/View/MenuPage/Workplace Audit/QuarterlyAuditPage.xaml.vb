@@ -1,172 +1,377 @@
 ﻿Imports System.ComponentModel
 Imports System.Collections.ObjectModel
+Imports UI_AIDE_CommCellServices.ServiceReference1
+Imports System.ServiceModel
+<CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class QuarterlyAuditPage
+    Implements ServiceReference1.IAideServiceCallback
+    Private dailyVMM As New dayVM
+    Private email As String
+    Private pageframe As Frame
+    Private profile As Profile
+    Private addframe As Frame
+    Private menugrid As Grid
+    Private submenuframe As Frame
+    Private _AideService As ServiceReference1.AideServiceClient
+    Dim lstAuditSchedMonth As WorkplaceAudit()
+    Dim AuditSchedMonthVM As New SelectionListViewModel
+    Dim workPlaceAuditVM As New WorkplaceAuditViewModel
+    Dim lstEmployee As WorkplaceAudit()
+    Dim lstAuditQuestions As WorkplaceAudit()
+    Private currDailyAuditAssigned As Integer
+    Private defaultDisplay As String
+    Private defaultFy_Week As Integer
+    Private LstAuditDailySchedByWeek As New ObservableCollection(Of WorkplaceAuditModel)
 
-    Private lstQuestions() As String = {"1. Has there been quarterly review with customer?", "2. Has the quarterly SI, team building or any team bonding activity been conducted?", "3. Has the problem solving been implemented and reviewed?", "4. Has the monthly audit been completed?"}
-    Private lstPeople() As String = {"Jiji", "Karen / Jeanette", "Cha / Jiji", "Cha / Jiji"}
-    Private lstDates() As String = {"Apr - Jun", "Jul - Sep", "Oct - Dec", "Jan - Mar"}
-    Private lstEmployee() As String = {"Hyacinth", "Richard", "Jhunell", "Zed"}
-    Private lstQuarter() As String = {"Q1", "Q2", "Q3", "Q4"}
-    Private lstNotes() As String = {"Success! no discrepancies encounter on this quarter.", "Success! no discrepancies encounter on this quarter.", "", ""}
-    Private dailyVMM As New QuarterlyVM
+    Dim lstFiscalYear As FiscalYear()
+    Dim commendationVM As New CommendationViewModel()
+    Dim fiscalyearVM As New SelectionListViewModel
+    Dim month As Integer
+    Dim year As Integer
 
-    Public Sub New()
-
+    Public Sub New(_pageframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+        Me.pageframe = _pageframe
+        Me.profile = _profile
+        Me.addframe = _addframe
+        Me.menugrid = _menugrid
+        Me.submenuframe = _submenuframe
         ' This call is required by the designer.
         InitializeComponent()
-        generatedata()
-        generateQuestions()
-
+        InitializeService()
         ' Add any initialization after the InitializeComponent() call.
+        LoadSChed()
+        SetFiscalYear()
 
+        'isSetDefault = True
+
+        If cbYear.SelectedValue = Nothing Then
+            cbYear.SelectedValue = defaultDisplay
+        End If
+    End Sub
+    Public Sub SetFiscalYear()
+        Try
+            month = Date.Now.Month
+
+            If Today.DayOfYear() <= CDate(Today.Year().ToString + "-03-31").DayOfYear Then
+                cbYear.Text = (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
+            Else
+                cbYear.Text = (Date.Now.Year).ToString() + "-" + (Date.Now.Year + 1).ToString()
+            End If
+
+            If month = 1 Then
+                year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4)) + 1
+            ElseIf month = 2 Then
+                year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4)) + 1
+            ElseIf month = 3 Then
+                year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4)) + 1
+            Else
+                year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+
+            End If
+
+            year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+
+
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
     End Sub
 
     Private Sub generateQuestions()
-        Dim questModel As New QuestionsMonthlyModel
-        Dim x As Integer = 0
-        For Each quest As String In lstQuestions
+        Dim questModel As New QuestionsDayModel
+        Dim imgdtcheck As String
 
-            dailyVMM.QuestionQuarterlyList.Add(New QuestionsQuarterlyModel(quest, lstPeople(x)))
-            x += 1
+        Try
+
+            If InitializeService() Then
+                lstAuditQuestions = _AideService.GetAuditQuestions(profile.Emp_ID, "4")
+            End If
+
+            Dim FYDBProvider As New WorkplaceAuditDBProvider
+            LstAuditDailySchedByWeek.Clear()
+            FYDBProvider.GetMyWorkplaceAudit.Clear()
+            For Each objFiscal As WorkplaceAudit In lstAuditQuestions
+                FYDBProvider.SetMyWorkplaceAudit(objFiscal)
+            Next
+
+            For Each rawUser As MyWorkplaceAudit In FYDBProvider.GetMyWorkplaceAudit()
+                LstAuditDailySchedByWeek.Add(New WorkplaceAuditModel(rawUser))
+            Next
+            workPlaceAuditVM.WorkPlaceAuditLst = LstAuditDailySchedByWeek
+
+            For Each quest As WorkplaceAuditModel In LstAuditDailySchedByWeek.ToList
+                '0 - Not yet Check the Question
+                '1 - Checked Already
+                '2 - checked but not completed/success
+
+
+
+                If month.ToString() = Date.Parse(quest.WEEKDATE).Month.ToString() Then
+                    If quest.DT_CHECK_FLG = 0 Then
+                        imgdtcheck = "..\..\..\Assets\Button\audittocheck.png"
+                    ElseIf quest.DT_CHECK_FLG = 1 Then
+                        imgdtcheck = "..\..\..\Assets\Button\Checked.png"
+                    Else
+                        imgdtcheck = "..\..\..\Assets\Button\wrong.png"
+                    End If
+                    dailyVMM.QuestionDayList.Add(New QuestionsDayModel(quest.AUDIT_QUESTIONS, quest.OWNER, quest.DT_CHECK_FLG, imgdtcheck, quest.WEEKDATE))
+
+                End If
+
+
+            Next
+
+            QuarterLVQuestions.ItemsSource = dailyVMM.QuestionDayList
+            DataContext = dailyVMM.QuestionDayList
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+
+    End Sub
+
+    Private Sub InitEmpAuditDailybyWeekData()
+        Try
+            Dim statusAudit As String = ""
+            Dim LstAuditDailySchedByWeek As New ObservableCollection(Of WorkplaceAuditModel)
+            Dim FYDBProvider As New WorkplaceAuditDBProvider
+            Dim monthNames As String = ""
+            Dim monthNames2 As String = ""
+            LstAuditDailySchedByWeek.Clear()
+            FYDBProvider.GetMyWorkplaceAudit.Clear()
+
+            If cbYear.SelectedValue = Nothing Then
+                cbYear.SelectedValue = String.Empty
+            End If
+
+
+            If Not cbYear.SelectedValue Is Nothing Then
+                'Dim DateString As String = stringMonth.Substring(0, 13)
+                defaultDisplay = cbYear.SelectedValue.ToString().Substring(0, 4)
+            End If
+
+            'since year today is base - let's place example day is 1
+            'doesn't matter what days just get current month with day
+            Dim yr As Integer
+
+            If month = 1 Then
+                yr = Integer.Parse(defaultDisplay) + 1
+            ElseIf month = 2 Then
+                yr = Integer.Parse(defaultDisplay) + 1
+            ElseIf month = 3 Then
+                yr = Integer.Parse(defaultDisplay) + 1
+            Else
+                yr = Integer.Parse(defaultDisplay)
+
+            End If
+
+
+            If InitializeService() Then
+                lstEmployee = _AideService.GetQuarterlyAuditor(profile.Emp_ID, yr)
+            End If
+
+            If lstEmployee.Count = 0 Then
+                MsgBox("Workplace Audit Monthly has no records in this fiscal year")
+                Return
+            End If
+
+            For Each objFiscal As WorkplaceAudit In lstEmployee
+                FYDBProvider.SetMyWorkplaceAudit(objFiscal)
+            Next
+
+            For Each rawUser As MyWorkplaceAudit In FYDBProvider.GetMyWorkplaceAudit()
+                LstAuditDailySchedByWeek.Add(New WorkplaceAuditModel(rawUser))
+                currDailyAuditAssigned = rawUser.EMP_ID
+                defaultFy_Week = rawUser.FY_WEEK
+
+            Next
+            workPlaceAuditVM.WorkPlaceAuditLst = LstAuditDailySchedByWeek
+            For Each quest As WorkplaceAuditModel In LstAuditDailySchedByWeek.ToList
+                Select Case quest.DT_CHECK_FLG
+                    Case 0
+                        statusAudit = "Not Completed"
+                    Case 1
+                        statusAudit = "Completed"
+                    Case 2
+                        statusAudit = "Completed"
+                End Select
+                monthNames = quest.WEEKDATE.ToString.Substring(0, 10)
+                monthNames2 = quest.WEEKDATE.ToString.Substring(13, 10)
+                monthNames = Date.Parse(monthNames).ToString("MMM")
+                monthNames2 = Date.Parse(monthNames2).ToString("MMM")
+
+
+
+                dailyVMM.Days.Add(New DayMod(monthNames & "-" & monthNames2, quest.WEEKDATE, quest.NICKNAME, statusAudit, Date.Parse(quest.WEEKDATESCHED).Year.ToString(), quest.DATE_CHECKED, quest.WEEKDATESCHED))
+            Next
+
+            QuarterLV.ItemsSource = dailyVMM.Days
+            DataContext = dailyVMM.Days
+
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+
+
+    End Sub
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            _AideService = New AideServiceClient(Context)
+            _AideService.Open()
+
+            bInitialize = True
+        Catch ex As SystemException
+            _AideService.Abort()
+        End Try
+        Return bInitialize
+    End Function
+    Public Sub LoadYear()
+        Try
+            If InitializeService() Then
+                lstFiscalYear = _AideService.GetAllFiscalYear()
+                LoadFiscalYear()
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
+    Public Sub LoadFiscalYear()
+        Try
+            Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
+            Dim FYDBProvider As New SelectionListDBProvider
+
+            For Each objFiscal As FiscalYear In lstFiscalYear
+                FYDBProvider._setlistofFiscal(objFiscal)
+            Next
+
+            For Each rawUser As myFiscalYearSet In FYDBProvider._getobjFiscal()
+                lstFiscalYearList.Add(New FiscalYearModel(rawUser))
+            Next
+
+            fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
+            cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+    Public Sub LoadSChed()
+        Try
+            If InitializeService() Then
+                lstAuditSchedMonth = _AideService.GetAuditSChed_Month(2, Date.Now.Year, Date.Now.Month)
+                LoadYear()
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+    End Sub
+
+
+
+    Private Sub ListViewItem_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
+        Dim item = (TryCast(sender, FrameworkElement)).DataContext
+
+
+
+        Dim FYDBProvider As New WorkplaceAuditDBProvider
+
+        For Each objFiscal As WorkplaceAudit In lstAuditQuestions
+            If objFiscal.WEEKDATE.ToString.Trim() = item.WEEKDATE.ToString.Trim() Then
+                FYDBProvider.SetMyWorkplaceAudit(objFiscal)
+            End If
 
         Next
-        QuarterLVQuestions.ItemsSource = dailyVMM.QuestionQuarterlyList
-        DataContext = dailyVMM.QuestionQuarterlyList
-    End Sub
-
-    Private Sub generatedata()
-
-        'Dim dailly As New dailyMod
-        'dailly.Days = "9"
-        'dailly.Dates = "5/27 - 5/31"
-        'dailyVMM.Daily.Add(dailly)
-
-
-
-        'Dim questModel As New QuestionsModel
-        Dim x As Integer = 9
-        Dim y As Integer = 0
-        For Each quest As String In lstDates
-
-            dailyVMM.Quarterly.Add(New QuarterlyMod(lstQuarter(y), quest, lstEmployee(y), lstNotes(y)))
-            x += 1
-            y += 1
+        LstAuditDailySchedByWeek.Clear()
+        For Each rawUser As MyWorkplaceAudit In FYDBProvider.GetMyWorkplaceAudit()
+            LstAuditDailySchedByWeek.Add(New WorkplaceAuditModel(rawUser))
         Next
-        QuarterLV.ItemsSource = dailyVMM.Quarterly
-        DataContext = dailyVMM.Quarterly
-    End Sub
 
-End Class
-
-Public Class QuarterlyVM
-    Private _dailyobjlst As ObservableCollection(Of QuarterlyMod)
-    Private QtnLst As ObservableCollection(Of QuestionsQuarterlyModel)
-
-
-
-    Public Sub New()
-        _dailyobjlst = New ObservableCollection(Of QuarterlyMod)
-        QtnLst = New ObservableCollection(Of QuestionsQuarterlyModel)
-    End Sub
-
-    Public Property Quarterly As ObservableCollection(Of QuarterlyMod)
-        Get
-            Return _dailyobjlst
-        End Get
-        Set(value As ObservableCollection(Of QuarterlyMod))
-            _dailyobjlst = value
-        End Set
-    End Property
-    Public Property QuestionQuarterlyList As ObservableCollection(Of QuestionsQuarterlyModel)
-        Get
-            Return QtnLst
-        End Get
-        Set(value As ObservableCollection(Of QuestionsQuarterlyModel))
-            QtnLst = value
-        End Set
-    End Property
-End Class
-
-Public Class QuarterlyMod
-    Private _quarters As String
-    Private _dates As String
-    Private _empName As String
-    Private _notes As String
-
-
-    Public Sub New()
-
-    End Sub
-
-    Public Sub New(quarterss As String, datess As String, emp As String, note As String)
-        _quarters = quarterss
-        _dates = datess
-        _empName = emp
-        If note = String.Empty Then
-            _notes = "Nothing"
+        If Date.Now >= Date.Parse(item.weekdate) Then
+            If profile.Permission_ID = 1 Then
+                pageframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 4))
+            End If
         Else
-            _notes = note
+            MsgBox("Cannot update advance.")
         End If
 
     End Sub
-    Public Property Quarter As String
-        Get
-            Return _quarters
-        End Get
-        Set(value As String)
-            _quarters = value
-        End Set
-    End Property
-    Public Property Dates As String
-        Get
-            Return _dates
-        End Get
-        Set(value As String)
-            _dates = value
-        End Set
-    End Property
-    Public Property EmpName As String
-        Get
-            Return _empName
-        End Get
-        Set(value As String)
-            _empName = value
-        End Set
-    End Property
-    Public Property Notes As String
-        Get
-            Return "Notes : " + _notes
-        End Get
-        Set(value As String)
-            _notes = value
-        End Set
-    End Property
-End Class
-Public Class QuestionsQuarterlyModel
-    Private Qtn As String
-    Private Ppl As String
-    Public Sub New()
+
+
+    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
+        Throw New NotImplementedException()
+    End Sub
+
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
+        Throw New NotImplementedException()
+    End Sub
+
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
+        Throw New NotImplementedException()
+    End Sub
+
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
+        Throw New NotImplementedException()
+    End Sub
+
+    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+        Throw New NotImplementedException()
+    End Sub
+
+    Private Sub SetSelectedDay(sender As Object, e As SelectionChangedEventArgs)
+        Dim item As Object
+        Dim questModel As New QuestionsDayModel
+        Dim imgdtcheck As String
+        If Not QuarterLV.SelectedItem Is Nothing Then
+            item = QuarterLV.SelectedItem.WEEK_DATE_SCHED
+        Else
+
+            Return
+        End If
+
+        dailyVMM.QuestionDayList.Clear()
+
+        Try
+            For Each quest As WorkplaceAuditModel In LstAuditDailySchedByWeek.ToList
+                '0 - Not yet Check the Question
+                '1 - Checked Already
+                '2 - checked but not completed/success
+
+                If item.ToString.Trim() = quest.WEEKDATE.ToString.Trim() Then
+                    If quest.DT_CHECK_FLG = 0 Then
+                        imgdtcheck = "..\..\..\Assets\Button\audittocheck.png"
+                    ElseIf quest.DT_CHECK_FLG = 1 Then
+                        imgdtcheck = "..\..\..\Assets\Button\Checked.png"
+                    Else
+                        imgdtcheck = "..\..\..\Assets\Button\wrong.png"
+                    End If
+
+                    dailyVMM.QuestionDayList.Add(New QuestionsDayModel(quest.AUDIT_QUESTIONS, quest.OWNER, quest.DT_CHECK_FLG, imgdtcheck, quest.WEEKDATE))
+                End If
+            Next
+
+            QuarterLVQuestions.ItemsSource = dailyVMM.QuestionDayList
+            DataContext = dailyVMM.QuestionDayList
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
 
     End Sub
-    Public Sub New(st As String, pl As String)
-        Qtn = st
-        Ppl = pl
-    End Sub
-    Public Property Questions As String
-        Get
-            Return Qtn
-        End Get
-        Set(value As String)
-            Qtn = value
-        End Set
-    End Property
 
-    Public Property People As String
-        Get
-            Return Ppl
-        End Get
-        Set(value As String)
-            Ppl = value
-        End Set
-    End Property
+    Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
+        If Not cbYear.SelectedIndex = -1 Then
+            year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+            dailyVMM.QuestionDayList.Clear()
+            dailyVMM.Days.Clear()
+            InitEmpAuditDailybyWeekData()
+            If dailyVMM.Days.Count <> 0 Then
+                generateQuestions()
+            End If
+        End If
+
+
+
+    End Sub
 End Class
+
+
+

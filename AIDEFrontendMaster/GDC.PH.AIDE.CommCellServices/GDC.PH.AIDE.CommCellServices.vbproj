@@ -509,17 +509,20 @@
     <Compile Include="View\MenuPage\Workplace Audit\AuditSchedSubMenuPage.xaml.vb">
       <DependentUpon>AuditSchedSubMenuPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MenuPage\Workplace Audit\DailyAuditCheck.xaml.vb">
+      <DependentUpon>DailyAuditCheck.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MenuPage\Workplace Audit\DailyAuditPage.xaml.vb">
       <DependentUpon>DailyAuditPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\MenuPage\Workplace Audit\WeeklyAuditPage.xaml.vb">
-      <DependentUpon>WeeklyAuditPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\Workplace Audit\MonthlyAuditPage.xaml.vb">
       <DependentUpon>MonthlyAuditPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\Workplace Audit\QuarterlyAuditPage.xaml.vb">
       <DependentUpon>QuarterlyAuditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Workplace Audit\WeeklyAuditPage.xaml.vb">
+      <DependentUpon>WeeklyAuditPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Notifications\About\AboutPage.xaml.vb">
       <DependentUpon>AboutPage.xaml</DependentUpon>
@@ -857,32 +860,36 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MenuPage\Workplace Audit\AuditSchedAddPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="View\MenuPage\Workplace Audit\AuditSchedMainPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="View\MenuPage\Workplace Audit\AuditSchedSubMenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="View\MenuPage\Workplace Audit\DailyAuditCheck.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MenuPage\Workplace Audit\DailyAuditPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\MenuPage\Workplace Audit\WeeklyAuditPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="View\MenuPage\Workplace Audit\MonthlyAuditPage.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="View\MenuPage\Workplace Audit\QuarterlyAuditPage.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="View\MenuPage\Workplace Audit\WeeklyAuditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="View\Notifications\About\AboutPage.xaml">
       <SubType>Designer</SubType>
@@ -1535,6 +1542,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icon\EnhLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\auditWrong.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\auditChecked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\audittocheck.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
