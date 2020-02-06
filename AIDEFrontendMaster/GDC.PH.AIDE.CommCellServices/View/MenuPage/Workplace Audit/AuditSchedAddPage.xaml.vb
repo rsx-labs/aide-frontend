@@ -518,15 +518,18 @@ Class AuditSchedAddPage
             Next
 
             For Each obj In lstauditSched.ToList
-                If Date.Parse(obj.PERIOD_START).Month = Date.Parse(cbPeriodStart.SelectedValue).Month Then
-                    For Each nickname In lstNicknameList.ToList
-                        If nickname.Nick_Name = obj.MONTHLY Then
-                            cbMonthly.SelectedValue = nickname.EMP_ID
-                            cbMonthly.IsEnabled = False
-                        End If
-                    Next
+                If Date.Parse(obj.PERIOD_START).Year = Date.Parse(cbPeriodStart.SelectedValue).Year Then
+                    If Date.Parse(obj.PERIOD_START).Month = Date.Parse(cbPeriodStart.SelectedValue).Month Then
+                        For Each nickname In lstNicknameList.ToList
+                            If nickname.Nick_Name = obj.MONTHLY Then
+                                cbMonthly.SelectedValue = nickname.EMP_ID
+                                cbMonthly.IsEnabled = False
+                            End If
+                        Next
 
+                    End If
                 End If
+
             Next
             If ifDuplicate = False Then
                 GetAllFridayOfWeek()

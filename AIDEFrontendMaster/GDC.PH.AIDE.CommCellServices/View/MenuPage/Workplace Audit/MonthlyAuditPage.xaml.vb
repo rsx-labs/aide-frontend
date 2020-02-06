@@ -87,23 +87,26 @@ Class MonthlyAuditPage
                 LstAuditDailySchedByWeek.Add(New WorkplaceAuditModel(rawUser))
             Next
             workPlaceAuditVM.WorkPlaceAuditLst = LstAuditDailySchedByWeek
-
+            If month = 1 Then
+                year = year + 1
+            ElseIf month = 2 Then
+                year = year + 1
+            ElseIf month = 2 Then
+                year = year + 1
+            End If
             For Each quest As WorkplaceAuditModel In LstAuditDailySchedByWeek.ToList
                 '0 - Not yet Check the Question
                 '1 - Checked Already
                 '2 - checked but not completed/success
-
-
-
-                If month.ToString() = Date.Parse(quest.WEEKDATE).Month.ToString() Then
-                        If quest.DT_CHECK_FLG = 0 Then
-                            imgdtcheck = "..\..\..\Assets\Button\audittocheck.png"
-                        ElseIf quest.DT_CHECK_FLG = 1 Then
-                            imgdtcheck = "..\..\..\Assets\Button\Checked.png"
-                        Else
-                            imgdtcheck = "..\..\..\Assets\Button\wrong.png"
-                        End If
-                        dailyVMM.QuestionDayList.Add(New QuestionsDayModel(quest.AUDIT_QUESTIONS, quest.OWNER, quest.DT_CHECK_FLG, imgdtcheck, quest.WEEKDATE))
+                If month.ToString() = Date.Parse(quest.WEEKDATE).Month.ToString() AndAlso year = CDate(quest.WEEKDATE).Year Then
+                    If quest.DT_CHECK_FLG = 0 Then
+                        imgdtcheck = "..\..\..\Assets\Button\audittocheck.png"
+                    ElseIf quest.DT_CHECK_FLG = 1 Then
+                        imgdtcheck = "..\..\..\Assets\Button\Checked.png"
+                    Else
+                        imgdtcheck = "..\..\..\Assets\Button\wrong.png"
+                    End If
+                    dailyVMM.QuestionDayList.Add(New QuestionsDayModel(quest.AUDIT_QUESTIONS, quest.OWNER, quest.DT_CHECK_FLG, imgdtcheck, quest.WEEKDATE))
 
                 End If
 
@@ -260,13 +263,11 @@ Class MonthlyAuditPage
             LstAuditDailySchedByWeek.Add(New WorkplaceAuditModel(rawUser))
         Next
 
-        If Date.Now >= Date.Parse(item.weekdate) Then
-            If profile.Emp_ID = currDailyAuditAssigned OrElse profile.Permission_ID = 1 Then
+
+        If profile.Emp_ID = currDailyAuditAssigned OrElse profile.Permission_ID = 1 Then
                 pageframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 3))
             End If
-        Else
-            MsgBox("Cannot update advance.")
-        End If
+
 
 
     End Sub
@@ -311,7 +312,7 @@ Class MonthlyAuditPage
                 '1 - Checked Already
                 '2 - checked but not completed/success
 
-                If item.ToString.Trim() = quest.WEEKDATE.ToString.Trim() Then
+                If item.ToString.Trim() = quest.WEEKDATE.ToString.Trim() AndAlso CDate(item).Year = CDate(quest.WEEKDATE).Year Then
                     If quest.DT_CHECK_FLG = 0 Then
                         imgdtcheck = "..\..\..\Assets\Button\audittocheck.png"
                     ElseIf quest.DT_CHECK_FLG = 1 Then
