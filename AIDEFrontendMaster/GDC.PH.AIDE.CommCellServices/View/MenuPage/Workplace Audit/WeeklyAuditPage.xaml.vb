@@ -304,14 +304,10 @@ Class WeeklyAuditPage
             LstAuditDailySchedByWeek.Add(New WorkplaceAuditModel(rawUser))
         Next
 
-        If Date.Now >= Date.Parse(item.weekdate) Then
 
-
-            If profile.Emp_ID = currDailyAuditAssigned OrElse profile.Permission_ID = 1 Then
+        If profile.Emp_ID = currDailyAuditAssigned OrElse profile.Permission_ID = 1 Then
                 pageframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 2))
-            End If
-        Else
-            MsgBox("Cannot update advance")
+
         End If
     End Sub
 

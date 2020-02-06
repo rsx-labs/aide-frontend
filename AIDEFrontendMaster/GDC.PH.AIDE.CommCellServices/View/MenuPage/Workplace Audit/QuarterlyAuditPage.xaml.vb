@@ -98,7 +98,35 @@ Class QuarterlyAuditPage
                 LstAuditDailySchedByWeek.Add(New WorkplaceAuditModel(rawUser))
             Next
             workPlaceAuditVM.WorkPlaceAuditLst = LstAuditDailySchedByWeek
-
+            Select Case month
+                Case 1
+                    month = 1
+                    year += 1
+                Case 2
+                    month = 1
+                    year += 1
+                Case 3
+                    month = 1
+                    year += 1
+                Case 4
+                    month = 4
+                Case 5
+                    month = 4
+                Case 6
+                    month = 4
+                Case 7
+                    month = 7
+                Case 8
+                    month = 7
+                Case 9
+                    month = 7
+                Case 10
+                    month = 8
+                Case 11
+                    month = 8
+                Case 12
+                    month = 8
+            End Select
             For Each quest As WorkplaceAuditModel In LstAuditDailySchedByWeek.ToList
                 '0 - Not yet Check the Question
                 '1 - Checked Already
@@ -106,7 +134,7 @@ Class QuarterlyAuditPage
 
 
 
-                If month.ToString() = Date.Parse(quest.WEEKDATE).Month.ToString() Then
+                If month.ToString() = Date.Parse(quest.WEEKDATE).Month.ToString() AndAlso year = CDate(quest.WEEKDATE).Year Then
                     If quest.DT_CHECK_FLG = 0 Then
                         imgdtcheck = "..\..\..\Assets\Button\audittocheck.png"
                     ElseIf quest.DT_CHECK_FLG = 1 Then
@@ -286,13 +314,11 @@ Class QuarterlyAuditPage
             LstAuditDailySchedByWeek.Add(New WorkplaceAuditModel(rawUser))
         Next
 
-        If Date.Now >= Date.Parse(item.weekdate) Then
-            If profile.Permission_ID = 1 Then
+
+        If profile.Permission_ID = 1 Then
                 pageframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 4))
             End If
-        Else
-            MsgBox("Cannot update advance.")
-        End If
+
 
     End Sub
 

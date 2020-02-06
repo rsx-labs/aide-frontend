@@ -74,8 +74,8 @@ Class DailyAuditPage
                 '2 - checked but not completed/success
 
 
-                If defaultFy_Week = quest.FY_WEEK Then
-                    If defaultDisplay.ToString.Trim() = quest.WEEKDATE.ToString.Trim() Then
+
+                If defaultDisplay.ToString.Trim() = quest.WEEKDATE.ToString.Trim() AndAlso defaultFy_Week = quest.FY_WEEK Then
                         If quest.DT_CHECK_FLG = 0 Then
                             imgdtcheck = "..\..\..\Assets\Button\audittocheck.png"
                         ElseIf quest.DT_CHECK_FLG = 1 Then
@@ -85,7 +85,7 @@ Class DailyAuditPage
                         End If
                         dailyVMM.QuestionDayList.Add(New QuestionsDayModel(quest.AUDIT_QUESTIONS, quest.OWNER, quest.DT_CHECK_FLG, imgdtcheck, quest.WEEKDATE))
                     End If
-                End If
+
 
 
             Next
@@ -154,15 +154,18 @@ Class DailyAuditPage
                 cbMonth.SelectedValue = CDate(defaultDisplay).Month
                 dateNow = Date.Now.Year & "-" & Date.Now.Month.ToString("00") & "-" & Date.Now.Day.ToString("00")
             End If
-            If Date.Parse(defaultDisplay).Month = Date.Parse(dateNow).Month Then
-                If GetWeekNumber(Date.Parse(defaultDisplay)) = GetWeekNumber(Date.Parse(dateNow)) Then
-                    defaultDisplay = CDate(DateString).Date.Year & "-" & CDate(DateString).Date.Month.ToString("00") & "-" & CDate(DateString).Date.Day.ToString("00")
+            If Date.Parse(defaultDisplay).Year = Date.Parse(dateNow).Year Then
+                If Date.Parse(defaultDisplay).Month = Date.Parse(dateNow).Month Then
+                    If GetWeekNumber(Date.Parse(defaultDisplay)) = GetWeekNumber(Date.Parse(dateNow)) Then
+                        defaultDisplay = CDate(DateString).Date.Year & "-" & CDate(DateString).Date.Month.ToString("00") & "-" & CDate(DateString).Date.Day.ToString("00")
+                    End If
                 End If
             End If
 
+            Dim dateParam As Date = CDate(defaultDisplay)
 
             If InitializeService() Then
-                lstEmployee = _AideService.GetDailyAuditorByWeek(profile.Emp_ID, cbWeek.SelectedValue)
+                lstEmployee = _AideService.GetDailyAuditorByWeek(profile.Emp_ID, cbWeek.SelectedValue, dateParam)
             End If
 
 
@@ -238,7 +241,7 @@ Class DailyAuditPage
             Dim stringMonth As String = ""
             Dim DateString As String
             Dim DateNow As String
-
+            Dim notequalToDateNow As String = ""
 
             For Each objFiscal As WorkplaceAudit In lstAuditSchedMonth
                 FYDBProvider._setListOfAuditSchedMonth(objFiscal)
@@ -250,12 +253,20 @@ Class DailyAuditPage
                 DateString = stringMonth.Substring(0, 13)
                 stringMonth = CDate(DateString).Date.Year & "-" & CDate(DateString).Date.Month.ToString("00") & "-" & CDate(DateString).Date.Day.ToString("00")
                 DateNow = Date.Now.Year & "-" & Date.Now.Month.ToString("00") & "-" & Date.Now.Day.ToString("00")
+                defaultFy_Week = 0
+                If notequalToDateNow = String.Empty Then
+                    notequalToDateNow = rawUser._fy_week
+                End If
+
                 If CDate(stringMonth).Year = CDate(DateNow).Year Then
                     If GetWeekNumber(CDate(stringMonth)) = GetWeekNumber(CDate(DateNow)) Then
                         defaultFy_Week = rawUser._fy_week
                     End If
                 End If
             Next
+            If defaultFy_Week = 0 Then
+                defaultFy_Week = CInt(notequalToDateNow)
+            End If
             AuditSchedMonthVM.ObjectAuditSchedMonthSet = lstAuditSchedMonthList
             cbWeek.ItemsSource = AuditSchedMonthVM.ObjectAuditSchedMonthSet
 
@@ -329,17 +340,18 @@ Class DailyAuditPage
                 '1 - Checked Already
                 '2 - checked but not completed/success
 
-                If item.ToString.Trim() = (Convert.ToDateTime(quest.WEEKDATE).Month.ToString.Trim() & "/" & Convert.ToDateTime(quest.WEEKDATE).Day.ToString.Trim()) Then
-                    If quest.DT_CHECK_FLG = 0 Then
-                        imgdtcheck = "..\..\..\Assets\Button\audittocheck.png"
-                    ElseIf quest.DT_CHECK_FLG = 1 Then
-                        imgdtcheck = "..\..\..\Assets\Button\Checked.png"
-                    Else
-                        imgdtcheck = "..\..\..\Assets\Button\wrong.png"
+                If item.ToString.Trim() = (Convert.ToDateTime(quest.WEEKDATE).Month.ToString.Trim() & "/" & Convert.ToDateTime(quest.WEEKDATE).Day.ToString.Trim()) AndAlso year = CDate(quest.WEEKDATE).Year Then
+                        If quest.DT_CHECK_FLG = 0 Then
+                            imgdtcheck = "..\..\..\Assets\Button\audittocheck.png"
+                        ElseIf quest.DT_CHECK_FLG = 1 Then
+                            imgdtcheck = "..\..\..\Assets\Button\Checked.png"
+                        Else
+                            imgdtcheck = "..\..\..\Assets\Button\wrong.png"
+                        End If
+
+                        dailyVMM.QuestionDayList.Add(New QuestionsDayModel(quest.AUDIT_QUESTIONS, quest.OWNER, quest.DT_CHECK_FLG, imgdtcheck, quest.WEEKDATE))
                     End If
 
-                    dailyVMM.QuestionDayList.Add(New QuestionsDayModel(quest.AUDIT_QUESTIONS, quest.OWNER, quest.DT_CHECK_FLG, imgdtcheck, quest.WEEKDATE))
-                End If
             Next
 
             QuarterLVQuestions.ItemsSource = dailyVMM.QuestionDayList
