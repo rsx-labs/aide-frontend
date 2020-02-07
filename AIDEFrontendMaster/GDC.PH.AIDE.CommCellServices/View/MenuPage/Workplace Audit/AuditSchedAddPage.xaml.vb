@@ -502,31 +502,35 @@ Class AuditSchedAddPage
         If cbPeriodStart.SelectedValue Is Nothing Then
             Return
         Else
-            For Each obj In lstauditSched.ToList
-                If obj.PERIOD_START = cbPeriodStart.SelectedValue Then
-                    MsgBox(" Schedule already assigned. Please select different schedule.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
-                    ifDuplicate = True
-                    cbPeriodStart.SelectedValue = 0
-                    Return
-                End If
-            Next
-
-            For Each obj In lstauditSched.ToList
-                If Date.Parse(obj.PERIOD_START).Year = Date.Parse(cbPeriodStart.SelectedValue).Year Then
-                    If Date.Parse(obj.PERIOD_START).Month = Date.Parse(cbPeriodStart.SelectedValue).Month Then
-                        For Each nickname In lstNicknameList.ToList
-                            If nickname.First_Name = obj.MONTHLY Then
-                                cbMonthly.SelectedValue = nickname.EMP_ID
-                                cbMonthly.IsEnabled = False
-                            End If
-                        Next
-
+            If Not cbPeriodStart.SelectedValue Is Nothing Then
+                For Each obj In lstauditSched.ToList
+                    If obj.PERIOD_START = cbPeriodStart.SelectedValue Then
+                        MsgBox(" Schedule already assigned. Please select different schedule.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                        ifDuplicate = True
+                        cbPeriodStart.SelectedItem = Nothing
+                        Return
                     End If
-                End If
+                Next
 
-            Next
+                For Each obj In lstauditSched.ToList
+                    If Date.Parse(obj.PERIOD_START).Year = Date.Parse(cbPeriodStart.SelectedValue).Year Then
+                        If Date.Parse(obj.PERIOD_START).Month = Date.Parse(cbPeriodStart.SelectedValue).Month Then
+                            For Each nickname In lstNicknameList.ToList
+                                If nickname.First_Name = obj.MONTHLY Then
+                                    cbMonthly.SelectedValue = nickname.EMP_ID
+                                    cbMonthly.IsEnabled = False
+                                End If
+                            Next
+
+                        End If
+                    End If
+
+                Next
+            End If
             If ifDuplicate = False Then
                 GetAllFridayOfWeek()
+            Else
+
             End If
         End If
     End Sub

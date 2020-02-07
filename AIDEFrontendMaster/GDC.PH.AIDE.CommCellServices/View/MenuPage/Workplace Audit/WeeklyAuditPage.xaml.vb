@@ -430,7 +430,10 @@ Class WeeklyAuditPage
         If dailyVMM.Days.Count <> 0 Then
             generateQuestions()
         Else
-            MsgBox("There is no records in selected date.  ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+            If e.RemovedItems.Count <> 0 Then
+                MsgBox("There is no records in selected date.  ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+            End If
+
         End If
     End Sub
 End Class

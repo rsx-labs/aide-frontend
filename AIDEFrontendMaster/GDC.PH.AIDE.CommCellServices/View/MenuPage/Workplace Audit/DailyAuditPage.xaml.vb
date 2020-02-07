@@ -27,6 +27,8 @@ Class DailyAuditPage
     Dim lstFiscalYear As FiscalYear()
 
     Dim fiscalyearVM As New SelectionListViewModel
+    Dim isthereAnyRecord As Boolean = True
+    Dim isMessageAlreadyPopupInCbyear As Boolean = False
     Public Sub New(_pageframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         Me.pageframe = _pageframe
         Me.profile = _profile
@@ -222,14 +224,17 @@ Class DailyAuditPage
                 If lstAuditSchedMonth.Count <> 0 Then
                     LoadPerWeekSchedule()
                 Else
-                    MsgBox("There is no records in selected date.  ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                    If isthereAnyRecord = True Then
+                        MsgBox("There is no records in selected date.  ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                    End If
+                    isthereAnyRecord = False
                     dailyVMM.QuestionDayList.Clear()
-                    dailyVMM.Days.Clear()
-                    cbWeek.ItemsSource = Nothing
-                    Return
-                End If
+                        dailyVMM.Days.Clear()
+                        cbWeek.ItemsSource = Nothing
+                        Return
+                    End If
 
-            End If
+                End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
@@ -448,6 +453,9 @@ Class DailyAuditPage
         ElseIf month = 3 Then
             year += 1
         End If
+
+        isthereAnyRecord = True
+        isMessageAlreadyPopupInCbyear = True
         LoadSChed()
         'If Not cbYear.SelectedIndex = -1 Then
         '    year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
@@ -473,7 +481,17 @@ Class DailyAuditPage
         ElseIf month = 3 Then
             year += 1
         End If
+        If isMessageAlreadyPopupInCbyear = True Then
+            isMessageAlreadyPopupInCbyear = False
+        Else
+            isthereAnyRecord = True
+        End If
+        If e.RemovedItems.Count <> 0 Then
+            isthereAnyRecord = True
+        End If
+
         LoadSChed()
+
         If cbWeek.SelectedValue Is Nothing Then
             cbWeek.SelectedValue = defaultFy_Week
         End If
