@@ -32,6 +32,11 @@ Public Class AssetsModel
     Public _firstName As String
     Public _nickName As String
     Public _employeeName As String
+    Public _date_borrowed As DateTime
+    Public _date_returned As DateTime
+    Public _asset_borrowing_id As Integer
+    Public _trans_fg As Integer
+
 #End Region
 
 #Region "CONSTRUCTOR"
@@ -64,6 +69,10 @@ Public Class AssetsModel
         Me.NICK_NAME = rawAssets.NICK_NAME
         Me.PREVIOUS_ID = rawAssets.PREVIOUS_ID
         Me.PREVIOUS_OWNER = rawAssets.PREVIOUS_OWNER
+        Me.DATE_BORROWED = rawAssets.DATE_BORROWED
+        Me.DATE_RETURNED = rawAssets.DATE_RETURNED
+        Me.ASSET_BORROWING_ID = rawAssets.ASSET_BORROWING_ID
+
     End Sub
 #End Region
 
@@ -319,6 +328,45 @@ Public Class AssetsModel
         End Set
     End Property
 
+    Public Property DATE_BORROWED As DateTime
+        Get
+            Return _date_borrowed
+        End Get
+        Set(value As DateTime)
+            _date_borrowed = value
+            NotifyPropertyChanged("DATE_BORROWED")
+        End Set
+    End Property
+
+    Public Property DATE_RETURNED As DateTime
+        Get
+            Return _date_returned
+        End Get
+        Set(value As DateTime)
+            _date_returned = value
+            NotifyPropertyChanged("DATE_RETURNED")
+        End Set
+    End Property
+
+    Public Property ASSET_BORROWING_ID As Integer
+        Get
+            Return _asset_borrowing_id
+        End Get
+        Set(value As Integer)
+            _asset_borrowing_id = value
+            NotifyPropertyChanged("ASSET_BORROWING_ID")
+        End Set
+    End Property
+
+    Public Property TRANS_FG As Integer
+        Get
+            Return _trans_fg
+        End Get
+        Set(value As Integer)
+            _trans_fg = value
+            NotifyPropertyChanged("TRANS_FG")
+        End Set
+    End Property
 #End Region
 
     Private Sub NotifyPropertyChanged(ByVal propertyName As String)

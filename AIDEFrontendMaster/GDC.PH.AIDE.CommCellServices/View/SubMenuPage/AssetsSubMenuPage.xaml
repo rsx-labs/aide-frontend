@@ -68,6 +68,23 @@
 
         </Button>
 
+        <Button Name="AssetBorrowing" Margin="2" Grid.Column="3" Style="{DynamicResource RoundCorner}" Click="AssetBorrowing_Click" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="70*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Image Margin="0,10,10,10" Source="../../Assets/Menu/AssetHistoryIcon.png"/>
+                </Grid>
+                <Grid Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Foreground="White" Text="Asset Borrowing"></TextBlock>
+                </Grid>
+            </Grid>
+
+
+        </Button>
+
     </Grid>
 
     <Page.Resources>

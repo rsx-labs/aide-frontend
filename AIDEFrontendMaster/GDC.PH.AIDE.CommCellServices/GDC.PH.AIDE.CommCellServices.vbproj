@@ -323,11 +323,17 @@
       <DependentUpon>AnnouncementDashboardUpdatePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\AnnouncementDashboard\RichTextBoxHelper.vb" />
+    <Compile Include="View\MenuPage\Assets\AssetBorrowingPage.xaml.vb">
+      <DependentUpon>AssetBorrowingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MenuPage\Assets\AssetsAddPage.xaml.vb">
       <DependentUpon>AssetsAddPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\Assets\AssetsHistory.xaml.vb">
       <DependentUpon>AssetsHistory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Assets\AssetsBorrowingAddPage.xaml.vb">
+      <DependentUpon>AssetsBorrowingAddPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\Assets\AssetsInventoryAddPage.xaml.vb">
       <DependentUpon>AssetsInventoryAddPage.xaml</DependentUpon>
@@ -622,11 +628,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\MenuPage\Assets\AssetBorrowingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MenuPage\Assets\AssetsAddPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\MenuPage\Assets\AssetsHistory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Assets\AssetsBorrowingAddPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
