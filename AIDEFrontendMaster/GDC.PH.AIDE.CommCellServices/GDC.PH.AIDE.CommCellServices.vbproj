@@ -1555,5 +1555,17 @@
   <ItemGroup>
     <Resource Include="Assets\Button\audittocheck.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Menu\audit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Menu\daily.png" />
+    <Resource Include="Assets\Menu\monthly.png" />
+    <Resource Include="Assets\Menu\schedule.png" />
+    <Resource Include="Assets\Menu\weekly.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Menu\quarterly.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
