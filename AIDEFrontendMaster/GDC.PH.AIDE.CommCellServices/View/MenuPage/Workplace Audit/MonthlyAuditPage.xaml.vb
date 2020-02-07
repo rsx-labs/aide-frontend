@@ -153,7 +153,7 @@ Class MonthlyAuditPage
             End If
 
             If lstEmployee.Count = 0 Then
-                MsgBox("Workplace audit monthly has no records in this fiscal year")
+                MsgBox("There is no records in selected fiscal year.  ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 Return
             End If
 

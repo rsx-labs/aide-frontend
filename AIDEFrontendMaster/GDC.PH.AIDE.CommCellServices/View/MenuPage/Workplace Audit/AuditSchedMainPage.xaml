@@ -913,7 +913,9 @@
                                 BorderBrush="{x:Null}" >
                         </Button>
                     </Grid>
-                    <Grid Grid.Column="1"></Grid>
+                    <Grid Grid.Column="1">
+                        <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" x:Name="txtPageNo" Margin="5,0,5,0" Foreground="DimGray" FontSize="10"/>
+                    </Grid>
                     <Grid Grid.Column="2">
                         <Button Height="Auto" Width="Auto" Margin="5" 
                                 x:Name="btnNext" 
