@@ -1448,6 +1448,13 @@
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/L"/>
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="#42ff6b" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/HSL"/>
                                             </MultiDataTrigger.Conditions>
                                             <Setter Property="Background" Value="#f78e81" />
@@ -1485,15 +1492,15 @@
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/P"/>
                                             </MultiDataTrigger.Conditions>
-                                            <Setter Property="Background" Value="#42ff6b" />
+                                            <Setter Property="Background" Value="#f78e81" />
                                             <Setter Property="Foreground" Value="Black"   />
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
                                                 <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/O"/>
                                             </MultiDataTrigger.Conditions>
-                                            <Setter Property="Background" Value="#42ff6b" />
-                                            <Setter Property="Foreground" Value="Black"   />
+                                            <Setter Property="Background" Value="#f78e81" />
+                                            <Setter Property="Foreground" Value="#fff261"   />
                                         </MultiDataTrigger>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>

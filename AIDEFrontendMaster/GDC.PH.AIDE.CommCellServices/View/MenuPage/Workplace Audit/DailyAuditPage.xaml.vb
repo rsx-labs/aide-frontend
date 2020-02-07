@@ -579,7 +579,7 @@ Public Class DayMod
         End If
         _weekdate = weekdate
         If date_checked.ToString.Trim.ToLower = "NULL".ToString.Trim.ToLower() Then
-            _date_checked = "Not yet checke"
+            _date_checked = "Not yet check"
         Else
             _date_checked = "Last Updated: " + date_checked
         End If
