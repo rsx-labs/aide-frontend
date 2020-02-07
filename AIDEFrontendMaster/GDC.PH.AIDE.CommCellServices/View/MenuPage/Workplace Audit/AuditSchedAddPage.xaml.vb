@@ -359,7 +359,7 @@ Class AuditSchedAddPage
             Else
                 auditSched.AUDIT_SCHED_ID = auditSchedID
                 For Each obj In lstNicknameList.ToList
-                    If obj.Nick_Name = txtBlockDaily.Text.ToString.Trim() Then
+                    If obj.First_Name = txtBlockDaily.Text.ToString.Trim() Then
                         If cbDaily.SelectedValue Is Nothing Then
                             cbDaily.SelectedValue = obj.EMP_ID
                             auditSched.DAILY = cbDaily.SelectedValue
@@ -367,7 +367,7 @@ Class AuditSchedAddPage
                             auditSched.DAILY = cbDaily.SelectedValue
                         End If
                     End If
-                    If obj.Nick_Name = txtBlockWeekly.Text.ToString.Trim() Then
+                    If obj.First_Name = txtBlockWeekly.Text.ToString.Trim() Then
                         If cbWeekly.SelectedValue Is Nothing Then
                             cbWeekly.SelectedValue = obj.EMP_ID
                             auditSched.WEEKLY = cbWeekly.SelectedValue
@@ -376,7 +376,7 @@ Class AuditSchedAddPage
                             auditSched.WEEKLY = cbWeekly.SelectedValue
                         End If
                     End If
-                    If obj.Nick_Name = txtBlockMonthly.Text.ToString.Trim() Then
+                    If obj.First_Name = txtBlockMonthly.Text.ToString.Trim() Then
                         If cbMonthly.SelectedValue Is Nothing Then
                             cbMonthly.SelectedValue = obj.EMP_ID
                             auditSched.MONTHLY = cbMonthly.SelectedValue
@@ -515,7 +515,7 @@ Class AuditSchedAddPage
                 If Date.Parse(obj.PERIOD_START).Year = Date.Parse(cbPeriodStart.SelectedValue).Year Then
                     If Date.Parse(obj.PERIOD_START).Month = Date.Parse(cbPeriodStart.SelectedValue).Month Then
                         For Each nickname In lstNicknameList.ToList
-                            If nickname.Nick_Name = obj.MONTHLY Then
+                            If nickname.First_Name = obj.MONTHLY Then
                                 cbMonthly.SelectedValue = nickname.EMP_ID
                                 cbMonthly.IsEnabled = False
                             End If

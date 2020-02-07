@@ -1131,7 +1131,7 @@
                                                         <ColumnDefinition Width="150*"/>
                                                     </Grid.ColumnDefinitions>
                                                     <Grid Grid.Column="0">
-                                                        <TextBlock VerticalAlignment="Center" FontSize="20" Foreground="SkyBlue" FontWeight="SemiBold" Text="{Binding EmpName}"/>
+                                                        <TextBlock VerticalAlignment="Center" FontSize="10" Foreground="SkyBlue" FontWeight="SemiBold" Text="{Binding EmpName}"/>
                                                     </Grid>
                                                     <Grid Grid.Column="1">
                                                         <TextBlock Text="{Binding Notes}" Margin="3,-20,-190,0"  TextWrapping="Wrap"  FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>

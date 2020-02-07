@@ -944,7 +944,7 @@
                         </TextBlock>
                     </Grid>
                     <Grid Grid.Row="4">
-                        <ComboBox ItemsSource="{Binding NicknameList}" Style="{DynamicResource StyleComboBox}" SelectedValuePath="EMP_ID" DisplayMemberPath="Nick_Name" x:Name="cbDaily" Margin="10,5,5,5"/>
+                        <ComboBox ItemsSource="{Binding NicknameList}" Style="{DynamicResource StyleComboBox}" SelectedValuePath="EMP_ID" DisplayMemberPath="First_Name" x:Name="cbDaily" Margin="10,5,5,5"/>
                         <TextBlock x:Name="txtBlockDaily" FontSize="12" IsHitTestVisible="False" Text="Select Daily Auditor" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -959,7 +959,7 @@
                         </TextBlock>
                     </Grid>
                     <Grid Grid.Row="5">
-                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbWeekly" Margin="10,5,5,5" ItemsSource="{Binding NicknameList}"  SelectedValuePath="EMP_ID" DisplayMemberPath="Nick_Name"/>
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbWeekly" Margin="10,5,5,5" ItemsSource="{Binding NicknameList}"  SelectedValuePath="EMP_ID" DisplayMemberPath="First_Name"/>
                         <TextBlock x:Name="txtBlockWeekly" FontSize="12" IsHitTestVisible="False" Text="Select Weekly Auditor" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -974,7 +974,7 @@
                         </TextBlock>
                     </Grid>
                     <Grid Grid.Row="6">
-                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonthly" Margin="10,5,5,5" ItemsSource="{Binding NicknameList}" DisplayMemberPath="Nick_Name" SelectedValuePath="EMP_ID"/>
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonthly" Margin="10,5,5,5" ItemsSource="{Binding NicknameList}" DisplayMemberPath="First_Name" SelectedValuePath="EMP_ID"/>
                         <TextBlock x:Name="txtBlockMonthly" FontSize="12" IsHitTestVisible="False" Text="Select Monthly Auditor" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
