@@ -989,7 +989,7 @@
                                 <TextBox BorderThickness="0" x:Name="txtRaisedBy" TextWrapping="Wrap" Template="{DynamicResource TextBoxBaseControlTemplate}" IsEnabled="False"
                              MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
-                            <ComboBox x:Name="comboRaisedBy" SelectedValuePath="Emp_ID" 
+                            <ComboBox x:Name="comboRaisedBy" SelectedValuePath="EMP_ID" 
                               DisplayMemberPath="EMPLOYEE_NAME" Margin="0,5,5,5" Style="{DynamicResource StyleComboBox}" ItemsSource="{Binding NicknameList}" IsReadOnly="True"/>
 
                             <TextBlock x:Name="comboRaisedTBlock" FontSize="12" IsHitTestVisible="False" Text="Raised by *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
