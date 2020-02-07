@@ -1142,7 +1142,7 @@
                                                         <TextBlock Text="{Binding Notes}" Margin="3,-20,-190,0"  TextWrapping="Wrap"  FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                     </Grid>
                                                     <Grid Grid.Column="2">
-                                                        <TextBlock Text="{Binding DATE_CHECKED}" Margin="-100,40,60,-20"  TextWrapping="WrapWithOverflow"  FontStyle="Italic" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                                        <TextBlock Text="{Binding DATE_CHECKED}" Margin="-100,40,60,-20"   TextWrapping="WrapWithOverflow"  FontStyle="Italic" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                                     </Grid>
                                                 </Grid>
                                                 <Grid Grid.Row="1">
