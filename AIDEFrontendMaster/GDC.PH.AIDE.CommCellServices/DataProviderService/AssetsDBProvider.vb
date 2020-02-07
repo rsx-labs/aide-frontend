@@ -5,6 +5,8 @@ Public Class AssetsDBProvider
 
     Private _assetsList As ObservableCollection(Of MyAssets)
     Private _assetsInventoryList As ObservableCollection(Of MyAssets)
+    Private _assetsBorrowingList As ObservableCollection(Of MyAssets)
+    Private _assetsBorrowingRequestList As ObservableCollection(Of MyAssets)
     Private _assetsHistoryList As ObservableCollection(Of MyAssets)
     Private _assetsTypeList As ObservableCollection(Of MyAssets)
     Private _assetsManufacturerList As ObservableCollection(Of MyAssets)
@@ -20,6 +22,8 @@ Public Class AssetsDBProvider
     Public Sub New()
         _assetsList = New ObservableCollection(Of MyAssets)
         _assetsInventoryList = New ObservableCollection(Of MyAssets)
+        _assetsBorrowingList = New ObservableCollection(Of MyAssets)
+        _assetsBorrowingRequestList = New ObservableCollection(Of MyAssets)
         _assetsHistoryList = New ObservableCollection(Of MyAssets)
         _assetsTypeList = New ObservableCollection(Of MyAssets)
         _assetsManufacturerList = New ObservableCollection(Of MyAssets)
@@ -33,6 +37,15 @@ Public Class AssetsDBProvider
     Public Function GetAssetInventoryList() As ObservableCollection(Of MyAssets)
         Return _assetsInventoryList
     End Function
+
+    Public Function GetAssetBorrowingList() As ObservableCollection(Of MyAssets)
+        Return _assetsBorrowingList
+    End Function
+
+    Public Function GetAssetBorrowingRequestList() As ObservableCollection(Of MyAssets)
+        Return _assetsBorrowingRequestList
+    End Function
+
 
     Public Function GetAssetHistoryList() As ObservableCollection(Of MyAssets)
         Return _assetsHistoryList
@@ -141,9 +154,126 @@ Public Class AssetsDBProvider
             .DATE_DESCR = Date_Descr,
             .ISAPPROVED = isApprove,
             .PREVIOUS_ID = _assets.PREVIOUS_ID,
-            .PREVIOUS_OWNER = _assets.PREVIOUS_OWNER
+            .PREVIOUS_OWNER = _assets.PREVIOUS_OWNER,
+            .ASSET_BORROWING_ID = _assets.ASSET_BORROWING_ID,
+            .DATE_BORROWED = _assets.DATE_BORROWED,
+            .DATE_RETURNED = _assets.DATE_RETURNED,
+            .OTHER_INFO = _assets.OTHER_INFO
         }
         _assetsInventoryList.Add(_objectAsset)
+    End Sub
+
+    Public Sub SetAssetBorrowingList(ByVal _assets As Assets)
+
+        Dim isApprove As Boolean
+
+        If _assets.STATUS = 1 Then
+            Status_Descr = UNASSIGNED
+        ElseIf _assets.STATUS = 2 Then
+            Status_Descr = ASSIGNED
+        ElseIf _assets.STATUS = 3 Then
+            Status_Descr = PARTIALLY_ASSIGNED
+        ElseIf _assets.STATUS = 4 Then
+            Status_Descr = PARTIALLY_UNASSIGNED
+        End If
+
+        If _assets.APPROVAL = 1 Then
+            isApprove = True
+        Else
+            isApprove = False
+        End If
+
+        Dim dateDiffYear As Integer = DateDiff(DateInterval.Year, _assets.DATE_PURCHASED, Date.Now)
+        Dim dateDiffMonth As Integer = DateDiff(DateInterval.Month, _assets.DATE_PURCHASED, Date.Now)
+        Dim dateDiffDay As Integer = DateDiff(DateInterval.Day, _assets.DATE_PURCHASED, Date.Now)
+        If dateDiffYear <> 0 Then
+            Date_Descr = dateDiffYear & " year/s"
+        ElseIf dateDiffMonth <> 0 Then
+            Date_Descr = dateDiffMonth & " month/s"
+        ElseIf dateDiffDay <> 0 Then
+            Date_Descr = dateDiffDay & " day/s"
+        End If
+
+        Dim _objectAsset As MyAssets = New MyAssets With {
+            .ASSET_ID = _assets.ASSET_ID,
+            .ASSET_TAG = _assets.ASSET_TAG,
+            .ASSET_DESC = _assets.ASSET_DESC,
+            .DATE_ASSIGNED = _assets.DATE_ASSIGNED,
+            .EMP_ID = _assets.EMP_ID,
+            .MANUFACTURER = _assets.MANUFACTURER,
+            .MODEL_NO = _assets.MODEL_NO,
+            .SERIAL_NO = _assets.SERIAL_NO,
+            .COMMENTS = _assets.COMMENTS,
+            .STATUS = _assets.STATUS,
+            .FULL_NAME = _assets.FULL_NAME,
+            .DEPARTMENT = _assets.DEPARTMENT,
+            .STATUS_DESCR = Status_Descr,
+            .APPROVAL = _assets.APPROVAL,
+            .DATE_DESCR = Date_Descr,
+            .ISAPPROVED = isApprove,
+            .PREVIOUS_ID = _assets.PREVIOUS_ID,
+            .PREVIOUS_OWNER = _assets.PREVIOUS_OWNER,
+            .ASSET_BORROWING_ID = _assets.ASSET_BORROWING_ID,
+            .DATE_BORROWED = _assets.DATE_BORROWED,
+            .DATE_RETURNED = _assets.DATE_RETURNED
+        }
+        _assetsBorrowingList.Add(_objectAsset)
+    End Sub
+
+    Public Sub SetAssetBorrowingRequestList(ByVal _assets As Assets)
+
+        Dim isApprove As Boolean
+
+        If _assets.STATUS = 1 Then
+            Status_Descr = UNASSIGNED
+        ElseIf _assets.STATUS = 2 Then
+            Status_Descr = ASSIGNED
+        ElseIf _assets.STATUS = 3 Then
+            Status_Descr = PARTIALLY_ASSIGNED
+        ElseIf _assets.STATUS = 4 Then
+            Status_Descr = PARTIALLY_UNASSIGNED
+        End If
+
+        If _assets.APPROVAL = 1 Then
+            isApprove = True
+        Else
+            isApprove = False
+        End If
+
+        'Dim dateDiffYear As Integer = DateDiff(DateInterval.Year, _assets.DATE_PURCHASED, Date.Now)
+        'Dim dateDiffMonth As Integer = DateDiff(DateInterval.Month, _assets.DATE_PURCHASED, Date.Now)
+        'Dim dateDiffDay As Integer = DateDiff(DateInterval.Day, _assets.DATE_PURCHASED, Date.Now)
+        'If dateDiffYear <> 0 Then
+        '    Date_Descr = dateDiffYear & " year/s"
+        'ElseIf dateDiffMonth <> 0 Then
+        '    Date_Descr = dateDiffMonth & " month/s"
+        'ElseIf dateDiffDay <> 0 Then
+        '    Date_Descr = dateDiffDay & " day/s"
+        'End If
+
+        Dim _objectAsset As MyAssets = New MyAssets With {
+            .ASSET_ID = _assets.ASSET_ID,
+            .ASSET_TAG = _assets.ASSET_TAG,
+            .ASSET_DESC = _assets.ASSET_DESC,
+            .EMP_ID = _assets.EMP_ID,
+            .MANUFACTURER = _assets.MANUFACTURER,
+            .MODEL_NO = _assets.MODEL_NO,
+            .SERIAL_NO = _assets.SERIAL_NO,
+            .COMMENTS = _assets.COMMENTS,
+            .STATUS = _assets.STATUS,
+            .FULL_NAME = _assets.FULL_NAME,
+            .DEPARTMENT = _assets.DEPARTMENT,
+            .STATUS_DESCR = Status_Descr,
+            .APPROVAL = _assets.APPROVAL,
+            .DATE_DESCR = Date_Descr,
+            .ISAPPROVED = isApprove,
+            .PREVIOUS_ID = _assets.PREVIOUS_ID,
+            .PREVIOUS_OWNER = _assets.PREVIOUS_OWNER,
+            .ASSET_BORROWING_ID = _assets.ASSET_BORROWING_ID,
+            .DATE_BORROWED = _assets.DATE_BORROWED,
+            .DATE_RETURNED = _assets.DATE_RETURNED
+        }
+        _assetsBorrowingList.Add(_objectAsset)
     End Sub
 
     Public Sub SetAssetHistoryList(ByVal _assets As Assets)
@@ -224,4 +354,7 @@ Public Class MyAssets
     Public Property NICK_NAME As String
     Public Property FIRST_NAME As String
     Public Property EMPLOYEE_NAME As String
+    Public Property DATE_BORROWED As DateTime
+    Public Property DATE_RETURNED As DateTime
+    Public Property ASSET_BORROWING_ID As Integer
 End Class

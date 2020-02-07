@@ -27,4 +27,8 @@ Public Class AssetsSubMenuPage
     Private Sub AssetHistory_Click(sender As Object, e As RoutedEventArgs)
         _pFrame.Navigate(New AssetsHistory(_pFrame, _profile))
     End Sub
+
+    Private Sub AssetBorrowing_Click(sender As Object, e As RoutedEventArgs)
+        _pFrame.Navigate(New AssetBorrowingPage(_pFrame, _profile, _addframe, _menugrid, _submenuframe, ""))
+    End Sub
 End Class
