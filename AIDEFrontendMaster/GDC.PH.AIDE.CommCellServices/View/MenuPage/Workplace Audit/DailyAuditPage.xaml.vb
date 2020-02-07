@@ -222,7 +222,7 @@ Class DailyAuditPage
                 If lstAuditSchedMonth.Count <> 0 Then
                     LoadPerWeekSchedule()
                 Else
-                    MsgBox("There's no data on selected dates.")
+                    MsgBox("There is no records in selected date.  ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                     dailyVMM.QuestionDayList.Clear()
                     dailyVMM.Days.Clear()
                     cbWeek.ItemsSource = Nothing

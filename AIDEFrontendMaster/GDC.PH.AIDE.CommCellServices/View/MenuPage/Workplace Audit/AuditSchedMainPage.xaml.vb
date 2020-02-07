@@ -35,6 +35,8 @@ Class AuditSchedMainPage
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
     Dim pagingRecordPerPage As Integer = 10
+    Dim currentPage As Integer
+    Dim lastPage As Integer
 
     Private Enum PagingMode
         _First = 1
@@ -101,6 +103,7 @@ Class AuditSchedMainPage
             If InitializeService() Then
                 lstauditSched = _AideService.GetAuditSched(empID, year)
                 SetPaging(PagingMode._First)
+                DisplayPagingInfo()
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
@@ -226,12 +229,39 @@ Class AuditSchedMainPage
                     Exit Select
             End Select
 
+            DisplayPagingInfo()
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
 
     End Sub
+    Private Sub DisplayPagingInfo()
+        ' If there has no data found
+        If lstauditSched.Length = 0 Then
+            txtPageNo.Text = "No Results Found "
+            ' GUISettingsOff()
+        Else
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
+            ' GUISettingsOn()
+        End If
+    End Sub
+    Private Sub GUISettingsOff()
+        'lv_team.Visibility = Windows.Visibility.Hidden
+        'lv_all.Visibility = Windows.Visibility.Hidden
+        'lv_unapproved.Visibility = Windows.Visibility.Hidden
 
+        btnPrev.IsEnabled = False
+        btnNext.IsEnabled = False
+    End Sub
+
+    Private Sub GUISettingsOn()
+        'lv_team.Visibility = Windows.Visibility.Visible
+        'lv_all.Visibility = Windows.Visibility.Visible
+        'lv_unapproved.Visibility = Windows.Visibility.Visible
+
+        btnPrev.IsEnabled = True
+        btnNext.IsEnabled = True
+    End Sub
 #End Region
 
 #Region "Events"
@@ -287,10 +317,12 @@ Class AuditSchedMainPage
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
         SetPaging(CInt(PagingMode._Next))
+        DisplayPagingInfo()
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
         SetPaging(CInt(PagingMode._Previous))
+        DisplayPagingInfo()
     End Sub
 #End Region
 

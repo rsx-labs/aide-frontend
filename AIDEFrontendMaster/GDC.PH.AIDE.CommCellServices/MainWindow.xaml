@@ -110,21 +110,7 @@
                                 <ColumnDefinition Width="20*"/>
                                 <ColumnDefinition Width="20*"/>
                             </Grid.ColumnDefinitions>
-                            <Button Name="WorkPlaceAuditBtn" Click="WorkPlaceAuditBtn_Click"  Margin="2" Grid.Column="0" Style="{DynamicResource RoundCorner}" >
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="30*"/>
-                                        <ColumnDefinition Width="70*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0">
-                                        <Image Margin="0,10,10,10" Source="Assets/Menu/HomeIcon.png"/>
-                                    </Grid>
-                                    <Grid Grid.Column="1" VerticalAlignment="Center">
-                                        <TextBlock Foreground="White" Text="Workplace Audit"></TextBlock>
-                                    </Grid>
-                                </Grid>
-                            </Button>
-                            <Button Name="EmployeeBtn" Click="EmployeesBtn_Click"  Margin="2" Grid.Column="1" Style="{DynamicResource RoundCorner}"  >
+                            <Button Name="EmployeeBtn" Click="EmployeesBtn_Click"  Margin="2" Grid.Column="0" Style="{DynamicResource RoundCorner}"  >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="30*"/>
@@ -135,6 +121,20 @@
                                     </Grid>
                                     <Grid Grid.Column="1" VerticalAlignment="Center">
                                         <TextBlock Foreground="White" Text="Contacts List" TextWrapping="WrapWithOverflow"></TextBlock>
+                                    </Grid>
+                                </Grid>
+                            </Button>
+                            <Button Name="SkillsBtn" Click="SkillsBtn_Click" Margin="2" Grid.Column="1" Style="{DynamicResource RoundCorner}"  >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30*"/>
+                                        <ColumnDefinition Width="70*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <Image Margin="0,10,10,10" Source="Assets/Menu/SkillsIcon.png"/>
+                                    </Grid>
+                                    <Grid Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Foreground="White" Text="Skills"></TextBlock>
                                     </Grid>
                                 </Grid>
                             </Button>
@@ -203,20 +203,21 @@
                                     </Grid>
                                 </Grid>
                             </Button>
-                            <Button Name="SkillsBtn" Click="SkillsBtn_Click" Margin="2" Grid.Column="1" Style="{DynamicResource RoundCorner}"  >
+                            <Button Name="WorkPlaceAuditBtn" Click="WorkPlaceAuditBtn_Click"  Margin="2" Grid.Column="1" Style="{DynamicResource RoundCorner}" >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="30*"/>
                                         <ColumnDefinition Width="70*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0">
-                                        <Image Margin="0,10,10,10" Source="Assets/Menu/SkillsIcon.png"/>
+                                        <Image Margin="0,10,10,10" Source="Assets/Menu/HomeIcon.png"/>
                                     </Grid>
                                     <Grid Grid.Column="1" VerticalAlignment="Center">
-                                        <TextBlock Foreground="White" Text="Skills"></TextBlock>
+                                        <TextBlock Foreground="White" Text="Workplace Audit"></TextBlock>
                                     </Grid>
                                 </Grid>
                             </Button>
+                           
                             <Button Name="OtherBtn" Click="OtherBtn_Click" Margin="2" Grid.Column="4" Style="{DynamicResource RoundCorner}"  >
                                 <Grid>
                                     <Grid.ColumnDefinitions>

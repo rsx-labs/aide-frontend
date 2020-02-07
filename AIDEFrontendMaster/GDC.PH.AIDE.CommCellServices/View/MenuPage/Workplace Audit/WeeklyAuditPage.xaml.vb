@@ -401,7 +401,7 @@ Class WeeklyAuditPage
         If dailyVMM.Days.Count <> 0 Then
             generateQuestions()
         Else
-            MsgBox("No data on selected Month")
+            MsgBox("There is no records in selected month.  ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
         End If
 
 
@@ -430,7 +430,7 @@ Class WeeklyAuditPage
         If dailyVMM.Days.Count <> 0 Then
             generateQuestions()
         Else
-            MsgBox("No data on selected Year and Month")
+            MsgBox("There is no records in selected date.  ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
         End If
     End Sub
 End Class

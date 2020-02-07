@@ -185,7 +185,7 @@ Class DailyAuditCheck
                     _AideService.UpdateCheckAuditQuestionStatus(InsertUpdatedDataInAudit)
                 Next
 
-                MsgBox(DisplayPageTitle() & " has been updated.")
+                MsgBox(DisplayPageTitle() & " has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
 
                 ReturnToLastPage()

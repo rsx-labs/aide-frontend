@@ -341,7 +341,9 @@ Class AuditSchedAddPage
 
                     Dim isMessageSuccessfuly As Boolean = aide.InsertAuditSched(auditSched)
                     If isMessageSuccessfuly Then
-                        MsgBox("Successfully Added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                        MsgBox("Successfully added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                    Else
+                        MsgBox("An application error was encountered. Please contact your AIDE Administrator. ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                     End If
 
                     _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
@@ -355,17 +357,7 @@ Class AuditSchedAddPage
                     _addframe.Visibility = Visibility.Hidden
                 End If
             Else
-                'If cbMonth.Text = Nothing Or cbDaily.SelectedValue = Nothing Or cbMonthly.SelectedValue = Nothing Or cbWeekly.SelectedValue = Nothing Or cbPeriodStart.SelectedValue = Nothing Or txtBlockYear.Text = Nothing Then
-                '    MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
-                'If txtBlockDaily.Text = txtBlockWeekly.Text Or txtBlockDaily.Text = txtBlockMonthly.Text Or txtBlockWeekly.Text = txtBlockMonthly.Text Then
-                '        MsgBox("Selected Auditors are the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
-                '    Else
-
-
                 auditSched.AUDIT_SCHED_ID = auditSchedID
-                'auditSched.PERIOD_START = cbPeriodStart.SelectedValue
-                'auditSched.PERIOD_END = txtBlockPeriodEnd.Text
-
                 For Each obj In lstNicknameList.ToList
                     If obj.Nick_Name = txtBlockDaily.Text.ToString.Trim() Then
                         If cbDaily.SelectedValue Is Nothing Then
@@ -402,7 +394,9 @@ Class AuditSchedAddPage
 
                 Dim isMessageSuccessfuly As Boolean = aide.UpdateAuditSched(auditSched)
                 If isMessageSuccessfuly Then
-                    MsgBox("Successfully Added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                    MsgBox("Schedule has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                Else
+                    MsgBox("An application error was encountered. Please contact your AIDE Administrator. ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 End If
 
                 _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
@@ -510,7 +504,7 @@ Class AuditSchedAddPage
         Else
             For Each obj In lstauditSched.ToList
                 If obj.PERIOD_START = cbPeriodStart.SelectedValue Then
-                    MsgBox(" Duplicate Entry", vbExclamation + vbCritical, "AuditSchedAddPage")
+                    MsgBox(" Schedule already assigned. Please select different schedule.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                     ifDuplicate = True
                     cbPeriodStart.SelectedValue = 0
                     Return
