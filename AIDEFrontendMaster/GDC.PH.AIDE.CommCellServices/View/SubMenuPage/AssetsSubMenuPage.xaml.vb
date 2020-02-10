@@ -29,6 +29,6 @@ Public Class AssetsSubMenuPage
     End Sub
 
     Private Sub AssetBorrowing_Click(sender As Object, e As RoutedEventArgs)
-        _pFrame.Navigate(New AssetBorrowingPage(_pFrame, _profile, _addframe, _menugrid, _submenuframe, ""))
+        _pFrame.Navigate(New AssetBorrowingPage(_pFrame, _profile, _addframe, _menugrid, _submenuframe, "Borrow"))
     End Sub
 End Class
