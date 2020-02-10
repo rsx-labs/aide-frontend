@@ -300,8 +300,8 @@
 
                                     <Grid Grid.Column="1">
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" />
-                                            <Button Style="{DynamicResource ButtonExport}" x:Name="btnExport" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" />
+                                            <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" Visibility="Hidden" />
+                                            <Button Style="{DynamicResource ButtonExport}" x:Name="btnExport" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" Visibility="Hidden"/>
                                         </StackPanel>
                                     </Grid>
                                 </Grid>
@@ -392,8 +392,8 @@
 
                                     <Grid Grid.Column="1">
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint2" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" />
-                                            <Button Style="{DynamicResource ButtonExport}" x:Name="btnExport2" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" />
+                                            <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint2" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" Visibility="Hidden"/>
+                                            <Button Style="{DynamicResource ButtonExport}" x:Name="btnExport2" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" Visibility="Hidden"/>
                                         </StackPanel>
                                     </Grid>
                                 </Grid>
@@ -582,8 +582,8 @@
 
                                     <Grid Grid.Column="1">
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint4" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" />
-                                            <Button Style="{DynamicResource ButtonExport}" x:Name="btnExport4" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" />
+                                            <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint4" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" Visibility="Hidden"/>
+                                            <Button Style="{DynamicResource ButtonExport}" x:Name="btnExport4" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" Visibility="Hidden"/>
                                         </StackPanel>
                                     </Grid>
                                 </Grid>
@@ -677,8 +677,8 @@
 
                                     <Grid Grid.Column="1">
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint5" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" />
-                                            <Button Style="{DynamicResource ButtonExport}" x:Name="btnExport5" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" />
+                                            <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint5" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" Visibility="Hidden"/>
+                                            <Button Style="{DynamicResource ButtonExport}" x:Name="btnExport5" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" Visibility="Hidden"/>
                                         </StackPanel>
                                     </Grid>
                                 </Grid>
