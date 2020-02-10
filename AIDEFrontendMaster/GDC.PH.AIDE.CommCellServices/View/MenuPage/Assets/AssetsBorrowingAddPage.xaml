@@ -1093,7 +1093,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelAssetTag" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Asset Tag" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            <TextBlock x:Name="txtlabelAssetTag" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Asset tag" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1162,7 +1162,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelAssetBorrowingID" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Asset Tag" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            <TextBlock x:Name="txtlabelAssetBorrowingID" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Asset Borrowing ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1339,7 +1339,7 @@
                         <Grid Grid.Row="5">
                             <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnDisapprove" Margin="5,5,0,5" >
 
-                                <TextBlock Text="DISAPPROVE" TextWrapping="Wrap" Margin="5"/>
+                                <TextBlock Text="REJECT" TextWrapping="Wrap" Margin="5"/>
 
                             </Button>
 
