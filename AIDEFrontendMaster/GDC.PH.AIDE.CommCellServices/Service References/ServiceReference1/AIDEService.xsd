@@ -163,6 +163,38 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DashboardTaskSummaryTotals" nillable="true" type="tns:DashboardTaskSummaryTotals" />
+  <xs:complexType name="Announcements">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ANNOUNCEMENT_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="DELETED_FG" type="xs:int" />
+      <xs:element minOccurs="0" name="EMP_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="END_DATE" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="MESSAGE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TITLE" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Announcements" nillable="true" type="tns:Announcements" />
+  <xs:complexType name="ArrayOfLate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Late" nillable="true" type="tns:Late" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLate" nillable="true" type="tns:ArrayOfLate" />
+  <xs:complexType name="Late">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FIRST_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MONTH" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NUMBER_OF_LATE" type="xs:int" />
+      <xs:element minOccurs="0" name="STATUS" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Late" nillable="true" type="tns:Late" />
+  <xs:complexType name="ArrayOfSabaLearning">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SabaLearning" nillable="true" type="tns:SabaLearning" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSabaLearning" nillable="true" type="tns:ArrayOfSabaLearning" />
   <xs:complexType name="SabaLearning">
     <xs:sequence>
       <xs:element minOccurs="0" name="DATE_COMPLETED" nillable="true" type="xs:string" />
@@ -176,12 +208,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SabaLearning" nillable="true" type="tns:SabaLearning" />
-  <xs:complexType name="ArrayOfSabaLearning">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="SabaLearning" nillable="true" type="tns:SabaLearning" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfSabaLearning" nillable="true" type="tns:ArrayOfSabaLearning" />
   <xs:complexType name="Comcell">
     <xs:sequence>
       <xs:element minOccurs="0" name="COMCELL_ID" type="xs:int" />
@@ -570,13 +596,16 @@
   <xs:complexType name="Assets">
     <xs:sequence>
       <xs:element minOccurs="0" name="APPROVAL" type="xs:int" />
+      <xs:element minOccurs="0" name="ASSET_BORROWING_ID" type="xs:int" />
       <xs:element minOccurs="0" name="ASSET_DESC" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ASSET_ID" type="xs:int" />
       <xs:element minOccurs="0" name="ASSET_TAG" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ASSIGNED_TO" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="COMMENTS" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DATE_ASSIGNED" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DATE_BORROWED" type="xs:dateTime" />
       <xs:element minOccurs="0" name="DATE_PURCHASED" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DATE_RETURNED" type="xs:dateTime" />
       <xs:element minOccurs="0" name="DEPARTMENT" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EMP_ID" type="xs:int" />
       <xs:element minOccurs="0" name="Employee_Name" nillable="true" type="xs:string" />
@@ -593,6 +622,7 @@
       <xs:element minOccurs="0" name="STATUS_DESCR" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TABLE_NAME" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TRANSFER_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="TRANS_FG" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Assets" nillable="true" type="tns:Assets" />
@@ -765,38 +795,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfResourcePlanner" nillable="true" type="tns:ArrayOfResourcePlanner" />
-  <xs:complexType name="Announcements">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ANNOUNCEMENT_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="DELETED_FG" type="xs:int" />
-      <xs:element minOccurs="0" name="EMP_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="END_DATE" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="MESSAGE" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="TITLE" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Announcements" nillable="true" type="tns:Announcements" />
   <xs:complexType name="ArrayOfAnnouncements">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Announcements" nillable="true" type="tns:Announcements" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfAnnouncements" nillable="true" type="tns:ArrayOfAnnouncements" />
-  <xs:complexType name="ArrayOfLate">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Late" nillable="true" type="tns:Late" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfLate" nillable="true" type="tns:ArrayOfLate" />
-  <xs:complexType name="Late">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="FIRST_NAME" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MONTH" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="NUMBER_OF_LATE" type="xs:int" />
-      <xs:element minOccurs="0" name="STATUS" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Late" nillable="true" type="tns:Late" />
   <xs:complexType name="Action">
     <xs:sequence>
       <xs:element minOccurs="0" name="Act_Assignee" type="xs:int" />
