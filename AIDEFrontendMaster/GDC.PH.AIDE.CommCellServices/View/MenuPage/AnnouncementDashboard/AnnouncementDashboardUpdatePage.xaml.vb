@@ -89,11 +89,11 @@ Class AnnouncementDashboardUpdatePage
 
 
             If announcementModel.ObjectAnnouncement.TITLE = Nothing Or textRange.Text.Trim() = String.Empty Then
-                MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else
                 Me.DataContext = announcementModel.ObjectAnnouncement
                 aide.UpdateAnnouncements(getDataUpdate(Me.DataContext()))
-                MsgBox("Successfully updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                MsgBox("Announcement has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 _announce.TITLE = Nothing
                 _announce.MESSAGE = Nothing
                 _announce.END_DATE = Nothing
@@ -126,7 +126,7 @@ Class AnnouncementDashboardUpdatePage
             If MsgBox("Are you sure you want to delete this announcement?", vbInformation + MsgBoxStyle.YesNo, "AIDE") = vbYes Then
                 Me.DataContext = announcementModel.ObjectAnnouncement
                 aide.UpdateAnnouncements(getDataDelete(Me.DataContext()))
-                MsgBox("Successfully deleted!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                MsgBox("Announcement has been deleted.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 _announce.TITLE = Nothing
                 _announce.MESSAGE = Nothing
                 _announce.END_DATE = Nothing
@@ -144,7 +144,7 @@ Class AnnouncementDashboardUpdatePage
             End If
 
             'If announcementModel.ObjectAnnouncement.TITLE = Nothing Or textRange.Text.Trim() = String.Empty Then
-            '    MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+            '    MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             'Else
             '    Me.DataContext = announcementModel.ObjectAnnouncement
             '    aide.UpdateAnnouncements(getDataDelete(Me.DataContext()))

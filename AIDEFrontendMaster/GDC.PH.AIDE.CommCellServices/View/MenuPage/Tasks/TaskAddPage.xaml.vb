@@ -320,7 +320,7 @@ Class TaskAddPage
             tasks.Others3 = obj.NewTasks.Others3
             Return True
         Catch ex As Exception
-            MsgBox("Invalid input!", MsgBoxStyle.Critical, "AIDE")
+            MsgBox(ex.Message.ToString(), MsgBoxStyle.Critical, "AIDE")
             Return False
         End Try
     End Function
@@ -350,55 +350,55 @@ Class TaskAddPage
 
     Private Function ValidateFields() As Boolean
         If txtRefID.Text = String.Empty Then
-            MsgBox("Please enter reference ID", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter a reference ID.", MsgBoxStyle.Critical, "AIDE")
             txtRefID.Focus()
             Return False
         End If
 
         If txtIncDescr.Text Is String.Empty Then
-            MsgBox("Please enter description", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter a description.", MsgBoxStyle.Critical, "AIDE")
             txtIncDescr.Focus()
             Return False
         End If
 
         If cbPhase.SelectedIndex = -1 Then
-            MsgBox("Please select phase", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please select a phase.", MsgBoxStyle.Critical, "AIDE")
             cbPhase.Focus()
             Return False
         End If
 
         If cbStatus.SelectedIndex = -1 Then
-            MsgBox("Please select status", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please select a status.", MsgBoxStyle.Critical, "AIDE")
             cbStatus.Focus()
             Return False
         End If
 
         If cbProject.SelectedIndex = -1 Then
-            MsgBox("Please select a project", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please select a project.", MsgBoxStyle.Critical, "AIDE")
             cbProject.Focus()
             Return False
         End If
 
         If cbCategory.SelectedIndex = -1 Then
-            MsgBox("Please select category", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please select a category.", MsgBoxStyle.Critical, "AIDE")
             cbCategory.Focus()
             Return False
         End If
 
         If dpCompltdDate.Text IsNot String.Empty And dpStartDate.Text = String.Empty Then
-            MsgBox("Please enter start date", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter a start date.", MsgBoxStyle.Critical, "AIDE")
             dpStartDate.Focus()
             Return False
         End If
 
         If (cbStatus.SelectedValue = stsInPrgress OrElse cbStatus.SelectedValue = stsWaitngForInfo OrElse cbStatus.SelectedValue = stsOnhold) And dpStartDate.Text Is String.Empty Then
-            MsgBox("Please enter start date", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter a start date.", MsgBoxStyle.Critical, "AIDE")
             dpStartDate.Focus()
             Return False
         End If
 
         If cbStatus.SelectedValue = stsCmpltd And dpCompltdDate.Text Is String.Empty Then
-            MsgBox("Please enter completed date", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter a completed date.", MsgBoxStyle.Critical, "AIDE")
             dpCompltdDate.Focus()
             Return False
         End If
@@ -499,17 +499,16 @@ Class TaskAddPage
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
         If ValidateFields() Then
             Try
-                Dim result As Integer = MsgBox("Are you sure you want to add task?", MsgBoxStyle.YesNo, "AIDE")
 
-                If result = vbYes Then
-                    If InitializeService() Then
-                        If GetDataContext(Me.DataContext) Then
-                            client.CreateTask(tasks)
-                            MsgBox("Successfully created task", MsgBoxStyle.Information, "AIDE")
-                            ClearValues()
-                            frame.Navigate(New TaskAdminPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
-                            ExitPage()
-                        End If
+
+
+                If InitializeService() Then
+                    If GetDataContext(Me.DataContext) Then
+                        client.CreateTask(tasks)
+                        MsgBox("Task has been added.", MsgBoxStyle.Information, "AIDE")
+                        ClearValues()
+                        frame.Navigate(New TaskAdminPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
+                        ExitPage()
                     End If
                 End If
             Catch ex As Exception
@@ -521,16 +520,14 @@ Class TaskAddPage
     Private Sub btnUpdate_Click(sender As Object, e As RoutedEventArgs) Handles btnUpdate.Click
         If ValidateFields() Then
             Try
-                Dim result As Integer = MsgBox("Are you sure you want to Update?", MsgBoxStyle.YesNo, "AIDE")
-                If result = vbYes Then
-                    If InitializeService() Then
-                        If GetDataContext(Me.DataContext) Then
-                            client.UpdateTask(tasks)
-                            MsgBox("Successfully updated", MsgBoxStyle.Information, "AIDE")
-                            ClearValues()
-                            frame.Navigate(New TaskListPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
-                            ExitPage()
-                        End If
+
+                If InitializeService() Then
+                    If GetDataContext(Me.DataContext) Then
+                        client.UpdateTask(tasks)
+                        MsgBox("Task has been updated.", MsgBoxStyle.Information, "AIDE")
+                        ClearValues()
+                        frame.Navigate(New TaskListPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
+                        ExitPage()
                     End If
                 End If
             Catch ex As Exception

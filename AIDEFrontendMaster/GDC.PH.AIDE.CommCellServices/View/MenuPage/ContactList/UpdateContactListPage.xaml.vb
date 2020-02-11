@@ -355,10 +355,10 @@ Class UpdateContactListPage
                 contactVM.ContactProfile.CEL_NO = String.Empty OrElse _
                 contactVM.ContactProfile.EMAIL_ADDRESS2 = String.Empty OrElse _
                 cbContactLocation.SelectedValue = Nothing Then
-                MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Else
-                If MsgBox("Are you sure you want to continue?", vbYesNo, "AIDE") = vbYes Then
-                    If InitializeService() Then
+
+                If InitializeService() Then
                         contactList.EmpID = contactVM.ContactProfile.EMP_ID
                         contactList.LAST_NAME = contactVM.ContactProfile.LAST_NAME.ToUpper()
                         contactList.FIRST_NAME = contactVM.ContactProfile.FIRST_NAME.ToUpper()
@@ -392,6 +392,7 @@ Class UpdateContactListPage
 
                         contactList.OLD_EMP_ID = old_empid
                         client.UpdateContactListByEmpID(contactList, 0)
+                        MsgBox("Contacts have been updated.", MsgBoxStyle.Information, "AIDE")
                         'ClearFields()
                         attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
                         mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
@@ -401,10 +402,7 @@ Class UpdateContactListPage
                         menugrid.Opacity = 1
                         submenuframe.IsEnabled = True
                         submenuframe.Opacity = 1
-                        addframe.Visibility = Visibility.Hidden
-                    End If
-                Else
-                    Exit Sub
+                    addframe.Visibility = Visibility.Hidden
                 End If
             End If
         Catch ex As Exception
@@ -448,10 +446,11 @@ Class UpdateContactListPage
                 contactList.DIVISION_ID = contactVM.ContactProfile.DIVISION_ID
                 contactList.OLD_EMP_ID = old_empid
 
-                If MsgBox("Are you sure you want to continue? Employee will be removed from the lists.", vbYesNo, "AIDE") = vbYes Then
+                If MsgBox("Are you sure you want to delete the Employee?", vbYesNo, "AIDE") = vbYes Then
                     If InitializeService() Then
                         client.UpdateContactListByEmpID(contactList, 0)
                         'ClearFields()
+                        MsgBox("Employee has been deleted.", MsgBoxStyle.OkOnly, "AIDE")
                         attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
                         mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
                         mainFrame.IsEnabled = True
@@ -461,6 +460,7 @@ Class UpdateContactListPage
                         submenuframe.IsEnabled = True
                         submenuframe.Opacity = 1
                         addframe.Visibility = Visibility.Hidden
+
                     End If
                 Else
                     Exit Sub
@@ -475,7 +475,7 @@ Class UpdateContactListPage
         Dim SelectedDivision As Integer
         SelectedDivision = cbContactDivision.SelectedValue
         If cbContactDepartment.SelectedValue = Nothing Then
-            MsgBox("Please select a department first. Thank you.", vbInformation, "AIDE")
+            MsgBox("Please select a department.", vbInformation, "AIDE")
         Else
             LoadDivision(cbContactDepartment.SelectedValue)
             cbContactDivision.SelectedValue = SelectedDivision

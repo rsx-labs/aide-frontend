@@ -82,7 +82,7 @@ Public Class AssetsInventoryAddPage
             e.Handled = True
             Dim assets As New Assets
             If CheckMissingField() Then
-                MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 Integer.TryParse(txtEmpID.Text, empId)
                 assets.EMP_ID = empId
@@ -103,26 +103,20 @@ Public Class AssetsInventoryAddPage
                 Else
                     assets.APPROVAL = 0
                 End If
+                If InitializeService() Then
+                    client.UpdateAssetsInventory(assets)
+                    MsgBox("Asset inventory have been updated.", MsgBoxStyle.Information, "AIDE")
+                    ClearFields()
+                    mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
+                    mainFrame.IsEnabled = True
+                    mainFrame.Opacity = 1
+                    _menugrid.IsEnabled = True
+                    _menugrid.Opacity = 1
+                    _submenuframe.IsEnabled = True
+                    _submenuframe.Opacity = 1
 
-                Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
-                If result = 1 Then
-                    If InitializeService() Then
-                        client.UpdateAssetsInventory(assets)
-                        ClearFields()
-                        mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
-                        mainFrame.IsEnabled = True
-                        mainFrame.Opacity = 1
-                        _menugrid.IsEnabled = True
-                        _menugrid.Opacity = 1
-                        _submenuframe.IsEnabled = True
-                        _submenuframe.Opacity = 1
-
-                        _addframe.Visibility = Visibility.Hidden
-                    End If
-                Else
-                    Exit Sub
+                    _addframe.Visibility = Visibility.Hidden
                 End If
-
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
@@ -249,7 +243,7 @@ Public Class AssetsInventoryAddPage
     Private Sub dateInput_SelectedDateChanged(sender As Object, e As SelectionChangedEventArgs) Handles dateInput.SelectedDateChanged
         e.Handled = True
         If dateInput.SelectedDate > Date.Now Then
-            MsgBox("Date must not be beyond today", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Please enter a date on or before the current date.", MsgBoxStyle.Exclamation, "AIDE")
             dateInput.SelectedDate = Date.Now
         Else
             Exit Sub
@@ -303,23 +297,20 @@ Public Class AssetsInventoryAddPage
         assets.STATUS = status
         assets.ASSIGNED_TO = 999 'USED JUST TO BE NOT NULL
 
-        Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
-        If result = 1 Then
-            If InitializeService() Then
-                client.UpdateAssetsInventoryApproval(assets)
-                ClearFields()
-                mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
-                mainFrame.IsEnabled = True
-                mainFrame.Opacity = 1
-                _menugrid.IsEnabled = True
-                _menugrid.Opacity = 1
-                _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
+        If InitializeService() Then
+            client.UpdateAssetsInventoryApproval(assets)
+            MsgBox("Asset inventory have been updated.", MsgBoxStyle.Information, "AIDE")
+            ClearFields()
+            mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
+            mainFrame.IsEnabled = True
+            mainFrame.Opacity = 1
+            _menugrid.IsEnabled = True
+            _menugrid.Opacity = 1
+            _submenuframe.IsEnabled = True
+            _submenuframe.Opacity = 1
 
-                _addframe.Visibility = Visibility.Hidden
-            End If
-        Else
-            Exit Sub
+            _addframe.Visibility = Visibility.Hidden
+
         End If
     End Sub
 

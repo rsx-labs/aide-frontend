@@ -158,11 +158,11 @@ Class ComcellAddPage
             InitializeService()
             If mode = "Add" Then
                 If cbMonth.Text = Nothing Or cbFacilitator.Text = Nothing Or cbMinTaker.Text = Nothing Or cbYear.Text = Nothing Then
-                    MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                     'ElseIf cbFacilitator.Text = cbMinTaker.Text Then
                     '    MsgBox("Selected facilitator and minutes taker are the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 Else
-                    MsgBox("Successfully added", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                    MsgBox("Facilitator and Minutes Taker have been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
                     comcell.EMP_ID = profile.Emp_ID
                     comcell.MONTH = cbMonth.Text
@@ -185,11 +185,11 @@ Class ComcellAddPage
                 End If
             Else
                 If cbMonth.Text = Nothing Or cbFacilitator.Text = Nothing Or cbMinTaker.Text = Nothing Or cbYear.Text = Nothing Then
-                    MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                     'ElseIf cbFacilitator.Text = cbMinTaker.Text Then
                     '    MsgBox("Selected facilitator and minutes taker are the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 Else
-                    MsgBox("Successfully updated", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                    MsgBox("Facilitator and Minutes Taker have been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
                     comcell.COMCELL_ID = comcellID
                     comcell.MONTH = cbMonth.Text

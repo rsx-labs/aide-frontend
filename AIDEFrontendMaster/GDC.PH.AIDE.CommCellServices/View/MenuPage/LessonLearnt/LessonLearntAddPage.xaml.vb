@@ -197,22 +197,18 @@ Class LessonLearntAddPage
             GetDataContext(Me.DataContext())
 
             If lessonLearnt.Problem.Trim = String.Empty Or lessonLearnt.Resolution.Trim = String.Empty Then
-                MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Else
-                Dim result As Integer = MsgBox("Are you sure you want to save?", MsgBoxStyle.YesNo, "AIDE")
-
-                If result = vbYes Then
-                    Try
-                        If Me.InitializeService Then
-                            client.CreateLessonLearnt(lessonLearnt)
-                            MsgBox("Successfully created", MsgBoxStyle.Information, "AIDE")
-                            ClearValues()
-                            ExitPage()
-                        End If
-                    Catch ex As Exception
-                        MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
-                    End Try
-                End If
+                Try
+                    If Me.InitializeService Then
+                        client.CreateLessonLearnt(lessonLearnt)
+                        MsgBox("Lesson learned has been added.", MsgBoxStyle.Information, "AIDE")
+                        ClearValues()
+                        ExitPage()
+                    End If
+                Catch ex As Exception
+                    MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
+                End Try
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
@@ -222,7 +218,7 @@ Class LessonLearntAddPage
     Private Sub btnAddAction_Click(sender As Object, e As RoutedEventArgs) Handles btnAddAction.Click
         'INSERT SELECTED ACTION
         If lvAction.SelectedIndex = -1 Then
-            MsgBox("Please select an item first.")
+            MsgBox("Please select an action item.")
         Else
             Dim selectedAction As ActionModel = lvAction.SelectedValue
             Dim selectedActionList As New ObservableCollection(Of ActionModel)

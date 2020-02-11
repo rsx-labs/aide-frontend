@@ -64,7 +64,7 @@ Public Class AssetsAddPage
             e.Handled = True
             Dim assets As New Assets
             If CheckMissingField() Then
-                MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 assets.ASSET_ID = txtID.Text
                 assets.EMP_ID = txtCreatedBy.Text
@@ -76,25 +76,21 @@ Public Class AssetsAddPage
                 assets.DATE_PURCHASED = dateInput.SelectedDate
                 assets.OTHER_INFO = txtOtherInfo.Text
                 assets.ASSIGNED_TO = 999
-                Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
-                If result = 1 Then
-                    If InitializeService() Then
-                        client.UpdateAssets(assets)
-                        ClearFields()
-                        mainFrame.Navigate(New AssetsListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
-                        mainFrame.IsEnabled = True
-                        mainFrame.Opacity = 1
-                        _menugrid.IsEnabled = True
-                        _menugrid.Opacity = 1
-                        _submenuframe.IsEnabled = True
-                        _submenuframe.Opacity = 1
 
-                        _addframe.Visibility = Visibility.Hidden
-                    End If
-                Else
-                    Exit Sub
+                If InitializeService() Then
+                    client.UpdateAssets(assets)
+                    MsgBox("Asset has been updated.", MsgBoxStyle.Information, "AIDE")
+                    ClearFields()
+                    mainFrame.Navigate(New AssetsListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
+                    mainFrame.IsEnabled = True
+                    mainFrame.Opacity = 1
+                    _menugrid.IsEnabled = True
+                    _menugrid.Opacity = 1
+                    _submenuframe.IsEnabled = True
+                    _submenuframe.Opacity = 1
+
+                    _addframe.Visibility = Visibility.Hidden
                 End If
-
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
@@ -106,7 +102,7 @@ Public Class AssetsAddPage
             e.Handled = True
             Dim assets As New Assets
             If CheckMissingField() Then
-                MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 assets.EMP_ID = Integer.Parse(txtCreatedBy.Text)
                 assets.ASSET_DESC = cbAssetType.Text
@@ -117,23 +113,20 @@ Public Class AssetsAddPage
                 assets.DATE_PURCHASED = Date.Parse(dateInput.SelectedDate)
                 assets.ASSIGNED_TO = cbNickname.SelectedValue
                 assets.OTHER_INFO = txtOtherInfo.Text
-                Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
-                If result = 1 Then
-                    If InitializeService() Then
-                        client.InsertAssets(assets)
-                        ClearFields()
-                        mainFrame.Navigate(New AssetsListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
-                        mainFrame.IsEnabled = True
-                        mainFrame.Opacity = 1
-                        _menugrid.IsEnabled = True
-                        _menugrid.Opacity = 1
-                        _submenuframe.IsEnabled = True
-                        _submenuframe.Opacity = 1
 
-                        _addframe.Visibility = Visibility.Hidden
-                    End If
-                Else
-                    Exit Sub
+                If InitializeService() Then
+                    client.InsertAssets(assets)
+                    MsgBox("Asset has been added.", MsgBoxStyle.Information, "AIDE")
+                    ClearFields()
+                    mainFrame.Navigate(New AssetsListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
+                    mainFrame.IsEnabled = True
+                    mainFrame.Opacity = 1
+                    _menugrid.IsEnabled = True
+                    _menugrid.Opacity = 1
+                    _submenuframe.IsEnabled = True
+                    _submenuframe.Opacity = 1
+
+                    _addframe.Visibility = Visibility.Hidden
                 End If
             End If
         Catch ex As Exception
@@ -157,10 +150,10 @@ Public Class AssetsAddPage
         Try
             e.Handled = True
             If txtID.Text = String.Empty Then
-                MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Else
-                Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
-                If result = 1 Then
+                Dim result As Integer = MsgBox("Are you sure you want to delete this asset?", MessageBoxButton.YesNo, "AIDE")
+                If result = 6 Then
                     client.DeleteSuccessRegisterBySuccessID(CUInt(txtID.Text))
                     ClearFields()
                     mainFrame.Navigate(New AssetsListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
@@ -184,7 +177,7 @@ Public Class AssetsAddPage
     Private Sub dateInput_SelectedDateChanged(sender As Object, e As SelectionChangedEventArgs) Handles dateInput.SelectedDateChanged
         e.Handled = True
         If dateInput.SelectedDate > Date.Now Then
-            MsgBox("Date must not be beyond today", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Please enter a date on or before the current date.", MsgBoxStyle.Exclamation, "AIDE")
             dateInput.SelectedDate = Date.Now
         Else
             Exit Sub

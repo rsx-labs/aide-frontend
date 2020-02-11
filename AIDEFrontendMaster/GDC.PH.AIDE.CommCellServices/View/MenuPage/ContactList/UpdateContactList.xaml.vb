@@ -72,11 +72,10 @@ Class UpdateContactList
                 contactList.DateReviewed = DateTime.Now.Date
                 contactList.Nick_Name = txtCNickName.Text
 
-                Dim result As Integer = MsgBox("Are you sure you want to continue?", MsgBoxStyle.OkCancel, "AIDE")
-                If result = 1 Then
-                    If InitializeService() Then
+                If InitializeService() Then
                         client.UpdateContactListByEmpID(contactList, 0)
-                        ClearFields()
+                    MsgBox("Contacts have been updated.", MsgBoxStyle.Information, "AIDE")
+                    ClearFields()
                         attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
                         mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
                         mainFrame.IsEnabled = True
@@ -86,9 +85,7 @@ Class UpdateContactList
                         submenuframe.IsEnabled = True
                         submenuframe.Opacity = 1
                         addframe.Visibility = Visibility.Hidden
-                    End If
-                Else
-                    Exit Sub
+
                 End If
             End If
         Catch ex As Exception

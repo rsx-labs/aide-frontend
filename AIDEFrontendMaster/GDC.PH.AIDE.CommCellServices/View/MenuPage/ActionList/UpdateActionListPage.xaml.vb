@@ -168,9 +168,9 @@ Class UpdateActionListPage
             InitializeService()
             If _actionModel.REF_NO = Nothing Or _actionModel.ACTION_MESSAGE = Nothing Or Act_AssignedAll.Text = String.Empty Or _actionModel.DUE_DATE = Nothing Or _actionModel.DATE_CLOSED = Nothing Then
                 If _actionModel.DATE_CLOSED = Nothing And _actionModel.ACTION_MESSAGE <> Nothing And _actionModel.DUE_DATE <> Nothing And Act_AssignedAll.Text <> String.Empty Then
-                    If MsgBox("Do you want to proceed without closing date?", MsgBoxStyle.Information + vbYesNo, "AIDE") = vbYes Then
+                    If MsgBox("Are you sure you want to proceed without a closing date?", MsgBoxStyle.Information + vbYesNo, "AIDE") = vbYes Then
                         aide.UpdateActionList(getDataUpdate(Me.DataContext()))
-                        MsgBox("Successfully updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                        MsgBox("Action item has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                         act_ion.Act_ID = Nothing
                         act_ion.Act_Message = Nothing
                         act_ion.Act_Assignee = Nothing
@@ -187,11 +187,11 @@ Class UpdateActionListPage
                         _addframe.Visibility = Visibility.Hidden
                     End If
                 Else
-                    MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                    MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 End If
             Else
                 aide.UpdateActionList(getDataUpdate(Me.DataContext()))
-                MsgBox("Successfully updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                MsgBox("Action item has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 act_ion.Act_ID = Nothing
                 act_ion.Act_Message = Nothing
                 act_ion.Act_Assignee = Nothing
@@ -228,7 +228,7 @@ Class UpdateActionListPage
     'Validates if selected duedate is less than the previous due date
     Private Sub Act_DueDate_SelectedDateChanged(sender As Object, e As SelectionChangedEventArgs)
         If Act_DueDate.SelectedDate < hold_Duedate Then
-            MsgBox("Dates should be not the day before!", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter a date on or after the current date.", MsgBoxStyle.Critical, "AIDE")
 
             Act_DueDate.Text = hold_Duedate
         End If
@@ -241,7 +241,7 @@ Class UpdateActionListPage
         Try
             e.Handled = True
             If Act_AssignedAll.Text = String.Empty Then
-                MsgBox("Textbox is empty", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("No assigned employee to remove.", MsgBoxStyle.Exclamation, "AIDE")
             ElseIf Act_AssigneeCB2.SelectedValue = String.Empty Then
                 MsgBox("Please select an employee", MsgBoxStyle.Exclamation, "AIDE")
             Else
@@ -263,7 +263,7 @@ Class UpdateActionListPage
                         Act_AssignedAll.Text = txtBox.Remove(ifYes, cbBox.Length)
                     End If
                 Else
-                    MsgBox("Entry already removed", MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("No assigned employee to remove.", MsgBoxStyle.Exclamation, "AIDE")
                 End If
             End If
         Catch ex As Exception
@@ -282,7 +282,7 @@ Class UpdateActionListPage
             If ifYes = -1 Then
                 Act_AssignedAll.Text += ", " + Act_AssigneeCB2.SelectedValue
             Else
-                MsgBox("Cannot allow duplicate entry!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Employee already assigned. Please select a different employee.", MsgBoxStyle.Exclamation, "AIDE")
             End If
         End If
     End Sub
@@ -290,7 +290,7 @@ Class UpdateActionListPage
     Private Sub btnRemovedEmployee_Click_1(sender As Object, e As RoutedEventArgs)
         e.Handled = True
         If Act_AssignedAll.Text = String.Empty Then
-            MsgBox("Textbox is Empty", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("No assigned employee to remove.", MsgBoxStyle.Exclamation, "AIDE")
         Else
             Dim txtBox As String = Act_AssignedAll.Text
             Dim cbBox As String = String.Empty
@@ -312,7 +312,7 @@ Class UpdateActionListPage
                     Act_AssignedAll.Text = txtBox.Remove(ifYes, cbBox.Length)
                 End If
             Else
-                MsgBox("Entry already removed", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("No assigned employee to remove.", MsgBoxStyle.Exclamation, "AIDE")
             End If
         End If
     End Sub

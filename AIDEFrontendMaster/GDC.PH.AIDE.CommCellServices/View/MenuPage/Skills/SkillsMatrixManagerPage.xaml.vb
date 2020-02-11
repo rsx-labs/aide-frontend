@@ -342,7 +342,7 @@ Class SkillsMatrixManagerPage
             Skills.SkillID = cbProjectList.SelectedValue
             Skills.Last_Reviewed = Date.Now
             client.InsertNewSkills(Skills)
-            MsgBox("Successfully Added " & cbProjectList.Text.ToUpper & " Skill!", MsgBoxStyle.Information, "Employee Assist Tools")
+            MsgBox(cbProjectList.Text.ToUpper & " has been added.", MsgBoxStyle.Information, "Employee Assist Tools")
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Employee Assist Tools")
         End Try
@@ -365,7 +365,7 @@ Class SkillsMatrixManagerPage
             Skills.SkillID = cbProjectList.SelectedValue
             Skills.Last_Reviewed = Date.Now
             client.UpdateSkills(Skills)
-            MsgBox("Successfully Updated " & cbProjectList.Text.ToUpper & " Skill!", MsgBoxStyle.Information, "Employee Assist Tools")
+            MsgBox("Skill's matrix proficiency level have been updated." & cbProjectList.Text.ToUpper, MsgBoxStyle.Information, "Employee Assist Tools")
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Employee Assist Tools")
         End Try
@@ -385,7 +385,7 @@ Class SkillsMatrixManagerPage
             Skills.EmpID = Convert.ToInt32(lblEmpID.Text)
             Skills.Last_Reviewed = Date.Now
             client.UpdateAllSkills(Skills)
-            MsgBox("Successfully Updated " & cbProjectList.Text.ToUpper & " Skill!", MsgBoxStyle.Information, "Employee Assist Tools")
+            MsgBox(cbProjectList.Text.ToUpper & " has been updated.", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Employee Assist Tools")
         End Try
@@ -492,24 +492,18 @@ Class SkillsMatrixManagerPage
 
             Else
                 If proficiency = proflevel Then
-                    MsgBox("You've selected your current proficiency!" & vbNewLine & "Please select another one to update " & cbProjectList.Text.ToUpper, MsgBoxStyle.Critical, "AIDE")
+                    MsgBox("There is no change in proficiency level. " & vbNewLine & "Please select another skill to update." & cbProjectList.Text.ToUpper, MsgBoxStyle.Critical, "AIDE")
                 Else
                     InitializeService()
                     If client.GetProfLvlByEmpIDSkillIDs(Convert.ToInt32(lblEmpID.Text), skillid).Prof_LVL = 1 Then
-                        Dim result = MsgBox("You are going to update " & cbProjectList.Text.ToUpper & " Skill." & vbNewLine & "Do you wish to Continue?", MessageBoxButtons.YesNo, "AIDE")
-                        If result = vbYes Then
-                            UpdateSkillsProficiency()
-                        Else
-                            ClearSelection()
-                        End If
+
+                        UpdateSkillsProficiency()
+
                     Else
-                        Dim result = MsgBox("You are going to add proficiency level to " & cbProjectList.Text.ToUpper & " skill." & vbNewLine & "Do you wish to Continue?", MessageBoxButtons.YesNo, "AIDE")
-                        If result = vbYes Then
-                            InsertSkillsProficiency()
-                        Else
-                            ClearSelection()
+
+                        InsertSkillsProficiency()
+
                         End If
-                    End If
                     _SkillDBProvider._splist.Clear()
                     ClearSelection()
                     LoadSkillsProf()

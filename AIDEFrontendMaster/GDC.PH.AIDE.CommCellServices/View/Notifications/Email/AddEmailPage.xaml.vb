@@ -48,10 +48,10 @@ Class AddEmailPage
                         CodeCombination = getCode()
                         email_frame.Navigate(New EmailCodeRequest(email_frame, CodeCombination, mainwindow, SendCodeViewModel))
                     Else
-                        MsgBox("Email is not a member of AIDE.", MsgBoxStyle.Exclamation, "AIDE")
+                        MsgBox("Email is not registered to AIDE.", MsgBoxStyle.Exclamation, "AIDE")
                     End If
                 Else
-                    MsgBox("Email used is not valid.", MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("Please enter a valid email address.", MsgBoxStyle.Exclamation, "AIDE")
                 End If
             Catch ex As Exception
 

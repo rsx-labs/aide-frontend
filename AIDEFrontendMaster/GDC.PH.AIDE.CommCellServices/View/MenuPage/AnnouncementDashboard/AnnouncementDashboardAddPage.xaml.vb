@@ -107,10 +107,10 @@ Class AnnouncementDashboardAddPage
             Dim textRange As New TextRange(txtAnnouncementMessage.Document.ContentStart, txtAnnouncementMessage.Document.ContentEnd)
 
             If _announcemodel.TITLE = Nothing Or textRange.Text.Trim() = String.Empty Then
-                MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else
                 aide.InsertAnnouncements(getDataInsert(Me.DataContext()))
-                MsgBox("Successfully added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                MsgBox("Announcement has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 _announce.TITLE = Nothing
                 _announce.MESSAGE = Nothing
                 _announce.END_DATE = Nothing

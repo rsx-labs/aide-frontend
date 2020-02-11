@@ -83,9 +83,9 @@ Class TrackerAddPage
 
             aide.InsertSabaCourses(getDataInsert(Me.DataContext()))
             If sabalearning.TITLE = Nothing Or sabalearning.END_DATE = Nothing Then
-                MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else
-                MsgBox("Successfully added", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                MsgBox("Tracker has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
                 sabalearning.TITLE = Nothing
                 sabalearning.END_DATE = Nothing

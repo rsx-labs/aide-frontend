@@ -70,10 +70,10 @@ Class ResourcePlannerAddPage
     Private Sub btnCreateLeave_Click(sender As Object, e As RoutedEventArgs) Handles btnCreateLeave.Click
         Try
             If profile.Permission_ID <> 1 AndAlso cbCategory.DisplayMemberPath = "Holiday" Then
-                MsgBox("Sorry! You do not have authorization to file holiday Leave. Please contact your Manager", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Access to file Holiday leave has been denied. Please contact your Manager.", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 If cbCategory.Text = String.Empty Or dtpFrom.Text = String.Empty Or dtpTo.Text = String.Empty Then
-                    MsgBox("Please fill all required fields!", MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("Please enter all required fields. Ensure all required fields have * indicated.!", MsgBoxStyle.Exclamation, "AIDE")
                 ElseIf cbCategory.SelectedValue = setStatus Then
                     Dim notify = MsgBox("There is already an existing " & cbCategory.Text & " for this date" & vbNewLine & "Do you wish to proceed?", MsgBoxStyle.YesNo, "AIDE")
                     If notify = MsgBoxResult.Yes Then
@@ -81,15 +81,13 @@ Class ResourcePlannerAddPage
                     End If
                 Else
                     If isHalfDay And cbSchedule.SelectedIndex = -1 Then
-                        MsgBox("Please fill all required fields!", MsgBoxStyle.Exclamation, "AIDE")
+                        MsgBox("Please enter all required fields. Ensure all required fields have * indicated.!", MsgBoxStyle.Exclamation, "AIDE")
                     Else
-                        Dim ans = MsgBox("Are you sure you want to file " & cbCategory.Text & "?", MsgBoxStyle.YesNo, "AIDE")
-                        If ans = MsgBoxResult.Yes Then
-                            InsertResourcePlanner()
-                            dtpTo.IsEnabled = True
-                            attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
-                            ExitPage()
-                        End If
+                        InsertResourcePlanner()
+                        dtpTo.IsEnabled = True
+                        attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
+                        ExitPage()
+
                     End If
                 End If
             End If
@@ -200,7 +198,7 @@ Class ResourcePlannerAddPage
             client.UpdateResourcePlanner(Resource)
         End If
             _ResourceDBProvider._splist.Clear()
-        MsgBox("Successfully applied " & cbCategory.Text, MsgBoxStyle.Information, "AIDE")
+        MsgBox(cbCategory.Text & " has been applied. ", MsgBoxStyle.Information, "AIDE")
     End Sub
 
     Public Sub LoadCategory()
@@ -231,7 +229,7 @@ Class ResourcePlannerAddPage
             txtEmpID.Text = profile.Emp_ID
             LoadEmployee()
         Else
-            txtInfo.Text = "Please fill up all required fields."
+            txtInfo.Text = "Please enter all required fields. Ensure all required fields have * indicated.."
             GridForManagers.Visibility = Windows.Visibility.Collapsed
             GridLine.Visibility = Windows.Visibility.Collapsed
         End If

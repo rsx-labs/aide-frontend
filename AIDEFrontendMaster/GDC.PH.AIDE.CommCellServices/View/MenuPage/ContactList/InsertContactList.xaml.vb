@@ -251,7 +251,7 @@ Class InsertContactList
                 contactVM.ContactProfile.EMAIL_ADDRESS = String.Empty OrElse _
                 contactVM.ContactProfile.CEL_NO = String.Empty OrElse _
                 cbContactLocation.SelectedValue = Nothing Then
-                MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 contactList.EmpID = contactVM.ContactProfile.EMP_ID
                 contactList.LAST_NAME = contactVM.ContactProfile.LAST_NAME.ToUpper()
@@ -294,25 +294,23 @@ Class InsertContactList
                 contactList.MARITAL_STATUS_ID = CInt(cbContactMaritalStatus.SelectedValue)
                 contactList.MARITAL_STATUS = cbContactMaritalStatus.Text
 
-                Dim result As Integer = MsgBox("Are you sure you want to continue?", MsgBoxStyle.OkCancel, "AIDE")
-                If result = 1 Then
-                    If InitializeService() Then
-                        client.CreateNewContactByEmpID(contactList)
-                        'ClearFields()
-                        attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
-                        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
-                        mainFrame.IsEnabled = True
-                        mainFrame.Opacity = 1
-                        menugrid.IsEnabled = True
-                        menugrid.Opacity = 1
-                        submenuframe.IsEnabled = True
-                        submenuframe.Opacity = 1
-                        addframe.Visibility = Visibility.Hidden
-                    End If
-                Else
-                    Exit Sub
+
+
+                If InitializeService() Then
+                    client.CreateNewContactByEmpID(contactList)
+                    'ClearFields()
+                    attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
+                    mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+                    mainFrame.IsEnabled = True
+                    mainFrame.Opacity = 1
+                    menugrid.IsEnabled = True
+                    menugrid.Opacity = 1
+                    submenuframe.IsEnabled = True
+                    submenuframe.Opacity = 1
+                    addframe.Visibility = Visibility.Hidden
                 End If
             End If
+
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
         End Try

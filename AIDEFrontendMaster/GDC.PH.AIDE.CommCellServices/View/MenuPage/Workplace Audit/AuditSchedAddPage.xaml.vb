@@ -341,7 +341,7 @@ Class AuditSchedAddPage
 
                     Dim isMessageSuccessfuly As Boolean = aide.InsertAuditSched(auditSched)
                     If isMessageSuccessfuly Then
-                        MsgBox("Successfully added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                        MsgBox("Auditor has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                     Else
                         MsgBox("An application error was encountered. Please contact your AIDE Administrator. ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                     End If

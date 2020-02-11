@@ -109,7 +109,7 @@ Class SkillsMatrixPage
             Skills.SkillID = cbSkillList.SelectedValue
             Skills.Last_Reviewed = Date.Now
             client.InsertNewSkills(Skills)
-            MsgBox("Successfully added " & cbSkillList.Text.ToUpper & " Skill!", MsgBoxStyle.Information, "AIDE")
+            MsgBox(cbSkillList.Text.ToUpper & "has been added. ", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
         End Try
@@ -131,7 +131,7 @@ Class SkillsMatrixPage
             Skills.SkillID = cbSkillList.SelectedValue
             Skills.Last_Reviewed = Date.Now
             client.UpdateSkills(Skills)
-            MsgBox("Successfully updated " & cbSkillList.Text.ToUpper & " skill!", MsgBoxStyle.Information, "AIDE")
+            MsgBox(cbSkillList.Text.ToUpper & "has been updated. ", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
         End Try
@@ -290,23 +290,17 @@ Class SkillsMatrixPage
                 ClearSelection()
             Else
                 If proficiency = proflevel Then
-                    MsgBox("You've selected your current proficiency!" & vbNewLine & "Please select another one to update " & cbSkillList.Text.ToUpper, MsgBoxStyle.Critical, "AIDE")
+                    MsgBox("There is no change in proficiency level. " & vbNewLine & "Please select another skill to update." & cbSkillList.Text.ToUpper, MsgBoxStyle.Critical, "AIDE")
                 Else
                     If client.GetProfLvlByEmpIDSkillIDs(empid, skillid).Prof_LVL = 1 Then
-                        Dim result = MsgBox("You are going to update " & cbSkillList.Text.ToUpper & " skill." & vbNewLine & "Do you wish to Continue?", MessageBoxButtons.YesNo, "AIDE")
-                        If result = vbYes Then
-                            UpdateSkillsProficiency()
+
+                        UpdateSkillsProficiency()
+
                         Else
-                            ClearSelection()
+
+                        InsertSkillsProficiency()
+
                         End If
-                    Else
-                        Dim result = MsgBox("You are going to add proficiency level to " & cbSkillList.Text.ToUpper & " skill." & vbNewLine & "Do you wish to Continue?", MessageBoxButtons.YesNo, "AIDE")
-                        If result = vbYes Then
-                            InsertSkillsProficiency()
-                        Else
-                            ClearSelection()
-                        End If
-                    End If
                 End If
 
                 _SkillDBProvider._splist.Clear()

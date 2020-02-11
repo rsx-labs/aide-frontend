@@ -120,10 +120,10 @@ Class KPITargetsAddPage
             Dim textRange As New TextRange(txtDescription.Document.ContentStart, txtDescription.Document.ContentEnd)
 
             If _kpiModel.Subject = Nothing Or textRange.Text.Trim() = String.Empty Then
-                MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else
                 aide.InsertKPITarget(getDataInsert(Me.DataContext()))
-                MsgBox("Successfully added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                MsgBox("KPI Target has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 _kpitargets.KPI_Id = Nothing
                 _kpitargets.Description = Nothing
                 _kpitargets.Subject = Nothing

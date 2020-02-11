@@ -127,11 +127,11 @@ Class KPITargetsUpdatePage
 
 
             If _kpiTargetsVM.KPITargetsSet.Subject = Nothing Or textRange.Text.Trim() = String.Empty Then
-                MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else
                 Me.DataContext = _kpiTargetsVM.KPITargetsSet
                 _client.UpdatePITarget(getDataUpdate(Me.DataContext()))
-                MsgBox("Successfully updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                MsgBox("KPI target have been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 _kpiTargets.Subject = Nothing
                 _kpiTargets.Description = Nothing
 

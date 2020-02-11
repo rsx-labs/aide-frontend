@@ -174,7 +174,7 @@ Class CommendationViewPage
            comboProject.Text = String.Empty Or
            textRange.Text = String.Empty Or
             txtCommendationEmployees.Text = String.Empty Then
-            MsgBox("Please Fill All Required Fields", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Return False
         End If
         Return True
