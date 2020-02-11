@@ -22,7 +22,7 @@ Public Class ViewProjectViewModel
                 _employeeList.Add(New ViewProjectModel(rawUser))
             Next
         Catch ex As Exception
-            Console.Write(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
     End Sub

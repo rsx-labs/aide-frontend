@@ -36,10 +36,7 @@ Class ComcellAddPage
             LoadEmpNickName()
             mode = "Add"
         Catch ex As Exception
-            If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "Error Encountered") = vbYes Then
-                Environment.Exit(0)
-            Else
-            End If
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     'Update Constructor
@@ -59,10 +56,7 @@ Class ComcellAddPage
             LoadEmpNickName()
             mode = "Update"
         Catch ex As Exception
-            If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "Error Encountered") = vbYes Then
-                Environment.Exit(0)
-            Else
-            End If
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 #End Region
@@ -77,6 +71,7 @@ Class ComcellAddPage
             bInitialize = True
         Catch ex As SystemException
             aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -121,7 +116,7 @@ Class ComcellAddPage
                 cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
             Next
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -147,7 +142,7 @@ Class ComcellAddPage
                 cbMinTaker.DataContext = nicknameVM
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 #End Region
@@ -212,10 +207,7 @@ Class ComcellAddPage
                 End If
             End If
         Catch ex As Exception
-            If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "AIDE") = vbYes Then
-                Environment.Exit(0)
-            Else
-            End If
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

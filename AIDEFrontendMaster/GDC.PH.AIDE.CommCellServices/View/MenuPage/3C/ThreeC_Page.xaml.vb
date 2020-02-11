@@ -73,7 +73,7 @@ Public Class ThreeC_Page
             End If
             
         Catch ex As SystemException
-            MsgBox(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             _AIDEClientService.Abort()
         End Try
     End Sub
@@ -87,7 +87,7 @@ Public Class ThreeC_Page
                 DisplayPagingInfo()
             End If
         Catch ex As SystemException
-            MsgBox(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             _AIDEClientService.Abort()
         End Try
     End Sub
@@ -101,7 +101,7 @@ Public Class ThreeC_Page
                 DisplayPagingInfo()
             End If
         Catch ex As SystemException
-            MsgBox(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             _AIDEClientService.Abort()
         End Try
     End Sub
@@ -125,6 +125,7 @@ Public Class ThreeC_Page
             bInitialize = True
         Catch ex As SystemException
             _AIDEClientService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -222,7 +223,7 @@ Public Class ThreeC_Page
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(_lstConcern.Length / pagingRecordPerPage)
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

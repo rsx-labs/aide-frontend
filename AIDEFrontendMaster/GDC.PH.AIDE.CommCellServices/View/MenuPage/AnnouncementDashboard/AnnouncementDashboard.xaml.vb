@@ -74,6 +74,7 @@ Class AnnouncementDashboard
             bInitialize = True
         Catch ex As SystemException
             _AideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -86,7 +87,7 @@ Class AnnouncementDashboard
                 DisplayPagingInfo()
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -110,7 +111,7 @@ Class AnnouncementDashboard
             '    lastPage = (lstAnnouncements.Length / pagingRecordPerPage) + 1
             'End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

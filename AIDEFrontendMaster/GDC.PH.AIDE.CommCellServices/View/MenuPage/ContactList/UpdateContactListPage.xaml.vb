@@ -154,7 +154,7 @@ Class UpdateContactListPage
 
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -181,7 +181,7 @@ Class UpdateContactListPage
 
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -207,7 +207,7 @@ Class UpdateContactListPage
                 cbContactDepartment.ItemsSource = selectionListVM.ObjectDepartmentSet
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -234,7 +234,7 @@ Class UpdateContactListPage
 
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -261,7 +261,7 @@ Class UpdateContactListPage
                 cbContactMaritalStatus.ItemsSource = selectionListVM.ObjectMaritalSet
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -287,7 +287,7 @@ Class UpdateContactListPage
                 cbContactShiftStatus.ItemsSource = selectionListVM.ObjectWorkShiftSet
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -315,6 +315,7 @@ Class UpdateContactListPage
             bInitialize = True
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -406,7 +407,7 @@ Class UpdateContactListPage
                 End If
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -467,7 +468,7 @@ Class UpdateContactListPage
                 End If
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

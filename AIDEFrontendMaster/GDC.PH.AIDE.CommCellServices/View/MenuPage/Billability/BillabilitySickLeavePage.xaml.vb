@@ -54,6 +54,7 @@ Public Class BillabilitySickLeavePage
             bInitialize = True
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -69,7 +70,7 @@ Public Class BillabilitySickLeavePage
                     client.InsertLeaveCredits(profile.Emp_ID, year)
                 End If
             Catch ex As Exception
-                MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+               MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             End Try
         End If
     End Sub
@@ -87,7 +88,7 @@ Public Class BillabilitySickLeavePage
             year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -98,7 +99,7 @@ Public Class BillabilitySickLeavePage
                 LoadFiscalYear()
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -118,7 +119,7 @@ Public Class BillabilitySickLeavePage
             fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -179,7 +180,7 @@ Public Class BillabilitySickLeavePage
             chartSL.AxisX.First().LabelsRotation = 135
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

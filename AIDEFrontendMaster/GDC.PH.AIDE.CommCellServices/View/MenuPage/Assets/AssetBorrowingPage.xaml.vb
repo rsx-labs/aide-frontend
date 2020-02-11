@@ -126,7 +126,7 @@ Public Class AssetBorrowingPage
                 ' SetPaging(PagingMode._First)
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -163,7 +163,7 @@ Public Class AssetBorrowingPage
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(lstAssets.Length / pagingRecordPerPage)
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -188,7 +188,7 @@ Public Class AssetBorrowingPage
     '        assetsVM.AssetInventoryList = lstAssetsList
     '        Me.DataContext = assetsVM
     '    Catch ex As Exception
-    '        MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+    '       MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
     '    End Try
     'End Sub
 
@@ -235,7 +235,7 @@ Public Class AssetBorrowingPage
             lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
             DisplayPagingInfo()
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -248,6 +248,7 @@ Public Class AssetBorrowingPage
             bInitialize = True
         Catch ex As SystemException
             _AideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -313,7 +314,7 @@ Public Class AssetBorrowingPage
 
             DisplayPagingInfo()
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -727,7 +728,7 @@ Public Class AssetBorrowingPage
         '    show = True
         '    'frame.Navigate(New AssetsInventoryListPage(frame, profile, _addframe, _menugrid, _submenuframe))
         'Catch ex As Exception
-        '    MsgBox(ex.Message, MsgBoxStyle.Critical, "AIDE")
+        '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         'End Try
     End Sub
 
@@ -786,7 +787,7 @@ Public Class AssetBorrowingPage
 
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

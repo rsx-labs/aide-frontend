@@ -46,6 +46,7 @@ Class ComcellClockAddPage
             bInitialize = True
         Catch ex As SystemException
             aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -118,7 +119,7 @@ Class ComcellClockAddPage
                 MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             End If
         Catch ex As Exception
-
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         ExitPage()
     End Sub
@@ -209,6 +210,7 @@ Class ComcellClockAddPage
         Try
             SetData(comcellClockVM.objectComcellClockSet)
         Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

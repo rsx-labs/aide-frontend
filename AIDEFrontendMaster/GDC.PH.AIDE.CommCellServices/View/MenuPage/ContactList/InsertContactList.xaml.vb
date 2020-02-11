@@ -122,7 +122,7 @@ Class InsertContactList
                 cbContactPosition.ItemsSource = selectionListVM.ObjectPositionSet
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -148,7 +148,7 @@ Class InsertContactList
                 cbContactGroup.ItemsSource = selectionListVM.ObjectPermissionSet
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -174,7 +174,7 @@ Class InsertContactList
                 cbContactMaritalStatus.ItemsSource = selectionListVM.ObjectMaritalSet
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -200,7 +200,7 @@ Class InsertContactList
                 cbContactShiftStatus.ItemsSource = selectionListVM.ObjectWorkShiftSet
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -312,7 +312,7 @@ Class InsertContactList
             End If
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 #End Region
@@ -327,6 +327,7 @@ Class InsertContactList
             bInitialize = True
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function

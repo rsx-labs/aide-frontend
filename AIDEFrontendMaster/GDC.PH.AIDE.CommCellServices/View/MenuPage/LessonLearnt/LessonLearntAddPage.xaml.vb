@@ -63,6 +63,7 @@ Class LessonLearntAddPage
             bInitialize = True
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -89,7 +90,7 @@ Class LessonLearntAddPage
                 lessonLearntModel.EmployeeID = profile.Emp_ID
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -112,7 +113,7 @@ Class LessonLearntAddPage
                 lvAction.ItemsSource = lstActionList
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -152,7 +153,7 @@ Class LessonLearntAddPage
             End If
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -207,11 +208,11 @@ Class LessonLearntAddPage
                         ExitPage()
                     End If
                 Catch ex As Exception
-                    MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
                 End Try
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
+             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

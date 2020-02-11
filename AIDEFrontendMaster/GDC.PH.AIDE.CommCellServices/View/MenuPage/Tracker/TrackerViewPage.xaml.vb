@@ -76,6 +76,7 @@ Class TrackerViewPage
             bInitialize = True
         Catch ex As SystemException
             _AideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -93,7 +94,7 @@ Class TrackerViewPage
                 LoadSabaCoursesNot()
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -115,10 +116,7 @@ Class TrackerViewPage
             End If
             Return SabaLearning
         Catch ex As Exception
-            If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "Error Encountered") = vbYes Then
-                Environment.Exit(0)
-            Else
-            End If
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             Return ex
         End Try
     End Function
@@ -149,7 +147,7 @@ Class TrackerViewPage
             SabaLearningListVM.ObjectCompletedSabaLearningSet = lstSabaLearningList
             lstEmpCompleted.ItemsSource = SabaLearningListVM.ObjectCompletedSabaLearningSet
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -176,7 +174,7 @@ Class TrackerViewPage
             SabaLearningListVM.ObjectNotCompletedSabaLearningSet = lstSabaLearningList
             lstEmpNotCompleted.ItemsSource = SabaLearningListVM.ObjectNotCompletedSabaLearningSet
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -259,10 +257,7 @@ Class TrackerViewPage
                 'addframe.Visibility = Visibility.Hidden
             End If
         Catch ex As Exception
-            If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "AIDE") = vbYes Then
-                Environment.Exit(0)
-            Else
-            End If
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

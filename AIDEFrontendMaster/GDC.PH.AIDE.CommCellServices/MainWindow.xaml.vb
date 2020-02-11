@@ -182,6 +182,7 @@ Class MainWindow
             bInitialize = True
         Catch ex As SystemException
             aideClientService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -217,7 +218,7 @@ Class MainWindow
                 profileViewModel.SelectedUser = New ProfileModel(profileDBProvider.GetMyProfile())
             End If
         Catch ex As SystemException
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -233,7 +234,7 @@ Class MainWindow
                 Environment.Exit(0)
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -268,7 +269,7 @@ Class MainWindow
             End If
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

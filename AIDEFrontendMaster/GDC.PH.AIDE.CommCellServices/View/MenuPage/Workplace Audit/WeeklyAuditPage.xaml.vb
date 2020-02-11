@@ -54,7 +54,7 @@ Class WeeklyAuditPage
                 LoadFiscalYear()
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Public Sub LoadFiscalYear()
@@ -73,7 +73,7 @@ Class WeeklyAuditPage
             fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -97,7 +97,7 @@ Class WeeklyAuditPage
             End If
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Private Sub generateQuestions()
@@ -150,7 +150,7 @@ Class WeeklyAuditPage
             QuarterLVQuestions.ItemsSource = dailyVMM.QuestionDayList
             DataContext = dailyVMM.QuestionDayList
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
     End Sub
@@ -231,7 +231,7 @@ Class WeeklyAuditPage
             DataContext = dailyVMM.Days
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
 
@@ -246,6 +246,7 @@ Class WeeklyAuditPage
             bInitialize = True
         Catch ex As SystemException
             _AideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -253,13 +254,10 @@ Class WeeklyAuditPage
         Try
             If InitializeService() Then
                 lstAuditSchedMonth = _AideService.GetAuditSChed_Month(2, Date.Now.Year, Date.Now.Month)
-
                 LoadPerWeekSchedule()
-
-
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Public Sub LoadPerWeekSchedule()
@@ -281,16 +279,13 @@ Class WeeklyAuditPage
             cbMonth.ItemsSource = AuditSchedMonthVM.ObjectAuditSchedMonthSet
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
 
     Private Sub ListViewItem_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
         Dim item = (TryCast(sender, FrameworkElement)).DataContext
-
-
-
         Dim FYDBProvider As New WorkplaceAuditDBProvider
 
         For Each objFiscal As WorkplaceAudit In lstAuditQuestions
@@ -304,10 +299,8 @@ Class WeeklyAuditPage
             LstAuditDailySchedByWeek.Add(New WorkplaceAuditModel(rawUser))
         Next
 
-
         If profile.Emp_ID = currDailyAuditAssigned OrElse profile.Permission_ID = 1 Then
-                pageframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 2))
-
+            pageframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 2))
         End If
     End Sub
 
@@ -367,27 +360,19 @@ Class WeeklyAuditPage
             QuarterLVQuestions.ItemsSource = dailyVMM.QuestionDayList
             DataContext = dailyVMM.QuestionDayList
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
     End Sub
 
     Private Sub cbMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbMonth.SelectionChanged
         Dim selectedFy_Week As Integer
+
         selectedFy_Week = defaultFy_Week
         selectedFy_Week = sender.selecteditem.fy_week
         cbMonth.SelectedValue = selectedFy_Week
-
-
-        'If cbMonth.SelectedValue = 1 Then
-        '    year = -1
-        'ElseIf cbMonth.SelectedValue = 2 Then
-        '    year = -1
-        'ElseIf cbMonth.SelectedValue = 3 Then
-
-        '    year = -1
-        'End If
         year = cbYear.SelectedItem.FISCAL_year.ToString.Substring(0, 4)
+
         If Month = 1 Then
             year += 1
         ElseIf Month = 2 Then
@@ -395,13 +380,15 @@ Class WeeklyAuditPage
         ElseIf Month = 3 Then
             year += 1
         End If
+
         dailyVMM.QuestionDayList.Clear()
         dailyVMM.Days.Clear()
         InitEmpAuditDailybyWeekData()
+
         If dailyVMM.Days.Count <> 0 Then
             generateQuestions()
         Else
-            MsgBox("There is no records in selected month.  ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("There is no records in selected date.  ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
         End If
 
 
@@ -416,17 +403,17 @@ Class WeeklyAuditPage
         ElseIf Month = 3 Then
             year += 1
         End If
+
         If cbMonth.SelectedValue Is Nothing Then
             cbMonth.SelectedValue = Date.Now.Month
         End If
+
         Month = cbMonth.SelectedValue
         cbMonth.SelectedValue = Month
-
-
-
         dailyVMM.QuestionDayList.Clear()
         dailyVMM.Days.Clear()
         InitEmpAuditDailybyWeekData()
+
         If dailyVMM.Days.Count <> 0 Then
             generateQuestions()
         Else

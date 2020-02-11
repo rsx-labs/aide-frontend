@@ -96,6 +96,7 @@ Class CreateProjectPage
             bInitialize = True
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -113,7 +114,7 @@ Class CreateProjectPage
                 DisplayPagingInfo()
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -131,7 +132,7 @@ Class CreateProjectPage
                 dgProjectList.DataContext = Nothing
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -168,7 +169,7 @@ Class CreateProjectPage
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(lstProj.Length / pagingRecordPerPage)
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -194,7 +195,7 @@ Class CreateProjectPage
             txtSearch.Text = String.Empty
             MsgBox("Project has been added.", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Project")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -219,7 +220,7 @@ Class CreateProjectPage
             ' txtSearch.Text = String.Empty
             MsgBox("Project has been updated.", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Project")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -257,7 +258,7 @@ Class CreateProjectPage
             lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
             DisplayPagingInfo()
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -318,7 +319,7 @@ Class CreateProjectPage
                     lblProjIdValidation.Content = String.Empty
                 End If
             Catch ex As Exception
-                MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+               MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             End Try
 
         End If
@@ -353,7 +354,7 @@ Class CreateProjectPage
                 End If
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -437,7 +438,7 @@ Class CreateProjectPage
 
             'DisplayPagingInfo()
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

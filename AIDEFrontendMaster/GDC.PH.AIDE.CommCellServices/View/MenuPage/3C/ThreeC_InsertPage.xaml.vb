@@ -52,6 +52,7 @@ Class ThreeC_InsertPage
             'Return True
         Catch ex As SystemException
             _AIDEClientService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -69,6 +70,7 @@ Class ThreeC_InsertPage
             Return True
         Catch ex As SystemException
             _AIDEClientService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             Return False
         End Try
     End Function
@@ -87,7 +89,7 @@ Class ThreeC_InsertPage
                 Me.DataContext = _ConcernViewModel
             End If
         Catch ex As SystemException
-
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     

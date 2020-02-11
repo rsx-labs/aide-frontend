@@ -109,6 +109,7 @@ Public Class TaskListPage
             projectViewModel.ProjectList = listProjects
         Catch ex As Exception
             aideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Rework 
@@ -126,6 +127,7 @@ Public Class TaskListPage
             tasksViewModel.ReworkStatusList = listReworkStatus
         Catch ex As SystemException
             aideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Severity 
@@ -143,6 +145,7 @@ Public Class TaskListPage
             tasksViewModel.SeverityStatusList = listSeverityStatus
         Catch ex As SystemException
             aideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Incident Type 
@@ -160,6 +163,7 @@ Public Class TaskListPage
             tasksViewModel.CategoryStatusList = listCategoryStatus
         Catch ex As SystemException
             aideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Phase Status 
@@ -177,6 +181,7 @@ Public Class TaskListPage
             tasksViewModel.PhaseStatusList = listPhaseStatus
         Catch ex As SystemException
             aideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Task Status
@@ -194,6 +199,7 @@ Public Class TaskListPage
             tasksViewModel.TaskStatusList = listTaskStatus
         Catch ex As SystemException
             aideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -206,6 +212,7 @@ Public Class TaskListPage
             bInitialize = True
         Catch ex As SystemException
             aideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -227,7 +234,7 @@ Public Class TaskListPage
                 End If
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -272,7 +279,7 @@ Public Class TaskListPage
             lv_taskList.ItemsSource = lstTasksData
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 #End Region

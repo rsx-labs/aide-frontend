@@ -73,7 +73,7 @@ Class QuarterlyAuditPage
 
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -131,9 +131,6 @@ Class QuarterlyAuditPage
                 '0 - Not yet Check the Question
                 '1 - Checked Already
                 '2 - checked but not completed/success
-
-
-
                 If month.ToString() = Date.Parse(quest.WEEKDATE).Month.ToString() AndAlso year = CDate(quest.WEEKDATE).Year Then
                     If quest.DT_CHECK_FLG = 0 Then
                         imgdtcheck = "..\..\..\Assets\Button\audittocheck.png"
@@ -145,14 +142,12 @@ Class QuarterlyAuditPage
                     dailyVMM.QuestionDayList.Add(New QuestionsDayModel(quest.AUDIT_QUESTIONS, quest.OWNER, quest.DT_CHECK_FLG, imgdtcheck, quest.WEEKDATE))
 
                 End If
-
-
             Next
 
             QuarterLVQuestions.ItemsSource = dailyVMM.QuestionDayList
             DataContext = dailyVMM.QuestionDayList
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
     End Sub
@@ -226,9 +221,6 @@ Class QuarterlyAuditPage
                 monthNames2 = quest.WEEKDATE.ToString.Substring(13, 10)
                 monthNames = Date.Parse(monthNames).ToString("MMM")
                 monthNames2 = Date.Parse(monthNames2).ToString("MMM")
-
-
-
                 dailyVMM.Days.Add(New DayMod(monthNames & "-" & monthNames2, quest.WEEKDATE, quest.NICKNAME, statusAudit, Date.Parse(quest.WEEKDATESCHED).Year.ToString(), quest.DATE_CHECKED, quest.WEEKDATESCHED))
             Next
 
@@ -236,10 +228,8 @@ Class QuarterlyAuditPage
             DataContext = dailyVMM.Days
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
-
-
     End Sub
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
@@ -251,6 +241,7 @@ Class QuarterlyAuditPage
             bInitialize = True
         Catch ex As SystemException
             _AideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -261,7 +252,7 @@ Class QuarterlyAuditPage
                 LoadFiscalYear()
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Public Sub LoadFiscalYear()
@@ -280,7 +271,7 @@ Class QuarterlyAuditPage
             fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Public Sub LoadSChed()
@@ -290,17 +281,11 @@ Class QuarterlyAuditPage
                 LoadYear()
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
-
-
-
     Private Sub ListViewItem_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
         Dim item = (TryCast(sender, FrameworkElement)).DataContext
-
-
-
         Dim FYDBProvider As New WorkplaceAuditDBProvider
 
         For Each objFiscal As WorkplaceAudit In lstAuditQuestions
@@ -314,11 +299,9 @@ Class QuarterlyAuditPage
             LstAuditDailySchedByWeek.Add(New WorkplaceAuditModel(rawUser))
         Next
 
-
         If profile.Permission_ID = 1 Then
                 pageframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 4))
             End If
-
 
     End Sub
 
@@ -378,7 +361,7 @@ Class QuarterlyAuditPage
             QuarterLVQuestions.ItemsSource = dailyVMM.QuestionDayList
             DataContext = dailyVMM.QuestionDayList
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
     End Sub
@@ -393,9 +376,6 @@ Class QuarterlyAuditPage
                 generateQuestions()
             End If
         End If
-
-
-
     End Sub
 End Class
 

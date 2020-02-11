@@ -54,6 +54,7 @@ Class AssignedProjectMainPage
             AssignedProjectGrid.ItemsSource = _assignedProjVM.AssignedProjectList
         Catch ex As SystemException
             _aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -69,6 +70,7 @@ Class AssignedProjectMainPage
             'Return True
         Catch ex As SystemException
             _aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function

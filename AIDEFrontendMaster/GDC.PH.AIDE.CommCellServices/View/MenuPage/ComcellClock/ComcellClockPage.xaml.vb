@@ -60,6 +60,7 @@ Class ComcellClockPage
             isServiceEnabled = True
         Catch ex As SystemException
             aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -112,7 +113,7 @@ Class ComcellClockPage
             End If
 
         Catch ex As Exception
-
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Private Function getSelectedFY(Year As Integer, month As Integer)
@@ -156,7 +157,7 @@ Class ComcellClockPage
             End If
             comcellClockVM.objectComcellSetAlarm = GetDayValue(ComcellClockModel.CLOCK_DAY) + NewHour.ToString() + ComcellClockModel.CLOCK_MINUTE.ToString() + "1"
         Catch ex As Exception
-
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -224,7 +225,7 @@ Class ComcellClockPage
                 End If
 
             Catch ex As Exception
-
+                MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             End Try
         End If
 
@@ -251,7 +252,7 @@ Class ComcellClockPage
                 loadComcell()
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

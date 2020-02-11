@@ -55,6 +55,7 @@ Class AddEmailPage
                 End If
             Catch ex As Exception
 
+                MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             End Try
             
            
@@ -75,7 +76,10 @@ Class AddEmailPage
 
         Catch ex As Exception
 
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+
         End Try
+        Return True
     End Function
 
     Private Function CheckEmailValidity(email As String) As Boolean
@@ -98,7 +102,7 @@ Class AddEmailPage
             End If
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -141,6 +145,7 @@ Class AddEmailPage
             bInitialize = True
         Catch ex As SystemException
             aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function

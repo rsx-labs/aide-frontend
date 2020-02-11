@@ -100,6 +100,7 @@ Class TaskAddPage
             bInitialize = True
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
 
@@ -144,6 +145,7 @@ Class TaskAddPage
             tasksViewModel.CategoryStatusList = listCategoryStatus
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Severity Combobox
@@ -161,6 +163,7 @@ Class TaskAddPage
             tasksViewModel.SeverityStatusList = listSeverityStatus
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Task Status Combobox
@@ -179,6 +182,7 @@ Class TaskAddPage
             tasksViewModel.TaskStatusList = listTaskStatus
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Phase Status Combobox
@@ -197,6 +201,7 @@ Class TaskAddPage
             tasksViewModel.PhaseStatusList = listPhaseStatus
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Rework Combobox
@@ -215,6 +220,7 @@ Class TaskAddPage
             tasksViewModel.ReworkStatusList = listReworkStatus
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         tasksViewModel.NewTasks = tasksModel
@@ -240,6 +246,7 @@ Class TaskAddPage
             cbProject.DataContext = projectViewModel
         Catch ex As Exception
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
     End Sub
@@ -254,7 +261,7 @@ Class TaskAddPage
                 tasksModel.TaskId = totalCount
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -512,7 +519,7 @@ Class TaskAddPage
                     End If
                 End If
             Catch ex As Exception
-                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
+                 MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             End Try
         End If
     End Sub
@@ -531,7 +538,7 @@ Class TaskAddPage
                     End If
                 End If
             Catch ex As Exception
-                MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
+                 MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             End Try
         End If
     End Sub

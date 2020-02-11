@@ -112,6 +112,7 @@ Class WeeklyReportPage
             bInitialize = True
         Catch ex As SystemException
             AideServiceClient.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -135,6 +136,7 @@ Class WeeklyReportPage
             weekRangeViewModel.WeeklyReportStatusList = listWeeklyReportStatus
         Catch ex As SystemException
             AideServiceClient.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -145,7 +147,7 @@ Class WeeklyReportPage
                 LoadWeeklyReports()
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -172,7 +174,7 @@ Class WeeklyReportPage
             dgWeeklyReports.ItemsSource = weeklyReportCollection
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -191,7 +193,7 @@ Class WeeklyReportPage
 
             lblMissingReportsWeek.Content = lastWeekSaturday.ToShortDateString + " - " + lastWeekFriday.ToShortDateString + " Missing Reports"
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -212,7 +214,7 @@ Class WeeklyReportPage
             currentPage = missingReportCollection.CurrentPage + 1
             lastPage = Math.Ceiling(lstMissingReports.Length / pagingRecordPerPage)
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -240,7 +242,7 @@ Class WeeklyReportPage
                 LoadFiscalYear()
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -261,7 +263,7 @@ Class WeeklyReportPage
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -289,7 +291,7 @@ Class WeeklyReportPage
             cbYear.SelectedValue = startFiscalYear & "-" & endFiscalYear
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 #End Region

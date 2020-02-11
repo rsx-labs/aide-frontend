@@ -48,10 +48,7 @@ Class AuditSchedAddPage
             LoadauditSched()
             mode = "Add"
         Catch ex As Exception
-            If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "Error Encountered") = vbYes Then
-                Environment.Exit(0)
-            Else
-            End If
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     'Update Constructor
@@ -77,10 +74,7 @@ Class AuditSchedAddPage
 
             mode = "Update"
         Catch ex As Exception
-            If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "Error Encountered") = vbYes Then
-                Environment.Exit(0)
-            Else
-            End If
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 #End Region
@@ -95,6 +89,7 @@ Class AuditSchedAddPage
             bInitialize = True
         Catch ex As SystemException
             aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -118,7 +113,7 @@ Class AuditSchedAddPage
 
             Me.DataContext = auditSchedVM
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -150,7 +145,8 @@ Class AuditSchedAddPage
             ''cbMonthly.SelectedValue = txtBlockMonth.Text
             'cbYear.SelectedValue = txtBlockYear.Text
         Catch ex As Exception
-            ex.Message.ToString()
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -211,7 +207,7 @@ Class AuditSchedAddPage
                 cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
             Next
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -222,7 +218,7 @@ Class AuditSchedAddPage
                 LoadFiscalYear()
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Public Sub LoadFiscalYear()
@@ -241,7 +237,7 @@ Class AuditSchedAddPage
             fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Public Sub LoadSChed()
@@ -251,7 +247,7 @@ Class AuditSchedAddPage
                 LoadYear()
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -278,7 +274,7 @@ Class AuditSchedAddPage
                 cbWeekly.DataContext = nicknameVM
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -325,12 +321,10 @@ Class AuditSchedAddPage
             InitializeService()
             If mode = "Add" Then
                 If cbMonth.SelectedValue = Nothing Or cbDaily.SelectedValue = Nothing Or cbMonthly.SelectedValue = Nothing Or cbWeekly.SelectedValue = Nothing Or cbPeriodStart.SelectedValue = Nothing Or cbYear.SelectedValue.ToString.Substring(0, 4) = Nothing Then
-                    MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 ElseIf cbDaily.SelectedValue = cbWeekly.SelectedValue Or cbDaily.SelectedValue = cbMonthly.SelectedValue Or cbWeekly.SelectedValue = cbMonthly.SelectedValue Then
-                    MsgBox("Selected Auditors are the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("Employee already assigned. Please select a different employee.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 Else
-
-
                     auditSched.EMP_ID = profile.Emp_ID
                     auditSched.PERIOD_START = cbPeriodStart.Text
                     auditSched.PERIOD_END = txtPeriodEnd.Text
@@ -341,7 +335,7 @@ Class AuditSchedAddPage
 
                     Dim isMessageSuccessfuly As Boolean = aide.InsertAuditSched(auditSched)
                     If isMessageSuccessfuly Then
-                        MsgBox("Auditor has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                        MsgBox("Employees have been assigned to workplace audit.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                     Else
                         MsgBox("An application error was encountered. Please contact your AIDE Administrator. ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                     End If
@@ -385,16 +379,9 @@ Class AuditSchedAddPage
                         End If
                     End If
                 Next
-
-
-
-
-                'auditSched.YEAR = cbYear.SelectedValue.ToString.Substring(0, 4)
-
-
                 Dim isMessageSuccessfuly As Boolean = aide.UpdateAuditSched(auditSched)
                 If isMessageSuccessfuly Then
-                    MsgBox("Schedule has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                    MsgBox("Wokrplace Schedule have been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 Else
                     MsgBox("An application error was encountered. Please contact your AIDE Administrator. ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 End If
@@ -412,10 +399,7 @@ Class AuditSchedAddPage
             'End If
 
         Catch ex As Exception
-            If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "AIDE") = vbYes Then
-                Environment.Exit(0)
-            Else
-            End If
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

@@ -64,6 +64,7 @@ Class LessonLearntUpdatePage
             bInitialize = True
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -89,7 +90,7 @@ Class LessonLearntUpdatePage
                 lvAction.ItemsSource = lstActionList
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -114,7 +115,7 @@ Class LessonLearntUpdatePage
                 End If
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -137,7 +138,7 @@ Class LessonLearntUpdatePage
                 lessonLearnt.ActionNo = ""
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -184,11 +185,11 @@ Class LessonLearntUpdatePage
                         ExitPage()
                     End If
                 Catch ex As Exception
-                    MsgBox(ex.Message, MsgBoxStyle.Critical, "AIDE")
+                    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
                 End Try
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "Failed")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -217,7 +218,7 @@ Class LessonLearntUpdatePage
                         ConfigureButtons()
                     End If
                 Catch ex As Exception
-                    MsgBox(ex.Message, MsgBoxStyle.Critical, "Failed")
+                   MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
                 End Try
             End If
         End If
@@ -240,7 +241,7 @@ Class LessonLearntUpdatePage
                 GetActionLists()
                 ConfigureButtons()
             Catch ex As Exception
-                MsgBox(ex.Message, MsgBoxStyle.Critical, "Failed")
+               MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             End Try
         End If
     End Sub

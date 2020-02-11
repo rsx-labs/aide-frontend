@@ -132,7 +132,7 @@ Class HomePage
     '            LoadCommendations()
     '        End If
     '    Catch ex As Exception
-    '        MessageBox.Show(ex.Message)
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
     '    End Try
     'End Sub
 
@@ -152,7 +152,7 @@ Class HomePage
     '        commendationVM.CommendationList = lstCommendationList
     '        lv_commendation.ItemsSource = commendationVM.CommendationList
     '    Catch ex As Exception
-    '        MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+    '       MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
     '    End Try
     'End Sub
 
