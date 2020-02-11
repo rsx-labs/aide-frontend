@@ -174,21 +174,18 @@ Class LessonLearntUpdatePage
             GetUpdatedData(Me.DataContext)
 
             If lessonLearnt.Problem.Trim = String.Empty Or lessonLearnt.Resolution.Trim = String.Empty Then
-                MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Else
-                Dim result As Integer = MsgBox("Are you sure you want to update?", MsgBoxStyle.YesNo, "AIDE")
 
-                If result = vbYes Then
-                    Try
-                        If Me.InitializeService() Then
-                            client.UpdateLessonLearntInfo(lessonLearnt)
-                            MsgBox("Successfully updated", MsgBoxStyle.Information, "AIDE")
-                            ExitPage()
-                        End If
-                    Catch ex As Exception
-                        MsgBox(ex.Message, MsgBoxStyle.Critical, "AIDE")
-                    End Try
-                End If
+                Try
+                    If Me.InitializeService() Then
+                        client.UpdateLessonLearntInfo(lessonLearnt)
+                        MsgBox("Lesson learnt has been updated.", MsgBoxStyle.Information, "AIDE")
+                        ExitPage()
+                    End If
+                Catch ex As Exception
+                    MsgBox(ex.Message, MsgBoxStyle.Critical, "AIDE")
+                End Try
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Critical, "Failed")
@@ -199,10 +196,10 @@ Class LessonLearntUpdatePage
         'INSERT SELECTED ACTION
 
         If lstSelectedActionList.Count > 0 Then
-            MsgBox("Lesson learnt already reference to an action list", MsgBoxStyle.Information, "AIDE")
+            MsgBox("Lesson learnt is already referenced to an action.", MsgBoxStyle.Information, "AIDE")
         Else
             If lvAction.SelectedIndex = -1 Then
-                MsgBox("Please select an item first.")
+                MsgBox("Please select an action item.")
             Else
                 Try
                     If InitializeService() Then
@@ -213,7 +210,7 @@ Class LessonLearntUpdatePage
                         lessonLearntModel.ActionNo = lessonLearnt.ActionNo 'Reload Reference Action List
 
                         client.UpdateLessonLearntInfo(lessonLearnt)
-                        MsgBox("Successfully added new action reference in lessons learnt", MsgBoxStyle.Information, "AIDE")
+                        MsgBox("Action has been added to lesson learnt.", MsgBoxStyle.Information, "AIDE")
 
                         GetActionLists()
                         GetReferenceActionList()
@@ -227,7 +224,7 @@ Class LessonLearntUpdatePage
     End Sub
 
     Private Sub btnRemoveAction_Click(sender As Object, e As RoutedEventArgs) Handles btnRemoveAction.Click
-        If MsgBox("Are you sure you want to remove?", MsgBoxStyle.Question + vbYesNo, "AIDE") = vbYes Then
+        If MsgBox("Are you sure you want to remove action from lesson learnt?", MsgBoxStyle.Question + vbYesNo, "AIDE") = vbYes Then
             Try
                 InitializeService()
                 GetUpdatedData(Me.DataContext())
@@ -236,7 +233,7 @@ Class LessonLearntUpdatePage
                 lessonLearntViewModel.SelectedLessonLearnt.ActionNo = "" 'Clear view model Action No
 
                 client.UpdateLessonLearntInfo(lessonLearnt)
-                MsgBox("Successfully remove action reference in lesson learnt", MsgBoxStyle.Information, "AIDE")
+                MsgBox("Action has been removed from lesson learnt.", MsgBoxStyle.Information, "AIDE")
                 client.Close()
 
                 lstSelectedActionList.Clear()

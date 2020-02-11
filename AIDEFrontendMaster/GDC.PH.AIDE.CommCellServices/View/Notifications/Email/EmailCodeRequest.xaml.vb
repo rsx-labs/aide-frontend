@@ -229,7 +229,7 @@ Class EmailCodeRequest
 
 #Region "Event Handling"
     Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
-        If MsgBox("Code that was sent to your email cannot be use once go back.", vbYesNo, "AIDE") = vbYes Then
+        If MsgBox("A new access code will be required for your next login once you exit.", vbYesNo, "AIDE") = vbYes Then
             email_frame.Navigate(New AddEmailPage(email_frame, mainwindow))
         End If
     End Sub
@@ -239,7 +239,7 @@ Class EmailCodeRequest
         If Not codecombo = 0 Then
             Try
                 SendCodeRequest(sendVM.objectSendCodeSet2.PERSONAL_EMAIL, mailConfigVM)
-                MsgBox("New code was sent to your email", vbOKOnly, "AIDE")
+                MsgBox("New access code has been sent to your email.", vbOKOnly, "AIDE")
                 NewCodeBtn.IsEnabled = False
                 TimeExpire = mailConfigVM.objectMailConfigSet.PASSWORD_EXPIRY
                 expiryStarts()
@@ -259,18 +259,18 @@ Class EmailCodeRequest
         If Not codecombo = 0 Then
             If CheckEntry() Then
                 If Not CodeEntry = codecombo Then
-                    MsgBox("Invalid Code Entry.", MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("Please enter a valid code.", MsgBoxStyle.Exclamation, "AIDE")
                     clearNumFields()
                 Else
                     mainwindow.GetEmail = sendVM.objectSendCodeSet2.WORK_EMAIL
                     mainwindow.Close()
                 End If
             Else
-                MsgBox("Please fillup all fields.", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             End If
             
         Else
-            MsgBox("Access Code has been expired. Please get a new one.", vbOKOnly, "AIDE")
+            MsgBox("Access code is expired. Please request for a new access code.", vbOKOnly, "AIDE")
         End If
 
     End Sub

@@ -219,7 +219,7 @@ Class ThreeC_UpdatePage
         Try
             If InitializeService() Then
                 AIDEClientService.UpdateSelectedConcern(UpdateSelectedConcern(Me.DataContext()))
-                MsgBox("Successfully updated concern", MsgBoxStyle.Information)
+                MsgBox("3C has been updated.", MsgBoxStyle.Information)
                 AIDEClientService.Close()
 
                 ExitPage()
@@ -233,10 +233,10 @@ Class ThreeC_UpdatePage
         InitializeService()
         Try
             If lvACtion.SelectedIndex = -1 Then
-                MsgBox("Please select an item first.")
+                MsgBox("Please select an action item.")
             Else
                 AIDEClientService.insertAndDeleteSelectedAction(InsertSelectedAction())
-                MsgBox("Successfully added new action reference in concern", MsgBoxStyle.Information)
+                MsgBox("Action reference has been added to 3C.", MsgBoxStyle.Information)
                 AIDEClientService.Close()
 
                 LoadActionList()
@@ -254,9 +254,9 @@ Class ThreeC_UpdatePage
                 If lvActionRef.SelectedIndex = -1 Then
                     MsgBox("Please select an item first!", MsgBoxStyle.Exclamation, "AIDE")
                 Else
-                    If MsgBox("Are you sure you want to remove?", MsgBoxStyle.Question + vbYesNo, "AIDE") = vbYes Then
+                    If MsgBox("Are you sure you want to remove action from 3C?", MsgBoxStyle.Question + vbYesNo, "AIDE") = vbYes Then
                         AIDEClientService.insertAndDeleteSelectedAction(DeleteSelectedActionReference())
-                        MsgBox("Successfully remove action reference in concern", MsgBoxStyle.Information, "AIDE")
+                        MsgBox("Action has been removed from the 3C.", MsgBoxStyle.Information, "AIDE")
                         AIDEClientService.Close()
 
                         LoadActionList()

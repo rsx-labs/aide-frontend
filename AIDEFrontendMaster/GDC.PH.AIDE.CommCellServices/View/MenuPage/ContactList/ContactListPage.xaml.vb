@@ -391,6 +391,7 @@ Public Class ContactListPage
                         contactList.DIVISION_ID = contactListMod.DIVISION_ID
                         contactList.OLD_EMP_ID = profile.Emp_ID
                         _AideService.UpdateContactListByEmpID(contactList, 1)
+                        MsgBox("Employee has been assigned to your team.", MsgBoxStyle.OkOnly, "AIDE")
                         paginatedCollection.Clear()
                         SetData()
                     End If

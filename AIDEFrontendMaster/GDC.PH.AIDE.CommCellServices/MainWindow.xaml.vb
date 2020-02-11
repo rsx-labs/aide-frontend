@@ -137,7 +137,7 @@ Class MainWindow
         attendance()
         LoadVersionNo()
         LoadSideBar()
-        MsgBox("Welcome " & email, MsgBoxStyle.Information, "AIDE")
+        MsgBox("Welcome " & email & ".", MsgBoxStyle.Information, "AIDE")
         PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
         SubMenuFrame.Navigate(New BlankSubMenu())
     End Sub
@@ -229,7 +229,7 @@ Class MainWindow
                     SaveProfile(profile)
                 End If
             Else
-                MsgBox("Please login to Outlook", MsgBoxStyle.Critical, "AIDE")
+                MsgBox("Please login to Outlook.", MsgBoxStyle.Critical, "AIDE")
                 Environment.Exit(0)
             End If
         Catch ex As Exception
@@ -261,7 +261,7 @@ Class MainWindow
             attendanceSummarry.TimeIn = timeIn
 
             If attendanceSummarry.EmployeeID = 0 Then 'Service time-out needs to be handled on the service or else always restart it when it time's out
-                MsgBox("Service time-out! Attendance will not be recorded!" + Environment.NewLine + "Application will automatically close.", MsgBoxStyle.Critical, "AIDE")
+                MsgBox("Service timed out. Application will close automatically." + Environment.NewLine + "Please note that no attendance will be recorded.", MsgBoxStyle.Critical, "AIDE")
                 Environment.Exit(0)
             Else
                 aideClientService.InsertAttendance(attendanceSummarry)
@@ -292,7 +292,7 @@ Class MainWindow
             objMutex = Nothing
             Me.Focus()
             Me.Topmost = True
-            MessageBox.Show("Another instance of AIDE is already running!")
+            MessageBox.Show("Another instance of AIDE is already running.")
             End
         End If
     End Sub
@@ -375,8 +375,8 @@ Class MainWindow
 
     Private Sub ExitBtn_Click(sender As Object, e As RoutedEventArgs)
         Dim result = MsgBox("Do you want to logoff?" & vbCrLf & vbCrLf &
-                            "Click YES to logoff" & vbCrLf &
-                            "Click NO to quit the application", vbQuestion + MsgBoxStyle.YesNoCancel, "AIDE")
+                            "Click YES to logoff." & vbCrLf &
+                            "Click NO to close the application only.", vbQuestion + MsgBoxStyle.YesNo, "AIDE")
         If result = MsgBoxResult.Yes Then
             If InitializeService() Then
                 aideClientService.InsertLogoffTime(profile.Emp_ID)

@@ -433,19 +433,19 @@ Public Class ProjectViewModel
             If _assign.Count = 0 Then
                 If SelectedProject.ProjectID > 0 Then
                     _AideServiceClient.DeleteAllAssignedProject(SelectedProject.ProjectID)
-                    MsgBox("Assigned employee(s) to selected project deleted successfully!", MsgBoxStyle.Information)
+                    MsgBox("Employees have been removed from the project.", MsgBoxStyle.Information)
                 Else
-                    MsgBox("No Assigned Project yet, Please Select Employee to Assign Project!", MsgBoxStyle.Information)
+                    MsgBox("Please select employee(s) to assign to the project.", MsgBoxStyle.Information)
                 End If
             Else
                 If _assign(0).ProjectID = 0 Then
-                    MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
                     Exit Sub
 
                 End If
                 _AideServiceClient.DeleteAllAssignedProject(SelectedProject.ProjectID)
                 _AideServiceClient.CreateAssignedProject(_assign.ToArray())
-                MsgBox("Assigned Project Successfully saved!", MsgBoxStyle.Information)
+                MsgBox("Employee has been assigned to the project.", MsgBoxStyle.Information)
             End If
 
         Catch ex As Exception

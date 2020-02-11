@@ -240,7 +240,7 @@ Class TrackerViewPage
                 MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 addframe.Navigate(New TrackerViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, profile))
             Else
-                MsgBox("Successfully Added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                MsgBox("Tracker has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
                 SabaLearning.DATE_COMPLETED = Nothing
                 SabaLearning.SABA_ID = Nothing

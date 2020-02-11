@@ -365,7 +365,7 @@ Class WeeklyReportAddPage
     Private Sub cbDateRange_DropDownClosed(sender As Object, e As EventArgs) Handles cbDateRange.DropDownClosed
         If Not selectedValue = cbDateRange.SelectedValue Then
             If lstWeeklyReportsData.Count > 0 Then
-                Dim result As Integer = MsgBox("Changing period date will delete input data?", MsgBoxStyle.YesNo, "AIDE")
+                Dim result As Integer = MsgBox("Are you sure you want to change period date? Entered data will be deleted.", MsgBoxStyle.YesNo, "AIDE")
 
                 If result = vbYes Then
                     selectedValue = cbDateRange.SelectedValue
@@ -561,14 +561,14 @@ Class WeeklyReportAddPage
                     Next
 
                     If totalWeeklyHours < 40 Then
-                        MsgBox("Insufficient actual effort hours [Total:" + totalWeeklyHours.ToString + "]", MsgBoxStyle.Critical, "AIDE")
+                        MsgBox("Actual effort hours [Total:" + totalWeeklyHours.ToString + "] is insufficient.", MsgBoxStyle.Critical, "AIDE")
                     Else
                         Dim result As Integer = MsgBox("Submit weekly report for the week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
 
                         If result = vbYes Then
                             If InitializeService() Then
                                 AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, deletedWeeklyReport.ToArray, weeklyReportXref)
-                                MsgBox("Weekly report successfully created!", MsgBoxStyle.Information, "AIDE")
+                                MsgBox("Weekly report has been added.", MsgBoxStyle.Information, "AIDE")
                                 ExitPage()
                             End If
                         End If
@@ -652,7 +652,7 @@ Class WeeklyReportAddPage
                     If result = vbYes Then
                         If InitializeService() Then
                             AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, deletedWeeklyReport.ToArray, weeklyReportXref)
-                            MsgBox("Weekly report successfully saved!", MsgBoxStyle.Information)
+                            MsgBox("Weekly report has been saved.", MsgBoxStyle.Information)
                             ExitPage()
                         End If
                     End If
@@ -874,13 +874,13 @@ Class WeeklyReportAddPage
         End If
 
         If cbStatus.SelectedIndex = -1 Then
-            MsgBox("Please select status", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please select a status.", MsgBoxStyle.Critical, "AIDE")
             cbStatus.Focus()
             Return False
         End If
 
         If dpCompletedDate.Text IsNot String.Empty And dpStartDate.Text = String.Empty Then
-            MsgBox("Please enter start date", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter a start date.", MsgBoxStyle.Critical, "AIDE")
             dpStartDate.Focus()
             Return False
         End If
@@ -892,31 +892,31 @@ Class WeeklyReportAddPage
         'End If
 
         If (cbStatus.SelectedValue = stsInPrgress OrElse cbStatus.SelectedValue = stsWaitngForInfo OrElse cbStatus.SelectedValue = stsOnhold) And dpStartDate.Text Is String.Empty Then
-            MsgBox("Please enter start date", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter a start date.", MsgBoxStyle.Critical, "AIDE")
             dpStartDate.Focus()
             Return False
         End If
 
         If cbStatus.SelectedValue = stsCmpltd And dpCompletedDate.Text Is String.Empty Then
-            MsgBox("Please enter completed date", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter a completed date.", MsgBoxStyle.Critical, "AIDE")
             dpCompletedDate.Focus()
             Return False
         End If
 
         If txtEffortEst.Text Is String.Empty And txtRefID.Text IsNot String.Empty Then
-            MsgBox("Please enter estimate effort", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter an estimate effort.", MsgBoxStyle.Critical, "AIDE")
             txtEffortEst.Focus()
             Return False
         End If
 
         If txtActualEffortWk.Text Is String.Empty Then
-            MsgBox("Please enter actual effort for the week", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter an actual effort for the week.", MsgBoxStyle.Critical, "AIDE")
             txtActualEffortWk.Focus()
             Return False
         End If
 
         If txtActualEffort.Text Is String.Empty Then
-            MsgBox("Please enter actual effort", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter an actual effort.", MsgBoxStyle.Critical, "AIDE")
             txtActualEffort.Focus()
             Return False
         End If

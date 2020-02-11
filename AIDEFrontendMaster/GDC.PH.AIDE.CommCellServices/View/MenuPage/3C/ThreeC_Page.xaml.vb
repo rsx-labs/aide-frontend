@@ -162,7 +162,7 @@ Public Class ThreeC_Page
 
         If Not ThreeC_DataGridView.SelectedIndex = -1 Then
             If CType(ThreeC_DataGridView.SelectedItem, ConcernModel).STATUS = "CLOSED" Then
-                MsgBox("Cannot Edit/Update this Concern. Closed Already", MsgBoxStyle.Exclamation + vbCritical, "CLOSED")
+                MsgBox("This 3C is already closed. Update is no longer allowed.", MsgBoxStyle.Exclamation + vbCritical, "CLOSED")
             Else
                 _addframe.Navigate(New ThreeC_UpdatePage((Me.DataContext()), _frame, email, _menugrid, _submenuframe, _addframe))
                 _frame.IsEnabled = False
@@ -195,7 +195,7 @@ Public Class ThreeC_Page
     Private Sub btnFilter(sender As Object, e As RoutedEventArgs)
         isSearchIsUsed = 2
         If dtpTo.Text = String.Empty Or dtpFrom.Text = String.Empty Then
-            MsgBox("Please Complete date Selection.", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter a date from and date to.", MsgBoxStyle.Critical, "AIDE")
         Else
             LoadBetweenSearchDate(offsetVal, nextVal, Me.DataContext())
             GetDateTimeNow(Me.DataContext())

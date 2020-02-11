@@ -167,7 +167,7 @@ Class CommendationUpdatePage
            comboProject.Text = String.Empty Or
            textRange.Text = String.Empty Or
             txtCommendationEmployees.Text = String.Empty Then
-            MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Return False
         End If
         Return True
@@ -202,7 +202,7 @@ Class CommendationUpdatePage
             If ifYes = -1 Then
                 txtCommendationEmployees.Text += ", " + comboAddEmployee.Text
             Else
-                MsgBox("Cannot allow duplicate entry!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Employee already assigned. Please select a different employee.", MsgBoxStyle.Exclamation, "AIDE")
             End If
         End If
     End Sub
@@ -213,10 +213,9 @@ Class CommendationUpdatePage
 
     Private Sub btnCommendationUpdate_Click(sender As Object, e As RoutedEventArgs)
         If FindMissingFields() Then
-            Dim ans = MsgBox("Are you sure you want to update commendation?", MsgBoxStyle.YesNo, "AIDE")
-            If ans = MsgBoxResult.Yes Then
-                'CreateTaskID()
-                Dim comm As New Commendations
+
+            'CreateTaskID()
+            Dim comm As New Commendations
                 Dim textRange As New TextRange(txtCommendationReason.Document.ContentStart, txtCommendationReason.Document.ContentEnd)
 
                 comm.COMMEND_ID = commendationVM._commendationModel.CommendID
@@ -226,9 +225,10 @@ Class CommendationUpdatePage
                 comm.EMPLOYEE = UCase(txtCommendationEmployees.Text)
                 comm.DATE_SENT = dateInput.SelectedDate
                 comm.EMP_ID = empID
-                client.UpdateCommendations(comm)
-                'mainFrame.Navigate(New HomePage(mainFrame, position, empID, _addframe, _menugrid, _submenuframe, _))
-                commendFrame.Navigate(New CommendationDashBoard(mainFrame, Me.position, Me.empID, _addframe, _menugrid, _submenuframe, Me.profiles.Email_Address, Me.profiles, commendFrame))
+            client.UpdateCommendations(comm)
+            MsgBox("Commendation has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+            'mainFrame.Navigate(New HomePage(mainFrame, position, empID, _addframe, _menugrid, _submenuframe, _))
+            commendFrame.Navigate(New CommendationDashBoard(mainFrame, Me.position, Me.empID, _addframe, _menugrid, _submenuframe, Me.profiles.Email_Address, Me.profiles, commendFrame))
                 mainFrame.IsEnabled = True
                 mainFrame.Opacity = 1
                 _menugrid.IsEnabled = True
@@ -238,7 +238,7 @@ Class CommendationUpdatePage
 
                 _addframe.Visibility = Visibility.Hidden
             End If
-        End If
+
     End Sub
 #End Region
 

@@ -549,14 +549,14 @@ Class WeeklyReportUpdatePage
                 Next
 
                 If totalWeeklyHours < 40 Then
-                    MsgBox("Insufficient actual effort hours [Total:" + totalWeeklyHours.ToString + "]", MsgBoxStyle.Critical, "AIDE")
+                    MsgBox("Actual effort hours [Total:" + totalWeeklyHours.ToString + "] is insufficient.", MsgBoxStyle.Critical, "AIDE")
                 Else
                     Dim result As Integer = MsgBox("Update weekly report on week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
 
                     If result = vbYes Then
                         If InitializeService() Then
                             AideServiceClient.UpdateWeeklyReport(weeklyReport.ToArray, deletedWeeklyReport.ToArray, weeklyReportXref)
-                            MsgBox("Weekly report successfully updated!", MsgBoxStyle.Information)
+                            MsgBox("Weekly report has been updated.", MsgBoxStyle.Information)
                             ExitPage()
                         End If
                     End If
@@ -642,7 +642,7 @@ Class WeeklyReportUpdatePage
                     If result = vbYes Then
                         If InitializeService() Then
                             AideServiceClient.UpdateWeeklyReport(weeklyReport.ToArray, deletedWeeklyReport.ToArray, weeklyReportXref)
-                            MsgBox("Weekly report successfully updated!", MsgBoxStyle.Information)
+                            MsgBox("Weekly report have been updated", MsgBoxStyle.Information)
                             Select Case entryType
                                 Case 0
                                     ExitPage()
@@ -832,13 +832,13 @@ Class WeeklyReportUpdatePage
         End If
 
         If cbStatus.SelectedIndex = -1 Then
-            MsgBox("Please select status", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please select a status.", MsgBoxStyle.Critical, "AIDE")
             cbStatus.Focus()
             Return False
         End If
 
         If dpCompletedDate.Text IsNot String.Empty And dpStartDate.Text = String.Empty Then
-            MsgBox("Please enter start date", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter a start date.", MsgBoxStyle.Critical, "AIDE")
             dpStartDate.Focus()
             Return False
         End If
@@ -850,31 +850,31 @@ Class WeeklyReportUpdatePage
         'End If
 
         If (cbStatus.SelectedValue = stsInPrgress OrElse cbStatus.SelectedValue = stsWaitngForInfo OrElse cbStatus.SelectedValue = stsOnhold) And dpStartDate.Text Is String.Empty Then
-            MsgBox("Please enter start date", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter a start date.", MsgBoxStyle.Critical, "AIDE")
             dpStartDate.Focus()
             Return False
         End If
 
         If cbStatus.SelectedValue = stsCmpltd And dpCompletedDate.Text Is String.Empty Then
-            MsgBox("Please enter completed date", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter a completed date.", MsgBoxStyle.Critical, "AIDE")
             dpCompletedDate.Focus()
             Return False
         End If
 
         If txtEffortEst.Text Is String.Empty And txtRefID.Text IsNot String.Empty Then
-            MsgBox("Please enter estimate effort", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter an estimate effort.", MsgBoxStyle.Critical, "AIDE")
             txtEffortEst.Focus()
             Return False
         End If
 
         If txtActualEffortWk.Text Is String.Empty Then
-            MsgBox("Please enter actual effort for the week", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter an actual effort for the week.", MsgBoxStyle.Critical, "AIDE")
             txtActualEffortWk.Focus()
             Return False
         End If
 
         If txtActualEffort.Text Is String.Empty Then
-            MsgBox("Please enter actual effort", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Please enter an actual effort.", MsgBoxStyle.Critical, "AIDE")
             txtActualEffort.Focus()
             Return False
         End If

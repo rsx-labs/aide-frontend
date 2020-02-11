@@ -69,7 +69,7 @@ Class NewSuccessRegister
             e.Handled = True
             Dim SuccessRegisters As New SuccessRegister
             If txtSRDetails.Text = String.Empty AndAlso txtSRAdditional.Text = String.Empty AndAlso txtSRWhosInvolve.Text = String.Empty Then
-                MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 SuccessRegisters.SuccessID = txtSRID.Text
                 SuccessRegisters.Emp_ID = comboRaisedBy.SelectedValue
@@ -78,6 +78,7 @@ Class NewSuccessRegister
                 SuccessRegisters.WhosInvolve = txtSRWhosInvolve.Text
                 SuccessRegisters.AdditionalInformation = txtSRAdditional.Text
                 client.UpdateSuccessRegisterByEmpID(SuccessRegisters)
+                MsgBox("Success register has been updated.", MsgBoxStyle.Information, "AIDE")
                 ClearFields()
                 mainFrame.Navigate(New SuccessRegisterPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
                 mainFrame.IsEnabled = True
@@ -103,29 +104,28 @@ Class NewSuccessRegister
             e.Handled = True
             Dim SuccessRegisters As New SuccessRegister
             If txtSRDetails.Text = String.Empty Or dateInput.Text = String.Empty Or comboRaisedBy.Text = Nothing Or txtSRWhosInvolve.Text = String.Empty Then
-                MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 SuccessRegisters.Emp_ID = comboRaisedBy.SelectedValue
                 SuccessRegisters.DateInput = dateInput.SelectedDate
                 SuccessRegisters.DetailsOfSuccess = txtSRDetails.Text
                 SuccessRegisters.WhosInvolve = txtSRWhosInvolve.Text
                 SuccessRegisters.AdditionalInformation = txtSRAdditional.Text
-                Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
-                If result = 1 Then
-                    client.CreateNewSuccessRegister(SuccessRegisters)
-                    ClearFields()
+
+                client.CreateNewSuccessRegister(SuccessRegisters)
+                MsgBox("Success Register has been added.", MsgBoxStyle.Information, "AIDE")
+                ClearFields()
                     mainFrame.Navigate(New SuccessRegisterPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
                     mainFrame.IsEnabled = True
                     mainFrame.Opacity = 1
                     _menugrid.IsEnabled = True
                     _menugrid.Opacity = 1
                     _submenuframe.IsEnabled = True
-                    _submenuframe.Opacity = 1
+                _submenuframe.Opacity = 1
+                _addframe.Visibility = Visibility.Hidden
 
-                    _addframe.Visibility = Visibility.Hidden
-                Else
-                    Exit Sub
-                End If
+                Exit Sub
+
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
@@ -159,7 +159,7 @@ Class NewSuccessRegister
             If ifYes = -1 Then
                 txtSRWhosInvolve.Text += ", " + comboAddEmployee.SelectedValue
             Else
-                MsgBox("Cannot allow duplicate entry!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Employee is already involved. Please select a different employee.", MsgBoxStyle.Exclamation, "AIDE")
             End If
         End If
     End Sub
@@ -172,10 +172,10 @@ Class NewSuccessRegister
         Try
             e.Handled = True
             If txtSRID.Text = String.Empty Then
-                MsgBox("Please fill up all required Fields", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Else
-                Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
-                If result = 1 Then
+                Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.YesNo, "AIDE")
+                If result = 6 Then
                     client.DeleteSuccessRegisterBySuccessID(CUInt(txtSRID.Text))
                     ClearFields()
                     _addframe.Navigate(New SuccessRegisterPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
@@ -204,7 +204,7 @@ Class NewSuccessRegister
     Private Sub dateInput_SelectedDateChanged(sender As Object, e As SelectionChangedEventArgs) Handles dateInput.SelectedDateChanged
         e.Handled = True
         If dateInput.SelectedDate > Date.Now Then
-            MsgBox("Date must not be beyond today", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Please enter a date on or before the current date.", MsgBoxStyle.Exclamation, "AIDE")
             dateInput.SelectedDate = Date.Now
         Else
             Exit Sub
@@ -216,7 +216,7 @@ Class NewSuccessRegister
         Try
             e.Handled = True
             If txtSRWhosInvolve.Text = String.Empty Then
-                MsgBox("Textbox is empty", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("No assigned employee to remove.", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 Dim txtBox As String = txtSRWhosInvolve.Text
                 Dim cbBox As String = String.Empty
@@ -238,7 +238,7 @@ Class NewSuccessRegister
                         cbBox = comboAddEmployee.SelectedValue & ", "
                     End If
                 Else
-                    MsgBox("Entry already removed", MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("No assigned employee to remove.", MsgBoxStyle.Exclamation, "AIDE")
                 End If
             End If
         Catch ex As Exception

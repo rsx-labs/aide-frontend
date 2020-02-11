@@ -90,7 +90,7 @@ Public Class AssetsBorrowingAddPage
             e.Handled = True
             Dim assets As New Assets
             If CheckMissingField() Then
-                MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 If Me.fromPage = "Borrow" Then
                     Integer.TryParse(txtEmpID.Text, empId)
@@ -161,27 +161,22 @@ Public Class AssetsBorrowingAddPage
                     '    assets.APPROVAL = 0
                     'End If
                 End If
-                Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
-                If result = 1 Then
-                    If InitializeService() Then
-                        client.InsertAssetsBorrowing(assets)
-                        ClearFields()
-                        'mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
-                        mainFrame.Navigate(New AssetBorrowingPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
-                        mainFrame.IsEnabled = True
-                        mainFrame.Opacity = 1
-                        _menugrid.IsEnabled = True
-                        _menugrid.Opacity = 1
-                        _submenuframe.IsEnabled = True
-                        _submenuframe.Opacity = 1
 
-                        _addframe.Visibility = Visibility.Hidden
-                    End If
-                Else
-                    Exit Sub
+                If InitializeService() Then
+                    client.InsertAssetsBorrowing(assets)
+                    MsgBox("Asset has been updated.", MsgBoxStyle.Information, "AIDE")
+                    ClearFields()
+                    'mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
+                    mainFrame.Navigate(New AssetBorrowingPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
+                    mainFrame.IsEnabled = True
+                    mainFrame.Opacity = 1
+                    _menugrid.IsEnabled = True
+                    _menugrid.Opacity = 1
+                    _submenuframe.IsEnabled = True
+                    _submenuframe.Opacity = 1
+
+                    _addframe.Visibility = Visibility.Hidden
                 End If
-
-
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
@@ -271,10 +266,10 @@ Public Class AssetsBorrowingAddPage
             assets.APPROVAL = 1
             assets.ASSIGNED_TO = 999 'USED JUST TO BE NOT NULL
 
-            Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
-            If result = 1 Then
-                If InitializeService() Then
+
+            If InitializeService() Then
                     client.UpdateAssetsInventoryCancel(assets)
+                    MsgBox("Asset has been updated.", MsgBoxStyle.Information, "AIDE")
                     ClearFields()
                     mainFrame.Navigate(New AssetBorrowingPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
                     mainFrame.IsEnabled = True
@@ -284,10 +279,7 @@ Public Class AssetsBorrowingAddPage
                     _submenuframe.IsEnabled = True
                     _submenuframe.Opacity = 1
 
-                    _addframe.Visibility = Visibility.Hidden
-                End If
-            Else
-                Exit Sub
+                _addframe.Visibility = Visibility.Hidden
             End If
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
@@ -297,7 +289,7 @@ Public Class AssetsBorrowingAddPage
     Private Sub dateInput_SelectedDateChanged(sender As Object, e As SelectionChangedEventArgs) Handles dateInput.SelectedDateChanged
         e.Handled = True
         If dateInput.SelectedDate > Date.Now Then
-            MsgBox("Date must not be beyond today", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Please enter a date on or before the current date.", MsgBoxStyle.Exclamation, "AIDE")
             dateInput.SelectedDate = Date.Now
         Else
             Exit Sub
@@ -352,10 +344,11 @@ Public Class AssetsBorrowingAddPage
         assets.STATUS = stat
         assets.APPROVAL = approval
 
-        Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
-        If result = 1 Then
+        Dim result As Integer = MsgBox("Are you sure you want to disapprove this asset assignment?", MessageBoxButton.YesNo, "AIDE")
+        If result = 6 Then
             If InitializeService() Then
                 client.InsertAssetsBorrowing(assets)
+                MsgBox("Asset assignment has been disapproved.", MsgBoxStyle.Information, "AIDE")
                 ClearFields()
                 'mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
                 mainFrame.Navigate(New AssetBorrowingPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))

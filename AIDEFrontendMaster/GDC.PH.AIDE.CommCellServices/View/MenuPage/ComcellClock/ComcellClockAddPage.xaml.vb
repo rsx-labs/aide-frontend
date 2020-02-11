@@ -108,14 +108,14 @@ Class ComcellClockAddPage
                         _comcellclock.Emp_ID = clockVM.EMP_ID
                         _comcellclock.MIDDAY = clockVM.MIDDAY
                         aide.UpdateComcellClock(_comcellclock)
-                        MsgBox("Successfully set new Comm. Cell clock", MsgBoxStyle.OkOnly, "AIDE")
+                        MsgBox("The Comm. Cell time has been set.", MsgBoxStyle.OkOnly, "AIDE")
                         comcellFrame.Navigate(New ComcellClockPage(profile, Me.comcellFrame, Me._window))
                     End If
                 Else
-                    MsgBox("Please check your time entry. Input hours should not exceed to 12 and Input Minutes should not exceed to 59.", MsgBoxStyle.Exclamation, "AIDE")
+                    MsgBox("Please enter a valid time.", MsgBoxStyle.Exclamation, "AIDE")
                 End If
             Else
-                MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             End If
         Catch ex As Exception
 

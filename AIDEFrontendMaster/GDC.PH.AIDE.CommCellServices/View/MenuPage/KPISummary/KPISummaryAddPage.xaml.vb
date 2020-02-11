@@ -214,7 +214,7 @@ Class KPISummaryAddPage
     Private Sub AddBtn_Click(sender As Object, e As RoutedEventArgs)
         Try
             If ValidateFields() = False Then
-                MsgBox("Please input required fields!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 Exit Sub
             End If
 
@@ -223,7 +223,7 @@ Class KPISummaryAddPage
                     Dim lstkpiSummary As KPISummary() = aide.GetKPISummaryListMonthly(Me.profile.Emp_ID, _dtStartYear, _dtEndYear, cbMonth.SelectedValue, cbKPI.SelectedValue)
                     If Not IsNothing(lstkpiSummary) Then
                         If lstkpiSummary.Count > 0 Then
-                            MsgBox("Record already exists!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                            MsgBox("KPI Summary already exists.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                             Exit Sub
                         Else
                             _kpiSummary.EmployeeId = Me.profile.Emp_ID
@@ -236,7 +236,7 @@ Class KPISummaryAddPage
                             _kpiSummary.KPIOverall = CDbl(txtActual.Text) / CDbl(txtTarget.Text)
                             _kpiSummary.DatePosted = Date.Now
                             If aide.InsertKPISummary(_kpiSummary) = True Then
-                                MsgBox("Successfully added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                                MsgBox("KPI Summary has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                             End If
 
                         End If
@@ -248,7 +248,7 @@ Class KPISummaryAddPage
                     _kpiSummary.KPIOverall = _kpiSummary.KPIActual / _kpiSummary.KPITarget
                     _kpiSummary.DatePosted = Date.Now
                     If aide.UpdateKPISummary(_kpiSummary) Then
-                        MsgBox("Successfully updated!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                        MsgBox("KPI Summary has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
                     End If
                 End If

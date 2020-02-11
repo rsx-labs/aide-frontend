@@ -192,7 +192,7 @@ Class CreateProjectPage
             LoadProjectList()
             ClearSelection()
             txtSearch.Text = String.Empty
-            MsgBox("Project successfully added", MsgBoxStyle.Information, "AIDE")
+            MsgBox("Project has been added.", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Project")
         End Try
@@ -217,7 +217,7 @@ Class CreateProjectPage
 
             ClearSelection()
             ' txtSearch.Text = String.Empty
-            MsgBox("Project successfully updated", MsgBoxStyle.Information, "AIDE")
+            MsgBox("Project has been updated.", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Project")
         End Try
@@ -270,15 +270,15 @@ Class CreateProjectPage
 
         If Not e.Handled Then
         Else
-            MsgBox("Number/s Only")
+            MsgBox("Please enter a numeric Project ID.", MsgBoxStyle.Information, "AIDE")
         End If
     End Sub
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
         If txtProjName.Text = String.Empty Or cbBillability.Text = String.Empty Or cbCategory.Text = String.Empty Then
-            MsgBox("Please fill up all required fields", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
         ElseIf (String.IsNullOrEmpty((lblProjIdValidation.Content))) = False Then
-            MsgBox("Project ID isn't available", MsgBoxStyle.Critical, "AIDE")
+            MsgBox("Project ID already exists.", MsgBoxStyle.Critical, "AIDE")
         Else
             InsertNewProject()
         End If
@@ -313,7 +313,7 @@ Class CreateProjectPage
             Try
                 Dim lstProject As Project = client.GetProjectByID(txtProjCD.Text)
                 If Not IsNothing(lstProject) Then
-                    lblProjIdValidation.Content = "Project ID isn't available"
+                    lblProjIdValidation.Content = "Project ID already exists."
                 Else
                     lblProjIdValidation.Content = String.Empty
                 End If
@@ -359,7 +359,7 @@ Class CreateProjectPage
 
     Private Sub btnUpdate_Click(sender As Object, e As RoutedEventArgs) Handles btnUpdate.Click
         If txtProjName.Text = Nothing Or cbBillability.Text = Nothing Or cbCategory.Text = Nothing Then
-            MsgBox("Please fill up all required fields")
+            MsgBox("Please enter all required fields. Ensure all required fields have * indicated.")
         Else
             If (String.IsNullOrEmpty((txtSearch.Text))) = False Then
                 UpdateProjectDetails()

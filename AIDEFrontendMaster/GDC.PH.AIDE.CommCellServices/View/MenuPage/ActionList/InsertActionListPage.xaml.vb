@@ -161,9 +161,9 @@ Class InsertActionListPage
 
             aide.InsertActionList(getDataInsert(Me.DataContext()))
             If act_ion.Act_ID = Nothing Or act_ion.Act_Message = Nothing Or act_ion.Act_Assignee = Nothing Or act_ion.Act_DueDate = Nothing Then
-                MsgBox("Please fill up all required fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else
-                MsgBox("Successfully added!", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                MsgBox("Action item has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 GenerateActionRef()
                 act_ion.Act_ID = Nothing
                 act_ion.Act_Message = Nothing
@@ -203,7 +203,7 @@ Class InsertActionListPage
 
     Private Sub Act_DueDate_SelectedDateChanged(sender As Object, e As SelectionChangedEventArgs)
         If Act_DueDate.SelectedDate < Today.Date Then
-            MsgBox("Due date should be prior ahead to today's date.", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Please enter date on or before the current date.", MsgBoxStyle.Exclamation, "AIDE")
             Act_DueDate.Text = Today.Date
         End If
     End Sub
@@ -219,7 +219,7 @@ Class InsertActionListPage
             If ifYes = -1 Then
                 Act_AssignedAll.Text += ", " + Act_AssigneeCB.SelectedValue
             Else
-                MsgBox("Cannot allow duplicate entry!", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("Employee already assigned. Please select a different employee.", MsgBoxStyle.Exclamation, "AIDE")
             End If
         End If
     End Sub
@@ -227,7 +227,7 @@ Class InsertActionListPage
     Private Sub btnRemovedEmployee_Click(sender As Object, e As RoutedEventArgs) Handles btnRemovedEmployee.Click
         e.Handled = True
         If Act_AssignedAll.Text = String.Empty Then
-            MsgBox("Textbox is empty", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("No assigned employee to remove.", MsgBoxStyle.Exclamation, "AIDE")
         Else
             Dim txtBox As String = Act_AssignedAll.Text
             Dim cbBox As String = String.Empty
@@ -249,7 +249,7 @@ Class InsertActionListPage
                     Act_AssignedAll.Text = txtBox.Remove(ifYes, cbBox.Length)
                 End If
             Else
-                MsgBox("Entry already removed", MsgBoxStyle.Exclamation, "AIDE")
+                MsgBox("No assigned employee to remove.", MsgBoxStyle.Exclamation, "AIDE")
             End If
         End If
     End Sub

@@ -93,10 +93,10 @@ Class ThreeC_InsertPage
     
     Private Function ValidateFields(ByVal obj As ConcernViewModel)
         If obj.SelectedConcern.CONCERN = "" Or obj.SelectedConcern.CAUSE = "" Or obj.SelectedConcern.COUNTERMEASURE = "" Then
-            MsgBox("Please fill up all required fields!", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Return False
         ElseIf dtDate.SelectedDate.ToString() = String.Empty Then
-            MsgBox("Please select due date before creating concern.", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Please enter a due date.", MsgBoxStyle.Exclamation, "AIDE")
             Return False
         Else
             concern.Cause = obj.SelectedConcern.CAUSE
@@ -152,11 +152,7 @@ Class ThreeC_InsertPage
 #Region "Buttons/Events"
     Private Sub btnBackClick(sender As Object, e As RoutedEventArgs)
         If txtConcern.Text <> "" OrElse txtCAUSE.Text.ToString <> "" OrElse txtCounterMeasure.Text.ToString <> "" Then
-            If MsgBox("Are you sure you want to navigate to 3c's Home Page?", MsgBoxStyle.YesNo, "AIDE") = vbYes Then
-                ExitPage()
-            Else
-                Return
-            End If
+            ExitPage()
         Else
             ExitPage()
         End If
@@ -169,7 +165,7 @@ Class ThreeC_InsertPage
 
         If isValidate Then
             _AIDEClientService.InsertIntoConcern(concern, email)
-            MsgBox("Successfully created 3C!", MsgBoxStyle.Information, "AIDE")
+            MsgBox("3C has been added.", MsgBoxStyle.Information, "AIDE")
 
             txtRefNo.Text = String.Empty
             txtConcern.Clear()
