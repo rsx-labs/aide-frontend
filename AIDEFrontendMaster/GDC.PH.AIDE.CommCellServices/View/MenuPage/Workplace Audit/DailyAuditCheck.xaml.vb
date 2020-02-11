@@ -39,10 +39,7 @@ Class DailyAuditCheck
 
             LoadData()
         Catch ex As Exception
-            If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "Error Encountered") = vbYes Then
-                Environment.Exit(0)
-            Else
-            End If
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -60,6 +57,7 @@ Class DailyAuditCheck
             bInitialize = True
         Catch ex As SystemException
             _AideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -115,13 +113,13 @@ Class DailyAuditCheck
         Dim strDisplay As String = ""
         Select Case auditDisplay
             Case 1
-                strDisplay = "Workplace Audit-Daily"
+                strDisplay = "Daily Audit"
             Case 2
-                strDisplay = "Workplace Audit-Weekly"
+                strDisplay = "Weekly Audit"
             Case 3
-                strDisplay = "Workplace Audit-Monthly"
+                strDisplay = "Monthly Audit"
             Case 4
-                strDisplay = "Workplace Audit-Quarterly"
+                strDisplay = "Quarterly Audit"
         End Select
 
         txtReminder.Text = "Please Check " & strDisplay
@@ -185,13 +183,13 @@ Class DailyAuditCheck
                     _AideService.UpdateCheckAuditQuestionStatus(InsertUpdatedDataInAudit)
                 Next
 
-                MsgBox(DisplayPageTitle() & " has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                MsgBox(DisplayPageTitle() & " have been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
 
                 ReturnToLastPage()
             End If
         Catch ex As Exception
-            MsgBox(ex.ToString())
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

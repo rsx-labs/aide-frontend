@@ -46,10 +46,7 @@ Class KPISummaryAddPage
             LoadControls()
             mode = "Add"
         Catch ex As Exception
-            If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "Error Encountered") = vbYes Then
-                Environment.Exit(0)
-            Else
-            End If
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     'Update Constructor
@@ -90,10 +87,7 @@ Class KPISummaryAddPage
             mode = "Update"
             txtBlockButton.Text = mode
         Catch ex As Exception
-            If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "Error Encountered") = vbYes Then
-                Environment.Exit(0)
-            Else
-            End If
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 #End Region
@@ -108,6 +102,7 @@ Class KPISummaryAddPage
             bInitialize = True
         Catch ex As SystemException
             aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -153,7 +148,7 @@ Class KPISummaryAddPage
                 cbYear.Items.Add(New With {.Text = i.ToString, .Value = i})
             Next
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -173,7 +168,7 @@ Class KPISummaryAddPage
 
         Catch ex As Exception
 
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
 
         End Try
 
@@ -204,7 +199,7 @@ Class KPISummaryAddPage
             cbKPI.DisplayMemberPath = "Value"
             cbKPI.SelectedValuePath = "Key"
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -265,10 +260,7 @@ Class KPISummaryAddPage
             End If
 
         Catch ex As Exception
-            If MsgBox(ex.Message + " Do you wish to exit?", vbYesNo + vbCritical, "AIDE") = vbYes Then
-                Environment.Exit(0)
-            Else
-            End If
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

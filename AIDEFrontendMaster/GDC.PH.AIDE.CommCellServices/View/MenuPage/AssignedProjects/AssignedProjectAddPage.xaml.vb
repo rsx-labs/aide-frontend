@@ -51,6 +51,7 @@ Class AssignedProjectAddPage
             'Return True
         Catch ex As SystemException
             _aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -82,6 +83,7 @@ Class AssignedProjectAddPage
             Me.DataContext = _ProjectVM
         Catch ex As SystemException
             _aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -107,7 +109,7 @@ Class AssignedProjectAddPage
 
             cbProjectName.DataContext = _projectViewModel
         Catch ex As SystemException
-            MsgBox(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             _aide.Abort()
         End Try
     End Sub

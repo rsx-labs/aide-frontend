@@ -57,7 +57,7 @@ Public Class ProjectViewModel
                 _employeeList.Add(New EmployeeModel(rawUser))
             Next
         Catch ex As Exception
-            Console.Write(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         AddMode = True
@@ -357,7 +357,7 @@ Public Class ProjectViewModel
                 End If
             Next
         Catch ex As Exception
-            Console.WriteLine(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         If AssignedEmployeeLists.Count > 0 Then
@@ -376,7 +376,7 @@ Public Class ProjectViewModel
 
             AssignedEmployeeLists.Clear()
         Catch ex As Exception
-            Console.WriteLine(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         AddMode = True
@@ -400,7 +400,7 @@ Public Class ProjectViewModel
             AssignedEmployeeLists = New ObservableCollection(Of EmployeeListModel)(AssignedEmployeeLists.OrderBy(Function(f) f.Name).ToList())
 
         Catch ex As Exception
-            Console.WriteLine(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         If AssignedEmployeeLists.Count > 0 Then
@@ -449,7 +449,7 @@ Public Class ProjectViewModel
             End If
 
         Catch ex As Exception
-            MsgBox(ex.Message)
+             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         'Clear()
     End Sub
@@ -465,6 +465,7 @@ Public Class ProjectViewModel
             'Return True
         Catch ex As SystemException
             _AideServiceClient.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function

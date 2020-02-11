@@ -96,7 +96,7 @@ Class CommendationUpdatePage
                 comboAddEmployee.ItemsSource = nicknameVM.NicknameList
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -121,7 +121,7 @@ Class CommendationUpdatePage
                 comboAddEmployee.ItemsSource = nicknameVM.NicknameList
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -154,7 +154,7 @@ Class CommendationUpdatePage
             End If
         Catch ex As SystemException
 
-            MsgBox(ex.Message)
+             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             client.Abort()
 
         End Try
@@ -255,6 +255,7 @@ Class CommendationUpdatePage
             'Return True
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function

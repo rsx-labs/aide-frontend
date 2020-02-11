@@ -179,6 +179,7 @@ Class CommendationAddPage
             'Return True
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -208,7 +209,7 @@ Class CommendationAddPage
                 comboAddEmployee.ItemsSource = nicknameVM.NicknameList
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -239,7 +240,7 @@ Class CommendationAddPage
             End If
         Catch ex As SystemException
 
-            MsgBox(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             client.Abort()
 
         End Try
@@ -253,7 +254,7 @@ Class CommendationAddPage
                 totalCount = lstTasks.Length + 1
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

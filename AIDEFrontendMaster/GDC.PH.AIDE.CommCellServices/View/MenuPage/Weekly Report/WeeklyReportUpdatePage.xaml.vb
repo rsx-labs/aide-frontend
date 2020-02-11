@@ -128,6 +128,7 @@ Class WeeklyReportUpdatePage
             bInitialize = True
         Catch ex As SystemException
             AideServiceClient.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -153,6 +154,7 @@ Class WeeklyReportUpdatePage
             cbProject.DataContext = projectViewModel
         Catch ex As Exception
             AideServiceClient.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Rework Combobox
@@ -171,6 +173,7 @@ Class WeeklyReportUpdatePage
             cbRework.DataContext = tasksViewModel
         Catch ex As SystemException
             AideServiceClient.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Severity Combobox
@@ -189,6 +192,7 @@ Class WeeklyReportUpdatePage
             cbSeverity.DataContext = tasksViewModel
         Catch ex As SystemException
             AideServiceClient.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Incident Type Combobox
@@ -207,6 +211,7 @@ Class WeeklyReportUpdatePage
             cbIncidentType.DataContext = tasksViewModel
         Catch ex As SystemException
             AideServiceClient.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Phase Status Combobox
@@ -225,6 +230,7 @@ Class WeeklyReportUpdatePage
             cbPhase.DataContext = tasksViewModel
         Catch ex As SystemException
             AideServiceClient.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Task Status Combobox
@@ -243,6 +249,7 @@ Class WeeklyReportUpdatePage
             cbStatus.DataContext = tasksViewModel
         Catch ex As SystemException
             AideServiceClient.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items for Week Range Combobox
@@ -263,6 +270,7 @@ Class WeeklyReportUpdatePage
             cbDateRange.SelectedValue = weekRangeID
         Catch ex As SystemException
             AideServiceClient.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         'If dgWeeklyReport.DataContext Is Nothing Then
         '    dgWeeklyReport.Visibility = Windows.Visibility.Hidden
@@ -315,6 +323,7 @@ Class WeeklyReportUpdatePage
 
         Catch ex As Exception
             AideServiceClient.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -563,7 +572,7 @@ Class WeeklyReportUpdatePage
                 End If
 
             Catch ex As Exception
-                MsgBox(ex.Message)
+                 MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             End Try
         End If
     End Sub
@@ -653,7 +662,7 @@ Class WeeklyReportUpdatePage
                     End If
 
                 Catch ex As Exception
-                    MsgBox(ex.Message)
+                     MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
                 End Try
             End If
         End If

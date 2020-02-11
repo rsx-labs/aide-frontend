@@ -69,6 +69,7 @@ Public Class BillabilityManagerVLLeavePage
             bInitialize = True
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -115,7 +116,7 @@ Public Class BillabilityManagerVLLeavePage
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(lstresource.Length / pagingRecordPerPage)
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

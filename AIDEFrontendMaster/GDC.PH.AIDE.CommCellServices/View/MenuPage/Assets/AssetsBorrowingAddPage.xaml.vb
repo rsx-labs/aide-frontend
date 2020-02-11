@@ -179,7 +179,7 @@ Public Class AssetsBorrowingAddPage
                 End If
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
+             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -212,7 +212,7 @@ Public Class AssetsBorrowingAddPage
     '            End If
     '        End If
     '    Catch ex As Exception
-    '        MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
+    '         MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
     '    End Try
     'End Sub
 
@@ -234,7 +234,7 @@ Public Class AssetsBorrowingAddPage
 
             Approval(10, 2)
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
+             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -244,7 +244,7 @@ Public Class AssetsBorrowingAddPage
             Approval(11, 1)
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
+             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -282,7 +282,7 @@ Public Class AssetsBorrowingAddPage
                 _addframe.Visibility = Visibility.Hidden
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
+             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -474,6 +474,7 @@ Public Class AssetsBorrowingAddPage
             'Return True
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -507,7 +508,7 @@ Public Class AssetsBorrowingAddPage
                 End If
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -571,7 +572,7 @@ Public Class AssetsBorrowingAddPage
 
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -598,7 +599,7 @@ Public Class AssetsBorrowingAddPage
                 cbAssetType.ItemsSource = assetsVM.AssetTypeList
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -625,7 +626,7 @@ Public Class AssetsBorrowingAddPage
                 cbAssetManufacturer.ItemsSource = assetsVM.AssetManufacturerList
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 #End Region

@@ -100,6 +100,7 @@ Class _3CDashboard
             'Return True
         Catch ex As SystemException
             _AIDEClientService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -133,10 +134,8 @@ Class _3CDashboard
             'Completed.Text = CompletedDate.ToString()
 
         Catch ex As SystemException
-
-            MsgBox(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             _AIDEClientService.Abort()
-
         End Try
     End Sub
 

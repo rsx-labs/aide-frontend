@@ -84,6 +84,7 @@ Public Class ContactListPage
             bInitialize = True
         Catch ex As SystemException
             _AideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -99,7 +100,7 @@ Public Class ContactListPage
     '            'SetPaging(PagingMode._First)
     '        End If
     '    Catch ex As Exception
-    '        MessageBox.Show(ex.Message)
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
     '    End Try
     'End Sub
 
@@ -125,7 +126,7 @@ Public Class ContactListPage
                 ' SetPaging(PagingMode._First)
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -156,7 +157,7 @@ Public Class ContactListPage
             lastPage = Math.Ceiling(lstContacts.Length / pagingRecordPerPage)
             LoadDataForPrint()
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -182,7 +183,7 @@ Public Class ContactListPage
             dv_contacts.ItemsSource = lstContactsList
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -247,7 +248,7 @@ Public Class ContactListPage
 
             DisplayPagingInfo()
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

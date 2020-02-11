@@ -99,7 +99,7 @@ Class ResourcePlannerAddPage
                 End If
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -156,6 +156,7 @@ Class ResourcePlannerAddPage
             bInitialize = True
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -176,7 +177,7 @@ Class ResourcePlannerAddPage
             _ResourceViewModel.ResourceList = resourcelist
             lstEmployee.DataContext = _ResourceViewModel
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -224,7 +225,7 @@ Class ResourcePlannerAddPage
             _ResourceViewModel.CategoryList = resourcelist
             cbCategory.DataContext = _ResourceViewModel
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -243,7 +244,7 @@ Class ResourcePlannerAddPage
             End If
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         Return bLeaveExists
@@ -300,7 +301,7 @@ Class ResourcePlannerAddPage
             cbSchedule.Items.Add(New With {.Text = "Morning"})
             cbSchedule.Items.Add(New With {.Text = "Afternoon"})
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

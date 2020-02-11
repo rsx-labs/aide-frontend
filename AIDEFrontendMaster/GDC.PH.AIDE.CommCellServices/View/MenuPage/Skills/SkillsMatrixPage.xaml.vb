@@ -77,6 +77,7 @@ Class SkillsMatrixPage
             bInitialize = True
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -111,7 +112,7 @@ Class SkillsMatrixPage
             client.InsertNewSkills(Skills)
             MsgBox(cbSkillList.Text.ToUpper & "has been added. ", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     ''' <summary>
@@ -133,7 +134,7 @@ Class SkillsMatrixPage
             client.UpdateSkills(Skills)
             MsgBox(cbSkillList.Text.ToUpper & "has been updated. ", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     ''' <summary>
@@ -157,7 +158,7 @@ Class SkillsMatrixPage
 
             cbSkillList.DataContext = _SkillsViewModel
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -187,7 +188,7 @@ Class SkillsMatrixPage
             table = ToDataTable(it)  ' Convert stored data in dictionary to datable to display in datagrid
             dgSkill.ItemsSource = table.AsDataView
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
     End Sub
@@ -309,7 +310,7 @@ Class SkillsMatrixPage
 
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

@@ -119,7 +119,7 @@ Public Class AssetsInventoryAddPage
                 End If
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
+             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -152,7 +152,7 @@ Public Class AssetsInventoryAddPage
     '            End If
     '        End If
     '    Catch ex As Exception
-    '        MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
+    '         MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
     '    End Try
     'End Sub
 
@@ -179,7 +179,7 @@ Public Class AssetsInventoryAddPage
             empId = assetsModel.PREVIOUS_ID
             Approval()
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
+             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -195,7 +195,7 @@ Public Class AssetsInventoryAddPage
             End If
             Approval()
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
+             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -236,7 +236,7 @@ Public Class AssetsInventoryAddPage
                 Exit Sub
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Exclamation, "Failed")
+             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -413,6 +413,7 @@ Public Class AssetsInventoryAddPage
             'Return True
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -446,7 +447,7 @@ Public Class AssetsInventoryAddPage
                 End If
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -509,7 +510,7 @@ Public Class AssetsInventoryAddPage
 
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -536,7 +537,7 @@ Public Class AssetsInventoryAddPage
                 cbAssetType.ItemsSource = assetsVM.AssetTypeList
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -563,7 +564,7 @@ Public Class AssetsInventoryAddPage
                 cbAssetManufacturer.ItemsSource = assetsVM.AssetManufacturerList
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 #End Region

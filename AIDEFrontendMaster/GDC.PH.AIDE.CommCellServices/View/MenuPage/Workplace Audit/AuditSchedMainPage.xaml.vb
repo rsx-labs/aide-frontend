@@ -84,6 +84,7 @@ Class AuditSchedMainPage
             bInitialize = True
         Catch ex As SystemException
             _AideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -94,7 +95,7 @@ Class AuditSchedMainPage
                 LoadFiscalYear()
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -106,7 +107,7 @@ Class AuditSchedMainPage
                 DisplayPagingInfo()
             End If
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -130,7 +131,7 @@ Class AuditSchedMainPage
 
             Me.DataContext = auditSchedVM
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Public Sub LoadFiscalYear()
@@ -150,7 +151,7 @@ Class AuditSchedMainPage
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Public Sub SetFiscalYear()
@@ -167,7 +168,7 @@ Class AuditSchedMainPage
 
             lblYear.Text = "FY: " + (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Private Sub SetPaging(mode As Integer)
@@ -231,7 +232,7 @@ Class AuditSchedMainPage
 
             DisplayPagingInfo()
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
     End Sub
@@ -293,7 +294,7 @@ Class AuditSchedMainPage
                 End If
             End If
         Catch ex As Exception
-            ex.Message.ToString()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

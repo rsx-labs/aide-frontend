@@ -88,6 +88,7 @@ Class EmailCodeRequest
 
         Catch ex As Exception
 
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -109,6 +110,7 @@ Class EmailCodeRequest
 
         Catch ex As Exception
 
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -136,7 +138,7 @@ Class EmailCodeRequest
 
             client.Send(mail)
         Catch ex As Exception
-            MsgBox(ex.Message)
+             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Private Function appendDigits() As Integer
@@ -144,6 +146,8 @@ Class EmailCodeRequest
         Try
             AppendedDigits = CInt(Num1.Text + Num2.Text + Num3.Text + Num4.Text + Num5.Text + Num6.Text)
         Catch ex As Exception
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             Return 0
         End Try
 
@@ -170,6 +174,7 @@ Class EmailCodeRequest
             bInitialize = True
         Catch ex As SystemException
             aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -247,6 +252,7 @@ Class EmailCodeRequest
                 ExpireTitle.Text = "Code expires in"
             Catch ex As Exception
 
+                MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             End Try
 
         End If

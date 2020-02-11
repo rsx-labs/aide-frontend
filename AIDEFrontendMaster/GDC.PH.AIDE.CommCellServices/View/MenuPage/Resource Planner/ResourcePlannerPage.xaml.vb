@@ -65,6 +65,7 @@ Class ResourcePlannerPage
             bInitialize = True
         Catch ex As SystemException
             client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
@@ -94,7 +95,7 @@ Class ResourcePlannerPage
                 LoadFiscalYear()
             End If
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -115,7 +116,7 @@ Class ResourcePlannerPage
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -133,7 +134,7 @@ Class ResourcePlannerPage
 
             cbDisplayMonth.SelectedValue = month
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -221,7 +222,7 @@ Class ResourcePlannerPage
     '        table = ToDataTable(it)
     '        dgResourcePlanner.ItemsSource = table.AsDataView
     '    Catch ex As Exception
-    '        MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+    '       MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
     '    End Try
     'End Sub
 
@@ -341,7 +342,7 @@ Class ResourcePlannerPage
             dgResourcePlanner.RowBackground = New SolidColorBrush(Colors.White)
             dgResourcePlanner.ItemsSource = table.AsDataView
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -366,7 +367,7 @@ Class ResourcePlannerPage
     '        dgLeaveCredits.ItemsSource = resourcelist
 
     '    Catch ex As Exception
-    '        MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+    '       MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
     '    End Try
     'End Sub
 

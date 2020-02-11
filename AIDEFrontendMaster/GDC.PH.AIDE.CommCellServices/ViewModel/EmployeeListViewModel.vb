@@ -21,7 +21,8 @@ Public Class EmployeeListViewModel
                 _employeeList.Add(New EmployeeListModel(rawUser))
             Next
         Catch ex As Exception
-            Console.Write(ex.Message)
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
     End Sub
