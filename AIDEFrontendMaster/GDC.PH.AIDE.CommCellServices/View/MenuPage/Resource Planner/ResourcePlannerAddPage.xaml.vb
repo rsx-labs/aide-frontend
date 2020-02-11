@@ -83,11 +83,18 @@ Class ResourcePlannerAddPage
                     If isHalfDay And cbSchedule.SelectedIndex = -1 Then
                         MsgBox("Please enter all required fields. Ensure all required fields have * indicated.!", MsgBoxStyle.Exclamation, "AIDE")
                     Else
-                        InsertResourcePlanner()
-                        dtpTo.IsEnabled = True
-                        attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
-                        ExitPage()
+                        If CheckLeaveExists() Then
+                            MsgBox("Unable to file leave. Leaves already applied within the date range", MsgBoxStyle.Exclamation, "AIDE")
+                        Else
+                            Dim ans = MsgBox("Are you sure you want to file " & cbCategory.Text & "?", MsgBoxStyle.YesNo, "AIDE")
+                            If ans = MsgBoxResult.Yes Then
 
+                                InsertResourcePlanner()
+                                dtpTo.IsEnabled = True
+                                attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
+                                ExitPage()
+                            End If
+                        End If
                     End If
                 End If
             End If
@@ -220,6 +227,27 @@ Class ResourcePlannerAddPage
             MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
         End Try
     End Sub
+
+    Private Function CheckLeaveExists() As Boolean
+        Dim bLeaveExists As Boolean
+        Dim empID As Integer
+
+        Try
+            InitializeService()
+
+            empID = Integer.Parse(txtEmpID.Text)
+            Dim lstresource As ResourcePlanner() = client.GetLeavesByDateAndEmpID(empID, cbCategory.SelectedValue, dtpFrom.SelectedDate, dtpTo.SelectedDate)
+
+            If lstresource.Count > 0 Then
+                bLeaveExists = True
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+        End Try
+
+        Return bLeaveExists
+    End Function
 
     Public Sub LoadData()
         txtEmpID.Text = profile.Emp_ID

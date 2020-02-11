@@ -1093,7 +1093,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelAssetTag" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Asset Tag" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            <TextBlock x:Name="txtlabelAssetTag" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Asset tag" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1162,7 +1162,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelAssetBorrowingID" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Asset Tag" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            <TextBlock x:Name="txtlabelAssetBorrowingID" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Asset Borrowing ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1219,8 +1219,8 @@
                             </TextBlock>
                         </Grid>
                         <Grid Grid.Row="1">
-                            <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbStatus" Margin="5,5,0,5" IsReadOnly="True" VerticalContentAlignment="Center" Visibility="Hidden"/>
-                            <TextBlock x:Name="txtStatus" FontSize="12" IsHitTestVisible="False" Text="Select asset status *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
+                            <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbStatus" Margin="5,5,0,5" IsReadOnly="True" VerticalContentAlignment="Center" Visibility="Collapsed" IsEnabled="False"/>
+                            <TextBlock x:Name="txtStatus" FontSize="12" IsHitTestVisible="False" Text="Select asset status *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray" Visibility="Collapsed">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1232,7 +1232,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelStatus" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Status" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9" IsEnabled="False">
+                            <TextBlock x:Name="txtlabelStatus" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Status" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9" IsEnabled="False" Visibility="Collapsed">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
@@ -1278,7 +1278,7 @@
                         </Grid>
                         <Grid Grid.Row="3">
                             <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbNickname" Margin="5,5,0,5" IsReadOnly="True" VerticalContentAlignment="Center"
-                          SelectedValuePath="EMP_ID" DisplayMemberPath="EMPLOYEE_NAME"/>
+                          SelectedValuePath="EMP_ID" DisplayMemberPath="EMPLOYEE_NAME" IsEnabled="False"/>
                             <TextBlock x:Name="txtEmpName" FontSize="12" IsHitTestVisible="False" Text="Select employee *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -1305,12 +1305,12 @@
                             </TextBlock>
                         </Grid>
                         <Grid Grid.Row="4">
-                            <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                            <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Visibility="Collapsed">
 
-                                <TextBox x:Name="txtComments" Template="{DynamicResource TextBoxBaseControlTemplate}"
+                                <TextBox x:Name="txtComments" Template="{DynamicResource TextBoxBaseControlTemplate}" Visibility="Collapsed"
                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter additional info" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter additional info" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,22,0" Foreground="DarkGray" Visibility="Collapsed">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -1339,7 +1339,7 @@
                         <Grid Grid.Row="5">
                             <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnDisapprove" Margin="5,5,0,5" >
 
-                                <TextBlock Text="DISAPPROVE" TextWrapping="Wrap" Margin="5"/>
+                                <TextBlock Text="REJECT" TextWrapping="Wrap" Margin="5"/>
 
                             </Button>
 

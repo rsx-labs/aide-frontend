@@ -90,6 +90,8 @@ Public Class AssetBorrowingPage
             AssetBorrowRequestList.Visibility = Windows.Visibility.Collapsed
             AssetReturnList.Visibility = Windows.Visibility.Collapsed
         End If
+        btnPrint.Visibility = Windows.Visibility.Hidden
+
     End Sub
 
     Public Sub SetData()
@@ -106,13 +108,13 @@ Public Class AssetBorrowingPage
                     btnPrint.Visibility = Windows.Visibility.Hidden
                 ElseIf SR.SelectedIndex = 3 Then
                     lstAssets = _AideService.GetAllAssetsBorrowingRequestByEmpID(profile.Emp_ID)
-                    btnPrint.Visibility = Windows.Visibility.Visible
+                    btnPrint.Visibility = Windows.Visibility.Hidden
                 ElseIf SR.SelectedIndex = 4 Then
                     lstAssets = _AideService.GetAllAssetsReturnsByEmpID(profile.Emp_ID)
-                    btnPrint.Visibility = Windows.Visibility.Visible
+                    btnPrint.Visibility = Windows.Visibility.Hidden
                 ElseIf SR.SelectedIndex = 5 Then
                     lstAssets = _AideService.GetAssetBorrowersLog(profile.Emp_ID, 0)
-                    btnPrint.Visibility = Windows.Visibility.Visible
+                    btnPrint.Visibility = Windows.Visibility.Hidden
                 Else
                     lstAssets = _AideService.GetAllAssetsInventoryUnApproved(profile.Emp_ID)
                     btnPrint.Visibility = Windows.Visibility.Hidden
@@ -321,11 +323,16 @@ Public Class AssetBorrowingPage
         If lstAssets.Length = 0 Then
             txtPageNo.Text = "No Results Found "
             txtAllPageNo.Text = "No Results Found "
+            txtBorrowPageNo.Text = "No Results Found "
+            txtBorrowRequestPageNo.Text = "No Results Found "
+            txtBorrowersLogPageNo.Text = "No Results Found "
             GUISettingsOff()
         Else
             txtPageNo.Text = "page " & currentPage & " of " & lastPage
             txtAllPageNo.Text = "page " & currentPage & " of " & lastPage
             txtBorrowPageNo.Text = "page " & currentPage & " of " & lastPage
+            txtBorrowRequestPageNo.Text = "page " & currentPage & " of " & lastPage
+            txtBorrowersLogPageNo.Text = "page " & currentPage & " of " & lastPage
             GUISettingsOn()
         End If
     End Sub
@@ -338,6 +345,15 @@ Public Class AssetBorrowingPage
 
         btnPrev3.IsEnabled = False
         btnNext3.IsEnabled = False
+
+        btnPrev4.IsEnabled = False
+        btnNext4.IsEnabled = False
+
+        btnPrev5.IsEnabled = False
+        btnNext5.IsEnabled = False
+
+        btnPrev6.IsEnabled = False
+        btnNext6.IsEnabled = False
     End Sub
 
     Private Sub GUISettingsOn()
@@ -348,6 +364,15 @@ Public Class AssetBorrowingPage
 
         btnPrev3.IsEnabled = True
         btnNext3.IsEnabled = True
+
+        btnPrev4.IsEnabled = True
+        btnNext4.IsEnabled = True
+
+        btnPrev5.IsEnabled = True
+        btnNext5.IsEnabled = True
+
+        btnPrev6.IsEnabled = True
+        btnNext6.IsEnabled = True
     End Sub
 #End Region
 
@@ -405,19 +430,19 @@ Public Class AssetBorrowingPage
             page = "Personal"
         ElseIf SR.SelectedIndex = 1 Then
             page = "All"
-            btnPrint.Visibility = Windows.Visibility.Visible
+            btnPrint.Visibility = Windows.Visibility.Hidden
         ElseIf SR.SelectedIndex = 2 Then
             page = "Borrow"
-            btnPrint.Visibility = Windows.Visibility.Visible
+            'btnPrint.Visibility = Windows.Visibility.Visible
         ElseIf SR.SelectedIndex = 3 Then
             page = "Request"
-            btnPrint.Visibility = Windows.Visibility.Visible
+            'btnPrint.Visibility = Windows.Visibility.Visible
         ElseIf SR.SelectedIndex = 4 Then
             page = "Return"
-            btnPrint.Visibility = Windows.Visibility.Visible
+            'btnPrint.Visibility = Windows.Visibility.Visible
         ElseIf SR.SelectedIndex = 5 Then
             page = "BorrowersLog"
-            btnPrint.Visibility = Windows.Visibility.Visible
+            'btnPrint.Visibility = Windows.Visibility.Visible
         Else
             page = "Approval"
         End If
