@@ -192,7 +192,7 @@ Class ComcellClockAddPage
 #End Region
 
 #Region "Events"
-    Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
+    Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs)
         Dim window As MainWindow = DirectCast(_window, MainWindow)
         comcellFrame.Navigate(New ComcellClockPage(profile, Me.comcellFrame, _window))
         window.MenuGrid.IsEnabled = True
