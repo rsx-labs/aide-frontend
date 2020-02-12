@@ -487,8 +487,8 @@
 
                                     <Grid Grid.Column="1">
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint3" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" />
-                                            <Button Style="{DynamicResource ButtonExport}" x:Name="btnExport3" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" />
+                                            <Button Style="{DynamicResource ButtonPrint}" x:Name="btnPrint3" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" Visibility="Hidden" />
+                                            <Button Style="{DynamicResource ButtonExport}" x:Name="btnExport3" Content="Print" HorizontalAlignment="Right"  Margin="10,5,10,5" VerticalAlignment="Center" Visibility="Hidden" />
                                         </StackPanel>
                                     </Grid>
                                 </Grid>

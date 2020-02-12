@@ -896,7 +896,7 @@
             </Grid>
             <Grid Grid.Row="1" Background="Gray">
                 <Viewbox>
-                    <TextBlock Foreground="White" Margin="10" Text="Please enter all required fields. Ensure all required fields have * indicated.."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Foreground="White" Margin="10" Text="Please enter all required fields. Ensure all required fields have * indicated.."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
                 </Viewbox>
             </Grid>
 
@@ -915,7 +915,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
+                            <!--<RowDefinition Height="*"/>-->
 
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="6">
@@ -1143,37 +1143,37 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </Grid>
-                        <Grid Grid.Row="6">
-                            <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                        <Grid Grid.Row="6" Visibility="Collapsed">
+                            <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Visibility="Collapsed">
 
-                                <TextBox x:Name="txtAssetBorrowingID" IsReadOnly="True" Template="{DynamicResource TextBoxBaseControlTemplate}"
+                                <TextBox x:Name="txtComments" Template="{DynamicResource TextBoxBaseControlTemplate}" Visibility="Collapsed"
                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Asset borrowing ID *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter additional info" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,22,0" Foreground="DarkGray" Visibility="Collapsed">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=txtAssetBorrowingID}" Value="">
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtComments}" Value="">
                                                 <Setter Property="Visibility" Value="Visible"/>
                                             </DataTrigger>
-
                                         </Style.Triggers>
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelAssetBorrowingID" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Asset Borrowing ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            <TextBlock x:Name="txtlabelComment" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Additional Info" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Visible"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Text, ElementName=txtAssetBorrowingID}" Value="">
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtComments}" Value="">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
+
                         </Grid>
 
                     </Grid>
@@ -1185,7 +1185,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
+                            <!--<RowDefinition Height="*"/>-->
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Border Margin="5,0,5,0" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
@@ -1218,7 +1218,7 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </Grid>
-                        <Grid Grid.Row="1">
+                        <Grid Grid.Row="4" Visibility="Collapsed">
                             <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbStatus" Margin="5,5,0,5" IsReadOnly="True" VerticalContentAlignment="Center" Visibility="Collapsed" IsEnabled="False"/>
                             <TextBlock x:Name="txtStatus" FontSize="12" IsHitTestVisible="False" Text="Select asset status *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray" Visibility="Collapsed">
                                 <TextBlock.Style>
@@ -1226,7 +1226,7 @@
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, ElementName=cbStatus}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Setter Property="Visibility" Value="Collapsed"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -1304,7 +1304,7 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </Grid>
-                        <Grid Grid.Row="4">
+                        <!--<Grid Grid.Row="4">
                             <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Visibility="Collapsed">
 
                                 <TextBox x:Name="txtComments" Template="{DynamicResource TextBoxBaseControlTemplate}" Visibility="Collapsed"
@@ -1335,9 +1335,41 @@
                                 </TextBlock.Style>
                             </TextBlock>
 
+                        </Grid>-->
+                        <Grid Grid.Row="1">
+                            <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Visibility="Visible">
+
+                                <TextBox x:Name="txtAssetBorrowingID" IsReadOnly="True" Template="{DynamicResource TextBoxBaseControlTemplate}"
+                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Visible"/>
+                            </Border>
+                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Asset borrowing ID *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtAssetBorrowingID}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBlock x:Name="txtlabelAssetBorrowingID" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Asset Borrowing ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=txtAssetBorrowingID}" Value="">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                         </Grid>
-                        <Grid Grid.Row="5">
-                            <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnDisapprove" Margin="5,5,0,5" >
+                        <Grid Grid.Row="5" Visibility="Collapsed">
+                            <!--<Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnDisapprove" Margin="5,5,0,5" >
 
                                 <TextBlock Text="REJECT" TextWrapping="Wrap" Margin="5"/>
 
@@ -1349,15 +1381,33 @@
 
                                 <TextBlock x:Name="txtBtnUpdate" Text="SEND BORROW REQUEST" TextWrapping="Wrap" Margin="5"/>
 
-                            </Button>
+                            </Button>-->
+                            <Button Visibility="Hidden" Style="{DynamicResource RoundCornerUpdate}" x:Name="btnCancel" Margin="5,5,0,5" >
 
+                                <TextBlock Text="REJECT" TextWrapping="Wrap" Margin="5"/>
+
+                            </Button>
 
 
                         </Grid>
                         <Grid Grid.Row="6">
-                            <Button Visibility="Hidden" Style="{DynamicResource RoundCornerUpdate}" x:Name="btnCancel" Margin="5,5,0,5" >
+                            <!--<Button Visibility="Hidden" Style="{DynamicResource RoundCornerUpdate}" x:Name="btnCancel" Margin="5,5,0,5" >
 
                                 <TextBlock Text="REJECT" TextWrapping="Wrap" Margin="5"/>
+
+                            </Button>-->
+
+                            <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnDisapprove" Margin="5,5,0,5" >
+
+                                <TextBlock Text="REJECT" TextWrapping="Wrap" Margin="5"/>
+
+                            </Button>
+
+
+
+                            <Button Style="{DynamicResource RoundCornerUpdate2}" x:Name="btnUpdate" Margin="5,5,0,5" >
+
+                                <TextBlock x:Name="txtBtnUpdate" Text="SEND BORROW REQUEST" TextWrapping="Wrap" Margin="5"/>
 
                             </Button>
 

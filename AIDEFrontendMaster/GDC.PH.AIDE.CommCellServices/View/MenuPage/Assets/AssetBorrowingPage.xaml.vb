@@ -83,9 +83,9 @@ Public Class AssetBorrowingPage
 #Region "Sub Procedures"
 
     Public Sub SetUnApprovedtTabVisible()
-        If profile.Permission_ID = 1 Then
-            Unapproved.Visibility = Windows.Visibility.Visible
-        End If
+        'If profile.Permission_ID = 1 Then
+        '    Unapproved.Visibility = Windows.Visibility.Visible
+        'End If
         If profile.Permission_ID <> 1 And profile.Permission_ID <> 4 Then
             AssetBorrowRequestList.Visibility = Windows.Visibility.Collapsed
             AssetReturnList.Visibility = Windows.Visibility.Collapsed
@@ -326,6 +326,7 @@ Public Class AssetBorrowingPage
             txtAllPageNo.Text = "No Results Found "
             txtBorrowPageNo.Text = "No Results Found "
             txtBorrowRequestPageNo.Text = "No Results Found "
+            txtReturnPageNo.Text = "No Results Found "
             txtBorrowersLogPageNo.Text = "No Results Found "
             GUISettingsOff()
         Else
@@ -333,6 +334,7 @@ Public Class AssetBorrowingPage
             txtAllPageNo.Text = "page " & currentPage & " of " & lastPage
             txtBorrowPageNo.Text = "page " & currentPage & " of " & lastPage
             txtBorrowRequestPageNo.Text = "page " & currentPage & " of " & lastPage
+            txtReturnPageNo.Text = "page " & currentPage & " of " & lastPage
             txtBorrowersLogPageNo.Text = "page " & currentPage & " of " & lastPage
             GUISettingsOn()
         End If
@@ -390,7 +392,7 @@ Public Class AssetBorrowingPage
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
-        If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+        If totalRecords > ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
             paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = lastPage
@@ -575,7 +577,7 @@ Public Class AssetBorrowingPage
     Private Sub lv_assetBorrowingRequestList_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles lv_assetBorrowingRequestList.SelectionChanged
         e.Handled = True
         If show = True Then
-            If lv_assetBorrowingRequestList.SelectedIndex <> -1 And profile.Permission_ID = 4 Then 'allow only custodian to assign assets
+            If lv_assetBorrowingRequestList.SelectedIndex <> -1 And (profile.Permission_ID = 4 Or profile.Permission_ID = 1) Then 'allow only custodian to assign assets
                 If lv_assetBorrowingRequestList.SelectedItem IsNot Nothing Then
                     'If CType(lv_assetBorrowingRequestList.SelectedItem, AssetsModel).STATUS <> 1 And CType(lv_assetBorrowingRequestList.SelectedItem, AssetsModel).EMP_ID <> profile.Emp_ID Then
                     '    Exit Sub
@@ -614,7 +616,7 @@ Public Class AssetBorrowingPage
     Private Sub lv_assetReturnList_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles lv_assetReturnList.SelectionChanged
         e.Handled = True
         If show = True Then
-            If lv_assetReturnList.SelectedIndex <> -1 And profile.Permission_ID = 4 Then 'allow only custodian to assign assets
+            If lv_assetReturnList.SelectedIndex <> -1 And (profile.Permission_ID = 4 Or profile.Permission_ID = 1) Then 'allow only custodian to assign assets
                 If lv_assetReturnList.SelectedItem IsNot Nothing Then
                     'If CType(lv_assetBorrowingRequestList.SelectedItem, AssetsModel).STATUS <> 1 And CType(lv_assetBorrowingRequestList.SelectedItem, AssetsModel).EMP_ID <> profile.Emp_ID Then
                     '    Exit Sub

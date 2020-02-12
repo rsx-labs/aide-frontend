@@ -48,20 +48,15 @@ Public Class AssetsBorrowingAddPage
         tbSuccessForm.Text = "Assets Borrowing"
         Me.pageDefinition = "Borrow"
         LoadData()
-        LoadStatus()
+        'LoadStatus()
         AssignEvents()
         PopulateComboBoxAssetID()
         'ListOfCustodians()
         ListOfAssetType()
         ListOfAssetManufacturer()
 
-        If fromPage = "Borrow" And profile.Permission_ID = 1 Then
-            txtEmpID.IsEnabled = True
-            txtEmpID.Text = String.Empty
-        Else
-            txtEmpID.Text = _assetsModel.EMP_ID
-            Integer.TryParse(txtEmpID.Text, empId)
-        End If
+        txtEmpID.Text = _assetsModel.EMP_ID
+        Integer.TryParse(txtEmpID.Text, empId)
 
         If assetsModel.STATUS = 4 And assetsModel.PREVIOUS_ID <> 0 Then
             status = 1
@@ -89,6 +84,7 @@ Public Class AssetsBorrowingAddPage
         Try
             e.Handled = True
             Dim assets As New Assets
+            Dim result As Integer
             If CheckMissingField() Then
                 MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Else
@@ -110,6 +106,7 @@ Public Class AssetsBorrowingAddPage
                     'assets.PREVIOUS_ID = assetsModel.EMP_ID
                     assets.TRANSFER_ID = cbNickname.SelectedValue
                     assets.APPROVAL = 0
+                    result = MsgBox("Press OK to confirm borrowing this asset.", MessageBoxButton.OKCancel, "AIDE")
                     'If profile.Permission_ID = 1 Then
                     '    assets.APPROVAL = 1
                     'Else
@@ -155,6 +152,7 @@ Public Class AssetsBorrowingAddPage
                     'assets.PREVIOUS_ID = assetsModel.EMP_ID
                     assets.TRANSFER_ID = cbNickname.SelectedValue
                     assets.APPROVAL = 1
+                    result = MsgBox("Press OK to confirm returning this asset.", MessageBoxButton.OKCancel, "AIDE")
                     'If profile.Permission_ID = 1 Then
                     '    assets.APPROVAL = 1
                     'Else
@@ -162,20 +160,23 @@ Public Class AssetsBorrowingAddPage
                     'End If
                 End If
 
-                If InitializeService() Then
-                    client.InsertAssetsBorrowing(assets)
-                    MsgBox("Asset has been updated.", MsgBoxStyle.Information, "AIDE")
-                    ClearFields()
-                    'mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
-                    mainFrame.Navigate(New AssetBorrowingPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
-                    mainFrame.IsEnabled = True
-                    mainFrame.Opacity = 1
-                    _menugrid.IsEnabled = True
-                    _menugrid.Opacity = 1
-                    _submenuframe.IsEnabled = True
-                    _submenuframe.Opacity = 1
 
-                    _addframe.Visibility = Visibility.Hidden
+                If result = 1 Then
+                    If InitializeService() Then
+                        client.InsertAssetsBorrowing(assets)
+                        MsgBox("Asset has been updated.", MsgBoxStyle.Information, "AIDE")
+                        ClearFields()
+                        'mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
+                        mainFrame.Navigate(New AssetBorrowingPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
+                        mainFrame.IsEnabled = True
+                        mainFrame.Opacity = 1
+                        _menugrid.IsEnabled = True
+                        _menugrid.Opacity = 1
+                        _submenuframe.IsEnabled = True
+                        _submenuframe.Opacity = 1
+
+                        _addframe.Visibility = Visibility.Hidden
+                    End If
                 End If
             End If
         Catch ex As Exception
@@ -344,11 +345,22 @@ Public Class AssetsBorrowingAddPage
         assets.STATUS = stat
         assets.APPROVAL = approval
 
-        Dim result As Integer = MsgBox("Are you sure you want to disapprove this asset assignment?", MessageBoxButton.YesNo, "AIDE")
+        Dim result As Integer
+        If approval = 1 Then
+            result = MsgBox("Are you sure you want to Approve this asset borrowing request?", MessageBoxButton.YesNo, "AIDE")
+        ElseIf approval = 2 Then
+            result = MsgBox("Are you sure you want to Reject this asset borrowing request?", MessageBoxButton.YesNo, "AIDE")
+        End If
+
         If result = 6 Then
             If InitializeService() Then
                 client.InsertAssetsBorrowing(assets)
-                MsgBox("Asset assignment has been disapproved.", MsgBoxStyle.Information, "AIDE")
+
+                If approval = 1 Then
+                    MsgBox("Asset borrowing request has been Approved.", MsgBoxStyle.Information, "AIDE")
+                ElseIf approval = 2 Then
+                    MsgBox("Asset borrowing request has been Rejected.", MsgBoxStyle.Information, "AIDE")
+                End If
                 ClearFields()
                 'mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
                 mainFrame.Navigate(New AssetBorrowingPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
@@ -366,7 +378,7 @@ Public Class AssetsBorrowingAddPage
         End If
 
 
-     
+
     End Sub
 
     Private Sub AssignEvents()
