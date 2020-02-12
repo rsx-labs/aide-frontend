@@ -328,24 +328,56 @@ Public Class AssetsModel
         End Set
     End Property
 
-    Public Property DATE_BORROWED As DateTime
+    Public Property DATE_BORROWED As String
+        'Get
+        '    Return _date_borrowed
+        'End Get
+        'Set(value As DateTime)
+        '    _date_borrowed = value
+        '    NotifyPropertyChanged("DATE_BORROWED")
+        'End Set
+
         Get
-            Return _date_borrowed
+            If _date_borrowed = CDate("01/01/9999") Then
+                Return String.Empty
+            Else
+                Return _date_borrowed.ToString("MM/dd/yyyy")
+            End If
         End Get
-        Set(value As DateTime)
-            _date_borrowed = value
+        Set(value As String)
+            If value = Nothing Then
+                _date_borrowed = Nothing
+            Else
+                _date_borrowed = CDate(value)
+            End If
             NotifyPropertyChanged("DATE_BORROWED")
         End Set
     End Property
 
-    Public Property DATE_RETURNED As DateTime
+    Public Property DATE_RETURNED As String
+        'Get
+        '    Return _date_returned
+        'End Get
+        'Set(value As String)
+        '    _date_returned = value
+        '    NotifyPropertyChanged("DATE_RETURNED")
+        'End Set
         Get
-            Return _date_returned
+            If _date_returned = CDate("01/01/9999") Then
+                Return String.Empty
+            Else
+                Return _date_returned.ToString("MM/dd/yyyy")
+            End If
         End Get
-        Set(value As DateTime)
-            _date_returned = value
+        Set(value As String)
+            If value = Nothing Then
+                _date_returned = Nothing
+            Else
+                _date_returned = CDate(value)
+            End If
             NotifyPropertyChanged("DATE_RETURNED")
         End Set
+
     End Property
 
     Public Property ASSET_BORROWING_ID As Integer
