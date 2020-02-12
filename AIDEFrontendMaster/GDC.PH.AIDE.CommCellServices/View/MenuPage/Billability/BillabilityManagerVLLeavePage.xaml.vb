@@ -100,6 +100,8 @@ Public Class BillabilityManagerVLLeavePage
                         sStatus = "Completed"
                     ElseIf iResource.startDate > Today.Date Then
                         sStatus = "Scheduled"
+                    ElseIf iResource.Status = 5 Or iResource.Status = 6 Or iResource.Status = 9 Or iResource.Status = 12 And iResource.startDate < DateTime.Now Then
+                        sStatus = "Completed"
                     Else
                         sStatus = "Ongoing"
                     End If
