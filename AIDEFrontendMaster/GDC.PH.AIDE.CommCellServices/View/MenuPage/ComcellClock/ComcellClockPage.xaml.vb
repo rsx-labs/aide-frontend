@@ -292,7 +292,7 @@ Class ComcellClockPage
         window.PagesFrame.Opacity = 0.3
         window.PagesFrame.IsEnabled = False
         addframe.Visibility = Visibility.Visible
-        addframe.Margin = New Thickness(200, 120, 200, 120)
+        addframe.Margin = New Thickness(200, 160, 200, 160)
     End Sub
 
     'Private Sub StopBtn_Click(sender As Object, e As RoutedEventArgs)
