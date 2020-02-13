@@ -40,96 +40,94 @@
             </Grid>
             
             <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}" >
-                <Grid Margin="10,5,10,5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="2*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.25*"/>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="0.25*"/>
+                </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0">
-                        <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                            <TextBox Background="Transparent" 
-                                     x:Name="txtTitle" 
-                                     TextWrapping="Wrap" 
-                                     FontSize="12"
-                                     MaxLines="255" 
-                                     BorderThickness="0"
-                                     HorizontalContentAlignment="Center" 
-                                     VerticalContentAlignment="Center" 
-                                     Text="{Binding TITLE, Mode=TwoWay}"/>
-                        </Border>
-                        
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Announcement title *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,5,5,5" Foreground="DarkGray">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=txtTitle}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                <Grid Grid.Row="0">
+                    <Border Margin="10,10,10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                        <TextBox Background="Transparent" 
+                                 x:Name="txtTitle" 
+                                 TextWrapping="Wrap" 
+                                 FontSize="12"
+                                 MaxLines="255" 
+                                 BorderThickness="0"
+                                 HorizontalContentAlignment="Center" 
+                                 VerticalContentAlignment="Center" 
+                                 Text="{Binding TITLE, Mode=TwoWay}"/>
+                    </Border>
 
-                        <TextBlock x:Name="txtlabelTitle" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Title" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=txtTitle}" Value="">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </Grid>
+                    <TextBlock Text="Announcement title *" Margin="0,5,0,0">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
+                                 <Setter Property="Visibility" Value="Collapsed"/>
+                                 <Style.Triggers>
+                                     <DataTrigger Binding="{Binding Text, ElementName=txtTitle}" Value="">
+                                         <Setter Property="Visibility" Value="Visible"/>
+                                     </DataTrigger>
+                                 </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                     
+                    <TextBlock x:Name="txtlabelTitle" Text="Title" Margin="5">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForLabel}">
+                                 <Setter Property="Visibility" Value="Visible"/>
+                                 <Style.Triggers>
+                                     <DataTrigger Binding="{Binding Text, ElementName=txtTitle}" Value="">
+                                         <Setter Property="Visibility" Value="Collapsed"/>
+                                     </DataTrigger>
+                                 </Style.Triggers>
+                             </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
                     
-                    <Grid Grid.Row="1">
-                        <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                            <RichTextBox Margin="5,10,5,0" Foreground="DimGray" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" x:Name="txtAnnouncementMessage">
-                                <FlowDocument>
-                                    <Paragraph TextAlignment="Justify">
-                                        <Run Foreground="DimGray" x:Name="runname"/>
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
-                        </Border>
-                        
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Write announcement message *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray" >
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=runname}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-
-                        <TextBlock x:Name="txtlabelMessage" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Message" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=runname}" Value="">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </Grid>
+                <Grid Grid.Row="1">
+                    <Border Margin="10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                        <RichTextBox Margin="5,10,5,0" Foreground="DimGray" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" x:Name="txtAnnouncementMessage">
+                            <FlowDocument>
+                                <Paragraph TextAlignment="Justify">
+                                    <Run Foreground="DimGray" x:Name="runname"/>
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                    </Border>
                     
-                    <Grid Grid.Row="2">
-                        <Button Style="{DynamicResource RoundCornerCreate}" x:Name="btnAnnouncementCreate" Margin="0,5" HorizontalAlignment="Stretch" Click="btnAnnouncementCreate_Click">
-                            <TextBlock Text="CREATE" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
-                        </Button>
-                    </Grid>
+                    <TextBlock Text="Write announcement message *" Margin="5,0,5,0">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=runname}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    
+                    <TextBlock x:Name="txtlabelMessage" Text="Message" Margin="5,0">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForLabel}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=runname}" Value="">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+                    
+                <Grid Grid.Row="2">
+                    <Button Style="{DynamicResource RoundCornerCreate}" x:Name="btnAnnouncementCreate" Margin="10,5,10,10" HorizontalAlignment="Stretch" Click="btnAnnouncementCreate_Click">
+                        <TextBlock Text="CREATE" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                    </Button>
                 </Grid>
             </Grid>
         </Grid>

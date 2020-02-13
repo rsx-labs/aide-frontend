@@ -17,8 +17,8 @@
 
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="0.2*"/>
                 </Grid.ColumnDefinitions>
                 
                 <Grid Grid.Column="0">
@@ -29,11 +29,7 @@
                 
                 <Grid Grid.Column="1">
                     <Viewbox Margin="10" HorizontalAlignment="Right">
-                        <Button x:Name="btnBack"  Style="{DynamicResource ButtonBack}" Click="btnBack_Click">
-                            <Viewbox>
-                                <TextBlock Text="Back"  Foreground="White" Margin="10"/>
-                            </Viewbox>
-                        </Button>
+                        <Button x:Name="btnBack" Style="{DynamicResource ButtonBack}" Click="btnBack_Click"/>
                     </Viewbox>
                 </Grid>
             </Grid>
@@ -46,9 +42,8 @@
 
             <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}" >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="0.5*"/>
                 </Grid.ColumnDefinitions>
                 
                 <Grid Grid.Column="0" Name="GridForManagers">
@@ -73,9 +68,9 @@
                                      VerticalContentAlignment="Center"/>
                         </Border>
                         
-                        <TextBlock IsHitTestVisible="False" Text="Enter sent by *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,5,0,0" Foreground="DarkGray">
+                        <TextBlock Text="Enter sent by *" Margin="0,5,0,0">
                             <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=txtSentBy}" Value="">
@@ -85,10 +80,10 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        
-                        <TextBlock x:Name="txtlabelSentBy" Width="120" TextAlignment="Center" Margin="5,5,5,5" Text="Sent by" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+
+                        <TextBlock x:Name="txtlabelSentBy" Text="Sent by" Margin="5">
                             <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForLabel}">
                                     <Setter Property="Visibility" Value="Visible"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=txtSentBy}" Value="">
@@ -106,9 +101,10 @@
                                   DisplayMemberPath="ProjectName"
                                   SelectedValue="{Binding SelectedProject}"
                                   SelectedValuePath="ProjectID" Style="{DynamicResource StyleComboBox}"/>
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select project *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
+                        
+                        <TextBlock Text="Select project *">
                             <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=comboProject}" Value="">
@@ -118,9 +114,10 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBlock x:Name="txtlabelSelectProject" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Project Selected" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                        
+                        <TextBlock x:Name="txtlabelSelectProject" Margin="5,0" Text="Project Selected" >
                             <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForLabel}">
                                     <Setter Property="Visibility" Value="Visible"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=comboProject}" Value="">
@@ -136,14 +133,16 @@
                         <Border Margin="10,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                             <TextBox Background="Transparent" 
                                      BorderThickness="0" 
+                                     IsReadOnly="True"
                                      x:Name="txtCommendationEmployees" 
                                      Template="{DynamicResource TextBoxBaseControlTemplate}" 
                                      HorizontalContentAlignment="Center" 
                                      VerticalContentAlignment="Center" />
                         </Border>
-                            <TextBlock FontSize="12" IsHitTestVisible="False" Text="Add employee *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
+                        
+                        <TextBlock Text="Add employee *">
                             <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=txtCommendationEmployees}" Value="">
@@ -153,10 +152,10 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        
-                        <TextBlock x:Name="txtlabelCommendedEmployee" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Commendation to" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+
+                        <TextBlock x:Name="txtlabelCommendedEmployee" Text="Commendation to" Margin="5,0">
                             <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForLabel}">
                                     <Setter Property="Visibility" Value="Visible"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=txtCommendationEmployees}" Value="">
@@ -180,9 +179,9 @@
                                       Style="{DynamicResource StyleComboBox}" 
                                       DisplayMemberPath="Nick_Name" />
                             
-                            <TextBlock x:Name="txtemployeeWM" FontSize="12" IsHitTestVisible="False" Text="Select employee" VerticalAlignment="Center" HorizontalAlignment="Center"  Foreground="DarkGray">
+                            <TextBlock x:Name="txtemployeeWM" Text="Select employee" >
                                 <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, ElementName=comboAddEmployee}" Value="">
@@ -192,10 +191,10 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            
-                            <TextBlock x:Name="txtlabelSelectedEmployee" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Selected Employee" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+
+                            <TextBlock x:Name="txtlabelSelectedEmployee" Text="Selected Employee" Margin="5,0">
                                 <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForLabel}">
                                         <Setter Property="Visibility" Value="Visible"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, ElementName=comboAddEmployee}" Value="">
@@ -208,20 +207,16 @@
                         </Grid>
                         
                         <Grid Grid.Column="1">
-                            <Button Style="{DynamicResource ButtonAdd}" x:Name="btnCommendationAddEmployee" IsEnabled="False" Margin="5,5,5,10" VerticalContentAlignment="Center">
-                                <!--<Viewbox>
-                                    --><!--<TextBlock Text="+" TextWrapping="Wrap" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>--><!--
-                                </Viewbox>-->
-                            </Button>
+                            <Button Style="{DynamicResource ButtonAdd}" x:Name="btnCommendationAddEmployee" IsEnabled="False" Margin="5" VerticalContentAlignment="Center"/>
                         </Grid>
                     </Grid>
                 </Grid>
                 
                 <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="0.6*"/>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="0.2*"/>
                     </Grid.RowDefinitions>
                     
                     <Grid Grid.Row="0">
@@ -235,9 +230,9 @@
                             </RichTextBox>
                         </Border>
                         
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter commendation reason *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
+                        <TextBlock Text="Enter commendation reason *" Margin="5,0">
                             <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=txtRunName}" Value="">
@@ -247,10 +242,10 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        
-                        <TextBlock x:Name="txtlabelCommendationReason" Width="120" TextAlignment="Center" Margin="5,5,5,5" Text="Reason" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+
+                        <TextBlock x:Name="txtlabelCommendationReason" Text="Reason" Margin="5">
                             <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForLabel}">
                                     <Setter Property="Visibility" Value="Visible"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=txtRunName}" Value="">
@@ -266,9 +261,10 @@
                         <Border Margin="5,5,10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                             <DatePicker Style="{DynamicResource styleDatePickerfrom}" Text="12" Margin="2" x:Name="dateInput" BorderBrush="Transparent"/>
                         </Border>
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a date *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
+                        
+                        <TextBlock Background="Transparent" Text="Select a date *" Margin="5,0">
                             <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=dateInput}" Value="">
@@ -279,9 +275,9 @@
                             </TextBlock.Style>
                         </TextBlock>
                         
-                        <TextBlock x:Name="txtlabelDate" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Date Created" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                        <TextBlock x:Name="txtlabelDate" Text="Date Created">
                             <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForLabel}">
                                     <Setter Property="Visibility" Value="Visible"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=dateInput}" Value="">

@@ -38,6 +38,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="YesBtn" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="VerticalContentAlignment" Value="Top"/>
@@ -723,6 +724,10 @@
             <Setter Property="Background" Value="Gainsboro"/>
         </Style>
 
+        <Style TargetType="{x:Type RichTextBox }">
+            <Setter Property="Foreground" Value="DarkGray"/>
+        </Style>
+        
         <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
             <Border Background="{TemplateBinding Background}" 
                 x:Name="Bd" BorderBrush="Gainsboro"
@@ -743,6 +748,24 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
+
+        <Style x:Key="TextBlockStyleForTextbox" TargetType="TextBlock">
+            <Setter Property="IsHitTestVisible" Value="False" />
+            <Setter Property="Foreground" Value="DarkGray" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="TextBlockStyleForLabel" TargetType="TextBlock">
+            <Setter Property="Width" Value="120" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="Background" Value="Gray" />
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="9"/>
+        </Style>
+
         <!-- End Textbox Styles -->
         
         <!-- Combobox Styles-->
@@ -1260,6 +1283,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="AideAboutBtn" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>

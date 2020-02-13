@@ -55,9 +55,10 @@
                         
                         <Grid Grid.Column="0">
                             <ComboBox FontSize="12" Style="{DynamicResource StyleComboBox}" Name="ComcellDayCB" Margin="0,5,2.5,5"/>
-                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a day *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            
+                            <TextBlock Text="Select a day *" Margin="5,0,0,0">
                                 <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, ElementName=ComcellDayCB}" Value="">
@@ -67,9 +68,10 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock x:Name="txtlabelDay" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Day" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            
+                            <TextBlock x:Name="txtlabelDay" Margin="5,0" Text="Day">
                                 <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForLabel}">
                                         <Setter Property="Visibility" Value="Visible"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, ElementName=ComcellDayCB}" Value="">
@@ -81,6 +83,7 @@
                             </TextBlock>
                         </Grid>
                     </Grid>
+                    
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
@@ -92,9 +95,9 @@
                                 <TextBox MaxLength="2" BorderBrush="Transparent" Background="Transparent" MinWidth="70" BorderThickness="0" Template="{DynamicResource TextBoxBaseControlTemplate}" Name="ComcellHourCB" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12" PreviewTextInput="ComcellHourCB_PreviewTextInput"/>
                             </Border>
                             
-                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Hours *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock Text="Hours *" Margin="5,0,0,0">
                                 <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, ElementName=ComcellHourCB}" Value="">
@@ -105,9 +108,9 @@
                                 </TextBlock.Style>
                             </TextBlock>
                             
-                            <TextBlock x:Name="txtlabelHours" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Hours" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            <TextBlock x:Name="txtlabelHours" Margin="5,0" Text="Hours">
                                 <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForLabel}">
                                         <Setter Property="Visibility" Value="Visible"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, ElementName=ComcellHourCB}" Value="">
@@ -153,9 +156,9 @@
                                 <TextBox MaxLength="2" BorderBrush="Transparent" Background="Transparent" MinWidth="70" BorderThickness="0" Template="{DynamicResource TextBoxBaseControlTemplate}" Name="ComcellMinuteCB" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12" PreviewTextInput="ComcellMinuteCB_PreviewTextInput"/>
                             </Border>
 
-                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Minutes *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock Text="Minutes *" Margin="5,0,0,0">
                                 <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, ElementName=ComcellMinuteCB}" Value="">
@@ -166,9 +169,9 @@
                                 </TextBlock.Style>
                             </TextBlock>
                             
-                            <TextBlock x:Name="txtlabelSelectedMinute" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Minutes" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            <TextBlock x:Name="txtlabelSelectedMinute" Margin="5,0" Text="Minutes">
                                 <TextBlock.Style>
-                                    <Style TargetType="{x:Type TextBlock}">
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForLabel}">
                                         <Setter Property="Visibility" Value="Visible"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Text, ElementName=ComcellMinuteCB}" Value="">
@@ -180,15 +183,16 @@
                             </TextBlock>
                         </Grid>
                     </Grid>
+                    
                     <Grid Grid.Row="2">
                         <ComboBox FontSize="12" Style="{DynamicResource StyleComboBox}" Name="ComcellTimeExtensionCB" Margin="0,5,2.5,5">
                             <ComboBoxItem Content="AM"/>
                             <ComboBoxItem Content="PM"/>
                         </ComboBox>
                         
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a midday *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <TextBlock Text="Select a midday *" Margin="5,0,0,0">
                             <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=ComcellTimeExtensionCB}" Value="">
@@ -199,9 +203,9 @@
                             </TextBlock.Style>
                         </TextBlock>
                         
-                        <TextBlock x:Name="txtlabelSelectedExtension" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Midday" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                        <TextBlock x:Name="txtlabelSelectedExtension" Margin="5,0" Text="Midday">
                             <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForLabel}">
                                     <Setter Property="Visibility" Value="Visible"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=ComcellTimeExtensionCB}" Value="">

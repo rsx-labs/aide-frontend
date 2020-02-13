@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
       Title="KPITargetsUpdatePage">
+    
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
@@ -15,8 +16,8 @@
 
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="0.2*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
@@ -27,11 +28,7 @@
 
                 <Grid Grid.Column="1">
                     <Viewbox Margin="10" HorizontalAlignment="Right">
-                        <Button x:Name="btnBack"  Style="{DynamicResource ButtonBack}" Click="btnBack_Click">
-                            <Viewbox>
-                                <TextBlock Text="Back"  Foreground="White" Margin="10"/>
-                            </Viewbox>
-                        </Button>
+                        <Button x:Name="btnBack"  Style="{DynamicResource ButtonBack}" Click="btnBack_Click"/>
                     </Viewbox>
                 </Grid>
             </Grid>
@@ -43,16 +40,15 @@
             </Grid>
 
             <Grid Grid.Row="2" Background="{DynamicResource GradientDesign}" >
-                <Grid Margin="10,5,10,5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="100"/>
-                        <RowDefinition Height="50"/>
-                    </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.25*"/>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="0.25*"/>
+                </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0">
-                        <Border Margin="10,10,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                            <TextBox Background="Transparent" 
+                <Grid Grid.Row="0">
+                    <Border Margin="10,10,10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                        <TextBox Background="Transparent" 
                                      x:Name="txtTitle" 
                                      TextWrapping="Wrap" 
                                      FontSize="12"
@@ -61,78 +57,77 @@
                                      HorizontalContentAlignment="Center" 
                                      VerticalContentAlignment="Center" 
                                      Text="{Binding KPITargetsSet.Subject, Mode=TwoWay}"/>
-                        </Border>
+                    </Border>
 
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="KPI title *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,5,5,5" Foreground="DarkGray">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=txtTitle}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                    <TextBlock Text="KPI title *" Margin="0,5,0,0">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=txtTitle}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
 
-                        <TextBlock x:Name="txtlabelTitle" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Title" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=txtTitle}" Value="">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </Grid>
+                    <TextBlock x:Name="txtlabelTitle" Text="Title" Margin="5">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForLabel}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=txtTitle}" Value="">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
 
-                    <Grid Grid.Row="1">
-                        <Border Margin="5,10,10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                            <RichTextBox Margin="10" Foreground="DimGray" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" x:Name="txtKPIDescription">
-                                <FlowDocument>
-                                    <Paragraph TextAlignment="Justify">
-                                        <Run Foreground="DimGray" Name="runname"/>
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
-                        </Border>
+                <Grid Grid.Row="1">
+                    <Border Margin="10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                        <RichTextBox Margin="10" Foreground="DimGray" BorderBrush="Transparent" BorderThickness="0" Background="Transparent" x:Name="txtKPIDescription">
+                            <FlowDocument>
+                                <Paragraph TextAlignment="Justify">
+                                    <Run Foreground="DimGray" Name="runname"/>
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                    </Border>
 
-                        <TextBlock FontSize="12" IsHitTestVisible="False" Text="Write KPI description *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=runname}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                    <TextBlock Text="Write KPI description *" Margin="0,5,0,0">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=runname}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
 
-                        <TextBlock x:Name="txtlabelMessage" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Message" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=runname}" Value="">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </Grid>
+                    <TextBlock x:Name="txtlabelMessage" Text="Message" Margin="5,0">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForLabel}">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=runname}" Value="">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
 
-                    <Grid Grid.Row="2">
-                        <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnUpdate" Margin="5,5,10,10" HorizontalAlignment="Stretch" Click="btnKPITargetUpdate_Click">
-                            <TextBlock Text="UPDATE" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
-                        </Button>
-                    </Grid>
+                <Grid Grid.Row="2">
+                    <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnUpdate" Margin="10,5,10,10" HorizontalAlignment="Stretch" Click="btnKPITargetUpdate_Click">
+                        <TextBlock Text="UPDATE" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                    </Button>
                 </Grid>
             </Grid>
         </Grid>
