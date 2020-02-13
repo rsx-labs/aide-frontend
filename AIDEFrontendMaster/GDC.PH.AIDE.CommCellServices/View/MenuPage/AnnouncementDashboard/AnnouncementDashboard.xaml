@@ -57,8 +57,7 @@
                 
                 <Grid Grid.Column="1">
                     <Viewbox HorizontalAlignment="Right" Margin="5">
-                        <Button x:Name="btnCreate" Visibility="Collapsed"  Style="{DynamicResource ButtonAdd}" Click="btnCreate_Click">
-                        </Button>
+                        <Button x:Name="btnCreate" Visibility="Collapsed"  Style="{DynamicResource ButtonAdd}" Click="btnCreate_Click"/>
                     </Viewbox>
                 </Grid>
             </Grid>

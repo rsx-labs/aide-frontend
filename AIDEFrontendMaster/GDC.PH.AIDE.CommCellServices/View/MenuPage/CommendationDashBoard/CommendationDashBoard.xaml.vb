@@ -87,8 +87,8 @@ Class CommendationDashBoard
             If InitializeService() Then
                 lstCommendation = _AideService.GetCommendations(empID)
                 lstFiscalYear = _AideService.GetAllFiscalYear()
-                LoadCommendations()
                 LoadFiscalYear()
+                LoadCommendations()
             End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -223,7 +223,7 @@ Class CommendationDashBoard
                 _menugrid.Opacity = 0.3
                 _submenuframe.IsEnabled = False
                 _submenuframe.Opacity = 0.3
-                _addframe.Margin = New Thickness(140, 70, 140, 70)
+                _addframe.Margin = New Thickness(140, 100, 140, 100)
                 _addframe.Visibility = Visibility.Visible
             End If
         End If
@@ -237,23 +237,18 @@ Class CommendationDashBoard
         _menugrid.Opacity = 0.3
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(140, 70, 140, 70)
+        _addframe.Margin = New Thickness(140, 100, 140, 100)
         _addframe.Visibility = Visibility.Visible
     End Sub
 
-    Private Sub cbMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbMonth.SelectionChanged
-        If m_loaded Then
-            month = cbMonth.SelectedValue
-            'cbYear.SelectedValue = Date.Now().Year.ToString() + "-" + (Date.Now().Year + 1).ToString()
-            LoadCommendationsBySearch()
-        End If
+    Private Sub cbMonth_DropDownClosed(sender As Object, e As EventArgs) Handles cbMonth.DropDownClosed
+        month = cbMonth.SelectedValue
+        LoadCommendationsBySearch()
     End Sub
 
-    Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
-        If m_loaded Then
-            year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
-            LoadCommendationsBySearch()
-        End If
+    Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
+        year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+        LoadCommendationsBySearch()
     End Sub
 #End Region
 
