@@ -537,7 +537,7 @@
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Model No." Width="100" Binding="{Binding MODEL_NO}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Serial No." Width="100" Binding="{Binding SERIAL_NO}" />
                                             <!--<DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Purchased" Width="110" Binding="{Binding DATE_DESCR}" />-->
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Borrowed" Width="105" Binding="{Binding DATE_BORROWED, StringFormat=d}" Visibility="Collapsed"/>
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Borrowed" Width="105" Binding="{Binding DATE_BORROWED, StringFormat=d}"/>
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Returned" Width="105" Binding="{Binding DATE_RETURNED, StringFormat=d}" Visibility="Collapsed"/>
                                             <!--<DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Other Info" Width="120" Binding="{Binding OTHER_INFO}" />-->
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="90" Binding="{Binding STATUS_DESCR}" Visibility="Collapsed"/>
