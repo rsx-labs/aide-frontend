@@ -195,7 +195,7 @@
                         <Button Visibility="Hidden" x:Name="btnPrint"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" Style="{DynamicResource ButtonPrint}" HorizontalContentAlignment="Center">
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Print"></TextBlock>
                         </Button>
-                        <Button x:Name="btnViewAll" Width="155" Height="35"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" Style="{DynamicResource RoundCornerUpdate}" HorizontalContentAlignment="Center">
+                        <Button x:Name="btnViewAll" Width="155" Height="35"  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0" Style="{DynamicResource RoundCornerUpdate}" HorizontalContentAlignment="Center">
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="View My Outstanding Tasks"></TextBlock>
                         </Button>
                     </StackPanel>

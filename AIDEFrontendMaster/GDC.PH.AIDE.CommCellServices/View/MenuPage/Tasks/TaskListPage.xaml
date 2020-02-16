@@ -10,38 +10,38 @@
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="11.5*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="0.11*"/>
+                <RowDefinition Height="0.79*"/>
+                <RowDefinition Height="0.1*"/>
             </Grid.RowDefinitions>
             
             <Grid Grid.Row="0" Background="White">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.9*"/>
+                    <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="12*"/>
+                        <ColumnDefinition Width="0.08*"/>
+                        <ColumnDefinition Width="0.92*"/>
                     </Grid.ColumnDefinitions>
                     
                     <Grid Grid.Column="0">
-                        <Viewbox HorizontalAlignment="Left" Margin="5,5,0,5" >
+                        <Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
                             <Image Source="..\..\..\Assets\Button\TaskLogo.png" />
                         </Viewbox>
                     </Grid>
 
                     <Grid Grid.Column="1">
                         <Viewbox HorizontalAlignment="Left">
-                            <TextBlock TextWrapping="Wrap" Padding="0" Text="View Outstanding Task" Margin="0,7,0,7" Foreground="DimGray"/>
+                            <TextBlock TextWrapping="Wrap" Padding="0" Text="View Outstanding Tasks" Margin="0,7,0,7" Foreground="DimGray"/>
                         </Viewbox>
                     </Grid>
                 </Grid>
                 
                 <Grid Grid.Column="1">
-                    <Viewbox Margin="15">
+                    <Viewbox Margin="10">
                         <Button x:Name="btnBack" Style="{DynamicResource ButtonBack}" HorizontalAlignment="Right" Click="btnBack_Click"/>
                     </Viewbox>
                 </Grid>
@@ -85,44 +85,28 @@
                     </DataGrid>
                 </Border>
             </Grid>
-            
+
             <Grid Grid.Row="2" Background="White">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width=".8*"/>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions>
- 
+
                 <Grid Grid.Column="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1.5*"/>
-                        <ColumnDefinition Width="1*"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Grid Grid.Column="0">
-                        <Button Height="Auto" Width="Auto"  
-                                Margin="5"
-                                x:Name="btnPrev" 
-                                Style="{DynamicResource ButtonPageBack}" 
-                                BorderBrush="{x:Null}" >
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Height="30" Width="30"
+                                                x:Name="btnPrev" 
+                                                Style="{DynamicResource ButtonPageBack}" 
+                                                BorderBrush="{x:Null}" >
                         </Button>
-                    </Grid>
-                    
-                    <Grid Grid.Column="1">
-                            <TextBlock TextWrapping="Wrap" Padding="0" x:Name="txtPageNo" Margin="0,7,0,7" Foreground="DimGray" FontSize="9"/>
-                    </Grid>
-                    
-                    <Grid Grid.Column="2">
-                        <Button Height="Auto" Width="Auto" Margin="5" 
-                                x:Name="btnNext" 
-                                Style="{DynamicResource ButtonPageNext}" 
-                                BorderBrush="{x:Null}">
+                        <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" x:Name="txtPageNo" Margin="5,0,5,0" Foreground="DimGray" FontSize="10"/>
+                        <Button Height="30" Width="30"
+                                                x:Name="btnNext" 
+                                                Style="{DynamicResource ButtonPageNext}" 
+                                                BorderBrush="{x:Null}">
                         </Button>
-                    </Grid>
-                </Grid>
-                
-                <Grid Grid.Column="2" >
+                    </StackPanel>
                 </Grid>
             </Grid>
         </Grid>

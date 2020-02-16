@@ -24,7 +24,6 @@ Class ResourcePlannerAddPage
     Dim setStatus As Integer
     Dim isHalfDay As Boolean
     Dim displayStatus As String = String.Empty
-
 #End Region
 
 #Region "Constructor"

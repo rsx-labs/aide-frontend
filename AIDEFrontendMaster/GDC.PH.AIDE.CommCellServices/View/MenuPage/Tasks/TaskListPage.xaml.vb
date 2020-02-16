@@ -30,6 +30,7 @@ Public Class TaskListPage
     Dim pagingRecordPerPage As Integer = 10
     Dim currentPage As Integer
     Dim lastPage As Integer
+    Dim totalRecords As Integer
 #End Region
 
 #Region "Fields"
@@ -222,8 +223,9 @@ Public Class TaskListPage
             If InitializeService() Then
                 lstTask = aideService.GetTasksByEmpID(empID)
                 If lstTask.Count <> 0 Then
-                    'SetPaging(PagingMode._First)
                     LoadData()
+                    totalRecords = lstTask.Length
+                    DisplayPagingInfo()
                 Else
                     lv_taskList.Visibility = Windows.Visibility.Collapsed
                     lbl_noOT.Visibility = Windows.Visibility.Visible
@@ -276,6 +278,8 @@ Public Class TaskListPage
                                                     })
             Next
 
+            currentPage = lstTasksData.CurrentPage + 1
+            lastPage = Math.Ceiling(lstTask.Length / pagingRecordPerPage)
             lv_taskList.ItemsSource = lstTasksData
 
         Catch ex As Exception
@@ -395,15 +399,41 @@ Public Class TaskListPage
 
         If totalRecords >= ((lstTasksData.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
             lstTasksData.CurrentPage = lstTasksData.CurrentPage + 1
+            currentPage = lstTasksData.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
         End If
-        'SetPaging(CInt(PagingMode._Next))
+
+        DisplayPagingInfo()
+    End Sub
+
+    Private Sub DisplayPagingInfo()
+        ' If there has no data found
+        If lstTask.Length = 0 Then
+            txtPageNo.Text = "No Results Found "
+            GUISettingsOff()
+        Else
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
+            GUISettingsOn()
+        End If
     End Sub
 
     Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
         lstTasksData.CurrentPage = lstTasksData.CurrentPage - 1
-        'SetPaging(CInt(PagingMode._Previous))
+        If currentPage > 1 Then
+            currentPage -= 1
+        End If
+        DisplayPagingInfo()
     End Sub
 
+    Private Sub GUISettingsOff()
+        btnPrev.IsEnabled = False
+        btnNext.IsEnabled = False
+    End Sub
+
+    Private Sub GUISettingsOn()
+        btnPrev.IsEnabled = True
+        btnNext.IsEnabled = True
+    End Sub
 #End Region
 
 #Region "ICallBack Function"
