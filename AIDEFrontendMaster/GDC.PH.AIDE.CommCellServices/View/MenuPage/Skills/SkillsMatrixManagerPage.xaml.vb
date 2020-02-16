@@ -209,7 +209,16 @@ Class SkillsMatrixManagerPage
 
                     Exit For
                 Next
-                dict.Add(iSkill.Skill_Descr, level)
+
+                Dim skillDesc As String
+
+                If iSkill.Skill_Descr.Contains(".") Then
+                    skillDesc = iSkill.Skill_Descr.Replace(".", Chr(149))
+                Else
+                    skillDesc = iSkill.Skill_Descr
+                End If
+
+                dict.Add(skillDesc, level)
             Next
 
             'For Each iSkills As mySkillList In _SkillDBProvider.GetSkillProf()
@@ -288,9 +297,17 @@ Class SkillsMatrixManagerPage
                         End If
                     Next
 
+                    Dim skillDesc As String
+
+                    If iSkill.Skill_Descr.Contains(".") Then
+                        skillDesc = iSkill.Skill_Descr.Replace(".", Chr(149))
+                    Else
+                        skillDesc = iSkill.Skill_Descr
+                    End If
+
                     '' Adding to dictionary every employees skills description and  skills proficiency
                     If emp_id.Equals(iEmployee.EmpID.ToString()) Then
-                        dict.Add(iSkill.Skill_Descr, level)
+                        dict.Add(skillDesc, level)
                     End If
 
                     If Not emp_id.Equals(iEmployee.EmpID.ToString()) Then
@@ -300,7 +317,7 @@ Class SkillsMatrixManagerPage
                         dict = New Dictionary(Of String, String)()
                         dict.Add("Employee ID", iEmployee.EmpID)
                         dict.Add("Employee Name", iEmployee.Name)
-                        dict.Add(iSkill.Skill_Descr, level)
+                        dict.Add(skillDesc, level)
                     End If
 
                     emp_id = iEmployee.EmpID
@@ -736,15 +753,16 @@ Class SkillsMatrixManagerPage
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
 
     End Sub
+
     Private Sub DgSkillList_Loaded(sender As Object, e As RoutedEventArgs) Handles dgSkillList.Loaded
         If dgSkillList.Columns.Count > 0 Then
             dgSkillList.Columns.Item(0).Visibility = Visibility.Collapsed
         End If
     End Sub
 
-#End Region
-
     Private Sub dgSkillList_PreviewMouseWheel(sender As Object, e As MouseWheelEventArgs) Handles dgSkillList.PreviewMouseWheel
         svSkillList.ScrollToVerticalOffset(svSkillList.VerticalOffset - e.Delta)
     End Sub
+#End Region
+
 End Class

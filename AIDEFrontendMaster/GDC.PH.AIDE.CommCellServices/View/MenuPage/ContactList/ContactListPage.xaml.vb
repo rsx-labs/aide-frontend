@@ -496,7 +496,7 @@ Public Class ContactListPage
         submenuframe.IsEnabled = False
         submenuframe.Opacity = 0.3
         addframe.Visibility = Visibility.Visible
-        addframe.Margin = New Thickness(80, 60, 80, 60)
+        addframe.Margin = New Thickness(80, 80, 80, 80)
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
