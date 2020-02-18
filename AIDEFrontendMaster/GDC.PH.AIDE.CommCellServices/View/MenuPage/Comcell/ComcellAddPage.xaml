@@ -987,7 +987,7 @@
                         </TextBlock>
                     </Grid>
                     <Grid Grid.Row="4">
-                        <Button Style="{DynamicResource RoundCorner}" Name="AddBtn" Margin="0,5" Click="AddBtn_Click">
+                        <Button Style="{DynamicResource RoundCornerCreate}" Name="AddBtn" Margin="0,5" Click="AddBtn_Click">
                             <TextBlock x:Name="txtBlockButton" Text="CREATE" TextWrapping="Wrap" Margin="5"/>
                         </Button>
                     </Grid>

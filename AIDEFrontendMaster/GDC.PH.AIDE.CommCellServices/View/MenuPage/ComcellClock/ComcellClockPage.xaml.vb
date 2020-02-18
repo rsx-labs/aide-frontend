@@ -213,6 +213,7 @@ Class ComcellClockPage
         End Select
     End Function
 
+
     Public Function TimeCheck(timenow As String) As Boolean
 
         If isServiceEnabled Then

@@ -10,7 +10,6 @@
         WindowStyle="None"
         ResizeMode="CanMinimize"
         mc:Ignorable="d">
-    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5*"/>
@@ -34,53 +33,60 @@
                     <GradientStop Color="#FFD31818" Offset="1"/>
                 </LinearGradientBrush>
             </Grid.Background>
-            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="90*"/>
                 <ColumnDefinition Width="10*"/>
             </Grid.ColumnDefinitions>
-            
             <Grid Grid.Column="0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+             
                     <Viewbox HorizontalAlignment="Left" >
-                        <Button x:Name="DashboardBtn" Click="DashboardBtn_Click" Style="{DynamicResource Flat}" Margin="10,7">
-                            <TextBlock x:Name="txtTitle" TextWrapping="Wrap" Margin="0" FontWeight="Bold" Foreground="WhiteSmoke"/>
+                        <Button x:Name="DashboardBtn" Click="DashboardBtn_Click" Style="{DynamicResource Flat}" Margin="10,7"  >
+                        <TextBlock x:Name="txtTitle" TextWrapping="Wrap" Margin="0" FontWeight="Bold" Foreground="WhiteSmoke"/>
                         </Button>
                     </Viewbox>
                 </StackPanel>
+                
             </Grid>
 
             <Grid Grid.Column="1" HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal">
-                    <Button Background="Transparent" Margin="10" Name="MinimizeBtn" Click="MinimizeBtn_Click" BorderThickness="0" Style="{DynamicResource ButtonMini}"/>
-                    <Button Style="{DynamicResource ButtonBack}" Background="Transparent" Margin="10" Name="ExitBtn"  Click="ExitBtn_Click" BorderThickness="0"/>
+                    <Button Background="Transparent" Margin="10" Name="MinimizeBtn" Click="MinimizeBtn_Click" BorderThickness="0" Style="{DynamicResource ButtonMini}" >
+                        
+                    </Button>
+                    <Button Style="{DynamicResource ButtonBack}" Background="Transparent" Margin="10" Name="ExitBtn"  Click="ExitBtn_Click" BorderThickness="0">
+                       
+                    </Button>
                 </StackPanel>
+                
             </Grid>
         </Grid>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.18*"/>
-                <ColumnDefinition Width="0.62*"/>
-                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="18*"/>
+                <ColumnDefinition Width="62*"/>
+                <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
-            
             <Grid x:Name="AttendanceGrid" Grid.Column="0" Margin="0,5,5,5">
+
                 <Frame Name="AttendanceFrame" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+
             </Grid>
-            
             <Grid Grid.Column="1" x:Name="MainGridParent">
                 <!--<Grid.Background>
                     <ImageBrush ImageSource="Assets/FujitsuBG.jpg" Stretch="Fill"/>
                 </Grid.Background>-->
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="0.07*"/>
-                    <RowDefinition Height="0.80*"/>
-                    <RowDefinition Height="0.13*"/>
+                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="80*"/>
+                    <RowDefinition Height="13*"/>
                 </Grid.RowDefinitions>
-                
                 <Grid Grid.Row="0" Margin="5">
+
+
                     <Frame Name="SubMenuFrame" NavigationUIVisibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
                 </Grid>
 
                 <Grid x:Name="MainGrid" Grid.Row="1" Margin="5">
@@ -90,38 +96,34 @@
 
                 <!-- Grid where buttons are allocated -->
                 <Grid Grid.Row="2" Margin="5" x:Name="MenuGrid">
+
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="0.5*"/>
-                            <RowDefinition Height="0.5*"/>
+                            <RowDefinition Height="50*"/>
+                            <RowDefinition Height="50*"/>
                         </Grid.RowDefinitions>
-                        
                         <Grid Grid.Row="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.2*"/>
-                                <ColumnDefinition Width="0.2*"/>
-                                <ColumnDefinition Width="0.2*"/>
-                                <ColumnDefinition Width="0.2*"/>
-                                <ColumnDefinition Width="0.2*"/>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="20*"/>
                             </Grid.ColumnDefinitions>
-                            
                             <Button Name="EmployeeBtn" Click="EmployeesBtn_Click"  Margin="2" Grid.Column="0" Style="{DynamicResource RoundCorner}"  >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="0.3*"/>
-                                        <ColumnDefinition Width="0.7*"/>
+                                        <ColumnDefinition Width="30*"/>
+                                        <ColumnDefinition Width="70*"/>
                                     </Grid.ColumnDefinitions>
-                                    
                                     <Grid Grid.Column="0">
                                         <Image Margin="0,10,10,10" Source="Assets/Menu/EmployeeIcon.png"/>
                                     </Grid>
-                                    
                                     <Grid Grid.Column="1" VerticalAlignment="Center">
                                         <TextBlock Foreground="White" Text="Contacts List" TextWrapping="WrapWithOverflow"></TextBlock>
                                     </Grid>
                                 </Grid>
                             </Button>
-                            
                             <Button Name="SkillsBtn" Click="SkillsBtn_Click" Margin="2" Grid.Column="1" Style="{DynamicResource RoundCorner}"  >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -136,7 +138,6 @@
                                     </Grid>
                                 </Grid>
                             </Button>
-                            
                             <Button Name="AttendanceBtn" Click="AttendanceBtn_Click" Margin="2" Grid.Column="2" Style="{DynamicResource RoundCorner}"  >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -151,7 +152,6 @@
                                     </Grid>
                                 </Grid>
                             </Button>
-                            
                             <Button Name="TaskBtn" Click="TaskBtn_Click" Margin="2" Grid.Column="3" Style="{DynamicResource RoundCorner}"  >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -166,7 +166,6 @@
                                     </Grid>
                                 </Grid>
                             </Button>
-                            
                             <Button Name="BillabilityBtn" Click="BillabilityBtn_Click"  Margin="2" Grid.Column="4" Style="{DynamicResource RoundCorner}"  >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -182,16 +181,14 @@
                                 </Grid>
                             </Button>
                         </Grid>
-                        
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.2*"/>
-                                <ColumnDefinition Width="0.2*"/>
-                                <ColumnDefinition Width="0.2*"/>
-                                <ColumnDefinition Width="0.2*"/>
-                                <ColumnDefinition Width="0.2*"/>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="20*"/>
+                                <ColumnDefinition Width="20*"/>
                             </Grid.ColumnDefinitions>
-                            
                             <Button Name="ImprovementBtn" Click="ImprovementBtn_Click" Margin="2" Grid.Column="0" Style="{DynamicResource RoundCorner}"  >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -206,7 +203,6 @@
                                     </Grid>
                                 </Grid>
                             </Button>
-                            
                             <Button Name="WorkPlaceAuditBtn" Click="WorkPlaceAuditBtn_Click"  Margin="2" Grid.Column="1" Style="{DynamicResource RoundCorner}" >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -236,7 +232,6 @@
                                     </Grid>
                                 </Grid>
                             </Button>
-                            
                             <Button Name="ProjectBtn" Click="ProjectBtn_Click" Margin="2" Grid.Column="3" Style="{DynamicResource RoundCorner}"  >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -251,7 +246,6 @@
                                     </Grid>
                                 </Grid>
                             </Button>
-                            
                             <Button Name="AssetsBtn" Click="AssetsBtn_Click" Margin="2" Grid.Column="2" Style="{DynamicResource RoundCorner}"  >
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -270,19 +264,17 @@
                     </Grid>
                 </Grid>
             </Grid>
-            
             <Grid Grid.Column="2" x:Name="SideBarGrid">
                 <Grid.RowDefinitions>
+
                     <RowDefinition Height="60*"/>
                 </Grid.RowDefinitions>
-                
                 <Grid Grid.Row="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"/>
                         <RowDefinition Height="3*"/>
                         <RowDefinition Height="1.5*"/>
                     </Grid.RowDefinitions>
-                    
                     <Grid Grid.Row="0">
                         <Frame x:Name="genericFrame" Margin="5,5,0,5" NavigationUIVisibility="Hidden" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </Grid>
@@ -293,6 +285,7 @@
                         <Frame x:Name="ComcellClockFrame" Margin="5,5,5,5" NavigationUIVisibility="Hidden" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                     </Grid>
                 </Grid>
+
             </Grid>
         </Grid>
 
@@ -301,40 +294,48 @@
                 <ColumnDefinition Width="7*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>-->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+            
+           
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Viewbox HorizontalAlignment="left">
+                            <Button Name="HomeBtn2"  Grid.Column="0" Style="{DynamicResource TaskBarBtn}" >
+                                <Image Margin="1" Source="Assets/Button/DashboardLogo.png"/>
+                            </Button>
+                        </Viewbox>
+                    </Grid>
+                    <Grid Grid.Column="1">
 
-                <Grid Grid.Column="0">
-                    <Viewbox HorizontalAlignment="left">
-                        <Button Name="HomeBtn2"  Grid.Column="0" Style="{DynamicResource TaskBarBtn}" >
-                            <Image Margin="1" Source="Assets/Button/DashboardLogo.png"/>
-                        </Button>
-                    </Viewbox>
-                </Grid>
-
-                <Grid Grid.Column="1">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Viewbox Margin="5" HorizontalAlignment="Right">
-                            <Button Name="AboutBtn" Margin="2" Style="{DynamicResource AideAboutBtn}" Click="AboutBtn_Click"/>
-                        </Viewbox>
+                            <Button Name="AboutBtn" Margin="2" Style="{DynamicResource AideAboutBtn}" Click="AboutBtn_Click">
 
+                            </Button>
+                        </Viewbox>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="white">
                             <Viewbox>
                                 <TextBlock FontWeight="Bold" Name="TimeTxt" TextWrapping="Wrap" Margin="5" Foreground="DarkSlateGray" Text="{Binding Now}"/>
                             </Viewbox>
-
                             <Rectangle Fill="Black" Width="1" Margin="2,10,2,10"/>
-
                             <Viewbox HorizontalAlignment="Left">
                                 <TextBlock FontStyle="Italic" Name="DateTxt" TextWrapping="Wrap" Margin="10" Foreground="DimGray"/>
                             </Viewbox>
                         </StackPanel>
                     </StackPanel>
+                    </Grid>
                 </Grid>
-            </Grid>
+               
+
+
+
+
+                
+          
+
             <!--<Grid.RowDefinitions>
                         <RowDefinition Height="2*"/>
                         <RowDefinition Height="1.2*"/>
@@ -352,8 +353,9 @@
 
             
         </Grid>
+
+
     </Grid>
-    
     <Window.Resources>
         <Style x:Key="CloseButton"  TargetType="TextBlock">
             <Setter Property= "Foreground" Value="Blue"/>
@@ -363,7 +365,6 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
         <Style x:Key="RoundCorner" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -378,40 +379,8 @@
                                           TextElement.FontWeight="Bold">
                                 </ContentPresenter>
                             </Border>
+
                         </Grid>
-                        
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="#FF005895"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" TargetName="border" Value="#FF09C2EA"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        
-        <Style x:Key="TaskBarBtn" TargetType="{x:Type Button}">
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="1"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="0" Background="Transparent">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          TextElement.FontWeight="Bold">
-                                </ContentPresenter>
-                            </Border>
-                        </Grid>
-                        
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter Property="Background" TargetName="border" Value="#FF005895"/>
@@ -428,7 +397,38 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+        <Style x:Key="TaskBarBtn" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid x:Name="grid">
+                            <Border x:Name="border" CornerRadius="0" Background="Transparent">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          TextElement.FontWeight="Bold">
+                                </ContentPresenter>
+                            </Border>
+
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FF005895"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FF09C2EA"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="Flat" TargetType="Button">
             <Setter Property="Background" Value="{x:Null}" />
             <Setter Property="BorderBrush" Value="{x:Null}" />
@@ -454,7 +454,6 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="{x:Null}" />
@@ -462,14 +461,13 @@
                     <Setter Property="FontWeight" Value="Normal" />
                     <Setter Property="Cursor" Value="Hand"></Setter>
                 </Trigger>
-                
                 <Trigger Property="IsFocused" Value="True">
                     <Setter Property="FontWeight" Value="Normal" />
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
         <Style x:Key="ButtonBack" TargetType="{x:Type Button}">
+
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -477,6 +475,7 @@
                                Height="Auto"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
+                               
                                Source="\Assets\Button\closebtn.png"
                                Stretch="Fill">
                             <Image.Effect>
@@ -491,11 +490,14 @@
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
+
                 </Setter.Value>
             </Setter>
+
         </Style>
 
         <Style x:Key="ButtonMini" TargetType="{x:Type Button}">
+
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -503,6 +505,7 @@
                                Height="Auto"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
+                               
                                Source="\Assets\Button\minimized.png"
                                Stretch="Fill">
                             <Image.Effect>
@@ -517,10 +520,11 @@
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
+
                 </Setter.Value>
             </Setter>
+
         </Style>
-        
         <Style x:Key="DasbBoardBtn" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -559,8 +563,8 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
-        
         <Style x:Key="ButtonAdd" TargetType="{x:Type Button}">
+
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -584,12 +588,15 @@
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
+
                 </Setter.Value>
             </Setter>
+
         </Style>
+        
     </Window.Resources>
-    
     <Window.Background>
+        
         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
             <LinearGradientBrush.RelativeTransform>
                 <TransformGroup>

@@ -163,6 +163,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DashboardTaskSummaryTotals" nillable="true" type="tns:DashboardTaskSummaryTotals" />
+  <xs:complexType name="ArrayOfAnnouncements">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Announcements" nillable="true" type="tns:Announcements" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAnnouncements" nillable="true" type="tns:ArrayOfAnnouncements" />
   <xs:complexType name="Announcements">
     <xs:sequence>
       <xs:element minOccurs="0" name="ANNOUNCEMENT_ID" type="xs:int" />
@@ -778,7 +784,7 @@
       <xs:element minOccurs="0" name="NAME" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="StatusCD" type="xs:int" />
+      <xs:element minOccurs="0" name="StatusCD" type="xs:short" />
       <xs:element minOccurs="0" name="TotalBalance" type="xs:double" />
       <xs:element minOccurs="0" name="UsedLeaves" type="xs:double" />
       <xs:element minOccurs="0" name="dateFrom" type="xs:dateTime" />
@@ -795,12 +801,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfResourcePlanner" nillable="true" type="tns:ArrayOfResourcePlanner" />
-  <xs:complexType name="ArrayOfAnnouncements">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Announcements" nillable="true" type="tns:Announcements" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfAnnouncements" nillable="true" type="tns:ArrayOfAnnouncements" />
   <xs:complexType name="Action">
     <xs:sequence>
       <xs:element minOccurs="0" name="Act_Assignee" type="xs:int" />

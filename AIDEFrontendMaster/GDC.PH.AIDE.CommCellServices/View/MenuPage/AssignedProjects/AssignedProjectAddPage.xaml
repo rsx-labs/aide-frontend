@@ -251,7 +251,7 @@
                             </Button>
                         </Grid>
                         <Grid Grid.Row="5">
-                            <Button Style="{DynamicResource RoundCorner}" Command="{Binding ClearCommand}" IsEnabled="{Binding ClearMode}" Margin="0,5,5,5" >
+                            <Button Style="{DynamicResource RoundCornerGray}" Command="{Binding ClearCommand}" IsEnabled="{Binding ClearMode}" Margin="0,5,5,5" >
 
                                 <TextBlock Text="CLEAR" TextWrapping="Wrap" Margin="5"/>
 

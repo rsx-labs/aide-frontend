@@ -21,9 +21,14 @@ Class ResourcePlannerAddPage
     Private profile As Profile
     Private mainwindows As MainWindow
 
+    Dim isManager As Integer = 1
+    Dim isHoliday As Integer = 7
     Dim setStatus As Integer
     Dim isHalfDay As Boolean
     Dim displayStatus As String = String.Empty
+
+    Dim dateFrom As Date
+    Dim dateTo As Date
 #End Region
 
 #Region "Constructor"
@@ -73,21 +78,22 @@ Class ResourcePlannerAddPage
             Else
                 If cbCategory.Text = String.Empty Or dtpFrom.Text = String.Empty Or dtpTo.Text = String.Empty Then
                     MsgBox("Please enter all required fields. Ensure all required fields have * indicated.!", MsgBoxStyle.Exclamation, "AIDE")
-                ElseIf cbCategory.SelectedValue = setStatus Then
-                    Dim notify = MsgBox("There is already an existing " & cbCategory.Text & " for this date" & vbNewLine & "Do you wish to proceed?", MsgBoxStyle.YesNo, "AIDE")
-                    If notify = MsgBoxResult.Yes Then
-                        InsertResourcePlanner()
-                    End If
+                    'ElseIf cbCategory.SelectedValue = setStatus Then
+                    '    Dim notify = MsgBox("There is already an existing " & cbCategory.Text & " for this date" & vbNewLine & "Do you wish to proceed?", MsgBoxStyle.YesNo, "AIDE")
+                    '    If notify = MsgBoxResult.Yes Then
+                    '        InsertResourcePlanner()
+                    '    End If
                 Else
                     If isHalfDay And cbSchedule.SelectedIndex = -1 Then
                         MsgBox("Please enter all required fields. Ensure all required fields have * indicated.!", MsgBoxStyle.Exclamation, "AIDE")
                     Else
-                        If CheckLeaveExists() Then
+                        SetDates()
+                        If CheckLeaveExists() And (Not cbCategory.SelectedValue = isHoliday) Then
                             MsgBox("Unable to file leave. Leaves already applied within the date range", MsgBoxStyle.Exclamation, "AIDE")
                         Else
                             Dim ans = MsgBox("Are you sure you want to file " & cbCategory.Text & "?", MsgBoxStyle.YesNo, "AIDE")
-                            If ans = MsgBoxResult.Yes Then
 
+                            If ans = MsgBoxResult.Yes Then
                                 InsertResourcePlanner()
                                 dtpTo.IsEnabled = True
                                 attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
@@ -182,29 +188,28 @@ Class ResourcePlannerAddPage
 
     Public Sub InsertResourcePlanner()
         Dim Resource As New ResourcePlanner
-        If cbSchedule.Text = "Morning".Trim.ToString() Then
-            dtpFrom.SelectedDate = dtpFrom.SelectedDate.Value.AddHours(0).AddMinutes(0).AddSeconds(0)
-            dtpTo.SelectedDate = dtpTo.SelectedDate.Value.AddHours(13).AddMinutes(59).AddSeconds(59)
-        ElseIf cbSchedule.Text = "Afternoon" Then
-            dtpFrom.SelectedDate = dtpFrom.SelectedDate.Value.AddHours(14).AddMinutes(0).AddSeconds(0)
-            dtpTo.SelectedDate = dtpTo.SelectedDate.Value.AddHours(23).AddMinutes(59).AddSeconds(59)
-        Else
-            dtpFrom.SelectedDate = dtpFrom.SelectedDate.Value.AddHours(0).AddMinutes(0).AddSeconds(0)
-            dtpTo.SelectedDate = dtpTo.SelectedDate.Value.AddHours(23).AddMinutes(59).AddSeconds(59)
-        End If
+
         Resource.NAME = ""
         Resource.DESCR = ""
         Resource.Image_Path = ""
         Resource.EmpID = txtEmpID.Text
-        Resource.dateFrom = dtpFrom.SelectedDate
-        Resource.dateTo = dtpTo.SelectedDate
+        Resource.dateFrom = dateFrom
+        Resource.dateTo = dateTo
         Resource.Status = cbCategory.SelectedValue
-        If profile.Emp_ID <> txtEmpID.Text Then
-            client.InsertResourcePlanner(Resource)
+
+        If profile.Permission_ID = isManager Then
+            client.InsertResourcePlannerForManager(Resource)
         Else
-            client.UpdateResourcePlanner(Resource)
+            client.InsertResourcePlannerForEmployee(Resource)
         End If
-            _ResourceDBProvider._splist.Clear()
+
+        'If profile.Emp_ID <> txtEmpID.Text Then
+        '    client.InsertResourcePlanner(Resource)
+        'Else
+        '    client.UpdateResourcePlanner(Resource)
+        'End If
+
+        _ResourceDBProvider._splist.Clear()
         MsgBox(cbCategory.Text & " has been applied. ", MsgBoxStyle.Information, "AIDE")
     End Sub
 
@@ -236,7 +241,7 @@ Class ResourcePlannerAddPage
             InitializeService()
 
             empID = Integer.Parse(txtEmpID.Text)
-            Dim lstresource As ResourcePlanner() = client.GetLeavesByDateAndEmpID(empID, cbCategory.SelectedValue, dtpFrom.SelectedDate, dtpTo.SelectedDate)
+            Dim lstresource As ResourcePlanner() = client.GetLeavesByDateAndEmpID(empID, cbCategory.SelectedValue, dateFrom, dateTo)
 
             If lstresource.Count > 0 Then
                 bLeaveExists = True
@@ -248,6 +253,19 @@ Class ResourcePlannerAddPage
 
         Return bLeaveExists
     End Function
+
+    Public Sub SetDates()
+        If cbSchedule.Text = "Morning".Trim.ToString() Then
+            dateFrom = dtpFrom.SelectedDate.Value.AddHours(0).AddMinutes(0).AddSeconds(0)
+            dateTo = dtpTo.SelectedDate.Value.AddHours(13).AddMinutes(59).AddSeconds(59)
+        ElseIf cbSchedule.Text = "Afternoon" Then
+            dateFrom = dtpFrom.SelectedDate.Value.AddHours(14).AddMinutes(0).AddSeconds(0)
+            dateTo = dtpTo.SelectedDate.Value.AddHours(23).AddMinutes(59).AddSeconds(59)
+        Else
+            dateFrom = dtpFrom.SelectedDate.Value.AddHours(0).AddMinutes(0).AddSeconds(0)
+            dateTo = dtpTo.SelectedDate.Value.AddHours(23).AddMinutes(59).AddSeconds(59)
+        End If
+    End Sub
 
     Public Sub LoadData()
         txtEmpID.Text = profile.Emp_ID

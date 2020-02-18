@@ -134,7 +134,7 @@ Class MainWindow
 
     Private Sub InitializeData()
         SetEmployeeData()
-        attendance()
+        Attendance()
         LoadVersionNo()
         LoadSideBar()
         MsgBox("Welcome " & email & ".", MsgBoxStyle.Information, "AIDE")
@@ -238,7 +238,7 @@ Class MainWindow
         End Try
     End Sub
 
-    Public Sub attendance()
+    Public Sub Attendance()
         Try
             'Get Login Time
             If machineOS.Contains("Windows 7") Then
@@ -265,7 +265,7 @@ Class MainWindow
                 MsgBox("Service timed out. Application will close automatically." + Environment.NewLine + "Please note that no attendance will be recorded.", MsgBoxStyle.Critical, "AIDE")
                 Environment.Exit(0)
             Else
-                aideClientService.InsertAttendance(attendanceSummarry)
+                aideClientService.InsertAttendanceByEmpID(attendanceSummarry)
             End If
 
         Catch ex As Exception
@@ -371,16 +371,16 @@ Class MainWindow
         'SubMenuFrame.Navigate(New AuditSchedSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
     End Sub
 
-
-
-
     Private Sub ExitBtn_Click(sender As Object, e As RoutedEventArgs)
         Dim result = MsgBox("Do you want to logoff?" & vbCrLf & vbCrLf &
                             "Click YES to logoff." & vbCrLf &
-                            "Click NO to close the application only.", vbQuestion + MsgBoxStyle.YesNo, "AIDE")
+                            "Click NO to close the application only.", vbQuestion + MsgBoxStyle.YesNoCancel, "AIDE")
+
+        Dim logoffTime As Date = DateTime.Now
+
         If result = MsgBoxResult.Yes Then
             If InitializeService() Then
-                aideClientService.InsertLogoffTime(profile.Emp_ID)
+                aideClientService.InsertLogoffTime(profile.Emp_ID, logoffTime)
                 Environment.Exit(0)
             End If
         ElseIf result = MsgBoxResult.No Then
