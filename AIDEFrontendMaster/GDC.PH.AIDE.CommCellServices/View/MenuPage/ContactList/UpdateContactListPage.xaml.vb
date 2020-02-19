@@ -336,7 +336,6 @@ Class UpdateContactListPage
 
     Private Sub btnCUpdate_Click(sender As Object, e As RoutedEventArgs) Handles btnCUpdate.Click
         Try
-
             e.Handled = True
             contactVM.ContactProfile = DataContext
             Dim contactList As New ContactList

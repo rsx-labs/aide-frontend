@@ -15,7 +15,7 @@ Public Class ResourcePlannerModel
     Private _endDate As DateTime
     Private _durations As String
     Private _leaveStatus As String
-    Private _statusCD As Integer
+    Private _statusCD As Short
 
     Public Sub New()
 
@@ -160,11 +160,11 @@ Public Class ResourcePlannerModel
         End Set
     End Property
 
-    Public Property STATUS_CD As Integer
+    Public Property STATUS_CD As Short
         Get
             Return _statusCD
         End Get
-        Set(value As Integer)
+        Set(value As Short)
             _statusCD = value
             NotifyPropertyChanged("STATUS_CD")
         End Set
