@@ -34,8 +34,4 @@ Class OtherSubMenuPage
     Private Sub Comcell_Click(sender As Object, e As RoutedEventArgs)
         pageframe.Navigate(New ComcellMainPage(pageframe, profile, addframe, menugrid, submenuframe))
     End Sub
-
-    Private Sub Late_Click(sender As Object, e As RoutedEventArgs)
-        pageframe.Navigate(New LatePage(pageframe, profile, addframe, menugrid, submenuframe))
-    End Sub
 End Class

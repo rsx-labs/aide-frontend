@@ -30,6 +30,8 @@ Class AttendanceSubMenuPage
         pFrame.Navigate(New BillabilitySickLeavePage(profile, pFrame))
     End Sub
 
-
+    Private Sub Late_Click(sender As Object, e As RoutedEventArgs)
+        pFrame.Navigate(New LatePage(pFrame, profile, addframe, menugrid, submenuframe))
+    End Sub
 
 End Class
