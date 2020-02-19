@@ -62,12 +62,16 @@ Class KPISummaryAddPage
             InitializeComponent()
             LoadMonth()
             LoadYears(_kpiSummary.FYStart.Year, _kpiSummary.FYEnd.Year)
-            LoadControls()
+            'LoadControls()
 
             If Me._kpiSummary.KPI_Month >= 4 Then
-                cbYear.Text = Convert.ToDateTime(_kpiSummary.FYStart).Year.ToString()
+                ' cbYear.Text = Convert.ToDateTime(_kpiSummary.FYStart).Year.ToString()
+                txtBlockYear.Text = Convert.ToDateTime(_kpiSummary.FYStart).Year.ToString()
+                cbYear.SelectedValue = Convert.ToDateTime(_kpiSummary.FYStart).Year.ToString()
             Else
-                cbYear.Text = Convert.ToDateTime(_kpiSummary.FYEnd).Year.ToString()
+                'cbYear.Text = Convert.ToDateTime(_kpiSummary.FYEnd).Year.ToString()
+                txtBlockYear.Text = Convert.ToDateTime(_kpiSummary.FYEnd).Year.ToString()
+                cbYear.SelectedValue = Convert.ToDateTime(_kpiSummary.FYEnd).Year.ToString()
             End If
             cbYear.IsEnabled = False
 
