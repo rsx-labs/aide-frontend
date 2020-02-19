@@ -259,16 +259,24 @@ Public Class KPISummaryPage
 
         If kpiList.Count > 0 Then
             For Each iSummary As KPISummaryData In kpiList
-                If _year < Date.Now.Year Then
-                    curYear = _year
-                Else
-                    If iSummary._Month >= 4 Then
-                        curYear = Date.Now.Year
-                    Else
-                        curYear = Date.Now.Year - 1
-                    End If
-                End If
+                'If _year < Date.Now.Year Then
+                '    curYear = _year
+                'Else
+                '    If iSummary._Month >= 4 Then
+                '        curYear = Date.Now.Year
+                '    Else
+                '        curYear = Date.Now.Year - 1
+                '    End If
+                'End If
 
+                Dim fyStart As Integer = (iSummary._FYStart).Year
+                Dim fyEnd As Integer = (iSummary._FYEnd).Year
+
+                If iSummary._Month >= 4 Then
+                    curYear = fyStart
+                Else
+                    curYear = fyEnd
+                End If
 
                 If kpiName <> iSummary._subject Then
                     x = x + 1
@@ -285,6 +293,7 @@ Public Class KPISummaryPage
                         End If
 
                         dict.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), (iSummary.KPI_Target * 100).ToString() + " | " + (iSummary.KPI_Actual * 100).ToString())
+                        'dict.Add(dfmi.GetMonthName(iSummary._Month), (iSummary.KPI_Target * 100).ToString() + " | " + (iSummary.KPI_Actual * 100).ToString())
                     ElseIf x = 2 Then
                         overallValue = overallValue + (iSummary.KPI_Overall * 100)
                         If Not dict2.ContainsKey("KPI") Then
@@ -296,6 +305,7 @@ Public Class KPISummaryPage
                             dict2.Add("KPI", iSummary._subject)
                         End If
                         dict2.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), (iSummary.KPI_Target * 100).ToString() + " | " + (iSummary.KPI_Actual * 100).ToString())
+                        'dict2.Add(dfmi.GetMonthName(iSummary._Month), (iSummary.KPI_Target * 100).ToString() + " | " + (iSummary.KPI_Actual * 100).ToString())
                     ElseIf x = 3 Then
                         overallValue = (overallValue + (iSummary.KPI_Overall * 100)) / 3
                         If Not dict3.ContainsKey("KPI") Then
@@ -307,11 +317,13 @@ Public Class KPISummaryPage
                             dict3.Add("KPI", iSummary._subject)
                         End If
                         dict3.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), (iSummary.KPI_Target * 100).ToString() + " | " + (iSummary.KPI_Actual * 100).ToString())
+                        'dict3.Add(dfmi.GetMonthName(iSummary._Month), (iSummary.KPI_Target * 100).ToString() + " | " + (iSummary.KPI_Actual * 100).ToString())
 
                         If Not dict4.ContainsKey("KPI") Then
                             dict4.Add("KPI", "Overall")
                         End If
                         dict4.Add(dfmi.GetMonthName(iSummary._Month) + " " + curYear.ToString(), Math.Round(overallValue, 2).ToString())
+                        'dict4.Add(dfmi.GetMonthName(iSummary._Month), Math.Round(overallValue, 2).ToString())
                         x = 0
                     End If
                 End If
