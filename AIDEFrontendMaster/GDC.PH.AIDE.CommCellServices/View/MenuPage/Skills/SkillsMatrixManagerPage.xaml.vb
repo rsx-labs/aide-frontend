@@ -404,7 +404,7 @@ Class SkillsMatrixManagerPage
             Skills.EmpID = Convert.ToInt32(lblEmpID.Text)
             Skills.Last_Reviewed = Date.Now
             client.UpdateAllSkills(Skills)
-            MsgBox(cbProjectList.Text.ToUpper & " has been updated.", MsgBoxStyle.Information, "AIDE")
+            MsgBox("Skills have been updated.", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -495,7 +495,8 @@ Class SkillsMatrixManagerPage
             InitializeService()
             skillid = cbProjectList.SelectedValue
             GetProfLevel()
-            If cbProjectList.SelectedValue = 0 Or checkRB() = True Then
+
+            If cbProjectList.SelectedIndex = -1 And checkRB() = True Then
                 Dim result = MsgBox("You are going to update your Skills" & vbNewLine & "Do you wish to continue?", MessageBoxButtons.YesNo, "AIDE")
 
                 If bClick = False Then
@@ -508,21 +509,17 @@ Class SkillsMatrixManagerPage
                         UpdateAllSkillsProficiency()
                     End If
                 End If
-
             Else
                 If proficiency = proflevel Then
                     MsgBox("There is no change in proficiency level. " & vbNewLine & "Please select another skill to update." & cbProjectList.Text.ToUpper, MsgBoxStyle.Critical, "AIDE")
                 Else
                     InitializeService()
                     If client.GetProfLvlByEmpIDSkillIDs(Convert.ToInt32(lblEmpID.Text), skillid).Prof_LVL = 1 Then
-
                         UpdateSkillsProficiency()
-
                     Else
-
                         InsertSkillsProficiency()
+                    End If
 
-                        End If
                     _SkillDBProvider._splist.Clear()
                     ClearSelection()
                     LoadSkillsProf()

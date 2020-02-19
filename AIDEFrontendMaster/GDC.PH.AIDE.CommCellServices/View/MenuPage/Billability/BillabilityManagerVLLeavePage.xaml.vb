@@ -80,9 +80,9 @@ Public Class BillabilityManagerVLLeavePage
             _ResourceDBProvider._AllLeavesList.Clear()
             paginatedCollection = New PaginatedObservableCollection(Of ResourcePlannerModel)(pagingRecordPerPage)
             If selection = 0 Then
-                lstresource = client.GetAllLeavesByEmployee(profile.Emp_ID, 4, 1)
+                lstresource = client.GetAllLeavesByEmployee(profile.Emp_ID, vlStatus)
             Else
-                lstresource = client.GetAllLeavesHistoryByEmployee(profile.Emp_ID, 4)
+                lstresource = client.GetAllLeavesHistoryByEmployee(profile.Emp_ID, vlStatus)
             End If
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
             Dim resourceListVM As New ResourcePlannerViewModel()
@@ -153,16 +153,17 @@ Public Class BillabilityManagerVLLeavePage
         End If
     End Sub
 
-    Private Function UpdateLeave() As Boolean
-        Dim LeaveService As New ResourcePlanner
+    Private Function CancelLeave() As Boolean
+        Dim resourcePlanner As New ResourcePlanner
 
         If lv_ActiveLeaves.SelectedItem IsNot Nothing Then
-            LeaveService.StartDate = CType(lv_ActiveLeaves.SelectedItem, ResourcePlannerModel).START_DATE
-            LeaveService.EndDate = CType(lv_ActiveLeaves.SelectedItem, ResourcePlannerModel).END_DATE
-            LeaveService.EmpID = Me.profile.Emp_ID
+            resourcePlanner.StartDate = CType(lv_ActiveLeaves.SelectedItem, ResourcePlannerModel).START_DATE
+            resourcePlanner.EndDate = CType(lv_ActiveLeaves.SelectedItem, ResourcePlannerModel).END_DATE
+            resourcePlanner.Status = CType(lv_ActiveLeaves.SelectedItem, ResourcePlannerModel).Status
+            resourcePlanner.EmpID = Me.profile.Emp_ID
 
             If InitializeService() Then
-                client.UpdateLeaves(LeaveService, 0, CType(lv_ActiveLeaves.SelectedItem, ResourcePlannerModel).Status)
+                client.CancelLeave(resourcePlanner)
             End If
 
             Return True
@@ -237,7 +238,7 @@ Public Class BillabilityManagerVLLeavePage
 
     Private Sub CancelBtn_Click(sender As Object, e As RoutedEventArgs)
         If MsgBox("Are you sure to cancel this leave?", MsgBoxStyle.Information + MsgBoxStyle.YesNo, "AIDE Leave") = vbYes Then
-            If UpdateLeave() Then
+            If CancelLeave() Then
                 MsgBox("Successfully cancelled leave/s", MsgBoxStyle.Information, "AIDE")
                 selection = 0
                 LoadDataActive()

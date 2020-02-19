@@ -1208,7 +1208,7 @@
                             </Button>
                         </Grid>
                         <Grid Grid.Row="3">
-                            <Button Style="{DynamicResource RoundCorner}" x:Name="btnSRDelete" Margin="5,5,0,5" >
+                            <Button Style="{DynamicResource RoundCornerGray}" x:Name="btnSRDelete" Margin="5,5,0,5" >
                                 
                                     <TextBlock Text="DELETE" TextWrapping="Wrap" Margin="5"/>
                                 

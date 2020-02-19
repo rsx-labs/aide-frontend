@@ -93,7 +93,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.11*"/>
                     <RowDefinition Height="0.10*"/>
-                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="0.75*"/>
                 </Grid.RowDefinitions>
 
@@ -222,8 +222,8 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.20*" />
                         <ColumnDefinition Width="0.4*" />
-                        <ColumnDefinition Width="0.20*" />
-                        <ColumnDefinition Width="0.20*" />
+                        <ColumnDefinition Width="0.15*" />
+                        <ColumnDefinition Width="0.25*" />
                     </Grid.ColumnDefinitions>
                     
                     <Grid Grid.Column="0">
@@ -265,9 +265,9 @@
                     </Grid>
                     
                     <Grid Grid.Column="2">
-                        <Button x:Name="btnAddUpdate" Style="{DynamicResource RoundCorner}" Margin="5">
+                        <Button x:Name="btnAddUpdate" Style="{DynamicResource RoundCorner}" Margin="10,5">
                             <Viewbox>
-                                <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="5"/>
+                                <TextBlock Text="UPDATE" TextWrapping="Wrap" Margin="7"/>
                             </Viewbox>
                         </Button>
                     </Grid>

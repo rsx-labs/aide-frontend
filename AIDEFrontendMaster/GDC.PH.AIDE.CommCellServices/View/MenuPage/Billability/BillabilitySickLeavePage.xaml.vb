@@ -153,6 +153,11 @@ Public Class BillabilitySickLeavePage
                 TotalBalance.Add(iResource.TotalBalance)
                 employee(i) = iResource.Emp_Name
                 i += 1
+
+                If Me.profile.Emp_ID = iResource.Emp_ID Then
+                    Dim totRemBal As Double = iResource.HalfBalance + iResource.TotalBalance
+                    TxtRemBalance.Text = totRemBal.ToString()
+                End If
             Next
 
             SeriesCollection = New SeriesCollection From {

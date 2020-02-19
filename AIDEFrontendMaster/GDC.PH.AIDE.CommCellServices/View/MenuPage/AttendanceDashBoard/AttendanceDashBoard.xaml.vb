@@ -50,7 +50,7 @@ Public Class AttendanceDashBoard
     Public Sub SetData()
         Try
             If InitializeService() Then
-                AEmployee = _AideService.GetAttendanceToday(profile.Email_Address)
+                AEmployee = _AideService.GetAttendanceToday(profile.Emp_ID)
 
                 Dim d As DateTime? = Nothing
                 Dim lstAEmployeeList As New ObservableCollection(Of AttendanceModel)
