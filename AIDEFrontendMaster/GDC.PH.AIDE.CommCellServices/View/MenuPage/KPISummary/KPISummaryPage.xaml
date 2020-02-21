@@ -79,7 +79,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <Grid Grid.Column="0">
-                    <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="5,10,10,10" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
+                    <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="10" Height="30" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
                     
                     <TextBlock Text="Select Fiscal Year">
                         <TextBlock.Style>

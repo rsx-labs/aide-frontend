@@ -8,6 +8,22 @@ Imports System.Collections.ObjectModel
 Class AuditSchedMainPage
     Implements ServiceReference1.IAideServiceCallback
 
+#Region "Paging Declarations"
+    Dim startRowIndex As Integer
+    Dim lastRowIndex As Integer
+    Dim pagingPageIndex As Integer
+    Dim pagingRecordPerPage As Integer = 10
+    Dim currentPage As Integer
+    Dim lastPage As Integer
+    Dim totalRecords As Integer
+
+    Private Enum PagingMode
+        _First = 1
+        _Next = 2
+        _Previous = 3
+        _Last = 4
+    End Enum
+#End Region
 
 #Region "Fields"
 
@@ -24,26 +40,11 @@ Class AuditSchedMainPage
     Private nextYear As Integer
 
     Dim lstauditSched As AuditSched()
+    Dim lstauditSchedList As PaginatedObservableCollection(Of AuditSchedModel) = New PaginatedObservableCollection(Of AuditSchedModel)(pagingRecordPerPage)
     Dim auditSchedVM As New AuditSchedViewModel()
     Dim lstFiscalYear As FiscalYear()
     Dim fiscalyearVM As New SelectionListViewModel
 
-#End Region
-
-#Region "Paging Declarations"
-    Dim startRowIndex As Integer
-    Dim lastRowIndex As Integer
-    Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 10
-    Dim currentPage As Integer
-    Dim lastPage As Integer
-
-    Private Enum PagingMode
-        _First = 1
-        _Next = 2
-        _Previous = 3
-        _Last = 4
-    End Enum
 #End Region
 
 #Region "Constructor"
@@ -67,8 +68,6 @@ Class AuditSchedMainPage
         LoadYear()
         SetFiscalYear()
         SetData()
-
-
     End Sub
 
 #End Region
@@ -88,6 +87,7 @@ Class AuditSchedMainPage
         End Try
         Return bInitialize
     End Function
+
     Public Sub LoadYear()
         Try
             If InitializeService() Then
@@ -103,7 +103,7 @@ Class AuditSchedMainPage
         Try
             If InitializeService() Then
                 lstauditSched = _AideService.GetAuditSched(empID, year)
-                SetPaging(PagingMode._First)
+                LoadAuditSched()
                 DisplayPagingInfo()
             End If
         Catch ex As Exception
@@ -111,29 +111,29 @@ Class AuditSchedMainPage
         End Try
     End Sub
 
-    Public Sub LoadauditSched()
+    Public Sub LoadAuditSched()
         Try
-            Dim lstauditSchedList As New ObservableCollection(Of AuditSchedModel)
             Dim auditSchedDBProvider As New AuditSchedDBProvider
-            Dim objauditSched As New AuditSched
 
+            lstauditSchedList = New PaginatedObservableCollection(Of AuditSchedModel)(pagingRecordPerPage)
 
-            For i As Integer = startRowIndex To lastRowIndex
-                objauditSched = lstauditSched(i)
-                auditSchedDBProvider.SetMyAuditSched(objauditSched)
+            For Each objAuditSched As AuditSched In lstauditSched
+                auditSchedDBProvider.SetMyAuditSched(objAuditSched)
             Next
 
-            For Each rawUser As MyAuditSched In auditSchedDBProvider.GetMyAuditSched()
-                lstauditSchedList.Add(New AuditSchedModel(rawUser))
+            For Each auditSched As MyAuditSched In auditSchedDBProvider.GetMyAuditSched()
+                lstauditSchedList.Add(New AuditSchedModel(auditSched))
             Next
 
-            auditSchedVM.AuditSchedList = lstauditSchedList
-
-            Me.DataContext = auditSchedVM
+            currentPage = lstauditSchedList.CurrentPage + 1
+            lastPage = Math.Ceiling(lstauditSched.Length / pagingRecordPerPage)
+            
+            AuditSchedLV.ItemsSource = lstauditSchedList
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
     Public Sub LoadFiscalYear()
         Try
             Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
@@ -154,6 +154,7 @@ Class AuditSchedMainPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
     Public Sub SetFiscalYear()
         Try
             Month = Date.Now.Month
@@ -166,11 +167,12 @@ Class AuditSchedMainPage
 
             year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
 
-            lblYear.Text = "FY: " + (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
+            lblYear.Text = "Fiscal Year: " + (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
     Private Sub SetPaging(mode As Integer)
         Try
             Dim totalRecords As Integer = lstauditSched.Length
@@ -240,10 +242,10 @@ Class AuditSchedMainPage
         ' If there has no data found
         If lstauditSched.Length = 0 Then
             txtPageNo.Text = "No Results Found "
-            ' GUISettingsOff()
+            GUISettingsOff()
         Else
             txtPageNo.Text = "page " & currentPage & " of " & lastPage
-            ' GUISettingsOn()
+            GUISettingsOn()
         End If
     End Sub
     Private Sub GUISettingsOff()
@@ -307,12 +309,12 @@ Class AuditSchedMainPage
         submenuframe.IsEnabled = False
         submenuframe.Opacity = 0.3
         addframe.Visibility = Visibility.Visible
-        addframe.Margin = New Thickness(200, 100, 200, 100)
+        addframe.Margin = New Thickness(150, 60, 150, 60)
     End Sub
 
     Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
         year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
-        lblYear.Text = "FY: " + year.ToString + " - " + (year + 1).ToString
+        lblYear.Text = "Fiscal Year: " + year.ToString + " - " + (year + 1).ToString
         SetData()
     End Sub
 

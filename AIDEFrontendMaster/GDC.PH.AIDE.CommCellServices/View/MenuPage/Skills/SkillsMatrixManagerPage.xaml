@@ -221,7 +221,7 @@
                 <Grid Grid.Row="2" x:Name="grdUpdate" Height="Auto" VerticalAlignment="Top" Margin="10,5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.20*" />
-                        <ColumnDefinition Width="0.4*" />
+                        <ColumnDefinition Width="0.40*" />
                         <ColumnDefinition Width="0.15*" />
                         <ColumnDefinition Width="0.25*" />
                     </Grid.ColumnDefinitions>

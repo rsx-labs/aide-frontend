@@ -418,7 +418,7 @@ Public Class KPISummaryPage
         _submenuFrame.IsEnabled = False
         _submenuFrame.Opacity = 0.3
         _addFrame.Visibility = Visibility.Visible
-        _addFrame.Margin = New Thickness(150, 60, 150, 60)
+        _addFrame.Margin = New Thickness(150, 120, 150, 120)
     End Sub
 
 
@@ -451,7 +451,7 @@ Public Class KPISummaryPage
                             _submenuFrame.IsEnabled = False
                             _submenuFrame.Opacity = 0.3
                             _addFrame.Visibility = Visibility.Visible
-                            _addFrame.Margin = New Thickness(150, 60, 150, 60)
+                            _addFrame.Margin = New Thickness(150, 120, 150, 120)
 
                         End If
 

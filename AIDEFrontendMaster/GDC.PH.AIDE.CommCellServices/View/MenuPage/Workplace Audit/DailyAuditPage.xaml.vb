@@ -28,24 +28,29 @@ Class DailyAuditPage
 
     Dim fiscalyearVM As New SelectionListViewModel
     Dim isthereAnyRecord As Boolean = True
+    Dim isInitialize As Boolean
     Dim isMessageAlreadyPopupInCbyear As Boolean = False
+
     Public Sub New(_pageframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         Me.pageframe = _pageframe
         Me.profile = _profile
         Me.addframe = _addframe
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
+
         ' This call is required by the designer.
         InitializeComponent()
         InitializeService()
         ' Add any initialization after the InitializeComponent() call.
+        isInitialize = True
+
         LoadYear()
         SetFiscalYear()
         LoadSChed()
         'isSetDefault = True
         LoadMonthLst()
 
-
+        isInitialize = False
     End Sub
 
     Private Sub generateQuestions()
@@ -53,7 +58,6 @@ Class DailyAuditPage
         Dim imgdtcheck As String
 
         Try
-
             If InitializeService() Then
                 lstAuditQuestions = _AideService.GetAuditQuestions(profile.Emp_ID, "1")
             End If
@@ -93,9 +97,11 @@ Class DailyAuditPage
         End Try
 
     End Sub
+
     Public Shared Function GetWeekNumber(ByVal datum As Date) As Integer
         Return (datum.Day - 1) \ 7 + 1
     End Function
+
     Public Sub LoadMonthLst()
         Try
             If InitializeService() Then
@@ -106,6 +112,7 @@ Class DailyAuditPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
     Public Sub GetMonthLst()
         Try
             Dim lstAuditSchedMonthList As New ObservableCollection(Of WorkplaceAuditModel)
@@ -120,7 +127,6 @@ Class DailyAuditPage
                 If defaultFy_Week = 0 Then
                     defaultFy_Week = rawUser._fy_week
                 End If
-
             Next
             AuditSchedMonthVM.ObjectAuditSchedMonthSet = lstAuditSchedMonthList
             cbMonth.ItemsSource = AuditSchedMonthVM.ObjectAuditSchedMonthSet
@@ -129,6 +135,7 @@ Class DailyAuditPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
     Private Sub InitEmpAuditDailybyWeekData()
         Try
             Dim statusAudit As String = ""
@@ -190,8 +197,6 @@ Class DailyAuditPage
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
-
-
     End Sub
 
     Public Function InitializeService() As Boolean
@@ -208,6 +213,7 @@ Class DailyAuditPage
         End Try
         Return bInitialize
     End Function
+
     Public Sub LoadSChed()
         Try
             If InitializeService() Then
@@ -215,21 +221,22 @@ Class DailyAuditPage
                 If lstAuditSchedMonth.Count <> 0 Then
                     LoadPerWeekSchedule()
                 Else
-                    If isthereAnyRecord = True Then
+                    If isthereAnyRecord = True And isInitialize = False Then
                         MsgBox("There is no records in selected date.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                     End If
+
                     isthereAnyRecord = False
                     dailyVMM.QuestionDayList.Clear()
                         dailyVMM.Days.Clear()
                         cbWeek.ItemsSource = Nothing
                         Return
                     End If
-
                 End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
     Public Sub LoadPerWeekSchedule()
         Try
             Dim lstAuditSchedMonthList As New ObservableCollection(Of WorkplaceAuditModel)
@@ -271,11 +278,8 @@ Class DailyAuditPage
         End Try
     End Sub
 
-
     Private Sub ListViewItem_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
         Dim item = (TryCast(sender, FrameworkElement)).DataContext
-
-
 
         Dim FYDBProvider As New WorkplaceAuditDBProvider
 
@@ -285,17 +289,16 @@ Class DailyAuditPage
             End If
 
         Next
+
         LstAuditDailySchedByWeek.Clear()
         For Each rawUser As MyWorkplaceAudit In FYDBProvider.GetMyWorkplaceAudit()
             LstAuditDailySchedByWeek.Add(New WorkplaceAuditModel(rawUser))
         Next
 
-
         If profile.Emp_ID = currDailyAuditAssigned OrElse profile.Permission_ID = 1 Then
             pageframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 1))
         End If
     End Sub
-
 
     Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
         Throw New NotImplementedException()
@@ -374,6 +377,7 @@ Class DailyAuditPage
             End If
         End If
     End Sub
+
     Public Sub LoadYear()
         Try
             If InitializeService() Then
@@ -384,6 +388,7 @@ Class DailyAuditPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
     Public Sub LoadFiscalYear()
         Try
             Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
@@ -477,12 +482,9 @@ Class DailyAuditPage
     End Sub
 End Class
 
-
 Public Class dayVM
     Private _dailyobjlst As ObservableCollection(Of DayMod)
     Private QtnLst As ObservableCollection(Of QuestionsDayModel)
-
-
 
     Public Sub New()
         _dailyobjlst = New ObservableCollection(Of DayMod)
@@ -516,6 +518,7 @@ Public Class DayMod
     Private _date_checked As String
     Private _weekdateSched As String
     Private _fyweek As Integer
+
     Public Sub New()
 
     End Sub
@@ -529,7 +532,6 @@ Public Class DayMod
         Else
             _notes = note
         End If
-
     End Sub
 
     Public Sub New(dayss As String, datess As String, emp As String, note As String, weekdate As String, date_checked As String)
@@ -548,6 +550,7 @@ Public Class DayMod
             _date_checked = "Last Updated: " + date_checked
         End If
     End Sub
+
     Public Sub New(dayss As String, datess As String, emp As String, note As String, weekdate As String, date_checked As String, weekdateSched As String)
         _days = dayss
         _dates = datess
@@ -565,6 +568,7 @@ Public Class DayMod
         End If
         _weekdateSched = weekdateSched
     End Sub
+
     Public Sub New(fyweek As Integer, datess As String, emp As String, note As String, weekdate As String, date_checked As String, weekdateSched As String)
         _fyweek = fyweek
         _dates = datess
@@ -583,7 +587,6 @@ Public Class DayMod
         _weekdateSched = weekdateSched
     End Sub
 
-
     Public Property Days As String
         Get
             Return _days
@@ -592,6 +595,7 @@ Public Class DayMod
             _days = value
         End Set
     End Property
+
     Public Property FY_WEEK As Integer
         Get
             Return _fyweek
@@ -600,6 +604,7 @@ Public Class DayMod
             _fyweek = value
         End Set
     End Property
+
     Public Property Dates As String
         Get
             Return _dates
@@ -608,6 +613,7 @@ Public Class DayMod
             _dates = value
         End Set
     End Property
+
     Public Property EmpName As String
         Get
             Return _empName
@@ -616,6 +622,7 @@ Public Class DayMod
             _empName = value
         End Set
     End Property
+
     Public Property Notes As String
         Get
             Return _notes
@@ -624,6 +631,7 @@ Public Class DayMod
             _notes = value
         End Set
     End Property
+
     Public Property WEEKDATE As String
         Get
             Return _weekdate
@@ -632,6 +640,7 @@ Public Class DayMod
             _weekdate = value
         End Set
     End Property
+
     Public Property DATE_CHECKED As String
         Get
             Return _date_checked
@@ -640,6 +649,7 @@ Public Class DayMod
             _date_checked = value
         End Set
     End Property
+
     Public Property WEEK_DATE_SCHED As String
         Get
             Return _weekdateSched
@@ -649,6 +659,7 @@ Public Class DayMod
         End Set
     End Property
 End Class
+
 Public Class QuestionsDayModel
     Private Qtn As String
     Private Ppl As String
@@ -656,6 +667,7 @@ Public Class QuestionsDayModel
     Private _questionNumber As Integer
     Private dtchckflg As Integer
     Private _weekdate As String
+
     Public Sub New()
 
     End Sub
@@ -666,18 +678,21 @@ Public Class QuestionsDayModel
         _questionNumber = questionNum
         Me.dtchckflg = dt_chck_flg
     End Sub
+
     Public Sub New(st As String, pl As String, questionNum As Integer, dt_chck_flg As Integer)
         Qtn = st
         Ppl = pl
         _questionNumber = questionNum
         Me.dtchckflg = dt_chck_flg
     End Sub
+
     Public Sub New(st As String, pl As String, dt_chck_flg As Integer, dtchck As String)
         Qtn = st
         Ppl = pl
         Me.dtchck = dtchck
         Me.dtchckflg = dt_chck_flg
     End Sub
+
     Public Sub New(st As String, pl As String, dt_chck_flg As Integer, dtchck As String, WEEKDATE As String)
         Qtn = st
         Ppl = pl
@@ -703,6 +718,7 @@ Public Class QuestionsDayModel
             Ppl = value
         End Set
     End Property
+
     Public Property DT_CHECK As String
         Get
             Return dtchck
@@ -711,6 +727,7 @@ Public Class QuestionsDayModel
             dtchck = value
         End Set
     End Property
+
     Public Property DT_CHECK_FLG As Integer
         Get
             Return dtchckflg
@@ -728,6 +745,7 @@ Public Class QuestionsDayModel
             _questionNumber = value
         End Set
     End Property
+
     Public Property WEEKDATE As String
         Get
             Return _weekdate

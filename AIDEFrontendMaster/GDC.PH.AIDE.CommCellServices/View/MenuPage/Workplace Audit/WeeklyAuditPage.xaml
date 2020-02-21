@@ -6,7 +6,6 @@
       mc:Ignorable="d" 
       Title="WeeklyAuditPage">
     <Page.Resources>
-
         <Style TargetType="CheckBox">
             <Setter Property="SnapsToDevicePixels" Value="False" />
             <Setter Property="OverridesDefaultStyle" Value="true" />
@@ -986,57 +985,65 @@
             <Setter Property="Height" Value="30" />
         </Style>
     </Page.Resources>
+    
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.2*"/>
-                <RowDefinition Height="1.2*"/>
-                <RowDefinition Height="10.5*"/>
-                <RowDefinition Height=".1*"/>
+                <RowDefinition Height="0.11*" />
+                <RowDefinition Height="0.11*" />
+                <RowDefinition Height="0.78*" />
             </Grid.RowDefinitions>
+            
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
+                
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
-
+                        <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="12*"/>
                     </Grid.ColumnDefinitions>
+                    
                     <Grid Grid.Column="0">
                         <!--<Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
                             <Image Source="..\..\..\Assets\Icon\SabaIcon.png" />
                         </Viewbox>-->
                     </Grid>
+                    
                     <Grid Grid.Column="1">
-                        <Viewbox HorizontalAlignment="Left" Margin="20,0,0,0">
+                        <Viewbox HorizontalAlignment="Left">
                             <TextBlock TextWrapping="Wrap" Padding="0" Text="Weekly Workplace Audit" Margin="0,7,0,7" Foreground="DimGray"/>
                         </Viewbox>
                     </Grid>
                 </Grid>
+                
                 <Grid Grid.Column="1">
                     <Viewbox Margin="10" HorizontalAlignment="Right" VerticalAlignment="Center">
                         <Button Visibility="Collapsed" Style="{DynamicResource ButtonAdd}" x:Name="btnCreate" BorderBrush="{x:Null}"/>
                     </Viewbox>
                 </Grid>
             </Grid>
+            
             <Grid Grid.Row="1" Background="#FFFBFBFB">
                 <Grid Grid.Row="1" >
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+                    
                     <Grid Grid.Column="0">
                         <TextBlock x:Name="lblYear" FontSize="16" Foreground="DimGray" FontWeight="Bold" VerticalAlignment="Center" Margin="15,0,0,0"/>
                     </Grid>
+                    
                     <Grid Grid.Column="2">
-                        <ComboBox  Style="{DynamicResource StyleComboBox}"  x:Name="cbYear" Margin="10" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a Year" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <ComboBox  Style="{DynamicResource StyleComboBox}"  x:Name="cbYear" Height="30" Margin="5" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
+                        <TextBlock Text="Select a Year" >
                             <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=cbYear}" Value="">
@@ -1047,11 +1054,13 @@
                             </TextBlock.Style>
                         </TextBlock>
                     </Grid>
+                    
                     <Grid Grid.Column="3">
-                        <ComboBox x:Name="cbMonth" Margin="10" Style="{DynamicResource StyleComboBox}"  DisplayMemberPath="AUDITSCHED_MONTH" SelectedValuePath="FY_WEEK" />
-                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a week" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,0,0" Foreground="DarkGray">
+                        <ComboBox x:Name="cbMonth" Margin="5,5,15,5" Style="{DynamicResource StyleComboBox}" Height="30" DisplayMemberPath="AUDITSCHED_MONTH" SelectedValuePath="FY_WEEK" />
+                        
+                        <TextBlock Text="Select a week">
                             <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
                                     <Setter Property="Visibility" Value="Collapsed"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
@@ -1064,35 +1073,29 @@
                     </Grid>
                 </Grid>
             </Grid>
+            
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="6*"/>
                 </Grid.ColumnDefinitions>
+                
                 <Grid Grid.Column="0" Background="{DynamicResource GradientDesign}">
                     <ListView  Background="Transparent" SelectionChanged="SetSelectedDay"  ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" x:Name="QuarterLV" SelectedValuePath="{Binding WEEKDATE}" ItemsSource="{Binding Days}" BorderBrush="{x:Null}" SelectionMode="Single" Foreground="#FF07B9B1" TextOptions.TextFormattingMode="Display" AllowDrop="True" BorderThickness="0" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
-
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter Property="Background" Value="red" />
-
                                     </Trigger>
 
-                                    <DataTrigger Binding="{Binding Notes}"
-                                                                Value="Not Completed">
-                                        <Setter Property="Foreground"
-                                                                 Value="Red" />
+                                    <DataTrigger Binding="{Binding Notes}" Value="Not Completed">
+                                        <Setter Property="Foreground" Value="Red" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Notes}"
-                                                                Value="Completed">
-
-                                        <Setter Property="Foreground"
-                                                                 Value="Green" />
+                                    
+                                    <DataTrigger Binding="{Binding Notes}" Value="Completed">
+                                        <Setter Property="Foreground" Value="Green" />
                                     </DataTrigger>
-
-
                                 </Style.Triggers>
                             </Style>
                         </ListView.ItemContainerStyle>
@@ -1100,51 +1103,54 @@
                         <ListView.ItemTemplate x:Uid="selectEmp" >
                             <DataTemplate>
                                 <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="2" Margin="1">
-
                                     <StackPanel VerticalAlignment="Stretch" MinHeight="50" MaxWidth="500" MaxHeight="500">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="2*"/>
                                                 <ColumnDefinition Width="6*"/>
-
                                             </Grid.ColumnDefinitions>
+                                            
                                             <!--<Grid Grid.Column="2">
                                                     <Image VerticalAlignment="Top" HorizontalAlignment="Left" Source="{Binding DisplayStatus}" Width="20" Height="20" Margin="0,5,0,0"/>
                                                     <TextBlock Foreground="DimGray" Text="{Binding Descr}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" FontSize="9" VerticalAlignment="Bottom" />
                                                 </Grid>-->
+                                            
                                             <Grid Grid.Column="0" Background="#FFFB9A9A">
                                                 <StackPanel Orientation="Vertical">
                                                     <TextBlock FontSize="28" Foreground="White"  Margin="2,2,2,0" Text="{Binding FY_WEEK}" FontWeight="SemiBold"  HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                                                     <TextBlock FontStyle="Italic" Margin="2,2,2,5" VerticalAlignment="Top" HorizontalAlignment="Center" Text="{Binding Dates, StringFormat=MM/dd/yyyy}" FontWeight="Normal" Foreground="DimGray"></TextBlock>
                                                 </StackPanel>
                                             </Grid>
+                                            
                                             <Grid Grid.Column="1" Margin="10,0,0,50">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="5*"/>
                                                     <RowDefinition Height="2*"/>
                                                     <RowDefinition Height="5*"/>
                                                 </Grid.RowDefinitions>
+                                                
                                                 <Grid Grid.Row="0">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="70*"/>
                                                         <ColumnDefinition Width="50*"/>
                                                         <ColumnDefinition Width="150*"/>
                                                     </Grid.ColumnDefinitions>
+                                                    
                                                     <Grid Grid.Column="0">
                                                         <TextBlock VerticalAlignment="Center" FontSize="10" Foreground="SkyBlue" FontWeight="SemiBold" Text="{Binding EmpName}"/>
                                                     </Grid>
+                                                    
                                                     <Grid Grid.Column="1">
                                                         <TextBlock Text="{Binding Notes}" Margin="3,-20,-190,0"  TextWrapping="Wrap"  FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                     </Grid>
+                                                    
                                                     <Grid Grid.Column="2">
                                                         <TextBlock Text="{Binding DATE_CHECKED}" Margin="-100,40,60,-20"  TextWrapping="WrapWithOverflow"  FontStyle="Italic" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                                     </Grid>
                                                 </Grid>
+                                                
                                                 <Grid Grid.Row="1">
-
-
                                                     <!--<TextBlock VerticalAlignment="Top" TextWrapping="WrapWithOverflow" Foreground="DimGray" FontStyle="Italic" Text="{Binding Notes}"/>-->
-
                                                 </Grid>
                                             </Grid>
                                         </Grid>
@@ -1157,6 +1163,7 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </Grid>
+                
                 <Grid Grid.Column="1">
                     <StackPanel Orientation="Vertical">
                         <Border Margin="0,10,10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="0,0,0,1">
@@ -1164,17 +1171,19 @@
                                 <TextBlock Text="WEEKLY CHECKS" FontWeight="SemiBold" Foreground="DimGray"/>
                                 <TextBlock Text=" (from previous week)" FontStyle="Italic" Foreground="DimGray"/>
                             </StackPanel>
-
                         </Border>
-                        <ListView Focusable="False" Background="Transparent" Margin="5" ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" x:Name="QuarterLVQuestions" ItemsSource="{Binding Daily}" Height="auto" Width="auto" BorderBrush="{x:Null}" Foreground="#FF07B9B1" TextOptions.TextFormattingMode="Display" AllowDrop="True" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        
+                        <ListView Focusable="False" Background="Transparent" Margin="5" ScrollViewer.CanContentScroll="False" ScrollViewer.VerticalScrollBarVisibility="Visible" HorizontalContentAlignment="Stretch" x:Name="QuarterLVQuestions" ItemsSource="{Binding Daily}" Height="auto" Width="auto" BorderBrush="{x:Null}" Foreground="#FF07B9B1" TextOptions.TextFormattingMode="Display" AllowDrop="True" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick"/>
+                                    
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter Property="Background" Value="Transparent" />
                                             <Setter Property="BorderThickness" Value="0" />
                                         </Trigger>
+                                        
                                         <Trigger Property="IsSelected" Value="True">
                                             <Setter Property="Background" Value="Transparent" />
                                             <Setter Property="BorderThickness" Value="0" />
@@ -1182,10 +1191,10 @@
                                     </Style.Triggers>
                                 </Style>
                             </ListView.ItemContainerStyle>
+                            
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Border Background="white" Margin="5,2,5,1">
-
                                         <StackPanel VerticalAlignment="Stretch" MinHeight="30" MaxHeight="200">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -1198,19 +1207,17 @@
                                                     <TextBlock Foreground="DimGray" Text="{Binding Descr}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" FontSize="9" VerticalAlignment="Bottom" />
                                                 </Grid>-->
                                                 <Grid Grid.Column="0" >
-
                                                     <TextBlock Margin="0,0,10,0" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" FontSize="12" VerticalAlignment="Center" Text="{Binding Questions}" Foreground="DimGray"></TextBlock>
                                                 </Grid>
+                                                
                                                 <Grid Grid.Column="2">
-
                                                     <Image  Source="{Binding DT_CHECK}" Margin="2" Height="30" Width="30" MinHeight="20" MinWidth="20" MaxHeight="100" MaxWidth="100">
                                                         <Image.InputBindings>
                                                             <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding MouseDoubleClickCommand}"/>
                                                         </Image.InputBindings>
                                                     </Image>
-
-
                                                 </Grid>
+                                                
                                                 <Grid Grid.Column="1">
                                                     <TextBlock TextWrapping="WrapWithOverflow" FontWeight="Light" HorizontalAlignment="Center" FontSize="11" FontStyle="Italic" VerticalAlignment="Center" Text="{Binding People}" Foreground="DimGray"></TextBlock>
                                                 </Grid>
@@ -1222,13 +1229,10 @@
                                     </Border>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
-
                         </ListView>
                     </StackPanel>
                 </Grid>
             </Grid>
         </Grid>
-
-
     </Border>
 </Page>

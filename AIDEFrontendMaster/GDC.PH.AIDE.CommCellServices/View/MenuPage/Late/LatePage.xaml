@@ -8,6 +8,7 @@
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       d:DesignHeight="300" d:DesignWidth="300"
       Title="Non-Billables">
+    
     <Page.Resources>
         <LinearGradientBrush Opacity=".5" x:Key="GradientDesign" MappingMode="RelativeToBoundingBox">
             <!--<RadialGradientBrush.RelativeTransform>
@@ -21,290 +22,175 @@
             <GradientStop Color="#FFFFD1FF" Offset="0.0"/>
             <GradientStop Color="#FFC4FFF4" Offset="1.0"/>
         </LinearGradientBrush>
+    </Page.Resources>
 
-        <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
-            <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}"/>
-        </ControlTemplate>
-        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
-            <Grid>
+    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.11*" />
+                <RowDefinition Height="0.89*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*"/>
-                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="0.9*"/>
+                    <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions>
-                <Border
-                  x:Name="Border" 
-                  Grid.ColumnSpan="2"
-                  CornerRadius="15"
-                  Background="White"
-                  BorderBrush="Gainsboro"
-                  BorderThickness="3" />
-                <Border                   
-                    Grid.Column="0"
-                  CornerRadius="0" 
-                  Margin="1" 
-                   IsEnabled="False"
-                  Background="Transparent" 
-                  BorderBrush="Gainsboro"
-                  BorderThickness="0,0,1,0" />
-                <Path 
-                  x:Name="Arrow"
-                  Grid.Column="1"     
-                  Fill="DimGray"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center"
-                  Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"
-                />
+
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.08*"/>
+                        <ColumnDefinition Width="0.92*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
+                            <Image Source="..\..\..\Assets\Menu\clock.png" />
+                        </Viewbox>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Viewbox HorizontalAlignment="Left">
+                            <TextBlock TextWrapping="Wrap" Padding="0" Text="Late Tracking" Margin="0,7,0,7" Foreground="DimGray"/>
+                        </Viewbox>
+                    </Grid>
+                </Grid>
             </Grid>
-        </ControlTemplate>
-        
-        <Style TargetType="{x:Type ComboBoxItem}">
-            <Setter Property="SnapsToDevicePixels" Value="true"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
-                        <Border Name="Border"
-                              Padding="2"
-                              SnapsToDevicePixels="true">
-                            <ContentPresenter />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsHighlighted" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="#FF4F4F4F"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="#888888"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
 
-        <Style x:Key="StyleComboBox" TargetType="{x:Type ComboBox}">
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                
+                <Grid Grid.Row="0" Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.2*" />
+                        <RowDefinition Height="0.8*" />
+                    </Grid.RowDefinitions>
+                    
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.7*" />
+                            <ColumnDefinition Width="0.3*" />
+                        </Grid.ColumnDefinitions>
 
-            <Setter Property="SnapsToDevicePixels" Value="true"/>
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-            <Setter Property="MinWidth" Value="120"/>
-            <Setter Property="MinHeight" Value="20"/>
-            <Setter Property="Foreground" Value="DimGray"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ComboBox}">
-                        <Grid>
-                            <ToggleButton 
-                            Name="ToggleButton" 
-                            Template="{StaticResource ComboBoxToggleButton}" 
-                            Grid.Column="2" 
-                            Focusable="false"
-                            IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
-                            ClickMode="Press">
-                            </ToggleButton>
-                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}"
-                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                            Margin="5"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center" />
-
-                            <TextBox x:Name="PART_EditableTextBox"
-                            Style="{x:Null}" 
-                            Template="{StaticResource ComboBoxTextBox}" 
-                            HorizontalAlignment="Center" 
-                            VerticalAlignment="Center" 
-                            Margin="0"
-                            Focusable="True" 
-                                     FontSize="12"
-                            Background="Transparent"
-                            Foreground="DimGray"
-                            Visibility="Visible"
-                            IsReadOnly="{TemplateBinding IsReadOnly}"/>
-
-                            <Popup 
-                            Name="Popup"
-                            Placement="Bottom"
-                            IsOpen="{TemplateBinding IsDropDownOpen}"
-                            AllowsTransparency="True" 
-                            Focusable="False"
-                            PopupAnimation="Slide">
-
-                                <Grid Name="DropDown"
-                              SnapsToDevicePixels="True"                
-                              MinWidth="{TemplateBinding ActualWidth}"
-                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
-                                    <Border 
-                                x:Name="DropDownBorder"
-                                Background="#FF3F3F3F"
-
-                                BorderThickness="1"
-                                BorderBrush="#888888"/>
-                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
-                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
-                                    </ScrollViewer>
-                                </Grid>
-                            </Popup>
+                        <Grid Grid.Column="0">
+                            <Label Name="lblYear"
+                               Content="Late for the Fiscal Year"
+                               HorizontalContentAlignment="Center"
+                               FontSize="15"
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Center"/>
                         </Grid>
 
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="HasItems" Value="false">
-                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="#888888"/>
-                            </Trigger>
-                            <Trigger Property="IsGrouping" Value="true">
-                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
-                            </Trigger>
-                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
-                                <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0"/>
-                                <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
-                            </Trigger>
-                            <Trigger Property="IsEditable"  Value="true">
-                                <Setter Property="IsTabStop" Value="false"/>
-                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
-                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
-                            </Trigger>
+                        <Grid Grid.Column="1">
+                            <ComboBox  Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="5,5,10,5" DisplayMemberPath="FISCAL_YEAR" Height="30" SelectedValuePath="FISCAL_YEAR"/>
 
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
+                            <TextBlock Text="Select Fiscal Year" >
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=cbYear}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Grid>
 
-            </Style.Triggers>
-        </Style>
-
-    </Page.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Column="0" Grid.Row="0" Margin="2" Background="White" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.2*" />
-                <RowDefinition Height="0.8*" />
-            </Grid.RowDefinitions>
-
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition  />
-                    <ColumnDefinition  />
-                </Grid.ColumnDefinitions>
-                
-                <Grid Grid.Column="0">
-                    <Label Name="lblYear"
-                       Content="Late for the Fiscal Year"
-                       HorizontalContentAlignment="Center"
-                       FontSize="15"
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center"/>
-                </Grid>
-                
-                <Grid Grid.Column="1">
-                    <ComboBox  Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="5,5,10,5" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
-                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Fiscal Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text, ElementName=cbYear}" Value="">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                </Grid>
-                
-            </Grid>
-            <Grid Grid.Row="1">
-                <lvc:CartesianChart x:Name="chartLateFY"
-                                    Series="{Binding SeriesCollectionLateFY}"
-                                    LegendLocation="Right"
-                                    Background="{DynamicResource GradientDesign}">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Labels="{Binding LabelsLateFY}"
-                                  ShowLabels="True" 
-                                  Foreground="Black">
-                            <lvc:Axis.Separator>
-                                <lvc:Separator Step="1" StrokeThickness="0" />
-                            </lvc:Axis.Separator>
-                        </lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Number of Late"
-                                  Foreground="Black"
-                                  LabelFormatter="{Binding FormatterLateFY}">
-                        </lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                </lvc:CartesianChart>
-            </Grid>
-        </Grid>
-        <Grid Grid.Column="0" Grid.Row="1" Margin="2" Background="White">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.2*" />
-                <RowDefinition Height="0.8*" />
-            </Grid.RowDefinitions>
-
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition  />
-                    <ColumnDefinition  />
-                </Grid.ColumnDefinitions>
-
-                <Grid Grid.Column="0">
-                    <Label Name="lblMonthLate"
-                       Content=""
-                       HorizontalContentAlignment="Center"
-                       FontSize="15"
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center"/>
+                    <Grid Grid.Row="1">
+                        <lvc:CartesianChart x:Name="chartLateFY"
+                                            Series="{Binding SeriesCollectionLateFY}"
+                                            LegendLocation="Right"
+                                            Background="{DynamicResource GradientDesign}">
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis Labels="{Binding LabelsLateFY}"
+                                          ShowLabels="True" 
+                                          Foreground="Black">
+                                    <lvc:Axis.Separator>
+                                        <lvc:Separator Step="1" StrokeThickness="0" />
+                                    </lvc:Axis.Separator>
+                                </lvc:Axis>
+                            </lvc:CartesianChart.AxisX>
+                            <lvc:CartesianChart.AxisY>
+                                <lvc:Axis Title="Number of Late"
+                                          Foreground="Black"
+                                          LabelFormatter="{Binding FormatterLateFY}">
+                                </lvc:Axis>
+                            </lvc:CartesianChart.AxisY>
+                        </lvc:CartesianChart>
+                    </Grid>
                 </Grid>
 
-                <Grid Grid.Column="1">
-                    <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Margin="5,5,10,5"/>
-                    <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Month" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
-                                        <Setter Property="Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+
+                <Grid Grid.Row="1" Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.2*" />
+                        <RowDefinition Height="0.8*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.7*" />
+                            <ColumnDefinition Width="0.3*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            <Label Name="lblMonthLate"
+                                   Content=""
+                                   HorizontalContentAlignment="Center"
+                                   FontSize="15"
+                                   VerticalAlignment="Center" 
+                                   HorizontalAlignment="Center"/>
+                        </Grid>
+
+                        <Grid Grid.Column="1">
+                            <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Margin="5,5,10,5" Height="30"/>
+                            
+                            <TextBlock Text="Select Month">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
+                    </Grid>
+                    
+                    <Grid Grid.Row="1">
+                        <lvc:CartesianChart x:Name="chartLate"
+                                            Series="{Binding SeriesCollectionLate}"
+                                            LegendLocation="Right"
+                                            Background="{DynamicResource GradientDesign}">
+                            <lvc:CartesianChart.AxisX>
+                                <lvc:Axis Labels="{Binding LabelsLate}"
+                                          ShowLabels="True" 
+                                          Foreground="Black">
+                                    <lvc:Axis.Separator>
+                                        <lvc:Separator Step="1" StrokeThickness="0" />
+                                    </lvc:Axis.Separator>
+                                </lvc:Axis>
+                            </lvc:CartesianChart.AxisX>
+                            <lvc:CartesianChart.AxisY>
+                                <lvc:Axis Title="Number of Late"
+                                          Foreground="Black"
+                                          LabelFormatter="{Binding FormatterLate}">
+                                </lvc:Axis>
+                            </lvc:CartesianChart.AxisY>
+                        </lvc:CartesianChart>
+                    </Grid>
                 </Grid>
-                
-            </Grid>
-            <Grid Grid.Row="1">
-                <lvc:CartesianChart x:Name="chartLate"
-                                    Series="{Binding SeriesCollectionLate}"
-                                    LegendLocation="Right"
-                                    Background="{DynamicResource GradientDesign}">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Labels="{Binding LabelsLate}"
-                                  ShowLabels="True" 
-                                  Foreground="Black">
-                            <lvc:Axis.Separator>
-                                <lvc:Separator Step="1" StrokeThickness="0" />
-                            </lvc:Axis.Separator>
-                        </lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Number of Late"
-                                  Foreground="Black"
-                                  LabelFormatter="{Binding FormatterLate}">
-                        </lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                </lvc:CartesianChart>
             </Grid>
         </Grid>
-    </Grid>
+    </Border>
+ 
 </Page>

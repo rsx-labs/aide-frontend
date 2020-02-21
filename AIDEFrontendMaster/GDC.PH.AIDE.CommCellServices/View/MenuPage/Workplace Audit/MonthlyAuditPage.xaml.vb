@@ -28,6 +28,7 @@ Class MonthlyAuditPage
     Dim fiscalyearVM As New SelectionListViewModel
     Dim month As Integer
     Dim year As Integer
+    Dim isInitialize As Boolean
 
     Public Sub New(_pageframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         Me.pageframe = _pageframe
@@ -38,12 +39,14 @@ Class MonthlyAuditPage
         InitializeComponent()
         InitializeService()
         ' Add any initialization after the InitializeComponent() call.
+        isInitialize = True
         LoadSChed()
         SetFiscalYear()
 
         If cbYear.SelectedValue = Nothing Then
             cbYear.SelectedValue = defaultDisplay
         End If
+        isInitialize = False
     End Sub
     Public Sub SetFiscalYear()
         Try
@@ -129,7 +132,6 @@ Class MonthlyAuditPage
                 cbYear.SelectedValue = String.Empty
             End If
 
-
             If Not cbYear.SelectedValue Is Nothing Then
                 'Dim DateString As String = stringMonth.Substring(0, 13)
                 defaultDisplay = cbYear.SelectedValue.ToString().Substring(5, 4)
@@ -140,14 +142,14 @@ Class MonthlyAuditPage
             Dim yr As Integer
             yr = CInt(defaultDisplay)
 
-
-
             If InitializeService() Then
                 lstEmployee = _AideService.GetMonthlyAuditor(profile.Emp_ID, yr)
             End If
 
             If lstEmployee.Count = 0 Then
-                MsgBox("There is no records in selected fiscal year.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                If Not isInitialize Then
+                    MsgBox("There is no records in selected fiscal year.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                End If
                 Return
             End If
 
