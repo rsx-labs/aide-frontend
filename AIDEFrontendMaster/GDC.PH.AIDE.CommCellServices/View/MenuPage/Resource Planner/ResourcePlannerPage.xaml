@@ -23,245 +23,282 @@
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>
             <Style.Triggers>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="P"/>
-                    </MultiDataTrigger.Conditions>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="P">
                     <Setter Property="Background" Value="#42ff6b" />
                     <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="VL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="EL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="OL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HVL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HVL/HVL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HVL/HEL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HVL/HOL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HVL/HOBA"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HEL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HEL/HVL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HEL/HEL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HEL/HOL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HEL/HOBA"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HEL/P"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HEL/O"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOL/HVL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOL/HEL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOL/HOL"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#6dbbe8" />
-                    <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="O"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="OBA"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="O/HOL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="O/HSL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="O/HVL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="O/HEL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="O/HOBA"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOBA"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOBA/HOBA"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOBA/HSL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOBA/HVL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOBA/HEL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOBA/HOL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOBA/P"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOBA/O"/>
-                    </MultiDataTrigger.Conditions>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="O">
                     <Setter Property="Background" Value="#fff261" />
                     <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="L"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="SL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL"/>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/HSL"/>
-                    </MultiDataTrigger.Conditions>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="L">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="Red" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="VL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="EL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="OL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="SL">
                     <Setter Property="Background" Value="#f78e81" />
                     <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="H"/>
-                    </MultiDataTrigger.Conditions>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="OBA">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="H">
                     <Setter Property="Background" Value="#e9c1f7" />
                     <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="P/HSL"/>
-                    </MultiDataTrigger.Conditions>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="P/HSL">
                     <Setter Property="Background" Value="#42ff6b" />
-                    <Setter Property="Foreground" Value="Black"   />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="P/HVL"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#6dbbe8" />
-                    <Setter Property="Foreground" Value="black"   />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="P/HEL"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#6dbbe8" />
-                    <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="P/HOL"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#6dbbe8" />
-                    <Setter Property="Foreground" Value="Black"   />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="P/HOBA"/>
-                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Foreground" Value="Red" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="P/HVL">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="P/HEL">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="P/HOL">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="P/HOBA">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="#FFFFF300" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="O/HVL">
                     <Setter Property="Background" Value="#fff261" />
-                    <Setter Property="Foreground" Value="Black"   />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="L/HSL"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#42ff6b" />
-                    <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="L/HVL"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#42ff6b" />
-                    <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="L/HEL"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#42ff6b" />
-                    <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="L/HOL"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#42ff6b" />
-                    <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="L/HOBA"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#42ff6b" />
-                    <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HVL/HSL"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#f78e81" />
-                    <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HVL/P"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#6dbbe8" />
-                    <Setter Property="Foreground" Value="black"   />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HVL/O"/>
-                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="O/HEL">
                     <Setter Property="Background" Value="#fff261" />
-                    <Setter Property="Foreground" Value="black"   />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HEL/HSL"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#f78e81" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="O/HOL">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="O/HSL">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Red" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="O/HOBA">
+                    <Setter Property="Background" Value="#fff261" />
                     <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOL/HSL"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#f78e81" />
-                    <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOL/HOBA"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#6dbbe8" />
-                    <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOL/P"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#6dbbe8" />
-                    <Setter Property="Foreground" Value="Black"   />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HOL/O"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#6dbbe8" />
-                    <Setter Property="Foreground" Value="Black"   />
-                </MultiDataTrigger>
-
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/HVL"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#f78e81" />
-                    <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/HEL"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#f78e81" />
-                    <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/HOL"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#f78e81" />
-                    <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/HOBA"/>
-                    </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#f78e81" />
-                    <Setter Property="Foreground" Value="Black" />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/P"/>
-                    </MultiDataTrigger.Conditions>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="L/HSL">
                     <Setter Property="Background" Value="#42ff6b" />
-                    <Setter Property="Foreground" Value="Black"   />
-                </MultiDataTrigger>
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Path=Content.Text, RelativeSource={RelativeSource Self}}" Value="HSL/O"/>
-                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Foreground" Value="Red" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="L/HVL">
                     <Setter Property="Background" Value="#42ff6b" />
-                    <Setter Property="Foreground" Value="Black"   />
-                </MultiDataTrigger>
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="L/HEL">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="L/HOL">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="L/HOBA">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="#FFFFF300" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HVL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HVL/P">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HVL/O">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HVL/L">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HVL/HVL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HVL/HEL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HVL/HOL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HVL/HSL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Red" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HVL/HOBA">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HEL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HEL/P">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HEL/O">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HEL/L">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HEL/HVL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HEL/HEL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HEL/HOL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HEL/HSL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Red" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HEL/HOBA">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOL/P">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOL/O">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOL/L">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOL/HVL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOL/HEL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOL/HOL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOL/HSL">
+                    <Setter Property="Background" Value="#6dbbe8" />
+                    <Setter Property="Foreground" Value="Red" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOL/HOBA">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HSL">
+                    <Setter Property="Background" Value="#f78e81" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HSL/P">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="Red" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HSL/O">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Red" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HSL/L">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="Red" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HSL/HVL">
+                    <Setter Property="Background" Value="#f78e81" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HSL/HEL">
+                    <Setter Property="Background" Value="#f78e81" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HSL/HOL">
+                    <Setter Property="Background" Value="#f78e81" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HSL/HSL">
+                    <Setter Property="Background" Value="#f78e81" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HSL/HOBA">
+                    <Setter Property="Background" Value="#f78e81" />
+                    <Setter Property="Foreground" Value="Yellow" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOBA">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOBA/P">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="#FFFFF300" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOBA/O">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOBA/L">
+                    <Setter Property="Background" Value="#42ff6b" />
+                    <Setter Property="Foreground" Value="#FFFFF300" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOBA/HVL">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOBA/HEL">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOBA/HOL">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Blue" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOBA/HSL">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Red" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="HOBA/HOBA">
+                    <Setter Property="Background" Value="#fff261" />
+                    <Setter Property="Foreground" Value="Black" />
+                </DataTrigger>
             </Style.Triggers>
         </Style>
         

@@ -34,8 +34,8 @@ Class NewSuccessRegister
         Me._menugrid = _menugrid
         Me._submenuframe = _submenuframe
         btnSRCreate.Visibility = System.Windows.Visibility.Visible
-        btnSRUpdate.Visibility = System.Windows.Visibility.Hidden
-        btnSRDelete.Visibility = System.Windows.Visibility.Hidden
+        btnSRUpdate.Visibility = System.Windows.Visibility.Collapsed
+        btnSRDelete.Visibility = System.Windows.Visibility.Collapsed
         comboRaisedBy.Visibility = System.Windows.Visibility.Visible
         txtRaisedBy.Visibility = System.Windows.Visibility.Hidden
         tbSuccessForm.Text = "Create Success Register"
@@ -271,7 +271,7 @@ Class NewSuccessRegister
     ''' </summary>
     ''' <remarks></remarks>
     Private Sub LoadData()
-        btnSRCreate.Visibility = System.Windows.Visibility.Hidden
+        btnSRCreate.Visibility = System.Windows.Visibility.Collapsed
         btnSRUpdate.Visibility = System.Windows.Visibility.Visible
         btnSRDelete.Visibility = System.Windows.Visibility.Visible
         comboRaisedBy.Visibility = System.Windows.Visibility.Hidden

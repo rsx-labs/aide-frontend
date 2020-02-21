@@ -5,6 +5,7 @@ Imports System.ServiceModel
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class WeeklyAuditPage
     Implements ServiceReference1.IAideServiceCallback
+
     Private dailyVMM As New dayVM
     Private email As String
     Private pageframe As Frame
@@ -24,8 +25,11 @@ Class WeeklyAuditPage
     Private LstAuditDailySchedByWeek As New ObservableCollection(Of WorkplaceAuditModel)
     Private Month As Integer
     Dim year As Integer
+    Dim isInitialize As Boolean
+
     Dim lstFiscalYear As FiscalYear()
     Dim fiscalyearVM As New SelectionListViewModel
+
     Public Sub New(_pageframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         Me.pageframe = _pageframe
         Me.profile = _profile
@@ -36,16 +40,18 @@ Class WeeklyAuditPage
         InitializeComponent()
         InitializeService()
         ' Add any initialization after the InitializeComponent() call.
+        isInitialize = True
         LoadYear()
         LoadSChed()
         SetFiscalYear()
         'isSetDefault = True
 
         If Not cbMonth.SelectedItem Is Nothing Then
-
             Month = Date.Now.Month
             cbMonth.SelectedValue = Month
         End If
+
+        isInitialize = False
     End Sub
     Public Sub LoadYear()
         Try
@@ -236,6 +242,7 @@ Class WeeklyAuditPage
 
 
     End Sub
+
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
         Try
@@ -250,6 +257,7 @@ Class WeeklyAuditPage
         End Try
         Return bInitialize
     End Function
+
     Public Sub LoadSChed()
         Try
             If InitializeService() Then
@@ -260,6 +268,7 @@ Class WeeklyAuditPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
     Public Sub LoadPerWeekSchedule()
         Try
             Dim lstAuditSchedMonthList As New ObservableCollection(Of WorkplaceAuditModel)
@@ -283,7 +292,6 @@ Class WeeklyAuditPage
         End Try
     End Sub
 
-
     Private Sub ListViewItem_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
         Dim item = (TryCast(sender, FrameworkElement)).DataContext
         Dim FYDBProvider As New WorkplaceAuditDBProvider
@@ -303,7 +311,6 @@ Class WeeklyAuditPage
             pageframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 2))
         End If
     End Sub
-
 
     Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
         Throw New NotImplementedException()
@@ -388,10 +395,10 @@ Class WeeklyAuditPage
         If dailyVMM.Days.Count <> 0 Then
             generateQuestions()
         Else
-            MsgBox("There is no records in selected date.  ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+            If Not isInitialize Then
+                MsgBox("There is no records in selected date.  ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+            End If
         End If
-
-
     End Sub
 
     Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
@@ -418,7 +425,9 @@ Class WeeklyAuditPage
             generateQuestions()
         Else
             If e.RemovedItems.Count <> 0 Then
-                MsgBox("There is no records in selected date.  ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                If Not isInitialize Then
+                    MsgBox("There is no records in selected date.  ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
+                End If
             End If
 
         End If

@@ -29,7 +29,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.11*" />
                 <RowDefinition Height="55" />
-                <RowDefinition Height="0.89*" />
+                <RowDefinition Height="0.78*" />
             </Grid.RowDefinitions>
             
             <Grid Grid.Row="0">
@@ -66,7 +66,8 @@
                 </Grid.ColumnDefinitions>
                 
                 <Grid Grid.Column="0">
-                    <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Margin="10,10,5,10"/>
+                    <ComboBox Style="{DynamicResource StyleComboBox}" Height="30" x:Name="cbMonth" Margin="10,10,5,10"/>
+                    
                     <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Month" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
@@ -82,7 +83,7 @@
                 </Grid>
                 
                 <Grid Grid.Column="1">
-                    <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="5,10,10,10" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
+                    <ComboBox Style="{DynamicResource StyleComboBox}" Height="30" x:Name="cbYear" Margin="5,10,10,10" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
                     <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
