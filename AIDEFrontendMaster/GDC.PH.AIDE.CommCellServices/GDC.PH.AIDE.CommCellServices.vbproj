@@ -1578,5 +1578,8 @@
   <ItemGroup>
     <Resource Include="Assets\Menu\quarterly.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Attendance\holiday.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
