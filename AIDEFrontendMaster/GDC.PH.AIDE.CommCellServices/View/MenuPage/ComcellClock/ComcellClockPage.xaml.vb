@@ -11,59 +11,68 @@ Class ComcellClockPage
     Implements ServiceReference1.IAideServiceCallback
 
 #Region "Declaration"
-    Private aide As ServiceReference1.AideServiceClient
-    Private emp_ID As Integer
-    Private _comcellclock As New ComcellClock
+    Private aideService As ServiceReference1.AideServiceClient
+    Private empID As Integer
+    Private comcellclock As New ComcellClock
     Private comcellClockVM As New ComcellClockViewModel
     Private comcellFrame As Frame
-    Private _window As Window
+    Private window As Window
     Private alarmActive As Boolean
     Private pos As String
     Private lstComcell() As Comcell
     Private year As Integer
     Private monthToday As Integer
-    Private ComcellVM As New ComcellViewModel
+    Private comcellVM As New ComcellViewModel
     Private profile As Profile
-    Private ComcellClockModel As New ComcellClockModel
-    Dim isServiceEnabled As Boolean
+    Private comcellClockModel As New ComcellClockModel
+    Private isServiceEnabled As Boolean
 
+    Public timer As DispatcherTimer = New DispatcherTimer()
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_profile As Profile, com_cellFrame As Frame, winx As Window)
+    Public Sub New(_profile As Profile, _comcellFrame As Frame, _window As Window)
         InitializeComponent()
+
         year = Date.Now.Year
         monthToday = Date.Now.Month
+
         DataContext = comcellClockVM
-        Me.comcellFrame = com_cellFrame
-        Me.profile = _profile
-        Me.emp_ID = profile.Emp_ID
-        Me._window = winx
+        comcellFrame = _comcellFrame
+        profile = _profile
+        empID = profile.Emp_ID
+        window = _window
         year = getSelectedFY(year, monthToday)
-        InitializeService()
-        GetData()
-        setclock()
-        getTime()
+
+        GetAlarmClockData()
+        SetAlarmClock()
+        SetTime()
         'refreshClock()
-        SetData2()
+        SetComcellMinutes()
+
+        'load controls
+        ManagerAuth()
     End Sub
 #End Region
 
 #Region "Service Methods"
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
+
         Try
             Dim Context As InstanceContext = New InstanceContext(Me)
-            aide = New AideServiceClient(Context)
-            aide.Open()
+            aideService = New AideServiceClient(Context)
+            aideService.Open()
             bInitialize = True
             isServiceEnabled = True
         Catch ex As SystemException
-            aide.Abort()
+            aideService.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
         Return bInitialize
     End Function
+
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
     End Sub
@@ -86,29 +95,10 @@ Class ComcellClockPage
 #End Region
 
 #Region "Methods/Functions"
-    Public Sub getTime()
-        Dim actualTime As String
-        Dim timer As DispatcherTimer = New DispatcherTimer(New TimeSpan(0, 0, 1), DispatcherPriority.Normal, Function()
-
-                                                                                                                 Dim dateNow As DateTime = Format(DateTime.Now, "hh:mm:ss tt")
-                                                                                                                 actualTime = DateTime.Now.DayOfWeek.ToString().ToUpper() + " " + dateNow.ToString("hh:mm:ss tt")
-
-
-                                                                                                                 If TimeCheck(actualTime) Then
-                                                                                                                         'alarmActive = True
-                                                                                                                         Dim winwin As New ComcellClockWindow
-                                                                                                                         winwin.ShowDialog()
-                                                                                                                     If _window.WindowState = WindowState.Minimized Then
-                                                                                                                         _window.Show()
-                                                                                                                     End If
-                                                                                                                 End If
-                                                                                                             End Function, Me.Dispatcher)
-    End Sub
-
-    Private Sub GetData()
+    Private Sub GetAlarmClockData()
         Try
             If InitializeService() Then
-                _comcellclock = aide.GetClockTimeByEmployee(Me.emp_ID)
+                comcellclock = aideService.GetClockTimeByEmployee(empID)
                 LoadData()
             End If
 
@@ -116,9 +106,8 @@ Class ComcellClockPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
     Private Function getSelectedFY(Year As Integer, month As Integer)
-
-
         Select Case month
             Case 1
                 Year = Year - 1
@@ -130,32 +119,34 @@ Class ComcellClockPage
                 Year = Year
         End Select
 
-
         Return Year
     End Function
+
     Private Sub LoadData()
         'Dim AlarmDate As String
-        ComcellClockModel = New ComcellClockModel
-        Dim ComcellClockDB As New ComcellClockDBProvider
-        Dim NewHour As String = String.Empty
+        comcellClockModel = New ComcellClockModel
+        Dim comcellClockDB As New ComcellClockDBProvider
+        Dim newHour As String = String.Empty
+
         Try
-            ComcellClockDB._setlistofitems(_comcellclock)
-            ComcellClockModel = New ComcellClockModel(ComcellClockDB._getobjClock)
+            comcellClockDB._setlistofitems(comcellclock)
+            comcellClockModel = New ComcellClockModel(comcellClockDB._getobjClock)
 
             comcellClockVM.objectComcellClockSet = ComcellClockModel
 
-            If ComcellClockModel.MIDDAY = "PM" Then
-                NewHour = ComcellClockModel.CLOCK_HOUR
-                If Not ComcellClockModel.CLOCK_HOUR = 12 Then
-                    NewHour = (ComcellClockModel.CLOCK_HOUR + 12).ToString()
+            If comcellClockModel.MIDDAY = "PM" Then
+                newHour = comcellClockModel.CLOCK_HOUR
+                If Not comcellClockModel.CLOCK_HOUR = 12 Then
+                    newHour = (comcellClockModel.CLOCK_HOUR + 12).ToString()
                 End If
             Else
-                NewHour = ComcellClockModel.CLOCK_HOUR
-                If ComcellClockModel.CLOCK_HOUR = 12 Then
-                    NewHour = "0"
+                newHour = comcellClockModel.CLOCK_HOUR
+                If comcellClockModel.CLOCK_HOUR = 12 Then
+                    newHour = "0"
                 End If
             End If
-            comcellClockVM.objectComcellSetAlarm = GetDayValue(ComcellClockModel.CLOCK_DAY) + NewHour.ToString() + ComcellClockModel.CLOCK_MINUTE.ToString() + "1"
+
+            comcellClockVM.objectComcellSetAlarm = GetDayValue(comcellClockModel.CLOCK_DAY) + newHour.ToString() + comcellClockModel.CLOCK_MINUTE.ToString() + "1"
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -169,7 +160,7 @@ Class ComcellClockPage
         End If
     End Sub
 
-    Public Sub setclock()
+    Public Sub SetAlarmClock()
         CalculateHour()
         CalculateMinute()
         GetComcellDay()
@@ -190,7 +181,7 @@ Class ComcellClockPage
     Private Sub GetComcellDay()
         Try
             Dim dayconvert As String = GetDayValue(comcellClockVM.objectComcellClockSet.CLOCK_DAY)
-            comcellClockVM.objectComcellDayOnly = dayconvert & " " & _comcellclock.Clock_Hour.ToString("00") & ":" & _comcellclock.Clock_Minute.ToString().PadLeft(2, "0") & ":00" & " " & _comcellclock.MIDDAY
+            comcellClockVM.objectComcellDayOnly = dayconvert & " " & comcellclock.Clock_Hour.ToString("00") & ":" & comcellclock.Clock_Minute.ToString().PadLeft(2, "0") & ":00" & " " & comcellclock.MIDDAY
         Catch ex As Exception
             MsgBox("Please set Comm. Cell time.", MsgBoxStyle.Critical, "AIDE")
         End Try
@@ -213,50 +204,47 @@ Class ComcellClockPage
         End Select
     End Function
 
-    Public Function TimeCheck(timenow As String) As Boolean
+    Public Sub SetTime()
+        AddHandler timer.Tick, New EventHandler(AddressOf Timer_Click)
+        timer.Interval = New TimeSpan(0, 0, 1)
+        timer.Start()
+    End Sub
 
-        If isServiceEnabled Then
-            _comcellclock = aide.GetClockTimeByEmployee(Me.emp_ID)
-        Else
-            Try
-                If InitializeService() Then
-                    _comcellclock = aide.GetClockTimeByEmployee(Me.emp_ID)
-                    LoadData()
-                End If
+    Private Sub Timer_Click(ByVal sender As Object, ByVal e As EventArgs)
+        Dim dateNow As DateTime = Format(DateTime.Now, "hh:mm:ss tt")
+        Dim actualTime As String
 
-            Catch ex As Exception
-                MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-            End Try
+        actualTime = DateTime.Now.DayOfWeek.ToString().ToUpper() + " " + dateNow.ToString("hh:mm:ss tt")
+
+        Dim comcellTime As String = [Enum].GetName(GetType(DayOfWeek), Convert.ToInt32(comcellclock.Clock_Day)).ToString.Trim.ToUpper() & " " & comcellclock.Clock_Hour.ToString("00") & ":" & comcellclock.Clock_Minute.ToString().PadLeft(2, "0") & ":00" & " " & comcellclock.MIDDAY
+
+        If actualTime = comcellTime Then
+            Dim winwin As New ComcellClockWindow
+            winwin.ShowDialog()
+            If window.WindowState = WindowState.Minimized Then
+                window.Show()
+            End If
         End If
-
-
-        Dim UpdateComcellTime As String = [Enum].GetName(GetType(DayOfWeek), Convert.ToInt32(_comcellclock.Clock_Day)).ToString.Trim.ToUpper() & " " & _comcellclock.Clock_Hour.ToString("00") & ":" & _comcellclock.Clock_Minute.ToString().PadLeft(2, "0") & ":00" & " " & _comcellclock.MIDDAY
-
-
-        TimeCheck = False
-        If timenow = UpdateComcellTime Then
-            TimeCheck = True
-        End If
-    End Function
+    End Sub
 
     Public Sub refreshClock()
         Dim timer As DispatcherTimer = New DispatcherTimer(New TimeSpan(0, 5, 0), DispatcherPriority.Normal, Function()
-                                                                                                                 comcellFrame.Navigate(New ComcellClockPage(profile, comcellFrame, _window))
+                                                                                                                 comcellFrame.Navigate(New ComcellClockPage(profile, comcellFrame, window))
                                                                                                              End Function, Me.Dispatcher)
     End Sub
 
-    Public Sub SetData2()
+    Public Sub SetComcellMinutes()
         Try
             If InitializeService() Then
-                lstComcell = aide.GetComcellMeeting(emp_ID, year)
-                loadComcell()
+                lstComcell = aideService.GetComcellMeeting(empID, year)
+                LoadComcellMinutes()
             End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
-    Private Sub loadComcell()
+    Private Sub LoadComcellMinutes()
         Dim ComcellToday As New ComcellModel
         Dim ComcellDBProvider As New ComcellDBProvider
 
@@ -269,28 +257,25 @@ Class ComcellClockPage
 
         If Not ComcellDBProvider.GetMyComcellItem.COMCELL_ID = 0 Then
             ComcellToday = New ComcellModel(ComcellDBProvider.GetMyComcellItem)
-            ComcellVM.ComcellItem = ComcellToday
-            Facilitator.Text = ComcellVM.ComcellItem.FACILITATOR_NAME.ToUpper()
-            MinutesTaker.Text = ComcellVM.ComcellItem.MINUTES_TAKER_NAME.ToUpper()
+            comcellVM.ComcellItem = ComcellToday
+            Facilitator.Text = comcellVM.ComcellItem.FACILITATOR_NAME.ToUpper()
+            MinutesTaker.Text = comcellVM.ComcellItem.MINUTES_TAKER_NAME.ToUpper()
         End If
-        'load controls
-        ManagerAuth()
     End Sub
 #End Region
 
 #Region "Events"
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
-
-        Dim window As MainWindow = DirectCast(_window, MainWindow)
-        Dim addframe As Frame = window.AddFrame
+        Dim mainWindow As MainWindow = DirectCast(window, MainWindow)
+        Dim addframe As Frame = mainWindow.AddFrame
         addframe.Visibility = Visibility.Visible
-        addframe.Navigate(New ComcellClockAddPage(profile, comcellFrame, addframe, _window, ComcellClockModel))
-        window.MenuGrid.Opacity = 0.3
-        window.MenuGrid.IsEnabled = False
-        window.SubMenuFrame.Opacity = 0.3
-        window.SubMenuFrame.IsEnabled = False
-        window.PagesFrame.Opacity = 0.3
-        window.PagesFrame.IsEnabled = False
+        addframe.Navigate(New ComcellClockAddPage(profile, comcellFrame, addframe, window, comcellClockModel, Me))
+        mainWindow.MenuGrid.Opacity = 0.3
+        mainWindow.MenuGrid.IsEnabled = False
+        mainWindow.SubMenuFrame.Opacity = 0.3
+        mainWindow.SubMenuFrame.IsEnabled = False
+        mainWindow.PagesFrame.Opacity = 0.3
+        mainWindow.PagesFrame.IsEnabled = False
         addframe.Visibility = Visibility.Visible
         addframe.Margin = New Thickness(200, 160, 200, 160)
     End Sub

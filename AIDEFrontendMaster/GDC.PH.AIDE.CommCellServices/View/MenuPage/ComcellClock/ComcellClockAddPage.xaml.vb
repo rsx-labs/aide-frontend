@@ -9,30 +9,31 @@ Class ComcellClockAddPage
 #Region "Fields"
     Private empID As Integer
     Private comcellFrame As Frame
-    Private _addframe As Frame
-    Private aide As ServiceReference1.AideServiceClient
-    Private _comcellclock As New ComcellClock
+    Private addframe As Frame
+    Private aideService As ServiceReference1.AideServiceClient
+    Private comcellclock As New ComcellClock
     Private comcellClockVM As New ComcellClockViewModel
-    Private _window As Window
+    Private window As Window
     Private pos As String
     Private profile As Profile
     Private comcellClockModel As New ComcellClockModel
+    Private comcellClockPage As ComcellClockPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_profile As Profile, com_cellframe As Frame, addframe As Frame, winx As Window, _ComcellClockModel As ComcellClockModel)
+    Public Sub New(_profile As Profile, _comcellframe As Frame, _addframe As Frame, _window As Window, _comcellClockModel As ComcellClockModel, _comcellClockPage As ComcellClockPage)
         ' This call is required by the designer.
         InitializeComponent()
-        Me.profile = _profile
-        Me.empID = profile.Emp_ID
-        Me.comcellFrame = com_cellframe
-        Me._addframe = addframe
-        Me._window = winx
-        Me.comcellClockModel = _ComcellClockModel
+        profile = _profile
+        empID = profile.Emp_ID
+        comcellFrame = _comcellframe
+        comcellClockPage = _comcellClockPage
+        addframe = _addframe
+        window = _window
+        comcellClockModel = _comcellClockModel
         populateDayCB()
         DataContext = comcellClockVM
         LoadData()
-
     End Sub
 #End Region
 
@@ -41,15 +42,16 @@ Class ComcellClockAddPage
         Dim bInitialize As Boolean = False
         Try
             Dim Context As InstanceContext = New InstanceContext(Me)
-            aide = New AideServiceClient(Context)
-            aide.Open()
+            aideService = New AideServiceClient(Context)
+            aideService.Open()
             bInitialize = True
         Catch ex As SystemException
-            aide.Abort()
+            aideService.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
     End Function
+
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
     End Sub
@@ -79,6 +81,7 @@ Class ComcellClockAddPage
         ComcellMinuteCB.Text = (comcellClockModel.CLOCK_MINUTE / 6).ToString("00")
         ComcellTimeExtensionCB.Text = comcellClockModel.MIDDAY
     End Sub
+
     Private Sub SetDataDay()
         If Not ComcellDayCB.Text = String.Empty Then
             comcellClockVM.objectComcellClockSet.CLOCK_DAY = ConvertDays(ComcellDayCB.Text)
@@ -103,14 +106,15 @@ Class ComcellClockAddPage
             If Not clockVM.CLOCK_DAY = 0 AndAlso Not clockVM.CLOCK_HOUR = 0 AndAlso Not clockVM.MIDDAY = String.Empty Then
                 If checkLimit() Then
                     If InitializeService() Then
-                        _comcellclock.Clock_Day = clockVM.CLOCK_DAY
-                        _comcellclock.Clock_Hour = clockVM.CLOCK_HOUR
-                        _comcellclock.Clock_Minute = clockVM.CLOCK_MINUTE
-                        _comcellclock.Emp_ID = clockVM.EMP_ID
-                        _comcellclock.MIDDAY = clockVM.MIDDAY
-                        aide.UpdateComcellClock(_comcellclock)
+                        comcellclock.Clock_Day = clockVM.CLOCK_DAY
+                        comcellclock.Clock_Hour = clockVM.CLOCK_HOUR
+                        comcellclock.Clock_Minute = clockVM.CLOCK_MINUTE
+                        comcellclock.Emp_ID = clockVM.EMP_ID
+                        comcellclock.MIDDAY = clockVM.MIDDAY
+                        aideService.UpdateComcellClock(comcellclock)
                         MsgBox("The Comm. Cell time has been set.", MsgBoxStyle.OkOnly, "AIDE")
-                        comcellFrame.Navigate(New ComcellClockPage(profile, Me.comcellFrame, Me._window))
+                        comcellClockPage.timer.IsEnabled = False 'Stop the previous timer
+                        ExitPage()
                     End If
                 Else
                     MsgBox("Please enter a valid time.", MsgBoxStyle.Exclamation, "AIDE")
@@ -121,21 +125,20 @@ Class ComcellClockAddPage
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
-        ExitPage()
     End Sub
 
     Private Sub ExitPage()
-        Dim window As MainWindow = DirectCast(_window, MainWindow)
-        comcellFrame.Navigate(New ComcellClockPage(profile, Me.comcellFrame, _window))
-        window.MenuGrid.IsEnabled = True
-        window.MenuGrid.Opacity = 1
-        window.PagesFrame.Opacity = 1
-        window.PagesFrame.IsEnabled = True
+        Dim mainWindow As MainWindow = DirectCast(window, MainWindow)
+        comcellFrame.Navigate(New ComcellClockPage(profile, comcellFrame, window))
+        mainWindow.MenuGrid.IsEnabled = True
+        mainWindow.MenuGrid.Opacity = 1
+        mainWindow.PagesFrame.Opacity = 1
+        mainWindow.PagesFrame.IsEnabled = True
         comcellFrame.IsEnabled = True
         comcellFrame.Opacity = 1
-        window.SubMenuFrame.Opacity = 1
-        window.SubMenuFrame.IsEnabled = True
-        _addframe.Visibility = Visibility.Hidden
+        mainWindow.SubMenuFrame.Opacity = 1
+        mainWindow.SubMenuFrame.IsEnabled = True
+        addframe.Visibility = Visibility.Hidden
     End Sub
 
     Public Sub populateDayCB()
@@ -162,22 +165,26 @@ Class ComcellClockAddPage
     End Function
 
     Private Function ConvertDays(days As String) As Integer
+        Dim day As Integer
+
         Select Case days
             Case "Monday"
-                Return 1
+                day = 1
             Case "Tuesday"
-                Return 2
+                day = 2
             Case "Wednesday"
-                Return 3
+                day = 3
             Case "Thursday"
-                Return 4
+                day = 4
             Case "Friday"
-                Return 5
+                day = 5
             Case "Saturday"
-                Return 6
+                day = 6
             Case "Sunday"
-                Return 7
+                day = 7
         End Select
+
+        Return day
     End Function
 
     Private Function checkLimit() As Boolean
@@ -193,17 +200,7 @@ Class ComcellClockAddPage
 
 #Region "Events"
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs)
-        Dim window As MainWindow = DirectCast(_window, MainWindow)
-        comcellFrame.Navigate(New ComcellClockPage(profile, Me.comcellFrame, _window))
-        window.MenuGrid.IsEnabled = True
-        window.MenuGrid.Opacity = 1
-        window.PagesFrame.Opacity = 1
-        window.PagesFrame.IsEnabled = True
-        comcellFrame.IsEnabled = True
-        comcellFrame.Opacity = 1
-        window.SubMenuFrame.Opacity = 1
-        window.SubMenuFrame.IsEnabled = True
-        _addframe.Visibility = Visibility.Hidden
+        ExitPage()
     End Sub
 
     Private Sub UpdateBtn_Click(sender As Object, e As RoutedEventArgs)
@@ -224,4 +221,5 @@ Class ComcellClockAddPage
         e.Handled = _regex.IsMatch(e.Text)
     End Sub
 #End Region
+
 End Class
