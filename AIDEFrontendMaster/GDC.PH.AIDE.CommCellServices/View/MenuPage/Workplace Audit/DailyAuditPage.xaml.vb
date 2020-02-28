@@ -296,7 +296,15 @@ Class DailyAuditPage
         Next
 
         If profile.Emp_ID = currDailyAuditAssigned OrElse profile.Permission_ID = 1 Then
-            pageframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 1))
+            addframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 1))
+            pageframe.IsEnabled = False
+            pageframe.Opacity = 0.3
+            menugrid.IsEnabled = False
+            menugrid.Opacity = 0.3
+            submenuframe.IsEnabled = False
+            submenuframe.Opacity = 0.3
+            addframe.Visibility = Visibility.Visible
+            addframe.Margin = New Thickness(120, 60, 120, 60)
         End If
     End Sub
 
@@ -547,7 +555,7 @@ Public Class DayMod
         If date_checked.ToString.Trim.ToLower = "NULL".ToString.Trim.ToLower() Then
             _date_checked = "Not yet check"
         Else
-            _date_checked = "Last Updated: " + date_checked
+            _date_checked = date_checked
         End If
     End Sub
 
@@ -564,7 +572,7 @@ Public Class DayMod
         If date_checked.ToString.Trim.ToLower = "NULL".ToString.Trim.ToLower() Then
             _date_checked = "Not yet check"
         Else
-            _date_checked = "Last Updated: " + date_checked
+            _date_checked = date_checked
         End If
         _weekdateSched = weekdateSched
     End Sub
@@ -582,7 +590,7 @@ Public Class DayMod
         If date_checked.ToString.Trim.ToLower = "NULL".ToString.Trim.ToLower() Then
             _date_checked = "Not yet check"
         Else
-            _date_checked = "Last Updated: " + date_checked
+            _date_checked = date_checked
         End If
         _weekdateSched = weekdateSched
     End Sub

@@ -60,9 +60,9 @@
                     </Grid>
                     
                     <Grid Grid.Column="3">
-                        <ComboBox Grid.ColumnSpan="1" Style="{DynamicResource StyleComboBox}" MinWidth="140" Height="30" x:Name="cbYear" Margin="5,5,10,5" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="0,10,10,10" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
                         
-                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                        <!--<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
                             <Viewbox Margin="15,15,0,15">
                                 <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png"/>
                             </Viewbox>
@@ -79,7 +79,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                        </StackPanel>
+                        </StackPanel>-->
                     </Grid>
                 </Grid>
             </Grid>

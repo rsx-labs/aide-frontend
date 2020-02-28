@@ -991,8 +991,8 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.11*" />
-                <RowDefinition Height="0.11*" />
-                <RowDefinition Height="0.78*" />
+                <RowDefinition Height="0.10*" />
+                <RowDefinition Height="0.79*" />
             </Grid.RowDefinitions>
             
             <Grid Grid.Row="0">
@@ -1041,7 +1041,7 @@
                     </Grid>
                     
                     <Grid Grid.Column="3">
-                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="5,5,15,5" Height="30" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="0,10,10,10" DisplayMemberPath="FISCAL_YEAR" SelectedValuePath="FISCAL_YEAR"/>
                         
                         <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select Fiscal Year" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                             <TextBlock.Style>
@@ -1109,38 +1109,33 @@
                                                     <TextBlock Foreground="DimGray" Text="{Binding Descr}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" FontSize="9" VerticalAlignment="Bottom" />
                                                 </Grid>-->
                                             <Grid Grid.Column="0" Background="#FFFB9A9A">
-                                                <StackPanel Orientation="Vertical">
-                                                    <TextBlock FontSize="21" Foreground="White"  Margin="2,2,2,20" Text="{Binding Days}" FontWeight="SemiBold"  HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                                                    <TextBlock FontStyle="Italic" Margin="2,2,2,5" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="{Binding WEEKDATE}" FontWeight="Bold" Foreground="DimGray"></TextBlock>
+                                                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                                                    <TextBlock FontSize="21" Foreground="White"  Text="{Binding Days}" FontWeight="SemiBold"  HorizontalAlignment="Center" VerticalAlignment="Bottom"></TextBlock>
+                                                    <TextBlock FontStyle="Italic" Margin="2,2,2,5" VerticalAlignment="Top" HorizontalAlignment="Center" Text="{Binding WEEKDATE}" Foreground="DimGray"></TextBlock>
                                                 </StackPanel>
                                             </Grid>
-                                            <Grid Grid.Column="1" Margin="10,0,0,50">
+                                            <Grid Grid.Column="1" Margin="10,0,0,10">
                                                 <Grid.RowDefinitions>
-                                                    <RowDefinition Height="5*"/>
                                                     <RowDefinition Height="2*"/>
-                                                    <RowDefinition Height="5*"/>
+                                                    <RowDefinition Height="1*"/>
+                                                    <RowDefinition Height="1*"/>
                                                 </Grid.RowDefinitions>
+
                                                 <Grid Grid.Row="0">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="70*"/>
-                                                        <ColumnDefinition Width="50*"/>
-                                                        <ColumnDefinition Width="150*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <Grid Grid.Column="0">
-                                                        <TextBlock VerticalAlignment="Center" FontSize="20" Foreground="SkyBlue" FontWeight="SemiBold" Text="{Binding EmpName}"/>
-                                                    </Grid>
-                                                    <Grid Grid.Column="1">
-                                                        <TextBlock Text="{Binding Notes}" Margin="3,-20,-190,0"  TextWrapping="Wrap"  FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    </Grid>
-                                                    <Grid Grid.Column="2">
-                                                        <TextBlock Text="{Binding DATE_CHECKED}" Margin="-100,40,60,-20"  TextWrapping="WrapWithOverflow"  FontStyle="Italic" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                                                    </Grid>
+                                                    <TextBlock VerticalAlignment="Center" FontSize="18" Foreground="SkyBlue" FontWeight="SemiBold" Text="{Binding EmpName}"/>
                                                 </Grid>
                                                 <Grid Grid.Row="1">
-
-
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="Remarks: " Foreground="DimGray" FontStyle="Italic"/>
+                                                        <TextBlock Text="{Binding DATE_CHECKED}"  TextWrapping="WrapWithOverflow"  FontStyle="Italic" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                                    </StackPanel>
                                                     <!--<TextBlock VerticalAlignment="Top" TextWrapping="WrapWithOverflow" Foreground="DimGray" FontStyle="Italic" Text="{Binding Notes}"/>-->
-
+                                                </Grid>
+                                                <Grid Grid.Row="2">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="Status: " Foreground="DimGray" FontStyle="Italic"/>
+                                                        <TextBlock Text="{Binding Notes}"  TextWrapping="Wrap"  FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    </StackPanel>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
