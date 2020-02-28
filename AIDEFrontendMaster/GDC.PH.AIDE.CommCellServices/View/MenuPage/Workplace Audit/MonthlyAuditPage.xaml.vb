@@ -167,7 +167,7 @@ Class MonthlyAuditPage
             For Each quest As WorkplaceAuditModel In LstAuditDailySchedByWeek.ToList
                 Select Case quest.DT_CHECK_FLG
                     Case 0
-                        statusAudit = "Not completed"
+                        statusAudit = "Not Completed"
                     Case 1
                         statusAudit = "Completed"
                     Case 2
@@ -257,8 +257,16 @@ Class MonthlyAuditPage
         Next
 
         If profile.Emp_ID = currDailyAuditAssigned OrElse profile.Permission_ID = 1 Then
-                pageframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 3))
-            End If
+            addframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 3))
+            pageframe.IsEnabled = False
+            pageframe.Opacity = 0.3
+            menugrid.IsEnabled = False
+            menugrid.Opacity = 0.3
+            submenuframe.IsEnabled = False
+            submenuframe.Opacity = 0.3
+            addframe.Visibility = Visibility.Visible
+            addframe.Margin = New Thickness(120, 60, 120, 60)
+        End If
 
     End Sub
 

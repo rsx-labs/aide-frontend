@@ -307,8 +307,16 @@ Class QuarterlyAuditPage
         Next
 
         If profile.Permission_ID = 1 Then
-                pageframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 4))
-            End If
+            addframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 4))
+            pageframe.IsEnabled = False
+            pageframe.Opacity = 0.3
+            menugrid.IsEnabled = False
+            menugrid.Opacity = 0.3
+            submenuframe.IsEnabled = False
+            submenuframe.Opacity = 0.3
+            addframe.Visibility = Visibility.Visible
+            addframe.Margin = New Thickness(120, 60, 120, 60)
+        End If
 
     End Sub
 
