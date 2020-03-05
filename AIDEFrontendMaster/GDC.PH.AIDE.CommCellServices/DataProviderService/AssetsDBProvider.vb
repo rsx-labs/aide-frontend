@@ -119,7 +119,7 @@ Public Class AssetsDBProvider
             Status_Descr = PARTIALLY_UNASSIGNED
         End If
 
-        If _assets.APPROVAL = 1 Then
+        If _assets.APPROVAL = 5 Then
             isApprove = True
         Else
             isApprove = False

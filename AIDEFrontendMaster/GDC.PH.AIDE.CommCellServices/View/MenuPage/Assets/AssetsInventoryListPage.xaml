@@ -130,7 +130,7 @@
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Serial No." Width="110" Binding="{Binding SERIAL_NO}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Tag" Width="100" Binding="{Binding ASSET_TAG}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Assigned" Width="105" Binding="{Binding DATE_ASSIGNED, StringFormat=d}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Other Info" Width="120" Binding="{Binding OTHER_INFO}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Comments" Width="120" Binding="{Binding COMMENTS}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="90" Binding="{Binding STATUS_DESCR}" />
                                             <DataGridTemplateColumn Header="Approved" Width="90" >
                                                 <DataGridTemplateColumn.CellTemplate>
@@ -255,7 +255,7 @@
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Tag" Width="100" Binding="{Binding ASSET_TAG}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Purchased" Width="110" Binding="{Binding DATE_DESCR}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Assigned" Width="105" Binding="{Binding DATE_ASSIGNED, StringFormat=d}" />
-                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Other Info" Width="120" Binding="{Binding OTHER_INFO}" />
+                                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Comments" Width="120" Binding="{Binding COMMENTS}" />
                                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="90" Binding="{Binding STATUS_DESCR}" />
                                         </DataGrid.Columns>
                                     </DataGrid>
@@ -351,7 +351,7 @@
                                                 <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Serial No." Width="100" Binding="{Binding SERIAL_NO}" />
                                                 <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Asset Tag" Width="100" Binding="{Binding ASSET_TAG}" />
                                                 <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Assigned" Width="105" Binding="{Binding DATE_ASSIGNED, StringFormat=d}" />
-                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Other Info" Width="120" Binding="{Binding OTHER_INFO}" />
+                                                <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Comments" Width="120" Binding="{Binding COMMENTS}" />
                                                 <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Status" Width="90" Binding="{Binding STATUS_DESCR}" />
                                             </DataGrid.Columns>
                                         </DataGrid>
