@@ -96,30 +96,36 @@ Public Class AssetsInventoryAddPage
                 assets.ASSET_TAG = txtAssetTag.Text
                 assets.STATUS = cbStatus.SelectedValue
                 assets.ASSIGNED_TO = 999 'USED JUST TO BE NOT NULL
-                assets.PREVIOUS_ID = assetsModel.EMP_ID
+                assets.PREVIOUS_ID = assetsModel.PREVIOUS_ID
                 assets.TRANSFER_ID = cbNickname.SelectedValue
-                If profile.Permission_ID = 1 Then
-                    assets.APPROVAL = 1
+                If profile.Permission_ID = 1 Then 'Manage
+                    If assetsModel.APPROVAL <> 0 Then
+                        assets.APPROVAL = 5
+                    Else
+                        assets.APPROVAL = assetsModel.APPROVAL
+                    End If
+                ElseIf profile.Permission_ID = 4 Then 'Asset Custodian
+                    assets.APPROVAL = 6
                 Else
-                    assets.APPROVAL = 0
+                    assets.APPROVAL = assetsModel.APPROVAL
                 End If
-                If InitializeService() Then
-                    client.UpdateAssetsInventory(assets)
-                    MsgBox("Asset inventory have been updated.", MsgBoxStyle.Information, "AIDE")
-                    ClearFields()
-                    mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
-                    mainFrame.IsEnabled = True
-                    mainFrame.Opacity = 1
-                    _menugrid.IsEnabled = True
-                    _menugrid.Opacity = 1
-                    _submenuframe.IsEnabled = True
-                    _submenuframe.Opacity = 1
+            If InitializeService() Then
+                client.UpdateAssetsInventory(assets)
+                MsgBox("Asset inventory have been updated.", MsgBoxStyle.Information, "AIDE")
+                ClearFields()
+                mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
+                mainFrame.IsEnabled = True
+                mainFrame.Opacity = 1
+                _menugrid.IsEnabled = True
+                _menugrid.Opacity = 1
+                _submenuframe.IsEnabled = True
+                _submenuframe.Opacity = 1
 
-                    _addframe.Visibility = Visibility.Hidden
-                End If
+                _addframe.Visibility = Visibility.Hidden
+            End If
             End If
         Catch ex As Exception
-             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -214,7 +220,7 @@ Public Class AssetsInventoryAddPage
             assets.SERIAL_NO = txtSerial.Text
             assets.ASSET_TAG = txtAssetTag.Text
             assets.STATUS = 1
-            assets.APPROVAL = 1
+            assets.APPROVAL = 6
             assets.ASSIGNED_TO = 999 'USED JUST TO BE NOT NULL
 
             Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
@@ -324,6 +330,7 @@ Public Class AssetsInventoryAddPage
         AddHandler btnBack.Click, AddressOf btnBack_Click
         AddHandler btnUpdate.Click, AddressOf btnUpdate_Click
         AddHandler btnDisapprove.Click, AddressOf btnDisapprove_Click
+        cbNickname.SelectedValue = assetsModel.EMP_ID
     End Sub 'Assign events to buttons
 
     Private Sub ClearFields()

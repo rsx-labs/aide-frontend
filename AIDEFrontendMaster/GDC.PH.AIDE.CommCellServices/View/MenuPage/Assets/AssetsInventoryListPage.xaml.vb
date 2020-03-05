@@ -371,7 +371,7 @@ Public Class AssetsInventoryListPage
         Dim RowDataContaxt As AssetsModel = TryCast(e.Row.DataContext, AssetsModel)
 
         If RowDataContaxt IsNot Nothing Then
-            If RowDataContaxt.EMP_ID = profile.Emp_ID And RowDataContaxt.STATUS = 2 And RowDataContaxt.APPROVAL = 1 And profile.Permission_ID = 1 Then
+            If RowDataContaxt.EMP_ID = profile.Emp_ID And RowDataContaxt.STATUS = 2 And RowDataContaxt.APPROVAL = 5 And (profile.Permission_ID = 1 Or profile.Permission_ID = 4) Then
                 e.Row.Background = New BrushConverter().ConvertFrom("#CCFFD8D8")
                 e.Row.Foreground = New SolidColorBrush(Colors.Black)
                 boxPersonal.Visibility = Windows.Visibility.Visible
@@ -401,6 +401,8 @@ Public Class AssetsInventoryListPage
                 assetsModel.COMMENTS = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).COMMENTS
                 assetsModel.FULL_NAME = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).FULL_NAME
                 assetsModel.ISAPPROVED = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).ISAPPROVED
+                assetsModel.APPROVAL = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).APPROVAL
+                assetsModel.PREVIOUS_ID = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).PREVIOUS_ID
                 _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Personal", _addframe, _menugrid, _submenuframe))
                 frame.IsEnabled = False
                 frame.Opacity = 0.3
