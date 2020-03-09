@@ -533,6 +533,9 @@
     <Compile Include="View\Notifications\About\AboutPage.xaml.vb">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Notifications\Attendance\AttendanceNotification.xaml.vb">
+      <DependentUpon>AttendanceNotification.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Notifications\Birthday\Birthday.xaml.vb">
       <DependentUpon>Birthday.xaml</DependentUpon>
     </Compile>
@@ -906,6 +909,10 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="View\Notifications\About\AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Notifications\Attendance\AttendanceNotification.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1580,6 +1587,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Attendance\holiday.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\noticlose.png" />
+    <Resource Include="Assets\Button\notienter.png" />
+    <Resource Include="Assets\Button\notienterafter.png" />
+    <Resource Include="Assets\Button\notiopen.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

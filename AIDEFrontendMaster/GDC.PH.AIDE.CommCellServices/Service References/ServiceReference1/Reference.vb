@@ -1595,6 +1595,101 @@ Namespace ServiceReference1
     
     <System.Diagnostics.DebuggerStepThroughAttribute(),  _
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="Late", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
+     System.SerializableAttribute()>  _
+    Partial Public Class Late
+        Inherits Object
+        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+        
+        <System.NonSerializedAttribute()>  _
+        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FIRST_NAMEField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private MONTHField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private NUMBER_OF_LATEField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private STATUSField As Integer
+        
+        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
+        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
+            Get
+                Return Me.extensionDataField
+            End Get
+            Set
+                Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FIRST_NAME() As String
+            Get
+                Return Me.FIRST_NAMEField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FIRST_NAMEField, value) <> true) Then
+                    Me.FIRST_NAMEField = value
+                    Me.RaisePropertyChanged("FIRST_NAME")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property MONTH() As String
+            Get
+                Return Me.MONTHField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.MONTHField, value) <> true) Then
+                    Me.MONTHField = value
+                    Me.RaisePropertyChanged("MONTH")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property NUMBER_OF_LATE() As Integer
+            Get
+                Return Me.NUMBER_OF_LATEField
+            End Get
+            Set
+                If (Me.NUMBER_OF_LATEField.Equals(value) <> true) Then
+                    Me.NUMBER_OF_LATEField = value
+                    Me.RaisePropertyChanged("NUMBER_OF_LATE")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property STATUS() As Integer
+            Get
+                Return Me.STATUSField
+            End Get
+            Set
+                If (Me.STATUSField.Equals(value) <> true) Then
+                    Me.STATUSField = value
+                    Me.RaisePropertyChanged("STATUS")
+                End If
+            End Set
+        End Property
+        
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        
+        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
+            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
+            If (Not (propertyChanged) Is Nothing) Then
+                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
+            End If
+        End Sub
+    End Class
+    
+    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
      System.Runtime.Serialization.DataContractAttribute(Name:="SabaLearning", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
      System.SerializableAttribute()>  _
     Partial Public Class SabaLearning
@@ -6871,6 +6966,9 @@ Namespace ServiceReference1
         Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private CommentsField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private DESCRField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
@@ -6931,6 +7029,19 @@ Namespace ServiceReference1
             End Get
             Set
                 Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Comments() As String
+            Get
+                Return Me.CommentsField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.CommentsField, value) <> true) Then
+                    Me.CommentsField = value
+                    Me.RaisePropertyChanged("Comments")
+                End If
             End Set
         End Property
         
@@ -7291,101 +7402,6 @@ Namespace ServiceReference1
                 If (Object.ReferenceEquals(Me.TITLEField, value) <> true) Then
                     Me.TITLEField = value
                     Me.RaisePropertyChanged("TITLE")
-                End If
-            End Set
-        End Property
-        
-        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-        
-        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
-            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
-            If (Not (propertyChanged) Is Nothing) Then
-                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
-            End If
-        End Sub
-    End Class
-    
-    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
-     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
-     System.Runtime.Serialization.DataContractAttribute(Name:="Late", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
-     System.SerializableAttribute()>  _
-    Partial Public Class Late
-        Inherits Object
-        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
-        
-        <System.NonSerializedAttribute()>  _
-        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private FIRST_NAMEField As String
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private MONTHField As String
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private NUMBER_OF_LATEField As Integer
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private STATUSField As Integer
-        
-        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
-        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
-            Get
-                Return Me.extensionDataField
-            End Get
-            Set
-                Me.extensionDataField = value
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property FIRST_NAME() As String
-            Get
-                Return Me.FIRST_NAMEField
-            End Get
-            Set
-                If (Object.ReferenceEquals(Me.FIRST_NAMEField, value) <> true) Then
-                    Me.FIRST_NAMEField = value
-                    Me.RaisePropertyChanged("FIRST_NAME")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property MONTH() As String
-            Get
-                Return Me.MONTHField
-            End Get
-            Set
-                If (Object.ReferenceEquals(Me.MONTHField, value) <> true) Then
-                    Me.MONTHField = value
-                    Me.RaisePropertyChanged("MONTH")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property NUMBER_OF_LATE() As Integer
-            Get
-                Return Me.NUMBER_OF_LATEField
-            End Get
-            Set
-                If (Me.NUMBER_OF_LATEField.Equals(value) <> true) Then
-                    Me.NUMBER_OF_LATEField = value
-                    Me.RaisePropertyChanged("NUMBER_OF_LATE")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property STATUS() As Integer
-            Get
-                Return Me.STATUSField
-            End Get
-            Set
-                If (Me.STATUSField.Equals(value) <> true) Then
-                    Me.STATUSField = value
-                    Me.RaisePropertyChanged("STATUS")
                 End If
             End Set
         End Property
@@ -9512,6 +9528,12 @@ Namespace ServiceReference1
      System.ServiceModel.ServiceContractAttribute(ConfigurationName:="ServiceReference1.IAideService", CallbackContract:=GetType(ServiceReference1.IAideServiceCallback), SessionMode:=System.ServiceModel.SessionMode.Required)>  _
     Public Interface IAideService
         
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetLate", ReplyAction:="http://tempuri.org/IAideService/GetLateResponse")>  _
+        Function GetLate(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal toDisplay As Integer) As ServiceReference1.Late()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetLate", ReplyAction:="http://tempuri.org/IAideService/GetLateResponse")>  _
+        Function GetLateAsync(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal toDisplay As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Late())
+        
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllSabaCourses", ReplyAction:="http://tempuri.org/IAideService/GetAllSabaCoursesResponse")>  _
         Function GetAllSabaCourses(ByVal empID As Integer) As ServiceReference1.SabaLearning()
         
@@ -9653,6 +9675,8 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.TaskSummary)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Late())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Late)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SabaLearning())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SabaLearning)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Comcell)),  _
@@ -9713,8 +9737,6 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ResourcePlanner())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Announcements)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Announcements())),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Late())),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Late)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MyAttendance)),  _
@@ -9763,6 +9785,8 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.TaskSummary)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Late())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Late)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SabaLearning())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SabaLearning)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Comcell)),  _
@@ -9823,8 +9847,6 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ResourcePlanner())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Announcements)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Announcements())),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Late())),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Late)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MyAttendance)),  _
@@ -10386,6 +10408,12 @@ Namespace ServiceReference1
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/CancelLeave")>  _
         Function CancelLeaveAsync(ByVal resource As ServiceReference1.ResourcePlanner) As System.Threading.Tasks.Task
         
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllNotFiledLeaves", ReplyAction:="http://tempuri.org/IAideService/GetAllNotFiledLeavesResponse")>  _
+        Function GetAllNotFiledLeaves(ByVal empID As Integer) As ServiceReference1.ResourcePlanner()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllNotFiledLeaves", ReplyAction:="http://tempuri.org/IAideService/GetAllNotFiledLeavesResponse")>  _
+        Function GetAllNotFiledLeavesAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.ResourcePlanner())
+        
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertAnnouncements")>  _
         Sub InsertAnnouncements(ByVal announcements As ServiceReference1.Announcements)
         
@@ -10403,12 +10431,6 @@ Namespace ServiceReference1
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateAnnouncements")>  _
         Function UpdateAnnouncementsAsync(ByVal announcements As ServiceReference1.Announcements) As System.Threading.Tasks.Task
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetLate", ReplyAction:="http://tempuri.org/IAideService/GetLateResponse")>  _
-        Function GetLate(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal toDisplay As Integer) As ServiceReference1.Late()
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetLate", ReplyAction:="http://tempuri.org/IAideService/GetLateResponse")>  _
-        Function GetLateAsync(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal toDisplay As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Late())
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertActionList")>  _
         Sub InsertActionList(ByVal _Action As ServiceReference1.Action)
@@ -10825,6 +10847,8 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.TaskSummary)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Late())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Late)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SabaLearning())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SabaLearning)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Comcell)),  _
@@ -10885,8 +10909,6 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ResourcePlanner())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Announcements)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Announcements())),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Late())),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Late)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MyAttendance)),  _
@@ -10942,6 +10964,14 @@ Namespace ServiceReference1
         Public Sub New(ByVal callbackInstance As System.ServiceModel.InstanceContext, ByVal binding As System.ServiceModel.Channels.Binding, ByVal remoteAddress As System.ServiceModel.EndpointAddress)
             MyBase.New(callbackInstance, binding, remoteAddress)
         End Sub
+        
+        Public Function GetLate(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal toDisplay As Integer) As ServiceReference1.Late() Implements ServiceReference1.IAideService.GetLate
+            Return MyBase.Channel.GetLate(empID, month, year, toDisplay)
+        End Function
+        
+        Public Function GetLateAsync(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal toDisplay As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Late()) Implements ServiceReference1.IAideService.GetLateAsync
+            Return MyBase.Channel.GetLateAsync(empID, month, year, toDisplay)
+        End Function
         
         Public Function GetAllSabaCourses(ByVal empID As Integer) As ServiceReference1.SabaLearning() Implements ServiceReference1.IAideService.GetAllSabaCourses
             Return MyBase.Channel.GetAllSabaCourses(empID)
@@ -11847,6 +11877,14 @@ Namespace ServiceReference1
             Return MyBase.Channel.CancelLeaveAsync(resource)
         End Function
         
+        Public Function GetAllNotFiledLeaves(ByVal empID As Integer) As ServiceReference1.ResourcePlanner() Implements ServiceReference1.IAideService.GetAllNotFiledLeaves
+            Return MyBase.Channel.GetAllNotFiledLeaves(empID)
+        End Function
+        
+        Public Function GetAllNotFiledLeavesAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.ResourcePlanner()) Implements ServiceReference1.IAideService.GetAllNotFiledLeavesAsync
+            Return MyBase.Channel.GetAllNotFiledLeavesAsync(empID)
+        End Function
+        
         Public Sub InsertAnnouncements(ByVal announcements As ServiceReference1.Announcements) Implements ServiceReference1.IAideService.InsertAnnouncements
             MyBase.Channel.InsertAnnouncements(announcements)
         End Sub
@@ -11869,14 +11907,6 @@ Namespace ServiceReference1
         
         Public Function UpdateAnnouncementsAsync(ByVal announcements As ServiceReference1.Announcements) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateAnnouncementsAsync
             Return MyBase.Channel.UpdateAnnouncementsAsync(announcements)
-        End Function
-        
-        Public Function GetLate(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal toDisplay As Integer) As ServiceReference1.Late() Implements ServiceReference1.IAideService.GetLate
-            Return MyBase.Channel.GetLate(empID, month, year, toDisplay)
-        End Function
-        
-        Public Function GetLateAsync(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal toDisplay As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Late()) Implements ServiceReference1.IAideService.GetLateAsync
-            Return MyBase.Channel.GetLateAsync(empID, month, year, toDisplay)
         End Function
         
         Public Sub InsertActionList(ByVal _Action As ServiceReference1.Action) Implements ServiceReference1.IAideService.InsertActionList

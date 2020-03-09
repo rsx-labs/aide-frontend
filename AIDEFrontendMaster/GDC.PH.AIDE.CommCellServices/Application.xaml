@@ -38,7 +38,62 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
+        <Style x:Key="ButtonNoty" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Name="buttonImage"
+                               Height="Auto"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Source="Assets\Button\notiopen.png"
+                               Stretch="Fill"
+                               Margin="5">
+                            <!--<Image.Effect>
+                                <DropShadowEffect  Direction="290" Opacity="0.6" ShadowDepth="1" Color="Black"/>
+                            </Image.Effect>-->
+                        </Image>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonImage"
+                                        Property="Margin"
+                                        Value="0"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ButtonNotyEnter" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Name="buttonImage"
+                               Height="Auto"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Source="Assets\Button\notienter.png"
+                               Stretch="Fill">
+                            <!--<Image.Effect>
+                                <DropShadowEffect  Direction="290" Opacity="0.6" ShadowDepth="1" Color="Black"/>
+                            </Image.Effect>-->
+                        </Image>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonImage"
+                                        Property="Source"
+                                        Value="Assets\Button\notienterafter.png"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="YesBtn" TargetType="{x:Type Button}">
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="VerticalContentAlignment" Value="Top"/>

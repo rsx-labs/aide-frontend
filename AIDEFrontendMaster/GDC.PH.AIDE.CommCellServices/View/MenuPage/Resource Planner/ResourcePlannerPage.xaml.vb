@@ -16,6 +16,7 @@ Class ResourcePlannerPage
     Private _ResourceDBProvider As New ResourcePlannerDBProvider
     Private _ResourcePADBProvider As New ResourcePlannerDBProvider
     Private _ResourceViewModel As New ResourcePlannerViewModel
+    Private lstresource As ResourcePlanner()
     Private mainFrame As Frame
     Private _addframe As Frame
     Private _menugrid As Grid
@@ -54,6 +55,7 @@ Class ResourcePlannerPage
         SetFiscalYear()
 
         LoadAllEmpResourcePlanner()
+        CountMissingLeave()
     End Sub
 
     Public Function InitializeService() As Boolean
@@ -86,6 +88,22 @@ Class ResourcePlannerPage
         cbDisplayMonth.Items.Add(New With {.Text = "October", .Value = 10})
         cbDisplayMonth.Items.Add(New With {.Text = "November", .Value = 11})
         cbDisplayMonth.Items.Add(New With {.Text = "December", .Value = 12})
+    End Sub
+    Public Sub CountMissingLeave()
+        Try
+            InitializeService()
+            Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
+            lstresource = client.GetAllNotFiledLeaves(profile.Emp_ID)
+
+            If lstresource.Count = 0 Then
+                NotiCountBorder.Visibility = Visibility.Hidden
+            Else
+                NotiCount.Text = lstresource.Count.ToString()
+            End If
+
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
     End Sub
 
     Public Sub LoadYear()
@@ -509,6 +527,18 @@ Class ResourcePlannerPage
         _submenuframe.IsEnabled = False
         _submenuframe.Opacity = 0.3
         _addframe.Margin = New Thickness(100, 60, 100, 60)
+        _addframe.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub btnNotification_Click(sender As Object, e As RoutedEventArgs) Handles btnNotification.Click
+        _addframe.Navigate(New AttendanceNotification(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
+        mainFrame.IsEnabled = False
+        mainFrame.Opacity = 0.3
+        _menugrid.IsEnabled = False
+        _menugrid.Opacity = 0.3
+        _submenuframe.IsEnabled = False
+        _submenuframe.Opacity = 0.3
+        _addframe.Margin = New Thickness(0)
         _addframe.Visibility = Visibility.Visible
     End Sub
 

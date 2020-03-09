@@ -10,6 +10,7 @@ Public Class ResourcePlannerDBProvider
     Public _AllLeavesList As ObservableCollection(Of myResourceList)
     Public _splist As ObservableCollection(Of myResourceList)
     Public _palist As ObservableCollection(Of myResourceList)
+    Private _allNotFiledLeaves As ObservableCollection(Of myResourceList)
     Sub New()
         _resourceList = New ObservableCollection(Of myResourceList)
         _emprpList = New ObservableCollection(Of myResourceList)
@@ -19,6 +20,7 @@ Public Class ResourcePlannerDBProvider
         _AllLeavesList = New ObservableCollection(Of myResourceList)
         _splist = New ObservableCollection(Of myResourceList)
         _palist = New ObservableCollection(Of myResourceList)
+        _allNotFiledLeaves = New ObservableCollection(Of myResourceList)
     End Sub
 
     Public Sub SetResourceList(ByVal resourceLst As ResourcePlanner)
@@ -91,6 +93,12 @@ Public Class ResourcePlannerDBProvider
         _splist.Add(_Resourceobj)
     End Sub
 
+    Public Sub SetAllNotFiledLeaves(ByVal resourceLst As ResourcePlanner)
+        Dim _Resourceobj As myResourceList = New myResourceList With {.Date_Entry = resourceLst.DateEntry,
+                                                                     .duration = resourceLst.Duration,
+                                                                     .comments = resourceLst.Comments}
+        _allNotFiledLeaves.Add(_Resourceobj)
+    End Sub
     Public Sub SetAllLeavesList(ByVal resourceLst As ResourcePlanner)
         Dim _Resourceobj As myResourceList = New myResourceList With {.startDate = resourceLst.StartDate,
                                                                       .endDate = resourceLst.EndDate,
@@ -114,7 +122,9 @@ Public Class ResourcePlannerDBProvider
         _palist.Add(_Resourceobj)
 
     End Sub
-
+    Public Function GetAllNotFiledLeaves()
+        Return _allNotFiledLeaves
+    End Function
     Public Function GetPerfectAttendanceList()
         Return _palist
     End Function
@@ -139,4 +149,5 @@ Public Class myResourceList
     Public endDate As Date
     Public duration As Double
     Public statuscd As Integer
+    Public comments As String
 End Class
