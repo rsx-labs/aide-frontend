@@ -163,6 +163,21 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DashboardTaskSummaryTotals" nillable="true" type="tns:DashboardTaskSummaryTotals" />
+  <xs:complexType name="ArrayOfLate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Late" nillable="true" type="tns:Late" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLate" nillable="true" type="tns:ArrayOfLate" />
+  <xs:complexType name="Late">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FIRST_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MONTH" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NUMBER_OF_LATE" type="xs:int" />
+      <xs:element minOccurs="0" name="STATUS" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Late" nillable="true" type="tns:Late" />
   <xs:complexType name="ArrayOfSabaLearning">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="SabaLearning" nillable="true" type="tns:SabaLearning" />
@@ -742,6 +757,7 @@
   <xs:element name="Skills" nillable="true" type="tns:Skills" />
   <xs:complexType name="ResourcePlanner">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DESCR" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DateEntry" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Duration" type="xs:double" />
@@ -786,21 +802,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfAnnouncements" nillable="true" type="tns:ArrayOfAnnouncements" />
-  <xs:complexType name="ArrayOfLate">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Late" nillable="true" type="tns:Late" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfLate" nillable="true" type="tns:ArrayOfLate" />
-  <xs:complexType name="Late">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="FIRST_NAME" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MONTH" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="NUMBER_OF_LATE" type="xs:int" />
-      <xs:element minOccurs="0" name="STATUS" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Late" nillable="true" type="tns:Late" />
   <xs:complexType name="Action">
     <xs:sequence>
       <xs:element minOccurs="0" name="Act_Assignee" type="xs:int" />

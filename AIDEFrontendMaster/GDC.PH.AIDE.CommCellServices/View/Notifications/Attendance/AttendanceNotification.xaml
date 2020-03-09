@@ -1,0 +1,126 @@
+﻿<Page x:Class="AttendanceNotification"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UI_AIDE_CommCellServices"
+      Height="450" Width="500" Background="Transparent"
+      Title="AttendanceNotification">
+    <Border Background="white" BorderBrush="Gainsboro" BorderThickness="0" CornerRadius="15">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Grid.Row="0">
+                <Viewbox Margin="15,10" HorizontalAlignment="Left">
+                    <TextBlock  Text="Leave Notification"/>
+                </Viewbox>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="0">
+                <Viewbox Margin="15" HorizontalAlignment="Right">
+                    <Button Name="BackBtn" Style="{DynamicResource ButtonBack}"/>
+                </Viewbox>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.ColumnSpan="2" Background="AliceBlue">
+                <ListView Background="Transparent" Margin="5" ScrollViewer.CanContentScroll="False" 
+                      ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" 
+                      x:Name="LeaveNotyLV" Height="auto" Width="auto" BorderBrush="{x:Null}" SelectionMode="Single" 
+                      Foreground="#FF07B9B1" TextOptions.TextFormattingMode="Display" AllowDrop="True" 
+                      BorderThickness="0" Focusable="False" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+
+                            <StackPanel VerticalAlignment="Stretch">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="9*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Column="0">
+                                        <Border x:Name="IconLbl" Margin="1">
+                                            <Viewbox HorizontalAlignment="Left" Margin="10">
+
+                                                <Image Source="/../../Assets/Menu/ResourcePlannerIcon.png"/>
+                                            </Viewbox>
+                                            <Border.OpacityMask>
+                                                <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
+                                                    <GradientStop Color="#ffffffff" Offset="1" />
+                                                    <GradientStop Color="#00ffffff" Offset="1" />
+                                                </RadialGradientBrush>
+                                            </Border.OpacityMask>
+                                            <Border.Style>
+                                                <Style>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding ElementName=titleTxt, Path=Text}" Value="Full day">
+                                                            <Setter Property="Border.Background" Value="SteelBlue" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding ElementName=titleTxt, Path=Text}" Value="Half day">
+                                                            <Setter Property="Border.Background" Value="CadetBlue" />
+                                                        </DataTrigger>
+
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                        </Border>
+                                    </Grid>
+                                    <Grid Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <TextBlock x:Name="titleTxt" Foreground="Black" Margin="10,0,0,0" Text="{Binding COMMENT}"  HorizontalAlignment="Left" FontWeight="SemiBold" FontSize="12" VerticalAlignment="Bottom" />
+                                        </Grid>
+                                        <Grid Grid.Row="1">
+                                            <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                                                <TextBlock Foreground="DimGray" Text="There was a missing entry of attendance on "/>
+                                                <TextBlock Foreground="DimGray"  Text="{Binding DATE_ENTRY, StringFormat=MM/dd/yyyy}"  HorizontalAlignment="Left"  VerticalAlignment="Top" />
+
+                                            </StackPanel>
+                                        </Grid>
+
+
+
+                                    </Grid>
+                                    <Grid Grid.Column="2">
+                                        <Viewbox Margin="10" HorizontalAlignment="Right">
+                                            <Button x:Name="btnUpdateLeaveNoty" Style="{DynamicResource ButtonNotyEnter}" Click="btnUpdateLeaveNoty_Click"/>
+                                        </Viewbox>
+                                    </Grid>
+                                </Grid>
+                            </StackPanel>
+
+                        </DataTemplate>
+
+                    </ListView.ItemTemplate>
+
+                </ListView>
+                <TextBlock x:Name="noNotiTxt" Foreground="DimGray" VerticalAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic" FontSize="14" Text="Empty Notification" Visibility="Hidden"/>
+
+            </Grid>
+            <Grid Grid.Row="2" Grid.ColumnSpan="2">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Height="30" Width="30"
+                                                x:Name="btnPrev" 
+                                                Style="{DynamicResource ButtonPageBack}" 
+                                                BorderBrush="{x:Null}" >
+                    </Button>
+                    <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" x:Name="txtPageNo" Margin="5,0,5,0" Foreground="DimGray" FontSize="10"/>
+                    <Button Height="30" Width="30"
+                                                x:Name="btnNext" 
+                                                Style="{DynamicResource ButtonPageNext}" 
+                                                BorderBrush="{x:Null}">
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Page>

@@ -16,6 +16,7 @@ Public Class ResourcePlannerModel
     Private _durations As String
     Private _leaveStatus As String
     Private _statusCD As Short
+    Private _comment As String
 
     Public Sub New()
 
@@ -28,6 +29,7 @@ Public Class ResourcePlannerModel
         Me._status = rawResourceList.Status
         Me._EmpImage = rawResourceList.Emp_Image
         Me._dateEntry = rawResourceList.Date_Entry
+        Me._comment = rawResourceList.comments
     End Sub
 
     Public Sub New(ByVal rawResourceList As myResourceList, ByVal StatusLeave As String)
@@ -170,6 +172,15 @@ Public Class ResourcePlannerModel
         End Set
     End Property
 
+    Public Property COMMENT As String
+        Get
+            Return _comment
+        End Get
+        Set(value As String)
+            _comment = value
+            NotifyPropertyChanged("COMMENT")
+        End Set
+    End Property
     Private Sub NotifyPropertyChanged(ByVal propertyname As String)
         RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyname))
     End Sub

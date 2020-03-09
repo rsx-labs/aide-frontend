@@ -29,6 +29,8 @@ Class ResourcePlannerAddPage
 
     Dim dateFrom As Date
     Dim dateTo As Date
+    Dim dateFromNoty As String
+    Dim isFromNoty As Boolean
 #End Region
 
 #Region "Constructor"
@@ -43,6 +45,23 @@ Class ResourcePlannerAddPage
         LoadData()
         LoadCategory()
         LoadSchedule()
+        cbSchedule.IsEnabled = False
+    End Sub
+
+    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _attendanceFrame As Frame, _isToDate As String)
+        Me.profile = _profile
+        Me.mainFrame = mFrame
+        Me._addframe = _addframe
+        Me._menugrid = _menugrid
+        Me._submenuframe = _submenuframe
+        Me.attendanceFrame = _attendanceFrame
+        Me.InitializeComponent()
+        dtpFrom.SelectedDate = _isToDate
+        isFromNoty = True
+        LoadData()
+        LoadCategory()
+        LoadSchedule()
+
         cbSchedule.IsEnabled = False
     End Sub
 #End Region
@@ -110,11 +129,13 @@ Class ResourcePlannerAddPage
     End Sub
 
     Private Sub lstEmployee_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles lstEmployee.SelectionChanged
-        If profile.Permission_ID = 1 Then
-            txtEmpID.Text = lstEmployee.SelectedValue
-        Else
-            txtEmpID.Text = profile.Emp_ID
-            MsgBox("Sorry you do not have authorization for this Employee", MsgBoxStyle.Exclamation, "AIDE")
+        If Not isFromNoty Then
+            If profile.Permission_ID = 1 Then
+                txtEmpID.Text = lstEmployee.SelectedValue
+            Else
+                txtEmpID.Text = profile.Emp_ID
+                MsgBox("Sorry you do not have authorization for this Employee", MsgBoxStyle.Exclamation, "AIDE")
+            End If
         End If
     End Sub
 
@@ -123,9 +144,13 @@ Class ResourcePlannerAddPage
     End Sub
 
     Private Sub cbCategory_DropDownOpened(sender As Object, e As EventArgs) Handles cbCategory.DropDownOpened
-        dtpFrom.IsEnabled = True
-        dtpFrom.Text = ""
-        dtpTo.Text = ""
+        If Not isFromNoty Then
+            dtpFrom.IsEnabled = True
+            dtpFrom.Text = ""
+            dtpTo.Text = ""
+        Else
+            dtpTo.IsEnabled = True
+        End If
     End Sub
 
     Private Sub cbCategory_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbCategory.SelectionChanged

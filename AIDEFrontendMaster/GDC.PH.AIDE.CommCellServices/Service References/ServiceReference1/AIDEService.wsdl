@@ -103,6 +103,52 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetLate_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetLate_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="dual_GetAllSabaCourses_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -4726,6 +4772,52 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllNotFiledLeaves_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllNotFiledLeaves_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="dual_InsertAnnouncements_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -4796,52 +4888,6 @@
     </wsp:ExactlyOne>
   </wsp:Policy>
   <wsp:Policy wsu:Id="dual_UpdateAnnouncements_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetLate_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetLate_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -7604,6 +7650,12 @@
   <wsdl:message name="IAideService2_DashboardGetTaskSummaryTotals_OutputMessage">
     <wsdl:part name="parameters" element="tns:DashboardGetTaskSummaryTotalsResponse" />
   </wsdl:message>
+  <wsdl:message name="IAideService_GetLate_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLate" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetLate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLateResponse" />
+  </wsdl:message>
   <wsdl:message name="IAideService_GetAllSabaCourses_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAllSabaCourses" />
   </wsdl:message>
@@ -8207,6 +8259,12 @@
   <wsdl:message name="IAideService_CancelLeave_InputMessage">
     <wsdl:part name="parameters" element="tns:CancelLeave" />
   </wsdl:message>
+  <wsdl:message name="IAideService_GetAllNotFiledLeaves_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllNotFiledLeaves" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAllNotFiledLeaves_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllNotFiledLeavesResponse" />
+  </wsdl:message>
   <wsdl:message name="IAideService_InsertAnnouncements_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertAnnouncements" />
   </wsdl:message>
@@ -8218,12 +8276,6 @@
   </wsdl:message>
   <wsdl:message name="IAideService_UpdateAnnouncements_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateAnnouncements" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetLate_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetLate" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetLate_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetLateResponse" />
   </wsdl:message>
   <wsdl:message name="IAideService_InsertActionList_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertActionList" />
@@ -8607,6 +8659,10 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType msc:usingSession="true" name="IAideService">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetLate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetLate" message="tns:IAideService_GetLate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetLateResponse" message="tns:IAideService_GetLate_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllSabaCourses">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllSabaCourses" message="tns:IAideService_GetAllSabaCourses_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllSabaCoursesResponse" message="tns:IAideService_GetAllSabaCourses_OutputMessage" />
@@ -9034,6 +9090,10 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="CancelLeave">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/CancelLeave" message="tns:IAideService_CancelLeave_InputMessage" />
     </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllNotFiledLeaves">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllNotFiledLeaves" message="tns:IAideService_GetAllNotFiledLeaves_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllNotFiledLeavesResponse" message="tns:IAideService_GetAllNotFiledLeaves_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InsertAnnouncements">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/InsertAnnouncements" message="tns:IAideService_InsertAnnouncements_InputMessage" />
     </wsdl:operation>
@@ -9043,10 +9103,6 @@
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateAnnouncements">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/UpdateAnnouncements" message="tns:IAideService_UpdateAnnouncements_InputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetLate">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetLate" message="tns:IAideService_GetLate_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetLateResponse" message="tns:IAideService_GetLate_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InsertActionList">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/InsertActionList" message="tns:IAideService_InsertActionList_InputMessage" />
@@ -9373,6 +9429,17 @@
   <wsdl:binding name="dual" type="tns:IAideService">
     <wsp:PolicyReference URI="#dual_policy" />
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetLate">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetLate" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetLate_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetLate_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetAllSabaCourses">
       <soap12:operation soapAction="http://tempuri.org/IAideService/GetAllSabaCourses" style="document" />
       <wsdl:input>
@@ -10516,6 +10583,17 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
+    <wsdl:operation name="GetAllNotFiledLeaves">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAllNotFiledLeaves" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetAllNotFiledLeaves_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetAllNotFiledLeaves_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="InsertAnnouncements">
       <soap12:operation soapAction="http://tempuri.org/IAideService/InsertAnnouncements" style="document" />
       <wsdl:input>
@@ -10540,17 +10618,6 @@
         <wsp:PolicyReference URI="#dual_UpdateAnnouncements_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
-    </wsdl:operation>
-    <wsdl:operation name="GetLate">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetLate" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetLate_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetLate_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="InsertActionList">
       <soap12:operation soapAction="http://tempuri.org/IAideService/InsertActionList" style="document" />
