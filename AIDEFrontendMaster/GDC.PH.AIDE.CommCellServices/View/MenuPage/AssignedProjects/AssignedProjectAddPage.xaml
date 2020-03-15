@@ -276,7 +276,7 @@
                         <Grid Grid.Row="1">
                             <Border Margin="5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
-                                <DataGrid AlternationCount="2" Background="Transparent" AutoGenerateColumns="False" 
+                                <DataGrid AlternationCount="2" Background="Transparent" AutoGenerateColumns="False" SelectionMode="Single" 
                       Width="auto" BorderBrush="Transparent" 
                       ItemsSource="{Binding EmployeeLists}" 
                       SelectedItem="{Binding SelectedEmployees}"

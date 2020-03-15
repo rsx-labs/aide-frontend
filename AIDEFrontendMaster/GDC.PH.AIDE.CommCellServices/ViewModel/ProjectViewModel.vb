@@ -342,6 +342,11 @@ Public Class ProjectViewModel
 
 #Region "Procedures"
     Public Sub Add()
+
+        If SelectedEmployees Is Nothing Then
+            Exit Sub
+        End If
+
         Try
             'Move the name of the employee to the assignedemployeelist
             For Each rawEmployee As EmployeeListModel In EmployeeLists
@@ -351,11 +356,16 @@ Public Class ProjectViewModel
             Next
             AssignedEmployeeLists = New ObservableCollection(Of EmployeeListModel)(AssignedEmployeeLists.OrderBy(Function(f) f.Name).ToList())
 
-            For Each rawEmployee As EmployeeListModel In EmployeeLists
-                If SelectedEmployees.Name.Equals(rawEmployee.Name) Then
-                    EmployeeLists.Remove(rawEmployee)
-                End If
-            Next
+            'For Each rawEmployee As EmployeeListModel In EmployeeLists
+            '    If SelectedEmployees.Name.Equals(rawEmployee.Name) Then
+            '        EmployeeLists.Remove(rawEmployee)
+            '    End If
+            'Next
+
+            If EmployeeLists.Contains(SelectedEmployees) Then
+                EmployeeLists.Remove(SelectedEmployees)
+            End If
+
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -385,6 +395,11 @@ Public Class ProjectViewModel
     End Sub
 
     Private Sub Remove()
+
+        If SelectedAssignedEmployees Is Nothing Then
+            Exit Sub
+        End If
+
         Try
             For Each rawEmployee As EmployeeListModel In AssignedEmployeeLists
                 If SelectedAssignedEmployees.Name.Equals(rawEmployee.Name) Then
@@ -392,11 +407,16 @@ Public Class ProjectViewModel
                 End If
             Next
             EmployeeLists = New ObservableCollection(Of EmployeeListModel)(EmployeeLists.OrderBy(Function(f) f.Name).ToList())
-            For Each rawEmployee As EmployeeListModel In AssignedEmployeeLists
-                If SelectedAssignedEmployees.Name.Equals(rawEmployee.Name) Then
-                    AssignedEmployeeLists.Remove(rawEmployee)
-                End If
-            Next
+            'For Each rawEmployee As EmployeeListModel In AssignedEmployeeLists
+            '    If SelectedAssignedEmployees.Name.Equals(rawEmployee.Name) Then
+            '        AssignedEmployeeLists.Remove(rawEmployee)
+            '    End If
+            'Next
+
+            If AssignedEmployeeLists.Contains(SelectedAssignedEmployees) Then
+                AssignedEmployeeLists.Remove(SelectedAssignedEmployees)
+            End If
+
             AssignedEmployeeLists = New ObservableCollection(Of EmployeeListModel)(AssignedEmployeeLists.OrderBy(Function(f) f.Name).ToList())
 
         Catch ex As Exception
