@@ -17,6 +17,7 @@ Class ResourcePlannerPage
     Private _ResourcePADBProvider As New ResourcePlannerDBProvider
     Private _ResourceViewModel As New ResourcePlannerViewModel
     Private lstresource As ResourcePlanner()
+    Private _OptionsViewModel As OptionViewModel
     Private mainFrame As Frame
     Private _addframe As Frame
     Private _menugrid As Grid
@@ -26,6 +27,7 @@ Class ResourcePlannerPage
     Dim lstFiscalYear As FiscalYear()
     Dim commendationVM As New CommendationViewModel()
     Dim fiscalyearVM As New SelectionListViewModel
+
 
     Dim month As Integer = Date.Now.Month
     Dim setStatus As String
@@ -39,6 +41,7 @@ Class ResourcePlannerPage
     Dim day As Integer
     Dim displayOption As Integer = 1 'Weekly is the Default Display Options
     Dim perfectAttendanceID As Integer
+
 #End Region
 
     Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _attendanceFrame As Frame)
@@ -49,11 +52,9 @@ Class ResourcePlannerPage
         Me._submenuframe = _submenuframe
         Me.attendanceFrame = _attendanceFrame
         Me.InitializeComponent()
-
         LoadMonth()
         LoadYear()
         SetFiscalYear()
-
         LoadAllEmpResourcePlanner()
         CountMissingLeave()
     End Sub
@@ -89,6 +90,7 @@ Class ResourcePlannerPage
         cbDisplayMonth.Items.Add(New With {.Text = "November", .Value = 11})
         cbDisplayMonth.Items.Add(New With {.Text = "December", .Value = 12})
     End Sub
+
     Public Sub CountMissingLeave()
         Try
             InitializeService()

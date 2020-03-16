@@ -5156,6 +5156,149 @@ Namespace ServiceReference1
     
     <System.Diagnostics.DebuggerStepThroughAttribute(),  _
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="Options", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
+     System.SerializableAttribute()>  _
+    Partial Public Class Options
+        Inherits Object
+        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+        
+        <System.NonSerializedAttribute()>  _
+        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private DescriptionField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FunctionDescrField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FunctionIDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ModuleDescrField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ModuleIDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private OptionIDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ValueField As String
+        
+        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
+        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
+            Get
+                Return Me.extensionDataField
+            End Get
+            Set
+                Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Description() As String
+            Get
+                Return Me.DescriptionField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.DescriptionField, value) <> true) Then
+                    Me.DescriptionField = value
+                    Me.RaisePropertyChanged("Description")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FunctionDescr() As String
+            Get
+                Return Me.FunctionDescrField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FunctionDescrField, value) <> true) Then
+                    Me.FunctionDescrField = value
+                    Me.RaisePropertyChanged("FunctionDescr")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FunctionID() As Integer
+            Get
+                Return Me.FunctionIDField
+            End Get
+            Set
+                If (Me.FunctionIDField.Equals(value) <> true) Then
+                    Me.FunctionIDField = value
+                    Me.RaisePropertyChanged("FunctionID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ModuleDescr() As String
+            Get
+                Return Me.ModuleDescrField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.ModuleDescrField, value) <> true) Then
+                    Me.ModuleDescrField = value
+                    Me.RaisePropertyChanged("ModuleDescr")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ModuleID() As Integer
+            Get
+                Return Me.ModuleIDField
+            End Get
+            Set
+                If (Me.ModuleIDField.Equals(value) <> true) Then
+                    Me.ModuleIDField = value
+                    Me.RaisePropertyChanged("ModuleID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property OptionID() As Integer
+            Get
+                Return Me.OptionIDField
+            End Get
+            Set
+                If (Me.OptionIDField.Equals(value) <> true) Then
+                    Me.OptionIDField = value
+                    Me.RaisePropertyChanged("OptionID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Value() As String
+            Get
+                Return Me.ValueField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.ValueField, value) <> true) Then
+                    Me.ValueField = value
+                    Me.RaisePropertyChanged("Value")
+                End If
+            End Set
+        End Property
+        
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        
+        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
+            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
+            If (Not (propertyChanged) Is Nothing) Then
+                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
+            End If
+        End Sub
+    End Class
+    
+    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
      System.Runtime.Serialization.DataContractAttribute(Name:="Assets", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
      System.SerializableAttribute()>  _
     Partial Public Class Assets
@@ -9718,6 +9861,8 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPITargets())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPISummary)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPISummary())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Options())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Options)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Assets)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Assets())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LessonLearnt())),  _
@@ -9828,6 +9973,8 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPITargets())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPISummary)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPISummary())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Options())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Options)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Assets)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Assets())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LessonLearnt())),  _
@@ -10047,6 +10194,12 @@ Namespace ServiceReference1
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertLeaveCredits")>  _
         Function InsertLeaveCreditsAsync(ByVal empID As Integer, ByVal year As Integer) As System.Threading.Tasks.Task
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetOptions", ReplyAction:="http://tempuri.org/IAideService/GetOptionsResponse")>  _
+        Function GetOptions(ByVal OptionID As Integer, ByVal ModuleID As Integer, ByVal FunctionId As Integer) As ServiceReference1.Options()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetOptions", ReplyAction:="http://tempuri.org/IAideService/GetOptionsResponse")>  _
+        Function GetOptionsAsync(ByVal OptionID As Integer, ByVal ModuleID As Integer, ByVal FunctionId As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Options())
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateAssetsInventory")>  _
         Sub UpdateAssetsInventory(ByVal assets As ServiceReference1.Assets)
@@ -10890,6 +11043,8 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPITargets())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPISummary)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPISummary())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Options())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Options)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Assets)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Assets())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LessonLearnt())),  _
@@ -11395,6 +11550,14 @@ Namespace ServiceReference1
         
         Public Function InsertLeaveCreditsAsync(ByVal empID As Integer, ByVal year As Integer) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.InsertLeaveCreditsAsync
             Return MyBase.Channel.InsertLeaveCreditsAsync(empID, year)
+        End Function
+        
+        Public Function GetOptions(ByVal OptionID As Integer, ByVal ModuleID As Integer, ByVal FunctionId As Integer) As ServiceReference1.Options() Implements ServiceReference1.IAideService.GetOptions
+            Return MyBase.Channel.GetOptions(OptionID, ModuleID, FunctionId)
+        End Function
+        
+        Public Function GetOptionsAsync(ByVal OptionID As Integer, ByVal ModuleID As Integer, ByVal FunctionId As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Options()) Implements ServiceReference1.IAideService.GetOptionsAsync
+            Return MyBase.Channel.GetOptionsAsync(OptionID, ModuleID, FunctionId)
         End Function
         
         Public Sub UpdateAssetsInventory(ByVal assets As ServiceReference1.Assets) Implements ServiceReference1.IAideService.UpdateAssetsInventory

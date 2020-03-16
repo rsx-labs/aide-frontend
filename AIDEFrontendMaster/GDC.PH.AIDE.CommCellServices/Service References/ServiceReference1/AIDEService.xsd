@@ -576,6 +576,24 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfKPISummary" nillable="true" type="tns:ArrayOfKPISummary" />
+  <xs:complexType name="ArrayOfOptions">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Options" nillable="true" type="tns:Options" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOptions" nillable="true" type="tns:ArrayOfOptions" />
+  <xs:complexType name="Options">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FunctionDescr" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FunctionID" type="xs:int" />
+      <xs:element minOccurs="0" name="ModuleDescr" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ModuleID" type="xs:int" />
+      <xs:element minOccurs="0" name="OptionID" type="xs:int" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Options" nillable="true" type="tns:Options" />
   <xs:complexType name="Assets">
     <xs:sequence>
       <xs:element minOccurs="0" name="APPROVAL" type="xs:int" />
