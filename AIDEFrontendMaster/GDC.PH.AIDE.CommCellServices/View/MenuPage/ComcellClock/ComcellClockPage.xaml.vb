@@ -5,6 +5,8 @@ Imports System.Windows.Media.Animation
 Imports System.Media
 Imports System.Collections.ObjectModel
 Imports System.Globalization
+Imports System.Net.Mail
+Imports System.Configuration
 
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class ComcellClockPage
@@ -25,7 +27,22 @@ Class ComcellClockPage
     Private comcellVM As New ComcellViewModel
     Private profile As Profile
     Private comcellClockModel As New ComcellClockModel
+    Private _OptionsViewModel As OptionViewModel
     Private isServiceEnabled As Boolean
+    Private weeklyStatusConfig As New List(Of String)
+    Private _option As OptionModel
+    Private mailConfig As New MailConfig
+    Private mailConfigVM As New MailConfigViewModel
+    Private lstMissingReports As ContactList()
+    Private contactListVM As ContactListViewModel
+
+    Dim daySatDiff As Integer = Today.DayOfWeek - DayOfWeek.Saturday
+    Dim saturday As Date = Today.AddDays(-daySatDiff)
+    Dim lastWeekSaturday As Date = saturday.AddDays(-14) 'For Missing reports label
+
+    Dim dayFriDiff As Integer = Today.DayOfWeek - DayOfWeek.Friday
+    Dim friday As Date = Today.AddDays(-dayFriDiff)
+    Dim lastWeekFriday As Date = friday.AddDays(-7) ' For Missing reports label
 
     Public timer As DispatcherTimer = New DispatcherTimer()
 #End Region
@@ -43,6 +60,8 @@ Class ComcellClockPage
         empID = profile.Emp_ID
         window = _window
         year = getSelectedFY(year, monthToday)
+        GetMailConfig()
+        GetWeeklyReportCheckTime()
 
         GetAlarmClockData()
         SetAlarmClock()
@@ -121,6 +140,8 @@ Class ComcellClockPage
 
         Return Year
     End Function
+
+
 
     Private Sub LoadData()
         'Dim AlarmDate As String
@@ -217,13 +238,18 @@ Class ComcellClockPage
         actualTime = DateTime.Now.DayOfWeek.ToString().ToUpper() + " " + dateNow.ToString("hh:mm:ss tt")
 
         Dim comcellTime As String = [Enum].GetName(GetType(DayOfWeek), Convert.ToInt32(comcellclock.Clock_Day)).ToString.Trim.ToUpper() & " " & comcellclock.Clock_Hour.ToString("00") & ":" & comcellclock.Clock_Minute.ToString().PadLeft(2, "0") & ":00" & " " & comcellclock.MIDDAY
-
         If actualTime = comcellTime Then
             Dim winwin As New ComcellClockWindow
             winwin.ShowDialog()
             If window.WindowState = WindowState.Minimized Then
                 window.Show()
             End If
+        End If
+
+        Dim weeklyReportTime As String = [Enum].GetName(GetType(DayOfWeek), Convert.ToInt32(weeklyStatusConfig(0))).ToString.Trim.ToUpper() & " " & weeklyStatusConfig(1)
+
+        If actualTime = weeklyReportTime And isSendEmail() Then
+            SetMissingReports()
         End If
     End Sub
 
@@ -262,6 +288,9 @@ Class ComcellClockPage
             MinutesTaker.Text = comcellVM.ComcellItem.MINUTES_TAKER_NAME.ToUpper()
         End If
     End Sub
+
+
+
 #End Region
 
 #Region "Events"
@@ -287,6 +316,147 @@ Class ComcellClockPage
     '    alarmActive = False
     '    StopBtn.Visibility = False
     'End Sub
+#End Region
+
+#Region "Email Notification"
+    Private Function isSendEmail() As Boolean
+        Try
+            Dim allowSend As Boolean = False
+            _OptionsViewModel = New OptionViewModel
+            _option = New OptionModel
+            If _OptionsViewModel.GetOptions(1, 0, 0) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If CBool(opt.VALUE) Then
+                        allowSend = True
+                    End If
+                Next
+            End If
+            Return allowSend
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            Return False
+        End Try
+    End Function
+    Private Sub GetWeeklyReportCheckTime()
+        Try
+            _OptionsViewModel = New OptionViewModel
+            _option = New OptionModel
+            If _OptionsViewModel.GetOptions(0, 3, 0) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        Select Case opt.OPTION_ID
+                            Case 4
+                                weeklyStatusConfig = New List(Of String)(opt.VALUE.Split(","c))
+                            Case 5
+                                _option = opt
+                        End Select
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+
+    Public Sub SetMissingReports()
+        Try
+            Dim weekrange As String = lastWeekSaturday.ToShortDateString + " - " + lastWeekFriday.ToShortDateString
+            lstMissingReports = aideService.GetMissingReportsByEmpID(empID, lastWeekSaturday)
+            If lstMissingReports.Count > 0 Then
+                For Each objContacts As ContactList In lstMissingReports
+                    SendEmail(mailConfigVM, _option, objContacts.EMADDRESS, weekrange)
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Private Sub GetMailConfig()
+        Try
+            If InitializeService() Then
+                mailConfig = aideService.GetMailConfig()
+                LoadMailConfig()
+            End If
+
+        Catch ex As Exception
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Private Sub LoadMailConfig()
+
+        Dim MConfigModel As New MailConfigModel
+        Dim MConfigProvider As New MailConfigDBProvider
+
+        Try
+            MConfigProvider._setlistofitems(mailConfig)
+            MConfigModel = New MailConfigModel(MConfigProvider._getobjmailconfig)
+
+            mailConfigVM.objectMailConfigSet = MConfigModel
+
+        Catch ex As Exception
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Private Function composeBody(ByVal optmodel As OptionModel, ByVal choice As Integer, Optional ByVal objOptional As Object = Nothing) As String
+        Dim body As String
+        Dim bodyList As New List(Of String)(optmodel.VALUE.Split(","c))
+        Dim footer As String = "This is an auto-generated email. Please do not reply to this email."
+        Select Case choice
+            Case 1
+                body = "<html>
+                            <body>
+                                <div style=""margin:50px 100px"">
+                                    <center>
+                                        <div style=""background-color:red"">
+                                            <font size=""5"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font>
+                                        </div>
+                                        <div style=""background-color:#fcfff9"">
+	                                        <font size=""3"">" + bodyList(0) + " " + objOptional.ToString() + " " + bodyList(1) + "</font>
+                                           
+                                        </div>
+                                        <div style=""background-color:lightgray"">
+	                                        <font color=""white""><i>" + footer + "</i></font>
+                                        </div>
+                                    </center>
+                                </div>
+                            </body>
+                        </html>"
+
+        End Select
+
+        Return body
+    End Function
+    Public Sub SendEmail(ByVal mcVM As MailConfigViewModel, ByVal optmodel As OptionModel, email As String, Optional ByVal optionaObj As Object = Nothing)
+        Try
+            Dim sentTo As String = email
+            Dim sentFrom As String = mcVM.objectMailConfigSet.SENDER_EMAIL
+            Dim subject As String = mcVM.objectMailConfigSet.SUBJECT
+
+            Dim body As String = composeBody(optmodel, 1, optionaObj)
+            Dim client As SmtpClient = New SmtpClient()
+
+            client.Port = mcVM.objectMailConfigSet.PORT
+            client.Host = mcVM.objectMailConfigSet.HOST
+            client.EnableSsl = CBool(mcVM.objectMailConfigSet.ENABLE_SSL)
+            client.Timeout = mcVM.objectMailConfigSet.TIMEOUT
+            client.DeliveryMethod = SmtpDeliveryMethod.Network
+            client.UseDefaultCredentials = CBool(mcVM.objectMailConfigSet.USE_DFLT_CREDENTIALS)
+            client.Credentials = New System.Net.NetworkCredential(sentFrom, mcVM.objectMailConfigSet.SENDER_PASSWORD)
+
+            Dim mail As MailMessage = New MailMessage()
+            mail.From = New MailAddress(sentFrom)
+            mail.To.Add(sentTo)
+            mail.Subject = subject
+            mail.IsBodyHtml = True
+            mail.Body = body
+
+            client.Send(mail)
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
 #End Region
 
 End Class

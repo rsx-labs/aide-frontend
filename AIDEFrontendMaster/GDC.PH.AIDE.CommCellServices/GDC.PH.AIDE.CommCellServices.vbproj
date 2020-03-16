@@ -189,6 +189,7 @@
     <Compile Include="DataProviderService\LessonLearntDBProvider.vb" />
     <Compile Include="DataProviderService\MailConfigDBProvider.vb" />
     <Compile Include="DataProviderService\MessageDBProvider.vb" />
+    <Compile Include="DataProviderService\OptionDBProvider.vb" />
     <Compile Include="DataProviderService\ProfileDBProvider.vb" />
     <Compile Include="DataProviderService\ProjectDBProvider.vb" />
     <Compile Include="DataProviderService\ResourcePlannerDBProvider.vb" />
@@ -229,6 +230,7 @@
     <Compile Include="Model\LessonLearntModel.vb" />
     <Compile Include="Model\MailConfigModel.vb" />
     <Compile Include="Model\MessageModel.vb" />
+    <Compile Include="Model\OptionModel.vb" />
     <Compile Include="Model\PositionModel.vb" />
     <Compile Include="Model\ProfileModel.vb" />
     <Compile Include="Model\ProjectModel.vb" />
@@ -272,6 +274,7 @@
     <Compile Include="ViewModel\LessonLearntViewModel.vb" />
     <Compile Include="ViewModel\MailConfigViewModel.vb" />
     <Compile Include="ViewModel\MessageViewModel.vb" />
+    <Compile Include="ViewModel\OptionViewModel.vb" />
     <Compile Include="ViewModel\ProfileViewModel.vb" />
     <Compile Include="ViewModel\ProjectViewModel.vb" />
     <Compile Include="ViewModel\ResourcePlannerViewModel.vb" />
