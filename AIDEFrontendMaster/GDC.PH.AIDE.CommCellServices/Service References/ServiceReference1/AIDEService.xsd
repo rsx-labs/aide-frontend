@@ -163,6 +163,17 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DashboardTaskSummaryTotals" nillable="true" type="tns:DashboardTaskSummaryTotals" />
+  <xs:complexType name="Announcements">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ANNOUNCEMENT_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="DELETED_FG" type="xs:int" />
+      <xs:element minOccurs="0" name="EMP_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="END_DATE" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="MESSAGE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TITLE" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Announcements" nillable="true" type="tns:Announcements" />
   <xs:complexType name="ArrayOfLate">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Late" nillable="true" type="tns:Late" />
@@ -594,6 +605,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Options" nillable="true" type="tns:Options" />
+  <xs:complexType name="ArrayOfAssets">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Assets" nillable="true" type="tns:Assets" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAssets" nillable="true" type="tns:ArrayOfAssets" />
   <xs:complexType name="Assets">
     <xs:sequence>
       <xs:element minOccurs="0" name="APPROVAL" type="xs:int" />
@@ -627,12 +644,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Assets" nillable="true" type="tns:Assets" />
-  <xs:complexType name="ArrayOfAssets">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Assets" nillable="true" type="tns:Assets" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfAssets" nillable="true" type="tns:ArrayOfAssets" />
   <xs:complexType name="ArrayOfLessonLearnt">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="LessonLearnt" nillable="true" type="tns:LessonLearnt" />
@@ -803,17 +814,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfResourcePlanner" nillable="true" type="tns:ArrayOfResourcePlanner" />
-  <xs:complexType name="Announcements">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ANNOUNCEMENT_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="DELETED_FG" type="xs:int" />
-      <xs:element minOccurs="0" name="EMP_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="END_DATE" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="MESSAGE" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="TITLE" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Announcements" nillable="true" type="tns:Announcements" />
   <xs:complexType name="ArrayOfAnnouncements">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Announcements" nillable="true" type="tns:Announcements" />
@@ -920,6 +920,7 @@
       <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Local" type="xs:int" />
       <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ManagerEmail" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MiddleInitial" type="ser:char" />
       <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="OtherPhone" nillable="true" type="xs:string" />
