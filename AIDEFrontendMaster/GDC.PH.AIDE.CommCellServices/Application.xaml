@@ -22,7 +22,7 @@
                                 </ContentPresenter>
                             </Border>
                         </Grid>
-                        
+
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter Property="Background" TargetName="border" Value="Aquamarine"/>

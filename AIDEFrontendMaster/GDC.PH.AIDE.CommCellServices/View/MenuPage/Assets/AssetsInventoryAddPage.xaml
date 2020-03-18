@@ -1320,6 +1320,11 @@
                             
                         </Grid>
                         <Grid Grid.Row="6">
+                            <Button Visibility="Hidden" Style="{DynamicResource RoundCornerCreate}" x:Name="btnVerify" Margin="5,5,0,5" >
+
+                                <TextBlock Text="VERIFY" TextWrapping="Wrap" Margin="5"/>
+
+                            </Button>
                             <Button Visibility="Hidden" Style="{DynamicResource RoundCornerUpdate}" x:Name="btnCancel" Margin="5,5,0,5" >
                                 
                                     <TextBlock Text="CANCEL" TextWrapping="Wrap" Margin="5"/>
