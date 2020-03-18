@@ -28,6 +28,15 @@ Public Class AssetsInventoryAddPage
     Dim nicknameVM As New NicknameViewModel()
     Dim empId As Integer = 0
     Dim status As Integer
+
+    Private mailConfig As New MailConfig
+    Private mailConfigVM As New MailConfigViewModel
+    Private _OptionsViewModel As OptionViewModel
+    Private _option As OptionModel
+    Private lstMissingAttendance As Employee()
+    Private isAINotifAllow As Boolean
+
+    Private approvalDescr As String
 #End Region
 
 #Region "Constructor"
@@ -47,6 +56,7 @@ Public Class AssetsInventoryAddPage
         End If
         tbSuccessForm.Text = "Update Assigned Assets"
         Me.pageDefinition = "Update"
+        GetMailConfig()
         LoadData()
         LoadStatus()
         AssignEvents()
@@ -71,6 +81,9 @@ Public Class AssetsInventoryAddPage
             status = 2
         ElseIf assetsModel.STATUS = 3 And assetsModel.PREVIOUS_ID = 0 Then
             status = 1
+        End If
+        If assetsModel.APPROVAL = 6 Then
+            btnVerify.Visibility = Visibility.Visible
         End If
     End Sub
 
@@ -110,18 +123,29 @@ Public Class AssetsInventoryAddPage
                     assets.APPROVAL = assetsModel.APPROVAL
                 End If
             If InitializeService() Then
-                client.UpdateAssetsInventory(assets)
-                MsgBox("Asset inventory have been updated.", MsgBoxStyle.Information, "AIDE")
-                ClearFields()
-                mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
-                mainFrame.IsEnabled = True
-                mainFrame.Opacity = 1
-                _menugrid.IsEnabled = True
-                _menugrid.Opacity = 1
-                _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
+                    client.UpdateAssetsInventory(assets)
 
-                _addframe.Visibility = Visibility.Hidden
+                    If isAINotifAllow Then
+                        If profile.Permission_ID = 4 And cbStatus.SelectedValue = 3 Then
+                            GetAssetMovementData(16, 0, 0)
+                            SetAssetAssignEmailNotification(assets, cbNickname.SelectedValue)
+                        End If
+                        If cbStatus.SelectedValue = 4 Then
+                            GetAssetMovementData(19, 0, 0)
+                            SetAssetUnAssignEmailNotification(assets, cbNickname.SelectedValue)
+                        End If
+                    End If
+                    MsgBox("Asset inventory have been updated.", MsgBoxStyle.Information, "AIDE")
+                    ClearFields()
+                    mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
+                    mainFrame.IsEnabled = True
+                    mainFrame.Opacity = 1
+                    _menugrid.IsEnabled = True
+                    _menugrid.Opacity = 1
+                    _submenuframe.IsEnabled = True
+                    _submenuframe.Opacity = 1
+
+                    _addframe.Visibility = Visibility.Hidden
             End If
             End If
         Catch ex As Exception
@@ -174,9 +198,22 @@ Public Class AssetsInventoryAddPage
 
     End Sub
 
+    Private Sub btnVerify_Click(sender As Object, e As RoutedEventArgs) Handles btnVerify.Click
+        Try
+            If isAINotifAllow Then
+                GetAssetMovementData(17, 0, 0)
+                SetAssetVerifyEmailNotification(assetsModel, assetsModel.EMP_ID)
+            End If
+            MsgBox("Asset has been verified.", MsgBoxStyle.Information, "AIDE")
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+
     Private Sub btnDisapprove_Click(sender As Object, e As RoutedEventArgs) Handles btnDisapprove.Click
         Try
             e.Handled = True
+            approvalDescr = "disapproved"
             If status = 2 Or status = 3 Then
                 approvalStatus = 5 'Approved
             ElseIf status = 1 Or status = 4 Then
@@ -193,6 +230,7 @@ Public Class AssetsInventoryAddPage
         Try
             e.Handled = True
             approvalStatus = 5
+            approvalDescr = "approved"
             Integer.TryParse(txtEmpID.Text, empId) 'Integer.Parse(profile.Emp_ID)
             If assetsModel.STATUS = 4 Then
                 status = 1
@@ -305,6 +343,10 @@ Public Class AssetsInventoryAddPage
 
         If InitializeService() Then
             client.UpdateAssetsInventoryApproval(assets)
+            If isAINotifAllow Then
+                GetAssetMovementData(18, 0, 0)
+                SetAssetApprovalEmailNotification(assetsModel, cbNickname.SelectedValue)
+            End If
             MsgBox("Asset inventory have been updated.", MsgBoxStyle.Information, "AIDE")
             ClearFields()
             mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
@@ -574,6 +616,125 @@ Public Class AssetsInventoryAddPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+    Private Sub GetMailConfig()
+        Try
+            If InitializeService() Then
+                mailConfig = client.GetMailConfig()
+                LoadMailConfig()
+                isAINotifAllow = mailConfigVM.isSendEmail(10, 0, 0)
+            End If
+
+        Catch ex As Exception
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Private Sub LoadMailConfig()
+
+        Dim MConfigModel As New MailConfigModel
+        Dim MConfigProvider As New MailConfigDBProvider
+
+        Try
+            MConfigProvider._setlistofitems(MailConfig)
+            MConfigModel = New MailConfigModel(MConfigProvider._getobjmailconfig)
+
+            mailConfigVM.objectMailConfigSet = MConfigModel
+
+        Catch ex As Exception
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Private Sub GetAssetMovementData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer)
+        Try
+            _OptionsViewModel = New OptionViewModel
+            _option = New OptionModel
+            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        _option = opt
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Public Sub SetAssetAssignEmailNotification(ByVal asset As Assets, ByVal emp_id As Integer)
+        Try
+            Dim assetinfo As String = GetAssetInfo(asset)
+            lstMissingAttendance = client.GetEmployeeEmailForAssetMovement(emp_id)
+            If lstMissingAttendance.Count > 0 Then
+                For Each objEmployee As Employee In lstMissingAttendance
+                    mailConfigVM.SendEmail(mailConfigVM, _option, objEmployee.EmailAddress, objEmployee.ManagerEmail, 2, assetinfo)
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Public Sub SetAssetUnAssignEmailNotification(ByVal asset As Assets, ByVal emp_id As Integer)
+        Try
+            Dim assetinfo As String = GetAssetInfo(asset)
+            lstMissingAttendance = client.GetEmployeeEmailForAssetMovement(emp_id)
+            If lstMissingAttendance.Count > 0 Then
+                For Each objEmployee As Employee In lstMissingAttendance
+                    mailConfigVM.SendEmail(mailConfigVM, _option, objEmployee.EmployeeName, objEmployee.ManagerEmail, 3, assetinfo, assetsModel.FULL_NAME)
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Public Sub SetAssetVerifyEmailNotification(ByVal asset As AssetsModel, ByVal emp_id As Integer)
+        Try
+            Dim assetinfo As String = GetAssetInfo2(asset)
+            lstMissingAttendance = client.GetEmployeeEmailForAssetMovement(emp_id)
+            If lstMissingAttendance.Count > 0 Then
+                For Each objEmployee As Employee In lstMissingAttendance
+                    mailConfigVM.SendEmail(mailConfigVM, _option, objEmployee.ManagerEmail, objEmployee.EmployeeName, 3, assetinfo, asset.FULL_NAME)
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Public Sub SetAssetApprovalEmailNotification(ByVal asset As AssetsModel, ByVal emp_id As Integer)
+        Try
+            Dim assetinfo As String = GetAssetInfo2(asset)
+            Dim opt2 As String = asset.FULL_NAME + "," + approvalDescr + "," + Me.profile.FirstName + " " + Me.profile.LastName
+            lstMissingAttendance = client.GetEmployeeEmailForAssetMovement(emp_id)
+            If lstMissingAttendance.Count > 0 Then
+                For Each objEmployee As Employee In lstMissingAttendance
+                    mailConfigVM.SendEmail(mailConfigVM, _option, objEmployee.EmployeeName, objEmployee.EmailAddress, 4, assetinfo, opt2)
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Private Function GetAssetInfo(ByVal asset As Assets) As String
+        Dim assetinfo As String = String.Empty
+
+        assetinfo = "Type: " + asset.ASSET_DESC + "," +
+                    "Manufacturer: " + asset.MANUFACTURER + "," +
+                    "Model #: " + asset.MODEL_NO + "," +
+                    "Serial #:" + asset.SERIAL_NO + "," +
+                    "Asset Tag: " + asset.ASSET_TAG
+
+        Return assetinfo
+    End Function
+    Private Function GetAssetInfo2(ByVal asset As AssetsModel) As String
+        Dim assetinfo As String = String.Empty
+
+        assetinfo = "Type: " + asset.ASSET_DESC + "," +
+                    "Manufacturer: " + asset.MANUFACTURER + "," +
+                    "Model #: " + asset.MODEL_NO + "," +
+                    "Serial #:" + asset.SERIAL_NO + "," +
+                    "Asset Tag: " + asset.ASSET_TAG
+
+        Return assetinfo
+    End Function
 #End Region
 
 #Region "ICallBack Function"
