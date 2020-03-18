@@ -10,13 +10,13 @@ Class NewSuccessRegister
 #Region "Fields"
 
     Private mainFrame As Frame
+    Private addframe As Frame
+    Private menugrid As Grid
+    Private submenuframe As Frame
+    Private email As String
+    Private profile As Profile
     Private client As ServiceReference1.AideServiceClient
     Private successRegister As New SuccessRegisterModel
-    Private email As String
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
-    Private profile As Profile
     Private dsplyByDiv As Integer = 1
     'Private srmodel As SuccessRegisterModel
 
@@ -24,15 +24,16 @@ Class NewSuccessRegister
 
 #Region "Constructor"
 
-    Public Sub New(isEmpty As Boolean, mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_mainFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
 
         InitializeComponent()
-        Me.profile = _profile
-        Me.email = profile.Email_Address
-        Me.mainFrame = mainFrame
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
+        mainFrame = _mainFrame
+        addframe = _addframe
+        menugrid = _menugrid
+        submenuframe = _submenuframe
+        email = _profile.Email_Address
+        profile = _profile
+
         btnSRCreate.Visibility = System.Windows.Visibility.Visible
         btnSRUpdate.Visibility = System.Windows.Visibility.Collapsed
         btnSRDelete.Visibility = System.Windows.Visibility.Collapsed
@@ -43,15 +44,16 @@ Class NewSuccessRegister
         PopulateComboBox()
     End Sub
 
-    Public Sub New(_successRegister As SuccessRegisterModel, mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_mainFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _successRegister As SuccessRegisterModel, _profile As Profile)
         InitializeComponent()
-        Me.mainFrame = mainFrame
-        Me.profile = _profile
-        Me.email = profile.Email_Address
-        Me.successRegister = _successRegister
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
+        mainFrame = _mainFrame
+        addframe = _addframe
+        menugrid = _menugrid
+        submenuframe = _submenuframe
+        successRegister = _successRegister
+        email = _profile.Email_Address
+        profile = _profile
+
         tbSuccessForm.Text = "Update Success Register"
         LoadData()
         AssignEvents()
@@ -80,15 +82,7 @@ Class NewSuccessRegister
                 client.UpdateSuccessRegisterByEmpID(SuccessRegisters)
                 MsgBox("Success register has been updated.", MsgBoxStyle.Information, "AIDE")
                 ClearFields()
-                mainFrame.Navigate(New SuccessRegisterPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
-                mainFrame.IsEnabled = True
-                mainFrame.Opacity = 1
-                _menugrid.IsEnabled = True
-                _menugrid.Opacity = 1
-                _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
-
-                _addframe.Visibility = Visibility.Hidden
+                ExitPage()
             End If
         Catch ex As Exception
              MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -115,17 +109,7 @@ Class NewSuccessRegister
                 client.CreateNewSuccessRegister(SuccessRegisters)
                 MsgBox("Success Register has been added.", MsgBoxStyle.Information, "AIDE")
                 ClearFields()
-                    mainFrame.Navigate(New SuccessRegisterPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
-                    mainFrame.IsEnabled = True
-                    mainFrame.Opacity = 1
-                    _menugrid.IsEnabled = True
-                    _menugrid.Opacity = 1
-                    _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
-                _addframe.Visibility = Visibility.Hidden
-
-                Exit Sub
-
+                ExitPage()
             End If
         Catch ex As Exception
              MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -133,15 +117,7 @@ Class NewSuccessRegister
     End Sub
 
     Private Sub btnSRCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnSRCancel.Click
-        mainFrame.Navigate(New SuccessRegisterPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
-        mainFrame.IsEnabled = True
-        mainFrame.Opacity = 1
-        _menugrid.IsEnabled = True
-        _menugrid.Opacity = 1
-        _submenuframe.IsEnabled = True
-        _submenuframe.Opacity = 1
-
-        _addframe.Visibility = Visibility.Hidden
+        ExitPage()
     End Sub
 
     ''' <summary>
@@ -178,15 +154,7 @@ Class NewSuccessRegister
                 If result = 6 Then
                     client.DeleteSuccessRegisterBySuccessID(CUInt(txtSRID.Text))
                     ClearFields()
-                    _addframe.Navigate(New SuccessRegisterPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
-                    mainFrame.IsEnabled = True
-                    mainFrame.Opacity = 1
-                    _menugrid.IsEnabled = True
-                    _menugrid.Opacity = 1
-                    _submenuframe.IsEnabled = True
-                    _submenuframe.Opacity = 1
-
-                    _addframe.Visibility = Visibility.Hidden
+                    ExitPage()
                 Else
                     Exit Sub
                 End If
@@ -334,6 +302,17 @@ Class NewSuccessRegister
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+    End Sub
+
+    Private Sub ExitPage()
+        mainFrame.Navigate(New SuccessRegisterPage(mainFrame, addframe, menugrid, submenuframe, profile))
+        mainFrame.IsEnabled = True
+        mainFrame.Opacity = 1
+        menugrid.IsEnabled = True
+        menugrid.Opacity = 1
+        submenuframe.IsEnabled = True
+        submenuframe.Opacity = 1
+        addframe.Visibility = Visibility.Hidden
     End Sub
 #End Region
 

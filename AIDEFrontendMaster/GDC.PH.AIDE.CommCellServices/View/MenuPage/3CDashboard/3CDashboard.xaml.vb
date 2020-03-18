@@ -37,8 +37,7 @@ Class _3CDashboard
     Private isSearchIsUsed As Integer = 0
     Private isDateBetweenUsed As Integer = 0
 
-
-#Region "constructor"
+#Region "Constructor"
     Public Sub New(_email As String, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
 
         ' This call is required by the designer.
@@ -57,14 +56,8 @@ Class _3CDashboard
         LoadPieChartData()
 
         'UpdateAllOnClick()
-
-
-        ' Add any initialization after the InitializeComponent() call.
-
     End Sub
 #End Region
-
-
 
 #Region "Service methods"
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
@@ -187,11 +180,9 @@ Class _3CDashboard
     Public Property SeriesCollection As SeriesCollection
 
     Private Sub btnthreeC(sender As Object, e As RoutedEventArgs)
-        frame.Navigate(New ThreeC_Page(email, frame, addframe, menugrid, submenuframe))
+        frame.Navigate(New ThreeC_Page(profile, frame, addframe, menugrid, submenuframe))
         submenuframe.Navigate(New ImproveSubMenuPage(frame, email, Profile, addframe, menugrid, submenuframe))
     End Sub
-
-
 
 End Class
 

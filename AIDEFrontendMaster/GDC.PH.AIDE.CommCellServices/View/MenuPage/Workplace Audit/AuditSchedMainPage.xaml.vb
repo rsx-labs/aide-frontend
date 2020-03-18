@@ -44,7 +44,7 @@ Class AuditSchedMainPage
     Dim auditSchedVM As New AuditSchedViewModel()
     Dim lstFiscalYear As FiscalYear()
     Dim fiscalyearVM As New SelectionListViewModel
-
+    Dim guestAccount As Integer = 5
 #End Region
 
 #Region "Constructor"
@@ -273,26 +273,28 @@ Class AuditSchedMainPage
 
 
             e.Handled = True
-            If AuditSchedLV.SelectedIndex <> -1 Then
-                If AuditSchedLV.SelectedItem IsNot Nothing Then
-                    Dim auditSched As New AuditSchedModel
-                    auditSched.PERIOD_START = CType(AuditSchedLV.SelectedItem, AuditSchedModel).PERIOD_START
-                    auditSched.PERIOD_END = CType(AuditSchedLV.SelectedItem, AuditSchedModel).PERIOD_END
-                    auditSched.DAILY = CType(AuditSchedLV.SelectedItem, AuditSchedModel).DAILY
-                    auditSched.WEEKLY = CType(AuditSchedLV.SelectedItem, AuditSchedModel).WEEKLY
-                    auditSched.MONTHLY = CType(AuditSchedLV.SelectedItem, AuditSchedModel).MONTHLY
-                    auditSched.AUDIT_SCHED_ID = CType(AuditSchedLV.SelectedItem, AuditSchedModel).AUDIT_SCHED_ID
-                    auditSched.FY_START = CType(AuditSchedLV.SelectedItem, AuditSchedModel).FY_START
+            If Not profile.Permission_ID = guestAccount Then
+                If AuditSchedLV.SelectedIndex <> -1 Then
+                    If AuditSchedLV.SelectedItem IsNot Nothing Then
+                        Dim auditSched As New AuditSchedModel
+                        auditSched.PERIOD_START = CType(AuditSchedLV.SelectedItem, AuditSchedModel).PERIOD_START
+                        auditSched.PERIOD_END = CType(AuditSchedLV.SelectedItem, AuditSchedModel).PERIOD_END
+                        auditSched.DAILY = CType(AuditSchedLV.SelectedItem, AuditSchedModel).DAILY
+                        auditSched.WEEKLY = CType(AuditSchedLV.SelectedItem, AuditSchedModel).WEEKLY
+                        auditSched.MONTHLY = CType(AuditSchedLV.SelectedItem, AuditSchedModel).MONTHLY
+                        auditSched.AUDIT_SCHED_ID = CType(AuditSchedLV.SelectedItem, AuditSchedModel).AUDIT_SCHED_ID
+                        auditSched.FY_START = CType(AuditSchedLV.SelectedItem, AuditSchedModel).FY_START
 
-                    addframe.Navigate(New AuditSchedAddPage(profile, mainframe, addframe, menugrid, submenuframe, auditSched))
-                    mainframe.IsEnabled = False
-                    mainframe.Opacity = 0.3
-                    menugrid.IsEnabled = False
-                    menugrid.Opacity = 0.3
-                    submenuframe.IsEnabled = False
-                    submenuframe.Opacity = 0.3
-                    addframe.Visibility = Visibility.Visible
-                    addframe.Margin = New Thickness(150, 60, 150, 60)
+                        addframe.Navigate(New AuditSchedAddPage(profile, mainframe, addframe, menugrid, submenuframe, auditSched))
+                        mainframe.IsEnabled = False
+                        mainframe.Opacity = 0.3
+                        menugrid.IsEnabled = False
+                        menugrid.Opacity = 0.3
+                        submenuframe.IsEnabled = False
+                        submenuframe.Opacity = 0.3
+                        addframe.Visibility = Visibility.Visible
+                        addframe.Margin = New Thickness(150, 60, 150, 60)
+                    End If
                 End If
             End If
         Catch ex As Exception

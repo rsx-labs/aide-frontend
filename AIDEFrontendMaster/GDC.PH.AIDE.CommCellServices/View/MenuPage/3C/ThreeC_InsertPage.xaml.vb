@@ -12,30 +12,29 @@ Class ThreeC_InsertPage
 
 #Region "Fields"
     Public _AIDEClientService As ServiceReference1.AideServiceClient
+
+    Private profile As Profile
     Private email As String
-    Private _objConcern As New Concern
-    Private _frame As Frame
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
+    Private objConcern As New Concern
+    Private frame As Frame
+    Private addframe As Frame
+    Private menugrid As Grid
+    Private submenuframe As Frame
 
     Dim concern As New Concern
 #End Region
    
-    Public Sub New(email As String, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
-
-        ' This call is required by the designer.
+    Public Sub New(_profile As Profile, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         InitializeComponent()
 
-        ' Add any initialization after the InitializeComponent() call.
-        Me.email = email
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
+        email = _profile.Email_Address
+        profile = _profile
+        frame = _frame
+        addframe = _addframe
+        menugrid = _menugrid
+        submenuframe = _submenuframe
         setDate()
 
-        Me._frame = _frame
-        
         GetGeneRatedRefNo()
     End Sub
 
@@ -58,7 +57,7 @@ Class ThreeC_InsertPage
     End Function
 #End Region
    
-#Region "METHODS"
+#Region "Methods"
     'Get Generated RefNo
     Public Function GetGeneRatedRefNo() As Boolean
         InitializeService()
@@ -92,7 +91,7 @@ Class ThreeC_InsertPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
-    
+
     Private Function ValidateFields(ByVal obj As ConcernViewModel)
         If obj.SelectedConcern.CONCERN = "" Or obj.SelectedConcern.CAUSE = "" Or obj.SelectedConcern.COUNTERMEASURE = "" Then
             MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
@@ -116,16 +115,15 @@ Class ThreeC_InsertPage
     End Sub
 
     Private Sub ExitPage()
-        _frame.Navigate(New ThreeC_Page(email, _frame, _addframe, _menugrid, _submenuframe))
-        _frame.IsEnabled = True
-        _frame.Opacity = 1
-        _menugrid.IsEnabled = True
-        _menugrid.Opacity = 1
-        _submenuframe.IsEnabled = True
-        _submenuframe.Opacity = 1
-        _addframe.Visibility = Visibility.Hidden
+        frame.Navigate(New ThreeC_Page(profile, frame, addframe, menugrid, submenuframe))
+        frame.IsEnabled = True
+        frame.Opacity = 1
+        menugrid.IsEnabled = True
+        menugrid.Opacity = 1
+        submenuframe.IsEnabled = True
+        submenuframe.Opacity = 1
+        addframe.Visibility = Visibility.Hidden
     End Sub
-
 #End Region
 
 #Region "Notify Changes"

@@ -7,6 +7,7 @@ Class TaskSubMenuPage
     Private menugrid As Grid
     Private submenuframe As Frame
     Private currentWindow As MainWindow
+
     Public Sub New(_pFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _mainWindow As MainWindow)
         pFrame = _pFrame
         profile = _profile
@@ -18,7 +19,7 @@ Class TaskSubMenuPage
     End Sub
 
     Private Sub Task_Click(sender As Object, e As RoutedEventArgs)
-        pFrame.Navigate(New TaskAdminPage(pFrame, currentWindow, profile.Emp_ID, profile.Email_Address, addframe, menugrid, submenuframe))
+        pFrame.Navigate(New TaskAdminPage(pFrame, currentWindow, profile, addframe, menugrid, submenuframe))
     End Sub
 
     Private Sub Weekly_Click(sender As Object, e As RoutedEventArgs)

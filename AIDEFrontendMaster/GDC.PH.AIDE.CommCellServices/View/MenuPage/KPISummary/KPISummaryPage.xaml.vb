@@ -46,10 +46,8 @@ Public Class KPISummaryPage
 
         dgKPISummary.SelectionMode = DataGridSelectionMode.Single
         dgKPISummary.SelectionUnit = DataGridSelectionUnit.Cell
-
-        If _profile.Permission_ID = 1 Then
-            btnCreate.Visibility = Windows.Visibility.Visible
-        End If
+        
+        PermissionSettings()
     End Sub
 
 #Region "Private Methods"
@@ -467,7 +465,15 @@ Public Class KPISummaryPage
         Return result
     End Function
 
+    Private Sub PermissionSettings()
+        Dim managerAccount As Integer = 1
 
+        If _profile.Permission_ID = managerAccount Then
+            btnCreate.Visibility = Windows.Visibility.Visible
+        Else
+            btnCreate.Visibility = Windows.Visibility.Hidden
+        End If
+    End Sub
 #End Region
 
 #Region "Private Functions"

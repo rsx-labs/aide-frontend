@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:UI_AIDE_CommCellServices"
       mc:Ignorable="d" 
       Title="AssignedProjectMainPage">
+    
     <Page.Resources>
         <Style TargetType="{x:Type DataGrid}">
             <Setter Property="HeadersVisibility" Value="Column"/>
@@ -16,53 +17,52 @@
             <Setter Property="CanUserAddRows" Value="False"/>
             <Setter Property="CanUserDeleteRows" Value="False"/>
         </Style>
+        
         <Style TargetType="{x:Type DataGridCell}">
-
             <Setter Property="TextBlock.TextAlignment" Value="Center"/>
         </Style>
+        
         <Style TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="Foreground" Value="DimGray"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Height" Value="40"/>
             <Setter Property="Background" Value="Transparent"/>
-
             <Setter Property="BorderThickness" Value="0,0,1,1"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="BorderBrush" Value="Gainsboro"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Padding" Value="5"/>
         </Style>
+        
         <Style TargetType="{x:Type DataGridRow}">
             <Setter Property="Foreground" Value="Gray"/>
-
         </Style>
     </Page.Resources>
 
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="11*"/>
+                <RowDefinition Height="0.11*"/>
+                <RowDefinition Height="0.10*"/>
+                <RowDefinition Height="0.79*"/>
             </Grid.RowDefinitions>
+            
             <Grid Grid.Row="0" Background="white">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="1*"/>
-
+                    <ColumnDefinition Width="0.9*"/>
+                    <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="12*"/>
-
+                        <ColumnDefinition Width="0.08*"/>
+                        <ColumnDefinition Width="0.92*"/>
                     </Grid.ColumnDefinitions>
+                    
                     <Grid Grid.Column="0">
                         <Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
                             <Image Source="..\..\..\Assets\Button\AssignProjectLogo.png" />
                         </Viewbox>
-
                     </Grid>
 
                     <Grid Grid.Column="1">
@@ -70,50 +70,15 @@
                             <TextBlock TextWrapping="Wrap" Padding="0" Text="Assign Project" Margin="0,7,0,7" Foreground="DimGray"/>
                         </Viewbox>
                     </Grid>
-
                 </Grid>
-                <Grid Grid.Column="1">
-
-                </Grid>
-
             </Grid>
+            
             <Grid Grid.Row="1" Background="#FFFBFBFB">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="5*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
-
-                    </Grid>
-                    <Grid Grid.Column="1" HorizontalAlignment="Stretch">
-
-
-                    </Grid>
-                </Grid>
-                <Grid Grid.Column="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50*"/>
-                        <ColumnDefinition Width="15*"/>
-                        <ColumnDefinition Width="35*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid Grid.Column="2">
-                        <Viewbox Margin="10,15">
-                            <Button Style="{DynamicResource RoundCornerGray}" x:Name="btnAssign" Width="auto" Height="auto" Visibility="Collapsed">
-
-                                <TextBlock Text="Assign" Foreground="White" Margin="6" Padding="5,0"/>
-
-                            </Button>
-                        </Viewbox>
-                    </Grid>
-
-                </Grid>
+                <Button Style="{DynamicResource RoundCornerGray}" x:Name="btnAssign" Width="70" Height="30" Margin="10" Visibility="Collapsed" HorizontalAlignment="Right">
+                    <TextBlock Text="ASSIGN" Foreground="White"/>
+                </Button>
             </Grid>
+            
             <Grid Grid.Row="2" >
                 <Border Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
 

@@ -18,10 +18,11 @@ Public Class ThreeC_Page
 
     Public _AIDEClientService As ServiceReference1.AideServiceClient
     Private email As String
-    Private _frame As Frame
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
+    Private frame As Frame
+    Private addframe As Frame
+    Private menugrid As Grid
+    Private submenuframe As Frame
+    Private profile As Profile
 
     Private max As Integer
     Private incVal As Integer = 0
@@ -39,6 +40,7 @@ Public Class ThreeC_Page
     Private lastPage As Integer
     Private _lstConcern As Concern()
 
+    Dim guestAccount As Integer = 5
     Dim paginatedCollection As PaginatedObservableCollection(Of ConcernModel) = New PaginatedObservableCollection(Of ConcernModel)(pagingRecordPerPage)
 
     Private Enum PagingMode
@@ -48,18 +50,21 @@ Public Class ThreeC_Page
         _Last = 4
     End Enum
 
-    Public Sub New(email As String, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_profile As Profile, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         Dim clear As New ConcernViewModel
 
         InitializeComponent()
-        Me.InitializeService()
-        Me.email = email
-        Me._frame = _frame
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
+        InitializeService()
+
+        email = _profile.Email_Address
+        profile = _profile
+        frame = _frame
+        addframe = _addframe
+        menugrid = _menugrid
+        submenuframe = _submenuframe
 
         LoadConcernList(offsetVal, nextVal)
+        PermissionSettings()
     End Sub
 
 #Region "Methods"
@@ -113,6 +118,11 @@ Public Class ThreeC_Page
         Return _setDateNow
     End Function
 
+    Private Sub PermissionSettings()
+        If profile.Permission_ID = guestAccount Then
+            btnCreate.Visibility = Windows.Visibility.Hidden
+        End If
+    End Sub
 #End Region
 
 #Region "Initialize Service"
@@ -162,34 +172,36 @@ Public Class ThreeC_Page
     Private Sub ThreeC_DataGridView_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles ThreeC_DataGridView.MouseDoubleClick
 
         If Not ThreeC_DataGridView.SelectedIndex = -1 Then
-            If CType(ThreeC_DataGridView.SelectedItem, ConcernModel).STATUS = "CLOSED" Then
-                MsgBox("This 3C is already closed. Update is no longer allowed.", MsgBoxStyle.Exclamation + vbCritical, "CLOSED")
-            Else
-                _addframe.Navigate(New ThreeC_UpdatePage((Me.DataContext()), _frame, email, _menugrid, _submenuframe, _addframe))
-                _frame.IsEnabled = False
-                _frame.Opacity = 0.3
-                _menugrid.IsEnabled = False
-                _menugrid.Opacity = 0.3
-                _submenuframe.IsEnabled = False
-                _submenuframe.Opacity = 0.3
-                _addframe.Visibility = Visibility.Visible
-                _addframe.Margin = New Thickness(50, 50, 50, 50)
+            If Not profile.Permission_ID = guestAccount Then
+                If CType(ThreeC_DataGridView.SelectedItem, ConcernModel).STATUS = "CLOSED" Then
+                    MsgBox("This 3C is already closed. Update is no longer allowed.", MsgBoxStyle.Exclamation + vbCritical, "CLOSED")
+                Else
+                    addframe.Navigate(New ThreeC_UpdatePage((Me.DataContext()), profile, frame, menugrid, submenuframe, addframe))
+                    frame.IsEnabled = False
+                    frame.Opacity = 0.3
+                    menugrid.IsEnabled = False
+                    menugrid.Opacity = 0.3
+                    submenuframe.IsEnabled = False
+                    submenuframe.Opacity = 0.3
+                    addframe.Visibility = Visibility.Visible
+                    addframe.Margin = New Thickness(50, 50, 50, 50)
+                End If
             End If
         End If
     End Sub
 
     ''NAVIGATE
     Private Sub btnCreateNew3C(sender As Object, e As RoutedEventArgs)
-        _addframe.Navigate(New ThreeC_InsertPage(email, _frame, _addframe, _menugrid, _submenuframe))
+        addframe.Navigate(New ThreeC_InsertPage(profile, frame, addframe, menugrid, submenuframe))
         ''_frame.Navigate(New ThreeC_InsertPage(email, _frame))
-        _frame.IsEnabled = False
-        _frame.Opacity = 0.3
-        _menugrid.IsEnabled = False
-        _menugrid.Opacity = 0.3
-        _submenuframe.IsEnabled = False
-        _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(150, 60, 150, 60)
-        _addframe.Visibility = Visibility.Visible
+        frame.IsEnabled = False
+        frame.Opacity = 0.3
+        menugrid.IsEnabled = False
+        menugrid.Opacity = 0.3
+        submenuframe.IsEnabled = False
+        submenuframe.Opacity = 0.3
+        addframe.Margin = New Thickness(150, 60, 150, 60)
+        addframe.Visibility = Visibility.Visible
     End Sub
 
     ''SEARCH FILTER DATE

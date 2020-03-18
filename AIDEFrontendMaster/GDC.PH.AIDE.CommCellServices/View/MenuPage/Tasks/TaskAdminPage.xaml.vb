@@ -29,9 +29,10 @@ Class TaskAdminPage
     Public mainWindow As MainWindow
     Public empID As Integer
     Public email As String
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
+    Private addframe As Frame
+    Private menugrid As Grid
+    Private submenuframe As Frame
+    Private profile As Profile
 
     Dim currentPage As Integer
     Dim lastPage As Integer
@@ -42,17 +43,20 @@ Class TaskAdminPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _empID As Integer, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         InitializeComponent()
         frame = _frame
         mainWindow = _mainWindow
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
-        empID = _empID
-        email = _email
+        addframe = _addframe
+        menugrid = _menugrid
+        submenuframe = _submenuframe
+        empID = _profile.Emp_ID
+        email = _profile.Email_Address
+        profile = _profile
         SetDates()
         LoadEmployeeTaskAll()
+
+        PermissionSettings()
     End Sub
 #End Region
 
@@ -261,6 +265,15 @@ Class TaskAdminPage
 
     End Sub
 
+    Private Sub PermissionSettings()
+        Dim guestAccount As Integer = 5
+
+        If profile.Permission_ID = guestAccount Then
+            btnCreateTask.Visibility = Windows.Visibility.Hidden
+            btnViewAll.Visibility = Windows.Visibility.Hidden
+        End If
+    End Sub
+
     Private Sub DisplayPagingInfo()
         ' If there has no data found
         If lstTasks.Length = 0 Then
@@ -292,15 +305,15 @@ Class TaskAdminPage
 
 #Region "Buttons"
     Private Sub btnCreateTask_Click(sender As Object, e As RoutedEventArgs) Handles btnCreateTask.Click
-        _addframe.Navigate(New TaskAddPage(frame, mainWindow, email, _addframe, _menugrid, _submenuframe, empID))
+        addframe.Navigate(New TaskAddPage(frame, mainWindow, profile, addframe, menugrid, submenuframe))
         frame.IsEnabled = False
         frame.Opacity = 0.3
-        _menugrid.IsEnabled = False
-        _menugrid.Opacity = 0.3
-        _submenuframe.IsEnabled = False
-        _submenuframe.Opacity = 0.3
-        _addframe.Visibility = Visibility.Visible
-        _addframe.Margin = New Thickness(150, 30, 150, 30)
+        menugrid.IsEnabled = False
+        menugrid.Opacity = 0.3
+        submenuframe.IsEnabled = False
+        submenuframe.Opacity = 0.3
+        addframe.Visibility = Visibility.Visible
+        addframe.Margin = New Thickness(150, 30, 150, 30)
     End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As RoutedEventArgs) Handles btnPrint.Click
@@ -319,13 +332,13 @@ Class TaskAdminPage
     End Sub
 
     Private Sub btnViewAll_Click(sender As Object, e As RoutedEventArgs) Handles btnViewAll.Click
-        frame.Navigate(New TaskListPage(frame, mainWindow, empID, email, _addframe, _menugrid, _submenuframe))
+        frame.Navigate(New TaskListPage(frame, mainWindow, profile, addframe, menugrid, submenuframe))
         'frame.IsEnabled = False
         'frame.Opacity = 0.3
-        _menugrid.IsEnabled = False
-        _menugrid.Opacity = 0.3
-        _submenuframe.IsEnabled = False
-        _submenuframe.Opacity = 0.3
+        menugrid.IsEnabled = False
+        menugrid.Opacity = 0.3
+        submenuframe.IsEnabled = False
+        submenuframe.Opacity = 0.3
         '_addframe.Visibility = Visibility.Visible
         '_addframe.Margin = New Thickness(0, 0, 0, 0)
     End Sub

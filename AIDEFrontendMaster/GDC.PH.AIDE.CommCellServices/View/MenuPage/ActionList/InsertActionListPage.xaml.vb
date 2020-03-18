@@ -11,30 +11,29 @@ Class InsertActionListPage
     Implements UI_AIDE_CommCellServices.ServiceReference1.IAideServiceCallback
 
 #Region "Page Declaration"
-    Public _frame As Frame
+    Private email As String
+    Private profile As Profile
+    Private frame As Frame
+    Private addframe As Frame
+    Private menugrid As Grid
+    Private submenuframe As Frame
     Private aide As AideServiceClient
-    Private act_ion As New Action
-    Private _actionModel As New ActionModel()
-    Private __email As String
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
-    Private profiles As Profile
+    Private action As New Action
+    Private actionModel As New ActionModel()
     Private dsplyByDiv As Integer = 1
 #End Region
 
-    Public Sub New(F As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _prof As Profile)
+    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
         Try
-            __email = _email
-            Me._frame = _frame
-            Me._addframe = _addframe
-            Me._menugrid = _menugrid
-            Me._submenuframe = _submenuframe
-            Me.profiles = _prof
-            _frame = F
+            frame = _frame
+            addframe = _addframe
+            menugrid = _menugrid
+            submenuframe = _submenuframe
+            email = _profile.Email_Address
+            profile = _profile
             InitializeComponent()
             PopulateComboBox()
-            Me.DataContext = _actionModel
+            DataContext = actionModel
             GenerateActionRef()
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -49,7 +48,7 @@ Class InsertActionListPage
             Dim refCode As String = "ACT"
             Dim refNoCount As Integer
             Dim refNo As String
-            Dim action As Action() = aide.GetActionSummary(__email)
+            Dim action As Action() = aide.GetActionSummary(email)
             refNoCount = action.Count + 1
             refNo = refCode + "-" + Convert.ToString(Today.Date.ToString("MM/dd/yy")) + "-" + Convert.ToString(refNoCount)
             actionModel.REF_NO = refNo
@@ -65,7 +64,7 @@ Class InsertActionListPage
     Public Sub PopulateComboBox()
         Try
             If InitializeService() Then
-                Dim lstNickname As Nickname() = aide.ViewNicknameByDeptID(__email, dsplyByDiv)
+                Dim lstNickname As Nickname() = aide.ViewNicknameByDeptID(email, dsplyByDiv)
                 Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
                 Dim successRegisterDBProvider As New SuccessRegisterDBProvider
                 Dim nicknameVM As New NicknameViewModel()
@@ -93,20 +92,30 @@ Class InsertActionListPage
             InitializeService()
             If ActionModel.REF_NO = Nothing Or ActionModel.ACTION_MESSAGE = Nothing Or Act_AssigneeCB.SelectedValue = Nothing Or ActionModel.DUE_DATE = Nothing Or ActionModel.DATE_CLOSED = Nothing Then
             Else
-                act_ion.Act_ID = ActionModel.REF_NO
-                act_ion.Act_Message = ActionModel.ACTION_MESSAGE
-                act_ion.Act_Assignee = profiles.Emp_ID
-                act_ion.Act_DueDate = ActionModel.DUE_DATE
-                act_ion.Act_DateClosed = String.Empty
-                act_ion.Act_NickName = Act_AssignedAll.Text
+                action.Act_ID = ActionModel.REF_NO
+                action.Act_Message = ActionModel.ACTION_MESSAGE
+                action.Act_Assignee = profile.Emp_ID
+                action.Act_DueDate = ActionModel.DUE_DATE
+                action.Act_DateClosed = String.Empty
+                action.Act_NickName = Act_AssignedAll.Text
             End If
-            Return act_ion
+            Return action
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             Return ex
         End Try
     End Function
 
+    Private Sub ExitPage()
+        frame.Navigate(New HomeActionListsPage(frame, addframe, menugrid, submenuframe, profile))
+        frame.IsEnabled = True
+        frame.Opacity = 1
+        menugrid.IsEnabled = True
+        menugrid.Opacity = 1
+        submenuframe.IsEnabled = True
+        submenuframe.Opacity = 1
+        addframe.Visibility = Visibility.Hidden
+    End Sub
 #End Region
 
 #Region "Services Function/Method"
@@ -152,26 +161,18 @@ Class InsertActionListPage
             InitializeService()
 
             aide.InsertActionList(getDataInsert(Me.DataContext()))
-            If act_ion.Act_ID = Nothing Or act_ion.Act_Message = Nothing Or act_ion.Act_Assignee = Nothing Or act_ion.Act_DueDate = Nothing Then
+            If action.Act_ID = Nothing Or action.Act_Message = Nothing Or action.Act_Assignee = Nothing Or action.Act_DueDate = Nothing Then
                 MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else
                 MsgBox("Action item has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 GenerateActionRef()
-                act_ion.Act_ID = Nothing
-                act_ion.Act_Message = Nothing
-                act_ion.Act_Assignee = Nothing
-                act_ion.Act_DueDate = Nothing
-                act_ion.Act_DateClosed = Nothing
+                action.Act_ID = Nothing
+                action.Act_Message = Nothing
+                action.Act_Assignee = Nothing
+                action.Act_DueDate = Nothing
+                action.Act_DateClosed = Nothing
 
-                _frame.Navigate(New HomeActionListsPage(_frame, __email, _addframe, _menugrid, _submenuframe, profiles))
-                _frame.IsEnabled = True
-                _frame.Opacity = 1
-                _menugrid.IsEnabled = True
-                _menugrid.Opacity = 1
-                _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
-
-                _addframe.Visibility = Visibility.Hidden
+                ExitPage()
             End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -179,15 +180,7 @@ Class InsertActionListPage
     End Sub
 
     Private Sub backbtn_Click(sender As Object, e As RoutedEventArgs)
-        _frame.Navigate(New HomeActionListsPage(_frame, __email, _addframe, _menugrid, _submenuframe, profiles))
-        _frame.IsEnabled = True
-        _frame.Opacity = 1
-        _menugrid.IsEnabled = True
-        _menugrid.Opacity = 1
-        _submenuframe.IsEnabled = True
-        _submenuframe.Opacity = 1
-
-        _addframe.Visibility = Visibility.Hidden
+        ExitPage()
     End Sub
 
     Private Sub Act_DueDate_SelectedDateChanged(sender As Object, e As SelectionChangedEventArgs)

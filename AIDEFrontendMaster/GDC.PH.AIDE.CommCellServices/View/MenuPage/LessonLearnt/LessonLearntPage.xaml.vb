@@ -29,11 +29,11 @@ Class LessonLearntPage
 #End Region
 
 #Region "Fields"
-    Public frame As Frame
-    Public email As String
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
+    Private frame As Frame
+    Private addframe As Frame
+    Private menugrid As Grid
+    Private submenuframe As Frame
+    Private email As String
     Private profile As Profile
 
     Dim lstLesson As LessonLearnt()
@@ -41,15 +41,17 @@ Class LessonLearntPage
     Dim paginatedCollection As PaginatedObservableCollection(Of LessonLearntModel) = New PaginatedObservableCollection(Of LessonLearntModel)(pagingRecordPerPage)
 #End Region
 
-    Public Sub New(_frame As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
+    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
         InitializeComponent()
         frame = _frame
-        email = _email
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
-        Me.profile = _profile
+        addframe = _addframe
+        menugrid = _menugrid
+        submenuframe = _submenuframe
+        email = _profile.Email_Address
+        profile = _profile
+
         LoadLessonLearntList()
+        PermissionSettings()
     End Sub
 
 #Region "Common Methods"
@@ -175,19 +177,26 @@ Class LessonLearntPage
         btnNext.IsEnabled = True
     End Sub
 
+    Private Sub PermissionSettings()
+        Dim guestAccount As Integer = 5
+
+        If profile.Permission_ID = guestAccount Then
+            btnAddLessonLearnt.Visibility = Windows.Visibility.Hidden
+        End If
+    End Sub
 #End Region
 
 #Region "Events"
     Private Sub btnAddLessonLearnt_Click(sender As Object, e As RoutedEventArgs) Handles btnAddLessonLearnt.Click
-        _addframe.Navigate(New LessonLearntAddPage(frame, email, _addframe, _menugrid, _submenuframe, profile))
+        addframe.Navigate(New LessonLearntAddPage(frame, addframe, menugrid, submenuframe, profile))
         frame.IsEnabled = False
         frame.Opacity = 0.3
-        _menugrid.IsEnabled = False
-        _menugrid.Opacity = 0.3
-        _submenuframe.IsEnabled = False
-        _submenuframe.Opacity = 0.3
-        _addframe.Visibility = Visibility.Visible
-        _addframe.Margin = New Thickness(50, 50, 50, 50)
+        menugrid.IsEnabled = False
+        menugrid.Opacity = 0.3
+        submenuframe.IsEnabled = False
+        submenuframe.Opacity = 0.3
+        addframe.Visibility = Visibility.Visible
+        addframe.Margin = New Thickness(50, 50, 50, 50)
     End Sub
 
     Private Sub dgLessonLearnt_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles dgLessonLearnt.MouseDoubleClick
@@ -205,15 +214,15 @@ Class LessonLearntPage
                     lessonLearnt.Resolution = CType(dgLessonLearnt.SelectedItem, LessonLearntModel).Resolution
                     lessonLearnt.ActionNo = CType(dgLessonLearnt.SelectedItem, LessonLearntModel).ActionNo
 
-                    _addframe.Navigate(New LessonLearntUpdatePage(frame, lessonLearnt, profile, email, _menugrid, _submenuframe, _addframe))
+                    addframe.Navigate(New LessonLearntUpdatePage(frame, addframe, menugrid, submenuframe, lessonLearnt, profile))
                     frame.IsEnabled = False
                     frame.Opacity = 0.3
-                    _menugrid.IsEnabled = False
-                    _menugrid.Opacity = 0.3
-                    _submenuframe.IsEnabled = False
-                    _submenuframe.Opacity = 0.3
-                    _addframe.Visibility = Visibility.Visible
-                    _addframe.Margin = New Thickness(150, 60, 150, 60)
+                    menugrid.IsEnabled = False
+                    menugrid.Opacity = 0.3
+                    submenuframe.IsEnabled = False
+                    submenuframe.Opacity = 0.3
+                    addframe.Visibility = Visibility.Visible
+                    addframe.Margin = New Thickness(50, 50, 50, 50)
                 End If
             End If
         Catch ex As Exception

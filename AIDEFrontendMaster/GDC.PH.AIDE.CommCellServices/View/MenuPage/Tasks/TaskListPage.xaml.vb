@@ -41,8 +41,9 @@ Public Class TaskListPage
     Private menugrid As Grid
     Private submenuframe As Frame
     Private isEmpty As Boolean
-    Public email As String
-    Public empID As Integer
+    Private email As String
+    Private empID As Integer
+    Private profile As Profile
 
     Dim incidentTypeID As Integer = 2
     Dim statusID As Integer = 3
@@ -76,15 +77,16 @@ Public Class TaskListPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _empID As Integer, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         InitializeComponent()
-        Me.empID = _empID
-        Me.mainFrame = _frame
-        Me.addframe = _addframe
-        Me.menugrid = _menugrid
-        Me.submenuframe = _submenuframe
-        Me.mainWindow = _mainWindow
-        Me.email = _email
+        mainFrame = _frame
+        addframe = _addframe
+        menugrid = _menugrid
+        submenuframe = _submenuframe
+        mainWindow = _mainWindow
+        email = _profile.Email_Address
+        empID = _profile.Emp_ID
+        profile = _profile
         LoadDescriptionData()
         SetData()
     End Sub
@@ -373,7 +375,7 @@ Public Class TaskListPage
                 taskList.ActEffortWk = CType(lv_taskList.SelectedItem, TasksModel).ActEffortWk
                 taskList.Comments = CType(lv_taskList.SelectedItem, TasksModel).Comments
 
-                addframe.Navigate(New TaskAddPage(mainFrame, mainWindow, taskList, email, addframe, menugrid, submenuframe, empID))
+                addframe.Navigate(New TaskAddPage(mainFrame, mainWindow, taskList, profile, addframe, menugrid, submenuframe))
                 addframe.Margin = New Thickness(100, 50, 100, 50)
                 addframe.IsEnabled = True
                 addframe.Visibility = Visibility.Visible
@@ -384,7 +386,7 @@ Public Class TaskListPage
     End Sub
 
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs)
-        mainFrame.Navigate(New TaskAdminPage(mainFrame, mainWindow, empID, email, addframe, menugrid, submenuframe))
+        mainFrame.Navigate(New TaskAdminPage(mainFrame, mainWindow, profile, addframe, menugrid, submenuframe))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         menugrid.IsEnabled = True

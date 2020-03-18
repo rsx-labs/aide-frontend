@@ -16,6 +16,7 @@ Class TaskAddPage
     Private menugrid As Grid
     Private submenuframe As Frame
     Private empID As Integer
+    Private profile As Profile
     Private ProjectName As String
     Private ProjectID As Integer
 
@@ -58,29 +59,31 @@ Class TaskAddPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _empID As Integer)
+    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         InitializeComponent()
         frame = _frame
-        email = _email
-        Me.addframe = _addframe
-        Me.menugrid = _menugrid
-        Me.submenuframe = _submenuframe
-        Me.empID = _empID
+        addframe = _addframe
+        menugrid = _menugrid
+        submenuframe = _submenuframe
+        empID = _profile.Emp_ID
+        email = _profile.Email_Address
+        profile = _profile
         mainWindow = _mainWindow
         btnUpdate.Visibility = Windows.Visibility.Collapsed
         dpStartDate.DisplayDate = Date.Now
         LoadData()
     End Sub
 
-    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _taskList As TasksModel, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _empID As Integer)
+    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _taskList As TasksModel, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         InitializeComponent()
         frame = _frame
         mainWindow = _mainWindow
-        email = _email
-        Me.addframe = _addframe
-        Me.menugrid = _menugrid
-        Me.submenuframe = _submenuframe
-        Me.empID = _empID
+        addframe = _addframe
+        menugrid = _menugrid
+        submenuframe = _submenuframe
+        profile = _profile
+        empID = _profile.Emp_ID
+        email = _profile.Email_Address
         btnCreate.Visibility = Windows.Visibility.Collapsed
         ProjectID = _taskList.ProjId
         LoadData()
@@ -495,10 +498,10 @@ Class TaskAddPage
 
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs) Handles btnBack.Click
         If txtTitle.Text = "Update Task" Then
-            frame.Navigate(New TaskListPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
+            frame.Navigate(New TaskListPage(frame, mainWindow, profile, addframe, menugrid, submenuframe))
             ExitPage()
         Else
-            frame.Navigate(New TaskAdminPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
+            frame.Navigate(New TaskAdminPage(frame, mainWindow, Profile, addframe, menugrid, submenuframe))
             ExitPage()
         End If
     End Sub
@@ -506,15 +509,12 @@ Class TaskAddPage
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs) Handles btnCreate.Click
         If ValidateFields() Then
             Try
-
-
-
                 If InitializeService() Then
                     If GetDataContext(Me.DataContext) Then
                         client.CreateTask(tasks)
                         MsgBox("Task has been added.", MsgBoxStyle.Information, "AIDE")
                         ClearValues()
-                        frame.Navigate(New TaskAdminPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
+                        frame.Navigate(New TaskAdminPage(frame, mainWindow, profile, addframe, menugrid, submenuframe))
                         ExitPage()
                     End If
                 End If
@@ -533,7 +533,7 @@ Class TaskAddPage
                         client.UpdateTask(tasks)
                         MsgBox("Task has been updated.", MsgBoxStyle.Information, "AIDE")
                         ClearValues()
-                        frame.Navigate(New TaskListPage(frame, mainWindow, empID, email, addframe, menugrid, submenuframe))
+                        frame.Navigate(New TaskListPage(frame, mainWindow, profile, addframe, menugrid, submenuframe))
                         ExitPage()
                     End If
                 End If

@@ -33,6 +33,7 @@ Class SkillsMatrixManagerPage
     Dim bClick As Boolean
     Dim email As String
     Dim empID As Integer
+    Dim profile As Profile
     Dim skillid As Integer
     Dim proflevel As Integer = 0
     Dim proficiency As Integer
@@ -43,17 +44,20 @@ Class SkillsMatrixManagerPage
 
 #Region "Constructor"
 
-    Public Sub New(_empID As Integer, _email As String, _isManager As Boolean)
+    Public Sub New(_profile As Profile, _isManager As Boolean)
         ' This call is required by the designer.
-        Me.empID = _empID
-        Me.email = _email
-        Me.isManager = _isManager
-        Me.InitializeComponent()
+        profile = _profile
+        email = _profile.Email_Address
+        empID = _profile.Emp_ID
+        isManager = _isManager
+        InitializeComponent()
 
         LoadSkillsList()
         LoadEmployeeList()
         LoadProfile()
         grdUpdate.Visibility = Visibility.Collapsed
+
+        PermissionSettings()
     End Sub
 
 #End Region
@@ -141,7 +145,7 @@ Class SkillsMatrixManagerPage
 
             cbProjectList.DataContext = _SkillsViewModel
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -232,10 +236,8 @@ Class SkillsMatrixManagerPage
 
             dgSkillList.ItemsSource = table.AsDataView
 
-
-
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
     End Sub
@@ -340,7 +342,7 @@ Class SkillsMatrixManagerPage
             dgSkillList.SelectionUnit = DataGridSelectionUnit.FullRow
 
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -434,11 +436,18 @@ Class SkillsMatrixManagerPage
                 ViewAllEmployee()
             End If
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
     End Sub
 
+    Private Sub PermissionSettings()
+        Dim guestAccount As Integer = 5
+
+        If profile.Permission_ID = guestAccount Then
+            btnViewEmp.Visibility = Windows.Visibility.Hidden
+        End If
+    End Sub
 #End Region
 
 #Region "Events"

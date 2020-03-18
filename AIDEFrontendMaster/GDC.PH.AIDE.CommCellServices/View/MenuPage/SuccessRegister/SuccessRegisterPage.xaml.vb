@@ -33,14 +33,14 @@ Public Class SuccessRegisterPage
 #End Region
 
 #Region "Fields"
-    Private _AideService As ServiceReference1.AideServiceClient
     Private mainFrame As Frame
-    Private isEmpty As Boolean
+    Private addframe As Frame
+    Private menugrid As Grid
+    Private submenuframe As Frame
     Private email As String
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
     Private profile As Profile
+    Private isEmpty As Boolean
+    Private aideService As ServiceReference1.AideServiceClient
 
     Dim lstSuccess As SuccessRegister()
     Dim paginatedCollection As PaginatedObservableCollection(Of SuccessRegisterModel) = New PaginatedObservableCollection(Of SuccessRegisterModel)(pagingRecordPerPage)
@@ -49,15 +49,16 @@ Public Class SuccessRegisterPage
 
 #Region "Constructor"
 
-    Public Sub New(mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_mainFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
         InitializeComponent()
-        Me.profile = _profile
-        Me.email = profile.Email_Address
-        Me.mainFrame = mainFrame
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
+        mainFrame = _mainFrame
+        addframe = _addframe
+        menugrid = _menugrid
+        submenuframe = _submenuframe
+        email = _profile.Email_Address
+        profile = _profile
         SetData()
+        PermissionSettings()
     End Sub
 
 #End Region
@@ -66,15 +67,9 @@ Public Class SuccessRegisterPage
 
     Private Sub btnSRAdd_Click(sender As Object, e As RoutedEventArgs) Handles btnSRAdd.Click
         isEmpty = True
-        _addframe.Navigate(New NewSuccessRegister(isEmpty, mainFrame, profile, _addframe, _menugrid, _submenuframe))
-        mainFrame.IsEnabled = False
-        mainFrame.Opacity = 0.3
-        _menugrid.IsEnabled = False
-        _menugrid.Opacity = 0.3
-        _submenuframe.IsEnabled = False
-        _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(150, 100, 150, 100)
-        _addframe.Visibility = Visibility.Visible
+
+        addframe.Navigate(New NewSuccessRegister(mainFrame, addframe, menugrid, submenuframe, profile))
+        NavigatePage()
     End Sub
 
     Private Sub lv_successRegisterAll_MouseDoubleClick(sender As Object, e As SelectionChangedEventArgs) Handles lv_successRegisterAll.SelectionChanged
@@ -91,15 +86,8 @@ Public Class SuccessRegisterPage
                 successRegister.AdditionalInformation = CType(lv_successRegisterAll.SelectedItem, SuccessRegisterModel).AdditionalInformation
                 successRegister.DateInput = CType(lv_successRegisterAll.SelectedItem, SuccessRegisterModel).DateInput
 
-                _addframe.Navigate(New NewSuccessRegister(successRegister, mainFrame, profile, _addframe, _menugrid, _submenuframe))
-                mainFrame.IsEnabled = False
-                mainFrame.Opacity = 0.3
-                _menugrid.IsEnabled = False
-                _menugrid.Opacity = 0.3
-                _submenuframe.IsEnabled = False
-                _submenuframe.Opacity = 0.3
-                _addframe.Margin = New Thickness(150, 100, 150, 100)
-                _addframe.Visibility = Visibility.Visible
+                addframe.Navigate(New NewSuccessRegister(mainFrame, addframe, menugrid, submenuframe, successRegister, profile))
+                NavigatePage()
             End If
         End If
 
@@ -124,12 +112,12 @@ Public Class SuccessRegisterPage
 
 #End Region
 
-#Region "Functions"
+#Region "Methods"
 
     Public Sub SetData()
         Try
             If InitializeService() Then
-                lstSuccess = _AideService.ViewSuccessRegisterAll(email)
+                lstSuccess = aideService.ViewSuccessRegisterAll(email)
                 LoadData()
                 DisplayPagingInfo()
             End If
@@ -158,14 +146,14 @@ Public Class SuccessRegisterPage
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(lstSuccess.Length / pagingRecordPerPage)
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
     Public Sub SetDataForSearch(input As String, email As String)
         Try
             If InitializeService() Then
-                lstSuccess = _AideService.ViewSuccessRegisterBySearch(input, email)
+                lstSuccess = aideService.ViewSuccessRegisterBySearch(input, email)
                 LoadData()
                 DisplayPagingInfo()
             End If
@@ -179,13 +167,13 @@ Public Class SuccessRegisterPage
         Try
             'DisplayText("Opening client service...")
             Dim Context As InstanceContext = New InstanceContext(Me)
-            _AideService = New AideServiceClient(Context)
-            _AideService.Open()
+            aideService = New AideServiceClient(Context)
+            aideService.Open()
             bInitialize = True
             'DisplayText("Service opened successfully...")
             'Return True
         Catch ex As SystemException
-            _AideService.Abort()
+            aideService.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
@@ -252,7 +240,7 @@ Public Class SuccessRegisterPage
 
             'DisplayPagingInfo()
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -308,6 +296,25 @@ Public Class SuccessRegisterPage
 
     Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
         SetPaging(CInt(PagingMode._Last))
+    End Sub
+
+    Private Sub NavigatePage()
+        mainFrame.IsEnabled = False
+        mainFrame.Opacity = 0.3
+        menugrid.IsEnabled = False
+        menugrid.Opacity = 0.3
+        submenuframe.IsEnabled = False
+        submenuframe.Opacity = 0.3
+        addframe.Margin = New Thickness(150, 100, 150, 100)
+        addframe.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub PermissionSettings()
+        Dim guestAccount As Integer = 5
+
+        If profile.Permission_ID = guestAccount Then
+            btnSRAdd.Visibility = Windows.Visibility.Hidden
+        End If
     End Sub
 #End Region
 

@@ -41,6 +41,8 @@ Public Class BillabilitySickLeavePage
         SetFiscalYear()
         GenerateLeaveCredits()
         LoadData()
+
+        PermissionSettings()
     End Sub
 
 #Region "Private Methods"
@@ -189,6 +191,13 @@ Public Class BillabilitySickLeavePage
         End Try
     End Sub
 
+    Private Sub PermissionSettings()
+        Dim guestAccount As Integer = 5
+
+        If profile.Permission_ID = guestAccount Then
+            spBalance.Visibility = Windows.Visibility.Hidden
+        End If
+    End Sub
 #End Region
 
 #Region "Private Functions"
