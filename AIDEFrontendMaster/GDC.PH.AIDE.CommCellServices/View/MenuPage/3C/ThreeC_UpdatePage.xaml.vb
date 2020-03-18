@@ -15,6 +15,7 @@ Class ThreeC_UpdatePage
     Implements ServiceReference1.IAideServiceCallback
 
     Private email As String
+    Private profile As Profile
     Private frame As Frame
     Private menugrid As Grid
     Private addframe As Frame
@@ -29,17 +30,18 @@ Class ThreeC_UpdatePage
     Private lstConcernActionList As New ObservableCollection(Of ConcernModel)
     Private lstReferenceActionList As New ObservableCollection(Of ConcernModel)
 
-    Public Sub New(_concernViewModel As ConcernViewModel, _frame As Frame, _email As String, _menugrid As Grid, _submenuframe As Frame, _addframe As Frame)
+    Public Sub New(_concernViewModel As ConcernViewModel, _profile As Profile, _frame As Frame, _menugrid As Grid, _submenuframe As Frame, _addframe As Frame)
         ' This call is required by the designer.
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
+        concernViewModel = _concernViewModel
+        email = _profile.Email_Address
+        profile = _profile
         frame = _frame
         menugrid = _menugrid
-        email = _email
         submenuframe = _submenuframe
         addframe = _addframe
-        concernViewModel = _concernViewModel
 
         'Load Selected Concern from ThreeC Page
         LoadSelectedConcern()
@@ -199,7 +201,7 @@ Class ThreeC_UpdatePage
     End Sub
 
     Private Sub ExitPage()
-        frame.Navigate(New ThreeC_Page(email, frame, addframe, menugrid, submenuframe))
+        frame.Navigate(New ThreeC_Page(profile, frame, addframe, menugrid, submenuframe))
         frame.IsEnabled = True
         frame.Opacity = 1
         menugrid.IsEnabled = True

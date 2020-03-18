@@ -59,7 +59,7 @@
                     </Button>
                 </Grid>
                 
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="1" x:Name="gridDates">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.34*"/>
                         <ColumnDefinition Width="0.33*"/>

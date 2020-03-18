@@ -49,6 +49,7 @@ Class KPISummaryAddPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
     'Update Constructor
     Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame, kpi As KPISummary)
         Try
@@ -85,11 +86,10 @@ Class KPISummaryAddPage
             txtActual.Text = _kpiSummary.KPIActual
             txtTarget.Text = _kpiSummary.KPITarget
             'LoadControls()
-            'LoadMonth()
-            'SetData()
 
-            mode = "Update"
+            mode = "UPDATE"
             txtBlockButton.Text = mode
+            AddBtn.Style = FindResource("RoundCornerUpdate")
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -139,8 +139,6 @@ Class KPISummaryAddPage
         cbMonth.Items.Add(New With {.Text = "October", .Value = 10})
         cbMonth.Items.Add(New With {.Text = "November", .Value = 11})
         cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
-
-
     End Sub
 
     Public Sub LoadYears(ByVal startYr As Integer, ByVal endYr As Integer)
@@ -157,25 +155,17 @@ Class KPISummaryAddPage
     End Sub
 
     Public Sub SetData()
-
         Try
-
             If InitializeService() Then
-
                 Dim fiscalYear As Date = Date.Now()
 
                 _lstKPITargets = aide.GetAllKPITargets(Me.profile.Emp_ID, fiscalYear)
 
                 LoadKPITargets()
-
             End If
-
         Catch ex As Exception
-
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-
         End Try
-
     End Sub
 
     Public Sub LoadKPITargets()
@@ -207,6 +197,16 @@ Class KPISummaryAddPage
         End Try
     End Sub
 
+    Private Sub ExitPage()
+        _frame.Navigate(New KPISummaryPage(Me.profile, Me._frame, _addframe, _menugrid, _submenuframe))
+        _frame.IsEnabled = True
+        _frame.Opacity = 1
+        _menugrid.IsEnabled = True
+        _menugrid.Opacity = 1
+        _submenuframe.IsEnabled = True
+        _submenuframe.Opacity = 1
+        _addframe.Visibility = Visibility.Hidden
+    End Sub
 #End Region
 
 #Region "Events"
@@ -234,33 +234,23 @@ Class KPISummaryAddPage
                             _kpiSummary.KPITarget = CDbl(txtTarget.Text) / 100
                             _kpiSummary.KPIOverall = CDbl(txtActual.Text) / CDbl(txtTarget.Text)
                             _kpiSummary.DatePosted = Date.Now
+
                             If aide.InsertKPISummary(_kpiSummary) = True Then
                                 MsgBox("KPI Summary has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                             End If
-
                         End If
-
                     End If
                 Else
                     _kpiSummary.KPITarget = Convert.ToDouble(txtTarget.Text) / 100
                     _kpiSummary.KPIActual = Convert.ToDouble(txtActual.Text) / 100
                     _kpiSummary.KPIOverall = _kpiSummary.KPIActual / _kpiSummary.KPITarget
                     _kpiSummary.DatePosted = Date.Now
+
                     If aide.UpdateKPISummary(_kpiSummary) Then
                         MsgBox("KPI Summary has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
-
                     End If
                 End If
-                _frame.Navigate(New KPISummaryPage(Me.profile, Me._frame, _addframe, _menugrid, _submenuframe))
-                _frame.IsEnabled = True
-                _frame.Opacity = 1
-                _menugrid.IsEnabled = True
-                _menugrid.Opacity = 1
-                _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
-                _addframe.Visibility = Visibility.Hidden
-                'aide.InsertKPISummary()
-
+                ExitPage()
             End If
 
         Catch ex As Exception
@@ -269,14 +259,7 @@ Class KPISummaryAddPage
     End Sub
 
     Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
-        _frame.Navigate(New KPISummaryPage(Me.profile, Me._frame, _addframe, _menugrid, _submenuframe))
-        _frame.IsEnabled = True
-        _frame.Opacity = 1
-        _menugrid.IsEnabled = True
-        _menugrid.Opacity = 1
-        _submenuframe.IsEnabled = True
-        _submenuframe.Opacity = 1
-        _addframe.Visibility = Visibility.Hidden
+        ExitPage()
     End Sub
 #End Region
 
@@ -383,4 +366,5 @@ Class KPISummaryAddPage
 
 
 #End Region
+
 End Class

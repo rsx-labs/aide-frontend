@@ -44,11 +44,11 @@ Public Class BillabilityVacationLeavePage
         Me._attendanceFrame = attendanceFrame
         Me.InitializeComponent()
 
-
         LoadYear()
         SetFiscalYear()
         GenerateLeaveCredits()
         LoadData()
+        PermissionSettings()
     End Sub
 
 #Region "Private Methods"
@@ -202,6 +202,14 @@ Public Class BillabilityVacationLeavePage
         Catch ex As Exception
            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+    End Sub
+
+    Private Sub PermissionSettings()
+        Dim guestAccount As Integer = 5
+
+        If profile.Permission_ID = guestAccount Then
+            spBalance.Visibility = Windows.Visibility.Hidden
+        End If
     End Sub
 #End Region
 

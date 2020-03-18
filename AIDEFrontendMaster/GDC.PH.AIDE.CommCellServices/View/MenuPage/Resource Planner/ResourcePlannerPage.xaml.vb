@@ -28,7 +28,6 @@ Class ResourcePlannerPage
     Dim commendationVM As New CommendationViewModel()
     Dim fiscalyearVM As New SelectionListViewModel
 
-
     Dim month As Integer = Date.Now.Month
     Dim setStatus As String
     Dim displayStatus As String = String.Empty
@@ -52,11 +51,15 @@ Class ResourcePlannerPage
         Me._submenuframe = _submenuframe
         Me.attendanceFrame = _attendanceFrame
         Me.InitializeComponent()
+
         LoadMonth()
         LoadYear()
         SetFiscalYear()
+
         LoadAllEmpResourcePlanner()
         CountMissingLeave()
+
+        PermissionSettings()
     End Sub
 
     Public Function InitializeService() As Boolean
@@ -450,6 +453,15 @@ Class ResourcePlannerPage
         Return displayMonth
     End Function
 
+    Private Sub PermissionSettings()
+        Dim guestAccount As Integer = 5
+
+        If profile.Permission_ID = guestAccount Then
+            btnCreateLeave.Visibility = Windows.Visibility.Hidden
+            btnNotification.Visibility = Windows.Visibility.Hidden
+            btnManage.Visibility = Windows.Visibility.Hidden
+        End If
+    End Sub
 #End Region
 
 #Region "Button/Event"

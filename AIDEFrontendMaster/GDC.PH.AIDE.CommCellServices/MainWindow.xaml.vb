@@ -29,6 +29,7 @@ Class MainWindow
     Dim enableOutlook As String = ConfigurationManager.AppSettings("enableOutlook")
     Dim defaultEmail As String = ConfigurationManager.AppSettings("defaultEmail")
     Dim machineOS As String = My.Computer.Info.OSFullName
+    Dim guestPermission As Integer = 5
 #End Region
 
 #Region "Property declarations"
@@ -142,17 +143,33 @@ Class MainWindow
         SubMenuFrame.Navigate(New BlankSubMenu())
     End Sub
 
-    Public Function CheckOutlook() As Boolean
-        Try
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean
 
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            aideClientService = New AideServiceClient(Context)
+            aideClientService.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            aideClientService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+
+        Return bInitialize
+    End Function
+
+    Public Function CheckOutlook() As Boolean
+        Dim bCheckOutlook As Boolean
+
+        Try
             Dim app As Outlook.Application
             app = System.Runtime.InteropServices.Marshal.GetActiveObject("Outlook.Application")
             email = app.Session.CurrentUser.AddressEntry.GetExchangeUser.PrimarySmtpAddress
             'email = Application.ActiveExplorer.Session.CurrentUser.Address
             'email = app.Session.CurrentUser.Address
-            Return True
+            bCheckOutlook = True
         Catch ex As Exception
-            '    CheckOutlook()
             If MsgBox("Outlook is not running. Do you want to proceed with AIDE without Outlook?", MsgBoxStyle.Critical + vbYesNo, "AIDE") = vbYes Then
                 Dim addwindow As New AddEmailWindow()
                 addwindow.ShowDialog()
@@ -160,9 +177,10 @@ Class MainWindow
             Else
                 Environment.Exit(0)
                 Return Nothing
-                Return True
             End If
         End Try
+
+        Return bCheckOutlook
     End Function
 
     Public Sub LoadSideBar()
@@ -173,35 +191,22 @@ Class MainWindow
         ComcellClockFrame.Navigate(New ComcellClockPage(profile, ComcellClockFrame, Me))
     End Sub
 
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            aideClientService = New AideServiceClient(Context)
-            aideClientService.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            aideClientService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
-
     Private Function SignOn() As Boolean
+        Dim szReturn As Boolean
+
         Try
-            Dim szReturn As Boolean
             If InitializeService() Then
                 profile = aideClientService.SignOn(email)
                 szReturn = True
             Else
                 szReturn = False
             End If
-            Return szReturn
         Catch ex As SystemException
             aideClientService.Abort()
-            SetEmployeeData()
-            Return False
+            szReturn = False
         End Try
+
+        Return szReturn
     End Function
 
     Public Sub SaveProfile(ByVal _profile As Profile)
@@ -214,6 +219,7 @@ Class MainWindow
                 Else
                     IsManagerSignedOn = False
                 End If
+
                 profileDBProvider.SetMyProfile(_profile)
                 profileViewModel.SelectedUser = New ProfileModel(profileDBProvider.GetMyProfile())
             End If
@@ -225,7 +231,7 @@ Class MainWindow
     Private Sub SetEmployeeData()
         Try
             If email <> String.Empty Then
-                If Me.SignOn Then
+                If SignOn() Then
                     IsSignedOn = True
                     SaveProfile(profile)
                 End If
@@ -261,13 +267,14 @@ Class MainWindow
             attendanceSummarry.EmployeeID = EmployeeID
             attendanceSummarry.TimeIn = timeIn
 
-            If attendanceSummarry.EmployeeID = 0 Then 'Service time-out needs to be handled on the service or else always restart it when it time's out
+            If profile Is Nothing Then 'Service time-out needs to be handled on the service or else always restart it when it time's out
                 MsgBox("Service timed out. Application will close automatically." + Environment.NewLine + "Please note that no attendance will be recorded.", MsgBoxStyle.Critical, "AIDE")
                 Environment.Exit(0)
             Else
-                aideClientService.InsertAttendanceByEmpID(attendanceSummarry)
+                If Not profileDBProvider.GetMyProfile.Permission_ID = guestPermission Then
+                    aideClientService.InsertAttendanceByEmpID(attendanceSummarry)
+                End If
             End If
-
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -340,7 +347,7 @@ Class MainWindow
 
     Private Sub ImprovementBtn_Click(sender As Object, e As RoutedEventArgs) Handles ImprovementBtn.Click
         LoadSideBar()
-        PagesFrame.Navigate(New ThreeC_Page(email, PagesFrame, AddFrame, MenuGrid, SubMenuFrame))
+        PagesFrame.Navigate(New ThreeC_Page(profile, PagesFrame, AddFrame, MenuGrid, SubMenuFrame))
         SubMenuFrame.Navigate(New ImproveSubMenuPage(PagesFrame, email, profile, AddFrame, MenuGrid, SubMenuFrame))
     End Sub
 
@@ -372,19 +379,27 @@ Class MainWindow
     End Sub
 
     Private Sub ExitBtn_Click(sender As Object, e As RoutedEventArgs)
-        Dim result = MsgBox("Do you want to logoff?" & vbCrLf & vbCrLf &
+        If profile.Permission_ID = guestPermission Then
+            Dim result = MsgBox("Do you want to close the application?", vbQuestion + MsgBoxStyle.YesNo, "AIDE")
+
+            If result = MsgBoxResult.Yes Then
+                Environment.Exit(0)
+            End If
+        Else
+            Dim result = MsgBox("Do you want to logoff?" & vbCrLf & vbCrLf &
                             "Click YES to logoff." & vbCrLf &
                             "Click NO to close the application only.", vbQuestion + MsgBoxStyle.YesNoCancel, "AIDE")
 
-        Dim logoffTime As Date = DateTime.Now
+            Dim logoffTime As Date = DateTime.Now
 
-        If result = MsgBoxResult.Yes Then
-            If InitializeService() Then
-                aideClientService.InsertLogoffTime(profile.Emp_ID, logoffTime)
+            If result = MsgBoxResult.Yes Then
+                If InitializeService() Then
+                    aideClientService.InsertLogoffTime(profile.Emp_ID, logoffTime)
+                    Environment.Exit(0)
+                End If
+            ElseIf result = MsgBoxResult.No Then
                 Environment.Exit(0)
             End If
-        ElseIf result = MsgBoxResult.No Then
-            Environment.Exit(0)
         End If
     End Sub
 
@@ -395,11 +410,9 @@ Class MainWindow
     End Sub
 
     Private Sub SkillsBtn_Click(sender As Object, e As RoutedEventArgs)
-        empID = profile.Emp_ID
-
         LoadSideBar()
 
-        PagesFrame.Navigate(New SkillsMatrixManagerPage(empID, email, IsManagerSignedOn))
+        PagesFrame.Navigate(New SkillsMatrixManagerPage(profile, IsManagerSignedOn))
 
         SubMenuFrame.Navigate(New BlankSubMenu())
     End Sub
@@ -413,7 +426,7 @@ Class MainWindow
     End Sub
 
     Private Sub TaskBtn_Click(sender As Object, e As RoutedEventArgs)
-        PagesFrame.Navigate(New TaskAdminPage(PagesFrame, Me, profile.Emp_ID, email, AddFrame, MenuGrid, SubMenuFrame))
+        PagesFrame.Navigate(New TaskAdminPage(PagesFrame, Me, profile, AddFrame, MenuGrid, SubMenuFrame))
         SubMenuFrame.Navigate(New TaskSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, Me))
         LoadSideBar()
     End Sub

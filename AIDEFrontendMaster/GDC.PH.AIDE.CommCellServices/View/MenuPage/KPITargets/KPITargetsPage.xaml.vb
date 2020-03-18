@@ -196,6 +196,7 @@ Class KPITargetsPage
                             Exit For
                         End If
                     Next
+
                     addframe.Navigate(New KPITargetsUpdatePage(mainframe, _currentEmployeeID, addframe, menugrid, submenuframe, _emailAddress, _currentProfile, kpiTargetsList))
                     mainframe.IsEnabled = False
                     mainframe.Opacity = 0.3

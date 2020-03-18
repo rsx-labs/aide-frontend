@@ -98,6 +98,8 @@ Class WeeklyReportPage
         SetWeeklyReports()
         SetMissingReports()
 
+        PermissionSettings()
+
         If profile.Permission_ID = isManager OrElse profile.Permission_ID = isTeamLeader Then
             btnTeamReports.Visibility = Windows.Visibility.Visible
         End If
@@ -294,6 +296,17 @@ Class WeeklyReportPage
            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
+    Private Sub PermissionSettings()
+        Dim guestAccount As Integer = 5
+
+        If profile.Permission_ID = guestAccount Then
+            tcWeeklyReports.SelectedIndex = 1
+            gridDates.Visibility = Windows.Visibility.Hidden
+            WeeklyReports.Visibility = Windows.Visibility.Collapsed
+        End If
+    End Sub
+
 #End Region
 
 #Region "Events"

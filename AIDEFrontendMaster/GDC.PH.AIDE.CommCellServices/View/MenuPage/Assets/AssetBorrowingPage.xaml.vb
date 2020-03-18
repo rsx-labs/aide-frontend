@@ -38,10 +38,11 @@ Public Class AssetBorrowingPage
     Private _menugrid As Grid
     Private _submenuframe As Frame
     Private client As AideServiceClient
-    Dim assetVM As New AssetsViewModel()
+    Private assetVM As New AssetsViewModel()
 
     Private _AideService As ServiceReference1.AideServiceClient
     Dim show As Boolean = True
+    Dim guestAccount = 5
     Dim totalRecords As Integer
     Dim lstAssets As Assets()
     Dim paginatedCollection As PaginatedObservableCollection(Of AssetsModel) = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
@@ -471,7 +472,6 @@ Public Class AssetBorrowingPage
     Private Sub lv_assetInventoryListOwn_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles lv_assetInventoryListOwn.SelectionChanged
         e.Handled = True
         If lv_assetInventoryListOwn.SelectedIndex <> -1 Then
-
             If lv_assetInventoryListOwn.SelectedItem IsNot Nothing Then
                 Dim assetsModel As New AssetsModel
 
@@ -540,7 +540,7 @@ Public Class AssetBorrowingPage
     Private Sub lv_assetBorrowingList_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles lv_assetBorrowingList.SelectionChanged
         e.Handled = True
         If show = True Then
-            If lv_assetBorrowingList.SelectedIndex <> -1 Then 'allow only custodian to assign assets
+            If lv_assetBorrowingList.SelectedIndex <> -1 And Not profile.Permission_ID = guestAccount Then 'allow only custodian to assign assets
                 If lv_assetBorrowingList.SelectedItem IsNot Nothing Then
                     'If CType(lv_assetBorrowingList.SelectedItem, AssetsModel).STATUS <> 1 And CType(lv_assetBorrowingList.SelectedItem, AssetsModel).EMP_ID <> profile.Emp_ID Then
                     '    Exit Sub

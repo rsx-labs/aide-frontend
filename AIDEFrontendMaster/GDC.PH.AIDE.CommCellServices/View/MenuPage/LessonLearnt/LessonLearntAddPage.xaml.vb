@@ -10,12 +10,11 @@ Class LessonLearntAddPage
     Implements IAideServiceCallback
 
 #Region "Fields"
-    Public frame As Frame
-    Public mainWindow As MainWindow
-    Public email As String
+    Private frame As Frame
     Private addframe As Frame
     Private menugrid As Grid
     Private submenuframe As Frame
+    Private email As String
     Private profile As Profile
 
     Dim lstActionList As New ObservableCollection(Of ActionModel)
@@ -38,14 +37,14 @@ Class LessonLearntAddPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_frame As Frame, _email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
+    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
         InitializeComponent()
 
         frame = _frame
-        email = _email
         addframe = _addframe
         menugrid = _menugrid
         submenuframe = _submenuframe
+        email = _profile.Email_Address
         profile = _profile
 
         CreateReferenceNo()
@@ -180,7 +179,7 @@ Class LessonLearntAddPage
     End Sub
 
     Private Sub ExitPage()
-        frame.Navigate(New LessonLearntPage(frame, email, addframe, menugrid, submenuframe, profile))
+        frame.Navigate(New LessonLearntPage(frame, addframe, menugrid, submenuframe, profile))
         frame.IsEnabled = True
         frame.Opacity = 1
         menugrid.IsEnabled = True

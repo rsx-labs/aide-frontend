@@ -30,36 +30,34 @@ Class HomeActionListsPage
 #End Region
 
 #Region "Fields"
-    Private _frame As Frame
-    Private _email As String
-
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
+    Private email As String
+    Private profile As Profile
+    Private frame As Frame
+    Private addframe As Frame
+    Private menugrid As Grid
+    Private submenuframe As Frame
     Private aide As ServiceReference1.AideServiceClient
-    Private _ActionViewModel As New ActionListViewModel
+    Private actionViewModel As New ActionListViewModel
     Private action_provider As New ActionListDBProvider
     Private EnableRowHeaderDoubleClick As Boolean = False
     Private lstAction As Action()
-    Private profiles As Profile
 
+    Dim guestAccount As Integer = 5
     Dim paginatedCollection As PaginatedObservableCollection(Of ActionModel) = New PaginatedObservableCollection(Of ActionModel)(pagingRecordPerPage)
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_frame As Frame, email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _prof As Profile)
-        Try
-            Me._email = email
-            Me._frame = _frame
-            Me._addframe = _addframe
-            Me._menugrid = _menugrid
-            Me._submenuframe = _submenuframe
-            Me.profiles = _prof
-            InitializeComponent()
-            LoadActionList(_email)
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
+    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
+        frame = _frame
+        addframe = _addframe
+        menugrid = _menugrid
+        submenuframe = _submenuframe
+        email = _profile.Email_Address
+        profile = _profile
+        InitializeComponent()
+
+        LoadActionList(email)
+        PermissionSettings()
     End Sub
 #End Region
 
@@ -90,6 +88,11 @@ Class HomeActionListsPage
         End Try
     End Sub
 
+    Private Sub PermissionSettings()
+        If profile.Permission_ID = guestAccount Then
+            btnCreate.Visibility = Windows.Visibility.Hidden
+        End If
+    End Sub
 #End Region
 
 #Region "Paging Function/Method"
@@ -251,32 +254,31 @@ Class HomeActionListsPage
 #Region "Events Trigger"
     Private Sub ActionLV_MouseDoubleClick(sender As Object, e As MouseEventArgs)
         Try
-            If ActionLV.SelectedIndex = -1 Then
-            Else
-                InitializeService()
-                Dim _SelectedAction As New Action
+            If Not ActionLV.SelectedIndex = -1 Then
+                If Not profile.Permission_ID = guestAccount Then
+                    Dim selectedAction As New Action
 
-                _SelectedAction.Act_ID = CType(ActionLV.SelectedItem, ActionModel).REF_NO
-                _SelectedAction.Act_Message = CType(ActionLV.SelectedItem, ActionModel).ACTION_MESSAGE
-                _SelectedAction.Act_NickName = CType(ActionLV.SelectedItem, ActionModel).NICK_NAME
-                _SelectedAction.Act_DueDate = CType(ActionLV.SelectedItem, ActionModel).DUE_DATE
-                _SelectedAction.Act_DateClosed = CType(ActionLV.SelectedItem, ActionModel).DATE_CLOSED
-                If Not _SelectedAction.Act_DateClosed = String.Empty Then
-                    MsgBox("Selected action list has already been closed. Please select open action list.", vbOKOnly + vbInformation, "Action List")
-                Else
-                    _addframe.Navigate(New UpdateActionListPage(_frame, _SelectedAction, _email, _menugrid, _submenuframe, _addframe, Me.profiles))
-                    _frame.IsEnabled = False
-                    _frame.Opacity = 0.3
-                    _menugrid.IsEnabled = False
-                    _menugrid.Opacity = 0.3
-                    _submenuframe.IsEnabled = False
-                    _submenuframe.Opacity = 0.3
-                    _addframe.Margin = New Thickness(200, 30, 200, 30)
-                    _addframe.Visibility = Visibility.Visible
+                    selectedAction.Act_ID = CType(ActionLV.SelectedItem, ActionModel).REF_NO
+                    selectedAction.Act_Message = CType(ActionLV.SelectedItem, ActionModel).ACTION_MESSAGE
+                    selectedAction.Act_NickName = CType(ActionLV.SelectedItem, ActionModel).NICK_NAME
+                    selectedAction.Act_DueDate = CType(ActionLV.SelectedItem, ActionModel).DUE_DATE
+                    selectedAction.Act_DateClosed = CType(ActionLV.SelectedItem, ActionModel).DATE_CLOSED
+
+                    If Not selectedAction.Act_DateClosed = String.Empty Then
+                        MsgBox("Selected action list has already been closed. Please select open action list.", vbOKOnly + vbInformation, "Action List")
+                    Else
+                        addframe.Navigate(New UpdateActionListPage(frame, addframe, menugrid, submenuframe, selectedAction, profile))
+                        frame.IsEnabled = False
+                        frame.Opacity = 0.3
+                        menugrid.IsEnabled = False
+                        menugrid.Opacity = 0.3
+                        submenuframe.IsEnabled = False
+                        submenuframe.Opacity = 0.3
+                        addframe.Margin = New Thickness(200, 30, 200, 30)
+                        addframe.Visibility = Visibility.Visible
+                    End If
                 End If
-
             End If
-
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -284,9 +286,9 @@ Class HomeActionListsPage
 
     Private Sub SearchTextBox_TextChanged(sender As Object, e As TextChangedEventArgs)
         If SearchTextBox.Text = String.Empty Then
-            LoadActionList(_email)
+            LoadActionList(email)
         Else
-            LoadActionByMessage(SearchTextBox.Text, _email)
+            LoadActionByMessage(SearchTextBox.Text, email)
         End If
     End Sub
 
@@ -303,15 +305,15 @@ Class HomeActionListsPage
     End Sub
 
     Private Sub AddActionListBtn_Click(sender As Object, e As RoutedEventArgs)
-        _addframe.Navigate(New InsertActionListPage(_frame, _email, _addframe, _menugrid, _submenuframe, Me.profiles))
-        _frame.IsEnabled = False
-        _frame.Opacity = 0.3
-        _menugrid.IsEnabled = False
-        _menugrid.Opacity = 0.3
-        _submenuframe.IsEnabled = False
-        _submenuframe.Opacity = 0.3
-        _addframe.Margin = New Thickness(200, 50, 200, 50)
-        _addframe.Visibility = Visibility.Visible
+        addframe.Navigate(New InsertActionListPage(frame, addframe, menugrid, submenuframe, profile))
+        frame.IsEnabled = False
+        frame.Opacity = 0.3
+        menugrid.IsEnabled = False
+        menugrid.Opacity = 0.3
+        submenuframe.IsEnabled = False
+        submenuframe.Opacity = 0.3
+        addframe.Margin = New Thickness(200, 50, 200, 50)
+        addframe.Visibility = Visibility.Visible
     End Sub
 
     Private Sub ActionLV_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles ActionLV.LoadingRow

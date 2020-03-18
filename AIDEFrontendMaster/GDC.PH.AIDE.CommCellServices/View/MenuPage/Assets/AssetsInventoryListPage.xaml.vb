@@ -67,6 +67,7 @@ Public Class AssetsInventoryListPage
             SR.SelectedIndex = 2
         End If
 
+        PermissionSettings()
     End Sub
 #End Region
 
@@ -271,7 +272,6 @@ Public Class AssetsInventoryListPage
     End Sub
 
     Private Sub DisplayPagingInfo()
-
         ' If there has no data found
         If lstAssets.Length = 0 Then
             txtPageNo.Text = "No Results Found "
@@ -302,6 +302,15 @@ Public Class AssetsInventoryListPage
         btnNext2.IsEnabled = True
         btnPrev3.IsEnabled = True
         btnNext3.IsEnabled = True
+    End Sub
+
+    Private Sub PermissionSettings()
+        Dim guestAccount As Integer = 5
+
+        If profile.Permission_ID = guestAccount Then
+            Own.Visibility = Windows.Visibility.Collapsed
+            SR.SelectedIndex = 1
+        End If
     End Sub
 #End Region
 

@@ -11,36 +11,36 @@ Class UpdateActionListPage
     Implements UI_AIDE_CommCellServices.ServiceReference1.IAideServiceCallback
 
 #Region "Page Declaration"
-    Private _frame As Frame
+    Private email As String
+    Private profile As Profile
+    Private frame As Frame
+    Private menugrid As Grid
+    Private addframe As Frame
+    Private submenuframe As Frame
     Private aide As AideServiceClient
+    Private action As New Action
+    Private actionModel As New ActionModel()
     Private action_provider As New ActionListDBProvider
     Private actionPage_ As HomeActionListsPage
-    Private act_ion As New Action
-    Private _actionModel As New ActionModel()
-    Private _email As String
-    Private _menugrid As Grid
-    Private _addframe As Frame
-    Private _submenuframe As Frame
     Private hold_Duedate As String
-    Private profiles As Profile
     Private dsplyByDiv As Integer = 1
 #End Region
 
-    Public Sub New(f As Frame, act_ As Action, email As String, _menugrid As Grid, _submenuframe As Frame, _addframe As Frame, _prof As Profile)
+    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _action As Action, _profile As Profile)
         Try
-            Me._menugrid = _menugrid
-            Me._email = email
-            Me._submenuframe = _submenuframe
-            Me._addframe = _addframe
-            Me.profiles = _prof
-            _frame = f
-            act_ion = act_
+            frame = _frame
+            addframe = _addframe
+            menugrid = _menugrid
+            submenuframe = _submenuframe
+            action = _action
+            email = _profile.Email_Address
+            profile = _profile
 
             InitializeComponent()
-            DataContext = _actionModel
+            DataContext = actionModel
             showUpdateItems()
             PopulateComboBox()
-            hold_Duedate = _actionModel.DUE_DATE
+            hold_Duedate = actionModel.DUE_DATE
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -51,14 +51,14 @@ Class UpdateActionListPage
     Public Function showUpdateItems()
         Try
             InitializeService()
-            _actionModel.REF_NO = act_ion.Act_ID
-            _actionModel.ACTION_MESSAGE = act_ion.Act_Message
-            _actionModel.EMP_ID = profiles.Emp_ID
-            _actionModel.NICK_NAME = act_ion.Act_NickName
-            _actionModel.DUE_DATE = act_ion.Act_DueDate
-            _actionModel.DATE_CLOSED = act_ion.Act_DateClosed
-            Act_AssignedAll.Text = act_ion.Act_NickName
-            Return _actionModel
+            actionModel.REF_NO = action.Act_ID
+            actionModel.ACTION_MESSAGE = action.Act_Message
+            actionModel.EMP_ID = profile.Emp_ID
+            actionModel.NICK_NAME = action.Act_NickName
+            actionModel.DUE_DATE = action.Act_DueDate
+            actionModel.DATE_CLOSED = action.Act_DateClosed
+            Act_AssignedAll.Text = action.Act_NickName
+            Return actionModel
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -68,22 +68,22 @@ Class UpdateActionListPage
         Try
             InitializeService()
             If ActionModel.REF_NO = Nothing Or ActionModel.ACTION_MESSAGE = Nothing Or Act_AssignedAll.Text = String.Empty Or ActionModel.DUE_DATE = Nothing Or ActionModel.DATE_CLOSED = Nothing Then
-                act_ion.Act_ID = ActionModel.REF_NO
-                act_ion.Act_Message = ActionModel.ACTION_MESSAGE
-                act_ion.Act_Assignee = ActionModel.EMP_ID
-                act_ion.Act_DueDate = ActionModel.DUE_DATE
-                act_ion.Act_DateClosed = ActionModel.DATE_CLOSED
-                act_ion.Act_NickName = Act_AssignedAll.Text
+                action.Act_ID = ActionModel.REF_NO
+                action.Act_Message = ActionModel.ACTION_MESSAGE
+                action.Act_Assignee = ActionModel.EMP_ID
+                action.Act_DueDate = ActionModel.DUE_DATE
+                action.Act_DateClosed = ActionModel.DATE_CLOSED
+                action.Act_NickName = Act_AssignedAll.Text
             Else
-                act_ion.Act_ID = ActionModel.REF_NO
-                act_ion.Act_Message = ActionModel.ACTION_MESSAGE
-                act_ion.Act_Assignee = ActionModel.EMP_ID
-                act_ion.Act_DueDate = ActionModel.DUE_DATE
-                act_ion.Act_DateClosed = ActionModel.DATE_CLOSED
-                act_ion.Act_NickName = Act_AssignedAll.Text
-
+                action.Act_ID = ActionModel.REF_NO
+                action.Act_Message = ActionModel.ACTION_MESSAGE
+                action.Act_Assignee = ActionModel.EMP_ID
+                action.Act_DueDate = ActionModel.DUE_DATE
+                action.Act_DateClosed = ActionModel.DATE_CLOSED
+                action.Act_NickName = Act_AssignedAll.Text
             End If
-            Return act_ion
+
+            Return action
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             Return ex
@@ -93,7 +93,7 @@ Class UpdateActionListPage
     Public Sub PopulateComboBox()
         Try
             If InitializeService() Then
-                Dim lstNickname As Nickname() = aide.ViewNicknameByDeptID(_email, dsplyByDiv)
+                Dim lstNickname As Nickname() = aide.ViewNicknameByDeptID(email, dsplyByDiv)
                 Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
                 Dim successRegisterDBProvider As New SuccessRegisterDBProvider
                 Dim nicknameVM As New NicknameViewModel()
@@ -115,6 +115,16 @@ Class UpdateActionListPage
         End Try
     End Sub
 
+    Private Sub ExitPage()
+        frame.Navigate(New HomeActionListsPage(frame, addframe, menugrid, submenuframe, profile))
+        frame.IsEnabled = True
+        frame.Opacity = 1
+        menugrid.IsEnabled = True
+        menugrid.Opacity = 1
+        submenuframe.IsEnabled = True
+        submenuframe.Opacity = 1
+        addframe.Visibility = Visibility.Hidden
+    End Sub
 #End Region
 
 #Region "Services Function/Method"
@@ -159,25 +169,18 @@ Class UpdateActionListPage
     Private Sub UpdateBtn_Click(sender As Object, e As RoutedEventArgs)
         Try
             InitializeService()
-            If _actionModel.REF_NO = Nothing Or _actionModel.ACTION_MESSAGE = Nothing Or Act_AssignedAll.Text = String.Empty Or _actionModel.DUE_DATE = Nothing Or _actionModel.DATE_CLOSED = Nothing Then
-                If _actionModel.DATE_CLOSED = Nothing And _actionModel.ACTION_MESSAGE <> Nothing And _actionModel.DUE_DATE <> Nothing And Act_AssignedAll.Text <> String.Empty Then
+            If actionModel.REF_NO = Nothing Or actionModel.ACTION_MESSAGE = Nothing Or Act_AssignedAll.Text = String.Empty Or actionModel.DUE_DATE = Nothing Or actionModel.DATE_CLOSED = Nothing Then
+                If actionModel.DATE_CLOSED = Nothing And actionModel.ACTION_MESSAGE <> Nothing And actionModel.DUE_DATE <> Nothing And Act_AssignedAll.Text <> String.Empty Then
                     If MsgBox("Are you sure you want to proceed without a closing date?", MsgBoxStyle.Information + vbYesNo, "AIDE") = vbYes Then
                         aide.UpdateActionList(getDataUpdate(Me.DataContext()))
                         MsgBox("Action item has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
-                        act_ion.Act_ID = Nothing
-                        act_ion.Act_Message = Nothing
-                        act_ion.Act_Assignee = Nothing
-                        act_ion.Act_DueDate = Nothing
-                        act_ion.Act_DateClosed = Nothing
+                        action.Act_ID = Nothing
+                        action.Act_Message = Nothing
+                        action.Act_Assignee = Nothing
+                        action.Act_DueDate = Nothing
+                        action.Act_DateClosed = Nothing
 
-                        _frame.Navigate(New HomeActionListsPage(_frame, _email, _addframe, _menugrid, _submenuframe, profiles))
-                        _frame.IsEnabled = True
-                        _frame.Opacity = 1
-                        _menugrid.IsEnabled = True
-                        _menugrid.Opacity = 1
-                        _submenuframe.IsEnabled = True
-                        _submenuframe.Opacity = 1
-                        _addframe.Visibility = Visibility.Hidden
+                        ExitPage()
                     End If
                 Else
                     MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
@@ -185,20 +188,13 @@ Class UpdateActionListPage
             Else
                 aide.UpdateActionList(getDataUpdate(Me.DataContext()))
                 MsgBox("Action item has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
-                act_ion.Act_ID = Nothing
-                act_ion.Act_Message = Nothing
-                act_ion.Act_Assignee = Nothing
-                act_ion.Act_DueDate = Nothing
-                act_ion.Act_DateClosed = Nothing
+                action.Act_ID = Nothing
+                action.Act_Message = Nothing
+                action.Act_Assignee = Nothing
+                action.Act_DueDate = Nothing
+                action.Act_DateClosed = Nothing
 
-                _frame.Navigate(New HomeActionListsPage(_frame, _email, _addframe, _menugrid, _submenuframe, profiles))
-                _frame.IsEnabled = True
-                _frame.Opacity = 1
-                _menugrid.IsEnabled = True
-                _menugrid.Opacity = 1
-                _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
-                _addframe.Visibility = Visibility.Hidden
+                ExitPage()
             End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -206,14 +202,7 @@ Class UpdateActionListPage
     End Sub
 
     Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
-        _frame.Navigate(New HomeActionListsPage(_frame, _email, _addframe, _menugrid, _submenuframe, profiles))
-        _frame.IsEnabled = True
-        _frame.Opacity = 1
-        _menugrid.IsEnabled = True
-        _menugrid.Opacity = 1
-        _submenuframe.IsEnabled = True
-        _submenuframe.Opacity = 1
-        _addframe.Visibility = Visibility.Hidden
+        ExitPage()
     End Sub
 
     'Validates if selected duedate is less than the previous due date
@@ -224,7 +213,7 @@ Class UpdateActionListPage
             Act_DueDate.Text = hold_Duedate
         End If
         If Act_DueDate.Text = String.Empty Then
-            Act_DueDate.Text = _actionModel.DUE_DATE
+            Act_DueDate.Text = actionModel.DUE_DATE
         End If
     End Sub
 
