@@ -189,7 +189,7 @@
                                     <Image Source="..\..\..\Assets\Attendance\onsite.png" Margin="5"/>
                                 </Viewbox>
                                 <Viewbox Margin="5">
-                                    <TextBlock Text="On Site @ Client" VerticalAlignment="Center" FontSize="10"/>
+                                    <TextBlock Text="On Site" VerticalAlignment="Center" FontSize="10"/>
                                 </Viewbox>
                             </StackPanel>
                         </Grid>
