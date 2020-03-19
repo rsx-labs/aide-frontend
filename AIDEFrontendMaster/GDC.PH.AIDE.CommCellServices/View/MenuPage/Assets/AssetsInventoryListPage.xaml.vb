@@ -25,7 +25,7 @@ Public Class AssetsInventoryListPage
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 10
+    Dim pagingRecordPerPage As Integer
     Dim currentPage As Integer
     Dim lastPage As Integer
 #End Region
@@ -37,18 +37,20 @@ Public Class AssetsInventoryListPage
     Private _addframe As New Frame
     Private _menugrid As Grid
     Private _submenuframe As Frame
-
+    Private _OptionsViewModel As OptionViewModel
     Private _AideService As ServiceReference1.AideServiceClient
     Dim show As Boolean = True
     Dim totalRecords As Integer
     Dim lstAssets As Assets()
-    Dim paginatedCollection As PaginatedObservableCollection(Of AssetsModel) = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
+    Dim paginatedCollection As PaginatedObservableCollection(Of AssetsModel)
 #End Region
 
 #Region "Constructor"
     Public Sub New(_frame As Frame, _profile As Profile, addframe As Frame, menugrid As Grid, submenuframe As Frame, page As String)
-
         ' This call is required by the designer.
+        pagingRecordPerPage = GetOptionData(28, 5, 12)
+        paginatedCollection = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
+
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
@@ -204,6 +206,24 @@ Public Class AssetsInventoryListPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
+    End Function
+
+    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+        Dim strData As String = String.Empty
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        strData = opt.VALUE
+                        Exit For
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return strData
     End Function
 
     Private Sub SetPaging(mode As Integer)

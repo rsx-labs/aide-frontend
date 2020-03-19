@@ -118,7 +118,7 @@ Class ResourcePlannerPage
                 LoadFiscalYear()
             End If
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -139,7 +139,7 @@ Class ResourcePlannerPage
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
 
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -157,7 +157,7 @@ Class ResourcePlannerPage
 
             cbDisplayMonth.SelectedValue = month
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -264,7 +264,7 @@ Class ResourcePlannerPage
             InitializeService()
             _ResourceDBProvider._splist.Clear()
             _ResourcePADBProvider._palist.Clear()
-            
+
 
             Dim currentDate As DateTime = DateTime.Now
             Dim lstresource As ResourcePlanner() = client.GetAllEmpResourcePlanner(profile.Email_Address, month, year)
@@ -365,7 +365,7 @@ Class ResourcePlannerPage
             dgResourcePlanner.RowBackground = New SolidColorBrush(Colors.White)
             dgResourcePlanner.ItemsSource = table.AsDataView
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -449,7 +449,7 @@ Class ResourcePlannerPage
         End If
 
         displayMonth = MonthName(selectedMonth) + " " + newYear.ToString
-       
+
         Return displayMonth
     End Function
 

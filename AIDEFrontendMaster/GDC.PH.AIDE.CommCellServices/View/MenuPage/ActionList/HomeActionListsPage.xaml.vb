@@ -17,7 +17,7 @@ Class HomeActionListsPage
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 10
+    Dim pagingRecordPerPage As Integer
     Dim currentPage As Integer
     Dim lastPage As Integer
 
@@ -41,6 +41,7 @@ Class HomeActionListsPage
     Private action_provider As New ActionListDBProvider
     Private EnableRowHeaderDoubleClick As Boolean = False
     Private lstAction As Action()
+<<<<<<< HEAD
 
     Dim guestAccount As Integer = 5
     Dim paginatedCollection As PaginatedObservableCollection(Of ActionModel) = New PaginatedObservableCollection(Of ActionModel)(pagingRecordPerPage)
@@ -58,6 +59,31 @@ Class HomeActionListsPage
 
         LoadActionList(email)
         PermissionSettings()
+=======
+    Private profiles As Profile
+    Private _OptionsViewModel As OptionViewModel
+
+    Dim paginatedCollection As PaginatedObservableCollection(Of ActionModel)
+#End Region
+
+#Region "Constructor"
+    Public Sub New(_frame As Frame, email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _prof As Profile)
+        Try
+            Me._email = email
+            Me._frame = _frame
+            Me._addframe = _addframe
+            Me._menugrid = _menugrid
+            Me._submenuframe = _submenuframe
+            Me.profiles = _prof
+            InitializeComponent()
+
+            pagingRecordPerPage = GetOptionData(24, 9, 12)
+            paginatedCollection = New PaginatedObservableCollection(Of ActionModel)(pagingRecordPerPage)
+            LoadActionList(_email)
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+>>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
     End Sub
 #End Region
 
@@ -88,11 +114,31 @@ Class HomeActionListsPage
         End Try
     End Sub
 
+<<<<<<< HEAD
     Private Sub PermissionSettings()
         If profile.Permission_ID = guestAccount Then
             btnCreate.Visibility = Windows.Visibility.Hidden
         End If
     End Sub
+=======
+    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+        Dim strData As String = String.Empty
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        strData = opt.VALUE
+                        Exit For
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return strData
+    End Function
+>>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
 #End Region
 
 #Region "Paging Function/Method"

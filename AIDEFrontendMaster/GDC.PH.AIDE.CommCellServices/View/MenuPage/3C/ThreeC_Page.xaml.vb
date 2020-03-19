@@ -35,10 +35,11 @@ Public Class ThreeC_Page
     Private startRowIndex As Integer
     Private lastRowIndex As Integer
     Private pagingPageIndex As Integer
-    Private pagingRecordPerPage As Integer = 10
+    Private pagingRecordPerPage As Integer
     Private currentPage As Integer
     Private lastPage As Integer
     Private _lstConcern As Concern()
+    Private _OptionsViewModel As OptionViewModel
 
     Dim guestAccount As Integer = 5
     Dim paginatedCollection As PaginatedObservableCollection(Of ConcernModel) = New PaginatedObservableCollection(Of ConcernModel)(pagingRecordPerPage)
@@ -62,6 +63,8 @@ Public Class ThreeC_Page
         addframe = _addframe
         menugrid = _menugrid
         submenuframe = _submenuframe
+
+        pagingRecordPerPage = GetOptionData(23, 8, 12)
 
         LoadConcernList(offsetVal, nextVal)
         PermissionSettings()
@@ -118,11 +121,31 @@ Public Class ThreeC_Page
         Return _setDateNow
     End Function
 
+<<<<<<< HEAD
     Private Sub PermissionSettings()
         If profile.Permission_ID = guestAccount Then
             btnCreate.Visibility = Windows.Visibility.Hidden
         End If
     End Sub
+=======
+    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+        Dim strData As String = String.Empty
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        strData = opt.VALUE
+                        Exit For
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return strData
+    End Function
+>>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
 #End Region
 
 #Region "Initialize Service"

@@ -20,7 +20,7 @@ Class WeeklyTeamStatusReportPage
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 10
+    Dim pagingRecordPerPage As Integer
     Dim currentPage As Integer
     Dim lastPage As Integer
     Dim totalRecords As Integer
@@ -48,6 +48,7 @@ Class WeeklyTeamStatusReportPage
     Private year As Integer
     Private startFiscalYear As Integer
     Private endFiscalYear As Integer
+    Private _OptionsViewModel As OptionViewModel
 
     Dim dateToday As Date = Date.Today
     Dim monday As DateTime = Today.AddDays((Today.DayOfWeek - DayOfWeek.Monday) * -1)
@@ -71,7 +72,7 @@ Class WeeklyTeamStatusReportPage
 
     Dim lstWeekRange As WeekRange()
     Dim listWeeklyReportStatus As New ObservableCollection(Of WeeklyReportStatusModel)
-    Dim weeklyTeamStatusReportCollection As PaginatedObservableCollection(Of WeeklyTeamStatusReportModel) = New PaginatedObservableCollection(Of WeeklyTeamStatusReportModel)(pagingRecordPerPage)
+    Dim weeklyTeamStatusReportCollection As PaginatedObservableCollection(Of WeeklyTeamStatusReportModel)
 
     Dim weeklyReportDBProvider As New WeeklyReportDBProvider
     Dim weekRangeViewModel As New WeekRangeViewModel
@@ -92,6 +93,8 @@ Class WeeklyTeamStatusReportPage
         Me.submenuframe = _submenuframe
         Me.profile = _profile
 
+        pagingRecordPerPage = GetOptionData(22, 3, 12)
+        weeklyTeamStatusReportCollection = New PaginatedObservableCollection(Of WeeklyTeamStatusReportModel)(pagingRecordPerPage)
         selectedValue = -1
 
         InitializeData()
@@ -108,6 +111,9 @@ Class WeeklyTeamStatusReportPage
         Me.submenuframe = _submenuframe
         Me.profile = _profile
         Me.weekID = _weekRangeID
+
+        pagingRecordPerPage = GetOptionData(22, 3, 12)
+        weeklyTeamStatusReportCollection = New PaginatedObservableCollection(Of WeeklyTeamStatusReportModel)(pagingRecordPerPage)
 
         selectedValue = _weekRangeID
         month = _month
@@ -448,6 +454,24 @@ Class WeeklyTeamStatusReportPage
         Else
             Return listWeeklyReportStatus.Where(Function(x) x.Key = key).First().Value
         End If
+    End Function
+
+    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+        Dim strData As String = String.Empty
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        strData = opt.VALUE
+                        Exit For
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return strData
     End Function
 #End Region
 

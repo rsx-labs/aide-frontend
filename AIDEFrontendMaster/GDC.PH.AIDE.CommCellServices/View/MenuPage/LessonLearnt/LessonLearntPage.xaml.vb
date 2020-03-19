@@ -23,7 +23,7 @@ Class LessonLearntPage
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 10
+    Dim pagingRecordPerPage As Integer
     Dim currentPage As Integer
     Dim lastPage As Integer
 #End Region
@@ -38,17 +38,27 @@ Class LessonLearntPage
 
     Dim lstLesson As LessonLearnt()
     Dim client As AideServiceClient
+    Private _OptionsViewModel As OptionViewModel
     Dim paginatedCollection As PaginatedObservableCollection(Of LessonLearntModel) = New PaginatedObservableCollection(Of LessonLearntModel)(pagingRecordPerPage)
 #End Region
 
     Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
         InitializeComponent()
         frame = _frame
+<<<<<<< HEAD
         addframe = _addframe
         menugrid = _menugrid
         submenuframe = _submenuframe
         email = _profile.Email_Address
         profile = _profile
+=======
+        email = _email
+        Me._addframe = _addframe
+        Me._menugrid = _menugrid
+        Me._submenuframe = _submenuframe
+        Me.profile = _profile
+        pagingRecordPerPage = GetOptionData(25, 10, 12)
+>>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
 
         LoadLessonLearntList()
         PermissionSettings()
@@ -125,6 +135,24 @@ Class LessonLearntPage
            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
+    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+        Dim strData As String = String.Empty
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        strData = opt.VALUE
+                        Exit For
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return strData
+    End Function
 
     Private Sub SetData()
         Try

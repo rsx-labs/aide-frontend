@@ -27,7 +27,7 @@ Public Class SuccessRegisterPage
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 10
+    Dim pagingRecordPerPage As Integer
     Dim currentPage As Integer
     Dim lastPage As Integer
 #End Region
@@ -39,11 +39,15 @@ Public Class SuccessRegisterPage
     Private submenuframe As Frame
     Private email As String
     Private profile As Profile
+<<<<<<< HEAD
     Private isEmpty As Boolean
     Private aideService As ServiceReference1.AideServiceClient
+=======
+    Private _OptionsViewModel As OptionViewModel
+>>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
 
     Dim lstSuccess As SuccessRegister()
-    Dim paginatedCollection As PaginatedObservableCollection(Of SuccessRegisterModel) = New PaginatedObservableCollection(Of SuccessRegisterModel)(pagingRecordPerPage)
+    Dim paginatedCollection As PaginatedObservableCollection(Of SuccessRegisterModel)
 
 #End Region
 
@@ -51,12 +55,23 @@ Public Class SuccessRegisterPage
 
     Public Sub New(_mainFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
         InitializeComponent()
+<<<<<<< HEAD
         mainFrame = _mainFrame
         addframe = _addframe
         menugrid = _menugrid
         submenuframe = _submenuframe
         email = _profile.Email_Address
         profile = _profile
+=======
+        Me.profile = _profile
+        Me.email = profile.Email_Address
+        Me.mainFrame = mainFrame
+        Me._addframe = _addframe
+        Me._menugrid = _menugrid
+        Me._submenuframe = _submenuframe
+        pagingRecordPerPage = GetOptionData(26, 11, 12)
+        paginatedCollection = New PaginatedObservableCollection(Of SuccessRegisterModel)(pagingRecordPerPage)
+>>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
         SetData()
         PermissionSettings()
     End Sub
@@ -177,6 +192,24 @@ Public Class SuccessRegisterPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
         Return bInitialize
+    End Function
+
+    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+        Dim strData As String = String.Empty
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        strData = opt.VALUE
+                        Exit For
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return strData
     End Function
 
     Private Sub SetPaging(mode As Integer)

@@ -19,15 +19,12 @@ Class MainWindow
     Private empID As Integer
     Private permission As Integer
     Private objMutex As System.Threading.Mutex
-
+    Private _OptionsViewModel As OptionViewModel
     Dim profileDBProvider As New ProfileDBProvider
     Dim profileViewModel As New ProfileViewModel
     Dim profile As Profile
     Dim aideClientService As AideServiceClient
-    Dim eventStartUpId As String = ConfigurationManager.AppSettings("eventStartUpId")
-    Dim eventLogInId As String = ConfigurationManager.AppSettings("eventLogInId")
     Dim enableOutlook As String = ConfigurationManager.AppSettings("enableOutlook")
-    Dim defaultEmail As String = ConfigurationManager.AppSettings("defaultEmail")
     Dim machineOS As String = My.Computer.Info.OSFullName
     Dim guestPermission As Integer = 5
 #End Region
@@ -115,7 +112,7 @@ Class MainWindow
         If enableOutlook = "True" Then
             CheckOutlook()
         Else
-            email = defaultEmail
+            email = GetOptionData(15, 4, 8)
         End If
 
         InitializeData()
@@ -247,6 +244,7 @@ Class MainWindow
     Public Sub Attendance()
         Try
             'Get Login Time
+            Dim eventStartUpId As String = GetOptionData(14, 4, 6)
             If machineOS.Contains("Windows 7") Then
                 eventStartUpId = "12"
             End If
@@ -310,6 +308,24 @@ Class MainWindow
             txtTitle.Text = "Adaptive Intelligent Dashboard for Employees " & .Major & "." & .Minor & "." & .Build
         End With
     End Sub
+
+    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+        Dim strData As String = String.Empty
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        strData = opt.VALUE
+                        Exit For
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return strData
+    End Function
 
 #End Region
 

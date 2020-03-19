@@ -20,7 +20,7 @@ Class CreateProjectPage
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 8
+    Dim pagingRecordPerPage As Integer
     Dim currentPage As Integer
     Dim lastPage As Integer
 #End Region
@@ -32,6 +32,7 @@ Class CreateProjectPage
     Private _ProjectViewModel As New ProjectViewModel
     Private client As AideServiceClient
     Private _profile As Profile
+    Private _OptionsViewModel As OptionViewModel
 
     Dim billabiltiy As Short
     Dim category As Short
@@ -49,6 +50,7 @@ Class CreateProjectPage
         If _profile.Permission_ID = 1 Then
             grdCreate.Visibility = Visibility.Visible
         End If
+        pagingRecordPerPage = GetOptionData(31, 15, 12)
         SetData()
     End Sub
 #End Region
@@ -261,6 +263,24 @@ Class CreateProjectPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
+    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+        Dim strData As String = String.Empty
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        strData = opt.VALUE
+                        Exit For
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return strData
+    End Function
 
 #End Region
 

@@ -20,7 +20,7 @@ Class WeeklyReportPage
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 10
+    Dim pagingRecordPerPage As Integer
     Dim currentPage As Integer
     Dim lastPage As Integer
 
@@ -47,6 +47,7 @@ Class WeeklyReportPage
     Private startFiscalYear As Integer
     Private endFiscalYear As Integer
     Private displayMonth As String
+    Private _OptionsViewModel As OptionViewModel
 
     Dim dateToday As Date = Date.Today
 
@@ -89,6 +90,8 @@ Class WeeklyReportPage
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
         Me.profile = _profile
+
+        pagingRecordPerPage = GetOptionData(22, 3, 12)
 
         LoadMonth()
         LoadYear()
@@ -297,6 +300,7 @@ Class WeeklyReportPage
         End Try
     End Sub
 
+<<<<<<< HEAD
     Private Sub PermissionSettings()
         Dim guestAccount As Integer = 5
 
@@ -307,6 +311,25 @@ Class WeeklyReportPage
         End If
     End Sub
 
+=======
+    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+        Dim strData As String = String.Empty
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        strData = opt.VALUE
+                        Exit For
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return strData
+    End Function
+>>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
 #End Region
 
 #Region "Events"

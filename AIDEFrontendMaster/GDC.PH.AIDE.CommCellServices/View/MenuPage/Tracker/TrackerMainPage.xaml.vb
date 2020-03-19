@@ -12,7 +12,7 @@ Class SabaLearningMainPage
     Dim startRowIndex As Integer
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer = 10
+    Dim pagingRecordPerPage As Integer
     Dim currentPage As Integer
     Dim lastPage As Integer
 
@@ -33,7 +33,7 @@ Class SabaLearningMainPage
     Private submenuframe As Frame
     Private email As String
     Private profile As Profile
-
+    Private _OptionsViewModel As OptionViewModel
     Dim lstSabaLearning As SabaLearning()
     Dim totalRecords As Integer
     Dim searchLearning = New ObservableCollection(Of SabaLearning)
@@ -50,6 +50,7 @@ Class SabaLearningMainPage
         Me.addframe = _addframe
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
+        pagingRecordPerPage = GetOptionData(32, 16, 12)
         SetData()
 
         If profile.Permission_ID <> 1 Then
@@ -148,6 +149,24 @@ Class SabaLearningMainPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
+    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+        Dim strData As String = String.Empty
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        strData = opt.VALUE
+                        Exit For
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return strData
+    End Function
 
     Private Sub SetPaging(mode As Integer)
         Try
