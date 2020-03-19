@@ -39,12 +39,9 @@ Public Class SuccessRegisterPage
     Private submenuframe As Frame
     Private email As String
     Private profile As Profile
-<<<<<<< HEAD
     Private isEmpty As Boolean
     Private aideService As ServiceReference1.AideServiceClient
-=======
     Private _OptionsViewModel As OptionViewModel
->>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
 
     Dim lstSuccess As SuccessRegister()
     Dim paginatedCollection As PaginatedObservableCollection(Of SuccessRegisterModel)
@@ -55,23 +52,16 @@ Public Class SuccessRegisterPage
 
     Public Sub New(_mainFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
         InitializeComponent()
-<<<<<<< HEAD
         mainFrame = _mainFrame
         addframe = _addframe
         menugrid = _menugrid
         submenuframe = _submenuframe
         email = _profile.Email_Address
         profile = _profile
-=======
-        Me.profile = _profile
-        Me.email = profile.Email_Address
-        Me.mainFrame = mainFrame
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
+
         pagingRecordPerPage = GetOptionData(26, 11, 12)
         paginatedCollection = New PaginatedObservableCollection(Of SuccessRegisterModel)(pagingRecordPerPage)
->>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
+
         SetData()
         PermissionSettings()
     End Sub

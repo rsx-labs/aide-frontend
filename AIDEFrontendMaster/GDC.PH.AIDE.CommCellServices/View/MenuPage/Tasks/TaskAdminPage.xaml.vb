@@ -29,18 +29,11 @@ Class TaskAdminPage
     Public mainWindow As MainWindow
     Public empID As Integer
     Public email As String
-<<<<<<< HEAD
     Private addframe As Frame
     Private menugrid As Grid
     Private submenuframe As Frame
     Private profile As Profile
-=======
-    Private _addframe As Frame
-    Private _menugrid As Grid
-    Private _submenuframe As Frame
     Private _OptionsViewModel As OptionViewModel
->>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
-
     Dim currentPage As Integer
     Dim lastPage As Integer
     Dim lstTasks As TaskSummary()
@@ -54,22 +47,16 @@ Class TaskAdminPage
         InitializeComponent()
         frame = _frame
         mainWindow = _mainWindow
-<<<<<<< HEAD
         addframe = _addframe
         menugrid = _menugrid
         submenuframe = _submenuframe
         empID = _profile.Emp_ID
         email = _profile.Email_Address
         profile = _profile
-=======
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
-        empID = _empID
-        email = _email
+
         pagingRecordPerPage = GetOptionData(21, 7, 12)
         paginatedCollection = New PaginatedObservableCollection(Of TasksSpModel)(pagingRecordPerPage)
->>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
+
         SetDates()
         LoadEmployeeTaskAll()
 
