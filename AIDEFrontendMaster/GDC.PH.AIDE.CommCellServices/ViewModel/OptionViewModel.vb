@@ -11,6 +11,7 @@ Public Class OptionViewModel
 
     Private _optionLst As ObservableCollection(Of OptionModel)
     Private _optionDB As OptionDBProvider
+    Private _optionValue As String
     Private aide As ServiceReference1.AideServiceClient
 #End Region
 
@@ -29,6 +30,15 @@ Public Class OptionViewModel
         Set(value As ObservableCollection(Of OptionModel))
             _optionLst = value
             NotifyPropertyChanged("OptionList")
+        End Set
+    End Property
+    Public Property OptionValue As String
+        Get
+            Return _optionValue
+        End Get
+        Set(value As String)
+            _optionValue = value
+            NotifyPropertyChanged("OptionValue")
         End Set
     End Property
 
@@ -52,6 +62,21 @@ Public Class OptionViewModel
             Return False
         End Try
     End Function
+    Public Function GetOption(ByVal _optionID As Integer) As String
+        Try
+            If Me.InitializeService Then
+                Dim _option As Options() = aide.GetOptions(_optionID, 0, 0)
+                If _option.Length = 0 Then
+                    Return String.Empty
+                End If
+                SetOption(_option)
+            End If
+            Return _optionValue
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            Return String.Empty
+        End Try
+    End Function
 
     Private Sub SetOptions(ByVal _opt As Options())
         Try
@@ -60,6 +85,19 @@ Public Class OptionViewModel
             Next
             For Each optSet As myOptionSet In _optionDB._getObjOption()
                 _optionLst.Add(New OptionModel(optSet))
+            Next
+
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Private Sub SetOption(ByVal _opt As Options())
+        Try
+            For Each objOption As Options In _opt
+                _optionDB._setlistofitems(objOption)
+            Next
+            For Each optSet As myOptionSet In _optionDB._getObjOption()
+                _optionValue = optSet._value
             Next
 
         Catch ex As Exception

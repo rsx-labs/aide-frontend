@@ -33,8 +33,12 @@ Class ComcellClockPage
 
     Private configMissingWeeklyStatus As New List(Of String)
     Private configMissingAttendance As New List(Of String)
+    Private configUpdateContacts As New List(Of String)
+    Private configUpdateSkills As New List(Of String)
     Private isRPNotifAllow As Boolean
     Private isWRNotifAllow As Boolean
+    Private isCNotifAllow As Boolean
+    Private isSMNotifAllow As Boolean
     Private allowRPDays As String
 
     Private mailConfig As New MailConfig
@@ -271,6 +275,23 @@ Class ComcellClockPage
             End If
         End If
 
+        If isCNotifAllow And enableNotification Then
+            actualTime = Now.ToString("MM/dd/yyyy") & " " & dateNow.ToString("hh:mm:ss tt")
+            Dim ContactsTime As String = Now.Month.ToString("00") & "/" & CInt(configUpdateContacts(0)).ToString("00") & "/" & Now.Year.ToString("0000") & " " & configUpdateContacts(1)
+            If actualTime = ContactsTime Then
+                GetContactsEmailData()
+                SetUpdateContacts()
+            End If
+        End If
+
+        If isSMNotifAllow And enableNotification Then
+            actualTime = Now.ToString("MM/dd/yyyy") & " " & dateNow.ToString("hh:mm:ss tt")
+            Dim SkillsTime As String = Now.Month.ToString("00") & "/" & CInt(configUpdateSkills(0)).ToString("00") & "/" & Now.Year.ToString("0000") & " " & configUpdateSkills(1)
+            If actualTime = SkillsTime Then
+                GetSkillsEmailData()
+                SetUpdateSkills()
+            End If
+        End If
     End Sub
 
     Public Sub refreshClock()
@@ -312,9 +333,13 @@ Class ComcellClockPage
     Public Sub LoadAllEmailNotifConfig()
         GetWeeklyReportConfig()
         GetAttendanceConfig()
+        GetContactsConfig()
+        GetSkillsConfig()
 
         isRPNotifAllow = mailConfigVM.isSendEmail(8, 0, 0)
         isWRNotifAllow = mailConfigVM.isSendEmail(9, 0, 0)
+        isCNotifAllow = mailConfigVM.isSendEmail(11, 0, 0)
+        isSMNotifAllow = mailConfigVM.isSendEmail(12, 0, 0)
         allowRPDays = GetOptionData(13, 0, 0)
     End Sub
 
@@ -482,4 +507,91 @@ Class ComcellClockPage
         End Try
     End Sub
 #End Region
+#Region "Update Contact List"
+    Private Sub GetContactsConfig()
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(33, 0, 0) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        configUpdateContacts = New List(Of String)(opt.VALUE.Split(","c))
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Private Sub GetContactsEmailData()
+        Try
+            _OptionsViewModel = New OptionViewModel
+            _option = New OptionModel
+            If _OptionsViewModel.GetOptions(34, 0, 0) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        _option = opt
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Public Sub SetUpdateContacts()
+        Try
+            lstMissingAttendance = aideService.GetSkillAndContactsNotUpdated(empID, 1)
+            If lstMissingAttendance.Count > 0 Then
+                For Each objEmployee As Employee In lstMissingAttendance
+                    mailConfigVM.SendEmail(mailConfigVM, _option, objEmployee.EmailAddress, "", 1, MonthName(Now.Month(), False))
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+#End Region
+#Region "Update Skill Matrix"
+    Private Sub GetSkillsConfig()
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(35, 0, 0) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        configUpdateSkills = New List(Of String)(opt.VALUE.Split(","c))
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Private Sub GetSkillsEmailData()
+        Try
+            _OptionsViewModel = New OptionViewModel
+            _option = New OptionModel
+            If _OptionsViewModel.GetOptions(36, 0, 0) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        _option = opt
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Public Sub SetUpdateSkills()
+        Try
+            lstMissingAttendance = aideService.GetSkillAndContactsNotUpdated(empID, 2)
+            If lstMissingAttendance.Count > 0 Then
+                For Each objEmployee As Employee In lstMissingAttendance
+                    mailConfigVM.SendEmail(mailConfigVM, _option, objEmployee.EmailAddress, "", 1, MonthName(Now.Month(), False))
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+#End Region
+
 End Class
