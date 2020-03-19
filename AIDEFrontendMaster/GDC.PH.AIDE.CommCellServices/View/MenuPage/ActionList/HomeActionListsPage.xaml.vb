@@ -41,10 +41,13 @@ Class HomeActionListsPage
     Private action_provider As New ActionListDBProvider
     Private EnableRowHeaderDoubleClick As Boolean = False
     Private lstAction As Action()
-<<<<<<< HEAD
+    Private profiles As Profile
+    Private _OptionsViewModel As OptionViewModel
+
+    Dim paginatedCollection As PaginatedObservableCollection(Of ActionModel)
 
     Dim guestAccount As Integer = 5
-    Dim paginatedCollection As PaginatedObservableCollection(Of ActionModel) = New PaginatedObservableCollection(Of ActionModel)(pagingRecordPerPage)
+
 #End Region
 
 #Region "Constructor"
@@ -57,33 +60,11 @@ Class HomeActionListsPage
         profile = _profile
         InitializeComponent()
 
+        pagingRecordPerPage = GetOptionData(24, 9, 12)
+        paginatedCollection = New PaginatedObservableCollection(Of ActionModel)(pagingRecordPerPage)
+
         LoadActionList(email)
         PermissionSettings()
-=======
-    Private profiles As Profile
-    Private _OptionsViewModel As OptionViewModel
-
-    Dim paginatedCollection As PaginatedObservableCollection(Of ActionModel)
-#End Region
-
-#Region "Constructor"
-    Public Sub New(_frame As Frame, email As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _prof As Profile)
-        Try
-            Me._email = email
-            Me._frame = _frame
-            Me._addframe = _addframe
-            Me._menugrid = _menugrid
-            Me._submenuframe = _submenuframe
-            Me.profiles = _prof
-            InitializeComponent()
-
-            pagingRecordPerPage = GetOptionData(24, 9, 12)
-            paginatedCollection = New PaginatedObservableCollection(Of ActionModel)(pagingRecordPerPage)
-            LoadActionList(_email)
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
->>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
     End Sub
 #End Region
 
@@ -114,13 +95,12 @@ Class HomeActionListsPage
         End Try
     End Sub
 
-<<<<<<< HEAD
     Private Sub PermissionSettings()
         If profile.Permission_ID = guestAccount Then
             btnCreate.Visibility = Windows.Visibility.Hidden
         End If
     End Sub
-=======
+
     Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
         Dim strData As String = String.Empty
         Try
@@ -138,7 +118,7 @@ Class HomeActionListsPage
         End Try
         Return strData
     End Function
->>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
+
 #End Region
 
 #Region "Paging Function/Method"

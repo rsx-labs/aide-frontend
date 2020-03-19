@@ -45,20 +45,13 @@ Class LessonLearntPage
     Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
         InitializeComponent()
         frame = _frame
-<<<<<<< HEAD
         addframe = _addframe
         menugrid = _menugrid
         submenuframe = _submenuframe
         email = _profile.Email_Address
         profile = _profile
-=======
-        email = _email
-        Me._addframe = _addframe
-        Me._menugrid = _menugrid
-        Me._submenuframe = _submenuframe
-        Me.profile = _profile
+
         pagingRecordPerPage = GetOptionData(25, 10, 12)
->>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
 
         LoadLessonLearntList()
         PermissionSettings()

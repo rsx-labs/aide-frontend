@@ -68,8 +68,8 @@ Class WeeklyReportPage
 
     Dim listWeeklyReportStatus As New ObservableCollection(Of WeeklyReportStatusModel)
 
-    Dim weeklyReportCollection As PaginatedObservableCollection(Of WeekRangeModel) = New PaginatedObservableCollection(Of WeekRangeModel)(pagingRecordPerPage)
-    Dim missingReportCollection As PaginatedObservableCollection(Of ContactListModel) = New PaginatedObservableCollection(Of ContactListModel)(pagingRecordPerPage)
+    Dim weeklyReportCollection As PaginatedObservableCollection(Of WeekRangeModel)
+    Dim missingReportCollection As PaginatedObservableCollection(Of ContactListModel)
 
     Dim weeklyReportDBProvider As New WeeklyReportDBProvider
     Dim weekRangeViewModel As New WeekRangeViewModel
@@ -92,6 +92,8 @@ Class WeeklyReportPage
         Me.profile = _profile
 
         pagingRecordPerPage = GetOptionData(22, 3, 12)
+        weeklyReportCollection = New PaginatedObservableCollection(Of WeekRangeModel)(pagingRecordPerPage)
+        missingReportCollection = New PaginatedObservableCollection(Of ContactListModel)(pagingRecordPerPage)
 
         LoadMonth()
         LoadYear()
@@ -300,7 +302,6 @@ Class WeeklyReportPage
         End Try
     End Sub
 
-<<<<<<< HEAD
     Private Sub PermissionSettings()
         Dim guestAccount As Integer = 5
 
@@ -311,7 +312,6 @@ Class WeeklyReportPage
         End If
     End Sub
 
-=======
     Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
         Dim strData As String = String.Empty
         Try
@@ -329,7 +329,7 @@ Class WeeklyReportPage
         End Try
         Return strData
     End Function
->>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
+
 #End Region
 
 #Region "Events"

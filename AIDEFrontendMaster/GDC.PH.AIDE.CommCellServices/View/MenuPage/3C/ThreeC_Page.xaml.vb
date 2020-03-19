@@ -121,13 +121,12 @@ Public Class ThreeC_Page
         Return _setDateNow
     End Function
 
-<<<<<<< HEAD
     Private Sub PermissionSettings()
         If profile.Permission_ID = guestAccount Then
             btnCreate.Visibility = Windows.Visibility.Hidden
         End If
     End Sub
-=======
+
     Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
         Dim strData As String = String.Empty
         Try
@@ -145,7 +144,7 @@ Public Class ThreeC_Page
         End Try
         Return strData
     End Function
->>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
+
 #End Region
 
 #Region "Initialize Service"

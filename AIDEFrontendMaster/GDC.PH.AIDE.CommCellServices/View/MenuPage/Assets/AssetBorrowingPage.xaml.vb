@@ -38,13 +38,8 @@ Public Class AssetBorrowingPage
     Private _menugrid As Grid
     Private _submenuframe As Frame
     Private client As AideServiceClient
-<<<<<<< HEAD
     Private assetVM As New AssetsViewModel()
-
-=======
-    Dim assetVM As New AssetsViewModel()
     Private _OptionsViewModel As OptionViewModel
->>>>>>> AIDE-FRONTEND-496: Usage of a Parameter Table
     Private _AideService As ServiceReference1.AideServiceClient
     Dim show As Boolean = True
     Dim guestAccount = 5
