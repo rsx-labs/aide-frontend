@@ -62,11 +62,11 @@ Public Class MailConfigViewModel
                             <body>
                                 <div style=""margin:30px 0px"">
                                     <center>
-                                        <div style=""background-color:red"">
-                                            <font size=""5"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font>
+                                        <div style=""background-color:steelblue"">
+                                            <font size=""6"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font>
                                         </div>
                                         <div style=""background-color:#fcfff9"">
-	                                        <font size=""3"">" + bodyList(0) + " " + strOption.ToString() + " " + bodyList(1) + "</font>                                        
+	                                        <font size=""4"">" + bodyList(0) + " " + strOption.ToString() + " " + bodyList(1) + "</font>                                        
                                         </div>                                    
                                     </center>
                                 </div>
@@ -82,11 +82,11 @@ Public Class MailConfigViewModel
                             <body>
                                 <div style=""margin:30px 0px"">
                                     <center>
-                                        <div style=""background-color:dimgray"">
-                                            <font size=""5"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font>
+                                        <div style=""background-color:steelblue"">
+                                            <font size=""6"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font>
                                         </div>
                                         <div style=""background-color:#fcfff9"">
-	                                        <font size=""3"">" + bodyList(0) + "</font>
+	                                        <font size=""4"">" + bodyList(0) + "</font>
                                             <table style=""width:100%"">" + optList + "</table> 
                                         </div>
                                         
@@ -104,11 +104,11 @@ Public Class MailConfigViewModel
                             <body>
                                 <div style=""margin:30px 0px"">
                                     <center>
-                                        <div style=""background-color:dimgray"">
-                                            <font size=""5"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font>
+                                        <div style=""background-color:steelblue"">
+                                            <font size=""6"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font>
                                         </div>
                                         <div style=""background-color:#fcfff9"">
-	                                        <font size=""3"">" + bodyList(0) + " " + strOption2 + " " + bodyList(1) + "</font>
+	                                        <font size=""4"">" + bodyList(0) + " " + strOption2 + " " + bodyList(1) + "</font>
                                             <table style=""width:100%"">" + optList + "</table> 
                                         </div>
                                         
@@ -126,11 +126,11 @@ Public Class MailConfigViewModel
                             <body>
                                 <div style=""margin:30px 0px"">
                                     <center>
-                                        <div style=""background-color:dimgray"">
-                                            <font size=""5"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font>
+                                        <div style=""background-color:steelblue"">
+                                            <font size=""6"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font>
                                         </div>
                                         <div style=""background-color:#fcfff9"">
-	                                        <font size=""3"">" + bodyList(0) + " " + strOptionLst2(0) + " " + bodyList(1) + " " + strOptionLst2(1) + " " + bodyList(2) + " " + strOptionLst2(2) + "." + "</font>
+	                                        <font size=""4"">" + bodyList(0) + " " + strOptionLst2(0) + " " + bodyList(1) + " " + strOptionLst2(1) + " " + bodyList(2) + " " + strOptionLst2(2) + "." + "</font>
                                             <table style=""width:100%"">" + optList + "</table> 
                                         </div>
                                         
