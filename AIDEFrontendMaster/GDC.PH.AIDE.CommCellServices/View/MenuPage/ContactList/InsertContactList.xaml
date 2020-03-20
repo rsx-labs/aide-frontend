@@ -780,6 +780,46 @@
                                     <!--Other Phone-->
                                 </Grid>
                             </TabItem>
+
+                            <TabItem x:Name="PhotoDetailsTab"
+                                     Foreground="White" Width="150" HorizontalContentAlignment="Stretch" 
+                                     Height="30">
+                                
+                                <TabItem.Header>
+                                    <Viewbox HorizontalAlignment="Center">
+                                        <TextBlock TextWrapping="Wrap" Padding="10,0,0,0" Text="Photo Details" Margin="10" Foreground="White" FontSize="20"/>
+                                    </Viewbox>
+                                </TabItem.Header>
+
+                                <Grid Margin="10,5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="20*"/>
+                                        <RowDefinition Height="60*"/>
+                                        <RowDefinition Height="20*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Row="0" Grid.Column="0">
+                                        <TextBlock Foreground="Black" x:Name="txtPhotoNote"  FontSize="11" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Grid>
+
+                                    <Grid Grid.Row="1" Grid.Column="0">
+                                        <Viewbox HorizontalAlignment="Left">
+                                            <Image Name="imgPhoto" Stretch="Fill" Width="150" Height="100"/>
+                                        </Viewbox>                                        
+                                    </Grid>
+
+                                    <Grid Grid.Row="2" Grid.Column="0">
+                                        <Button Style="{DynamicResource RoundCornerGray}" x:Name="btnPhoto" HorizontalAlignment="Left"  Margin="5" >
+                                            <TextBlock Text="Browse" TextWrapping="Wrap" Margin="5"/>
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </TabItem>
+
                         </TabControl>
                     </Grid>
                 </Grid>
