@@ -193,6 +193,7 @@
     <Compile Include="DataProviderService\ProfileDBProvider.vb" />
     <Compile Include="DataProviderService\ProjectDBProvider.vb" />
     <Compile Include="DataProviderService\ResourcePlannerDBProvider.vb" />
+    <Compile Include="DataProviderService\ReportsDBProvider.vb" />
     <Compile Include="DataProviderService\SabaLearningDBProvider.vb" />
     <Compile Include="DataProviderService\SelectionListDBProvider.vb" />
     <Compile Include="DataProviderService\SendCodeDBProvider.vb" />
@@ -235,6 +236,7 @@
     <Compile Include="Model\ProfileModel.vb" />
     <Compile Include="Model\ProjectModel.vb" />
     <Compile Include="Model\ResourcePlannerModel.vb" />
+    <Compile Include="Model\ReportsModel.vb" />
     <Compile Include="Model\SabaLearningModel.vb" />
     <Compile Include="Model\SendCodeModel.vb" />
     <Compile Include="Model\SkillsModel.vb" />
@@ -278,6 +280,7 @@
     <Compile Include="ViewModel\ProfileViewModel.vb" />
     <Compile Include="ViewModel\ProjectViewModel.vb" />
     <Compile Include="ViewModel\ResourcePlannerViewModel.vb" />
+    <Compile Include="ViewModel\ReportsViewModel.vb" />
     <Compile Include="ViewModel\SabaLearningViewModel.vb" />
     <Compile Include="ViewModel\SelectionListViewModel.vb" />
     <Compile Include="ViewModel\SendCodeViewModel.vb" />
@@ -451,6 +454,24 @@
     </Compile>
     <Compile Include="View\MenuPage\KPITargets\KPITargetsPage.xaml.vb">
       <DependentUpon>KPITargetsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Reports\StatusReportFilter.xaml.vb">
+      <DependentUpon>StatusReportFilter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Reports\ResourcePlannerFilter.xaml.vb">
+      <DependentUpon>ResourcePlannerFilter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Reports\BillabilityFilter.xaml.vb">
+      <DependentUpon>BillabilityFilter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Reports\AssetInventoryFilter.xaml.vb">
+      <DependentUpon>AssetInventoryFilter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Reports\OutstandingTasksFilter.xaml.vb">
+      <DependentUpon>OutstandingTasksFilter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\Reports\ReportsMainPage.xaml.vb">
+      <DependentUpon>ReportsMainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\Resource Planner\ResourcePlannerAddPage.xaml.vb">
       <DependentUpon>ResourcePlannerAddPage.xaml</DependentUpon>
@@ -800,6 +821,30 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MenuPage\KPITargets\KPITargetsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Reports\StatusReportFilter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Reports\ResourcePlannerFilter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Reports\BillabilityFilter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Reports\AssetInventoryFilter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Reports\OutstandingTasksFilter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuPage\Reports\ReportsMainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
