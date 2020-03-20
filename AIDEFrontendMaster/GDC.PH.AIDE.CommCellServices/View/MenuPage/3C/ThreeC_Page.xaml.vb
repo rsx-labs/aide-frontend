@@ -174,6 +174,13 @@ Public Class ThreeC_Page
         Return strData
     End Function
 
+    Private Sub GUISettingsOff()
+        dg3C.Visibility = Windows.Visibility.Hidden
+
+        btnPrev.IsEnabled = False
+        btnNext.IsEnabled = False
+    End Sub
+
     Private Sub GUISettingsOn()
         dg3C.Visibility = Windows.Visibility.Visible
 
