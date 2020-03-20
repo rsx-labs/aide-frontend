@@ -35,16 +35,22 @@ Class ComcellClockPage
     Private configMissingAttendance As New List(Of String)
     Private configUpdateContacts As New List(Of String)
     Private configUpdateSkills As New List(Of String)
+    Private configUpdateWorkPlaceAudit As New List(Of String)
+    Private configUpdateWorkPlaceAuditDaily As New List(Of String)
+    Private configUpdateWorkPlaceAuditWeekly As New List(Of String)
+    Private configUpdateWorkPlaceAuditMonthly As New List(Of String)
     Private isRPNotifAllow As Boolean
     Private isWRNotifAllow As Boolean
     Private isCNotifAllow As Boolean
     Private isSMNotifAllow As Boolean
+    Private isWANotifAllow As Boolean
     Private allowRPDays As String
 
     Private mailConfig As New MailConfig
     Private mailConfigVM As New MailConfigViewModel
     Private lstMissingReports As ContactList()
     Private lstMissingAttendance As Employee()
+    Private objAuditor As Employee
 
     Private contactListVM As ContactListViewModel
 
@@ -247,6 +253,7 @@ Class ComcellClockPage
     Private Sub Timer_Click(ByVal sender As Object, ByVal e As EventArgs)
         Dim dateNow As DateTime = Format(DateTime.Now, "hh:mm:ss tt")
         Dim actualTime As String
+        Dim actualTimeMonthly As String
 
         actualTime = DateTime.Now.DayOfWeek.ToString().ToUpper() + " " + dateNow.ToString("hh:mm:ss tt")
 
@@ -292,6 +299,27 @@ Class ComcellClockPage
                 SetUpdateSkills()
             End If
         End If
+
+        If isWANotifAllow And enableNotification Then
+            actualTime = DateTime.Now.DayOfWeek.ToString().ToUpper() + " " + dateNow.ToString("hh:mm:ss tt")
+            actualTimeMonthly = Now.ToString("MM/dd/yyyy") & " " & dateNow.ToString("hh:mm:ss tt")
+            Dim WAWeeklyTime As String = [Enum].GetName(GetType(DayOfWeek), Convert.ToInt32(configUpdateWorkPlaceAuditWeekly(0))).ToString.Trim.ToUpper() & " " & configUpdateWorkPlaceAudit(0)
+            Dim WADailyTime As String = [Enum].GetName(GetType(DayOfWeek), Convert.ToInt32(Today.DayOfWeek)).ToString.Trim.ToUpper() & " " & configUpdateWorkPlaceAudit(0)
+            Dim WAMonthlyTime As String = Now.Month.ToString("00") & "/" & CInt(configUpdateWorkPlaceAuditMonthly(0)).ToString("00") & "/" & Now.Year.ToString("0000") & " " & configUpdateWorkPlaceAudit(0)
+            If actualTime = WADailyTime And configUpdateWorkPlaceAuditDaily.Contains(Convert.ToInt32(Today.DayOfWeek).ToString()) Then
+                GetWorkPlaceAuditEmailData()
+                SetUpdateWADaily()
+            End If
+            If actualTime = WAWeeklyTime Then
+                GetWorkPlaceAuditEmailData()
+                SetUpdateWAWeekly()
+            End If
+            If actualTimeMonthly = WAMonthlyTime Then
+                GetWorkPlaceAuditEmailData()
+                SetUpdateWAMonthly()
+            End If
+
+        End If
     End Sub
 
     Public Sub refreshClock()
@@ -335,11 +363,16 @@ Class ComcellClockPage
         GetAttendanceConfig()
         GetContactsConfig()
         GetSkillsConfig()
+        GetWorkPlaceAuditConfig()
+        GetWADailyConfig()
+        GetWAWeeklyConfig()
+        GetWAMonthlyConfig()
 
         isRPNotifAllow = mailConfigVM.isSendEmail(8, 0, 0)
         isWRNotifAllow = mailConfigVM.isSendEmail(9, 0, 0)
         isCNotifAllow = mailConfigVM.isSendEmail(11, 0, 0)
         isSMNotifAllow = mailConfigVM.isSendEmail(12, 0, 0)
+        isWANotifAllow = mailConfigVM.isSendEmail(37, 0, 0)
         allowRPDays = GetOptionData(13, 0, 0)
     End Sub
 
@@ -587,6 +620,118 @@ Class ComcellClockPage
                 For Each objEmployee As Employee In lstMissingAttendance
                     mailConfigVM.SendEmail(mailConfigVM, _option, objEmployee.EmailAddress, "", 1, MonthName(Now.Month(), False))
                 Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+#End Region
+
+#Region "Workplace Audit - Daily"
+    Private Sub GetWorkPlaceAuditConfig()
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(38, 0, 0) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        configUpdateWorkPlaceAudit = New List(Of String)(opt.VALUE.Split(","c))
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+
+    Private Sub GetWADailyConfig()
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(39, 0, 0) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        configUpdateWorkPlaceAuditDaily = New List(Of String)(opt.VALUE.Split(","c))
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+
+    Private Sub GetWorkPlaceAuditEmailData()
+        Try
+            _OptionsViewModel = New OptionViewModel
+            _option = New OptionModel
+            If _OptionsViewModel.GetOptions(42, 0, 0) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        _option = opt
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Public Sub SetUpdateWADaily()
+        Try
+            objAuditor = aideService.GetWorkPlaceAuditor(empID, 1)
+            If Not objAuditor Is Nothing Then
+                mailConfigVM.SendEmail(mailConfigVM, _option, objAuditor.EmailAddress, "", 1, "Daily Auditor")
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+#End Region
+#Region "Workplace Audit - Weekly"
+    Private Sub GetWAWeeklyConfig()
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(40, 0, 0) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        configUpdateWorkPlaceAuditWeekly = New List(Of String)(opt.VALUE.Split(","c))
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Public Sub SetUpdateWAWeekly()
+        Try
+            objAuditor = aideService.GetWorkPlaceAuditor(empID, 2)
+            If Not objAuditor Is Nothing Then
+                mailConfigVM.SendEmail(mailConfigVM, _option, objAuditor.EmailAddress, "", 1, "Weekly Auditor")
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+#End Region
+
+#Region "Workplace Audit - Weekly"
+    Private Sub GetWAMonthlyConfig()
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(41, 0, 0) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        configUpdateWorkPlaceAuditMonthly = New List(Of String)(opt.VALUE.Split(","c))
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+
+    Public Sub SetUpdateWAMonthly()
+        Try
+            objAuditor = aideService.GetWorkPlaceAuditor(empID, 3)
+            If Not objAuditor Is Nothing Then
+                mailConfigVM.SendEmail(mailConfigVM, _option, objAuditor.EmailAddress, "", 1, "Monthly Auditor")
             End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
