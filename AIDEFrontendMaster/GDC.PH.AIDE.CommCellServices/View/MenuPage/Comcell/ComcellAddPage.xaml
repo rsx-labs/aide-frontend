@@ -30,7 +30,7 @@
                                        BorderBrush="Transparent"
                                        Text=""
                                        TextAlignment="Center"
-                                       FontSize="12"
+                                       FontSize="11"
                                        HorizontalContentAlignment="Stretch"
                                        Padding="{TemplateBinding Padding}"
                                        VerticalContentAlignment="Stretch"
@@ -103,7 +103,7 @@
                                        Padding="{TemplateBinding Padding}"
                                        VerticalContentAlignment="Center"
                                        Visibility="Visible"
-                                               FontSize="12"
+                                               FontSize="11"
                                        Text="" VerticalAlignment="Center"
                                              
                                                HorizontalAlignment="Stretch"

@@ -260,7 +260,7 @@
                                        Padding="{TemplateBinding Padding}"
                                        VerticalContentAlignment="Center"
                                        Visibility="Visible"
-                                       
+                                       FontSize="11"
                                                HorizontalAlignment="Stretch"
                                        Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="1,1,0,1" Foreground="#FF1D1D1D">
                             </DatePickerTextBox>
@@ -327,7 +327,7 @@
                                        Padding="{TemplateBinding Padding}"
                                        VerticalContentAlignment="Center"
                                        Visibility="Visible"
-                                       
+                                       FontSize="11"
                                                HorizontalAlignment="Stretch"
                                        Style="{DynamicResource styleDatePickerTextBox}" Background="{x:Null}" BorderThickness="1,1,0,1" Foreground="#FF1D1D1D">
                             </DatePickerTextBox>
