@@ -191,7 +191,7 @@
                                     <ComboBoxItem Content="Task"/>
                                 </ComboBox>
                                 
-                                <TextBlock Text="Select category">
+                                <TextBlock Text="Select category *">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -252,7 +252,7 @@
                             </Grid>
 
                             <Grid Grid.Column="2">
-                                <Button Style="{DynamicResource RoundCornerGray}" x:Name="btnNewProject" Margin="5">
+                                <Button Style="{DynamicResource RoundCornerGray}" x:Name="btnClear" Margin="5">
                                     <TextBlock Text="CLEAR" TextWrapping="Wrap" Margin="5"/>
                                 </Button>
                             </Grid>

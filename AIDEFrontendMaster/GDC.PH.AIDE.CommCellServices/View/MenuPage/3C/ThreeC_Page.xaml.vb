@@ -16,48 +16,34 @@ Imports System.Printing
 Public Class ThreeC_Page
     Implements ServiceReference1.IAideServiceCallback
 
-    Public _AIDEClientService As ServiceReference1.AideServiceClient
-    Private email As String
+#Region "Paging Declarations"
+    Dim pagingRecordPerPage As Integer = 10
+    Dim currentPage As Integer
+    Dim lastPage As Integer
+    Dim totalRecords As Integer
+#End Region
+
+#Region "Fields"
     Private frame As Frame
     Private addframe As Frame
     Private menugrid As Grid
     Private submenuframe As Frame
     Private profile As Profile
 
-    Private max As Integer
-    Private incVal As Integer = 0
-    Private isSearchIsUsed As Integer = 0
-    Private isDateBetweenUsed As Integer = 0
 
-    Private offsetVal As Integer = 0
-    Private nextVal As Integer = 100
-
-    Private startRowIndex As Integer
-    Private lastRowIndex As Integer
-    Private pagingPageIndex As Integer
-    Private pagingRecordPerPage As Integer
-    Private currentPage As Integer
-    Private lastPage As Integer
-    Private _lstConcern As Concern()
     Private _OptionsViewModel As OptionViewModel
-
     Dim guestAccount As Integer = 5
+    Dim lstConcern As Concern()
+    Dim concernDBProvider As New ConcernDBProvider
+    Dim client As AideServiceClient
     Dim paginatedCollection As PaginatedObservableCollection(Of ConcernModel) = New PaginatedObservableCollection(Of ConcernModel)(pagingRecordPerPage)
+#End Region
 
-    Private Enum PagingMode
-        _First = 1
-        _Next = 2
-        _Previous = 3
-        _Last = 4
-    End Enum
-
+#Region "Constructor"
     Public Sub New(_profile As Profile, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
-        Dim clear As New ConcernViewModel
-
         InitializeComponent()
         InitializeService()
 
-        email = _profile.Email_Address
         profile = _profile
         frame = _frame
         addframe = _addframe
@@ -66,64 +52,107 @@ Public Class ThreeC_Page
 
         pagingRecordPerPage = GetOptionData(23, 8, 12)
 
-        LoadConcernList(offsetVal, nextVal)
+        LoadConcernList()
         PermissionSettings()
     End Sub
-
+#End Region
+    
 #Region "Methods"
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            client = New AideServiceClient(Context)
+            client.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
+
     ''DISPLAY to DATAGIRD VIEW
-    Public Sub LoadConcernList(offSet As Integer, NextVal As Integer)
+    Public Sub LoadConcernList()
         Try
             If InitializeService() Then
-                _lstConcern = _AIDEClientService.selectAllConcern(email, offSet, NextVal)
-                SetLists()
-                DisplayPagingInfo()
+                lstConcern = client.GetAllConcernLst(profile.Emp_ID)
+                SetLists(lstConcern)
             End If
-            
         Catch ex As SystemException
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-            _AIDEClientService.Abort()
+            client.Abort()
         End Try
     End Sub
 
-    ''resultSearch
-    Private Sub retrieveSearch(offSet As Integer, NextVal As Integer)
+    Private Sub SetLists(listConcern As Concern())
         Try
-            If InitializeService() Then
-                _lstConcern = _AIDEClientService.GetResultSearch(email, txtSearch.Text, offSet, NextVal)
-                SetLists()
-                DisplayPagingInfo()
-            End If
-        Catch ex As SystemException
+            concernDBProvider = New ConcernDBProvider
+            paginatedCollection = New PaginatedObservableCollection(Of ConcernModel)(pagingRecordPerPage)
+
+            For Each objConcern As Concern In listConcern
+                concernDBProvider.SetConcernList(objConcern)
+            Next
+
+            For Each iConcern As MyConcern In concernDBProvider.GetConcernList()
+                paginatedCollection.Add(New ConcernModel(iConcern))
+            Next
+
+            dg3C.ItemsSource = paginatedCollection
+
+            totalRecords = listConcern.Length
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+            DisplayPagingInfo()
+        Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-            _AIDEClientService.Abort()
+        End Try
+    End Sub
+
+    Private Sub Search3C(ByVal search As String)
+        Try
+            Dim items = From i In lstConcern Where i.Act_Reference.ToLower.Contains(search.ToLower) _
+                                            Or i.RefID.ToLower.Contains(search.ToLower) _
+                                            Or i.Concerns.ToLower.Contains(search.ToLower) _
+                                            Or i.Cause.ToLower.Contains(search.ToLower) _
+                                            Or i.CounterMeasure.ToLower.Contains(search.ToLower) _
+                                            Or i.EmpID.ToLower.Contains(search.ToLower)
+
+            Dim search3C = New ObservableCollection(Of Concern)(items)
+
+            SetLists(search3C.ToArray)
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
     ''DISPLAY to DATAGIRD VIEW WITH DATE SEARCH
-    Public Sub LoadBetweenSearchDate(offSet As Integer, NextVal As Integer, _concerngetDate As ConcernViewModel)
+    Public Sub Search3CBetweenDates(ByVal search As String)
         Try
-            If InitializeService() Then
-                _lstConcern = _AIDEClientService.GetBetweenSearchConcern(email, offSet, NextVal, dtpFrom.SelectedDate, dtpTo.SelectedDate)
-                SetLists()
-                DisplayPagingInfo()
-            End If
-        Catch ex As SystemException
+            Dim items = From i In lstConcern Where (i.Act_Reference.ToLower.Contains(search.ToLower) _
+                                            Or i.RefID.ToLower.Contains(search.ToLower) _
+                                            Or i.Concerns.ToLower.Contains(search.ToLower) _
+                                            Or i.Cause.ToLower.Contains(search.ToLower) _
+                                            Or i.CounterMeasure.ToLower.Contains(search.ToLower) _
+                                            Or i.EmpID.ToLower.Contains(search.ToLower)) _
+                                            And i.Due_Date >= dtpFrom.SelectedDate AndAlso i.Due_Date <= dtpTo.SelectedDate
+
+            Dim search3C = New ObservableCollection(Of Concern)(items)
+
+            SetLists(search3C.ToArray)
+        Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-            _AIDEClientService.Abort()
         End Try
     End Sub
 
-    Private Function GetDateTimeNow(_setDateNow As ConcernViewModel)
-        _setDateNow.GetBetWeenDate.DATE1 = DateTime.Now
-        _setDateNow.GetBetWeenDate.DATE2 = DateTime.Now
-
-        Return _setDateNow
-    End Function
-
-    Private Sub PermissionSettings()
-        If profile.Permission_ID = guestAccount Then
-            btnCreate.Visibility = Windows.Visibility.Hidden
+    Private Sub DisplayPagingInfo()
+        ' If there has no data found
+        If totalRecords = 0 Then
+            txtPageNo.Text = "No Results Found "
+            GUISettingsOff()
+        Else
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
+            GUISettingsOn()
         End If
     End Sub
 
@@ -145,39 +174,22 @@ Public Class ThreeC_Page
         Return strData
     End Function
 
-#End Region
+    Private Sub GUISettingsOn()
+        dg3C.Visibility = Windows.Visibility.Visible
 
-#Region "Initialize Service"
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            _AIDEClientService = New AideServiceClient(Context)
-            _AIDEClientService.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            _AIDEClientService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
-#End Region
-
-#Region "Buttons/Text - Events"
-    'TextChange Search Keyword
-    Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
-        If txtSearch.Text = String.Empty Then
-            isSearchIsUsed = 0
-            LoadConcernList(0, 10)
-        Else
-            isSearchIsUsed = 1
-            retrieveSearch(0, 10)
-            dtpFrom.Text = ""
-            dtpTo.Text = ""
-        End If
+        btnPrev.IsEnabled = True
+        btnNext.IsEnabled = True
     End Sub
 
-    Private Sub ThreeC_DataGridView_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles ThreeC_DataGridView.LoadingRow
+    Private Sub PermissionSettings()
+        If profile.Permission_ID = guestAccount Then
+            btnCreate.Visibility = Windows.Visibility.Hidden
+        End If
+    End Sub
+#End Region
+
+#Region "Events"
+    Private Sub dg3C_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles dg3C.LoadingRow
         Dim RowDataContaxt As ConcernModel = TryCast(e.Row.DataContext, ConcernModel)
         If RowDataContaxt IsNot Nothing Then
             If RowDataContaxt.DUE_DATE = DateTime.Now.ToString("yyyy-MM-dd") And RowDataContaxt.STATUS = "OPEN" Then
@@ -185,20 +197,26 @@ Public Class ThreeC_Page
 
             ElseIf DateTime.Now.ToString("yyyy-MM-dd") > RowDataContaxt.DUE_DATE And RowDataContaxt.STATUS = "OPEN" Then
                 e.Row.Background = New BrushConverter().ConvertFrom("#CCFFD8D8")
-
             End If
         End If
     End Sub
 
     'NAVIGATE TO UPDATE PAGE
-    Private Sub ThreeC_DataGridView_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles ThreeC_DataGridView.MouseDoubleClick
-
-        If Not ThreeC_DataGridView.SelectedIndex = -1 Then
+    Private Sub dg3C_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles dg3C.MouseDoubleClick
+        If Not dg3C.SelectedIndex = -1 Then
             If Not profile.Permission_ID = guestAccount Then
-                If CType(ThreeC_DataGridView.SelectedItem, ConcernModel).STATUS = "CLOSED" Then
+                If CType(dg3C.SelectedItem, ConcernModel).STATUS = "CLOSED" Then
                     MsgBox("This 3C is already closed. Update is no longer allowed.", MsgBoxStyle.Exclamation + vbCritical, "CLOSED")
                 Else
-                    addframe.Navigate(New ThreeC_UpdatePage((Me.DataContext()), profile, frame, menugrid, submenuframe, addframe))
+                    Dim concern As New ConcernModel
+                    concern.REF_ID = CType(dg3C.SelectedItem, ConcernModel).REF_ID
+                    concern.CONCERN = CType(dg3C.SelectedItem, ConcernModel).CONCERN
+                    concern.CAUSE = CType(dg3C.SelectedItem, ConcernModel).CAUSE
+                    concern.COUNTERMEASURE = CType(dg3C.SelectedItem, ConcernModel).COUNTERMEASURE
+                    concern.ACT_REFERENCE = CType(dg3C.SelectedItem, ConcernModel).ACT_REFERENCE
+                    concern.DUE_DATE = CType(dg3C.SelectedItem, ConcernModel).DUE_DATE
+
+                    addframe.Navigate(New ThreeC_UpdatePage(frame, addframe, menugrid, submenuframe, concern, profile))
                     frame.IsEnabled = False
                     frame.Opacity = 0.3
                     menugrid.IsEnabled = False
@@ -212,10 +230,16 @@ Public Class ThreeC_Page
         End If
     End Sub
 
-    ''NAVIGATE
+    Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
+        If dtpTo.Text = String.Empty Or dtpFrom.Text = String.Empty Then
+            Search3C(txtSearch.Text.Trim)
+        Else
+            Search3CBetweenDates(txtSearch.Text.Trim)
+        End If
+    End Sub
+
     Private Sub btnCreateNew3C(sender As Object, e As RoutedEventArgs)
         addframe.Navigate(New ThreeC_InsertPage(profile, frame, addframe, menugrid, submenuframe))
-        ''_frame.Navigate(New ThreeC_InsertPage(email, _frame))
         frame.IsEnabled = False
         frame.Opacity = 0.3
         menugrid.IsEnabled = False
@@ -227,64 +251,32 @@ Public Class ThreeC_Page
     End Sub
 
     ''SEARCH FILTER DATE
-    Private Sub btnFilter(sender As Object, e As RoutedEventArgs)
-        isSearchIsUsed = 2
+    Private Sub btnFilterDate(sender As Object, e As RoutedEventArgs)
+        'isSearchIsUsed = 2
         If dtpTo.Text = String.Empty Or dtpFrom.Text = String.Empty Then
             MsgBox("Please enter a date from and date to.", MsgBoxStyle.Critical, "AIDE")
         Else
-            LoadBetweenSearchDate(offsetVal, nextVal, Me.DataContext())
-            GetDateTimeNow(Me.DataContext())
+            Search3CBetweenDates(txtSearch.Text.Trim)
         End If
     End Sub
 
-    Private Sub SetLists()
-        Try
-            paginatedCollection = New PaginatedObservableCollection(Of ConcernModel)(pagingRecordPerPage)
-            Dim _concernViewModel As New ConcernViewModel
-            Dim concernDBProvider As New ConcernDBProvider
-
-            For Each objConcern As Concern In _lstConcern
-                concernDBProvider.SetConcernList(objConcern)
-            Next
-
-            For Each iConcern As MyConcern In concernDBProvider.GetConcernList()
-                paginatedCollection.Add(New ConcernModel(iConcern))
-            Next
-
-            _concernViewModel.ConcernList = paginatedCollection
-            Me.DataContext = _concernViewModel
-
-            currentPage = paginatedCollection.CurrentPage + 1
-            lastPage = Math.Ceiling(_lstConcern.Length / pagingRecordPerPage)
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-    End Sub
-
-    'PAGE NAVIAGTION -NEXT
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
-        Dim totalRecords As Integer = _lstConcern.Length
-
         If totalRecords > ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
             paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
         End If
+
         DisplayPagingInfo()
-        
-        GetDateTimeNow(Me.DataContext())
     End Sub
 
-    'PAGE NAVIGATION BACK
     Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
-
         paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
         If currentPage > 1 Then
             currentPage -= 1
         End If
+
         DisplayPagingInfo()
-        
-        GetDateTimeNow(Me.DataContext())
     End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As RoutedEventArgs) Handles btnPrint.Click
@@ -293,11 +285,10 @@ Public Class ThreeC_Page
         If CBool(dialog.ShowDialog().GetValueOrDefault()) Then
             dialog.PrintTicket.PageOrientation = PageOrientation.Landscape
             Dim pageSize As Size = New Size(dialog.PrintableAreaWidth, dialog.PrintableAreaHeight)
-            ThreeC_DataGridView.Measure(pageSize)
-            ThreeC_DataGridView.Arrange(New Rect(5, 5, pageSize.Width, pageSize.Height))
-            dialog.PrintVisual(ThreeC_DataGridView, "Print 3C's")
+            dg3C.Measure(pageSize)
+            dg3C.Arrange(New Rect(5, 5, pageSize.Width, pageSize.Height))
+            dialog.PrintVisual(dg3C, "Print 3C's")
         End If
-
     End Sub
 
     Private Sub dtpFrom_CalendarClosed(sender As Object, e As RoutedEventArgs) Handles dtpFrom.CalendarClosed
@@ -315,35 +306,10 @@ Public Class ThreeC_Page
         ReloadConcernList(e)
     End Sub
 
-    Private Sub DisplayPagingInfo()
-        ' If there has no data found
-        If _lstConcern.Length = 0 Then
-            txtPageNo.Text = "No Results Found "
-            GUISettingsOff()
-        Else
-            txtPageNo.Text = "page " & currentPage & " of " & lastPage
-            GUISettingsOn()
-        End If
-    End Sub
-
-    Private Sub GUISettingsOff()
-        ThreeC_DataGridView.Visibility = Windows.Visibility.Hidden
-
-        btnPrev.IsEnabled = False
-        btnNext.IsEnabled = False
-    End Sub
-
-    Private Sub GUISettingsOn()
-        ThreeC_DataGridView.Visibility = Windows.Visibility.Visible
-
-        btnPrev.IsEnabled = True
-        btnNext.IsEnabled = True
-    End Sub
-
     Private Sub ReloadConcernList(e)
         If e.Key = Key.Back Then
             If dtpFrom.Text Is String.Empty AndAlso dtpTo.Text Is String.Empty Then
-                LoadConcernList(offsetVal, nextVal)
+                SetLists(lstConcern)
             End If
         End If
     End Sub

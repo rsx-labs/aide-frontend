@@ -17,19 +17,10 @@ Public Class SuccessRegisterPage
     Implements ServiceReference1.IAideServiceCallback
 
 #Region "Paging Declarations"
-    Private Enum PagingMode
-        _First = 1
-        _Next = 2
-        _Previous = 3
-        _Last = 4
-    End Enum
-
-    Dim startRowIndex As Integer
-    Dim lastRowIndex As Integer
-    Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer
+    Dim pagingRecordPerPage As Integer = 10
     Dim currentPage As Integer
     Dim lastPage As Integer
+    Dim totalRecords As Integer
 #End Region
 
 #Region "Fields"
@@ -37,39 +28,166 @@ Public Class SuccessRegisterPage
     Private addframe As Frame
     Private menugrid As Grid
     Private submenuframe As Frame
-    Private email As String
     Private profile As Profile
     Private isEmpty As Boolean
     Private aideService As ServiceReference1.AideServiceClient
     Private _OptionsViewModel As OptionViewModel
 
+    Dim successRegisterDBProvider As New SuccessRegisterDBProvider
     Dim lstSuccess As SuccessRegister()
-    Dim paginatedCollection As PaginatedObservableCollection(Of SuccessRegisterModel)
+    Dim paginatedCollection As PaginatedObservableCollection(Of SuccessRegisterModel) = New PaginatedObservableCollection(Of SuccessRegisterModel)(pagingRecordPerPage)
 
 #End Region
 
 #Region "Constructor"
-
     Public Sub New(_mainFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
         InitializeComponent()
         mainFrame = _mainFrame
         addframe = _addframe
         menugrid = _menugrid
         submenuframe = _submenuframe
-        email = _profile.Email_Address
         profile = _profile
-
-        pagingRecordPerPage = GetOptionData(26, 11, 12)
+        
+		pagingRecordPerPage = GetOptionData(26, 11, 12)
         paginatedCollection = New PaginatedObservableCollection(Of SuccessRegisterModel)(pagingRecordPerPage)
 
-        SetData()
+        LoadSuccessRegister()
         PermissionSettings()
     End Sub
+#End Region
 
+#Region "Methods"
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            aideService = New AideServiceClient(Context)
+            aideService.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            aideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
+
+    Public Sub LoadSuccessRegister()
+        Try
+            If InitializeService() Then
+                lstSuccess = aideService.ViewSuccessRegisterAll(profile.Email_Address)
+                SetLists(lstSuccess)
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+
+    Public Sub SetLists(listSuccess As SuccessRegister())
+        Try
+            successRegisterDBProvider = New SuccessRegisterDBProvider
+            paginatedCollection = New PaginatedObservableCollection(Of SuccessRegisterModel)(pagingRecordPerPage)
+
+            For Each objSuccessRegister As SuccessRegister In listSuccess
+                successRegisterDBProvider.SetMySuccessRegister(objSuccessRegister)
+            Next
+
+            For Each successRegister As MySuccessRegister In successRegisterDBProvider.GetMySuccessRegister()
+                paginatedCollection.Add(New SuccessRegisterModel(successRegister))
+            Next
+
+            lv_successRegisterAll.ItemsSource = paginatedCollection
+
+            totalRecords = listSuccess.Length
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+            DisplayPagingInfo()
+
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+
+    Private Sub SearchSuccessRgister(ByVal search As String)
+        Try
+            Dim items = From i In lstSuccess Where i.Nick_Name.ToLower.Contains(search.ToLower) _
+                                            Or i.AdditionalInformation.ToLower.Contains(search.ToLower) _
+                                            Or i.DetailsOfSuccess.ToLower.Contains(search.ToLower) _
+                                            Or i.WhosInvolve.ToLower.Contains(search.ToLower)
+
+            Dim searchSuccessRegister = New ObservableCollection(Of SuccessRegister)(items)
+
+            SetLists(searchSuccessRegister.ToArray)
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+
+    Private Sub DisplayPagingInfo()
+        ' If there has no data found
+        If totalRecords = 0 Then
+            txtPageNo.Text = "No Results Found "
+            GUISettingsOff()
+        Else
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
+            GUISettingsOn()
+        End If
+    End Sub
+
+    Private Sub GUISettingsOff()
+        lv_successRegisterAll.Visibility = Windows.Visibility.Hidden
+        lv_successRegisterAll.Visibility = Windows.Visibility.Hidden
+
+        btnPrev.IsEnabled = False
+        btnNext.IsEnabled = False
+    End Sub
+
+    Private Sub GUISettingsOn()
+        lv_successRegisterAll.Visibility = Windows.Visibility.Visible
+        lv_successRegisterAll.Visibility = Windows.Visibility.Visible
+
+        btnPrev.IsEnabled = True
+        btnNext.IsEnabled = True
+    End Sub
+
+	Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+        Dim strData As String = String.Empty
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        strData = opt.VALUE
+                        Exit For
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return strData
+    End Function
+    
+    Private Sub NavigatePage()
+        mainFrame.IsEnabled = False
+        mainFrame.Opacity = 0.3
+        menugrid.IsEnabled = False
+        menugrid.Opacity = 0.3
+        submenuframe.IsEnabled = False
+        submenuframe.Opacity = 0.3
+        addframe.Margin = New Thickness(150, 100, 150, 100)
+        addframe.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub PermissionSettings()
+        Dim guestAccount As Integer = 5
+
+        If profile.Permission_ID = guestAccount Then
+            btnSRAdd.Visibility = Windows.Visibility.Hidden
+        End If
+    End Sub
 #End Region
 
 #Region "Events"
-
     Private Sub btnSRAdd_Click(sender As Object, e As RoutedEventArgs) Handles btnSRAdd.Click
         isEmpty = True
 
@@ -99,8 +217,7 @@ Public Class SuccessRegisterPage
     End Sub
 
     Private Sub txtSRSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSRSearch.TextChanged
-        e.Handled = True
-        SetDataForSearch(txtSRSearch.Text, email)
+        SearchSuccessRgister(txtSRSearch.Text.Trim)
     End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As RoutedEventArgs) Handles btnPrint.Click
@@ -113,185 +230,6 @@ Public Class SuccessRegisterPage
             lv_successRegisterAll.Arrange(New Rect(5, 5, pageSize.Width, pageSize.Height))
             dialog.PrintVisual(lv_successRegisterAll, "Print Success Register")
         End If
-    End Sub
-
-#End Region
-
-#Region "Methods"
-
-    Public Sub SetData()
-        Try
-            If InitializeService() Then
-                lstSuccess = aideService.ViewSuccessRegisterAll(email)
-                LoadData()
-                DisplayPagingInfo()
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-    End Sub
-
-    Public Sub LoadData()
-        Try
-            paginatedCollection.Clear()
-            Dim lstSuccessRegister As New ObservableCollection(Of SuccessRegisterModel)
-            Dim successRegisterDBProvider As New SuccessRegisterDBProvider
-
-            ' Set the MyLessonLearntList 
-            For Each objSuccessRegister As SuccessRegister In lstSuccess
-                successRegisterDBProvider.SetMySuccessRegister(objSuccessRegister)
-            Next
-
-            For Each lessonLearnt As MySuccessRegister In successRegisterDBProvider.GetMySuccessRegister()
-                paginatedCollection.Add(New SuccessRegisterModel(lessonLearnt))
-            Next
-
-            lv_successRegisterAll.ItemsSource = paginatedCollection
-            'LoadDataForPrint()
-            currentPage = paginatedCollection.CurrentPage + 1
-            lastPage = Math.Ceiling(lstSuccess.Length / pagingRecordPerPage)
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-    End Sub
-
-    Public Sub SetDataForSearch(input As String, email As String)
-        Try
-            If InitializeService() Then
-                lstSuccess = aideService.ViewSuccessRegisterBySearch(input, email)
-                LoadData()
-                DisplayPagingInfo()
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-    End Sub
-
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            'DisplayText("Opening client service...")
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            aideService = New AideServiceClient(Context)
-            aideService.Open()
-            bInitialize = True
-            'DisplayText("Service opened successfully...")
-            'Return True
-        Catch ex As SystemException
-            aideService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
-
-    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
-        Dim strData As String = String.Empty
-        Try
-            _OptionsViewModel = New OptionViewModel
-            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        strData = opt.VALUE
-                        Exit For
-                    End If
-                Next
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return strData
-    End Function
-
-    Private Sub SetPaging(mode As Integer)
-        Try
-            Dim totalRecords As Integer = lstSuccess.Length
-
-            Select Case mode
-                Case CInt(PagingMode._Next)
-                    ' Set the rows to be displayed if the total records is more than the (Record per Page * Page Index)
-                    If totalRecords > (pagingPageIndex * pagingRecordPerPage) Then
-
-                        ' Set the last row to be displayed if the total records is more than the (Record per Page * Page Index) + Record per Page
-                        If totalRecords >= ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) Then
-                            lastRowIndex = ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) - 1
-                        Else
-                            lastRowIndex = totalRecords - 1
-                        End If
-
-                        startRowIndex = pagingPageIndex * pagingRecordPerPage
-                        pagingPageIndex += 1
-                    Else
-                        startRowIndex = (pagingPageIndex - 1) * pagingRecordPerPage
-                        lastRowIndex = totalRecords - 1
-                    End If
-                    ' Bind data to the Data Grid
-                    LoadData()
-                    Exit Select
-                Case CInt(PagingMode._Previous)
-                    ' Set the Previous Page if the page index is greater than 1
-                    If pagingPageIndex > 1 Then
-                        pagingPageIndex -= 1
-
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-                        lastRowIndex = (pagingPageIndex * pagingRecordPerPage) - 1
-                        LoadData()
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._First)
-                    If totalRecords > pagingRecordPerPage Then
-                        pagingPageIndex = 2
-                        SetPaging(CInt(PagingMode._Previous))
-                    Else
-                        pagingPageIndex = 1
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-
-                        If Not totalRecords = 0 Then
-                            lastRowIndex = totalRecords - 1
-                            LoadData()
-                        Else
-                            lastRowIndex = 0
-                            Me.DataContext = Nothing
-                        End If
-
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._Last)
-                    pagingPageIndex = (lstSuccess.Length / pagingRecordPerPage)
-                    SetPaging(CInt(PagingMode._Next))
-                    Exit Select
-            End Select
-
-            'DisplayPagingInfo()
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-    End Sub
-
-    Private Sub DisplayPagingInfo()
-        ' If there has no data found
-        If lstSuccess.Length = 0 Then
-            txtPageNo.Text = "No Results Found "
-            GUISettingsOff()
-        Else
-            txtPageNo.Text = "page " & currentPage & " of " & lastPage
-            GUISettingsOn()
-        End If
-    End Sub
-
-    Private Sub GUISettingsOff()
-        lv_successRegisterAll.Visibility = Windows.Visibility.Hidden
-        lv_successRegisterAll.Visibility = Windows.Visibility.Hidden
-
-        btnPrev.IsEnabled = False
-        btnNext.IsEnabled = False
-    End Sub
-
-    Private Sub GUISettingsOn()
-        lv_successRegisterAll.Visibility = Windows.Visibility.Visible
-        lv_successRegisterAll.Visibility = Windows.Visibility.Visible
-
-        btnPrev.IsEnabled = True
-        btnNext.IsEnabled = True
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
@@ -311,33 +249,6 @@ Public Class SuccessRegisterPage
             currentPage -= 1
         End If
         DisplayPagingInfo()
-    End Sub
-
-    Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._First))
-    End Sub
-
-    Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Last))
-    End Sub
-
-    Private Sub NavigatePage()
-        mainFrame.IsEnabled = False
-        mainFrame.Opacity = 0.3
-        menugrid.IsEnabled = False
-        menugrid.Opacity = 0.3
-        submenuframe.IsEnabled = False
-        submenuframe.Opacity = 0.3
-        addframe.Margin = New Thickness(150, 100, 150, 100)
-        addframe.Visibility = Visibility.Visible
-    End Sub
-
-    Private Sub PermissionSettings()
-        Dim guestAccount As Integer = 5
-
-        If profile.Permission_ID = guestAccount Then
-            btnSRAdd.Visibility = Windows.Visibility.Hidden
-        End If
     End Sub
 #End Region
 

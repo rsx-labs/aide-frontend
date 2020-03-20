@@ -2,9 +2,9 @@
 Imports UI_AIDE_CommCellServices.ServiceReference1
 Imports System.Collections.ObjectModel
 Imports System.ServiceModel
+
 Class AuditSchedAddPage
     Implements UI_AIDE_CommCellServices.ServiceReference1.IAideServiceCallback
-
 
 #Region "Page Declaration"
     Public _frame As Frame
@@ -93,6 +93,7 @@ Class AuditSchedAddPage
         End Try
         Return bInitialize
     End Function
+
     Public Sub LoadauditSched()
         Try
             Dim lstauditSchedList As New ObservableCollection(Of AuditSchedModel)
@@ -117,21 +118,19 @@ Class AuditSchedAddPage
         End Try
     End Sub
 
-
     Public Sub LoadControls()
-        Dim getmonth As String = ""
-        getmonth = txtBlockMonth.Text
         Try
+            Dim getmonth As String = ""
+            getmonth = txtBlockMonth.Text
 
-
+            AddBtn.Style = FindResource("RoundCornerUpdate")
             txtHeader.Text = "Update Workplace Auditor"
-            txtBlockButton.Text = "Update"
+            txtBlockButton.Text = "UPDATE"
             txtBlockMonth.Text = GetSelectedMonth(AuditSchedModel.PERIOD_START.Month)
 
             txtBlockPeriodStart.Text = AuditSchedModel.PERIOD_START
             txtBlockPeriodEnd.Text = AuditSchedModel.PERIOD_END
             txtBlockYear.Text = AuditSchedModel.PERIOD_START.Year
-
 
             txtBlockDaily.Text = AuditSchedModel.DAILY
             txtBlockWeekly.Text = AuditSchedModel.WEEKLY
@@ -145,7 +144,6 @@ Class AuditSchedAddPage
             ''cbMonthly.SelectedValue = txtBlockMonth.Text
             'cbYear.SelectedValue = txtBlockYear.Text
         Catch ex As Exception
-
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -166,6 +164,7 @@ Class AuditSchedAddPage
         cbMonth.Items.Add(New With {.Text = "November", .Value = 11})
         cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
     End Sub
+
     Public Function GetSelectedMonth(month As String)
         Select Case month
             Case 1
@@ -194,7 +193,6 @@ Class AuditSchedAddPage
                 month = "December"
         End Select
 
-
         Return month
     End Function
 
@@ -221,6 +219,7 @@ Class AuditSchedAddPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
     Public Sub LoadFiscalYear()
         Try
             Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
@@ -240,6 +239,7 @@ Class AuditSchedAddPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
     Public Sub LoadSChed()
         Try
             If InitializeService() Then
@@ -279,7 +279,7 @@ Class AuditSchedAddPage
     End Sub
 
     Public Sub GetAllMondayOfWeekPerMonth(ByVal month As Integer, ByVal year As Integer, ByVal dayOfWeek As DayOfWeek)
-        cbPeriodStart.ITEMS.Clear()
+        cbPeriodStart.Items.Clear()
         Dim dates = New DateTime(year, month, 1)
 
         If dates.DayOfWeek <> dayOfWeek Then
@@ -387,15 +387,15 @@ Class AuditSchedAddPage
                 End If
 
                 _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
-                    _frame.IsEnabled = True
-                    _frame.Opacity = 1
-                    _menugrid.IsEnabled = True
-                    _menugrid.Opacity = 1
-                    _submenuframe.IsEnabled = True
-                    _submenuframe.Opacity = 1
+                _frame.IsEnabled = True
+                _frame.Opacity = 1
+                _menugrid.IsEnabled = True
+                _menugrid.Opacity = 1
+                _submenuframe.IsEnabled = True
+                _submenuframe.Opacity = 1
 
-                    _addframe.Visibility = Visibility.Hidden
-                End If
+                _addframe.Visibility = Visibility.Hidden
+            End If
             'End If
 
         Catch ex As Exception
@@ -519,6 +519,5 @@ Class AuditSchedAddPage
         End If
     End Sub
 #End Region
-
 
 End Class

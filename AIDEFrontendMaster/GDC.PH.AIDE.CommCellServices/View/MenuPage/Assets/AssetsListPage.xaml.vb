@@ -14,19 +14,10 @@ Public Class AssetsListPage
     Implements ServiceReference1.IAideServiceCallback
 
 #Region "Paging Declarations"
-    Private Enum PagingMode
-        _First = 1
-        _Next = 2
-        _Previous = 3
-        _Last = 4
-    End Enum
-
-    Dim startRowIndex As Integer
-    Dim lastRowIndex As Integer
-    Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer
+    Dim pagingRecordPerPage As Integer = 10
     Dim currentPage As Integer
     Dim lastPage As Integer
+    Dim totalRecords As Integer
 #End Region
 
 #Region "FIELDS"
@@ -36,10 +27,10 @@ Public Class AssetsListPage
     Private _menugrid As Grid
     Private _submenuframe As Frame
     Private _AideService As ServiceReference1.AideServiceClient
-    Private _OptionsViewModel As OptionViewModel
-    Dim totalRecords As Integer
+	Private _OptionsViewModel As OptionViewModel
     Dim lstAssets As Assets()
-    Dim paginatedCollection As PaginatedObservableCollection(Of AssetsModel)
+    Dim assetsDBProvider As New AssetsDBProvider
+    Dim paginatedCollection As PaginatedObservableCollection(Of AssetsModel) = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
 #End Region
 
 #Region "CONSTRUCTOR"
@@ -55,19 +46,147 @@ Public Class AssetsListPage
         Me._addframe = _addframe
         Me._menugrid = _menugrid
         Me._submenuframe = _submenuframe
-        Assets.SelectedIndex = 0
-        
 
+        Assets.SelectedIndex = 0
+
+        PermissionSettings()
+    End Sub
+#End Region
+
+#Region "METHODS"
+
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            'DisplayText("Opening client service...")
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            _AideService = New AideServiceClient(Context)
+            _AideService.Open()
+            bInitialize = True
+            'DisplayText("Service opened successfully...")
+            'Return True
+        Catch ex As SystemException
+            _AideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
+
+    Public Sub LoadAssets()
+        Try
+            If InitializeService() Then
+                If Assets.SelectedIndex = 0 Then
+                    lstAssets = _AideService.GetAllAssetsByEmpID(profile.Emp_ID)
+                    btnPrint.Visibility = Windows.Visibility.Hidden
+                Else
+                    lstAssets = _AideService.GetAllDeletedAssetsByEmpID(profile.Emp_ID)
+                    btnPrint.Visibility = Windows.Visibility.Hidden
+                End If
+
+                SetLists(lstAssets)
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+
+    Public Sub SetLists(listAssets As Assets())
+        Try
+            assetsDBProvider = New AssetsDBProvider
+            paginatedCollection = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
+
+            For Each objAssets As Assets In listAssets
+                assetsDBProvider.SetAssetList(objAssets)
+            Next
+
+            For Each assetList As MyAssets In assetsDBProvider.GetAssetList()
+                paginatedCollection.Add(New AssetsModel(assetList))
+            Next
+
+            If Assets.SelectedIndex = 0 Then
+                lv_assetList.ItemsSource = paginatedCollection
+            Else
+                lv_assetDeletedList.ItemsSource = paginatedCollection
+            End If
+
+            totalRecords = listAssets.Length
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+            DisplayPagingInfo()
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+
+    Public Sub SearchAssets(search As String)
+        Try
+            Dim items = From i In lstAssets Where i.ASSET_DESC.ToLower.Contains(search.ToLower) _
+                        Or i.MANUFACTURER.ToLower.Contains(search.ToLower) _
+                        Or i.MODEL_NO.ToLower.Contains(search.ToLower) _
+                        Or i.SERIAL_NO.ToLower.Contains(search.ToLower) _
+                        Or i.ASSET_TAG.ToLower.Contains(search.ToLower) _
+                        Or i.FULL_NAME.ToLower.Contains(search.ToLower) _
+                        Or i.OTHER_INFO.ToLower.Contains(search.ToLower)  'Or i.STATUS_DESCR.ToLower.Contains(input.ToLower) 
+
+            Dim searchAssets = New ObservableCollection(Of Assets)(items)
+
+            SetLists(searchAssets.ToArray)
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+
+    Private Sub DisplayPagingInfo()
+        ' If there has no data found
+        If totalRecords = 0 Then
+            txtPageNo.Text = "No Results Found "
+            GUISettingsOff()
+        Else
+            txtPageNo.Text = "page " & currentPage & " of " & lastPage
+            GUISettingsOn()
+        End If
+    End Sub
+
+    Private Sub GUISettingsOff()
+        lv_assetList.Visibility = Windows.Visibility.Hidden
+
+        btnPrev.IsEnabled = False
+        btnNext.IsEnabled = False
+    End Sub
+
+    Private Sub GUISettingsOn()
+        lv_assetList.Visibility = Windows.Visibility.Visible
+
+        btnPrev.IsEnabled = True
+        btnNext.IsEnabled = True
+    End Sub
+    
+	Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+        Dim strData As String = String.Empty
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        strData = opt.VALUE
+                        Exit For
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return strData
+    End Function
+    
+    Private Sub PermissionSettings()
         If profile.Permission_ID = 4 Then 'Allow custodian only to add assets
             btnAdd.Visibility = Windows.Visibility.Visible
         End If
     End Sub
 #End Region
 
-#Region "EVENTS"
-    Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
-        SetDataForSearch(txtSearch.Text)
-    End Sub
+#Region "Events"
 
     Private Sub btnAdd_Click(sender As Object, e As RoutedEventArgs) Handles btnAdd.Click
         _addframe.Navigate(New AssetsAddPage(frame, profile, _addframe, _menugrid, _submenuframe))
@@ -79,6 +198,10 @@ Public Class AssetsListPage
         _submenuframe.Opacity = 0.3
         _addframe.Margin = New Thickness(150, 60, 150, 60)
         _addframe.Visibility = Visibility.Visible
+    End Sub
+
+    Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
+        SearchAssets(txtSearch.Text.Trim)
     End Sub
 
     Private Sub lv_assetList_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles lv_assetList.LoadingRow
@@ -139,13 +262,12 @@ Public Class AssetsListPage
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
-        Dim totalRecords As Integer = lstAssets.Length
-
         If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
             paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
         End If
+
         DisplayPagingInfo()
     End Sub
 
@@ -154,228 +276,14 @@ Public Class AssetsListPage
         If currentPage > 1 Then
             currentPage -= 1
         End If
+
         DisplayPagingInfo()
     End Sub
 
-    Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._First))
-    End Sub
-
-    Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Last))
-    End Sub
-
     Private Sub Assets_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles Assets.SelectionChanged
-        paginatedCollection.Clear()
-        SetData()
+        LoadAssets()
     End Sub
 
-#End Region
-
-#Region "METHODS"
-
-    Public Sub SetData()
-        Try
-            If InitializeService() Then
-                If Assets.SelectedIndex = 0 Then
-                    lstAssets = _AideService.GetAllAssetsByEmpID(profile.Emp_ID)
-                    btnPrint.Visibility = Windows.Visibility.Hidden
-                Else
-                    lstAssets = _AideService.GetAllDeletedAssetsByEmpID(profile.Emp_ID)
-                    btnPrint.Visibility = Windows.Visibility.Hidden
-                End If
-                LoadData()
-                DisplayPagingInfo()
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-    End Sub
-
-    Public Sub LoadData()
-        Try
-            'paginatedCollection.Clear()
-            Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
-            Dim assetsDBProvider As New AssetsDBProvider
-
-            paginatedCollection = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
-
-            For Each objAssets As Assets In lstAssets
-                assetsDBProvider.SetAssetList(objAssets)
-            Next
-
-            For Each assetList As MyAssets In assetsDBProvider.GetAssetList()
-                paginatedCollection.Add(New AssetsModel(assetList))
-            Next
-
-            If Assets.SelectedIndex = 0 Then
-                lv_assetList.ItemsSource = paginatedCollection
-            Else
-                lv_assetDeletedList.ItemsSource = paginatedCollection
-            End If
-            'LoadDataForPrint()
-            currentPage = paginatedCollection.CurrentPage + 1
-            lastPage = Math.Ceiling(lstAssets.Length / pagingRecordPerPage)
-        Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-    End Sub
-
-    Public Sub SetDataForSearch(input As String)
-        Try
-            Dim assetsDBProvider As New AssetsDBProvider
-
-            paginatedCollection = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
-
-            Dim items = From i In lstAssets Where i.ASSET_DESC.ToLower.Contains(input.ToLower) Or i.MANUFACTURER.ToLower.Contains(input.ToLower) _
-                      Or i.MODEL_NO.ToLower.Contains(input.ToLower) Or i.SERIAL_NO.ToLower.Contains(input.ToLower) Or i.ASSET_TAG.ToLower.Contains(input.ToLower) _
-                      Or i.FULL_NAME.ToLower.Contains(input.ToLower) Or i.OTHER_INFO.ToLower.Contains(input.ToLower)  'Or i.STATUS_DESCR.ToLower.Contains(input.ToLower) 
-            Dim searchAssets = New ObservableCollection(Of Assets)(items)
-
-            For Each assets As Assets In searchAssets
-                assetsDBProvider.SetAssetList(assets)
-            Next
-
-            For Each assets As MyAssets In assetsDBProvider.GetAssetList()
-                paginatedCollection.Add(New AssetsModel(assets))
-            Next
-
-            totalRecords = searchAssets.Count
-            lv_assetList.ItemsSource = paginatedCollection
-            currentPage = paginatedCollection.CurrentPage + 1
-            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
-            DisplayPagingInfo()
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-    End Sub
-
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            'DisplayText("Opening client service...")
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            _AideService = New AideServiceClient(Context)
-            _AideService.Open()
-            bInitialize = True
-            'DisplayText("Service opened successfully...")
-            'Return True
-        Catch ex As SystemException
-            _AideService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
-
-    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
-        Dim strData As String = String.Empty
-        Try
-            _OptionsViewModel = New OptionViewModel
-            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        strData = opt.VALUE
-                        Exit For
-                    End If
-                Next
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return strData
-    End Function
-    
-    Private Sub SetPaging(mode As Integer)
-        Try
-            Dim totalRecords As Integer = lstAssets.Length
-
-            Select Case mode
-                Case CInt(PagingMode._Next)
-                    ' Set the rows to be displayed if the total records is more than the (Record per Page * Page Index)
-                    If totalRecords > (pagingPageIndex * pagingRecordPerPage) Then
-
-                        ' Set the last row to be displayed if the total records is more than the (Record per Page * Page Index) + Record per Page
-                        If totalRecords >= ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) Then
-                            lastRowIndex = ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) - 1
-                        Else
-                            lastRowIndex = totalRecords - 1
-                        End If
-
-                        startRowIndex = pagingPageIndex * pagingRecordPerPage
-                        pagingPageIndex += 1
-                    Else
-                        startRowIndex = (pagingPageIndex - 1) * pagingRecordPerPage
-                        lastRowIndex = totalRecords - 1
-                    End If
-                    ' Bind data to the Data Grid
-                    LoadData()
-                    Exit Select
-                Case CInt(PagingMode._Previous)
-                    ' Set the Previous Page if the page index is greater than 1
-                    If pagingPageIndex > 1 Then
-                        pagingPageIndex -= 1
-
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-                        lastRowIndex = (pagingPageIndex * pagingRecordPerPage) - 1
-                        LoadData()
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._First)
-                    If totalRecords > pagingRecordPerPage Then
-                        pagingPageIndex = 2
-                        SetPaging(CInt(PagingMode._Previous))
-                    Else
-                        pagingPageIndex = 1
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-
-                        If Not totalRecords = 0 Then
-                            lastRowIndex = totalRecords - 1
-                            LoadData()
-                        Else
-                            lastRowIndex = 0
-                            Me.DataContext = Nothing
-                        End If
-
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._Last)
-                    pagingPageIndex = (lstAssets.Length / pagingRecordPerPage)
-                    SetPaging(CInt(PagingMode._Next))
-                    Exit Select
-            End Select
-
-            DisplayPagingInfo()
-        Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-    End Sub
-
-    Private Sub DisplayPagingInfo()
-        ' If there has no data found
-        If lstAssets.Length = 0 Then
-            txtPageNo.Text = "No Results Found "
-            GUISettingsOff()
-        Else
-            txtPageNo.Text = "page " & currentPage & " of " & lastPage
-            GUISettingsOn()
-        End If
-    End Sub
-
-    Private Sub GUISettingsOff()
-        lv_assetList.Visibility = Windows.Visibility.Hidden
-
-        btnPrev.IsEnabled = False
-        btnNext.IsEnabled = False
-    End Sub
-
-    Private Sub GUISettingsOn()
-        lv_assetList.Visibility = Windows.Visibility.Visible
-
-        btnPrev.IsEnabled = True
-        btnNext.IsEnabled = True
-    End Sub
-
-    
 #End Region
 
 #Region "ICallBack Function"

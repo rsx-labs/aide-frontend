@@ -102,7 +102,7 @@ Class _3CDashboard
     Public Sub CalculateConcernList(offSet As Integer, NextVal As Integer)
 
         Try
-            Dim lstConcern As Concern() = _AIDEClientService.selectAllConcern(email, offSet, NextVal)
+            Dim lstConcern As Concern() = _AIDEClientService.GetAllConcernLst(profile.Emp_ID)
 
             For Each objConcern As Concern In lstConcern
                 Select Case objConcern.Due_Date

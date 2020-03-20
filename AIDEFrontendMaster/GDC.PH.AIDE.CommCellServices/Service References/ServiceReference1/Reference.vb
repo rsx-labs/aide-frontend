@@ -1595,6 +1595,148 @@ Namespace ServiceReference1
     
     <System.Diagnostics.DebuggerStepThroughAttribute(),  _
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="LocationList", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
+     System.SerializableAttribute()>  _
+    Partial Public Class LocationList
+        Inherits Object
+        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+        
+        <System.NonSerializedAttribute()>  _
+        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private LOCATIONField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private LOCATION_IDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ONSITE_FLGField As Short
+        
+        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
+        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
+            Get
+                Return Me.extensionDataField
+            End Get
+            Set
+                Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property LOCATION() As String
+            Get
+                Return Me.LOCATIONField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.LOCATIONField, value) <> true) Then
+                    Me.LOCATIONField = value
+                    Me.RaisePropertyChanged("LOCATION")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property LOCATION_ID() As Integer
+            Get
+                Return Me.LOCATION_IDField
+            End Get
+            Set
+                If (Me.LOCATION_IDField.Equals(value) <> true) Then
+                    Me.LOCATION_IDField = value
+                    Me.RaisePropertyChanged("LOCATION_ID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ONSITE_FLG() As Short
+            Get
+                Return Me.ONSITE_FLGField
+            End Get
+            Set
+                If (Me.ONSITE_FLGField.Equals(value) <> true) Then
+                    Me.ONSITE_FLGField = value
+                    Me.RaisePropertyChanged("ONSITE_FLG")
+                End If
+            End Set
+        End Property
+        
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        
+        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
+            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
+            If (Not (propertyChanged) Is Nothing) Then
+                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
+            End If
+        End Sub
+    End Class
+    
+    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="PositionList", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
+     System.SerializableAttribute()>  _
+    Partial Public Class PositionList
+        Inherits Object
+        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+        
+        <System.NonSerializedAttribute()>  _
+        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private POS_DESCRField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private POS_IDField As Integer
+        
+        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
+        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
+            Get
+                Return Me.extensionDataField
+            End Get
+            Set
+                Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property POS_DESCR() As String
+            Get
+                Return Me.POS_DESCRField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.POS_DESCRField, value) <> true) Then
+                    Me.POS_DESCRField = value
+                    Me.RaisePropertyChanged("POS_DESCR")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property POS_ID() As Integer
+            Get
+                Return Me.POS_IDField
+            End Get
+            Set
+                If (Me.POS_IDField.Equals(value) <> true) Then
+                    Me.POS_IDField = value
+                    Me.RaisePropertyChanged("POS_ID")
+                End If
+            End Set
+        End Property
+        
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        
+        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
+            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
+            If (Not (propertyChanged) Is Nothing) Then
+                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
+            End If
+        End Sub
+    End Class
+    
+    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
      System.Runtime.Serialization.DataContractAttribute(Name:="PermissionList", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
      System.SerializableAttribute()>  _
     Partial Public Class PermissionList
@@ -2403,6 +2545,149 @@ Namespace ServiceReference1
                 If (Object.ReferenceEquals(Me.ValueField, value) <> true) Then
                     Me.ValueField = value
                     Me.RaisePropertyChanged("Value")
+                End If
+            End Set
+        End Property
+        
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        
+        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
+            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
+            If (Not (propertyChanged) Is Nothing) Then
+                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
+            End If
+        End Sub
+    End Class
+    
+    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="SuccessRegister", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
+     System.SerializableAttribute()>  _
+    Partial Public Class SuccessRegister
+        Inherits Object
+        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+        
+        <System.NonSerializedAttribute()>  _
+        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private AdditionalInformationField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private DateInputField As Date
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private DetailsOfSuccessField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private Emp_IDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private Nick_NameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SuccessIDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private WhosInvolveField As String
+        
+        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
+        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
+            Get
+                Return Me.extensionDataField
+            End Get
+            Set
+                Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property AdditionalInformation() As String
+            Get
+                Return Me.AdditionalInformationField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.AdditionalInformationField, value) <> true) Then
+                    Me.AdditionalInformationField = value
+                    Me.RaisePropertyChanged("AdditionalInformation")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property DateInput() As Date
+            Get
+                Return Me.DateInputField
+            End Get
+            Set
+                If (Me.DateInputField.Equals(value) <> true) Then
+                    Me.DateInputField = value
+                    Me.RaisePropertyChanged("DateInput")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property DetailsOfSuccess() As String
+            Get
+                Return Me.DetailsOfSuccessField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.DetailsOfSuccessField, value) <> true) Then
+                    Me.DetailsOfSuccessField = value
+                    Me.RaisePropertyChanged("DetailsOfSuccess")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Emp_ID() As Integer
+            Get
+                Return Me.Emp_IDField
+            End Get
+            Set
+                If (Me.Emp_IDField.Equals(value) <> true) Then
+                    Me.Emp_IDField = value
+                    Me.RaisePropertyChanged("Emp_ID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Nick_Name() As String
+            Get
+                Return Me.Nick_NameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.Nick_NameField, value) <> true) Then
+                    Me.Nick_NameField = value
+                    Me.RaisePropertyChanged("Nick_Name")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SuccessID() As Integer
+            Get
+                Return Me.SuccessIDField
+            End Get
+            Set
+                If (Me.SuccessIDField.Equals(value) <> true) Then
+                    Me.SuccessIDField = value
+                    Me.RaisePropertyChanged("SuccessID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property WhosInvolve() As String
+            Get
+                Return Me.WhosInvolveField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.WhosInvolveField, value) <> true) Then
+                    Me.WhosInvolveField = value
+                    Me.RaisePropertyChanged("WhosInvolve")
                 End If
             End Set
         End Property
@@ -6575,148 +6860,6 @@ Namespace ServiceReference1
     
     <System.Diagnostics.DebuggerStepThroughAttribute(),  _
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
-     System.Runtime.Serialization.DataContractAttribute(Name:="LocationList", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
-     System.SerializableAttribute()>  _
-    Partial Public Class LocationList
-        Inherits Object
-        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
-        
-        <System.NonSerializedAttribute()>  _
-        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private LOCATIONField As String
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private LOCATION_IDField As Integer
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private ONSITE_FLGField As Short
-        
-        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
-        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
-            Get
-                Return Me.extensionDataField
-            End Get
-            Set
-                Me.extensionDataField = value
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property LOCATION() As String
-            Get
-                Return Me.LOCATIONField
-            End Get
-            Set
-                If (Object.ReferenceEquals(Me.LOCATIONField, value) <> true) Then
-                    Me.LOCATIONField = value
-                    Me.RaisePropertyChanged("LOCATION")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property LOCATION_ID() As Integer
-            Get
-                Return Me.LOCATION_IDField
-            End Get
-            Set
-                If (Me.LOCATION_IDField.Equals(value) <> true) Then
-                    Me.LOCATION_IDField = value
-                    Me.RaisePropertyChanged("LOCATION_ID")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property ONSITE_FLG() As Short
-            Get
-                Return Me.ONSITE_FLGField
-            End Get
-            Set
-                If (Me.ONSITE_FLGField.Equals(value) <> true) Then
-                    Me.ONSITE_FLGField = value
-                    Me.RaisePropertyChanged("ONSITE_FLG")
-                End If
-            End Set
-        End Property
-        
-        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-        
-        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
-            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
-            If (Not (propertyChanged) Is Nothing) Then
-                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
-            End If
-        End Sub
-    End Class
-    
-    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
-     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
-     System.Runtime.Serialization.DataContractAttribute(Name:="PositionList", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
-     System.SerializableAttribute()>  _
-    Partial Public Class PositionList
-        Inherits Object
-        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
-        
-        <System.NonSerializedAttribute()>  _
-        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private POS_DESCRField As String
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private POS_IDField As Integer
-        
-        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
-        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
-            Get
-                Return Me.extensionDataField
-            End Get
-            Set
-                Me.extensionDataField = value
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property POS_DESCR() As String
-            Get
-                Return Me.POS_DESCRField
-            End Get
-            Set
-                If (Object.ReferenceEquals(Me.POS_DESCRField, value) <> true) Then
-                    Me.POS_DESCRField = value
-                    Me.RaisePropertyChanged("POS_DESCR")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property POS_ID() As Integer
-            Get
-                Return Me.POS_IDField
-            End Get
-            Set
-                If (Me.POS_IDField.Equals(value) <> true) Then
-                    Me.POS_IDField = value
-                    Me.RaisePropertyChanged("POS_ID")
-                End If
-            End Set
-        End Property
-        
-        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-        
-        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
-            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
-            If (Not (propertyChanged) Is Nothing) Then
-                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
-            End If
-        End Sub
-    End Class
-    
-    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
-     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
      System.Runtime.Serialization.DataContractAttribute(Name:="Action", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
      System.SerializableAttribute()>  _
     Partial Public Class Action
@@ -9405,149 +9548,6 @@ Namespace ServiceReference1
         End Sub
     End Class
     
-    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
-     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
-     System.Runtime.Serialization.DataContractAttribute(Name:="SuccessRegister", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
-     System.SerializableAttribute()>  _
-    Partial Public Class SuccessRegister
-        Inherits Object
-        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
-        
-        <System.NonSerializedAttribute()>  _
-        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private AdditionalInformationField As String
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private DateInputField As Date
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private DetailsOfSuccessField As String
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private Emp_IDField As Integer
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private Nick_NameField As String
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private SuccessIDField As Integer
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private WhosInvolveField As String
-        
-        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
-        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
-            Get
-                Return Me.extensionDataField
-            End Get
-            Set
-                Me.extensionDataField = value
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property AdditionalInformation() As String
-            Get
-                Return Me.AdditionalInformationField
-            End Get
-            Set
-                If (Object.ReferenceEquals(Me.AdditionalInformationField, value) <> true) Then
-                    Me.AdditionalInformationField = value
-                    Me.RaisePropertyChanged("AdditionalInformation")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property DateInput() As Date
-            Get
-                Return Me.DateInputField
-            End Get
-            Set
-                If (Me.DateInputField.Equals(value) <> true) Then
-                    Me.DateInputField = value
-                    Me.RaisePropertyChanged("DateInput")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property DetailsOfSuccess() As String
-            Get
-                Return Me.DetailsOfSuccessField
-            End Get
-            Set
-                If (Object.ReferenceEquals(Me.DetailsOfSuccessField, value) <> true) Then
-                    Me.DetailsOfSuccessField = value
-                    Me.RaisePropertyChanged("DetailsOfSuccess")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property Emp_ID() As Integer
-            Get
-                Return Me.Emp_IDField
-            End Get
-            Set
-                If (Me.Emp_IDField.Equals(value) <> true) Then
-                    Me.Emp_IDField = value
-                    Me.RaisePropertyChanged("Emp_ID")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property Nick_Name() As String
-            Get
-                Return Me.Nick_NameField
-            End Get
-            Set
-                If (Object.ReferenceEquals(Me.Nick_NameField, value) <> true) Then
-                    Me.Nick_NameField = value
-                    Me.RaisePropertyChanged("Nick_Name")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property SuccessID() As Integer
-            Get
-                Return Me.SuccessIDField
-            End Get
-            Set
-                If (Me.SuccessIDField.Equals(value) <> true) Then
-                    Me.SuccessIDField = value
-                    Me.RaisePropertyChanged("SuccessID")
-                End If
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property WhosInvolve() As String
-            Get
-                Return Me.WhosInvolveField
-            End Get
-            Set
-                If (Object.ReferenceEquals(Me.WhosInvolveField, value) <> true) Then
-                    Me.WhosInvolveField = value
-                    Me.RaisePropertyChanged("WhosInvolve")
-                End If
-            End Set
-        End Property
-        
-        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-        
-        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
-            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
-            If (Not (propertyChanged) Is Nothing) Then
-                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
-            End If
-        End Sub
-    End Class
-    
     <System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0"),  _
      System.ServiceModel.ServiceContractAttribute(ConfigurationName:="ServiceReference1.IAideService2")>  _
     Public Interface IAideService2
@@ -9687,6 +9687,18 @@ Namespace ServiceReference1
      System.ServiceModel.ServiceContractAttribute(ConfigurationName:="ServiceReference1.IAideService", CallbackContract:=GetType(ServiceReference1.IAideServiceCallback), SessionMode:=System.ServiceModel.SessionMode.Required)>  _
     Public Interface IAideService
         
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllLocation", ReplyAction:="http://tempuri.org/IAideService/GetAllLocationResponse")>  _
+        Function GetAllLocation() As ServiceReference1.LocationList()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllLocation", ReplyAction:="http://tempuri.org/IAideService/GetAllLocationResponse")>  _
+        Function GetAllLocationAsync() As System.Threading.Tasks.Task(Of ServiceReference1.LocationList())
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllPosition", ReplyAction:="http://tempuri.org/IAideService/GetAllPositionResponse")>  _
+        Function GetAllPosition() As ServiceReference1.PositionList()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllPosition", ReplyAction:="http://tempuri.org/IAideService/GetAllPositionResponse")>  _
+        Function GetAllPositionAsync() As System.Threading.Tasks.Task(Of ServiceReference1.PositionList())
+        
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllPermission", ReplyAction:="http://tempuri.org/IAideService/GetAllPermissionResponse")>  _
         Function GetAllPermission() As ServiceReference1.PermissionList()
         
@@ -9777,6 +9789,18 @@ Namespace ServiceReference1
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetOptions", ReplyAction:="http://tempuri.org/IAideService/GetOptionsResponse")>  _
         Function GetOptionsAsync(ByVal OptionID As Integer, ByVal ModuleID As Integer, ByVal FunctionId As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Options())
         
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateSuccessRegisterByEmpID")>  _
+        Sub UpdateSuccessRegisterByEmpID(ByVal success As ServiceReference1.SuccessRegister)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateSuccessRegisterByEmpID")>  _
+        Function UpdateSuccessRegisterByEmpIDAsync(ByVal success As ServiceReference1.SuccessRegister) As System.Threading.Tasks.Task
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/DeleteSuccessRegisterBySuccessID")>  _
+        Sub DeleteSuccessRegisterBySuccessID(ByVal successID As Integer)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/DeleteSuccessRegisterBySuccessID")>  _
+        Function DeleteSuccessRegisterBySuccessIDAsync(ByVal successID As Integer) As System.Threading.Tasks.Task
+        
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/SignOn", ReplyAction:="http://tempuri.org/IAideService/SignOnResponse")>  _
         Function SignOn(ByVal emailAddress As String) As ServiceReference1.Profile
         
@@ -9825,11 +9849,11 @@ Namespace ServiceReference1
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/ViewBirthdayListByCurrentDay", ReplyAction:="http://tempuri.org/IAideService/ViewBirthdayListByCurrentDayResponse")>  _
         Function ViewBirthdayListByCurrentDayAsync(ByVal email As String) As System.Threading.Tasks.Task(Of ServiceReference1.BirthdayList())
         
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/selectAllConcern", ReplyAction:="http://tempuri.org/IAideService/selectAllConcernResponse")>  _
-        Function selectAllConcern(ByVal email As String, ByVal offsetVal As Integer, ByVal nextVal As Integer) As ServiceReference1.Concern()
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllConcernLst", ReplyAction:="http://tempuri.org/IAideService/GetAllConcernLstResponse")>  _
+        Function GetAllConcernLst(ByVal empID As Integer) As ServiceReference1.Concern()
         
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/selectAllConcern", ReplyAction:="http://tempuri.org/IAideService/selectAllConcernResponse")>  _
-        Function selectAllConcernAsync(ByVal email As String, ByVal offsetVal As Integer, ByVal nextVal As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Concern())
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllConcernLst", ReplyAction:="http://tempuri.org/IAideService/GetAllConcernLstResponse")>  _
+        Function GetAllConcernLstAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Concern())
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertIntoConcern")>  _
         Sub InsertIntoConcern(ByVal concern As ServiceReference1.Concern, ByVal email As String)
@@ -10194,6 +10218,10 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.TaskSummary)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PermissionList())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PermissionList)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DepartmentList())),  _
@@ -10210,6 +10238,7 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPISummary())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Options())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Options)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Profile)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ContactList())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ContactList)),  _
@@ -10246,10 +10275,6 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Contributors)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MessageDetail())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MessageDetail)),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList())),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList)),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList())),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MyAttendance)),  _
@@ -10278,7 +10303,6 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Assets())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LessonLearnt())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LessonLearnt)),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister()))>  _
         Function InsertAuditSched(ByVal auditSched As ServiceReference1.AuditSched) As Object
         
@@ -10306,6 +10330,10 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.TaskSummary)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PermissionList())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PermissionList)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DepartmentList())),  _
@@ -10322,6 +10350,7 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPISummary())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Options())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Options)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Profile)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ContactList())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ContactList)),  _
@@ -10358,10 +10387,6 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Contributors)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MessageDetail())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MessageDetail)),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList())),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList)),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList())),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MyAttendance)),  _
@@ -10390,7 +10415,6 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Assets())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LessonLearnt())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LessonLearnt)),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister()))>  _
         Function UpdateAuditSched(ByVal auditSched As ServiceReference1.AuditSched) As Object
         
@@ -10474,18 +10498,6 @@ Namespace ServiceReference1
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetMessage", ReplyAction:="http://tempuri.org/IAideService/GetMessageResponse")>  _
         Function GetMessageAsync(ByVal msgID As Integer, ByVal secID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.MessageDetail())
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllLocation", ReplyAction:="http://tempuri.org/IAideService/GetAllLocationResponse")>  _
-        Function GetAllLocation() As ServiceReference1.LocationList()
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllLocation", ReplyAction:="http://tempuri.org/IAideService/GetAllLocationResponse")>  _
-        Function GetAllLocationAsync() As System.Threading.Tasks.Task(Of ServiceReference1.LocationList())
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllPosition", ReplyAction:="http://tempuri.org/IAideService/GetAllPositionResponse")>  _
-        Function GetAllPosition() As ServiceReference1.PositionList()
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllPosition", ReplyAction:="http://tempuri.org/IAideService/GetAllPositionResponse")>  _
-        Function GetAllPositionAsync() As System.Threading.Tasks.Task(Of ServiceReference1.PositionList())
         
         <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertActionList")>  _
         Sub InsertActionList(ByVal _Action As ServiceReference1.Action)
@@ -10612,6 +10624,18 @@ Namespace ServiceReference1
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetEmployeeEmailForAssetMovement", ReplyAction:="http://tempuri.org/IAideService/GetEmployeeEmailForAssetMovementResponse")>  _
         Function GetEmployeeEmailForAssetMovementAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Employee())
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetSkillAndContactsNotUpdated", ReplyAction:="http://tempuri.org/IAideService/GetSkillAndContactsNotUpdatedResponse")>  _
+        Function GetSkillAndContactsNotUpdated(ByVal empID As Integer, ByVal choice As Integer) As ServiceReference1.Employee()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetSkillAndContactsNotUpdated", ReplyAction:="http://tempuri.org/IAideService/GetSkillAndContactsNotUpdatedResponse")>  _
+        Function GetSkillAndContactsNotUpdatedAsync(ByVal empID As Integer, ByVal choice As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Employee())
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWorkPlaceAuditor", ReplyAction:="http://tempuri.org/IAideService/GetWorkPlaceAuditorResponse")>  _
+        Function GetWorkPlaceAuditor(ByVal empID As Integer, ByVal choice As Integer) As ServiceReference1.Employee
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWorkPlaceAuditor", ReplyAction:="http://tempuri.org/IAideService/GetWorkPlaceAuditorResponse")>  _
+        Function GetWorkPlaceAuditorAsync(ByVal empID As Integer, ByVal choice As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Employee)
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetProfileInformation", ReplyAction:="http://tempuri.org/IAideService/GetProfileInformationResponse")>  _
         Function GetProfileInformation(ByVal empId As Integer) As ServiceReference1.Profile
@@ -10984,18 +11008,6 @@ Namespace ServiceReference1
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/ViewNicknameByDeptID", ReplyAction:="http://tempuri.org/IAideService/ViewNicknameByDeptIDResponse")>  _
         Function ViewNicknameByDeptIDAsync(ByVal email As String, ByVal toDisplay As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Nickname())
-        
-        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateSuccessRegisterByEmpID")>  _
-        Sub UpdateSuccessRegisterByEmpID(ByVal success As ServiceReference1.SuccessRegister)
-        
-        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateSuccessRegisterByEmpID")>  _
-        Function UpdateSuccessRegisterByEmpIDAsync(ByVal success As ServiceReference1.SuccessRegister) As System.Threading.Tasks.Task
-        
-        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/DeleteSuccessRegisterBySuccessID")>  _
-        Sub DeleteSuccessRegisterBySuccessID(ByVal successID As Integer)
-        
-        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/DeleteSuccessRegisterBySuccessID")>  _
-        Function DeleteSuccessRegisterBySuccessIDAsync(ByVal successID As Integer) As System.Threading.Tasks.Task
     End Interface
     
     <System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")>  _
@@ -11028,6 +11040,10 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.TaskSummary)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PermissionList())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PermissionList)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DepartmentList())),  _
@@ -11044,6 +11060,7 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPISummary())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Options())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Options)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Profile)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ContactList())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ContactList)),  _
@@ -11080,10 +11097,6 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Contributors)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MessageDetail())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MessageDetail)),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList())),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList)),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList())),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MyAttendance)),  _
@@ -11112,7 +11125,6 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Assets())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LessonLearnt())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LessonLearnt)),  _
-         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister()))>  _
         Sub NotifyUpdate(ByVal objData As Object)
     End Interface
@@ -11147,6 +11159,22 @@ Namespace ServiceReference1
         Public Sub New(ByVal callbackInstance As System.ServiceModel.InstanceContext, ByVal binding As System.ServiceModel.Channels.Binding, ByVal remoteAddress As System.ServiceModel.EndpointAddress)
             MyBase.New(callbackInstance, binding, remoteAddress)
         End Sub
+        
+        Public Function GetAllLocation() As ServiceReference1.LocationList() Implements ServiceReference1.IAideService.GetAllLocation
+            Return MyBase.Channel.GetAllLocation
+        End Function
+        
+        Public Function GetAllLocationAsync() As System.Threading.Tasks.Task(Of ServiceReference1.LocationList()) Implements ServiceReference1.IAideService.GetAllLocationAsync
+            Return MyBase.Channel.GetAllLocationAsync
+        End Function
+        
+        Public Function GetAllPosition() As ServiceReference1.PositionList() Implements ServiceReference1.IAideService.GetAllPosition
+            Return MyBase.Channel.GetAllPosition
+        End Function
+        
+        Public Function GetAllPositionAsync() As System.Threading.Tasks.Task(Of ServiceReference1.PositionList()) Implements ServiceReference1.IAideService.GetAllPositionAsync
+            Return MyBase.Channel.GetAllPositionAsync
+        End Function
         
         Public Function GetAllPermission() As ServiceReference1.PermissionList() Implements ServiceReference1.IAideService.GetAllPermission
             Return MyBase.Channel.GetAllPermission
@@ -11268,6 +11296,22 @@ Namespace ServiceReference1
             Return MyBase.Channel.GetOptionsAsync(OptionID, ModuleID, FunctionId)
         End Function
         
+        Public Sub UpdateSuccessRegisterByEmpID(ByVal success As ServiceReference1.SuccessRegister) Implements ServiceReference1.IAideService.UpdateSuccessRegisterByEmpID
+            MyBase.Channel.UpdateSuccessRegisterByEmpID(success)
+        End Sub
+        
+        Public Function UpdateSuccessRegisterByEmpIDAsync(ByVal success As ServiceReference1.SuccessRegister) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateSuccessRegisterByEmpIDAsync
+            Return MyBase.Channel.UpdateSuccessRegisterByEmpIDAsync(success)
+        End Function
+        
+        Public Sub DeleteSuccessRegisterBySuccessID(ByVal successID As Integer) Implements ServiceReference1.IAideService.DeleteSuccessRegisterBySuccessID
+            MyBase.Channel.DeleteSuccessRegisterBySuccessID(successID)
+        End Sub
+        
+        Public Function DeleteSuccessRegisterBySuccessIDAsync(ByVal successID As Integer) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.DeleteSuccessRegisterBySuccessIDAsync
+            Return MyBase.Channel.DeleteSuccessRegisterBySuccessIDAsync(successID)
+        End Function
+        
         Public Function SignOn(ByVal emailAddress As String) As ServiceReference1.Profile Implements ServiceReference1.IAideService.SignOn
             Return MyBase.Channel.SignOn(emailAddress)
         End Function
@@ -11332,12 +11376,12 @@ Namespace ServiceReference1
             Return MyBase.Channel.ViewBirthdayListByCurrentDayAsync(email)
         End Function
         
-        Public Function selectAllConcern(ByVal email As String, ByVal offsetVal As Integer, ByVal nextVal As Integer) As ServiceReference1.Concern() Implements ServiceReference1.IAideService.selectAllConcern
-            Return MyBase.Channel.selectAllConcern(email, offsetVal, nextVal)
+        Public Function GetAllConcernLst(ByVal empID As Integer) As ServiceReference1.Concern() Implements ServiceReference1.IAideService.GetAllConcernLst
+            Return MyBase.Channel.GetAllConcernLst(empID)
         End Function
         
-        Public Function selectAllConcernAsync(ByVal email As String, ByVal offsetVal As Integer, ByVal nextVal As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Concern()) Implements ServiceReference1.IAideService.selectAllConcernAsync
-            Return MyBase.Channel.selectAllConcernAsync(email, offsetVal, nextVal)
+        Public Function GetAllConcernLstAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Concern()) Implements ServiceReference1.IAideService.GetAllConcernLstAsync
+            Return MyBase.Channel.GetAllConcernLstAsync(empID)
         End Function
         
         Public Sub InsertIntoConcern(ByVal concern As ServiceReference1.Concern, ByVal email As String) Implements ServiceReference1.IAideService.InsertIntoConcern
@@ -11932,22 +11976,6 @@ Namespace ServiceReference1
             Return MyBase.Channel.GetMessageAsync(msgID, secID)
         End Function
         
-        Public Function GetAllLocation() As ServiceReference1.LocationList() Implements ServiceReference1.IAideService.GetAllLocation
-            Return MyBase.Channel.GetAllLocation
-        End Function
-        
-        Public Function GetAllLocationAsync() As System.Threading.Tasks.Task(Of ServiceReference1.LocationList()) Implements ServiceReference1.IAideService.GetAllLocationAsync
-            Return MyBase.Channel.GetAllLocationAsync
-        End Function
-        
-        Public Function GetAllPosition() As ServiceReference1.PositionList() Implements ServiceReference1.IAideService.GetAllPosition
-            Return MyBase.Channel.GetAllPosition
-        End Function
-        
-        Public Function GetAllPositionAsync() As System.Threading.Tasks.Task(Of ServiceReference1.PositionList()) Implements ServiceReference1.IAideService.GetAllPositionAsync
-            Return MyBase.Channel.GetAllPositionAsync
-        End Function
-        
         Public Sub InsertActionList(ByVal _Action As ServiceReference1.Action) Implements ServiceReference1.IAideService.InsertActionList
             MyBase.Channel.InsertActionList(_Action)
         End Sub
@@ -12114,6 +12142,22 @@ Namespace ServiceReference1
         
         Public Function GetEmployeeEmailForAssetMovementAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Employee()) Implements ServiceReference1.IAideService.GetEmployeeEmailForAssetMovementAsync
             Return MyBase.Channel.GetEmployeeEmailForAssetMovementAsync(empID)
+        End Function
+        
+        Public Function GetSkillAndContactsNotUpdated(ByVal empID As Integer, ByVal choice As Integer) As ServiceReference1.Employee() Implements ServiceReference1.IAideService.GetSkillAndContactsNotUpdated
+            Return MyBase.Channel.GetSkillAndContactsNotUpdated(empID, choice)
+        End Function
+        
+        Public Function GetSkillAndContactsNotUpdatedAsync(ByVal empID As Integer, ByVal choice As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Employee()) Implements ServiceReference1.IAideService.GetSkillAndContactsNotUpdatedAsync
+            Return MyBase.Channel.GetSkillAndContactsNotUpdatedAsync(empID, choice)
+        End Function
+        
+        Public Function GetWorkPlaceAuditor(ByVal empID As Integer, ByVal choice As Integer) As ServiceReference1.Employee Implements ServiceReference1.IAideService.GetWorkPlaceAuditor
+            Return MyBase.Channel.GetWorkPlaceAuditor(empID, choice)
+        End Function
+        
+        Public Function GetWorkPlaceAuditorAsync(ByVal empID As Integer, ByVal choice As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Employee) Implements ServiceReference1.IAideService.GetWorkPlaceAuditorAsync
+            Return MyBase.Channel.GetWorkPlaceAuditorAsync(empID, choice)
         End Function
         
         Public Function GetProfileInformation(ByVal empId As Integer) As ServiceReference1.Profile Implements ServiceReference1.IAideService.GetProfileInformation
@@ -12610,22 +12654,6 @@ Namespace ServiceReference1
         
         Public Function ViewNicknameByDeptIDAsync(ByVal email As String, ByVal toDisplay As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Nickname()) Implements ServiceReference1.IAideService.ViewNicknameByDeptIDAsync
             Return MyBase.Channel.ViewNicknameByDeptIDAsync(email, toDisplay)
-        End Function
-        
-        Public Sub UpdateSuccessRegisterByEmpID(ByVal success As ServiceReference1.SuccessRegister) Implements ServiceReference1.IAideService.UpdateSuccessRegisterByEmpID
-            MyBase.Channel.UpdateSuccessRegisterByEmpID(success)
-        End Sub
-        
-        Public Function UpdateSuccessRegisterByEmpIDAsync(ByVal success As ServiceReference1.SuccessRegister) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateSuccessRegisterByEmpIDAsync
-            Return MyBase.Channel.UpdateSuccessRegisterByEmpIDAsync(success)
-        End Function
-        
-        Public Sub DeleteSuccessRegisterBySuccessID(ByVal successID As Integer) Implements ServiceReference1.IAideService.DeleteSuccessRegisterBySuccessID
-            MyBase.Channel.DeleteSuccessRegisterBySuccessID(successID)
-        End Sub
-        
-        Public Function DeleteSuccessRegisterBySuccessIDAsync(ByVal successID As Integer) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.DeleteSuccessRegisterBySuccessIDAsync
-            Return MyBase.Channel.DeleteSuccessRegisterBySuccessIDAsync(successID)
         End Function
     End Class
 End Namespace
