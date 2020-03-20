@@ -26,27 +26,26 @@ Class ThreeC_UpdatePage
 
     Private concernDBProvider As New ConcernDBProvider
     Private concernViewModel As New ConcernViewModel
+    Private concernModel As New ConcernModel
 
     Private lstConcernActionList As New ObservableCollection(Of ConcernModel)
     Private lstReferenceActionList As New ObservableCollection(Of ConcernModel)
 
-    Public Sub New(_concernViewModel As ConcernViewModel, _profile As Profile, _frame As Frame, _menugrid As Grid, _submenuframe As Frame, _addframe As Frame)
+    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _concernModel As ConcernModel, _profile As Profile)
         ' This call is required by the designer.
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        concernViewModel = _concernViewModel
-        email = _profile.Email_Address
-        profile = _profile
         frame = _frame
+        addframe = _addframe
         menugrid = _menugrid
         submenuframe = _submenuframe
-        addframe = _addframe
+        concernModel = _concernModel
+        email = _profile.Email_Address
+        profile = _profile
 
-        'Load Selected Concern from ThreeC Page
-        LoadSelectedConcern()
-        LoadActionList()
-        LoadReferenceActionList()
+        GetActionList()
+        GetReferenceActionList()
         SetDataContext()
         ConfigureButtons()
     End Sub
@@ -68,44 +67,13 @@ Class ThreeC_UpdatePage
 #End Region
 
 #Region "Methods"
-    'Set selected Concern from ThreeCPage
-    Private Sub LoadSelectedConcern()
-        Try
-            If InitializeService() Then
-                Dim concernData As New Concern
-
-                concernData.RefID = concernViewModel.SelectedConcern.REF_ID
-                concernData.Concerns = concernViewModel.SelectedConcern.CONCERN
-                concernData.Cause = concernViewModel.SelectedConcern.CAUSE
-                concernData.CounterMeasure = concernViewModel.SelectedConcern.COUNTERMEASURE
-                concernData.Act_Reference = concernViewModel.SelectedConcern.ACT_REFERENCE
-                concernData.Due_Date = concernViewModel.SelectedConcern.DUE_DATE
-
-                concernDBProvider.SetConcernText(concernData)
-                concernViewModel.SelectedConcern = New ConcernModel(concernDBProvider.GetSelectedConcern())
-
-                concernRefID = concernData.RefID 'Set concern reference ID
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-    End Sub
-
-    Private Sub LoadActionList()
+    Private Sub GetActionList()
         Try
             If InitializeService() Then
                 lstConcernActionList.Clear()
-
-                Dim lstConcern As Concern()
                 concernDBProvider = New ConcernDBProvider
 
-                If isSearchTextIsUsed = 0 Then
-                    'DISPLAY LIST OF ACTION
-                    lstConcern = AIDEClientService.GetListOfACtion(concernRefID, email)
-                Else
-                    'DISPLAY LIST OF ACTION VIA SEARCH
-                    lstConcern = AIDEClientService.GetSearchAction(concernRefID, txtSearchAction.Text, email)
-                End If
+                Dim lstConcern As Concern() = AIDEClientService.GetListOfACtion(concernModel.REF_ID, email)
 
                 For Each objConcern As Concern In lstConcern
                     concernDBProvider.SetToComBoBox(objConcern)
@@ -115,20 +83,20 @@ Class ThreeC_UpdatePage
                     lstConcernActionList.Add(New ConcernModel(iConcern))
                 Next
 
-                lvACtion.ItemsSource = lstConcernActionList
+                lvAction.ItemsSource = lstConcernActionList
             End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
-    Private Sub LoadReferenceActionList()
+    Private Sub GetReferenceActionList()
         Try
             If InitializeService() Then
                 lstReferenceActionList.Clear()
                 concernDBProvider = New ConcernDBProvider
 
-                Dim lstConcern As Concern() = AIDEClientService.GetListOfACtionsReferences(concernRefID)
+                Dim lstConcern As Concern() = AIDEClientService.GetListOfACtionsReferences(concernModel.REF_ID)
 
                 For Each objConcern As Concern In lstConcern
                     concernDBProvider.SetTollistViewActionReference(objConcern)
@@ -146,12 +114,13 @@ Class ThreeC_UpdatePage
     End Sub
 
     Private Sub SetDataContext()
+        concernViewModel.SelectedConcern = concernModel
         Me.DataContext = concernViewModel
     End Sub
 
     'Insert Action Reference to concern
     Public Function InsertSelectedAction()
-        Dim selectedAction As ConcernModel = lvACtion.SelectedValue
+        Dim selectedAction As ConcernModel = lvAction.SelectedValue
         Dim addSelectedAction As New Concern
 
         addSelectedAction.RefID = concernRefID
@@ -213,11 +182,6 @@ Class ThreeC_UpdatePage
 #End Region
 
 #Region "Events"
-    Private Sub txtSearchAction_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearchAction.TextChanged
-        isSearchTextIsUsed = 1
-        LoadActionList()
-    End Sub
-
     Private Sub btnUpdateClick(sender As Object, e As RoutedEventArgs)
         Try
             If InitializeService() Then
@@ -235,15 +199,15 @@ Class ThreeC_UpdatePage
     Private Sub btnSaveActionRef(sender As Object, e As RoutedEventArgs)
         InitializeService()
         Try
-            If lvACtion.SelectedIndex = -1 Then
+            If lvAction.SelectedIndex = -1 Then
                 MsgBox("Please select an action item.")
             Else
                 AIDEClientService.insertAndDeleteSelectedAction(InsertSelectedAction())
                 MsgBox("Action reference has been added to 3C.", MsgBoxStyle.Information)
                 AIDEClientService.Close()
 
-                LoadActionList()
-                LoadReferenceActionList()
+                GetActionList()
+                GetReferenceActionList()
                 ConfigureButtons()
             End If
         Catch ex As Exception
@@ -262,8 +226,8 @@ Class ThreeC_UpdatePage
                         MsgBox("Action has been removed from the 3C.", MsgBoxStyle.Information, "AIDE")
                         AIDEClientService.Close()
 
-                        LoadActionList()
-                        LoadReferenceActionList()
+                        GetActionList()
+                        GetReferenceActionList()
                         ConfigureButtons()
                     End If
                 End If

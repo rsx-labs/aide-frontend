@@ -163,6 +163,33 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DashboardTaskSummaryTotals" nillable="true" type="tns:DashboardTaskSummaryTotals" />
+  <xs:complexType name="ArrayOfLocationList">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LocationList" nillable="true" type="tns:LocationList" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLocationList" nillable="true" type="tns:ArrayOfLocationList" />
+  <xs:complexType name="LocationList">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LOCATION" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LOCATION_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="ONSITE_FLG" type="xs:short" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LocationList" nillable="true" type="tns:LocationList" />
+  <xs:complexType name="ArrayOfPositionList">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PositionList" nillable="true" type="tns:PositionList" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPositionList" nillable="true" type="tns:ArrayOfPositionList" />
+  <xs:complexType name="PositionList">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="POS_DESCR" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="POS_ID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PositionList" nillable="true" type="tns:PositionList" />
   <xs:complexType name="ArrayOfPermissionList">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="PermissionList" nillable="true" type="tns:PermissionList" />
@@ -287,6 +314,18 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Options" nillable="true" type="tns:Options" />
+  <xs:complexType name="SuccessRegister">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdditionalInformation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateInput" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DetailsOfSuccess" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Emp_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="Nick_Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SuccessID" type="xs:int" />
+      <xs:element minOccurs="0" name="WhosInvolve" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SuccessRegister" nillable="true" type="tns:SuccessRegister" />
   <xs:complexType name="Profile">
     <xs:sequence>
       <xs:element minOccurs="0" name="Birthdate" type="xs:dateTime" />
@@ -704,33 +743,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="MessageDetail" nillable="true" type="tns:MessageDetail" />
-  <xs:complexType name="ArrayOfLocationList">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="LocationList" nillable="true" type="tns:LocationList" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfLocationList" nillable="true" type="tns:ArrayOfLocationList" />
-  <xs:complexType name="LocationList">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="LOCATION" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="LOCATION_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="ONSITE_FLG" type="xs:short" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="LocationList" nillable="true" type="tns:LocationList" />
-  <xs:complexType name="ArrayOfPositionList">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="PositionList" nillable="true" type="tns:PositionList" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfPositionList" nillable="true" type="tns:ArrayOfPositionList" />
-  <xs:complexType name="PositionList">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="POS_DESCR" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="POS_ID" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="PositionList" nillable="true" type="tns:PositionList" />
   <xs:complexType name="Action">
     <xs:sequence>
       <xs:element minOccurs="0" name="Act_Assignee" type="xs:int" />
@@ -1026,18 +1038,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="LessonLearnt" nillable="true" type="tns:LessonLearnt" />
-  <xs:complexType name="SuccessRegister">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="AdditionalInformation" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DateInput" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="DetailsOfSuccess" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Emp_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="Nick_Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SuccessID" type="xs:int" />
-      <xs:element minOccurs="0" name="WhosInvolve" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="SuccessRegister" nillable="true" type="tns:SuccessRegister" />
   <xs:complexType name="ArrayOfSuccessRegister">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="SuccessRegister" nillable="true" type="tns:SuccessRegister" />

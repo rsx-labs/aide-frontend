@@ -125,7 +125,7 @@
                 </Grid>
                 
                 <Grid Grid.Column="3">
-                    <Button Style="{DynamicResource RoundCornerGray}" Click="btnFilter" Margin="10" Width="auto" Height="auto" >
+                    <Button Style="{DynamicResource RoundCornerGray}" Click="btnFilterDate" Margin="10" Width="auto" Height="auto" >
                         <TextBlock Text="SEARCH" Foreground="White" Margin="6" Padding="5,0"/>
                     </Button>
                 </Grid>
@@ -133,7 +133,7 @@
 
             <Grid Grid.Row="2" Background="White">
                 <Border Margin="10,0,10,10" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
-                    <DataGrid Background="Transparent" x:Name="ThreeC_DataGridView" ItemsSource="{Binding ConcernList}"
+                    <DataGrid Background="Transparent" x:Name="dg3C" ItemsSource="{Binding ConcernList}"
                               SelectedItem="{Binding SelectedConcern}" IsReadOnly="True" 
                               Height="auto" Width="auto" 
                               AutoGenerateColumns="False" BorderBrush="Transparent" CanUserResizeColumns="False">

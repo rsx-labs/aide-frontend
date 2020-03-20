@@ -9,7 +9,6 @@ Imports UI_AIDE_CommCellServices.ServiceReference1
 Public Class ActionListDBProvider
     Private _obAction As ObservableCollection(Of myActionSet)
 
-
     Public Sub New()
         _obAction = New ObservableCollection(Of myActionSet)
     End Sub
@@ -19,7 +18,7 @@ Public Class ActionListDBProvider
     End Function
 
     Public Function _setlistofitems(ByRef act As Action)
-        Dim _myActionSet As New myActionSet With {._actRef = act.Act_ID, _
+        Dim _myActionSet As New MyActionSet With {._actRef = act.Act_ID, _
                                                   ._actMessage = act.Act_Message, _
                                                   ._actAssignee = act.Act_Assignee, _
                                                   ._actNickName = act.Act_NickName, _
@@ -32,7 +31,7 @@ Public Class ActionListDBProvider
 
 End Class
 
-Public Class myActionSet
+Public Class MyActionSet
     Property _actRef As String
     Property _actMessage As String
     Property _actAssignee As Integer

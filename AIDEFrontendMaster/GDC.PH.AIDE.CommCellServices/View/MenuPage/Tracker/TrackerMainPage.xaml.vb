@@ -9,23 +9,13 @@ Class SabaLearningMainPage
     Implements ServiceReference1.IAideServiceCallback
 
 #Region "Paging Declarations"
-    Dim startRowIndex As Integer
-    Dim lastRowIndex As Integer
-    Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer
+    Dim pagingRecordPerPage As Integer = 10
     Dim currentPage As Integer
     Dim lastPage As Integer
-
-    Private Enum PagingMode
-        _First = 1
-        _Next = 2
-        _Previous = 3
-        _Last = 4
-    End Enum
+    Dim totalRecords As Integer
 #End Region
 
 #Region "Fields"
-
     Private _AideService As ServiceReference1.AideServiceClient
     Private mainframe As Frame
     Private addframe As Frame
@@ -35,33 +25,28 @@ Class SabaLearningMainPage
     Private profile As Profile
     Private _OptionsViewModel As OptionViewModel
     Dim lstSabaLearning As SabaLearning()
-    Dim totalRecords As Integer
-    Dim searchLearning = New ObservableCollection(Of SabaLearning)
+    Dim sabalearningDBProvider As New SabaLearningDBProvider
     Dim paginatedCollection As PaginatedObservableCollection(Of SabaLearningModel) = New PaginatedObservableCollection(Of SabaLearningModel)(pagingRecordPerPage)
 #End Region
 
 #Region "Constructor"
 
     Public Sub New(_mainframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
-
         InitializeComponent()
-        Me.profile = _profile
-        Me.mainframe = _mainframe
-        Me.addframe = _addframe
-        Me.menugrid = _menugrid
-        Me.submenuframe = _submenuframe
-        pagingRecordPerPage = GetOptionData(32, 16, 12)
-        SetData()
+        mainframe = _mainframe
+        addframe = _addframe
+        menugrid = _menugrid
+        submenuframe = _submenuframe
+        profile = _profile
 
-        If profile.Permission_ID <> 1 Then
-            btnCreate.Visibility = Windows.Visibility.Collapsed
-        End If
+        pagingRecordPerPage = GetOptionData(32, 16, 12)
+        LoadSabaCourses()
+        PermissionSettings()
     End Sub
 
 #End Region
 
 #Region "Functions/Methods"
-
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
         Try
@@ -76,25 +61,23 @@ Class SabaLearningMainPage
         Return bInitialize
     End Function
 
-    Public Sub SetData()
+    Public Sub LoadSabaCourses()
         Try
             If InitializeService() Then
                 lstSabaLearning = _AideService.GetAllSabaCourses(profile.Emp_ID)
-                LoadSabaCourses()
-                DisplayPagingInfo()
+                SetLists(lstSabaLearning)
             End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
-    Public Sub LoadSabaCourses()
+    Public Sub SetLists(listSabaLearning As SabaLearning())
         Try
-            Dim lstSabaLearningList As New ObservableCollection(Of SabaLearningModel)
-            Dim sabalearningDBProvider As New SabaLearningDBProvider
+            sabalearningDBProvider = New SabaLearningDBProvider
             paginatedCollection = New PaginatedObservableCollection(Of SabaLearningModel)(pagingRecordPerPage)
 
-            For Each objTracker As SabaLearning In lstSabaLearning
+            For Each objTracker As SabaLearning In listSabaLearning
                 sabalearningDBProvider._setlistofitems(objTracker)
             Next
 
@@ -104,44 +87,7 @@ Class SabaLearningMainPage
 
             SabaLearningLV.ItemsSource = paginatedCollection
             'LoadDataForPrint()
-            currentPage = paginatedCollection.CurrentPage + 1
-            lastPage = Math.Ceiling(lstSabaLearning.Length / pagingRecordPerPage)
-        Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-    End Sub
-
-    Public Sub LoadSabaCourseByTitle(ByVal title As String)
-        Try
-            If InitializeService() Then
-                lstSabaLearning = _AideService.GetAllSabaCourseByTitle(title, profile.Emp_ID)
-                LoadSabaCourses()
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-    End Sub
-
-    Public Sub SetDataForSearch(input As String)
-        Try
-            'Dim items
-            Dim sabaLearningDBProvider As New SabaLearningDBProvider
-            paginatedCollection = New PaginatedObservableCollection(Of SabaLearningModel)(pagingRecordPerPage)
-
-
-            Dim items = From i In lstSabaLearning Where i.TITLE.ToLower.Contains(input.ToLower)
-            searchLearning = New ObservableCollection(Of SabaLearning)(items)
-
-            For Each saba As SabaLearning In searchLearning
-                sabaLearningDBProvider._setlistofitems(saba)
-            Next
-
-            For Each mysaba As mySabaLearningSet In sabaLearningDBProvider._getobjSabaLearning()
-                paginatedCollection.Add(New SabaLearningModel(mysaba))
-            Next
-
-            totalRecords = searchLearning.Count
-            SabaLearningLV.ItemsSource = paginatedCollection
+            totalRecords = listSabaLearning.Length
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
             DisplayPagingInfo()
@@ -149,8 +95,8 @@ Class SabaLearningMainPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
-
-    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+    
+	Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
@@ -168,74 +114,21 @@ Class SabaLearningMainPage
         Return strData
     End Function
 
-    Private Sub SetPaging(mode As Integer)
+    Private Sub SearchSabaCourses(search As String)
         Try
-            Dim totalRecords As Integer = lstSabaLearning.Length
+            Dim items = From i In lstSabaLearning Where i.TITLE.ToLower.Contains(search.ToLower)
 
-            Select Case mode
-                Case CInt(PagingMode._Next)
-                    ' Set the rows to be displayed if the total records is more than the (Record per Page * Page Index)
-                    If totalRecords > (pagingPageIndex * pagingRecordPerPage) Then
+            Dim searchSabaCourse = New ObservableCollection(Of SabaLearning)(items)
 
-                        ' Set the last row to be displayed if the total records is more than the (Record per Page * Page Index) + Record per Page
-                        If totalRecords >= ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) Then
-                            lastRowIndex = ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) - 1
-                        Else
-                            lastRowIndex = totalRecords - 1
-                        End If
-
-                        startRowIndex = pagingPageIndex * pagingRecordPerPage
-                        pagingPageIndex += 1
-                    Else
-                        startRowIndex = (pagingPageIndex - 1) * pagingRecordPerPage
-                        lastRowIndex = totalRecords - 1
-                    End If
-                    ' Bind data to the Data Grid
-                    LoadSabaCourses()
-                    Exit Select
-                Case CInt(PagingMode._Previous)
-                    ' Set the Previous Page if the page index is greater than 1
-                    If pagingPageIndex > 1 Then
-                        pagingPageIndex -= 1
-
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-                        lastRowIndex = (pagingPageIndex * pagingRecordPerPage) - 1
-                        LoadSabaCourses()
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._First)
-                    If totalRecords > pagingRecordPerPage Then
-                        pagingPageIndex = 2
-                        SetPaging(CInt(PagingMode._Previous))
-                    Else
-                        pagingPageIndex = 1
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-
-                        If Not totalRecords = 0 Then
-                            lastRowIndex = totalRecords - 1
-                            LoadSabaCourses()
-                        Else
-                            lastRowIndex = 0
-                            Me.DataContext = Nothing
-                        End If
-
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._Last)
-                    pagingPageIndex = (lstSabaLearning.Length / pagingRecordPerPage)
-                    SetPaging(CInt(PagingMode._Next))
-                    Exit Select
-            End Select
-
+            SetLists(searchSabaCourse.ToArray)
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
-
     End Sub
 
     Private Sub DisplayPagingInfo()
         ' If there has no data found
-        If lstSabaLearning.Length = 0 Then
+        If totalRecords = 0 Then
             txtPageNo.Text = "No Results Found "
             GUISettingsOff()
         Else
@@ -258,29 +151,16 @@ Class SabaLearningMainPage
         btnNext.IsEnabled = True
     End Sub
 
-    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
-        Dim totalRecords As Integer = lstSabaLearning.Length
-
-        If totalRecords > ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
-            paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
-            currentPage = paginatedCollection.CurrentPage + 1
-            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+    Private Sub PermissionSettings()
+        If profile.Permission_ID <> 1 Then
+            btnCreate.Visibility = Windows.Visibility.Collapsed
         End If
-        DisplayPagingInfo()
-    End Sub
-
-    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
-        paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
-        If currentPage > 1 Then
-            currentPage -= 1
-        End If
-        DisplayPagingInfo()
     End Sub
 #End Region
 
 #Region "Events"
     Private Sub SearchTextBox_TextChanged(sender As Object, e As TextChangedEventArgs)
-        SetDataForSearch(SearchTextBox.Text)
+        SearchSabaCourses(SearchTextBox.Text.Trim)
     End Sub
 
     Private Sub SabaLearningLV_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
@@ -319,6 +199,25 @@ Class SabaLearningMainPage
         addframe.Visibility = Visibility.Visible
         addframe.Margin = New Thickness(150, 150, 150, 150)
     End Sub
+
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
+        If totalRecords > ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+            paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+        End If
+
+        DisplayPagingInfo()
+    End Sub
+
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
+        paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
+        If currentPage > 1 Then
+            currentPage -= 1
+        End If
+
+        DisplayPagingInfo()
+    End Sub
 #End Region
 
 #Region "INotify Methods"
@@ -342,4 +241,5 @@ Class SabaLearningMainPage
 
     End Sub
 #End Region
+
 End Class

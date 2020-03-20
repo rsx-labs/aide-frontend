@@ -13,19 +13,10 @@ Class LessonLearntPage
     Implements IAideServiceCallback
 
 #Region "Paging Declarations"
-    Private Enum PagingMode
-        _First = 1
-        _Next = 2
-        _Previous = 3
-        _Last = 4
-    End Enum
-
-    Dim startRowIndex As Integer
-    Dim lastRowIndex As Integer
-    Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer
+    Dim pagingRecordPerPage As Integer = 10
     Dim currentPage As Integer
     Dim lastPage As Integer
+    Dim totalRecords As Integer
 #End Region
 
 #Region "Fields"
@@ -37,11 +28,13 @@ Class LessonLearntPage
     Private profile As Profile
 
     Dim lstLesson As LessonLearnt()
+    Dim lessonLearntDBProvider As New LessonLearntDBProvider
     Dim client As AideServiceClient
     Private _OptionsViewModel As OptionViewModel
     Dim paginatedCollection As PaginatedObservableCollection(Of LessonLearntModel) = New PaginatedObservableCollection(Of LessonLearntModel)(pagingRecordPerPage)
 #End Region
 
+#Region "Constructor"
     Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
         InitializeComponent()
         frame = _frame
@@ -56,8 +49,9 @@ Class LessonLearntPage
         LoadLessonLearntList()
         PermissionSettings()
     End Sub
-
-#Region "Common Methods"
+#End Region
+    
+#Region "Methods"
 
     Private Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
@@ -73,41 +67,40 @@ Class LessonLearntPage
         Return bInitialize
     End Function
 
-    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
-        If message <> String.Empty Then
-            MessageBox.Show(message)
-        End If
-    End Sub
-
-    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
-        If message <> String.Empty Then
-            MessageBox.Show(message)
-        End If
-    End Sub
-
-    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
-
-    End Sub
-
-    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
-
-    End Sub
-
-    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
-
-    End Sub
-
-#End Region
-
-#Region "Private Functions"
-
     Private Sub LoadLessonLearntList()
         Try
-            If Me.InitializeService Then
+            If InitializeService() Then
                 lstLesson = client.GetLessonLearntList(profile.Email_Address)
-                SetData()
-                DisplayPagingInfo()
+                SetData(lstLesson)
             End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+
+    Private Sub SetData(lstLessonsLearnt As LessonLearnt())
+        Try
+            lessonLearntDBProvider = New LessonLearntDBProvider
+            paginatedCollection = New PaginatedObservableCollection(Of LessonLearntModel)(pagingRecordPerPage)
+
+            ' Set the MyLessonLearntList 
+            For Each objLessonsLearnt As LessonLearnt In lstLessonsLearnt
+                lessonLearntDBProvider.SetLessonLearntList(objLessonsLearnt)
+            Next
+
+            ' Set the lstLessonsLearnt
+            For Each lessonsLearnt As MyLessonLearntList In lessonLearntDBProvider.GetLessonLearntList()
+                paginatedCollection.Add(New LessonLearntModel(lessonsLearnt))
+            Next
+
+            dgLessonLearnt.ItemsSource = paginatedCollection
+
+            totalRecords = lstLessonsLearnt.Length
+            currentPage = paginatedCollection.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+            DisplayPagingInfo()
+
+            'LoadDataForPrint()
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -115,21 +108,21 @@ Class LessonLearntPage
 
     Private Sub SearchProblemEncountered(ByVal search As String)
         Try
-            If Not search = String.Empty Then
-                If Me.InitializeService() Then
-                    lstLesson = client.GetLessonLearntByProblem(search, profile.Email_Address)
-                    SetData()
-                    DisplayPagingInfo()
-                End If
-            Else
-                LoadLessonLearntList()
-            End If
+            Dim items = From i In lstLesson Where i.Problem.ToLower.Contains(search.ToLower) _
+                                            Or i.Resolution.ToLower.Contains(search.ToLower) _
+                                            Or i.Nickname.ToLower.Contains(search.ToLower) _
+                                            Or i.ReferenceNo.ToLower.Contains(search.ToLower) _
+                                            Or i.ActionNo.ToLower.Contains(search.ToLower)
+
+            Dim searchLessonsLearnt = New ObservableCollection(Of LessonLearnt)(items)
+
+            SetData(searchLessonsLearnt.ToArray)
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
-    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+	Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
@@ -147,35 +140,9 @@ Class LessonLearntPage
         Return strData
     End Function
 
-    Private Sub SetData()
-        Try
-            Dim lessonLearntDBProvider As New LessonLearntDBProvider
-
-            paginatedCollection = New PaginatedObservableCollection(Of LessonLearntModel)(pagingRecordPerPage)
-
-            ' Set the MyLessonLearntList 
-            For Each objLessonLearnt As LessonLearnt In lstLesson
-                lessonLearntDBProvider.SetLessonLearntList(objLessonLearnt)
-            Next
-
-            ' Set the lstLessonLearnt
-            For Each lessonLearnt As MyLessonLearntList In lessonLearntDBProvider.GetLessonLearntList()
-                paginatedCollection.Add(New LessonLearntModel(lessonLearnt))
-            Next
-
-            dgLessonLearnt.ItemsSource = paginatedCollection
-
-            currentPage = paginatedCollection.CurrentPage + 1
-            lastPage = Math.Ceiling(lstLesson.Length / pagingRecordPerPage)
-            'LoadDataForPrint()
-        Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-    End Sub
-
     Private Sub DisplayPagingInfo()
-       ' If there has no data found
-        If lstLesson.Length = 0 Then
+        ' If there has no data found
+        If totalRecords = 0 Then
             txtPageNo.Text = "No Results Found "
             GUISettingsOff()
         Else
@@ -247,7 +214,7 @@ Class LessonLearntPage
                 End If
             End If
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -256,13 +223,12 @@ Class LessonLearntPage
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
-        Dim totalRecords As Integer = lstLesson.Length
-
         If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
             paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
         End If
+
         DisplayPagingInfo()
     End Sub
 
@@ -271,6 +237,7 @@ Class LessonLearntPage
         If currentPage > 1 Then
             currentPage -= 1
         End If
+
         DisplayPagingInfo()
     End Sub
 
@@ -289,4 +256,29 @@ Class LessonLearntPage
 
 #End Region
 
+#Region "Callback Methods"
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
+        If message <> String.Empty Then
+            MessageBox.Show(message)
+        End If
+    End Sub
+
+    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
+        If message <> String.Empty Then
+            MessageBox.Show(message)
+        End If
+    End Sub
+
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
+
+    End Sub
+
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
+
+    End Sub
+
+    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+
+    End Sub
+#End Region
 End Class

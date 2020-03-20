@@ -103,6 +103,98 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllLocation_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllLocation_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllPosition_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetAllPosition_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="dual_GetAllPermission_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -770,6 +862,52 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_UpdateSuccessRegisterByEmpID_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_DeleteSuccessRegisterBySuccessID_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="dual_SignOn_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -1092,7 +1230,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_selectAllConcern_Input_policy">
+  <wsp:Policy wsu:Id="dual_GetAllConcernLst_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -1115,7 +1253,7 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_selectAllConcern_output_policy">
+  <wsp:Policy wsu:Id="dual_GetAllConcernLst_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -4174,98 +4312,6 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetAllLocation_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetAllLocation_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetAllPosition_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_GetAllPosition_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
   <wsp:Policy wsu:Id="dual_InsertActionList_Input_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -5095,6 +5141,98 @@
     </wsp:ExactlyOne>
   </wsp:Policy>
   <wsp:Policy wsu:Id="dual_GetEmployeeEmailForAssetMovement_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetSkillAndContactsNotUpdated_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetSkillAndContactsNotUpdated_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetWorkPlaceAuditor_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
+          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="dual_GetWorkPlaceAuditor_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -7578,52 +7716,6 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_UpdateSuccessRegisterByEmpID_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="dual_DeleteSuccessRegisterBySuccessID_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="Sequence" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="SequenceAcknowledgement" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="AckRequested" Namespace="http://schemas.xmlsoap.org/ws/2005/02/rm" />
-          <sp:Header Name="ChannelInstance" Namespace="http://schemas.microsoft.com/ws/2005/02/duplex" />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
   <wsp:Policy wsu:Id="dual_NotifySuccess_output_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -7788,6 +7880,18 @@
   <wsdl:message name="IAideService2_DashboardGetTaskSummaryTotals_OutputMessage">
     <wsdl:part name="parameters" element="tns:DashboardGetTaskSummaryTotalsResponse" />
   </wsdl:message>
+  <wsdl:message name="IAideService_GetAllLocation_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllLocation" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAllLocation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllLocationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAllPosition_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPosition" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetAllPosition_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllPositionResponse" />
+  </wsdl:message>
   <wsdl:message name="IAideService_GetAllPermission_InputMessage">
     <wsdl:part name="parameters" element="tns:GetAllPermission" />
   </wsdl:message>
@@ -7875,6 +7979,12 @@
   <wsdl:message name="IAideService_GetOptions_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetOptionsResponse" />
   </wsdl:message>
+  <wsdl:message name="IAideService_UpdateSuccessRegisterByEmpID_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSuccessRegisterByEmpID" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_DeleteSuccessRegisterBySuccessID_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteSuccessRegisterBySuccessID" />
+  </wsdl:message>
   <wsdl:message name="IAideService_SignOn_InputMessage">
     <wsdl:part name="parameters" element="tns:SignOn" />
   </wsdl:message>
@@ -7917,11 +8027,11 @@
   <wsdl:message name="IAideService_ViewBirthdayListByCurrentDay_OutputMessage">
     <wsdl:part name="parameters" element="tns:ViewBirthdayListByCurrentDayResponse" />
   </wsdl:message>
-  <wsdl:message name="IAideService_selectAllConcern_InputMessage">
-    <wsdl:part name="parameters" element="tns:selectAllConcern" />
+  <wsdl:message name="IAideService_GetAllConcernLst_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllConcernLst" />
   </wsdl:message>
-  <wsdl:message name="IAideService_selectAllConcern_OutputMessage">
-    <wsdl:part name="parameters" element="tns:selectAllConcernResponse" />
+  <wsdl:message name="IAideService_GetAllConcernLst_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllConcernLstResponse" />
   </wsdl:message>
   <wsdl:message name="IAideService_InsertIntoConcern_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertIntoConcern" />
@@ -8319,18 +8429,6 @@
   <wsdl:message name="IAideService_GetMessage_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetMessageResponse" />
   </wsdl:message>
-  <wsdl:message name="IAideService_GetAllLocation_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllLocation" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetAllLocation_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllLocationResponse" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetAllPosition_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllPosition" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_GetAllPosition_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetAllPositionResponse" />
-  </wsdl:message>
   <wsdl:message name="IAideService_InsertActionList_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertActionList" />
   </wsdl:message>
@@ -8441,6 +8539,18 @@
   </wsdl:message>
   <wsdl:message name="IAideService_GetEmployeeEmailForAssetMovement_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetEmployeeEmailForAssetMovementResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetSkillAndContactsNotUpdated_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSkillAndContactsNotUpdated" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetSkillAndContactsNotUpdated_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSkillAndContactsNotUpdatedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetWorkPlaceAuditor_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetWorkPlaceAuditor" />
+  </wsdl:message>
+  <wsdl:message name="IAideService_GetWorkPlaceAuditor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetWorkPlaceAuditorResponse" />
   </wsdl:message>
   <wsdl:message name="IAideService_GetProfileInformation_InputMessage">
     <wsdl:part name="parameters" element="tns:GetProfileInformation" />
@@ -8763,12 +8873,6 @@
   <wsdl:message name="IAideService_ViewNicknameByDeptID_OutputMessage">
     <wsdl:part name="parameters" element="tns:ViewNicknameByDeptIDResponse" />
   </wsdl:message>
-  <wsdl:message name="IAideService_UpdateSuccessRegisterByEmpID_InputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateSuccessRegisterByEmpID" />
-  </wsdl:message>
-  <wsdl:message name="IAideService_DeleteSuccessRegisterBySuccessID_InputMessage">
-    <wsdl:part name="parameters" element="tns:DeleteSuccessRegisterBySuccessID" />
-  </wsdl:message>
   <wsdl:message name="IAideService_NotifySuccess_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifySuccess" />
   </wsdl:message>
@@ -8815,6 +8919,14 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType msc:usingSession="true" name="IAideService">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllLocation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllLocation" message="tns:IAideService_GetAllLocation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllLocationResponse" message="tns:IAideService_GetAllLocation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllPosition">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllPosition" message="tns:IAideService_GetAllPosition_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllPositionResponse" message="tns:IAideService_GetAllPosition_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllPermission">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllPermission" message="tns:IAideService_GetAllPermission_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllPermissionResponse" message="tns:IAideService_GetAllPermission_OutputMessage" />
@@ -8874,6 +8986,12 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetOptions" message="tns:IAideService_GetOptions_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetOptionsResponse" message="tns:IAideService_GetOptions_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateSuccessRegisterByEmpID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/UpdateSuccessRegisterByEmpID" message="tns:IAideService_UpdateSuccessRegisterByEmpID_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="DeleteSuccessRegisterBySuccessID">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/DeleteSuccessRegisterBySuccessID" message="tns:IAideService_DeleteSuccessRegisterBySuccessID_InputMessage" />
+    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SignOn">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/SignOn" message="tns:IAideService_SignOn_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/SignOnResponse" message="tns:IAideService_SignOn_OutputMessage" />
@@ -8904,9 +9022,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/ViewBirthdayListByCurrentDay" message="tns:IAideService_ViewBirthdayListByCurrentDay_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/ViewBirthdayListByCurrentDayResponse" message="tns:IAideService_ViewBirthdayListByCurrentDay_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="selectAllConcern">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/selectAllConcern" message="tns:IAideService_selectAllConcern_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/selectAllConcernResponse" message="tns:IAideService_selectAllConcern_OutputMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllConcernLst">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllConcernLst" message="tns:IAideService_GetAllConcernLst_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllConcernLstResponse" message="tns:IAideService_GetAllConcernLst_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InsertIntoConcern">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/InsertIntoConcern" message="tns:IAideService_InsertIntoConcern_InputMessage" />
@@ -9188,14 +9306,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetMessage" message="tns:IAideService_GetMessage_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetMessageResponse" message="tns:IAideService_GetMessage_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllLocation">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllLocation" message="tns:IAideService_GetAllLocation_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllLocationResponse" message="tns:IAideService_GetAllLocation_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetAllPosition">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetAllPosition" message="tns:IAideService_GetAllPosition_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetAllPositionResponse" message="tns:IAideService_GetAllPosition_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InsertActionList">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/InsertActionList" message="tns:IAideService_InsertActionList_InputMessage" />
     </wsdl:operation>
@@ -9274,6 +9384,14 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetEmployeeEmailForAssetMovement">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetEmployeeEmailForAssetMovement" message="tns:IAideService_GetEmployeeEmailForAssetMovement_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetEmployeeEmailForAssetMovementResponse" message="tns:IAideService_GetEmployeeEmailForAssetMovement_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetSkillAndContactsNotUpdated">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetSkillAndContactsNotUpdated" message="tns:IAideService_GetSkillAndContactsNotUpdated_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetSkillAndContactsNotUpdatedResponse" message="tns:IAideService_GetSkillAndContactsNotUpdated_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetWorkPlaceAuditor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetWorkPlaceAuditor" message="tns:IAideService_GetWorkPlaceAuditor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAideService/GetWorkPlaceAuditorResponse" message="tns:IAideService_GetWorkPlaceAuditor_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="GetProfileInformation">
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/GetProfileInformation" message="tns:IAideService_GetProfileInformation_InputMessage" />
@@ -9506,12 +9624,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAideService/ViewNicknameByDeptID" message="tns:IAideService_ViewNicknameByDeptID_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/ViewNicknameByDeptIDResponse" message="tns:IAideService_ViewNicknameByDeptID_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UpdateSuccessRegisterByEmpID">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/UpdateSuccessRegisterByEmpID" message="tns:IAideService_UpdateSuccessRegisterByEmpID_InputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="DeleteSuccessRegisterBySuccessID">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAideService/DeleteSuccessRegisterBySuccessID" message="tns:IAideService_DeleteSuccessRegisterBySuccessID_InputMessage" />
-    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="NotifySuccess">
       <wsdl:output wsaw:Action="http://tempuri.org/IAideService/NotifySuccess" message="tns:IAideService_NotifySuccess_OutputCallbackMessage" />
     </wsdl:operation>
@@ -9597,6 +9709,28 @@
   <wsdl:binding name="dual" type="tns:IAideService">
     <wsp:PolicyReference URI="#dual_policy" />
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAllLocation">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAllLocation" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetAllLocation_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetAllLocation_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllPosition">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAllPosition" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetAllPosition_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetAllPosition_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetAllPermission">
       <soap12:operation soapAction="http://tempuri.org/IAideService/GetAllPermission" style="document" />
       <wsdl:input>
@@ -9758,6 +9892,20 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="UpdateSuccessRegisterByEmpID">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/UpdateSuccessRegisterByEmpID" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_UpdateSuccessRegisterByEmpID_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteSuccessRegisterBySuccessID">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/DeleteSuccessRegisterBySuccessID" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_DeleteSuccessRegisterBySuccessID_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
     <wsdl:operation name="SignOn">
       <soap12:operation soapAction="http://tempuri.org/IAideService/SignOn" style="document" />
       <wsdl:input>
@@ -9838,14 +9986,14 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="selectAllConcern">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/selectAllConcern" style="document" />
+    <wsdl:operation name="GetAllConcernLst">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAllConcernLst" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#dual_selectAllConcern_Input_policy" />
+        <wsp:PolicyReference URI="#dual_GetAllConcernLst_Input_policy" />
         <soap12:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#dual_selectAllConcern_output_policy" />
+        <wsp:PolicyReference URI="#dual_GetAllConcernLst_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
@@ -10599,28 +10747,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetAllLocation">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAllLocation" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetAllLocation_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetAllLocation_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetAllPosition">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/GetAllPosition" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_GetAllPosition_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <wsp:PolicyReference URI="#dual_GetAllPosition_output_policy" />
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="InsertActionList">
       <soap12:operation soapAction="http://tempuri.org/IAideService/InsertActionList" style="document" />
       <wsdl:input>
@@ -10829,6 +10955,28 @@
       </wsdl:input>
       <wsdl:output>
         <wsp:PolicyReference URI="#dual_GetEmployeeEmailForAssetMovement_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSkillAndContactsNotUpdated">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetSkillAndContactsNotUpdated" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetSkillAndContactsNotUpdated_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetSkillAndContactsNotUpdated_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWorkPlaceAuditor">
+      <soap12:operation soapAction="http://tempuri.org/IAideService/GetWorkPlaceAuditor" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#dual_GetWorkPlaceAuditor_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#dual_GetWorkPlaceAuditor_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
@@ -11445,20 +11593,6 @@
         <wsp:PolicyReference URI="#dual_ViewNicknameByDeptID_output_policy" />
         <soap12:body use="literal" />
       </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="UpdateSuccessRegisterByEmpID">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/UpdateSuccessRegisterByEmpID" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_UpdateSuccessRegisterByEmpID_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
-    </wsdl:operation>
-    <wsdl:operation name="DeleteSuccessRegisterBySuccessID">
-      <soap12:operation soapAction="http://tempuri.org/IAideService/DeleteSuccessRegisterBySuccessID" style="document" />
-      <wsdl:input>
-        <wsp:PolicyReference URI="#dual_DeleteSuccessRegisterBySuccessID_Input_policy" />
-        <soap12:body use="literal" />
-      </wsdl:input>
     </wsdl:operation>
     <wsdl:operation name="NotifySuccess">
       <soap12:operation soapAction="http://tempuri.org/IAideService/NotifySuccess" style="document" />

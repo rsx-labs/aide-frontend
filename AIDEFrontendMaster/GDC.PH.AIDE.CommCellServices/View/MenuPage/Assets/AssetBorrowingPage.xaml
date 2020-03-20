@@ -18,21 +18,21 @@
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="1.5*"/>
-                <RowDefinition Height="11*"/>
+                <RowDefinition Height="0.11*"/>
+                <RowDefinition Height="0.11*"/>
+                <RowDefinition Height="0.78*"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0" Background="White">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.9*"/>
+                    <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="12*"/>
+                        <ColumnDefinition Width="0.08*"/>
+                        <ColumnDefinition Width="0.92*"/>
                     </Grid.ColumnDefinitions>
 
                     <Grid Grid.Column="0">
@@ -47,30 +47,27 @@
                         </Viewbox>
                     </Grid>
                 </Grid>
-
-                <Grid Grid.Column="1"/>
             </Grid>
 
             <Grid Grid.Row="1" Background="#FFFBFBFB">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition Width="0.6*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
                     <Grid Grid.Column="0" HorizontalAlignment="Stretch">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="181*"/>
-                                <ColumnDefinition Width="26*"/>
+                                <ColumnDefinition Width="0.3*"/>
+                                <ColumnDefinition Width="0.7*"/>
                             </Grid.ColumnDefinitions>
+                            
                             <TextBox MaxLength="30" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="DimGray" FontSize="12" Margin="10" BorderThickness="3" Name="txtSearch" TextWrapping="Wrap" TextChanged="txtSearch_TextChanged_1" Width="auto" Grid.ColumnSpan="2" />
+                            
                             <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
                                 <Viewbox Margin="15,15,0,15">
-                                    <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png">
-                                    </Image>
+                                    <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png"/>
                                 </Viewbox>
 
                                 <TextBlock TextWrapping="WrapWithOverflow" IsHitTestVisible="False" Text="Search asset" VerticalAlignment="Center" HorizontalAlignment="left" Margin="5,0,0,0" Foreground="DarkGray">

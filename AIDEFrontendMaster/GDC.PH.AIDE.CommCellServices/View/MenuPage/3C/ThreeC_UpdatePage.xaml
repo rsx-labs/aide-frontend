@@ -257,15 +257,12 @@
                                     <TextBlock Foreground="White" TextWrapping="Wrap" Text="All Action Reference" Margin="5"/>
                                 </Viewbox>
                             </Border>
-                            
-                            <TextBox Visibility="Hidden" x:Name="txtSearchAction" 
-                                     HorizontalContentAlignment="Center" Template="{DynamicResource TextBoxBaseControlTemplate}"/>
                         </Grid>
                         
                         <Grid Grid.Row="1">
                             <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                                 <DataGrid AlternationCount="2" Background="Transparent" 
-                                          AutoGenerateColumns="False" x:Name="lvACtion" Margin="0" 
+                                          AutoGenerateColumns="False" x:Name="lvAction" Margin="0" 
                                           Width="auto" BorderBrush="Transparent">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Action Message"  Width="1*" Binding="{Binding ACT_MESSAGE}" IsReadOnly="True"/>

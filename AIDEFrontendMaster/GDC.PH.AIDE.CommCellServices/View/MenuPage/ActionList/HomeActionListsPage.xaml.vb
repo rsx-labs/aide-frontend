@@ -14,19 +14,10 @@ Class HomeActionListsPage
     Implements IAideServiceCallback
 
 #Region "Paging Declarations"
-    Dim startRowIndex As Integer
-    Dim lastRowIndex As Integer
-    Dim pagingPageIndex As Integer
-    Dim pagingRecordPerPage As Integer
+    Dim pagingRecordPerPage As Integer = 10
     Dim currentPage As Integer
     Dim lastPage As Integer
-
-    Private Enum PagingMode
-        _First = 1
-        _Next = 2
-        _Previous = 3
-        _Last = 4
-    End Enum
+    Dim totalRecords As Integer
 #End Region
 
 #Region "Fields"
@@ -36,18 +27,14 @@ Class HomeActionListsPage
     Private addframe As Frame
     Private menugrid As Grid
     Private submenuframe As Frame
+
     Private aide As ServiceReference1.AideServiceClient
-    Private actionViewModel As New ActionListViewModel
-    Private action_provider As New ActionListDBProvider
-    Private EnableRowHeaderDoubleClick As Boolean = False
     Private lstAction As Action()
-    Private profiles As Profile
+    Private actionListDBProvider As New ActionListDBProvider
+
     Private _OptionsViewModel As OptionViewModel
-
-    Dim paginatedCollection As PaginatedObservableCollection(Of ActionModel)
-
     Dim guestAccount As Integer = 5
-
+    Dim paginatedCollection As PaginatedObservableCollection(Of ActionModel) = New PaginatedObservableCollection(Of ActionModel)(pagingRecordPerPage)
 #End Region
 
 #Region "Constructor"
@@ -56,49 +43,42 @@ Class HomeActionListsPage
         addframe = _addframe
         menugrid = _menugrid
         submenuframe = _submenuframe
-        email = _profile.Email_Address
         profile = _profile
         InitializeComponent()
 
         pagingRecordPerPage = GetOptionData(24, 9, 12)
         paginatedCollection = New PaginatedObservableCollection(Of ActionModel)(pagingRecordPerPage)
 
-        LoadActionList(email)
+        LoadActionList()
         PermissionSettings()
     End Sub
 #End Region
 
-#Region "Main Function/ Method"
+#Region "Methods"
 
-    'Load all action list from service data contract to datagrid
-    Private Sub LoadActionList(ByVal email As String)
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
         Try
-            If Me.InitializeService Then
-                lstAction = aide.GetActionSummary(email)
-                SetLists()
-                DisplayPagingInfo()
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            aide = New AideServiceClient(Context)
+            aide.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
+
+    Private Sub LoadActionList()
+        Try
+            If InitializeService() Then
+                lstAction = aide.GetActionSummary(profile.Email_Address)
+                SetLists(lstAction)
             End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
-    End Sub
-
-    Public Sub LoadActionByMessage(ByVal _message As String, ByVal email As String)
-        Try
-            If Me.InitializeService Then
-                lstAction = aide.GetActionListByMessage(_message, email)
-                SetLists()
-                DisplayPagingInfo()
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-    End Sub
-
-    Private Sub PermissionSettings()
-        If profile.Permission_ID = guestAccount Then
-            btnCreate.Visibility = Windows.Visibility.Hidden
-        End If
     End Sub
 
     Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
@@ -119,104 +99,48 @@ Class HomeActionListsPage
         Return strData
     End Function
 
-#End Region
-
-#Region "Paging Function/Method"
-
-    Private Sub SetLists()
+    Private Sub SetLists(listAction As Action())
         Try
-            paginatedCollection.Clear()
-            Dim lstactionlist As New ObservableCollection(Of ActionModel)
-            Dim lstactionprovider As New ActionListDBProvider
+            actionListDBProvider = New ActionListDBProvider
+            paginatedCollection = New PaginatedObservableCollection(Of ActionModel)(pagingRecordPerPage)
 
-            For Each iactionlist As myActionSet In lstactionprovider._getobAction()
-                lstactionlist.Add(New ActionModel(iactionlist))
+            For Each objActionList As Action In listAction
+                actionListDBProvider._setlistofitems(objActionList)
             Next
 
-            For Each objAct As Action In lstAction
-                lstactionprovider._setlistofitems(objAct)
-            Next
-
-            For Each actions As myActionSet In lstactionprovider._getobAction()
-                paginatedCollection.Add(New ActionModel(actions))
+            For Each actionsList As MyActionSet In actionListDBProvider._getobAction()
+                paginatedCollection.Add(New ActionModel(actionsList))
             Next
 
             ActionLV.ItemsSource = paginatedCollection
+
+            totalRecords = listAction.Length
             currentPage = paginatedCollection.CurrentPage + 1
-            lastPage = Math.Ceiling(lstAction.Length / pagingRecordPerPage)
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+            DisplayPagingInfo()
+
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
-    Private Sub SetPaging(mode As Integer)
+    Public Sub SearchAction(ByVal search As String)
         Try
-            Dim totalRecords As Integer = lstAction.Length
+            Dim items = From i In lstAction Where i.Act_Message.ToLower.Contains(search.ToLower) _
+                                            Or i.Act_NickName.ToLower.Contains(search.ToLower) _
+                                            Or i.Act_ID.ToLower.Contains(search.ToLower)
 
-            Select Case mode
-                Case CInt(PagingMode._Next)
-                    ' Set the rows to be displayed if the total records is more than the (Record per Page * Page Index)
-                    If totalRecords > (pagingPageIndex * pagingRecordPerPage) Then
+            Dim searchAction = New ObservableCollection(Of Action)(items)
 
-                        ' Set the last row to be displayed if the total records is more than the (Record per Page * Page Index) + Record per Page
-                        If totalRecords >= ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) Then
-                            lastRowIndex = ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) - 1
-                        Else
-                            lastRowIndex = totalRecords - 1
-                        End If
-
-                        startRowIndex = pagingPageIndex * pagingRecordPerPage
-                        pagingPageIndex += 1
-                    Else
-                        startRowIndex = (pagingPageIndex - 1) * pagingRecordPerPage
-                        lastRowIndex = totalRecords - 1
-                    End If
-                    ' Bind data to the Data Grid
-                    SetLists()
-                    Exit Select
-                Case CInt(PagingMode._Previous)
-                    ' Set the Previous Page if the page index is greater than 1
-                    If pagingPageIndex > 1 Then
-                        pagingPageIndex -= 1
-
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-                        lastRowIndex = (pagingPageIndex * pagingRecordPerPage) - 1
-                        SetLists()
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._First)
-                    If totalRecords > pagingRecordPerPage Then
-                        pagingPageIndex = 2
-                        SetPaging(CInt(PagingMode._Previous))
-                    Else
-                        pagingPageIndex = 1
-                        startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
-
-                        If Not totalRecords = 0 Then
-                            lastRowIndex = totalRecords - 1
-                            SetLists()
-                        Else
-                            lastRowIndex = 0
-                            Me.DataContext = Nothing
-                        End If
-
-                    End If
-                    Exit Select
-                Case CInt(PagingMode._Last)
-                    pagingPageIndex = (lstAction.Length / pagingRecordPerPage)
-                    SetPaging(CInt(PagingMode._Next))
-                    Exit Select
-            End Select
-
+            SetLists(searchAction.ToArray)
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
-
     End Sub
 
     Private Sub DisplayPagingInfo()
         ' If there has no data found
-        If lstAction.Length = 0 Then
+        If totalRecords = 0 Then
             txtPageNo.Text = "No Results Found "
             GUISettingsOff()
         Else
@@ -238,46 +162,15 @@ Class HomeActionListsPage
         btnPrev.IsEnabled = True
         btnNext.IsEnabled = True
     End Sub
+
+    Private Sub PermissionSettings()
+        If profile.Permission_ID = guestAccount Then
+            btnCreate.Visibility = Windows.Visibility.Hidden
+        End If
+    End Sub
 #End Region
 
-#Region "Services Function/Method"
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            aide = New AideServiceClient(Context)
-            aide.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            aide.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
-
-    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
-
-    End Sub
-
-    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
-
-    End Sub
-
-    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
-
-    End Sub
-
-    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
-
-    End Sub
-
-    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
-
-    End Sub
-
-#End Region
-
-#Region "Events Trigger"
+#Region "Events"
     Private Sub ActionLV_MouseDoubleClick(sender As Object, e As MouseEventArgs)
         Try
             If Not ActionLV.SelectedIndex = -1 Then
@@ -310,12 +203,8 @@ Class HomeActionListsPage
         End Try
     End Sub
 
-    Private Sub SearchTextBox_TextChanged(sender As Object, e As TextChangedEventArgs)
-        If SearchTextBox.Text = String.Empty Then
-            LoadActionList(email)
-        Else
-            LoadActionByMessage(SearchTextBox.Text, email)
-        End If
+    Private Sub txtSearch_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txtSearch.TextChanged
+        SearchAction(txtSearch.Text.Trim)
     End Sub
 
     Private Sub btnPrint_Click(sender As Object, e As RoutedEventArgs) Handles btnPrint.Click
@@ -354,13 +243,12 @@ Class HomeActionListsPage
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
-        Dim totalRecords As Integer = lstAction.Length
-
         If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
             paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
         End If
+
         DisplayPagingInfo()
     End Sub
 
@@ -369,17 +257,31 @@ Class HomeActionListsPage
         If currentPage > 1 Then
             currentPage -= 1
         End If
+
         DisplayPagingInfo()
     End Sub
+#End Region
 
-    Private Sub btnFirst_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._First))
+#Region "Callback"
+    Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
+
     End Sub
 
-    Private Sub btnLast_Click(sender As Object, e As RoutedEventArgs)
-        SetPaging(CInt(PagingMode._Last))
+    Public Sub NotifyOffline(EmployeeName As String) Implements IAideServiceCallback.NotifyOffline
+
     End Sub
 
+    Public Sub NotifyPresent(EmployeeName As String) Implements IAideServiceCallback.NotifyPresent
+
+    End Sub
+
+    Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
+
+    End Sub
+
+    Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+
+    End Sub
 #End Region
 
 End Class
