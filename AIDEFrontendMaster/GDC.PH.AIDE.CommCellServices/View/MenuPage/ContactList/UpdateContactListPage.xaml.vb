@@ -4,6 +4,7 @@ Imports System.Diagnostics
 Imports System.ServiceModel
 Imports System.Text.RegularExpressions
 Imports System.Configuration
+Imports System.Windows.Forms
 
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class UpdateContactListPage
@@ -21,12 +22,10 @@ Class UpdateContactListPage
     Private profile As Profile
     Private old_empid As Integer
     Private contactVM As New ContactListViewModel
+    Private _OptionsViewModel As OptionViewModel
+    Dim empPhoto As String
+    Dim photoPath As String
 
-    Dim locationEco As String = ConfigurationManager.AppSettings("locationEco")
-    Dim locationNet As String = ConfigurationManager.AppSettings("locationNet")
-    Dim locationDurham As String = ConfigurationManager.AppSettings("locationDurham")
-    Dim locationWfh As String = ConfigurationManager.AppSettings("locationWfh")
-    
 #End Region
 
 #Region "Constructors"
@@ -45,11 +44,14 @@ Class UpdateContactListPage
         old_empid = profile.Emp_ID
         DataContext = contactVM.ContactProfile
         ' Add any initialization after the InitializeComponent() call.
+        photoPath = GetOptionData(43, 6, 16)
+        txtPhotoNote.Text = "Note: Copy your picture to this path (" + photoPath + ")"
         ProcessUIAccess()
         AssignEvents()
         textLimits()
         LoadAllCB(contactModel)
         loadUI(contactModel)
+        imgPhoto.Source = New BitmapImage(New Uri(contactVM.ContactProfile.IMAGE_PATH.ToString))
     End Sub
 #End Region
 
@@ -238,7 +240,6 @@ Class UpdateContactListPage
         End Try
     End Sub
 
-
     Public Sub LoadMaritalStatus()
         Try
             If InitializeService() Then
@@ -290,6 +291,24 @@ Class UpdateContactListPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
+    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+        Dim strData As String = String.Empty
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        strData = opt.VALUE
+                        Exit For
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return strData
+    End Function
 
     Private Sub NumberValidationTextBox(ByVal sender As Object, ByVal e As TextCompositionEventArgs)
         Dim regex As Regex = New Regex("[^0-9/]+")
@@ -359,49 +378,49 @@ Class UpdateContactListPage
             Else
 
                 If InitializeService() Then
-                        contactList.EmpID = contactVM.ContactProfile.EMP_ID
-                        contactList.LAST_NAME = contactVM.ContactProfile.LAST_NAME.ToUpper()
-                        contactList.FIRST_NAME = contactVM.ContactProfile.FIRST_NAME.ToUpper()
-                        contactList.MIDDLE_NAME = contactVM.ContactProfile.MIDDLE_NAME.ToUpper()
-                        contactList.Nick_Name = contactVM.ContactProfile.NICK_NAME.ToUpper()
-                        contactList.ACTIVE = contactVM.ContactProfile.ACTIVE
-                        contactList.BIRTHDATE = contactVM.ContactProfile.BDATE
-                        contactList.DT_HIRED = contactVM.ContactProfile.DT_HIRED
-                        contactList.IMAGE_PATH = contactVM.ContactProfile.IMAGE_PATH
-                        contactList.EMADDRESS = contactVM.ContactProfile.EMAIL_ADDRESS
-                        contactList.EMADDRESS2 = contactVM.ContactProfile.EMAIL_ADDRESS2
-                        contactList.CELL_NO = contactVM.ContactProfile.CEL_NO
-                        contactList.lOCAL = contactVM.ContactProfile.LOCAL
-                        contactList.HOUSEPHONE = contactVM.ContactProfile.HOMEPHONE
-                        contactList.OTHERPHONE = contactVM.ContactProfile.OTHER_PHONE
-                        contactList.DateReviewed = DateTime.Now.Date
+                    contactList.EmpID = contactVM.ContactProfile.EMP_ID
+                    contactList.LAST_NAME = contactVM.ContactProfile.LAST_NAME.ToUpper()
+                    contactList.FIRST_NAME = contactVM.ContactProfile.FIRST_NAME.ToUpper()
+                    contactList.MIDDLE_NAME = contactVM.ContactProfile.MIDDLE_NAME.ToUpper()
+                    contactList.Nick_Name = contactVM.ContactProfile.NICK_NAME.ToUpper()
+                    contactList.ACTIVE = contactVM.ContactProfile.ACTIVE
+                    contactList.BIRTHDATE = contactVM.ContactProfile.BDATE
+                    contactList.DT_HIRED = contactVM.ContactProfile.DT_HIRED
+                    contactList.IMAGE_PATH = photoPath + empPhoto
+                    contactList.EMADDRESS = contactVM.ContactProfile.EMAIL_ADDRESS
+                    contactList.EMADDRESS2 = contactVM.ContactProfile.EMAIL_ADDRESS2
+                    contactList.CELL_NO = contactVM.ContactProfile.CEL_NO
+                    contactList.lOCAL = contactVM.ContactProfile.LOCAL
+                    contactList.HOUSEPHONE = contactVM.ContactProfile.HOMEPHONE
+                    contactList.OTHERPHONE = contactVM.ContactProfile.OTHER_PHONE
+                    contactList.DateReviewed = DateTime.Now.Date
 
-                        contactList.LOC = cbContactLocation.SelectedValue.ToString
-                        contactList.POSITION = cbContactPosition.Text
-                        contactList.PERMISSION_GROUP = cbContactGroup.Text
-                        contactList.DEPARTMENT = cbContactDepartment.Text
-                        contactList.DIVISION = cbContactDivision.Text
-                        contactList.MARITAL_STATUS = cbContactMaritalStatus.Text
+                    contactList.LOC = cbContactLocation.SelectedValue.ToString
+                    contactList.POSITION = cbContactPosition.Text
+                    contactList.PERMISSION_GROUP = cbContactGroup.Text
+                    contactList.DEPARTMENT = cbContactDepartment.Text
+                    contactList.DIVISION = cbContactDivision.Text
+                    contactList.MARITAL_STATUS = cbContactMaritalStatus.Text
 
-                        contactList.MARITAL_STATUS_ID = cbContactMaritalStatus.SelectedValue
-                        contactList.POSITION_ID = cbContactPosition.SelectedValue
-                        contactList.PERMISSION_GROUP_ID = cbContactGroup.SelectedValue
-                        contactList.DEPARTMENT_ID = cbContactDepartment.SelectedValue
-                        contactList.DIVISION_ID = cbContactDivision.SelectedValue
-                        contactList.SHIFT = cbContactShiftStatus.Text
+                    contactList.MARITAL_STATUS_ID = cbContactMaritalStatus.SelectedValue
+                    contactList.POSITION_ID = cbContactPosition.SelectedValue
+                    contactList.PERMISSION_GROUP_ID = cbContactGroup.SelectedValue
+                    contactList.DEPARTMENT_ID = cbContactDepartment.SelectedValue
+                    contactList.DIVISION_ID = cbContactDivision.SelectedValue
+                    contactList.SHIFT = cbContactShiftStatus.Text
 
-                        contactList.OLD_EMP_ID = old_empid
-                        client.UpdateContactListByEmpID(contactList, 0)
-                        MsgBox("Contacts have been updated.", MsgBoxStyle.Information, "AIDE")
-                        'ClearFields()
-                        attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
-                        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
-                        mainFrame.IsEnabled = True
-                        mainFrame.Opacity = 1
-                        menugrid.IsEnabled = True
-                        menugrid.Opacity = 1
-                        submenuframe.IsEnabled = True
-                        submenuframe.Opacity = 1
+                    contactList.OLD_EMP_ID = old_empid
+                    client.UpdateContactListByEmpID(contactList, 0)
+                    MsgBox("Contacts have been updated.", MsgBoxStyle.Information, "AIDE")
+                    'ClearFields()
+                    attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
+                    mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+                    mainFrame.IsEnabled = True
+                    mainFrame.Opacity = 1
+                    menugrid.IsEnabled = True
+                    menugrid.Opacity = 1
+                    submenuframe.IsEnabled = True
+                    submenuframe.Opacity = 1
                     addframe.Visibility = Visibility.Hidden
                 End If
             End If
@@ -426,7 +445,7 @@ Class UpdateContactListPage
                 contactList.POSITION = contactVM.ContactProfile.POSITION
                 contactList.DT_HIRED = contactVM.ContactProfile.DT_HIRED
                 contactList.MARITAL_STATUS = contactVM.ContactProfile.MARITAL_STATUS
-                contactList.IMAGE_PATH = contactVM.ContactProfile.IMAGE_PATH
+                'contactList.IMAGE_PATH = photoPath + empPhoto
                 contactList.PERMISSION_GROUP = contactVM.ContactProfile.PERMISSION_GROUP
                 contactList.DEPARTMENT = contactVM.ContactProfile.DEPARTMENT
                 contactList.DIVISION = contactVM.ContactProfile.DIVISION
@@ -479,6 +498,19 @@ Class UpdateContactListPage
         Else
             LoadDivision(cbContactDepartment.SelectedValue)
             cbContactDivision.SelectedValue = SelectedDivision
+        End If
+    End Sub
+
+    Private Sub btnPhoto_Click(sender As Object, e As RoutedEventArgs) Handles btnPhoto.Click
+        Dim op As OpenFileDialog = New OpenFileDialog()
+        op.Title = "Select a picture"
+        op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" & "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" & "Portable Network Graphic (*.png)|*.png"
+
+        Dim result As DialogResult = op.ShowDialog()
+
+        If result = DialogResult.OK Then
+            imgPhoto.Source = New BitmapImage(New Uri(op.FileName))
+            empPhoto = op.SafeFileName
         End If
     End Sub
 #End Region

@@ -4,6 +4,7 @@ Imports System.Diagnostics
 Imports System.ServiceModel
 Imports System.Text.RegularExpressions
 Imports System.Configuration
+Imports System.Windows.Forms
 
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class InsertContactList
@@ -22,12 +23,9 @@ Class InsertContactList
     Private profile As Profile
     Private user_empid As Integer
     Private contactVM As New ContactListViewModel
-
-    Dim locationEco As String = ConfigurationManager.AppSettings("locationEco")
-    Dim locationNet As String = ConfigurationManager.AppSettings("locationNet")
-    Dim locationDurham As String = ConfigurationManager.AppSettings("locationDurham")
-    Dim locationWfh As String = ConfigurationManager.AppSettings("locationWfh")
-
+    Private _OptionsViewModel As OptionViewModel
+    Dim empPhoto As String
+    Dim photoPath As String
 #End Region
 
 #Region "Constructor"
@@ -44,7 +42,8 @@ Class InsertContactList
         DataContext = contactVM.ContactProfile
         ClearTextVal()
         user_empid = Me.profile.Emp_ID
-
+        photoPath = GetOptionData(43, 6, 16)
+        txtPhotoNote.Text = "Note: Copy your picture to this path (" + photoPath + ")"
         AssignEvents()
         textLimits()
         LoadAllCB()
@@ -204,6 +203,24 @@ Class InsertContactList
         End Try
     End Sub
 
+    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+        Dim strData As String = String.Empty
+        Try
+            _OptionsViewModel = New OptionViewModel
+            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        strData = opt.VALUE
+                        Exit For
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return strData
+    End Function
+
     Private Sub ClearTextVal()
         txtContactEmpID.Text = String.Empty
 
@@ -261,7 +278,7 @@ Class InsertContactList
                 contactList.ACTIVE = 1
                 contactList.BIRTHDATE = contactVM.ContactProfile.BDATE
                 contactList.DT_HIRED = contactVM.ContactProfile.DT_HIRED
-                contactList.IMAGE_PATH = contactVM.ContactProfile.IMAGE_PATH
+                contactList.IMAGE_PATH = photoPath + empPhoto
                 contactList.DEPARTMENT = contactVM.ContactProfile.DEPARTMENT
                 contactList.DIVISION = contactVM.ContactProfile.DIVISION
                 contactList.DEPARTMENT_ID = contactVM.ContactProfile.DEPARTMENT_ID
@@ -281,7 +298,7 @@ Class InsertContactList
 
                 contactList.OLD_EMP_ID = user_empid
 
-                contactList.LOC = cbContactLocation.SelectedValue.ToString 
+                contactList.LOC = cbContactLocation.SelectedValue.ToString
 
                 contactList.POSITION_ID = CInt(cbContactPosition.SelectedValue)
                 contactList.POSITION = cbContactPosition.Text
@@ -314,6 +331,19 @@ Class InsertContactList
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+    End Sub
+
+    Private Sub btnPhoto_Click(sender As Object, e As RoutedEventArgs) Handles btnPhoto.Click
+        Dim op As OpenFileDialog = New OpenFileDialog()
+        op.Title = "Select a picture"
+        op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" & "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" & "Portable Network Graphic (*.png)|*.png"
+
+        Dim result As DialogResult = op.ShowDialog()
+
+        If result = DialogResult.OK Then
+            imgPhoto.Source = New BitmapImage(New Uri(op.FileName))
+            empPhoto = op.SafeFileName
+        End If
     End Sub
 #End Region
 
