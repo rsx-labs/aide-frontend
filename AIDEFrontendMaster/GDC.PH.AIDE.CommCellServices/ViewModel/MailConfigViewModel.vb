@@ -58,86 +58,25 @@ Public Class MailConfigViewModel
 
         Select Case choice
             Case 1
-                body = "<html>
-                            <body>
-                                <div style=""margin:30px 0px"">
-                                    <center>
-                                        <div style=""background-color:steelblue"">
-                                            <font size=""6"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font>
-                                        </div>
-                                        <div style=""background-color:#fcfff9"">
-	                                        <font size=""4"">" + bodyList(0) + " " + strOption.ToString() + " " + bodyList(1) + "</font>                                        
-                                        </div>                                    
-                                    </center>
-                                </div>
-                            </body>
-                        </html>"
+                body = "<html><body><div style=""margin:30px 0px""><center><div style=""background-color:steelblue""><font size=""6"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font></div><div style=""background-color:#fcfff9""><font size=""4"">" + bodyList(0) + " " + strOption.ToString() + " " + bodyList(1) + "</font></div></center></div></body></html>"
             Case 2
                 Dim optList As String = ""
                 For Each objopt As String In strOptionLst
                     optList = optList + "<tr><td><center>" + objopt + "</center></td></tr>"
                 Next
-
-                body = "<html>
-                            <body>
-                                <div style=""margin:30px 0px"">
-                                    <center>
-                                        <div style=""background-color:steelblue"">
-                                            <font size=""6"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font>
-                                        </div>
-                                        <div style=""background-color:#fcfff9"">
-	                                        <font size=""4"">" + bodyList(0) + "</font>
-                                            <table style=""width:100%"">" + optList + "</table> 
-                                        </div>
-                                        
-                                    </center>
-                                </div>
-                            </body>
-                        </html>"
+                body = "<html><body><div style=""margin:30px 0px""><center><div style=""background-color:steelblue""><font size=""6"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font></div><div style=""background-color:#fcfff9""><font size=""4"">" + bodyList(0) + "</font><table style=""width:100%"">" + optList + "</table></div></center></div></body></html>"
             Case 3
                 Dim optList As String = ""
                 For Each objopt As String In strOptionLst
                     optList = optList + "<tr><td><center>" + objopt + "</center></td></tr>"
                 Next
-
-                body = "<html>
-                            <body>
-                                <div style=""margin:30px 0px"">
-                                    <center>
-                                        <div style=""background-color:steelblue"">
-                                            <font size=""6"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font>
-                                        </div>
-                                        <div style=""background-color:#fcfff9"">
-	                                        <font size=""4"">" + bodyList(0) + " " + strOption2 + " " + bodyList(1) + "</font>
-                                            <table style=""width:100%"">" + optList + "</table> 
-                                        </div>
-                                        
-                                    </center>
-                                </div>
-                            </body>
-                        </html>"
+                body = "<html><body><div style=""margin:30px 0px""><center><div style=""background-color:steelblue""><font size=""6"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font></div><div style=""background-color:#fcfff9""><font size=""4"">" + bodyList(0) + " " + strOption2 + " " + bodyList(1) + "</font><table style=""width:100%"">" + optList + "</table></div></center></div></body></html>"
             Case 4
                 Dim optList As String = ""
                 For Each objopt As String In strOptionLst
                     optList = optList + "<tr><td><center>" + objopt + "</center></td></tr>"
                 Next
-
-                body = "<html>
-                            <body>
-                                <div style=""margin:30px 0px"">
-                                    <center>
-                                        <div style=""background-color:steelblue"">
-                                            <font size=""6"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font>
-                                        </div>
-                                        <div style=""background-color:#fcfff9"">
-	                                        <font size=""4"">" + bodyList(0) + " " + strOptionLst2(0) + " " + bodyList(1) + " " + strOptionLst2(1) + " " + bodyList(2) + " " + strOptionLst2(2) + "." + "</font>
-                                            <table style=""width:100%"">" + optList + "</table> 
-                                        </div>
-                                        
-                                    </center>
-                                </div>
-                            </body>
-                        </html>"
+                body = "<html><body><div style=""margin:30px 0px""><center><div style=""background-color:steelblue""><font size=""6"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font></div><div style=""background-color:#fcfff9""><font size=""4"">" + bodyList(0) + " " + strOptionLst2(0) + " " + bodyList(1) + " " + strOptionLst2(1) + " " + bodyList(2) + " " + strOptionLst2(2) + "." + "</font><table style=""width:100%"">" + optList + "</table></div></center></div></body></html>"
         End Select
 
         Return body
