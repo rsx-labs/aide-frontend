@@ -1,0 +1,2 @@
+@echo off
+"C:\Program Files (x86)\kool-aide\kool-aide" generate-report -r resource-planner --format excel --output "C:\GeneratedReports\Retail Services Resource Planner.xlsx" --params {\"departments\":[1],\"divisions\":[1],\"months\":[%1],\"year\":"%2"}

@@ -1062,6 +1062,30 @@
     </None>
     <AppDesigner Include="My Project\" />
     <None Include="packages.config" />
+    <None Include="ReportsCommands\generateassetinventoryreport.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ReportsCommands\generatecontactlistreport.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ReportsCommands\generateemployeebillabilityreport.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ReportsCommands\generateoutstandingtaskreport.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ReportsCommands\generateprojectbillabilityreport.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ReportsCommands\generateresourceplanner.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ReportsCommands\generateskillsmatrix.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ReportsCommands\generatestatusreport.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Service References\ServiceReference1\AIDEService.wsdl" />
     <None Include="Service References\ServiceReference1\AIDEService.xsd">
       <SubType>Designer</SubType>
