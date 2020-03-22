@@ -1,0 +1,2 @@
+@echo off
+"C:\Program Files (x86)\kool-aide\kool-aide" get -vw contact-list --format excel --output "C:\GeneratedReports\Retail Services Contact List.xlsx" --params {\"flag\":1,\"sorts\":[\"EmployeeName\"]} --autorun
