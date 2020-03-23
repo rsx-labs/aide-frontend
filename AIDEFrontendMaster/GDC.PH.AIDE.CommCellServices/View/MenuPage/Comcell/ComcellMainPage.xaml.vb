@@ -8,7 +8,6 @@ Imports System.Collections.ObjectModel
 Class ComcellMainPage
     Implements ServiceReference1.IAideServiceCallback
 
-
 #Region "Fields"
 
     Private _AideService As ServiceReference1.AideServiceClient
@@ -27,7 +26,7 @@ Class ComcellMainPage
     Dim lstFiscalYear As FiscalYear()
     Dim commendationVM As New CommendationViewModel()
     Dim fiscalyearVM As New SelectionListViewModel
-
+    Dim guestAccount As Integer = 5
 #End Region
 
 #Region "Paging Declarations"
@@ -57,14 +56,10 @@ Class ComcellMainPage
         Me.DataContext = ComcellVM
         Me.profile = _profile
 
-        If profile.Permission_ID = 1 Then
-            btnCreate.Visibility = Windows.Visibility.Visible
-        End If
-
         LoadYear()
         SetData()
         LoadFiscalYear()
-
+        PermissionSettings()
     End Sub
 
 #End Region
@@ -215,12 +210,22 @@ Class ComcellMainPage
 
     End Sub
 
+    Private Sub PermissionSettings()
+        Dim managerAccount As Integer = 1
+
+        If profile.Permission_ID = managerAccount Then
+            btnCreate.Visibility = Windows.Visibility.Visible
+        End If
+    End Sub
 #End Region
 
 #Region "Events"
     Private Sub ComcellLV_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
         e.Handled = True
-        If ComcellLV.SelectedIndex <> -1 Then
+        If ComcellLV.SelectedIndex <> -1 And _
+            profile.Permission_ID = 1 Or _
+            profile.FirstName.ToUpper = CType(ComcellLV.SelectedItem, ComcellModel).FACILITATOR_NAME Or _
+            profile.FirstName.ToUpper = CType(ComcellLV.SelectedItem, ComcellModel).MINUTES_TAKER_NAME Then
             If ComcellLV.SelectedItem IsNot Nothing Then
                 Dim comcell As New ComcellModel
                 comcell.MONTH = CType(ComcellLV.SelectedItem, ComcellModel).MONTH
@@ -239,7 +244,7 @@ Class ComcellMainPage
                 submenuframe.IsEnabled = False
                 submenuframe.Opacity = 0.3
                 addframe.Visibility = Visibility.Visible
-                addframe.Margin = New Thickness(150, 60, 150, 60)
+                addframe.Margin = New Thickness(150, 80, 150, 80)
             End If
         End If
     End Sub
