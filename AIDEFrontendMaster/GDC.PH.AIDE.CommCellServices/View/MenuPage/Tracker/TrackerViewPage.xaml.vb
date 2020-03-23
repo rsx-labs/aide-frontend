@@ -14,7 +14,6 @@ Imports LiveCharts.Wpf
 Class TrackerViewPage
     Implements ServiceReference1.IAideServiceCallback
 
-
 #Region "Fields"
 
     Private _AideService As ServiceReference1.AideServiceClient
@@ -61,6 +60,7 @@ Class TrackerViewPage
         LoadPieChartData()
         CheckCourseUpdated()
         BindModel(_sabacoursemodel, profile.Emp_ID)
+        PermissionSettings()
     End Sub
 
 #End Region
@@ -222,6 +222,15 @@ Class TrackerViewPage
         'Next
         DataContext = Me
     End Sub
+
+    Private Sub PermissionSettings()
+        Dim guestAccount As Integer = 5
+
+        If profile.Permission_ID = guestAccount Then
+            gUpdateControls.Visibility = Windows.Visibility.Hidden
+        End If
+
+    End Sub
 #End Region
 
 #Region "Events"
@@ -307,4 +316,5 @@ Class TrackerViewPage
 
     End Sub
 #End Region
+
 End Class

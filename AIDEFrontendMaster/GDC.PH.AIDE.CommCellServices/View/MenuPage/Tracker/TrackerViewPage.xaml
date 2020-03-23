@@ -1032,7 +1032,7 @@ xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
 
                         </lvc:PieChart>
                     </Grid>
-                    <Grid Grid.Column="1">
+                    <Grid Grid.Column="1" x:Name="gUpdateControls">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1.2*"/>
                             <RowDefinition Height="1.2*"/>
