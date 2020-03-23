@@ -340,21 +340,35 @@ Class ReportsMainPage
         Dim result As Integer
 
         If CType(ReportsLV.SelectedItem, ReportsModel).DESCRIPTION = "Contact List" Then
-            Process.Start(CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH)
-            result = MsgBox("Report has been downloaded. Open the Report Now?", MessageBoxButton.YesNo, "AIDE")
-            If result = 6 Then
-                Process.Start("C:\GeneratedReports\Retail Services Contact List.xlsx")
-            End If
+
+            Try
+                Dim fPath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+                Process.Start(fPath)
+                result = MsgBox("Report has been downloaded. Open the Report Now?", MessageBoxButton.YesNo, "AIDE")
+                If result = 6 Then
+                    Process.Start("C:\GeneratedReports\Retail Services Contact List.xlsx")
+                End If
+            Catch ex As SystemException
+                _AideService.Abort()
+                MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            End Try
 
         ElseIf CType(ReportsLV.SelectedItem, ReportsModel).DESCRIPTION = "Skills Matrix" Then
-            Process.Start(CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH)
-            result = MsgBox("Report has been downloaded. Open the Report Now?", MessageBoxButton.YesNo, "AIDE")
-            If result = 6 Then
-                Process.Start("C:\GeneratedReports\Retail Services Skills Matrix.xlsx")
-            End If
+            Try
+                Dim fPath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+                Process.Start(fPath)
+                result = MsgBox("Report has been downloaded. Open the Report Now?", MessageBoxButton.YesNo, "AIDE")
+                If result = 6 Then
+                    Process.Start("C:\GeneratedReports\Retail Services Skills Matrix.xlsx")
+                End If
+            Catch ex As SystemException
+                _AideService.Abort()
+                MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            End Try
 
         ElseIf CType(ReportsLV.SelectedItem, ReportsModel).DESCRIPTION = "Outstanding task" Then
-            Reports.FILE_PATH = CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Dim fPath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Reports.FILE_PATH = fPath
             addframe.Navigate(New OutstandingTasksFilter(Reports, mainframe, profile, "Borrow", addframe, menugrid, submenuframe))
             mainframe.IsEnabled = False
             mainframe.Opacity = 0.3
@@ -366,7 +380,8 @@ Class ReportsMainPage
             addframe.Visibility = Visibility.Visible
 
         ElseIf CType(ReportsLV.SelectedItem, ReportsModel).DESCRIPTION = "Asset Inventory" Then
-            Reports.FILE_PATH = CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Dim fPath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Reports.FILE_PATH = fPath
             addframe.Navigate(New AssetInventoryFilter(Reports, mainframe, profile, "Borrow", addframe, menugrid, submenuframe))
             mainframe.IsEnabled = False
             mainframe.Opacity = 0.3
@@ -378,7 +393,8 @@ Class ReportsMainPage
             addframe.Visibility = Visibility.Visible
 
         ElseIf CType(ReportsLV.SelectedItem, ReportsModel).DESCRIPTION = "Resource Planner" Then
-            Reports.FILE_PATH = CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Dim fPath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Reports.FILE_PATH = fPath
             addframe.Navigate(New ResourcePlannerFilter(Reports, mainframe, profile, "Borrow", addframe, menugrid, submenuframe))
             mainframe.IsEnabled = False
             mainframe.Opacity = 0.3
@@ -391,7 +407,8 @@ Class ReportsMainPage
 
 
         ElseIf CType(ReportsLV.SelectedItem, ReportsModel).DESCRIPTION = "Status Reports" Then
-            Reports.FILE_PATH = CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Dim fPath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Reports.FILE_PATH = fPath
             addframe.Navigate(New StatusReportFilter(Reports, mainframe, profile, "Borrow", addframe, menugrid, submenuframe))
             mainframe.IsEnabled = False
             mainframe.Opacity = 0.3
@@ -403,7 +420,8 @@ Class ReportsMainPage
             addframe.Visibility = Visibility.Visible
 
         ElseIf CType(ReportsLV.SelectedItem, ReportsModel).DESCRIPTION = "Employee Billability" Then
-            Reports.FILE_PATH = CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Dim fPath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Reports.FILE_PATH = fPath
             addframe.Navigate(New BillabilityFilter(Reports, mainframe, profile, "Employee", addframe, menugrid, submenuframe))
             mainframe.IsEnabled = False
             mainframe.Opacity = 0.3
@@ -415,7 +433,8 @@ Class ReportsMainPage
             addframe.Visibility = Visibility.Visible
 
         ElseIf CType(ReportsLV.SelectedItem, ReportsModel).DESCRIPTION = "Project Billability" Then
-            Reports.FILE_PATH = CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Dim fPath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Reports.FILE_PATH = fPath
             addframe.Navigate(New BillabilityFilter(Reports, mainframe, profile, "Project", addframe, menugrid, submenuframe))
             mainframe.IsEnabled = False
             mainframe.Opacity = 0.3
