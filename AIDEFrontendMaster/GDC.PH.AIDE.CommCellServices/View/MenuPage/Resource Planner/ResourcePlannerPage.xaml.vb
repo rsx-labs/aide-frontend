@@ -457,6 +457,7 @@ Class ResourcePlannerPage
         Dim guestAccount As Integer = 5
 
         If profile.Permission_ID = guestAccount Then
+            NotiCountBorder.Visibility = Visibility.Hidden
             btnCreateLeave.Visibility = Windows.Visibility.Hidden
             btnNotification.Visibility = Windows.Visibility.Hidden
             btnManage.Visibility = Windows.Visibility.Hidden
