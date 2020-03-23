@@ -123,7 +123,7 @@ Class ThreeC_UpdatePage
         Dim selectedAction As ConcernModel = lvAction.SelectedValue
         Dim addSelectedAction As New Concern
 
-        addSelectedAction.RefID = concernRefID
+        addSelectedAction.RefID = concernModel.REF_ID
         addSelectedAction.ACTREF = selectedAction.ACTREF
         addSelectedAction.ACT_MESSAGE = selectedAction.ACT_MESSAGE
 
@@ -148,7 +148,7 @@ Class ThreeC_UpdatePage
         Dim selectedAction As ConcernModel = lvActionRef.SelectedValue
         Dim removeSelectedAction As New Concern
 
-        removeSelectedAction.RefID = concernRefID
+        removeSelectedAction.RefID = concernModel.REF_ID
         removeSelectedAction.ACTREF = selectedAction.ACTREF
         removeSelectedAction.ACT_MESSAGE = selectedAction.ACT_MESSAGE
 
@@ -186,7 +186,7 @@ Class ThreeC_UpdatePage
         Try
             If InitializeService() Then
                 AIDEClientService.UpdateSelectedConcern(UpdateSelectedConcern(Me.DataContext()))
-                MsgBox("3C has been updated.", MsgBoxStyle.Information)
+                MsgBox("3C has been updated.", MsgBoxStyle.Information, "AIDE")
                 AIDEClientService.Close()
 
                 ExitPage()
@@ -203,7 +203,7 @@ Class ThreeC_UpdatePage
                 MsgBox("Please select an action item.")
             Else
                 AIDEClientService.insertAndDeleteSelectedAction(InsertSelectedAction())
-                MsgBox("Action reference has been added to 3C.", MsgBoxStyle.Information)
+                MsgBox("Action reference has been added to 3C.", MsgBoxStyle.Information, "AIDE")
                 AIDEClientService.Close()
 
                 GetActionList()
