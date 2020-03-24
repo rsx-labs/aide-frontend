@@ -50,14 +50,14 @@
                 <Grid Grid.Row="0">
                     <Border Margin="10,10,10,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                         <TextBox Background="Transparent" 
-                                     x:Name="txtTitle" 
-                                     TextWrapping="Wrap" 
-                                     FontSize="12"
-                                     MaxLines="255" 
-                                     BorderThickness="0"
-                                     HorizontalContentAlignment="Center" 
-                                     VerticalContentAlignment="Center" 
-                                     Text="{Binding ObjectAnnouncement.TITLE, Mode=TwoWay}"/>
+                                 x:Name="txtTitle" 
+                                 TextWrapping="Wrap" 
+                                 FontSize="12"
+                                 MaxLength="150"
+                                 BorderThickness="0"
+                                 HorizontalContentAlignment="Center" 
+                                 VerticalContentAlignment="Center" 
+                                 Text="{Binding ObjectAnnouncement.TITLE, Mode=TwoWay}"/>
                     </Border>
 
                     <TextBlock Text="Announcement title *" Margin="0,5,0,0">

@@ -153,6 +153,7 @@ Class NewSuccessRegister
                 Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.YesNo, "AIDE")
                 If result = 6 Then
                     client.DeleteSuccessRegisterBySuccessID(CUInt(txtSRID.Text))
+                    MsgBox("Success Register has been deleted.", MsgBoxStyle.Information, "AIDE")
                     ClearFields()
                     ExitPage()
                 Else

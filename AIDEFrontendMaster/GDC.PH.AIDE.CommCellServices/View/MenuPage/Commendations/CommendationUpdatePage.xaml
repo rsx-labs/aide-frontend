@@ -61,7 +61,7 @@
                                      BorderThickness="0" 
                                      Background="Transparent" 
                                      Template="{DynamicResource TextBoxBaseControlTemplate}" 
-                                     MaxLines="255" 
+                                     MaxLength="50"
                                      HorizontalContentAlignment="Center" 
                                      VerticalContentAlignment="Center" 
                                      Text="{Binding Commendation_Model.SentBy}"/>
