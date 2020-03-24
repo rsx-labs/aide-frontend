@@ -32,7 +32,9 @@ Class ComcellClockPage
     Private isServiceEnabled As Boolean
 
     Private configMissingWeeklyStatus As New List(Of String)
-    Private configMissingAttendance As New List(Of String)
+    Private configMissingAttendanceSemiFlex As New List(Of String)
+    Private configMissingAttendanceFlex As New List(Of String)
+    Private configMissingAttendanceDispatch As New List(Of String)
     Private configUpdateContacts As New List(Of String)
     Private configUpdateSkills As New List(Of String)
     Private configUpdateWorkPlaceAudit As New List(Of String)
@@ -45,6 +47,7 @@ Class ComcellClockPage
     Private isSMNotifAllow As Boolean
     Private isWANotifAllow As Boolean
     Private allowRPDays As String
+    Private allowRPDaysDispatch As String
 
     Private mailConfig As New MailConfig
     Private mailConfigVM As New MailConfigViewModel
@@ -267,10 +270,22 @@ Class ComcellClockPage
         End If
 
         If isRPNotifAllow And enableNotification Then
-            Dim AttendanceTime As String = [Enum].GetName(GetType(DayOfWeek), Convert.ToInt32(Today.DayOfWeek)).ToString.Trim.ToUpper() & " " & configMissingAttendance(0)
-            If actualTime = AttendanceTime And allowRPDays.Contains(Convert.ToInt32(Today.DayOfWeek).ToString()) Then
+            Dim AttendanceTimeSemiFlex As String = [Enum].GetName(GetType(DayOfWeek), Convert.ToInt32(Today.DayOfWeek)).ToString.Trim.ToUpper() & " " & configMissingAttendanceSemiFlex(0)
+            If actualTime = AttendanceTimeSemiFlex And allowRPDays.Contains(Convert.ToInt32(Today.DayOfWeek).ToString()) Then
                 GetAttendanceEmailData()
-                SetMissingAttendance()
+                SetMissingAttendance(1)
+            End If
+
+            Dim AttendanceTimeFlex As String = [Enum].GetName(GetType(DayOfWeek), Convert.ToInt32(Today.DayOfWeek)).ToString.Trim.ToUpper() & " " & configMissingAttendanceFlex(0)
+            If actualTime = AttendanceTimeSemiFlex And allowRPDays.Contains(Convert.ToInt32(Today.DayOfWeek).ToString()) Then
+                GetAttendanceEmailData()
+                SetMissingAttendance(2)
+            End If
+
+            Dim AttendanceTimeDispatch As String = [Enum].GetName(GetType(DayOfWeek), Convert.ToInt32(Today.DayOfWeek)).ToString.Trim.ToUpper() & " " & configMissingAttendanceDispatch(0)
+            If actualTime = AttendanceTimeDispatch And allowRPDaysDispatch.Contains(Convert.ToInt32(Today.DayOfWeek).ToString()) Then
+                GetAttendanceEmailData()
+                SetMissingAttendance(3)
             End If
         End If
 
@@ -374,6 +389,7 @@ Class ComcellClockPage
         isSMNotifAllow = mailConfigVM.isSendEmail(12, 0, 0)
         isWANotifAllow = mailConfigVM.isSendEmail(37, 0, 0)
         allowRPDays = GetOptionData(13, 0, 0)
+        allowRPDaysDispatch = GetOptionData(45, 0, 0)
     End Sub
 
 
@@ -504,7 +520,23 @@ Class ComcellClockPage
             If _OptionsViewModel.GetOptions(2, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
-                        configMissingAttendance = New List(Of String)(opt.VALUE.Split(","c))
+                        configMissingAttendanceSemiFlex = New List(Of String)(opt.VALUE.Split(","c))
+                    End If
+                Next
+            End If
+
+            If _OptionsViewModel.GetOptions(43, 0, 0) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        configMissingAttendanceFlex = New List(Of String)(opt.VALUE.Split(","c))
+                    End If
+                Next
+            End If
+
+            If _OptionsViewModel.GetOptions(44, 0, 0) Then
+                For Each opt As OptionModel In _OptionsViewModel.OptionList
+                    If Not opt Is Nothing Then
+                        configMissingAttendanceDispatch = New List(Of String)(opt.VALUE.Split(","c))
                     End If
                 Next
             End If
@@ -527,18 +559,103 @@ Class ComcellClockPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
-    Public Sub SetMissingAttendance()
+    Public Sub SetMissingAttendance(choice As Integer)
         Try
-            lstMissingAttendance = aideService.GetMissingAttendanceForToday(empID)
+            lstMissingAttendance = aideService.GetMissingAttendanceForToday(empID, choice)
+            Dim employeeCCLst As New List(Of String)
+            Dim managerToLst As New List(Of String)
+
             If lstMissingAttendance.Count > 0 Then
+                Dim objLst As List(Of String) = Nothing
                 For Each objEmployee As Employee In lstMissingAttendance
-                    mailConfigVM.SendEmail(mailConfigVM, _option, objEmployee.ManagerEmail, objEmployee.EmailAddress, 2, objEmployee.EmployeeName)
+                    objLst = New List(Of String)(objEmployee.EmailAddress.Split(","c))
+                    For Each obj As String In objLst
+                        If Not employeeCCLst.Contains(obj) Then
+                            employeeCCLst.Add(obj)
+                        End If
+                    Next
+                    objLst = New List(Of String)(objEmployee.ManagerEmail.Split(","c))
+                    For Each obj As String In objLst
+                        If Not managerToLst.Contains(obj) Then
+                            managerToLst.Add(obj)
+                        End If
+                    Next
                 Next
+                SendEmail(mailConfigVM, _option, managerToLst, employeeCCLst, 1, lstMissingAttendance)
             End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
+
+    Private Sub SendEmail(ByVal mcVM As MailConfigViewModel, ByVal optmodel As OptionModel, LstemailTo As List(Of String), LstemailCC As List(Of String), ByVal bodyType As Integer, ByVal EmployeeList As Employee())
+        Try
+
+            Dim sentFrom As String = mcVM.objectMailConfigSet.SENDER_EMAIL
+            Dim subject As String = mcVM.objectMailConfigSet.SUBJECT
+
+            Dim body As String = composeBody(optmodel, bodyType, EmployeeList)
+            Dim client As SmtpClient = New SmtpClient()
+
+            client.Port = mcVM.objectMailConfigSet.PORT
+            client.Host = mcVM.objectMailConfigSet.HOST
+            client.EnableSsl = CBool(mcVM.objectMailConfigSet.ENABLE_SSL)
+            client.Timeout = mcVM.objectMailConfigSet.TIMEOUT
+            client.DeliveryMethod = SmtpDeliveryMethod.Network
+            client.UseDefaultCredentials = CBool(mcVM.objectMailConfigSet.USE_DFLT_CREDENTIALS)
+            client.Credentials = New System.Net.NetworkCredential(sentFrom, mcVM.objectMailConfigSet.SENDER_PASSWORD)
+
+            Dim mail As MailMessage = New MailMessage()
+            mail.From = New MailAddress(sentFrom)
+
+            If Not LstemailTo Is Nothing Then
+                For Each objSentTo As String In LstemailTo
+                    mail.To.Add(objSentTo)
+                Next
+            End If
+
+            If Not LstemailCC Is Nothing Then
+                For Each objSentCC As String In LstemailCC
+                    mail.CC.Add(objSentCC)
+                Next
+            End If
+
+            mail.Subject = subject
+            mail.IsBodyHtml = True
+            mail.Body = body
+
+            client.Send(mail)
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+    End Sub
+    Private Function composeBody(ByVal optmodel As OptionModel, ByVal choice As Integer, ByVal EmpList As Employee()) As String
+        Dim body As String
+        Dim bodyList As New List(Of String)(optmodel.VALUE.Split(","c))
+        Dim strOptionLst As List(Of String) = Nothing
+        Dim optList As String = String.Empty
+        Dim objDate As String = String.Empty
+        For Each objEmp As Employee In EmpList
+            If objEmp.WeekDate = Today.ToString("yyyy-MM-dd") Then
+                objDate = "TODAY"
+            Else
+                objDate = CDate(objEmp.WeekDate).ToString("MM-dd-yyyy")
+            End If
+            optList = optList + "<tr><td><center><b><font size=""5"">" + objDate + "</font></b></center></td></tr>"
+            strOptionLst = New List(Of String)(objEmp.EmployeeName.Split(","c))
+            For Each obj As String In strOptionLst
+                optList = optList + "<tr><td><center>" + obj + "</center></td></tr>"
+            Next
+            optList = optList + "<br>"
+        Next
+
+        Select Case choice
+            Case 1
+                body = "<html><body><div style=""margin:30px 0px""><center><div style=""background-color:steelblue""><font size=""6"" color=""white"">" + optmodel.MODULE_DESCR + " - " + optmodel.FUNCTION_DESCR + "</font></div><div style=""background-color:#fcfff9""><font size=""4"">" + bodyList(0) + " " + bodyList(1) + "</font><table style=""width:100%"">" + optList + "</table></div></center></div></body></html>"
+        End Select
+
+        Return body
+    End Function
 #End Region
 #Region "Update Contact List"
     Private Sub GetContactsConfig()
