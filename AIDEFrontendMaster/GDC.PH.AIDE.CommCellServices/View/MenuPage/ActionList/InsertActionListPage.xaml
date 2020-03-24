@@ -66,7 +66,7 @@
                     
                     <Grid Grid.Row="1">
                         <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                            <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Name="Act_Message" TextWrapping="Wrap" Text="{Binding ACTION_MESSAGE, Mode=TwoWay}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12"/>
+                            <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Name="Act_Message" TextWrapping="Wrap" Text="{Binding ACTION_MESSAGE, Mode=TwoWay}" MaxLength="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12"/>
                         </Border>
                         
                         <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter action message *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">

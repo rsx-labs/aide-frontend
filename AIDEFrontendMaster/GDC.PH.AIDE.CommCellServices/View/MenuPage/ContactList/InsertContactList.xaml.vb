@@ -316,6 +316,7 @@ Class InsertContactList
                 If InitializeService() Then
                     client.CreateNewContactByEmpID(contactList)
                     'ClearFields()
+                    MsgBox("Contacts has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                     attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
                     mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
                     mainFrame.IsEnabled = True

@@ -63,18 +63,20 @@
                                 <ColumnDefinition Width="181*"/>
                                 <ColumnDefinition Width="26*"/>
                             </Grid.ColumnDefinitions>
+                            
                             <TextBox MaxLength="30" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="DimGray" FontSize="12" Margin="10" BorderThickness="3" Name="txtSearch" TextWrapping="Wrap" Width="auto" Grid.ColumnSpan="2" />
+                            
                             <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
                                 <Viewbox Margin="15,15,0,15">
-                                    <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png">
-                                    </Image>
+                                    <Image IsHitTestVisible="False" Source="..\..\..\Assets\Icon\search.png"/>
                                 </Viewbox>
-                                <TextBlock TextWrapping="WrapWithOverflow" IsHitTestVisible="False" Text="Search action list" VerticalAlignment="Center" HorizontalAlignment="left" Margin="5,0,0,0" Foreground="DarkGray">
+                                
+                                <TextBlock TextWrapping="WrapWithOverflow" Text="Search action list" Margin="5,0,0,0">
                                     <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
+                                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyleForTextbox}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=SearchTextBox}" Value="">
+                                                <DataTrigger Binding="{Binding Text, ElementName=txtSearch}" Value="">
                                                     <Setter Property="Visibility" Value="Visible"/>
                                                 </DataTrigger>
                                             </Style.Triggers>

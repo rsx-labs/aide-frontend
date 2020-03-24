@@ -52,7 +52,7 @@
                                  x:Name="txtTitle" 
                                  TextWrapping="Wrap" 
                                  FontSize="12"
-                                 MaxLines="255" 
+                                 MaxLength="50"
                                  BorderThickness="0"
                                  HorizontalContentAlignment="Center" 
                                  VerticalContentAlignment="Center" 
