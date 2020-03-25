@@ -452,6 +452,72 @@ Class ReportsMainPage
             addframe.Margin = New Thickness(150, 60, 150, 60)
             addframe.Visibility = Visibility.Visible
 
+        ElseIf CType(ReportsLV.SelectedItem, ReportsModel).DESCRIPTION = "3Cs Report" Then
+            Dim fPath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Reports.FILE_PATH = fPath
+            addframe.Navigate(New ImprovementsFilter(Reports, mainframe, profile, "Concerns", addframe, menugrid, submenuframe))
+            mainframe.IsEnabled = False
+            mainframe.Opacity = 0.3
+            menugrid.IsEnabled = False
+            menugrid.Opacity = 0.3
+            submenuframe.IsEnabled = False
+            submenuframe.Opacity = 0.3
+            addframe.Margin = New Thickness(150, 60, 150, 60)
+            addframe.Visibility = Visibility.Visible
+
+        ElseIf CType(ReportsLV.SelectedItem, ReportsModel).DESCRIPTION = "Actions List Report" Then
+            Dim fPath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Reports.FILE_PATH = fPath
+            addframe.Navigate(New ImprovementsFilter(Reports, mainframe, profile, "ActionsList", addframe, menugrid, submenuframe))
+            mainframe.IsEnabled = False
+            mainframe.Opacity = 0.3
+            menugrid.IsEnabled = False
+            menugrid.Opacity = 0.3
+            submenuframe.IsEnabled = False
+            submenuframe.Opacity = 0.3
+            addframe.Margin = New Thickness(150, 60, 150, 60)
+            addframe.Visibility = Visibility.Visible
+
+        ElseIf CType(ReportsLV.SelectedItem, ReportsModel).DESCRIPTION = "Lessons Learnt Report" Then
+            Dim fPath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Reports.FILE_PATH = fPath
+            addframe.Navigate(New ImprovementsFilter(Reports, mainframe, profile, "LessonsLearnt", addframe, menugrid, submenuframe))
+            mainframe.IsEnabled = False
+            mainframe.Opacity = 0.3
+            menugrid.IsEnabled = False
+            menugrid.Opacity = 0.3
+            submenuframe.IsEnabled = False
+            submenuframe.Opacity = 0.3
+            addframe.Margin = New Thickness(150, 60, 150, 60)
+            addframe.Visibility = Visibility.Visible
+
+        ElseIf CType(ReportsLV.SelectedItem, ReportsModel).DESCRIPTION = "Success Register Report" Then
+            Dim fPath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Reports.FILE_PATH = fPath
+            addframe.Navigate(New ImprovementsFilter(Reports, mainframe, profile, "Success", addframe, menugrid, submenuframe))
+            mainframe.IsEnabled = False
+            mainframe.Opacity = 0.3
+            menugrid.IsEnabled = False
+            menugrid.Opacity = 0.3
+            submenuframe.IsEnabled = False
+            submenuframe.Opacity = 0.3
+            addframe.Margin = New Thickness(150, 60, 150, 60)
+            addframe.Visibility = Visibility.Visible
+
+        ElseIf CType(ReportsLV.SelectedItem, ReportsModel).DESCRIPTION = "Commendations Report" Then
+            Dim fPath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
+            Reports.FILE_PATH = fPath
+            addframe.Navigate(New ImprovementsFilter(Reports, mainframe, profile, "Commendations", addframe, menugrid, submenuframe))
+            mainframe.IsEnabled = False
+            mainframe.Opacity = 0.3
+            menugrid.IsEnabled = False
+            menugrid.Opacity = 0.3
+            submenuframe.IsEnabled = False
+            submenuframe.Opacity = 0.3
+            addframe.Margin = New Thickness(150, 60, 150, 60)
+            addframe.Visibility = Visibility.Visible
+
+
         End If
 
 

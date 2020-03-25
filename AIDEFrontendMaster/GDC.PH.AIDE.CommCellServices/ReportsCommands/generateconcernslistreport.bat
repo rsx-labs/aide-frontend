@@ -1,0 +1,2 @@
+@echo on
+"C:\Program Files (x86)\kool-aide\kool-aide" get -vw concern-list --format excel --output "C:\GeneratedReports\Retail Services 3Cs List.xlsx" --params {\"departments\":[1],\"divisions\":[1],\"months\":[%1],\"fys\":[\"%2\"]}
