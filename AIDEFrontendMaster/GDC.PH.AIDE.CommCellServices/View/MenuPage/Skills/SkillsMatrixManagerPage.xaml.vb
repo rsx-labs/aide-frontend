@@ -386,7 +386,7 @@ Class SkillsMatrixManagerPage
             Skills.SkillID = cbProjectList.SelectedValue
             Skills.Last_Reviewed = Date.Now
             client.UpdateSkills(Skills)
-            MsgBox("Skill's matrix proficiency level have been updated." & cbProjectList.Text.ToUpper, MsgBoxStyle.Information, "AIDE")
+            MsgBox(cbProjectList.Text.ToUpper & " haave been updated.", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -520,7 +520,7 @@ Class SkillsMatrixManagerPage
                 End If
             Else
                 If proficiency = proflevel Then
-                    MsgBox("There is no change in proficiency level. " & vbNewLine & "Please select another skill to update." & cbProjectList.Text.ToUpper, MsgBoxStyle.Critical, "AIDE")
+                    MsgBox("There is no change in proficiency level. " & vbNewLine & "Please select another skill to update.", MsgBoxStyle.Critical, "AIDE")
                 Else
                     InitializeService()
                     If client.GetProfLvlByEmpIDSkillIDs(Convert.ToInt32(lblEmpID.Text), skillid).Prof_LVL = 1 Then
@@ -582,7 +582,7 @@ Class SkillsMatrixManagerPage
                     ClearSelection()
                     LoadSkillsProf()
 
-                    lblLastReviewed.Text = dgSkillList.CurrentCell.Item(23)
+                    'lblLastReviewed.Text = dgSkillList.CurrentCell.Item(23)
                     grdUpdate.Visibility = Visibility.Visible
                 End If
 

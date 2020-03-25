@@ -491,7 +491,7 @@
                                     <!--//First row-->
                                     <Grid Grid.Row="0" Grid.Column="0">
                                         <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                            <TextBox x:Name="txtContactNickName" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=NICK_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                            <TextBox x:Name="txtContactNickName" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=NICK_NAME}" MaxLength="10"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         </Border>
 
                                         <TextBlock Text="Enter nickname *">

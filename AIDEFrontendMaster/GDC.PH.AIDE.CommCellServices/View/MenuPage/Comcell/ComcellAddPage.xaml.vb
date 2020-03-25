@@ -5,7 +5,6 @@ Imports System.ServiceModel
 Class ComcellAddPage
     Implements UI_AIDE_CommCellServices.ServiceReference1.IAideServiceCallback
 
-
 #Region "Page Declaration"
     Public _frame As Frame
     Private aide As AideServiceClient
@@ -81,8 +80,10 @@ Class ComcellAddPage
         txtBlockMonth.Text = ComcellModel.MONTH
         txtBlockFacilitator.Text = ComcellModel.FACILITATOR_NAME
         txtBlockMinsTaker.Text = ComcellModel.MINUTES_TAKER_NAME
-        txtBlockButton.Text = "Update"
+        txtBlockButton.Text = "UPDATE"
         txtBlockYear.Text = ComcellModel.FY_START
+
+        AddBtn.Style = FindResource("RoundCornerUpdate")
 
         cbMonth.SelectedValue = txtBlockMonth.Text
         cbFacilitator.SelectedValue = txtBlockFacilitator.Text
@@ -244,4 +245,5 @@ Class ComcellAddPage
 
     End Sub
 #End Region
+
 End Class
