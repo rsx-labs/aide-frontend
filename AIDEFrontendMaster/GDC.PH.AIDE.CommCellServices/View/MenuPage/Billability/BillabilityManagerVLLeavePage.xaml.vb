@@ -237,7 +237,7 @@ Public Class BillabilityManagerVLLeavePage
     End Sub
 
     Private Sub CancelBtn_Click(sender As Object, e As RoutedEventArgs)
-        If MsgBox("Are you sure to cancel this leave?", MsgBoxStyle.Information + MsgBoxStyle.YesNo, "AIDE Leave") = vbYes Then
+        If MsgBox("Are you sure to cancel this leave?", MsgBoxStyle.Information + MsgBoxStyle.YesNo, "AIDE") = vbYes Then
             If CancelLeave() Then
                 MsgBox("Successfully cancelled leave/s", MsgBoxStyle.Information, "AIDE")
                 selection = 0

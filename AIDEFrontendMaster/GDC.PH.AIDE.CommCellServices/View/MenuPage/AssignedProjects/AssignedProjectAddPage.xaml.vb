@@ -21,6 +21,7 @@ Class AssignedProjectAddPage
     Public _email As String
     Private _empID As Integer
 #End Region
+
 #Region "Constructor"
     Public Sub New(_mainframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         ' This call is required by the designer.
@@ -38,6 +39,7 @@ Class AssignedProjectAddPage
         LoadAllProjectName()
     End Sub
 #End Region
+
 #Region "Methods"
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
@@ -55,6 +57,7 @@ Class AssignedProjectAddPage
         End Try
         Return bInitialize
     End Function
+
     Public Sub LoadEmployeeList()
         Try
             Dim _EmployeeListDBProvider As New EmployeeListProvider
@@ -171,6 +174,7 @@ Class AssignedProjectAddPage
             Next
         End If
     End Sub
+
     Private Sub ResetEmployeeList()
         If _ProjectVM.AssignedEmployeeLists.Count > 0 Then
             For Each rawEmployee As EmployeeListModel In _ProjectVM.AssignedEmployeeLists
@@ -184,6 +188,7 @@ Class AssignedProjectAddPage
         End If
     End Sub
 #End Region
+
 #Region "Events"
     Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
         _mainFrame.Navigate(New AssignedProjectMainPage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame))
@@ -197,12 +202,12 @@ Class AssignedProjectAddPage
     End Sub
 
     Private Sub cbProjectName_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbProjectName.SelectionChanged
-
         ResetEmployeeList()
         LoadAllProjectNameByID()
         LoadAssignedEmployees()
     End Sub
 #End Region
+
 #Region "Notification Methods"
     Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
         Throw New NotImplementedException()
@@ -220,4 +225,5 @@ Class AssignedProjectAddPage
         Throw New NotImplementedException()
     End Sub
 #End Region
+
 End Class

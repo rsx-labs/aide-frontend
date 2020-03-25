@@ -1044,7 +1044,7 @@ xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
                                 <DatePicker BorderThickness="0" Style="{DynamicResource styleDatePickerfrom}" x:Name="dtDate"  Text="{Binding SabaLearningVMModel.DATE_COMPLETED, Mode=TwoWay, StringFormat=dd-mm-yyyy}" 
                                 Margin="2" FontSize="12" BorderBrush="Transparent"/>
                             </Border>
-                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select end date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,10,0,0" Foreground="DarkGray">
+                            <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select completion date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,10,0,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Visibility" Value="Collapsed"/>

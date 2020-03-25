@@ -465,7 +465,7 @@ Public Class ProjectViewModel
                 End If
                 _AideServiceClient.DeleteAllAssignedProject(SelectedProject.ProjectID)
                 _AideServiceClient.CreateAssignedProject(_assign.ToArray())
-                MsgBox("Employee has been assigned to the project.", MsgBoxStyle.Information)
+                MsgBox("Employee has been assigned to the project.", MsgBoxStyle.Information, "AIDE")
             End If
 
         Catch ex As Exception

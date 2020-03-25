@@ -87,6 +87,7 @@ Class KPISummaryAddPage
             txtTarget.Text = _kpiSummary.KPITarget
             'LoadControls()
 
+            txtHeader.Text = "Update KPI Summary"
             mode = "UPDATE"
             txtBlockButton.Text = mode
             AddBtn.Style = FindResource("RoundCornerUpdate")

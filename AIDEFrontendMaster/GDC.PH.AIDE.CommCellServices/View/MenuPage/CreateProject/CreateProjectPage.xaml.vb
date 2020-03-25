@@ -347,7 +347,7 @@ Class CreateProjectPage
                     txtProjCD.Text = CType(dgProjectList.SelectedItem, ProjectModel).ProjectCode
                     txtProjName.Text = CType(dgProjectList.SelectedItem, ProjectModel).ProjectName
 
-                    If CType(dgProjectList.SelectedItem, ProjectModel).Category = "Task" Then
+                    If CType(dgProjectList.SelectedItem, ProjectModel).Category = "Project" Then
                         cbCategory.SelectedIndex = 0
                     Else
                         cbCategory.SelectedIndex = 1

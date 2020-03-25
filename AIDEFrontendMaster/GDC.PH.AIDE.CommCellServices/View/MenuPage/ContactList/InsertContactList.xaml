@@ -74,7 +74,7 @@
                                     <!--//First row-->
                                     <Grid Grid.Row="0" Grid.Column="0">
                                         <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                            <TextBox PreviewTextInput="NumberValidationTextBox" x:Name="txtContactEmpID" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=EMP_ID}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                            <TextBox PreviewTextInput="NumberValidationTextBox" x:Name="txtContactEmpID" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=EMP_ID}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         </Border>
 
                                         <TextBlock Text="Enter employee ID *">
@@ -107,7 +107,7 @@
                                     
                                     <Grid Grid.Row="0" Grid.Column="1">
                                         <Border Margin="5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                            <TextBox PreviewTextInput="AlphaValidationTextBox" x:Name="txtContactFName" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=FIRST_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                            <TextBox PreviewTextInput="AlphaValidationTextBox" x:Name="txtContactFName" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=FIRST_NAME}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         </Border>
 
                                         <TextBlock Text="Enter first name *">
@@ -487,7 +487,7 @@
                                     <!--//First row-->
                                     <Grid Grid.Row="0" Grid.Column="0">
                                         <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                            <TextBox x:Name="txtContactNickName" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=NICK_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                            <TextBox x:Name="txtContactNickName" MaxLength="10" Template="{DynamicResource TextBoxBaseControlTemplate}" TextWrapping="Wrap" IsEnabled="True" Text="{Binding Path=NICK_NAME}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                         </Border>
 
                                         <TextBlock Text="Enter nickname *">

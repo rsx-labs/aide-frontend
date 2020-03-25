@@ -156,7 +156,7 @@
                             <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
 
                                 <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Text="{Binding SelectedProject.ProjectCode}" TextWrapping="Wrap"
-                                     x:Name="projCD"    MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                     x:Name="projCD" IsReadOnly="True" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
                             <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Project Code *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray">
                                 <TextBlock.Style>

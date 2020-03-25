@@ -565,7 +565,7 @@ Class WeeklyReportUpdatePage
                     If result = vbYes Then
                         If InitializeService() Then
                             AideServiceClient.UpdateWeeklyReport(weeklyReport.ToArray, deletedWeeklyReport.ToArray, weeklyReportXref)
-                            MsgBox("Weekly report has been updated.", MsgBoxStyle.Information)
+                            MsgBox("Weekly report has been updated.", MsgBoxStyle.Information, "AIDE")
                             ExitPage()
                         End If
                     End If
