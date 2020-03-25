@@ -133,7 +133,14 @@ Class ReportsMainPage
             ReportsLV.ItemsSource = paginatedCollection
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
-            DisplayPagingInfo()
+
+            If totalRecords = 0 Then
+                txtPageNo.Text = "No Results Found "
+                GUISettingsOff()
+            Else
+                txtPageNo.Text = "page " & currentPage & " of " & lastPage
+                GUISettingsOn()
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
