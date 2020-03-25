@@ -455,6 +455,9 @@
     <Compile Include="View\MenuPage\KPITargets\KPITargetsPage.xaml.vb">
       <DependentUpon>KPITargetsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MenuPage\Reports\ImprovementsFilter.xaml.vb">
+      <DependentUpon>ImprovementsFilter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MenuPage\Reports\StatusReportFilter.xaml.vb">
       <DependentUpon>StatusReportFilter.xaml</DependentUpon>
     </Compile>
@@ -824,6 +827,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\MenuPage\Reports\ImprovementsFilter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\MenuPage\Reports\StatusReportFilter.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1062,13 +1069,25 @@
     </None>
     <AppDesigner Include="My Project\" />
     <None Include="packages.config" />
+    <None Include="ReportsCommands\generateactionlistreport.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="ReportsCommands\generateassetinventoryreport.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ReportsCommands\generatecommendationlistreport.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ReportsCommands\generateconcernslistreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="ReportsCommands\generatecontactlistreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="ReportsCommands\generateemployeebillabilityreport.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ReportsCommands\generatelessonlearntreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="ReportsCommands\generateoutstandingtaskreport.bat">
@@ -1084,6 +1103,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="ReportsCommands\generatestatusreport.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ReportsCommands\generatesuccessregisterreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Service References\ServiceReference1\AIDEService.wsdl" />

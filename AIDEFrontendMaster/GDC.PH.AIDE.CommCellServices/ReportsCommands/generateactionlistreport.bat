@@ -1,0 +1,2 @@
+@echo off
+"C:\Program Files (x86)\kool-aide\kool-aide" get -vw action-list --format excel --output "C:\GeneratedReports\Retail Services Action List.xlsx" --params {\"sorts\":[\"EmployeeName\"],\"departments\":[1],\"divisions\":[1],\"flag\":1,\"months\":[%1],\"fys\":[\"%2\"]}
