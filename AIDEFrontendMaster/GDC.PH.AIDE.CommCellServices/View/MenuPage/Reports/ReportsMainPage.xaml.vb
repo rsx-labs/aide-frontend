@@ -52,10 +52,10 @@ Class ReportsMainPage
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
         SetData()
-
-        If profile.Permission_ID <> 1 Then
-            btnCreate.Visibility = Windows.Visibility.Collapsed
-        End If
+        btnCreate.Visibility = Windows.Visibility.Collapsed
+        'If profile.Permission_ID <> 1 Then
+        '    btnCreate.Visibility = Windows.Visibility.Collapsed
+        'End If
     End Sub
 
 #End Region
