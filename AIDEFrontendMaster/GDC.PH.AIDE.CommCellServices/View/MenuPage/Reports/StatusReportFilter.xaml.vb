@@ -120,7 +120,7 @@ Public Class StatusReportFilter
             Dim processStartInfo As System.Diagnostics.ProcessStartInfo
             processStartInfo = New System.Diagnostics.ProcessStartInfo()
             processStartInfo.FileName = reportsModel.FILE_PATH 'Use the the full Pathname of the program
-            'processStartInfo.Verb = "runas"
+            processStartInfo.Verb = "runas"
             processStartInfo.Arguments = CStr(cbDateRange.SelectedValue)
             processStartInfo.UseShellExecute = False
             processStartInfo.RedirectStandardOutput = True

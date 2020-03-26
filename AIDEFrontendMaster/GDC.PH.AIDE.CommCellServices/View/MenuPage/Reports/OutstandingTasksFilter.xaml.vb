@@ -109,7 +109,7 @@ Public Class OutstandingTasksFilter
             Dim processStartInfo As System.Diagnostics.ProcessStartInfo
             processStartInfo = New System.Diagnostics.ProcessStartInfo()
             processStartInfo.FileName = reportsModel.FILE_PATH 'Use the the full Pathname of the program
-            'processStartInfo.Verb = "runas"
+            processStartInfo.Verb = "runas"
             If cbNickname.SelectedValue = 0 Then
                 processStartInfo.Arguments = "" + allEmpId & " " & dateStart
             Else

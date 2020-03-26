@@ -4,6 +4,8 @@ Imports System.IO
 Imports System.Diagnostics
 Imports System.ServiceModel
 Imports System.Collections.ObjectModel
+Imports System.Security.AccessControl
+
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class ReportsMainPage
     Implements ServiceReference1.IAideServiceCallback
@@ -349,8 +351,16 @@ Class ReportsMainPage
         If CType(ReportsLV.SelectedItem, ReportsModel).DESCRIPTION = "Contact List" Then
 
             Try
+                'Dim fPath As String = "C:\Program Files (x86)\GDC PH\AIDE CommCell\bin" + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
                 Dim fPath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
-                Process.Start(fPath)
+                Dim procInfo As New ProcessStartInfo()
+                procInfo.UseShellExecute = True
+                procInfo.FileName = (fPath)
+                procInfo.WorkingDirectory = ""
+                procInfo.CreateNoWindow = True
+                procInfo.Verb = "runas"
+                Process.Start(procInfo)
+
                 result = MsgBox("Report has been downloaded. Open the Report Now?", MessageBoxButton.YesNo, "AIDE")
                 If result = 6 Then
                     Process.Start("C:\GeneratedReports\Retail Services Contact List.xlsx")
@@ -363,7 +373,13 @@ Class ReportsMainPage
         ElseIf CType(ReportsLV.SelectedItem, ReportsModel).DESCRIPTION = "Skills Matrix" Then
             Try
                 Dim fPath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
-                Process.Start(fPath)
+                Dim procInfo As New ProcessStartInfo()
+                procInfo.UseShellExecute = True
+                procInfo.FileName = (fPath)
+                procInfo.WorkingDirectory = ""
+                procInfo.CreateNoWindow = True
+                procInfo.Verb = "runas"
+                Process.Start(procInfo)
                 result = MsgBox("Report has been downloaded. Open the Report Now?", MessageBoxButton.YesNo, "AIDE")
                 If result = 6 Then
                     Process.Start("C:\GeneratedReports\Retail Services Skills Matrix.xlsx")
@@ -427,6 +443,7 @@ Class ReportsMainPage
             addframe.Visibility = Visibility.Visible
 
         ElseIf CType(ReportsLV.SelectedItem, ReportsModel).DESCRIPTION = "Employee Billability" Then
+            'Dim fPath As String = "C:\Program Files (x86)\GDC PH\AIDE CommCell\bin" + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
             Dim fPath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + CType(ReportsLV.SelectedItem, ReportsModel).FILE_PATH
             Reports.FILE_PATH = fPath
             addframe.Navigate(New BillabilityFilter(Reports, mainframe, profile, "Employee", addframe, menugrid, submenuframe))
