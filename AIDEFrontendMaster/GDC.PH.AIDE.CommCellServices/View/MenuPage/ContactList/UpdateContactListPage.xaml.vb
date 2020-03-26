@@ -44,14 +44,19 @@ Class UpdateContactListPage
         old_empid = profile.Emp_ID
         DataContext = contactVM.ContactProfile
         ' Add any initialization after the InitializeComponent() call.
-        photoPath = GetOptionData(43, 6, 16)
+        photoPath = GetOptionData(46, 6, 16)
         txtPhotoNote.Text = "Note: Copy your picture to this path (" + photoPath + ")"
         ProcessUIAccess()
         AssignEvents()
         textLimits()
         LoadAllCB(contactModel)
         loadUI(contactModel)
-        imgPhoto.Source = New BitmapImage(New Uri(contactVM.ContactProfile.IMAGE_PATH.ToString))
+        Try
+            imgPhoto.Source = New BitmapImage(New Uri(contactVM.ContactProfile.IMAGE_PATH.ToString))
+        Catch ex As Exception
+            MsgBox("File Path for employee photo not found.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+
     End Sub
 #End Region
 
@@ -386,7 +391,6 @@ Class UpdateContactListPage
                     contactList.ACTIVE = contactVM.ContactProfile.ACTIVE
                     contactList.BIRTHDATE = contactVM.ContactProfile.BDATE
                     contactList.DT_HIRED = contactVM.ContactProfile.DT_HIRED
-                    contactList.IMAGE_PATH = photoPath + empPhoto
                     contactList.EMADDRESS = contactVM.ContactProfile.EMAIL_ADDRESS
                     contactList.EMADDRESS2 = contactVM.ContactProfile.EMAIL_ADDRESS2
                     contactList.CELL_NO = contactVM.ContactProfile.CEL_NO
@@ -410,6 +414,12 @@ Class UpdateContactListPage
                     contactList.SHIFT = cbContactShiftStatus.Text
 
                     contactList.OLD_EMP_ID = old_empid
+
+                    If empPhoto = Nothing Then
+                        contactList.IMAGE_PATH = contactVM.ContactProfile.IMAGE_PATH
+                    End If
+                    contactList.IMAGE_PATH = photoPath + empPhoto
+
                     client.UpdateContactListByEmpID(contactList, 0)
                     MsgBox("Contacts have been updated.", MsgBoxStyle.Information, "AIDE")
                     'ClearFields()
@@ -445,7 +455,7 @@ Class UpdateContactListPage
                 contactList.POSITION = contactVM.ContactProfile.POSITION
                 contactList.DT_HIRED = contactVM.ContactProfile.DT_HIRED
                 contactList.MARITAL_STATUS = contactVM.ContactProfile.MARITAL_STATUS
-                'contactList.IMAGE_PATH = photoPath + empPhoto
+                contactList.IMAGE_PATH = photoPath + empPhoto
                 contactList.PERMISSION_GROUP = contactVM.ContactProfile.PERMISSION_GROUP
                 contactList.DEPARTMENT = contactVM.ContactProfile.DEPARTMENT
                 contactList.DIVISION = contactVM.ContactProfile.DIVISION
