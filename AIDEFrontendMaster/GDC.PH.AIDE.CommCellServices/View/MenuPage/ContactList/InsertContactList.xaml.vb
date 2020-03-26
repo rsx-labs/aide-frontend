@@ -42,7 +42,7 @@ Class InsertContactList
         DataContext = contactVM.ContactProfile
         ClearTextVal()
         user_empid = Me.profile.Emp_ID
-        photoPath = GetOptionData(43, 6, 16)
+        photoPath = GetOptionData(46, 6, 16)
         txtPhotoNote.Text = "Note: Copy your picture to this path (" + photoPath + ")"
         AssignEvents()
         textLimits()
