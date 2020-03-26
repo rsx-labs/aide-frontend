@@ -6,6 +6,7 @@ Imports System.ServiceModel
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Public Class AssetsBorrowingAddPage
     Implements ServiceReference1.IAideServiceCallback
+
 #Region "Fields"
 
     Private mainFrame As Frame
@@ -28,6 +29,7 @@ Public Class AssetsBorrowingAddPage
     Dim nicknameVM As New NicknameViewModel()
     Dim empId As Integer = 0
     Dim status As Integer
+    Dim message As String
 #End Region
 
 #Region "Constructor"
@@ -107,6 +109,7 @@ Public Class AssetsBorrowingAddPage
                     assets.TRANSFER_ID = cbNickname.SelectedValue
                     assets.APPROVAL = 0
                     result = MsgBox("Press OK to confirm borrowing this asset.", MessageBoxButton.OKCancel, "AIDE")
+                    message = "requested"
                     'If profile.Permission_ID = 1 Then
                     '    assets.APPROVAL = 1
                     'Else
@@ -153,6 +156,7 @@ Public Class AssetsBorrowingAddPage
                     assets.TRANSFER_ID = cbNickname.SelectedValue
                     assets.APPROVAL = 1
                     result = MsgBox("Press OK to confirm returning this asset.", MessageBoxButton.OKCancel, "AIDE")
+                    message = "returned"
                     'If profile.Permission_ID = 1 Then
                     '    assets.APPROVAL = 1
                     'Else
@@ -164,7 +168,7 @@ Public Class AssetsBorrowingAddPage
                 If result = 1 Then
                     If InitializeService() Then
                         client.InsertAssetsBorrowing(assets)
-                        MsgBox("Asset has been updated.", MsgBoxStyle.Information, "AIDE")
+                        MsgBox("Asset has been " + message + ".", MsgBoxStyle.Information, "AIDE")
                         ClearFields()
                         'mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
                         mainFrame.Navigate(New AssetBorrowingPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))

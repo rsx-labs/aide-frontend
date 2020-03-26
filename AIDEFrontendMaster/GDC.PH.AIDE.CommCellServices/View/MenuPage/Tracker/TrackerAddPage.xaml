@@ -51,7 +51,7 @@
                     
                     <Grid Grid.Row="0">
                         <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                            <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Name="Saba_Title" TextWrapping="Wrap" Text="{Binding TITLE, Mode=TwoWay}" MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12"/>
+                            <TextBox Template="{DynamicResource TextBoxBaseControlTemplate}" Name="Saba_Title" TextWrapping="Wrap" Text="{Binding TITLE, Mode=TwoWay}" MaxLength="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12"/>
                         </Border>
                         
                         <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Enter tracker title *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">

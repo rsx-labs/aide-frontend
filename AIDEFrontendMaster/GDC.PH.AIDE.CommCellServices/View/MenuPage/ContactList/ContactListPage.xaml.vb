@@ -462,6 +462,7 @@ Public Class ContactListPage
                     If MsgBox("Are you sure to assign " + contactListMod.FULL_NAME + " on your team?", vbYesNo, "AIDE") = vbYes Then
                         contactList.ACTIVE = 1
                         _AideService.UpdateContactListByEmpID(contactList, 2)
+                        MsgBox("Employee has been assigned to your team.", MsgBoxStyle.OkOnly, "AIDE")
                         paginatedCollection.Clear()
                         SetData()
                     Else
