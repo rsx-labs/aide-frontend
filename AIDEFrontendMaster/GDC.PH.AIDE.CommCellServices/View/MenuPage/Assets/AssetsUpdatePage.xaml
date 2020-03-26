@@ -1034,7 +1034,7 @@
                                         </Grid>
                                         <Grid Grid.Row="2">
                                             <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                                <TextBox x:Name="txtModel" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center"/>
+                                                <TextBox MaxLength="20" x:Name="txtModel" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center"/>
                                             </Border>
                                             <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter model no." VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                                 <TextBlock.Style>
@@ -1071,7 +1071,7 @@
 
                                         <Grid Grid.Row="0">
                                             <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                                <TextBox x:Name="txtSerial" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center"/>
+                                                <TextBox MaxLength="20" x:Name="txtSerial" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center"/>
                                             </Border>
                                             <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter serial no." VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                                 <TextBlock.Style>
@@ -1100,7 +1100,7 @@
                                         </Grid>
                                         <Grid Grid.Row="1">
                                             <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                                                <TextBox x:Name="txtAssetTag" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center"/>
+                                                <TextBox MaxLength="50" x:Name="txtAssetTag" Template="{DynamicResource TextBoxBaseControlTemplate}" HorizontalContentAlignment="Center"/>
                                             </Border>
                                             <TextBlock FontSize="12" IsHitTestVisible="False" Text="Enter asset tag *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Foreground="DarkGray">
                                                 <TextBlock.Style>

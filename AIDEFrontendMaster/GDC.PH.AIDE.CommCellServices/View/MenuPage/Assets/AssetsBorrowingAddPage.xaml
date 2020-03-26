@@ -864,6 +864,7 @@
         </Style>
 
     </Page.Resources>
+    
     <Border Background="white" BorderBrush="Gainsboro" BorderThickness="1" CornerRadius="15">
         <Grid Margin="5">
             <Grid.RowDefinitions>
@@ -882,6 +883,7 @@
                         <TextBlock x:Name="tbSuccessForm" TextWrapping="Wrap" Text="Assets Borrowing Rquest" Margin="5" Foreground="DimGray"/>
                     </Viewbox>
                 </Grid>
+                
                 <Grid Grid.Column="1">
                     <Viewbox Margin="10" HorizontalAlignment="Right">
                         <Button x:Name="btnBack"  Style="{DynamicResource ButtonBack}" Click="btnBack_Click">
@@ -890,10 +892,9 @@
                             </Viewbox>
                         </Button>
                     </Viewbox>
-
                 </Grid>
-
             </Grid>
+            
             <Grid Grid.Row="1" Background="Gray">
                 <Viewbox>
                     <TextBlock Foreground="White" Margin="10" Text="Please enter all required fields. Ensure all required fields have * indicated.."  FontSize="13" FontFamily="Segoe UI" TextWrapping="WrapWithOverflow" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden"/>
@@ -1106,17 +1107,16 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </Grid>
+                        
                         <Grid Grid.Row="5">
                             <Button Style="{DynamicResource RoundCornerUpdate}" x:Name="btnApprove" Margin="5,5,0,5" >
-
                                 <TextBlock Text="APPROVE" TextWrapping="Wrap" Margin="5"/>
-
                             </Button>
                             <Border Visibility="Hidden" Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-
                                 <TextBox Visibility="Hidden" x:Name="txtID" IsReadOnly="True" TextWrapping="Wrap" Template="{DynamicResource TextBoxBaseControlTemplate}"
                              MaxLines="255" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
+                            
                             <TextBlock Visibility="Hidden" FontSize="12" IsHitTestVisible="False" Text="Enter asset ID" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -1130,6 +1130,7 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
+                            
                             <TextBlock Visibility="Hidden" x:Name="txtlabelAssetID" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Asset ID" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}">
@@ -1143,9 +1144,9 @@
                                 </TextBlock.Style>
                             </TextBlock>
                         </Grid>
+                        
                         <Grid Grid.Row="6" Visibility="Collapsed">
                             <Border Margin="5,5,0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Visibility="Collapsed">
-
                                 <TextBox x:Name="txtComments" Template="{DynamicResource TextBoxBaseControlTemplate}" Visibility="Collapsed"
                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             </Border>
@@ -1173,10 +1174,9 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-
                         </Grid>
-
                     </Grid>
+                    
                     <Grid Grid.Column="2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -1189,7 +1189,6 @@
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
                             <Border Margin="5,0,5,0" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-
                                 <DatePicker Style="{DynamicResource styleDatePickerfrom}" x:Name="dateInput"  VerticalContentAlignment="Center" BorderBrush="Transparent" Margin="0" FontSize="12" IsEnabled="False"/>
                             </Border>
                             <TextBlock FontSize="12" IsHitTestVisible="False" Text="Select date assigned" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
