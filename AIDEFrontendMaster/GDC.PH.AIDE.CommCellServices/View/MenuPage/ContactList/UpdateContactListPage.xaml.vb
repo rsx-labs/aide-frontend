@@ -414,11 +414,10 @@ Class UpdateContactListPage
                     contactList.SHIFT = cbContactShiftStatus.Text
 
                     contactList.OLD_EMP_ID = old_empid
-
+                    contactList.IMAGE_PATH = photoPath + empPhoto
                     If empPhoto = Nothing Then
                         contactList.IMAGE_PATH = contactVM.ContactProfile.IMAGE_PATH
                     End If
-                    contactList.IMAGE_PATH = photoPath + empPhoto
 
                     client.UpdateContactListByEmpID(contactList, 0)
                     MsgBox("Contacts have been updated.", MsgBoxStyle.Information, "AIDE")
