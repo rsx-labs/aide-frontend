@@ -48,7 +48,8 @@ Public Class SuccessRegisterDBProvider
             .EmpID = _nickname.Emp_ID,
             .NickName = _nickname.Nick_Name,
             .FirstName = _nickname.First_Name,
-        .EmployeeName = _nickname.Employee_Name
+        .EmployeeName = _nickname.Employee_Name,
+        .ImagePath = _nickname.Image_Path
                 }
         _nicknameList.Add(_successObject)
     End Sub
@@ -72,4 +73,5 @@ Public Class MyNickname
     Property NickName As String
     Property FirstName As String
     Property EmployeeName As String
+    Property ImagePath As String
 End Class

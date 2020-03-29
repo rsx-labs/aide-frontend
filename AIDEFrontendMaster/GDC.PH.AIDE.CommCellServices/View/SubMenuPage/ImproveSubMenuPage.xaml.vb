@@ -33,4 +33,8 @@ Class ImproveSubMenuPage
     Private Sub SuccessRegister_Click(sender As Object, e As RoutedEventArgs)
         mainFrame.Navigate(New SuccessRegisterPage(mainFrame, addframe, menugrid, submenuframe, profile))
     End Sub
+
+    Private Sub ProblemSolvingBtn_Click(sender As Object, e As RoutedEventArgs) Handles ProblemSolvingBtn.Click
+        mainFrame.Navigate(New ProblemSolvingPage(profile, mainFrame, addframe, menugrid, submenuframe))
+    End Sub
 End Class

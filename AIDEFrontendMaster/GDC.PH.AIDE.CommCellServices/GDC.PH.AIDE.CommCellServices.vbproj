@@ -190,6 +190,7 @@
     <Compile Include="DataProviderService\MailConfigDBProvider.vb" />
     <Compile Include="DataProviderService\MessageDBProvider.vb" />
     <Compile Include="DataProviderService\OptionDBProvider.vb" />
+    <Compile Include="DataProviderService\ProblemDBProvider.vb" />
     <Compile Include="DataProviderService\ProfileDBProvider.vb" />
     <Compile Include="DataProviderService\ProjectDBProvider.vb" />
     <Compile Include="DataProviderService\ResourcePlannerDBProvider.vb" />
@@ -233,6 +234,7 @@
     <Compile Include="Model\MessageModel.vb" />
     <Compile Include="Model\OptionModel.vb" />
     <Compile Include="Model\PositionModel.vb" />
+    <Compile Include="Model\ProblemModel.vb" />
     <Compile Include="Model\ProfileModel.vb" />
     <Compile Include="Model\ProjectModel.vb" />
     <Compile Include="Model\ResourcePlannerModel.vb" />
@@ -277,6 +279,7 @@
     <Compile Include="ViewModel\MailConfigViewModel.vb" />
     <Compile Include="ViewModel\MessageViewModel.vb" />
     <Compile Include="ViewModel\OptionViewModel.vb" />
+    <Compile Include="ViewModel\ProblemViewModel.vb" />
     <Compile Include="ViewModel\ProfileViewModel.vb" />
     <Compile Include="ViewModel\ProjectViewModel.vb" />
     <Compile Include="ViewModel\ResourcePlannerViewModel.vb" />
@@ -454,6 +457,42 @@
     </Compile>
     <Compile Include="View\MenuPage\KPITargets\KPITargetsPage.xaml.vb">
       <DependentUpon>KPITargetsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ProblemSolving\ProblemAddPage.xaml.vb">
+      <DependentUpon>ProblemAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ProblemSolving\ProblemCauseAddPage.xaml.vb">
+      <DependentUpon>ProblemCauseAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ProblemSolving\ProblemCauseUpdatePage.xaml.vb">
+      <DependentUpon>ProblemCauseUpdatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ProblemSolving\ProblemImplementAddPage.xaml.vb">
+      <DependentUpon>ProblemImplementAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ProblemSolving\ProblemImplementUpdatePage.xaml.vb">
+      <DependentUpon>ProblemImplementUpdatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ProblemSolving\ProblemOptionAddPage.xaml.vb">
+      <DependentUpon>ProblemOptionAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ProblemSolving\ProblemOptionUpdatePage.xaml.vb">
+      <DependentUpon>ProblemOptionUpdatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ProblemSolving\ProblemSolutionAddPage.xaml.vb">
+      <DependentUpon>ProblemSolutionAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ProblemSolving\ProblemSolutionUpdatePage.xaml.vb">
+      <DependentUpon>ProblemSolutionUpdatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ProblemSolving\ProblemSolvingPage.xaml.vb">
+      <DependentUpon>ProblemSolvingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ProblemSolving\ProblemUpdatePage.xaml.vb">
+      <DependentUpon>ProblemUpdatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuPage\ProblemSolving\ProblemViewPage.xaml.vb">
+      <DependentUpon>ProblemViewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MenuPage\Reports\ImprovementsFilter.xaml.vb">
       <DependentUpon>ImprovementsFilter.xaml</DependentUpon>
@@ -827,6 +866,54 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\MenuPage\ProblemSolving\ProblemAddPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\ProblemSolving\ProblemCauseAddPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\ProblemSolving\ProblemCauseUpdatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\ProblemSolving\ProblemImplementAddPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\ProblemSolving\ProblemImplementUpdatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\ProblemSolving\ProblemOptionAddPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\ProblemSolving\ProblemOptionUpdatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\ProblemSolving\ProblemSolutionAddPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\ProblemSolving\ProblemSolutionUpdatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\ProblemSolving\ProblemSolvingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\ProblemSolving\ProblemUpdatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MenuPage\ProblemSolving\ProblemViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MenuPage\Reports\ImprovementsFilter.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1069,45 +1156,30 @@
     </None>
     <AppDesigner Include="My Project\" />
     <None Include="packages.config" />
-    <Content Include="ReportsCommands\generateactionlistreport.bat">
+    <None Include="ReportsCommands\generateassetinventoryreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ReportsCommands\generateassetinventoryreport.bat">
+    </None>
+    <None Include="ReportsCommands\generatecontactlistreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ReportsCommands\generatecommendationlistreport.bat">
+    </None>
+    <None Include="ReportsCommands\generateemployeebillabilityreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ReportsCommands\generateconcernslistreport.bat">
+    </None>
+    <None Include="ReportsCommands\generateoutstandingtaskreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ReportsCommands\generatecontactlistreport.bat">
+    </None>
+    <None Include="ReportsCommands\generateprojectbillabilityreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ReportsCommands\generateemployeebillabilityreport.bat">
+    </None>
+    <None Include="ReportsCommands\generateresourceplanner.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ReportsCommands\generatelessonlearntreport.bat">
+    </None>
+    <None Include="ReportsCommands\generateskillsmatrix.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ReportsCommands\generateoutstandingtaskreport.bat">
+    </None>
+    <None Include="ReportsCommands\generatestatusreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ReportsCommands\generateprojectbillabilityreport.bat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ReportsCommands\generateresourceplanner.bat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ReportsCommands\generateskillsmatrix.bat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ReportsCommands\generatestatusreport.bat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="ReportsCommands\generatesuccessregisterreport.bat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
     <None Include="Service References\ServiceReference1\AIDEService.wsdl" />
     <None Include="Service References\ServiceReference1\AIDEService.xsd">
       <SubType>Designer</SubType>
@@ -1687,6 +1759,27 @@
     <Resource Include="Assets\Button\notienter.png" />
     <Resource Include="Assets\Button\notienterafter.png" />
     <Resource Include="Assets\Button\notiopen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\ProblemLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\ProblemSolvingLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\ProblemSolvingLogo2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\ParticipantLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\ButtonEditProblem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\ProblemViewBtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Button\ProblemViewLogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

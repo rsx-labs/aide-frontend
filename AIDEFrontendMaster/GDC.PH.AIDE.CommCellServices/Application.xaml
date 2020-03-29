@@ -508,7 +508,7 @@
                                VerticalAlignment="Stretch"
                                Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
                             <Image.Effect>
-                                <DropShadowEffect  Direction="290" Opacity="0.6" ShadowDepth="1" Color="Black"/>
+                                <DropShadowEffect  Direction="290" Opacity="0.3" ShadowDepth="1" Color="Black"/>
                             </Image.Effect>
                         </Image>
                         <ControlTemplate.Triggers>
@@ -522,7 +522,93 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
+        <Style x:Key="ButtonAddProblem" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Name="buttonImage"
+                               Height="Auto"
+                               HorizontalAlignment="Right"
+                               Margin="1"
+                               Source="Assets\Button\addnewclick.png"
+                               Opacity=".1"
+                               Stretch="Fill"
+                               VerticalAlignment="Stretch"
+                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                            <Image.Effect>
+                                <DropShadowEffect  Direction="290" Opacity="0.3" ShadowDepth="1" Color="Black"/>
+                            </Image.Effect>
+                        </Image>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonImage"
+                                        Property="Opacity"
+                                        Value="1"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ButtonEditProblem" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Name="buttonImage"
+                               Height="Auto"
+                               HorizontalAlignment="Right"
+                               Margin="1"
+                               Source="Assets\Button\ButtonEditProblem.png"
+                               Opacity=".1"
+                               Stretch="Fill"
+                               VerticalAlignment="Stretch"
+                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                            <Image.Effect>
+                                <DropShadowEffect  Direction="290" Opacity="0.3" ShadowDepth="1" Color="Black"/>
+                            </Image.Effect>
+                        </Image>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonImage"
+                                        Property="Opacity"
+                                        Value="1"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ButtonViewProblem" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Name="buttonImage"
+                               Height="Auto"
+                               HorizontalAlignment="Right"
+                               Margin="1"
+                               Source="Assets\Button\ProblemViewLogo.png"
+                               Opacity=".1"
+                               Stretch="Fill"
+                               VerticalAlignment="Stretch"
+                               Width="{Binding Path=Height, RelativeSource={RelativeSource Mode=Self}}">
+                            <Image.Effect>
+                                <DropShadowEffect  Direction="290" Opacity="0.3" ShadowDepth="1" Color="Black"/>
+                            </Image.Effect>
+                        </Image>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonImage"
+                                        Property="Opacity"
+                                        Value="1"></Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="ButtonBack" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>

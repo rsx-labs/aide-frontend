@@ -1595,6 +1595,341 @@ Namespace ServiceReference1
     
     <System.Diagnostics.DebuggerStepThroughAttribute(),  _
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="Problem", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
+     System.SerializableAttribute()>  _
+    Partial Public Class Problem
+        Inherits Object
+        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+        
+        <System.NonSerializedAttribute()>  _
+        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private CauseDescrField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private CauseIDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private CauseWhyField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private EmployeeIDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private EmployeeNameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ImplementAssigneeField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ImplementDescrField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ImplementIDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ImplementValueField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private OptionDescrField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private OptionIDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ProblemDescrField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ProblemIDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ProblemInvolveField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ResultDescrField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ResultIDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ResultValueField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SolutionDescrField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SolutionIDField As Integer
+        
+        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
+        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
+            Get
+                Return Me.extensionDataField
+            End Get
+            Set
+                Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property CauseDescr() As String
+            Get
+                Return Me.CauseDescrField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.CauseDescrField, value) <> true) Then
+                    Me.CauseDescrField = value
+                    Me.RaisePropertyChanged("CauseDescr")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property CauseID() As Integer
+            Get
+                Return Me.CauseIDField
+            End Get
+            Set
+                If (Me.CauseIDField.Equals(value) <> true) Then
+                    Me.CauseIDField = value
+                    Me.RaisePropertyChanged("CauseID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property CauseWhy() As String
+            Get
+                Return Me.CauseWhyField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.CauseWhyField, value) <> true) Then
+                    Me.CauseWhyField = value
+                    Me.RaisePropertyChanged("CauseWhy")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property EmployeeID() As Integer
+            Get
+                Return Me.EmployeeIDField
+            End Get
+            Set
+                If (Me.EmployeeIDField.Equals(value) <> true) Then
+                    Me.EmployeeIDField = value
+                    Me.RaisePropertyChanged("EmployeeID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property EmployeeName() As String
+            Get
+                Return Me.EmployeeNameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.EmployeeNameField, value) <> true) Then
+                    Me.EmployeeNameField = value
+                    Me.RaisePropertyChanged("EmployeeName")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ImplementAssignee() As Integer
+            Get
+                Return Me.ImplementAssigneeField
+            End Get
+            Set
+                If (Me.ImplementAssigneeField.Equals(value) <> true) Then
+                    Me.ImplementAssigneeField = value
+                    Me.RaisePropertyChanged("ImplementAssignee")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ImplementDescr() As String
+            Get
+                Return Me.ImplementDescrField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.ImplementDescrField, value) <> true) Then
+                    Me.ImplementDescrField = value
+                    Me.RaisePropertyChanged("ImplementDescr")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ImplementID() As Integer
+            Get
+                Return Me.ImplementIDField
+            End Get
+            Set
+                If (Me.ImplementIDField.Equals(value) <> true) Then
+                    Me.ImplementIDField = value
+                    Me.RaisePropertyChanged("ImplementID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ImplementValue() As String
+            Get
+                Return Me.ImplementValueField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.ImplementValueField, value) <> true) Then
+                    Me.ImplementValueField = value
+                    Me.RaisePropertyChanged("ImplementValue")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property OptionDescr() As String
+            Get
+                Return Me.OptionDescrField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.OptionDescrField, value) <> true) Then
+                    Me.OptionDescrField = value
+                    Me.RaisePropertyChanged("OptionDescr")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property OptionID() As Integer
+            Get
+                Return Me.OptionIDField
+            End Get
+            Set
+                If (Me.OptionIDField.Equals(value) <> true) Then
+                    Me.OptionIDField = value
+                    Me.RaisePropertyChanged("OptionID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ProblemDescr() As String
+            Get
+                Return Me.ProblemDescrField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.ProblemDescrField, value) <> true) Then
+                    Me.ProblemDescrField = value
+                    Me.RaisePropertyChanged("ProblemDescr")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ProblemID() As Integer
+            Get
+                Return Me.ProblemIDField
+            End Get
+            Set
+                If (Me.ProblemIDField.Equals(value) <> true) Then
+                    Me.ProblemIDField = value
+                    Me.RaisePropertyChanged("ProblemID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ProblemInvolve() As String
+            Get
+                Return Me.ProblemInvolveField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.ProblemInvolveField, value) <> true) Then
+                    Me.ProblemInvolveField = value
+                    Me.RaisePropertyChanged("ProblemInvolve")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ResultDescr() As String
+            Get
+                Return Me.ResultDescrField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.ResultDescrField, value) <> true) Then
+                    Me.ResultDescrField = value
+                    Me.RaisePropertyChanged("ResultDescr")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ResultID() As Integer
+            Get
+                Return Me.ResultIDField
+            End Get
+            Set
+                If (Me.ResultIDField.Equals(value) <> true) Then
+                    Me.ResultIDField = value
+                    Me.RaisePropertyChanged("ResultID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ResultValue() As String
+            Get
+                Return Me.ResultValueField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.ResultValueField, value) <> true) Then
+                    Me.ResultValueField = value
+                    Me.RaisePropertyChanged("ResultValue")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SolutionDescr() As String
+            Get
+                Return Me.SolutionDescrField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SolutionDescrField, value) <> true) Then
+                    Me.SolutionDescrField = value
+                    Me.RaisePropertyChanged("SolutionDescr")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SolutionID() As Integer
+            Get
+                Return Me.SolutionIDField
+            End Get
+            Set
+                If (Me.SolutionIDField.Equals(value) <> true) Then
+                    Me.SolutionIDField = value
+                    Me.RaisePropertyChanged("SolutionID")
+                End If
+            End Set
+        End Property
+        
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        
+        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
+            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
+            If (Not (propertyChanged) Is Nothing) Then
+                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
+            End If
+        End Sub
+    End Class
+    
+    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
      System.Runtime.Serialization.DataContractAttribute(Name:="ResourcePlanner", [Namespace]:="http://schemas.datacontract.org/2004/07/GDC.PH.AIDE.DCService"),  _
      System.SerializableAttribute()>  _
     Partial Public Class ResourcePlanner
@@ -6370,6 +6705,9 @@ Namespace ServiceReference1
         Private First_NameField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private Image_PathField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private Nick_NameField As String
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
@@ -6417,6 +6755,19 @@ Namespace ServiceReference1
                 If (Object.ReferenceEquals(Me.First_NameField, value) <> true) Then
                     Me.First_NameField = value
                     Me.RaisePropertyChanged("First_Name")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Image_Path() As String
+            Get
+                Return Me.Image_PathField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.Image_PathField, value) <> true) Then
+                    Me.Image_PathField = value
+                    Me.RaisePropertyChanged("Image_Path")
                 End If
             End Set
         End Property
@@ -9814,6 +10165,84 @@ Namespace ServiceReference1
      System.ServiceModel.ServiceContractAttribute(ConfigurationName:="ServiceReference1.IAideService", CallbackContract:=GetType(ServiceReference1.IAideServiceCallback), SessionMode:=System.ServiceModel.SessionMode.Required)>  _
     Public Interface IAideService
         
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertProblemCause")>  _
+        Sub InsertProblemCause(ByVal objProblem As ServiceReference1.Problem)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertProblemCause")>  _
+        Function InsertProblemCauseAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateProblemCause")>  _
+        Sub UpdateProblemCause(ByVal objProblem As ServiceReference1.Problem)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateProblemCause")>  _
+        Function UpdateProblemCauseAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllProblemOption", ReplyAction:="http://tempuri.org/IAideService/GetAllProblemOptionResponse")>  _
+        Function GetAllProblemOption() As ServiceReference1.Problem()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllProblemOption", ReplyAction:="http://tempuri.org/IAideService/GetAllProblemOptionResponse")>  _
+        Function GetAllProblemOptionAsync() As System.Threading.Tasks.Task(Of ServiceReference1.Problem())
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertProblemOption")>  _
+        Sub InsertProblemOption(ByVal objProblem As ServiceReference1.Problem)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertProblemOption")>  _
+        Function InsertProblemOptionAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateProblemOption")>  _
+        Sub UpdateProblemOption(ByVal objProblem As ServiceReference1.Problem)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateProblemOption")>  _
+        Function UpdateProblemOptionAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllProblemSolution", ReplyAction:="http://tempuri.org/IAideService/GetAllProblemSolutionResponse")>  _
+        Function GetAllProblemSolution() As ServiceReference1.Problem()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllProblemSolution", ReplyAction:="http://tempuri.org/IAideService/GetAllProblemSolutionResponse")>  _
+        Function GetAllProblemSolutionAsync() As System.Threading.Tasks.Task(Of ServiceReference1.Problem())
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertProblemSolution")>  _
+        Sub InsertProblemSolution(ByVal objProblem As ServiceReference1.Problem)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertProblemSolution")>  _
+        Function InsertProblemSolutionAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateProblemSolution")>  _
+        Sub UpdateProblemSolution(ByVal objProblem As ServiceReference1.Problem)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateProblemSolution")>  _
+        Function UpdateProblemSolutionAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllProblemImplement", ReplyAction:="http://tempuri.org/IAideService/GetAllProblemImplementResponse")>  _
+        Function GetAllProblemImplement() As ServiceReference1.Problem()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllProblemImplement", ReplyAction:="http://tempuri.org/IAideService/GetAllProblemImplementResponse")>  _
+        Function GetAllProblemImplementAsync() As System.Threading.Tasks.Task(Of ServiceReference1.Problem())
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertProblemImplement")>  _
+        Sub InsertProblemImplement(ByVal objProblem As ServiceReference1.Problem)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertProblemImplement")>  _
+        Function InsertProblemImplementAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateProblemImplement")>  _
+        Sub UpdateProblemImplement(ByVal objProblem As ServiceReference1.Problem)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateProblemImplement")>  _
+        Function UpdateProblemImplementAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllProblemResult", ReplyAction:="http://tempuri.org/IAideService/GetAllProblemResultResponse")>  _
+        Function GetAllProblemResult(ByVal problemID As Integer, ByVal optionID As Integer) As ServiceReference1.Problem()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllProblemResult", ReplyAction:="http://tempuri.org/IAideService/GetAllProblemResultResponse")>  _
+        Function GetAllProblemResultAsync(ByVal problemID As Integer, ByVal optionID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Problem())
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertProblemResult")>  _
+        Sub InsertProblemResult(ByVal objProblem As ServiceReference1.Problem)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertProblemResult")>  _
+        Function InsertProblemResultAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task
+        
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllNotFiledLeaves", ReplyAction:="http://tempuri.org/IAideService/GetAllNotFiledLeavesResponse")>  _
         Function GetAllNotFiledLeaves(ByVal empID As Integer) As ServiceReference1.ResourcePlanner()
         
@@ -9991,6 +10420,8 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.TaskSummary)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Problem)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Problem())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ResourcePlanner())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ResourcePlanner)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Announcements)),  _
@@ -10105,6 +10536,8 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.TaskSummary)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Problem)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Problem())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ResourcePlanner())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ResourcePlanner)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Announcements)),  _
@@ -10377,6 +10810,30 @@ Namespace ServiceReference1
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetOptions", ReplyAction:="http://tempuri.org/IAideService/GetOptionsResponse")>  _
         Function GetOptionsAsync(ByVal OptionID As Integer, ByVal ModuleID As Integer, ByVal FunctionId As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Options())
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllProblem", ReplyAction:="http://tempuri.org/IAideService/GetAllProblemResponse")>  _
+        Function GetAllProblem(ByVal empID As Integer) As ServiceReference1.Problem()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllProblem", ReplyAction:="http://tempuri.org/IAideService/GetAllProblemResponse")>  _
+        Function GetAllProblemAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Problem())
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertProblem")>  _
+        Sub InsertProblem(ByVal objProblem As ServiceReference1.Problem)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertProblem")>  _
+        Function InsertProblemAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateProblem")>  _
+        Sub UpdateProblem(ByVal objProblem As ServiceReference1.Problem)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateProblem")>  _
+        Function UpdateProblemAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllProblemCause", ReplyAction:="http://tempuri.org/IAideService/GetAllProblemCauseResponse")>  _
+        Function GetAllProblemCause() As ServiceReference1.Problem()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllProblemCause", ReplyAction:="http://tempuri.org/IAideService/GetAllProblemCauseResponse")>  _
+        Function GetAllProblemCauseAsync() As System.Threading.Tasks.Task(Of ServiceReference1.Problem())
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllAssetsUnAssigned", ReplyAction:="http://tempuri.org/IAideService/GetAllAssetsUnAssignedResponse")>  _
         Function GetAllAssetsUnAssigned(ByVal empID As Integer) As ServiceReference1.Assets()
@@ -11177,6 +11634,8 @@ Namespace ServiceReference1
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.TaskSummary)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Problem)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Problem())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ResourcePlanner())),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ResourcePlanner)),  _
          System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Announcements)),  _
@@ -11298,6 +11757,110 @@ Namespace ServiceReference1
         Public Sub New(ByVal callbackInstance As System.ServiceModel.InstanceContext, ByVal binding As System.ServiceModel.Channels.Binding, ByVal remoteAddress As System.ServiceModel.EndpointAddress)
             MyBase.New(callbackInstance, binding, remoteAddress)
         End Sub
+        
+        Public Sub InsertProblemCause(ByVal objProblem As ServiceReference1.Problem) Implements ServiceReference1.IAideService.InsertProblemCause
+            MyBase.Channel.InsertProblemCause(objProblem)
+        End Sub
+        
+        Public Function InsertProblemCauseAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.InsertProblemCauseAsync
+            Return MyBase.Channel.InsertProblemCauseAsync(objProblem)
+        End Function
+        
+        Public Sub UpdateProblemCause(ByVal objProblem As ServiceReference1.Problem) Implements ServiceReference1.IAideService.UpdateProblemCause
+            MyBase.Channel.UpdateProblemCause(objProblem)
+        End Sub
+        
+        Public Function UpdateProblemCauseAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateProblemCauseAsync
+            Return MyBase.Channel.UpdateProblemCauseAsync(objProblem)
+        End Function
+        
+        Public Function GetAllProblemOption() As ServiceReference1.Problem() Implements ServiceReference1.IAideService.GetAllProblemOption
+            Return MyBase.Channel.GetAllProblemOption
+        End Function
+        
+        Public Function GetAllProblemOptionAsync() As System.Threading.Tasks.Task(Of ServiceReference1.Problem()) Implements ServiceReference1.IAideService.GetAllProblemOptionAsync
+            Return MyBase.Channel.GetAllProblemOptionAsync
+        End Function
+        
+        Public Sub InsertProblemOption(ByVal objProblem As ServiceReference1.Problem) Implements ServiceReference1.IAideService.InsertProblemOption
+            MyBase.Channel.InsertProblemOption(objProblem)
+        End Sub
+        
+        Public Function InsertProblemOptionAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.InsertProblemOptionAsync
+            Return MyBase.Channel.InsertProblemOptionAsync(objProblem)
+        End Function
+        
+        Public Sub UpdateProblemOption(ByVal objProblem As ServiceReference1.Problem) Implements ServiceReference1.IAideService.UpdateProblemOption
+            MyBase.Channel.UpdateProblemOption(objProblem)
+        End Sub
+        
+        Public Function UpdateProblemOptionAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateProblemOptionAsync
+            Return MyBase.Channel.UpdateProblemOptionAsync(objProblem)
+        End Function
+        
+        Public Function GetAllProblemSolution() As ServiceReference1.Problem() Implements ServiceReference1.IAideService.GetAllProblemSolution
+            Return MyBase.Channel.GetAllProblemSolution
+        End Function
+        
+        Public Function GetAllProblemSolutionAsync() As System.Threading.Tasks.Task(Of ServiceReference1.Problem()) Implements ServiceReference1.IAideService.GetAllProblemSolutionAsync
+            Return MyBase.Channel.GetAllProblemSolutionAsync
+        End Function
+        
+        Public Sub InsertProblemSolution(ByVal objProblem As ServiceReference1.Problem) Implements ServiceReference1.IAideService.InsertProblemSolution
+            MyBase.Channel.InsertProblemSolution(objProblem)
+        End Sub
+        
+        Public Function InsertProblemSolutionAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.InsertProblemSolutionAsync
+            Return MyBase.Channel.InsertProblemSolutionAsync(objProblem)
+        End Function
+        
+        Public Sub UpdateProblemSolution(ByVal objProblem As ServiceReference1.Problem) Implements ServiceReference1.IAideService.UpdateProblemSolution
+            MyBase.Channel.UpdateProblemSolution(objProblem)
+        End Sub
+        
+        Public Function UpdateProblemSolutionAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateProblemSolutionAsync
+            Return MyBase.Channel.UpdateProblemSolutionAsync(objProblem)
+        End Function
+        
+        Public Function GetAllProblemImplement() As ServiceReference1.Problem() Implements ServiceReference1.IAideService.GetAllProblemImplement
+            Return MyBase.Channel.GetAllProblemImplement
+        End Function
+        
+        Public Function GetAllProblemImplementAsync() As System.Threading.Tasks.Task(Of ServiceReference1.Problem()) Implements ServiceReference1.IAideService.GetAllProblemImplementAsync
+            Return MyBase.Channel.GetAllProblemImplementAsync
+        End Function
+        
+        Public Sub InsertProblemImplement(ByVal objProblem As ServiceReference1.Problem) Implements ServiceReference1.IAideService.InsertProblemImplement
+            MyBase.Channel.InsertProblemImplement(objProblem)
+        End Sub
+        
+        Public Function InsertProblemImplementAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.InsertProblemImplementAsync
+            Return MyBase.Channel.InsertProblemImplementAsync(objProblem)
+        End Function
+        
+        Public Sub UpdateProblemImplement(ByVal objProblem As ServiceReference1.Problem) Implements ServiceReference1.IAideService.UpdateProblemImplement
+            MyBase.Channel.UpdateProblemImplement(objProblem)
+        End Sub
+        
+        Public Function UpdateProblemImplementAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateProblemImplementAsync
+            Return MyBase.Channel.UpdateProblemImplementAsync(objProblem)
+        End Function
+        
+        Public Function GetAllProblemResult(ByVal problemID As Integer, ByVal optionID As Integer) As ServiceReference1.Problem() Implements ServiceReference1.IAideService.GetAllProblemResult
+            Return MyBase.Channel.GetAllProblemResult(problemID, optionID)
+        End Function
+        
+        Public Function GetAllProblemResultAsync(ByVal problemID As Integer, ByVal optionID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Problem()) Implements ServiceReference1.IAideService.GetAllProblemResultAsync
+            Return MyBase.Channel.GetAllProblemResultAsync(problemID, optionID)
+        End Function
+        
+        Public Sub InsertProblemResult(ByVal objProblem As ServiceReference1.Problem) Implements ServiceReference1.IAideService.InsertProblemResult
+            MyBase.Channel.InsertProblemResult(objProblem)
+        End Sub
+        
+        Public Function InsertProblemResultAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.InsertProblemResultAsync
+            Return MyBase.Channel.InsertProblemResultAsync(objProblem)
+        End Function
         
         Public Function GetAllNotFiledLeaves(ByVal empID As Integer) As ServiceReference1.ResourcePlanner() Implements ServiceReference1.IAideService.GetAllNotFiledLeaves
             Return MyBase.Channel.GetAllNotFiledLeaves(empID)
@@ -11777,6 +12340,38 @@ Namespace ServiceReference1
         
         Public Function GetOptionsAsync(ByVal OptionID As Integer, ByVal ModuleID As Integer, ByVal FunctionId As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Options()) Implements ServiceReference1.IAideService.GetOptionsAsync
             Return MyBase.Channel.GetOptionsAsync(OptionID, ModuleID, FunctionId)
+        End Function
+        
+        Public Function GetAllProblem(ByVal empID As Integer) As ServiceReference1.Problem() Implements ServiceReference1.IAideService.GetAllProblem
+            Return MyBase.Channel.GetAllProblem(empID)
+        End Function
+        
+        Public Function GetAllProblemAsync(ByVal empID As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.Problem()) Implements ServiceReference1.IAideService.GetAllProblemAsync
+            Return MyBase.Channel.GetAllProblemAsync(empID)
+        End Function
+        
+        Public Sub InsertProblem(ByVal objProblem As ServiceReference1.Problem) Implements ServiceReference1.IAideService.InsertProblem
+            MyBase.Channel.InsertProblem(objProblem)
+        End Sub
+        
+        Public Function InsertProblemAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.InsertProblemAsync
+            Return MyBase.Channel.InsertProblemAsync(objProblem)
+        End Function
+        
+        Public Sub UpdateProblem(ByVal objProblem As ServiceReference1.Problem) Implements ServiceReference1.IAideService.UpdateProblem
+            MyBase.Channel.UpdateProblem(objProblem)
+        End Sub
+        
+        Public Function UpdateProblemAsync(ByVal objProblem As ServiceReference1.Problem) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateProblemAsync
+            Return MyBase.Channel.UpdateProblemAsync(objProblem)
+        End Function
+        
+        Public Function GetAllProblemCause() As ServiceReference1.Problem() Implements ServiceReference1.IAideService.GetAllProblemCause
+            Return MyBase.Channel.GetAllProblemCause
+        End Function
+        
+        Public Function GetAllProblemCauseAsync() As System.Threading.Tasks.Task(Of ServiceReference1.Problem()) Implements ServiceReference1.IAideService.GetAllProblemCauseAsync
+            Return MyBase.Channel.GetAllProblemCauseAsync
         End Function
         
         Public Function GetAllAssetsUnAssigned(ByVal empID As Integer) As ServiceReference1.Assets() Implements ServiceReference1.IAideService.GetAllAssetsUnAssigned
