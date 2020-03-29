@@ -123,13 +123,15 @@ Public Class NicknameModel
         Me.Emp_ID = rawNickname.EmpID
         Me.First_Name = rawNickname.FirstName
         Me.Nick_Name = rawNickname.NickName
-        Me.Employee_Name = rawNickname.EmployeeName
+        Me.EMPLOYEE_NAME = rawNickname.EmployeeName
+        Me._imagePath = rawNickname.ImagePath
     End Sub
 
     Private _empID As Integer
     Private _nickname As String
     Private _firstName As String
     Private _employeename As String
+    Private _imagePath As String
 
     Public Property EMP_ID As Integer
         Get
@@ -168,6 +170,19 @@ Public Class NicknameModel
         Set(value As String)
             _employeename = value
             NotifyPropertyChanged("EMPLOYEE_NAME")
+        End Set
+    End Property
+
+    Public Property Image_Path As String
+        Get
+            If _imagePath = String.Empty Then
+                Return "\..\Assets\EmployeePhotos\shadowImage.png"
+            End If
+            Return _imagePath
+        End Get
+        Set(value As String)
+            _imagePath = value
+            NotifyPropertyChanged("Image_Path")
         End Set
     End Property
 

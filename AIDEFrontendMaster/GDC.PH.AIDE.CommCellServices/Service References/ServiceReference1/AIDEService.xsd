@@ -163,6 +163,36 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DashboardTaskSummaryTotals" nillable="true" type="tns:DashboardTaskSummaryTotals" />
+  <xs:complexType name="Problem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CauseDescr" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CauseID" type="xs:int" />
+      <xs:element minOccurs="0" name="CauseWhy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmployeeID" type="xs:int" />
+      <xs:element minOccurs="0" name="EmployeeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ImplementAssignee" type="xs:int" />
+      <xs:element minOccurs="0" name="ImplementDescr" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ImplementID" type="xs:int" />
+      <xs:element minOccurs="0" name="ImplementValue" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OptionDescr" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OptionID" type="xs:int" />
+      <xs:element minOccurs="0" name="ProblemDescr" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProblemID" type="xs:int" />
+      <xs:element minOccurs="0" name="ProblemInvolve" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ResultDescr" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ResultID" type="xs:int" />
+      <xs:element minOccurs="0" name="ResultValue" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SolutionDescr" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SolutionID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Problem" nillable="true" type="tns:Problem" />
+  <xs:complexType name="ArrayOfProblem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Problem" nillable="true" type="tns:Problem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProblem" nillable="true" type="tns:ArrayOfProblem" />
   <xs:complexType name="ArrayOfResourcePlanner">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="ResourcePlanner" nillable="true" type="tns:ResourcePlanner" />
@@ -707,6 +737,7 @@
       <xs:element minOccurs="0" name="Emp_ID" type="xs:int" />
       <xs:element minOccurs="0" name="Employee_Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="First_Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Image_Path" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Nick_Name" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>

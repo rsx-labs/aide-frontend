@@ -70,7 +70,20 @@
                 </Grid>
             </Grid>
         </Button>
-        
+        <Button Name="ProblemSolvingBtn" Margin="2" Grid.Column="4" Style="{DynamicResource RoundCorner}" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="70*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Image Margin="0,10,10,10" Source="../../Assets/button/ProblemSolvingLogo.png"/>
+                </Grid>
+                <Grid Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Foreground="White" Text="Problem Solving"></TextBlock>
+                </Grid>
+            </Grid>
+        </Button>
         
     </Grid>
 
