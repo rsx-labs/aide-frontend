@@ -61,11 +61,11 @@ Class ProblemAddPage
     Private Sub CreateBtn_Click(sender As Object, e As RoutedEventArgs) Handles CreateBtn.Click
         Try
             If ProblemStatementTxt.Text = String.Empty Or lstOfEmployees.Count = 0 Then
-                MsgBox("Please fill up require fields.", vbOKOnly + vbCritical, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + vbCritical, "AIDE")
             Else
                 Dim _problem As Problem = setData()
                 client.InsertProblem(_problem)
-                MsgBox("Successfully created new problem!", vbOKOnly + vbInformation, "AIDE")
+                MsgBox("Problem has been added.", vbOKOnly + vbInformation, "AIDE")
                 ExitPage()
             End If
         Catch ex As Exception
@@ -73,6 +73,7 @@ Class ProblemAddPage
         End Try
     End Sub
 #End Region
+
 #Region "Methods"
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
