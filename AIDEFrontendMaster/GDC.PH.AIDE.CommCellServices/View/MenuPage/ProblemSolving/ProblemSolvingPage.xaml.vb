@@ -35,6 +35,10 @@ Public Class ProblemSolvingPage
         ControlsOff()
         LoadProblem()
         loadAll()
+        If Me._profile.Permission_ID = 5 Then
+            ProblemAddBtn.Visibility = Visibility.Collapsed
+            ProblemEditBtn.Visibility = Visibility.Collapsed
+        End If
     End Sub
 #End Region
 #Region "Function"
@@ -525,6 +529,16 @@ Public Class ProblemSolvingPage
             SolutionEditBtn.Visibility = Visibility.Hidden
             ImplementEditBtn.Visibility = Visibility.Hidden
         End If
+        If Me._profile.Permission_ID = 5 Then
+            CauseAddBtn.Visibility = Visibility.Hidden
+            OptionAddBtn.Visibility = Visibility.Hidden
+            CauseEditBtn.Visibility = Visibility.Hidden
+            OptionEditBtn.Visibility = Visibility.Hidden
+            SolutionAddBtn.Visibility = Visibility.Hidden
+            ImplementAddBtn.Visibility = Visibility.Hidden
+            SolutionEditBtn.Visibility = Visibility.Hidden
+            ImplementEditBtn.Visibility = Visibility.Hidden
+        End If
     End Sub
     Public Sub ControlsOff()
         CauseAddBtn.Visibility = Visibility.Hidden
@@ -555,6 +569,12 @@ Public Class ProblemSolvingPage
             SolutionEditBtn.Visibility = Visibility.Visible
             ImplementEditBtn.Visibility = Visibility.Visible
         Else
+            SolutionAddBtn.Visibility = Visibility.Hidden
+            ImplementAddBtn.Visibility = Visibility.Hidden
+            SolutionEditBtn.Visibility = Visibility.Hidden
+            ImplementEditBtn.Visibility = Visibility.Hidden
+        End If
+        If Me._profile.Permission_ID = 5 Then
             SolutionAddBtn.Visibility = Visibility.Hidden
             ImplementAddBtn.Visibility = Visibility.Hidden
             SolutionEditBtn.Visibility = Visibility.Hidden
