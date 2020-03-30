@@ -1156,30 +1156,45 @@
     </None>
     <AppDesigner Include="My Project\" />
     <None Include="packages.config" />
-    <None Include="ReportsCommands\generateassetinventoryreport.bat">
+    <Content Include="ReportsCommands\generateactionlistreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ReportsCommands\generatecontactlistreport.bat">
+    </Content>
+    <Content Include="ReportsCommands\generateassetinventoryreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ReportsCommands\generateemployeebillabilityreport.bat">
+    </Content>
+    <Content Include="ReportsCommands\generatecommendationlistreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ReportsCommands\generateoutstandingtaskreport.bat">
+    </Content>
+    <Content Include="ReportsCommands\generateconcernslistreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ReportsCommands\generateprojectbillabilityreport.bat">
+    </Content>
+    <Content Include="ReportsCommands\generatecontactlistreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ReportsCommands\generateresourceplanner.bat">
+    </Content>
+    <Content Include="ReportsCommands\generateemployeebillabilityreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ReportsCommands\generateskillsmatrix.bat">
+    </Content>
+    <Content Include="ReportsCommands\generatelessonlearntreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ReportsCommands\generatestatusreport.bat">
+    </Content>
+    <Content Include="ReportsCommands\generateoutstandingtaskreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Content Include="ReportsCommands\generateprojectbillabilityreport.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ReportsCommands\generateresourceplanner.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ReportsCommands\generateskillsmatrix.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ReportsCommands\generatestatusreport.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ReportsCommands\generatesuccessregisterreport.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Service References\ServiceReference1\AIDEService.wsdl" />
     <None Include="Service References\ServiceReference1\AIDEService.xsd">
       <SubType>Designer</SubType>
