@@ -60,12 +60,12 @@ Class ProblemImplementAddPage
     Private Sub CreateBtn_Click(sender As Object, e As RoutedEventArgs) Handles CreateBtn.Click
         Try
             If ImplementDetailTxt.Text = String.Empty Or ImplementValueTxt.Text = String.Empty Then
-                MsgBox("Please fill up require fields.", vbOKOnly + vbCritical, "AIDE")
+                MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + vbCritical, "AIDE")
             Else
                 If InitializeService() Then
                     Dim _problem As Problem = setData()
                     client.InsertProblemImplement(_problem)
-                    MsgBox("Successfully created!", vbOKOnly + vbInformation, "AIDE")
+                    MsgBox("Implement has been added.", vbOKOnly + vbInformation, "AIDE")
                     ExitPageReload()
                 End If
             End If
