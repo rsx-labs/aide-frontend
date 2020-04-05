@@ -39,6 +39,7 @@ Public Class BillabilitySickLeavePage
 
         LoadYear()
         SetFiscalYear()
+        GenerateLeaveCredits()
         LoadData()
     End Sub
 
@@ -61,7 +62,19 @@ Public Class BillabilitySickLeavePage
         lblYear.Content = "Sick Leave For Fiscal Year " + cbYear.SelectedValue
     End Sub
 
-    Public Sub SetFiscalYear()
+    Private Sub GenerateLeaveCredits()
+        If InitializeService() Then
+            Try
+                If Date.Today.Month = 4 And Date.Today.Day <= 7 Then
+                    client.InsertLeaveCredits(profile.Emp_ID, year)
+                End If
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Critical, "FAILED")
+            End Try
+        End If
+    End Sub
+
+    Private Sub SetFiscalYear()
         Try
             month = Date.Now.Month
 

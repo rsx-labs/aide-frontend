@@ -3771,7 +3771,13 @@ Namespace ServiceReference1
         Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private AUDITSCHED_MONTHField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private AUDIT_DAILY_IDField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private AUDIT_IDField As Integer
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private AUDIT_QUESTIONSField As String
@@ -3783,7 +3789,13 @@ Namespace ServiceReference1
         Private AUDIT_QUESTIONS_IDField As Integer
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private DT_CHECKEDField As Date
+        Private DATE_CHECKEDField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private DT_CHECKEDField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private DT_CHECK_FLGField As Integer
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private EMP_IDField As Integer
@@ -3792,10 +3804,22 @@ Namespace ServiceReference1
         Private FY_WEEKField As Integer
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private NICKNAMEField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private OWNERField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private STATUSField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private WEEKDATEField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private WEEKDATESCHEDField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private WEEKDAYSField As String
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
@@ -3808,6 +3832,19 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property AUDITSCHED_MONTH() As String
+            Get
+                Return Me.AUDITSCHED_MONTHField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.AUDITSCHED_MONTHField, value) <> true) Then
+                    Me.AUDITSCHED_MONTHField = value
+                    Me.RaisePropertyChanged("AUDITSCHED_MONTH")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
         Public Property AUDIT_DAILY_ID() As Integer
             Get
                 Return Me.AUDIT_DAILY_IDField
@@ -3816,6 +3853,19 @@ Namespace ServiceReference1
                 If (Me.AUDIT_DAILY_IDField.Equals(value) <> true) Then
                     Me.AUDIT_DAILY_IDField = value
                     Me.RaisePropertyChanged("AUDIT_DAILY_ID")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property AUDIT_ID() As Integer
+            Get
+                Return Me.AUDIT_IDField
+            End Get
+            Set
+                If (Me.AUDIT_IDField.Equals(value) <> true) Then
+                    Me.AUDIT_IDField = value
+                    Me.RaisePropertyChanged("AUDIT_ID")
                 End If
             End Set
         End Property
@@ -3860,14 +3910,40 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property DT_CHECKED() As Date
+        Public Property DATE_CHECKED() As String
+            Get
+                Return Me.DATE_CHECKEDField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.DATE_CHECKEDField, value) <> true) Then
+                    Me.DATE_CHECKEDField = value
+                    Me.RaisePropertyChanged("DATE_CHECKED")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property DT_CHECKED() As String
             Get
                 Return Me.DT_CHECKEDField
             End Get
             Set
-                If (Me.DT_CHECKEDField.Equals(value) <> true) Then
+                If (Object.ReferenceEquals(Me.DT_CHECKEDField, value) <> true) Then
                     Me.DT_CHECKEDField = value
                     Me.RaisePropertyChanged("DT_CHECKED")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property DT_CHECK_FLG() As Integer
+            Get
+                Return Me.DT_CHECK_FLGField
+            End Get
+            Set
+                If (Me.DT_CHECK_FLGField.Equals(value) <> true) Then
+                    Me.DT_CHECK_FLGField = value
+                    Me.RaisePropertyChanged("DT_CHECK_FLG")
                 End If
             End Set
         End Property
@@ -3899,6 +3975,19 @@ Namespace ServiceReference1
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property NICKNAME() As String
+            Get
+                Return Me.NICKNAMEField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.NICKNAMEField, value) <> true) Then
+                    Me.NICKNAMEField = value
+                    Me.RaisePropertyChanged("NICKNAME")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
         Public Property OWNER() As String
             Get
                 Return Me.OWNERField
@@ -3920,6 +4009,45 @@ Namespace ServiceReference1
                 If (Me.STATUSField.Equals(value) <> true) Then
                     Me.STATUSField = value
                     Me.RaisePropertyChanged("STATUS")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property WEEKDATE() As String
+            Get
+                Return Me.WEEKDATEField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.WEEKDATEField, value) <> true) Then
+                    Me.WEEKDATEField = value
+                    Me.RaisePropertyChanged("WEEKDATE")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property WEEKDATESCHED() As String
+            Get
+                Return Me.WEEKDATESCHEDField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.WEEKDATESCHEDField, value) <> true) Then
+                    Me.WEEKDATESCHEDField = value
+                    Me.RaisePropertyChanged("WEEKDATESCHED")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property WEEKDAYS() As String
+            Get
+                Return Me.WEEKDAYSField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.WEEKDAYSField, value) <> true) Then
+                    Me.WEEKDAYSField = value
+                    Me.RaisePropertyChanged("WEEKDAYS")
                 End If
             End Set
         End Property
@@ -9422,11 +9550,109 @@ Namespace ServiceReference1
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeeklyTeamStatusReport", ReplyAction:="http://tempuri.org/IAideService/GetWeeklyTeamStatusReportResponse")>  _
         Function GetWeeklyTeamStatusReportAsync(ByVal empID As Integer, ByVal month As Integer, ByVal year As Integer, ByVal weekID As Integer, ByVal entryType As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WeeklyTeamStatusReport())
         
-        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertAuditSched")>  _
-        Sub InsertAuditSched(ByVal auditSched As ServiceReference1.AuditSched)
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/InsertAuditSched", ReplyAction:="http://tempuri.org/IAideService/InsertAuditSchedResponse"),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardEmployee())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardEmployee)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardContact())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardContact)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardNonBillableHoursSummary())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardNonBillableHoursSummary)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTeamAttendance())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTeamAttendance)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AttendanceSummary())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AttendanceSummary)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.TaskSummary())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.TaskSummary)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SabaLearning)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SabaLearning())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Comcell)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Comcell())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ComcellClock)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeeklyReport())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeeklyReport)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeekRange)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeekRange())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ContactList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ContactList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeeklyTeamStatusReport())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeeklyTeamStatusReport)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AuditSched)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AuditSched())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SendCode)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MailConfig)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WorkplaceAudit)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WorkplaceAudit())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Contributors())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Contributors)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MessageDetail())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MessageDetail)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PermissionList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PermissionList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DepartmentList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DepartmentList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DivisionList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DivisionList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.StatusList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.StatusList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.FiscalYear())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.FiscalYear)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPITargets)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPITargets())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPISummary)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPISummary())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Assets())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Assets)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LessonLearnt())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LessonLearnt)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Nickname())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Nickname)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Profile)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.BirthdayList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.BirthdayList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Concern())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Concern)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Skills())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Skills)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ResourcePlanner)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ResourcePlanner())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Announcements)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Announcements())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Late())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Late)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MyAttendance)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MyAttendance())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.BillableHours())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.BillableHours)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Contact)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Contact())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Employee())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Employee)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Project())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Project)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AssignedProject)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AssignedProject())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ViewProject())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ViewProject)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.StatusGroup())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.StatusGroup)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Tasks)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Tasks())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Commendations)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Commendations()))>  _
+        Function InsertAuditSched(ByVal auditSched As ServiceReference1.AuditSched) As Object
         
-        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertAuditSched")>  _
-        Function InsertAuditSchedAsync(ByVal auditSched As ServiceReference1.AuditSched) As System.Threading.Tasks.Task
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/InsertAuditSched", ReplyAction:="http://tempuri.org/IAideService/InsertAuditSchedResponse")>  _
+        Function InsertAuditSchedAsync(ByVal auditSched As ServiceReference1.AuditSched) As System.Threading.Tasks.Task(Of Object)
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAuditSched", ReplyAction:="http://tempuri.org/IAideService/GetAuditSchedResponse")>  _
         Function GetAuditSched(ByVal empID As Integer, ByVal year As Integer) As ServiceReference1.AuditSched()
@@ -9434,11 +9660,109 @@ Namespace ServiceReference1
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAuditSched", ReplyAction:="http://tempuri.org/IAideService/GetAuditSchedResponse")>  _
         Function GetAuditSchedAsync(ByVal empID As Integer, ByVal year As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.AuditSched())
         
-        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateAuditSched")>  _
-        Sub UpdateAuditSched(ByVal auditSched As ServiceReference1.AuditSched)
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/UpdateAuditSched", ReplyAction:="http://tempuri.org/IAideService/UpdateAuditSchedResponse"),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardEmployee())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardEmployee)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardContact())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardContact)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardNonBillableHoursSummary())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardNonBillableHoursSummary)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTeamAttendance())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTeamAttendance)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AttendanceSummary())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AttendanceSummary)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.TaskSummary())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.TaskSummary)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DashboardTaskSummaryTotals)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SabaLearning)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SabaLearning())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Comcell)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Comcell())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ComcellClock)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeeklyReport())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeeklyReport)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeekRange)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeekRange())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ContactList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ContactList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeeklyTeamStatusReport())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WeeklyTeamStatusReport)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AuditSched)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AuditSched())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SendCode)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MailConfig)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WorkplaceAudit)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.WorkplaceAudit())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Contributors())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Contributors)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MessageDetail())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MessageDetail)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LocationList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PositionList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PermissionList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.PermissionList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DepartmentList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DepartmentList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DivisionList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.DivisionList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.StatusList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.StatusList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.FiscalYear())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.FiscalYear)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPITargets)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPITargets())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPISummary)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.KPISummary())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Assets())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Assets)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LessonLearnt())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.LessonLearnt)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.SuccessRegister())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Nickname())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Nickname)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Profile)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.BirthdayList())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.BirthdayList)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Concern())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Concern)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Skills())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Skills)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ResourcePlanner)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ResourcePlanner())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Announcements)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Announcements())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Late())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Late)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Action())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MyAttendance)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.MyAttendance())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.BillableHours())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.BillableHours)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Contact)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Contact())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Employee())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Employee)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Project())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Project)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AssignedProject)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.AssignedProject())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ViewProject())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.ViewProject)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.StatusGroup())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.StatusGroup)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Tasks)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Tasks())),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Commendations)),  _
+         System.ServiceModel.ServiceKnownTypeAttribute(GetType(ServiceReference1.Commendations()))>  _
+        Function UpdateAuditSched(ByVal auditSched As ServiceReference1.AuditSched) As Object
         
-        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/UpdateAuditSched")>  _
-        Function UpdateAuditSchedAsync(ByVal auditSched As ServiceReference1.AuditSched) As System.Threading.Tasks.Task
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/UpdateAuditSched", ReplyAction:="http://tempuri.org/IAideService/UpdateAuditSchedResponse")>  _
+        Function UpdateAuditSchedAsync(ByVal auditSched As ServiceReference1.AuditSched) As System.Threading.Tasks.Task(Of Object)
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWorkEmailbyEmail", ReplyAction:="http://tempuri.org/IAideService/GetWorkEmailbyEmailResponse")>  _
         Function GetWorkEmailbyEmail(ByVal email As String) As ServiceReference1.SendCode
@@ -9452,10 +9776,10 @@ Namespace ServiceReference1
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetMailConfig", ReplyAction:="http://tempuri.org/IAideService/GetMailConfigResponse")>  _
         Function GetMailConfigAsync() As System.Threading.Tasks.Task(Of ServiceReference1.MailConfig)
         
-        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertAuditDaily")>  _
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/InsertAuditDaily", ReplyAction:="http://tempuri.org/IAideService/InsertAuditDailyResponse")>  _
         Sub InsertAuditDaily(ByVal auditSched As ServiceReference1.WorkplaceAudit)
         
-        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertAuditDaily")>  _
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/InsertAuditDaily", ReplyAction:="http://tempuri.org/IAideService/InsertAuditDailyResponse")>  _
         Function InsertAuditDailyAsync(ByVal auditSched As ServiceReference1.WorkplaceAudit) As System.Threading.Tasks.Task
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAuditDaily", ReplyAction:="http://tempuri.org/IAideService/GetAuditDailyResponse")>  _
@@ -9469,6 +9793,42 @@ Namespace ServiceReference1
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAuditQuestions", ReplyAction:="http://tempuri.org/IAideService/GetAuditQuestionsResponse")>  _
         Function GetAuditQuestionsAsync(ByVal empID As Integer, ByVal questionGroup As String) As System.Threading.Tasks.Task(Of ServiceReference1.WorkplaceAudit())
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAuditSChed_Month", ReplyAction:="http://tempuri.org/IAideService/GetAuditSChed_MonthResponse")>  _
+        Function GetAuditSChed_Month(ByVal audit_grp As Integer, ByVal yr As Integer, ByVal month As Integer) As ServiceReference1.WorkplaceAudit()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAuditSChed_Month", ReplyAction:="http://tempuri.org/IAideService/GetAuditSChed_MonthResponse")>  _
+        Function GetAuditSChed_MonthAsync(ByVal audit_grp As Integer, ByVal yr As Integer, ByVal month As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WorkplaceAudit())
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetDailyAuditorByWeek", ReplyAction:="http://tempuri.org/IAideService/GetDailyAuditorByWeekResponse")>  _
+        Function GetDailyAuditorByWeek(ByVal empID As Integer, ByVal paramFYWeek As String, ByVal paramData As Date) As ServiceReference1.WorkplaceAudit()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetDailyAuditorByWeek", ReplyAction:="http://tempuri.org/IAideService/GetDailyAuditorByWeekResponse")>  _
+        Function GetDailyAuditorByWeekAsync(ByVal empID As Integer, ByVal paramFYWeek As String, ByVal paramData As Date) As System.Threading.Tasks.Task(Of ServiceReference1.WorkplaceAudit())
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeeklyAuditor", ReplyAction:="http://tempuri.org/IAideService/GetWeeklyAuditorResponse")>  _
+        Function GetWeeklyAuditor(ByVal empID As Integer, ByVal paraDate As Date) As ServiceReference1.WorkplaceAudit()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetWeeklyAuditor", ReplyAction:="http://tempuri.org/IAideService/GetWeeklyAuditorResponse")>  _
+        Function GetWeeklyAuditorAsync(ByVal empID As Integer, ByVal paraDate As Date) As System.Threading.Tasks.Task(Of ServiceReference1.WorkplaceAudit())
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetMonthlyAuditor", ReplyAction:="http://tempuri.org/IAideService/GetMonthlyAuditorResponse")>  _
+        Function GetMonthlyAuditor(ByVal empID As Integer, ByVal paraDate As Integer) As ServiceReference1.WorkplaceAudit()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetMonthlyAuditor", ReplyAction:="http://tempuri.org/IAideService/GetMonthlyAuditorResponse")>  _
+        Function GetMonthlyAuditorAsync(ByVal empID As Integer, ByVal paraDate As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WorkplaceAudit())
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetQuarterlyAuditor", ReplyAction:="http://tempuri.org/IAideService/GetQuarterlyAuditorResponse")>  _
+        Function GetQuarterlyAuditor(ByVal empID As Integer, ByVal paraDate As Integer) As ServiceReference1.WorkplaceAudit()
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetQuarterlyAuditor", ReplyAction:="http://tempuri.org/IAideService/GetQuarterlyAuditorResponse")>  _
+        Function GetQuarterlyAuditorAsync(ByVal empID As Integer, ByVal paraDate As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WorkplaceAudit())
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/UpdateCheckAuditQuestionStatus", ReplyAction:="http://tempuri.org/IAideService/UpdateCheckAuditQuestionStatusResponse")>  _
+        Function UpdateCheckAuditQuestionStatus(ByVal auditSched As ServiceReference1.WorkplaceAudit) As Boolean
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/UpdateCheckAuditQuestionStatus", ReplyAction:="http://tempuri.org/IAideService/UpdateCheckAuditQuestionStatusResponse")>  _
+        Function UpdateCheckAuditQuestionStatusAsync(ByVal auditSched As ServiceReference1.WorkplaceAudit) As System.Threading.Tasks.Task(Of Boolean)
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllContributors", ReplyAction:="http://tempuri.org/IAideService/GetAllContributorsResponse")>  _
         Function GetAllContributors(ByVal level As Integer) As ServiceReference1.Contributors()
@@ -9571,6 +9931,12 @@ Namespace ServiceReference1
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetKPISummaryListMonthly", ReplyAction:="http://tempuri.org/IAideService/GetKPISummaryListMonthlyResponse")>  _
         Function GetKPISummaryListMonthlyAsync(ByVal EmpId As Integer, ByVal FY_Start As Date, ByVal FY_End As Date, ByVal Month As Short, ByVal KPIRef As String) As System.Threading.Tasks.Task(Of ServiceReference1.KPISummary())
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertLeaveCredits")>  _
+        Sub InsertLeaveCredits(ByVal empID As Integer, ByVal year As Integer)
+        
+        <System.ServiceModel.OperationContractAttribute(IsOneWay:=true, Action:="http://tempuri.org/IAideService/InsertLeaveCredits")>  _
+        Function InsertLeaveCreditsAsync(ByVal empID As Integer, ByVal year As Integer) As System.Threading.Tasks.Task
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IAideService/GetAllAssetsHistory", ReplyAction:="http://tempuri.org/IAideService/GetAllAssetsHistoryResponse")>  _
         Function GetAllAssetsHistory(ByVal empID As Integer) As ServiceReference1.Assets()
@@ -10625,11 +10991,11 @@ Namespace ServiceReference1
             Return MyBase.Channel.GetWeeklyTeamStatusReportAsync(empID, month, year, weekID, entryType)
         End Function
         
-        Public Sub InsertAuditSched(ByVal auditSched As ServiceReference1.AuditSched) Implements ServiceReference1.IAideService.InsertAuditSched
-            MyBase.Channel.InsertAuditSched(auditSched)
-        End Sub
+        Public Function InsertAuditSched(ByVal auditSched As ServiceReference1.AuditSched) As Object Implements ServiceReference1.IAideService.InsertAuditSched
+            Return MyBase.Channel.InsertAuditSched(auditSched)
+        End Function
         
-        Public Function InsertAuditSchedAsync(ByVal auditSched As ServiceReference1.AuditSched) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.InsertAuditSchedAsync
+        Public Function InsertAuditSchedAsync(ByVal auditSched As ServiceReference1.AuditSched) As System.Threading.Tasks.Task(Of Object) Implements ServiceReference1.IAideService.InsertAuditSchedAsync
             Return MyBase.Channel.InsertAuditSchedAsync(auditSched)
         End Function
         
@@ -10641,11 +11007,11 @@ Namespace ServiceReference1
             Return MyBase.Channel.GetAuditSchedAsync(empID, year)
         End Function
         
-        Public Sub UpdateAuditSched(ByVal auditSched As ServiceReference1.AuditSched) Implements ServiceReference1.IAideService.UpdateAuditSched
-            MyBase.Channel.UpdateAuditSched(auditSched)
-        End Sub
+        Public Function UpdateAuditSched(ByVal auditSched As ServiceReference1.AuditSched) As Object Implements ServiceReference1.IAideService.UpdateAuditSched
+            Return MyBase.Channel.UpdateAuditSched(auditSched)
+        End Function
         
-        Public Function UpdateAuditSchedAsync(ByVal auditSched As ServiceReference1.AuditSched) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.UpdateAuditSchedAsync
+        Public Function UpdateAuditSchedAsync(ByVal auditSched As ServiceReference1.AuditSched) As System.Threading.Tasks.Task(Of Object) Implements ServiceReference1.IAideService.UpdateAuditSchedAsync
             Return MyBase.Channel.UpdateAuditSchedAsync(auditSched)
         End Function
         
@@ -10687,6 +11053,54 @@ Namespace ServiceReference1
         
         Public Function GetAuditQuestionsAsync(ByVal empID As Integer, ByVal questionGroup As String) As System.Threading.Tasks.Task(Of ServiceReference1.WorkplaceAudit()) Implements ServiceReference1.IAideService.GetAuditQuestionsAsync
             Return MyBase.Channel.GetAuditQuestionsAsync(empID, questionGroup)
+        End Function
+        
+        Public Function GetAuditSChed_Month(ByVal audit_grp As Integer, ByVal yr As Integer, ByVal month As Integer) As ServiceReference1.WorkplaceAudit() Implements ServiceReference1.IAideService.GetAuditSChed_Month
+            Return MyBase.Channel.GetAuditSChed_Month(audit_grp, yr, month)
+        End Function
+        
+        Public Function GetAuditSChed_MonthAsync(ByVal audit_grp As Integer, ByVal yr As Integer, ByVal month As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WorkplaceAudit()) Implements ServiceReference1.IAideService.GetAuditSChed_MonthAsync
+            Return MyBase.Channel.GetAuditSChed_MonthAsync(audit_grp, yr, month)
+        End Function
+        
+        Public Function GetDailyAuditorByWeek(ByVal empID As Integer, ByVal paramFYWeek As String, ByVal paramData As Date) As ServiceReference1.WorkplaceAudit() Implements ServiceReference1.IAideService.GetDailyAuditorByWeek
+            Return MyBase.Channel.GetDailyAuditorByWeek(empID, paramFYWeek, paramData)
+        End Function
+        
+        Public Function GetDailyAuditorByWeekAsync(ByVal empID As Integer, ByVal paramFYWeek As String, ByVal paramData As Date) As System.Threading.Tasks.Task(Of ServiceReference1.WorkplaceAudit()) Implements ServiceReference1.IAideService.GetDailyAuditorByWeekAsync
+            Return MyBase.Channel.GetDailyAuditorByWeekAsync(empID, paramFYWeek, paramData)
+        End Function
+        
+        Public Function GetWeeklyAuditor(ByVal empID As Integer, ByVal paraDate As Date) As ServiceReference1.WorkplaceAudit() Implements ServiceReference1.IAideService.GetWeeklyAuditor
+            Return MyBase.Channel.GetWeeklyAuditor(empID, paraDate)
+        End Function
+        
+        Public Function GetWeeklyAuditorAsync(ByVal empID As Integer, ByVal paraDate As Date) As System.Threading.Tasks.Task(Of ServiceReference1.WorkplaceAudit()) Implements ServiceReference1.IAideService.GetWeeklyAuditorAsync
+            Return MyBase.Channel.GetWeeklyAuditorAsync(empID, paraDate)
+        End Function
+        
+        Public Function GetMonthlyAuditor(ByVal empID As Integer, ByVal paraDate As Integer) As ServiceReference1.WorkplaceAudit() Implements ServiceReference1.IAideService.GetMonthlyAuditor
+            Return MyBase.Channel.GetMonthlyAuditor(empID, paraDate)
+        End Function
+        
+        Public Function GetMonthlyAuditorAsync(ByVal empID As Integer, ByVal paraDate As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WorkplaceAudit()) Implements ServiceReference1.IAideService.GetMonthlyAuditorAsync
+            Return MyBase.Channel.GetMonthlyAuditorAsync(empID, paraDate)
+        End Function
+        
+        Public Function GetQuarterlyAuditor(ByVal empID As Integer, ByVal paraDate As Integer) As ServiceReference1.WorkplaceAudit() Implements ServiceReference1.IAideService.GetQuarterlyAuditor
+            Return MyBase.Channel.GetQuarterlyAuditor(empID, paraDate)
+        End Function
+        
+        Public Function GetQuarterlyAuditorAsync(ByVal empID As Integer, ByVal paraDate As Integer) As System.Threading.Tasks.Task(Of ServiceReference1.WorkplaceAudit()) Implements ServiceReference1.IAideService.GetQuarterlyAuditorAsync
+            Return MyBase.Channel.GetQuarterlyAuditorAsync(empID, paraDate)
+        End Function
+        
+        Public Function UpdateCheckAuditQuestionStatus(ByVal auditSched As ServiceReference1.WorkplaceAudit) As Boolean Implements ServiceReference1.IAideService.UpdateCheckAuditQuestionStatus
+            Return MyBase.Channel.UpdateCheckAuditQuestionStatus(auditSched)
+        End Function
+        
+        Public Function UpdateCheckAuditQuestionStatusAsync(ByVal auditSched As ServiceReference1.WorkplaceAudit) As System.Threading.Tasks.Task(Of Boolean) Implements ServiceReference1.IAideService.UpdateCheckAuditQuestionStatusAsync
+            Return MyBase.Channel.UpdateCheckAuditQuestionStatusAsync(auditSched)
         End Function
         
         Public Function GetAllContributors(ByVal level As Integer) As ServiceReference1.Contributors() Implements ServiceReference1.IAideService.GetAllContributors
@@ -10823,6 +11237,14 @@ Namespace ServiceReference1
         
         Public Function GetKPISummaryListMonthlyAsync(ByVal EmpId As Integer, ByVal FY_Start As Date, ByVal FY_End As Date, ByVal Month As Short, ByVal KPIRef As String) As System.Threading.Tasks.Task(Of ServiceReference1.KPISummary()) Implements ServiceReference1.IAideService.GetKPISummaryListMonthlyAsync
             Return MyBase.Channel.GetKPISummaryListMonthlyAsync(EmpId, FY_Start, FY_End, Month, KPIRef)
+        End Function
+        
+        Public Sub InsertLeaveCredits(ByVal empID As Integer, ByVal year As Integer) Implements ServiceReference1.IAideService.InsertLeaveCredits
+            MyBase.Channel.InsertLeaveCredits(empID, year)
+        End Sub
+        
+        Public Function InsertLeaveCreditsAsync(ByVal empID As Integer, ByVal year As Integer) As System.Threading.Tasks.Task Implements ServiceReference1.IAideService.InsertLeaveCreditsAsync
+            Return MyBase.Channel.InsertLeaveCreditsAsync(empID, year)
         End Function
         
         Public Function GetAllAssetsHistory(ByVal empID As Integer) As ServiceReference1.Assets() Implements ServiceReference1.IAideService.GetAllAssetsHistory
