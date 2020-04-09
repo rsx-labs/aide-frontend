@@ -367,7 +367,7 @@ Class WeeklyEmployeeStatusReportPage
     End Function
 
     Private Sub ExitPage()
-        frame.Navigate(New WeeklyTeamStatusReportPage(frame, profile, addframe, menugrid, submenuframe, weekRangeID))
+        frame.Navigate(New WeeklyTeamStatusReportPage(frame, profile, addframe, menugrid, submenuframe, weekRangeID, 1, 1))
         frame.IsEnabled = True
         frame.Opacity = 1
         menugrid.IsEnabled = True

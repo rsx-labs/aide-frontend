@@ -112,8 +112,8 @@ Public Class KPISummaryPage
     Private Sub LoadData()
         LoadKPISummary()
         LoadKPISummaryTable()
-        lblKPISummary.Content = "Monthly KPI Summary for FY " + _year.ToString
-        lblKPISummaryChart.Content = "Monthly KPI Summary for FY " + _year.ToString
+        lblKPISummary.Content = "Monthly KPI Summary for FY " + _year.ToString + "-" + (_year + 1).ToString
+        lblKPISummaryChart.Content = "Monthly KPI Summary for FY " + _year.ToString + "-" + (_year + 1).ToString
     End Sub
 
     Private Sub LoadKPISummary()
