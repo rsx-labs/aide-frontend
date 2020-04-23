@@ -41,4 +41,4 @@ steps:
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Pipeline.Workspace)'
-    artifact: 'aide-frontend-drop'
+    artifact: 'every-checkin-drop'
