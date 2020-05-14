@@ -1602,7 +1602,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="favicon.ico" />
+    <Resource Include="favicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Button\export.png" />
@@ -1798,4 +1800,12 @@
     <Resource Include="Assets\Button\ProblemViewLogo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy $(ProjectDir)favicon.ico $(ProjectDir)$(OutDir) /q /y
+cd $(SolutionDir)
+cd ..
+xcopy readme.md $(ProjectDir)$(OutDir) /q /y
+xcopy license $(ProjectDir)$(OutDir) /q /y
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>

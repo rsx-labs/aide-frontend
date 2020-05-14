@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?define GDC.PH.AIDE.CommCellServices_TargetDir=$(var.GDC.PH.AIDE.CommCellServices.TargetDir)?>
+	<Product Id="*" 
+           Name="AIDE Communication Cell" 
+           Language="1033" 
+           Version="!(bind.FileVersion.UI_AIDE_CommCellServices.exe)"
+           Manufacturer="RS Experimental Labs" 
+           UpgradeCode="8443d18b-6a7a-4c6c-bee8-cc831e1e5008">
+		
+    <Package InstallerVersion="200" 
+             Compressed="yes" 
+             InstallScope="perMachine" />
+
+    <Property Id="MsiLogging" Value="v" />
+
+    <MediaTemplate EmbedCab="yes" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed."
+                  AllowSameVersionUpgrades="yes" />
+    
+		<Feature Id="ProductFeature" Title="AIDE Comcell Setup" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="ScriptComponents" />
+      <ComponentGroupRef Id="DocumentComponents"/>
+      <ComponentGroupRef Id="RegistryComponents"/>
+      <ComponentGroupRef Id="StartMenuComponent"/>
+      <ComponentGroupRef Id="DesktopShortcutComponent"/>
+		</Feature>
+    
+    <!--Application logo-->
+    <Icon Id="Icon" 
+          SourceFile="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)favicon.ico" />
+    <!--Application logo for Control Panel-->
+    <Property Id="ARPPRODUCTICON" Value="Icon" />
+    <!--Custom UI for installer-->
+    <Property Id="WIXUI_INSTALLDIR" Value="AIDE_FOLDER" />
+    <UIRef Id="WixUI_InstallDir" />
+    <!--EndUser License aggrement-->
+    <WixVariable Id="WixUILicenseRtf" Overridable="yes" Value="Resources\license.rtf" />
+    <!--Top Banner UI Logo-->
+    <WixVariable Id="WixUIBannerBmp" Overridable="yes" Value="Resources\TopBanner.jpg" />
+    <!--Verticle Banner UI Logo-->
+    <WixVariable Id="WixUIDialogBmp" Overridable="yes" Value="Resources\BackgroundLogo.jpg" />
+	</Product>
+
+  <!--Directory Structure -->
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+        <Directory Id="RSXLABS_FOLDER" Name="RS Experimental Labs">
+          <Directory Id="AIDE_FOLDER" Name="AIDE CommCell">
+            <Directory Id="INSTALL_FOLDER" Name="bin">
+              <Directory Id="SCRIPT_FOLDER" Name="reportscommands"/>
+            </Directory>
+          </Directory>
+        </Directory>
+			</Directory>
+      <!--For the start menu shortcut-->
+      <Directory Id="ProgramMenuFolder" >
+        <Directory Id="AIDE_PROGRAMFOLDER" Name="AIDE CommCell"/>
+      </Directory>
+      <!--For the desktop folder shortcut-->
+      <Directory Id="DesktopFolder" Name="Desktop"/>
+    </Directory>
+  </Fragment>
+  <!-- Doc Files-->
+  <Fragment>
+    <ComponentGroup Id="DocumentComponents" Directory="AIDE_FOLDER">
+      <Component Id="Readme.md" Guid="300345C2-8DD6-4113-AABE-CA1EBC652D56">
+        <File Id="Readme.md" Name="Readme.md" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)Readme.md" />
+      </Component>
+      <Component Id="license" Guid="11C167CC-7F63-44E2-8533-4AB64253465A">
+        <File Id="license" Name="license" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)license" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+	<!-- Install Files-->
+  <Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALL_FOLDER">
+			<Component Id="UI_AIDE_CommCellServices.exe" Guid="e9a6f77a-911f-4cdb-aef1-b95f01ffc212">
+			  <File Id="UI_AIDE_CommCellServices.exe" Name="UI_AIDE_CommCellServices.exe" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)UI_AIDE_CommCellServices.exe" />
+			</Component>
+			<Component Id="UI_AIDE_CommCellServices.exe.config" Guid="3681c6fb-41fb-446b-a004-25d7f2eeb452">
+			  <File Id="UI_AIDE_CommCellServices.exe.config" Name="UI_AIDE_CommCellServices.exe.config" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)UI_AIDE_CommCellServices.exe.config" />
+			</Component>    
+      <Component Id="LiveCharts.dll" Guid="98D027A1-59A9-4639-8148-B8F4799CCF55">
+        <File Id="LiveCharts.dll" Name="LiveCharts.dll" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)LiveCharts.dll" />
+      </Component>
+      <Component Id="LiveCharts.Wpf.dll" Guid="A3420A3D-550E-442D-BE83-3CB23FB8B35B">
+        <File Id="LiveCharts.Wpf.dll" Name="LiveCharts.Wpf.dll" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)LiveCharts.Wpf.dll" />
+      </Component>
+      <Component Id="stdole.dll" Guid="CD58A613-663B-4828-9507-A09E4DA4708D">
+        <File Id="stdole.dll" Name="stdole.dll" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)stdole.dll" />
+      </Component>
+      <Component Id="System.Net.Http.dll" Guid="90774863-DBC2-4225-A6C1-98612CB7DA18">
+        <File Id="System.Net.Http.dll" Name="System.Net.Http.dll" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)System.Net.Http.dll" />
+      </Component>
+      <Component Id="System.Windows.Controls.Input.Toolkit.dll" Guid="25C77016-9AE5-4DDD-831E-CB92E69CD3D8">
+        <File Id="System.Windows.Controls.Input.Toolkit.dll" Name="System.Windows.Controls.Input.Toolkit.dll" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)System.Windows.Controls.Input.Toolkit.dll" />
+      </Component>
+      <Component Id="System.Windows.Controls.Layout.Toolkit.dll" Guid="D8850848-AC0C-4801-AA67-A676B1569B8F">
+        <File Id="System.Windows.Controls.Layout.Toolkit.dll" Name="System.Windows.Controls.Layout.Toolkit.dll" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)System.Windows.Controls.Layout.Toolkit.dll" />
+      </Component>
+      <Component Id="WpfAnimatedGif.dll" Guid="F23F513F-423D-4668-B89B-E72640B93C30">
+        <File Id="WpfAnimatedGif.dll" Name="WpfAnimatedGif.dll" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)WpfAnimatedGif.dll" />
+      </Component>
+      <Component Id="WPFToolkit.dll" Guid="7A9F435E-1416-4E52-8EB8-F4FA6E4762FA">
+        <File Id="WPFToolkit.dll" Name="WPFToolkit.dll" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)WPFToolkit.dll" />
+      </Component>
+      <Component Id="favicon.ico" Guid="87BB1B2C-0519-4EB6-9DE3-A8B2C64D33E4">
+        <File Id="favicon.ico" Name="favicon.ico" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)favicon.ico" />
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+  <!--Script Files-->
+  <Fragment>
+    <ComponentGroup Id="ScriptComponents" Directory="SCRIPT_FOLDER">
+      <Component Id="generateactionlistreport" Guid="62B78B63-B193-4951-BFEA-958D849B1220">
+        <File Id="generateactionlistreport.bat" 
+              Name="generateactionlistreport.bat" 
+              Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)reportscommands\generateactionlistreport.bat" />
+      </Component>
+      <Component Id="generateassetinventoryreport" Guid="40DD2D81-6572-40C6-8894-4AD95B2A5D7E">
+        <File Id="generateassetinventoryreport.bat" 
+              Name="generateassetinventoryreport.bat" 
+              Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)reportscommands\generateassetinventoryreport.bat" />
+      </Component>
+      <Component Id="generatecommendationlistreport.bat" Guid="A4345870-253E-4AD0-9B75-8439C8FCD716">
+        <File Id="generatecommendationlistreport.bat" 
+              Name="generatecommendationlistreport.bat" 
+              Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)reportscommands\generatecommendationlistreport.bat" />
+      </Component>
+      <Component Id="generateconcernslistreport" Guid="FDFEFB44-B2BC-4BC0-807D-52327B804B80">
+        <File Id="generateconcernslistreport.bat" 
+              Name="generateconcernslistreport.bat" 
+              Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)reportscommands\generateconcernslistreport.bat" />
+      </Component>
+      <Component Id="generatecontactlistreport" Guid="51CFB963-9C2E-4954-8374-AA8F707B3A73">
+        <File Id="generatecontactlistreport.bat" 
+              Name="generatecontactlistreport.bat" 
+              Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)reportscommands\generatecontactlistreport.bat" />
+      </Component>
+      <Component Id="generateemployeebillabilityreport" Guid="3FAFD57E-8A80-4F0A-BF70-A85182F929EE">
+        <File Id="generateemployeebillabilityreport.bat" 
+              Name="generateemployeebillabilityreport.bat" 
+              Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)reportscommands\generateemployeebillabilityreport.bat" />
+      </Component>
+      <Component Id="generatelessonlearntreport" Guid="70B95278-F6A7-4FD6-A625-19CFB1077610">
+        <File Id="generatelessonlearntreport.bat" 
+              Name="generatelessonlearntreport.bat" 
+              Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)reportscommands\generatelessonlearntreport.bat" />
+      </Component>
+      <Component Id="generateoutstandingtaskreport" Guid="990ABAA0-CEC5-48BB-8874-5DF8ECFB1355">
+        <File Id="generateoutstandingtaskreport.bat" 
+              Name="generateoutstandingtaskreport.bat" 
+              Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)reportscommands\generateoutstandingtaskreport.bat" />
+      </Component>
+      <Component Id="generateprojectbillabilityreport" Guid="2555BE2D-5FB8-45C4-B039-035B83673D13">
+        <File Id="generateprojectbillabilityreport.bat" 
+              Name="generateprojectbillabilityreport.bat" 
+              Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)reportscommands\generateprojectbillabilityreport.bat" />
+      </Component>
+      <Component Id="generateresourceplanner" Guid="8AF01FF5-8E67-458C-A2F1-F6A67BC0D55D">
+        <File Id="generateresourceplanner.bat" 
+              Name="generateresourceplanner.bat" 
+              Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)reportscommands\generateresourceplanner.bat" />
+      </Component>
+      <Component Id="generateskillsmatrix" Guid="2738B171-AE53-4901-9934-018407317F1B">
+        <File Id="generateskillsmatrix.bat" 
+              Name="generateskillsmatrix.bat" 
+              Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)reportscommands\generateskillsmatrix.bat" />
+      </Component>
+      <Component Id="generateactionlistreport.bat" Guid="2268234F-2A26-405D-97BB-C9176263724F">
+        <File Id="generatestatusreport" 
+              Name="generatestatusreport.bat" 
+              Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)reportscommands\generatestatusreport.bat" />
+      </Component>
+      <Component Id="generatesuccessregisterreport" Guid="310C206C-91F2-4942-A613-C963EF5C9B9A">
+        <File Id="generatesuccessregisterreport.bat" 
+              Name="generatesuccessregisterreport.bat" 
+              Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)reportscommands\generatesuccessregisterreport.bat" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <!--Desktop Shortcut-->
+  <Fragment>
+    <ComponentGroup Id="DesktopShortcutComponent" Directory="DesktopFolder">
+      <Component Id="DesktopShortcut" Guid="36CD9998-CA65-4B80-A779-5BCC32BC1670">
+        <Shortcut Id="ApplicationDesktopMenuShortcut"
+                  Name="AIDE CommCell"
+                  Description="AIDE CommCell"
+                  Target="[#UI_AIDE_CommCellServices.exe]"
+                  WorkingDirectory="INSTALL_FOLDER"
+                  Icon="Icon"/>
+        <RemoveFolder Id="CleanUpDesktopShortCut" Directory="DesktopFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU"
+                       Key="Software\RS Experimental Labs\AIDE CommCell"  
+                       Type="integer" 
+                       Value="1" 
+                       KeyPath="yes"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <!--Start Menu Shortcut-->
+  <Fragment>
+    <ComponentGroup Id="StartMenuComponent" Directory="AIDE_PROGRAMFOLDER">
+      <Component Id="ApplicationShortcut" Guid="BC7A008C-72E8-4E92-AB79-8736982EC3E4">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="AIDE CommCell"
+                  Description="AIDE CommCell"
+                  Target="[#UI_AIDE_CommCellServices.exe]"
+                  WorkingDirectory="INSTALL_FOLDER"
+                  Icon="Icon"/>
+        <RemoveFolder Id="CleanUpStartShortCut" Directory="AIDE_PROGRAMFOLDER" On="uninstall"/>
+        <RegistryValue Root="HKCU"
+                       Key="Software\RS Experimental Labs\AIDE CommCell"  
+                       Type="integer" 
+                       Value="1" 
+                       KeyPath="yes"/>
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  
+  <!--Registry Entries-->
+  <Fragment>
+    <ComponentGroup Id="RegistryComponents" Directory="TARGETDIR">
+      <Component Id="RegistryEntries" Guid="13A11B43-91DC-4994-8B63-B7052D48FC44">
+        <RegistryKey Root="HKCU"
+                     Key="Software\RS Experimental Labs\AIDE CommCell"
+                     Action="createAndRemoveOnUninstall">
+          <RegistryValue Name="version" Type="string" Value="!(bind.FileVersion.UI_AIDE_CommCellServices.exe)"/>
+          
+        </RegistryKey>
+      </Component>
+    </ComponentGroup> 
+  </Fragment>
+</Wix>

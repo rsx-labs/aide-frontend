@@ -11,11 +11,11 @@ Imports System.Windows
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("UI_AIDE_CommCellServices")> 
+<Assembly: AssemblyTitle("AIDE CommCellServices")>
 <Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("UI_AIDE_CommCellServices")> 
-<Assembly: AssemblyCopyright("Copyright ©  2017")>
+<Assembly: AssemblyCompany("RS Experimental Labs")>
+<Assembly: AssemblyProduct("AIDE CommCellServices")>
+<Assembly: AssemblyCopyright("Copyright ©  2020")>
 <Assembly: AssemblyTrademark("")>
 <Assembly: ComVisible(false)>
 
@@ -55,5 +55,5 @@ Imports System.Windows
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("3.3.0.0")> 
-<Assembly: AssemblyFileVersion("3.3.0.0")> 
+<Assembly: AssemblyVersion("3.3.3.0")>
+<Assembly: AssemblyFileVersion("3.3.3")>
