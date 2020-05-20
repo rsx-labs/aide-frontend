@@ -41,6 +41,12 @@ already done it during first-time installation.
 
 ### AIDE Installation 
 
+```
+Note: The installer site may vary, please ask the core team. 
+The installer site will have the latest installer for AIDE ComCell 
+and AIDE Backend Service
+```
+
 #### AIDE Backend Service
 1. Download the latest installer from AIDE installer site.
 2. Run the MSI. Accept the default settings.
