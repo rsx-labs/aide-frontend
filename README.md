@@ -13,7 +13,7 @@ AIDE is meant to be ran on the employee machine once Outlook is already running
 - Windows Operating Sytem - The recommended version to be installed is Windows 10.
 - Microsoft Outlook - The recommended version to be installed to run alongside AIDE is Microsoft Outlook 2016
 
-## AIDE Front End Installation
+## Installation
 
 ### Pre-requisites
 
@@ -41,15 +41,15 @@ already done it during first-time installation.
 2. Open Command Prompt as Administrator and change directory to the folder where installwindowsfeaturewin10.bat is located.
 3. Type installwindowsfeaturewin10.bat from the Command Prompt and press the Enter key. Wait until the installation is completed.
 
-## AIDE Backend Service
-1. Download the installer from AIDE installer site.
+### AIDE Installation 
+
+#### AIDE Backend Service
+1. Download the latest installer from AIDE installer site.
 2. Run the MSI. Accept the default settings.
 
-### AIDE CommCell
-## AIDE Backend Service
-1. Download the installer from AIDE installer site.
+#### AIDE CommCell
+1. Download the latest installer from AIDE installer site.
 2. Run the MSI. Accept the default settings.
-
 
 ## Technology Stack
 
