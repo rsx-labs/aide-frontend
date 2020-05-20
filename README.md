@@ -6,7 +6,7 @@
 Adaptive Intelligent Dashboard for Employees (AIDE) is a digital Communication Cell Board with additional features such as Asset Inventory and Tracker.
 AIDE is meant to be ran on the employee machine once Outlook is already running
 
-## System Requiremets
+## System Requirements
 
 - Windows Operating Sytem - The recommended version to be installed is Windows 10.
 - Microsoft Outlook - The recommended version to be installed to run alongside AIDE is Microsoft Outlook 2016
