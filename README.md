@@ -13,7 +13,7 @@ AIDE is meant to be ran on the employee machine once Outlook is already running
 - Windows Operating Sytem - The recommended version to be installed is Windows 10.
 - Microsoft Outlook - The recommended version to be installed to run alongside AIDE is Microsoft Outlook 2016
 
-## AIDE Front End (AIDE CommCell) Installation
+## AIDE Front End Installation
 
 ### Pre-requisites
 
@@ -30,16 +30,26 @@ already done it during first-time installation.
 - .Net Framework 4.7 Advanced Services -> ASP.NET 4.7
 - .Net Framework 4.7 Advanced Services -> WCF Services -> HTTP Activation
 
-### Internet Information Services (IIS)
+#### Internet Information Services (IIS)
 1. Go to Start and search for Windows features
 2. Open Windows features.
 3. Under Windows Features, ensure that the following are checked
 - Internet Information Services -> Web Management Tools -> IIS Management Services
 
-### Additional Windows Feature
+#### Additional Windows Feature
 1. Download the installwindowsfeaturewin10.bat batch file from the installer site. The batch file is uploaded as a text file, you should rename the extension to *.bat. 
 2. Open Command Prompt as Administrator and change directory to the folder where installwindowsfeaturewin10.bat is located.
 3. Type installwindowsfeaturewin10.bat from the Command Prompt and press the Enter key. Wait until the installation is completed.
+
+## AIDE Backend Service
+1. Download the installer from AIDE installer site.
+2. Run the MSI. Accept the default settings.
+
+### AIDE CommCell
+## AIDE Backend Service
+1. Download the installer from AIDE installer site.
+2. Run the MSI. Accept the default settings.
+
 
 ## Technology Stack
 
