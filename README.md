@@ -66,3 +66,7 @@ and AIDE Backend Service
 - .Net Framework
 - MS SQL Server
 - WCF
+
+## Contributors
+
+[Past and present contributors. AIDE-nation! :)](https://github.com/rsx-labs/aide-frontend/graphs/contributors)
