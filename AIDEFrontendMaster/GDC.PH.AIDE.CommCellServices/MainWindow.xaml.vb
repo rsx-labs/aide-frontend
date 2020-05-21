@@ -9,6 +9,8 @@ Imports System.Reflection
 Imports System.Diagnostics.Eventing.Reader
 Imports System.Security
 Imports System.Configuration
+Imports NLog
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Class MainWindow
     Implements IAideServiceCallback
@@ -20,6 +22,7 @@ Class MainWindow
     Private permission As Integer
     Private objMutex As System.Threading.Mutex
     Private _OptionsViewModel As OptionViewModel
+    Private _instance As Integer
     Dim profileDBProvider As New ProfileDBProvider
     Dim profileViewModel As New ProfileViewModel
     Dim profile As Profile
@@ -27,6 +30,8 @@ Class MainWindow
     Dim enableOutlook As String = ConfigurationManager.AppSettings("enableOutlook")
     Dim machineOS As String = My.Computer.Info.OSFullName
     Dim guestPermission As Integer = 5
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
 #Region "Property declarations"
@@ -104,60 +109,74 @@ Class MainWindow
 
 #Region "Constructors"
     Public Sub New()
+        Dim optIDDefUser As Integer = 15
+        Dim modIdDefUser As Integer = 4
+        Dim funcIdDefUser As Integer = 8
+
+        With Assembly.GetExecutingAssembly().GetName().Version
+            _logger.Info("****** Starting AIDE " & .Major & "." & .Minor & "." & .Build & " ******")
+        End With
+
+        _logger.Debug("Start : Constructor")
+
         LoadOnce()
         InitializeComponent()
         InitializeService()
-        getTime()
+        GetTime()
 
-        If enableOutlook = "True" Then
+        Dim useOutlook As Boolean = False
+        Boolean.TryParse(enableOutlook, useOutlook)
+
+        If useOutlook Then
             CheckOutlook()
         Else
-            email = GetOptionData(15, 4, 8)
+            email = GetOptionData(optIDDefUser, modIdDefUser, funcIdDefUser)
         End If
 
         InitializeData()
+
+        _logger.Debug("End : Constructor")
     End Sub
 
     Public Sub New(_email As String)
+
+        _logger.Debug($"Start : Constructor with {_email}")
+
         InitializeComponent()
         InitializeService()
-        getTime()
+        GetTime()
         email = _email
-        
+
         InitializeData()
+
+        _logger.Debug("End : Constructor")
     End Sub
 #End Region
 
 #Region "Common Methods"
 
     Private Sub InitializeData()
+
+        _logger.Debug("Start : InitializeData")
+
         SetEmployeeData()
         Attendance()
         LoadVersionNo()
         LoadSideBar()
+
+        _logger.Info("Show greeting box and navigate to home screen")
+
         MsgBox("Welcome " & email & ".", MsgBoxStyle.Information, "AIDE")
         PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
         SubMenuFrame.Navigate(New BlankSubMenu())
+
+        _logger.Debug("End : InitializeData")
     End Sub
-
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean
-
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            aideClientService = New AideServiceClient(Context)
-            aideClientService.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            aideClientService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-
-        Return bInitialize
-    End Function
 
     Public Function CheckOutlook() As Boolean
         Dim bCheckOutlook As Boolean
+
+        _logger.Debug("Start : CheckOutlook")
 
         Try
             Dim app As Outlook.Application
@@ -167,6 +186,8 @@ Class MainWindow
             'email = app.Session.CurrentUser.Address
             bCheckOutlook = True
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             If MsgBox("Outlook is not running. Do you want to proceed with AIDE without Outlook?", MsgBoxStyle.Critical + vbYesNo, "AIDE") = vbYes Then
                 Dim addwindow As New AddEmailWindow()
                 addwindow.ShowDialog()
@@ -177,18 +198,51 @@ Class MainWindow
             End If
         End Try
 
+        _logger.Debug("End : CheckOutlook")
+
         Return bCheckOutlook
     End Function
 
     Public Sub LoadSideBar()
+        _logger.Debug("Start : LoadSideBar")
+
         AttendanceFrame.Navigate(New AttendanceDashBoard(PagesFrame, profile))
         genericFrame.Navigate(New _3CDashboard(email, PagesFrame, AddFrame, MenuGrid, SubMenuFrame, profile))
         'CommendationFrame.Navigate(New CommendationDashBoard(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, profile.Email_Address, profile, CommendationFrame))
         BirthdayFrame.Navigate(New BirthdayDashboard(profile.Email_Address))
         ComcellClockFrame.Navigate(New ComcellClockPage(profile, ComcellClockFrame, Me))
+
+        _logger.Debug("End : LoadSideBar")
     End Sub
 
+    Public Function InitializeService() As Boolean
+
+        _logger.Debug("Start : InitializeService")
+
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            aideClientService = New AideServiceClient(Context)
+
+            _logger.Info("Opening AIDE service ...")
+
+            aideClientService.Open()
+            bInitialize = True
+        Catch ex As SystemException
+
+            _logger.Error($"Failed to initialize service. {ex.ToString()}")
+
+            aideClientService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+
+        _logger.Debug("End : InitializeService")
+        Return bInitialize
+    End Function
+
     Private Function SignOn() As Boolean
+        _logger.Debug("Start : SignOn")
+
         Dim szReturn As Boolean
 
         Try
@@ -199,14 +253,19 @@ Class MainWindow
                 szReturn = False
             End If
         Catch ex As SystemException
+            _logger.Error(ex.ToString())
+
             aideClientService.Abort()
             szReturn = False
         End Try
 
+        _logger.Debug($"End : SignOn result = {szReturn}")
         Return szReturn
     End Function
 
     Public Sub SaveProfile(ByVal _profile As Profile)
+        _logger.Debug("Start : SaveProfile")
+
         Try
             If Not IsNothing(_profile) Then
                 EmployeeID = _profile.Emp_ID
@@ -221,11 +280,18 @@ Class MainWindow
                 profileViewModel.SelectedUser = New ProfileModel(profileDBProvider.GetMyProfile())
             End If
         Catch ex As SystemException
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("Start : SaveProfile")
     End Sub
 
     Private Sub SetEmployeeData()
+
+        _logger.Debug("Start : SetEmployeeData")
+
         Try
             If email <> String.Empty Then
                 If SignOn() Then
@@ -237,14 +303,24 @@ Class MainWindow
                 Environment.Exit(0)
             End If
         Catch ex As Exception
+            _logger.Error(ex.ToString())
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : SetEmployeeData")
+
     End Sub
 
     Public Sub Attendance()
+        Dim optIDStartupId As Integer = 14
+        Dim modIdStartupId As Integer = 4
+        Dim funcIdStartupId As Integer = 6
+
+        _logger.Debug("Start : Attendance")
+
         Try
             'Get Login Time
-            Dim eventStartUpId As String = GetOptionData(14, 4, 6)
+            Dim eventStartUpId As String = GetOptionData(optIDStartupId, modIdStartupId, funcIdStartupId)
             If machineOS.Contains("Windows 7") Then
                 eventStartUpId = "12"
             End If
@@ -252,7 +328,16 @@ Class MainWindow
             Dim dateToday As Date = DateTime.Now.ToString("MM/dd/yyyy")
             Dim logName As EventLog = New EventLog()
             logName.Log = "System"
-            Dim entries = logName.Entries.Cast(Of EventLogEntry)().Where(Function(x) x.InstanceId = CLng(eventStartUpId) And x.TimeWritten.Date = dateToday).[Select](Function(x) New With {x.MachineName, x.Site, x.Source, x.TimeWritten, x.InstanceId}).ToList()
+
+            _logger.Debug("Getting system event time.")
+
+            Dim entries = logName.Entries.Cast(Of EventLogEntry) _
+                            ().Where(Function(x) x.InstanceId = CLng(eventStartUpId) _
+                                        And x.TimeWritten.Date = dateToday) _
+                           .[Select](Function(x) New With {x.MachineName,
+                                        x.Site, x.Source, x.TimeWritten, x.InstanceId}) _
+                           .ToList()
+
             Dim timeIn As String
 
             If entries.Count = 0 Then
@@ -262,26 +347,47 @@ Class MainWindow
             End If
 
             Dim attendanceSummarry As New AttendanceSummary
+
             attendanceSummarry.EmployeeID = EmployeeID
             attendanceSummarry.TimeIn = timeIn
 
             If profile Is Nothing Then 'Service time-out needs to be handled on the service or else always restart it when it time's out
-                MsgBox("Service timed out. Application will close automatically." + Environment.NewLine + "Please note that no attendance will be recorded.", MsgBoxStyle.Critical, "AIDE")
+
+                _logger.Error("Service times out")
+
+                MsgBox("Service timed out. Application will close automatically." _
+                        + Environment.NewLine + "Please note that no attendance will be recorded.",
+                       MsgBoxStyle.Critical, "AIDE")
+
                 Environment.Exit(0)
             Else
                 If Not profileDBProvider.GetMyProfile.Permission_ID = guestPermission Then
+
+                    _logger.Info("Recording attendance ...")
+
                     aideClientService.InsertAttendanceByEmpID(attendanceSummarry)
                 End If
             End If
         Catch ex As Exception
+            _logger.Error(ex.ToString())
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : Attendance")
+
     End Sub
 
-    Public Sub getTime()
-        Dim timer As DispatcherTimer = New DispatcherTimer(New TimeSpan(0, 0, 1), DispatcherPriority.Normal, Function()
-                                                                                                                 Me.TimeTxt.Text = DateTime.Now.ToShortTimeString.ToString
-                                                                                                             End Function, Me.Dispatcher)
+    Public Sub GetTime()
+
+        Dim timer As DispatcherTimer = New DispatcherTimer(
+            New TimeSpan(0, 0, 1),
+            DispatcherPriority.Normal,
+            Sub()
+                Me.TimeTxt.Text = DateTime.Now.ToShortTimeString.ToString
+            End Sub,
+            Me.Dispatcher
+        )
+
         DateTxt.Text = Date.Now.ToLongDateString
     End Sub
 
@@ -291,6 +397,10 @@ Class MainWindow
     End Sub
 
     Private Sub LoadOnce()
+        _logger.Debug("Start : LoadOnce")
+        _logger.Debug($"Checking for existing instance. Count = {_instance}")
+
+        _instance += 1
         'Check to prevent running twice
         objMutex = New System.Threading.Mutex(False, "AIDE")
         If objMutex.WaitOne(0, False) = False Then
@@ -298,9 +408,18 @@ Class MainWindow
             objMutex = Nothing
             Me.Focus()
             Me.Topmost = True
-            MessageBox.Show("Another instance of AIDE is already running.")
+
+            'display the error only once
+            If _instance = 2 Then
+                MessageBox.Show("Another instance of AIDE is already running.")
+            End If
+
+            _logger.Error("Another instance of AIDE is already running.")
             End
         End If
+
+        _logger.Debug("End : LoadOnce")
+
     End Sub
 
     Private Sub LoadVersionNo()
@@ -310,6 +429,9 @@ Class MainWindow
     End Sub
 
     Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+
+        _logger.Debug("Start : GetOptionData")
+
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
@@ -323,7 +445,10 @@ Class MainWindow
             End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Error($"Error : {ex.ToString()}")
         End Try
+
+        _logger.Debug("End : GetOptionData")
         Return strData
     End Function
 
@@ -362,15 +487,27 @@ Class MainWindow
     End Sub
 
     Private Sub ImprovementBtn_Click(sender As Object, e As RoutedEventArgs) Handles ImprovementBtn.Click
+
+        _logger.Debug("Start : ImprovementBtn_Click")
+
         LoadSideBar()
+
         PagesFrame.Navigate(New ThreeC_Page(profile, PagesFrame, AddFrame, MenuGrid, SubMenuFrame))
         SubMenuFrame.Navigate(New ImproveSubMenuPage(PagesFrame, email, profile, AddFrame, MenuGrid, SubMenuFrame))
+
+        _logger.Debug("End : ImprovementBtn_Click")
     End Sub
 
     Private Sub HomeBtn2_Click(sender As Object, e As RoutedEventArgs) Handles HomeBtn2.Click
+
+        _logger.Debug("Start : HomeBtn2_Click")
+
         LoadSideBar()
         PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
         SubMenuFrame.Navigate(New BlankSubMenu())
+
+        _logger.Debug("End : HomeBtn2_Click")
+
         'If MenuGrid.Visibility = Windows.Visibility.Visible Then
         '    MenuGrid.Visibility = Windows.Visibility.Collapsed
         '    AttendanceGrid.Visibility = Windows.Visibility.Collapsed
@@ -395,10 +532,13 @@ Class MainWindow
     End Sub
 
     Private Sub ExitBtn_Click(sender As Object, e As RoutedEventArgs)
+        _logger.Debug("Start : ExitBtn_Click. Logging off...")
+
         If profile.Permission_ID = guestPermission Then
             Dim result = MsgBox("Do you want to close the application?", vbQuestion + MsgBoxStyle.YesNo, "AIDE")
 
             If result = MsgBoxResult.Yes Then
+                _logger.Info("****** Closing AIDE ******")
                 Environment.Exit(0)
             End If
         Else
@@ -410,82 +550,147 @@ Class MainWindow
 
             If result = MsgBoxResult.Yes Then
                 If InitializeService() Then
+                    _logger.Info("Inserting logoff time ...")
+                    _logger.Info("****** Closing AIDE ******")
+
                     aideClientService.InsertLogoffTime(profile.Emp_ID, logoffTime)
                     Environment.Exit(0)
                 End If
             ElseIf result = MsgBoxResult.No Then
+                _logger.Info("****** Closing AIDE ******")
                 Environment.Exit(0)
             End If
         End If
+
+        _logger.Debug("End : ExitBtn_Click.")
     End Sub
 
     Private Sub EmployeesBtn_Click(sender As Object, e As RoutedEventArgs)
+
+        _logger.Debug("Start : EmployeesBtn_Click")
+
         LoadSideBar()
         PagesFrame.Navigate(New ContactListPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame))
         SubMenuFrame.Navigate(New BlankSubMenu())
+
+        _logger.Debug("Start : EmployeesBtn_Click")
+
     End Sub
 
     Private Sub SkillsBtn_Click(sender As Object, e As RoutedEventArgs)
+
+        _logger.Debug("Start : SkillsBtn_Click")
+
         LoadSideBar()
 
         PagesFrame.Navigate(New SkillsMatrixManagerPage(profile, IsManagerSignedOn))
-
         SubMenuFrame.Navigate(New BlankSubMenu())
+
+        _logger.Debug("End : SkillsBtn_Click")
+
     End Sub
 
     Private Sub ProjectBtn_Click(sender As Object, e As RoutedEventArgs)
+
+        _logger.Debug("Start : ProjectBtn_Click")
+
         PagesFrame.Navigate(New CreateProjectPage(PagesFrame, profile))
         SubMenuFrame.Navigate(New ProjectSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
         LoadSideBar()
+
+        _logger.Debug("End : ProjectBtn_Click")
+
         'PagesFrame.Navigate(New ViewProjectUI(PagesFrame))
         'SubMenuFrame.Navigate(New BlankSubMenu())
     End Sub
 
     Private Sub TaskBtn_Click(sender As Object, e As RoutedEventArgs)
+
+        _logger.Debug("Start : TaskBtn_Click")
+
         PagesFrame.Navigate(New TaskAdminPage(PagesFrame, Me, profile, AddFrame, MenuGrid, SubMenuFrame))
         SubMenuFrame.Navigate(New TaskSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, Me))
         LoadSideBar()
+
+        _logger.Debug("End : TaskBtn_Click")
+
     End Sub
 
     Private Sub AttendanceBtn_Click(sender As Object, e As RoutedEventArgs)
+
+        _logger.Debug("Start : AttendanceBtn_Click")
+
         email = profile.Email_Address
         empID = profile.Emp_ID
 
         PagesFrame.Navigate(New ResourcePlannerPage(profile, PagesFrame, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame))
         SubMenuFrame.Navigate(New AttendanceSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame))
+
+        _logger.Debug("End : AttendanceBtn_Click")
+
     End Sub
 
     Private Sub AssetsBtn_Click(sender As Object, e As RoutedEventArgs)
+
+        _logger.Debug("Start : AssetsBtn_Click")
+
         PagesFrame.Navigate(New AssetsListPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
         SubMenuFrame.Navigate(New AssetsSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
         LoadSideBar()
+
+        _logger.Debug("End : AssetsBtn_Click")
+
     End Sub
 
     Private Sub BillabilityBtn_Click(sender As Object, e As RoutedEventArgs)
+
+        _logger.Debug("Start : BillabilityBtn_Click")
+
         PagesFrame.Navigate(New BillablesPage(profile, PagesFrame))
         SubMenuFrame.Navigate(New BillabilitySubMenu(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
         LoadSideBar()
+
+        _logger.Debug("End : BillabilityBtn_Click")
+
     End Sub
     Private Sub MinimizeBtn_Click(sender As Object, e As RoutedEventArgs)
         Me.WindowState = Windows.WindowState.Minimized
     End Sub
 
     Private Sub OtherBtn_Click(sender As Object, e As RoutedEventArgs)
+
+        _logger.Debug("Start : OtherBtn_Click")
+
         PagesFrame.Navigate(New BirthdayPage(PagesFrame, email))
         SubMenuFrame.Navigate(New OtherSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
         LoadSideBar()
+
+        _logger.Debug("End : OtherBtn_Click")
+
     End Sub
 
     Private Sub DashboardBtn_Click(sender As Object, e As RoutedEventArgs)
+
+        _logger.Debug("Start : DashboardBtn_Click")
+
         LoadSideBar()
         PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
         SubMenuFrame.Navigate(New BlankSubMenu())
+
+        _logger.Debug("End : DashboardBtn_Click")
+
     End Sub
 
     Private Sub WorkPlaceAuditBtn_Click(sender As Object, e As RoutedEventArgs)
+
+        _logger.Debug("Start : WorkPlaceAuditBtn_Click")
+
         LoadSideBar()
         PagesFrame.Navigate(New AuditSchedMainPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
         SubMenuFrame.Navigate(New AuditSchedSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
+
+        _logger.Debug("End : WorkPlaceAuditBtn_Click")
+
     End Sub
 #End Region
 
