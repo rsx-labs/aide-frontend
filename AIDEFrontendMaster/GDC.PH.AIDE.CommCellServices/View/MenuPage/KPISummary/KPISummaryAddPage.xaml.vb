@@ -194,7 +194,7 @@ Class KPISummaryAddPage
             cbKPI.DisplayMemberPath = "Value"
             cbKPI.SelectedValuePath = "Key"
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -231,9 +231,16 @@ Class KPISummaryAddPage
                             _kpiSummary.FYEnd = _dtEndYear
                             _kpiSummary.KPI_Reference = cbKPI.SelectedValue
                             _kpiSummary.KPI_Month = cbMonth.SelectedValue
-                            _kpiSummary.KPIActual = CDbl(txtActual.Text) / 100
-                            _kpiSummary.KPITarget = CDbl(txtTarget.Text) / 100
-                            _kpiSummary.KPIOverall = CDbl(txtActual.Text) / CDbl(txtTarget.Text)
+                            If CDbl(txtTarget.Text) = 0 Then
+                                _kpiSummary.KPIActual = 0
+                                _kpiSummary.KPITarget = 0
+                                _kpiSummary.KPIOverall = 0
+
+                            Else
+                                _kpiSummary.KPIActual = Convert.ToDouble(CDbl(txtActual.Text) / 100)
+                                _kpiSummary.KPITarget = Convert.ToDouble(CDbl(txtTarget.Text) / 100)
+                                _kpiSummary.KPIOverall = Convert.ToDouble(CDbl(txtActual.Text) / CDbl(txtTarget.Text))
+                            End If
                             _kpiSummary.DatePosted = Date.Now
 
                             If aide.InsertKPISummary(_kpiSummary) = True Then
@@ -242,9 +249,16 @@ Class KPISummaryAddPage
                         End If
                     End If
                 Else
-                    _kpiSummary.KPITarget = Convert.ToDouble(txtTarget.Text) / 100
-                    _kpiSummary.KPIActual = Convert.ToDouble(txtActual.Text) / 100
-                    _kpiSummary.KPIOverall = _kpiSummary.KPIActual / _kpiSummary.KPITarget
+                    If CDbl(txtTarget.Text) = 0 Then
+                        _kpiSummary.KPIActual = 0
+                        _kpiSummary.KPITarget = 0
+                        _kpiSummary.KPIOverall = 0
+
+                    Else
+                        _kpiSummary.KPITarget = Convert.ToDouble(Convert.ToDouble(txtTarget.Text) / 100)
+                        _kpiSummary.KPIActual = Convert.ToDouble(Convert.ToDouble(txtActual.Text) / 100)
+                        _kpiSummary.KPIOverall = Convert.ToDouble(_kpiSummary.KPIActual / _kpiSummary.KPITarget)
+                    End If
                     _kpiSummary.DatePosted = Date.Now
 
                     If aide.UpdateKPISummary(_kpiSummary) Then
