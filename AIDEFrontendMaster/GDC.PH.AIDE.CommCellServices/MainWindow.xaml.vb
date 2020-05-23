@@ -212,7 +212,7 @@ Class MainWindow
         AttendanceFrame.Navigate(New AttendanceDashBoard(PagesFrame, profile, _aideClientService))
         genericFrame.Navigate(New _3CDashboard(email, PagesFrame, AddFrame, MenuGrid, SubMenuFrame, profile, _aideClientService))
         'CommendationFrame.Navigate(New CommendationDashBoard(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, profile.Email_Address, profile, CommendationFrame))
-        'BirthdayFrame.Navigate(New BirthdayDashboard(profile.Email_Address, _aideClientService))
+        BirthdayFrame.Navigate(New BirthdayDashboard(profile.Email_Address, _aideClientService))
         ComcellClockFrame.Navigate(New ComcellClockPage(profile, ComcellClockFrame, Me, _aideClientService))
 
         _logger.Debug("End : LoadSideBar")
@@ -690,8 +690,8 @@ Class MainWindow
         _logger.Debug("Start : WorkPlaceAuditBtn_Click")
 
         LoadSideBar()
-        PagesFrame.Navigate(New AuditSchedMainPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
-        SubMenuFrame.Navigate(New AuditSchedSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
+        PagesFrame.Navigate(New AuditSchedMainPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, _aideClientService))
+        SubMenuFrame.Navigate(New AuditSchedSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, _aideClientService))
 
         _logger.Debug("End : WorkPlaceAuditBtn_Click")
 

@@ -4,6 +4,7 @@ Imports System.IO
 Imports System.Diagnostics
 Imports System.ServiceModel
 Imports System.Collections.ObjectModel
+Imports NLog
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class AuditSchedMainPage
     Implements ServiceReference1.IAideServiceCallback
@@ -27,7 +28,7 @@ Class AuditSchedMainPage
 
 #Region "Fields"
 
-    Private _AideService As ServiceReference1.AideServiceClient
+    Private _client As ServiceReference1.AideServiceClient
     Private empID As Integer
     Private mainframe As Frame
     Private addframe As Frame
@@ -45,13 +46,21 @@ Class AuditSchedMainPage
     Dim lstFiscalYear As FiscalYear()
     Dim fiscalyearVM As New SelectionListViewModel
     Dim guestAccount As Integer = 5
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
 #Region "Constructor"
 
-    Public Sub New(_mainframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_mainframe As Frame, _profile As Profile,
+                   _addframe As Frame, _menugrid As Grid,
+                   _submenuframe As Frame, aideService As AideServiceClient)
+
+        _logger.Debug("Start : Constructor")
 
         InitializeComponent()
+
+        _client = aideService
         Me.empID = _profile.Emp_ID
         Me.mainframe = _mainframe
         Me.addframe = _addframe
@@ -68,6 +77,9 @@ Class AuditSchedMainPage
         LoadYear()
         SetFiscalYear()
         SetData()
+
+        _logger.Debug("End : Constructor")
+
     End Sub
 
 #End Region
@@ -75,43 +87,75 @@ Class AuditSchedMainPage
 #Region "Functions/Methods"
 
     Public Function InitializeService() As Boolean
+        _logger.Debug("Start : InitializeService")
+
         Dim bInitialize As Boolean = False
         Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            _AideService = New AideServiceClient(Context)
-            _AideService.Open()
+
+            If _client.State = CommunicationState.Faulted Then
+
+                _logger.Debug("Service is faulted, reinitializing ...")
+
+                Dim Context As InstanceContext = New InstanceContext(Me)
+                _client = New AideServiceClient(Context)
+                _client.Open()
+            End If
+
             bInitialize = True
         Catch ex As SystemException
-            _AideService.Abort()
+            _logger.Error(ex.ToString())
+
+            _client.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : InitializeService")
+
         Return bInitialize
     End Function
 
     Public Sub LoadYear()
+
+        _logger.Debug("Start : LoadYear")
+
         Try
             If InitializeService() Then
-                lstFiscalYear = _AideService.GetAllFiscalYear()
+                lstFiscalYear = _client.GetAllFiscalYear()
                 LoadFiscalYear()
             End If
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : LoadYear")
     End Sub
 
     Public Sub SetData()
+
+        _logger.Debug("Start : SetData")
+
         Try
             If InitializeService() Then
-                lstauditSched = _AideService.GetAuditSched(empID, year)
+                lstauditSched = _client.GetAuditSched(empID, year)
                 LoadAuditSched()
                 DisplayPagingInfo()
             End If
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : SetData")
+
     End Sub
 
     Public Sub LoadAuditSched()
+
+        _logger.Debug("Start : LoadAuditSchedule")
+
         Try
             Dim auditSchedDBProvider As New AuditSchedDBProvider
 
@@ -127,14 +171,21 @@ Class AuditSchedMainPage
 
             currentPage = lstauditSchedList.CurrentPage + 1
             lastPage = Math.Ceiling(lstauditSched.Length / pagingRecordPerPage)
-            
+
             AuditSchedLV.ItemsSource = lstauditSchedList
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : LoadAuditSchedule")
     End Sub
 
     Public Sub LoadFiscalYear()
+
+        _logger.Debug("Start : LoadFiscalYear")
+
         Try
             Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
             Dim FYDBProvider As New SelectionListDBProvider
@@ -151,13 +202,21 @@ Class AuditSchedMainPage
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
 
         Catch ex As Exception
+            _logger.Debug(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : LoadFiscalYear")
+
     End Sub
 
     Public Sub SetFiscalYear()
+
+        _logger.Debug("Start : SetFiscalYear")
+
         Try
-            Month = Date.Now.Month
+            month = Date.Now.Month
 
             If Today.DayOfYear() <= CDate(Today.Year().ToString + "-03-31").DayOfYear Then
                 cbYear.Text = (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
@@ -167,13 +226,21 @@ Class AuditSchedMainPage
 
             year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
 
-            lblYear.Text = "Fiscal Year: " + (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
+            'lblYear.Text = "Fiscal Year: " + (Date.Now.Year - 1).ToString() + "-" + (Date.Now.Year).ToString()
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : SetFiscalYear")
+
     End Sub
 
     Private Sub SetPaging(mode As Integer)
+
+        _logger.Debug("Start : SetPaging")
+
         Try
             Dim totalRecords As Integer = lstauditSched.Length
 
@@ -196,7 +263,7 @@ Class AuditSchedMainPage
                         lastRowIndex = totalRecords - 1
                     End If
                     ' Bind data to the Data Grid
-                    LoadauditSched()
+                    LoadAuditSched()
                     Exit Select
                 Case CInt(PagingMode._Previous)
                     ' Set the Previous Page if the page index is greater than 1
@@ -205,7 +272,7 @@ Class AuditSchedMainPage
 
                         startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
                         lastRowIndex = (pagingPageIndex * pagingRecordPerPage) - 1
-                        LoadauditSched()
+                        LoadAuditSched()
                     End If
                     Exit Select
                 Case CInt(PagingMode._First)
@@ -218,7 +285,7 @@ Class AuditSchedMainPage
 
                         If Not totalRecords = 0 Then
                             lastRowIndex = totalRecords - 1
-                            LoadauditSched()
+                            LoadAuditSched()
                         Else
                             lastRowIndex = 0
                             Me.DataContext = Nothing
@@ -234,8 +301,13 @@ Class AuditSchedMainPage
 
             DisplayPagingInfo()
         Catch ex As Exception
+
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : SetPaging")
 
     End Sub
     Private Sub DisplayPagingInfo()
@@ -269,8 +341,10 @@ Class AuditSchedMainPage
 
 #Region "Events"
     Private Sub AuditSched_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
-        Try
 
+        _logger.Debug("Start : AuditSched_MouseDoubleClick")
+
+        Try
 
             e.Handled = True
             If Not profile.Permission_ID = guestAccount Then
@@ -285,7 +359,7 @@ Class AuditSchedMainPage
                         auditSched.AUDIT_SCHED_ID = CType(AuditSchedLV.SelectedItem, AuditSchedModel).AUDIT_SCHED_ID
                         auditSched.FY_START = CType(AuditSchedLV.SelectedItem, AuditSchedModel).FY_START
 
-                        addframe.Navigate(New AuditSchedAddPage(profile, mainframe, addframe, menugrid, submenuframe, auditSched))
+                        addframe.Navigate(New AuditSchedAddPage(profile, mainframe, addframe, menugrid, submenuframe, auditSched, _client))
                         mainframe.IsEnabled = False
                         mainframe.Opacity = 0.3
                         menugrid.IsEnabled = False
@@ -298,12 +372,16 @@ Class AuditSchedMainPage
                 End If
             End If
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : AuditSched_MouseDoubleClick")
     End Sub
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
-        addframe.Navigate(New AuditSchedAddPage(profile, mainframe, addframe, menugrid, submenuframe, lstauditSched))
+        addframe.Navigate(New AuditSchedAddPage(profile, mainframe, addframe, menugrid, submenuframe, lstauditSched, _client))
         mainframe.IsEnabled = False
         mainframe.Opacity = 0.3
         menugrid.IsEnabled = False
@@ -316,7 +394,7 @@ Class AuditSchedMainPage
 
     Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
         year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
-        lblYear.Text = "Fiscal Year: " + year.ToString + " - " + (year + 1).ToString
+        'lblYear.Text = "Fiscal Year: " + year.ToString + " - " + (year + 1).ToString
         SetData()
     End Sub
 

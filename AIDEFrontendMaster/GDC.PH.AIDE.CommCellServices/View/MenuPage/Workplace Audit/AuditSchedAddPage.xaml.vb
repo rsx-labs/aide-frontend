@@ -2,6 +2,7 @@
 Imports UI_AIDE_CommCellServices.ServiceReference1
 Imports System.Collections.ObjectModel
 Imports System.ServiceModel
+Imports NLog
 
 Class AuditSchedAddPage
     Implements UI_AIDE_CommCellServices.ServiceReference1.IAideServiceCallback
@@ -28,12 +29,20 @@ Class AuditSchedAddPage
     Private lstNicknameList As New ObservableCollection(Of NicknameModel)
     Dim lstauditSched As AuditSched()
     Dim auditSchedVM As New AuditSchedViewModel()
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
 #Region "Constructors"
     'Add Constructor
-    Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame, _lstauditSched As AuditSched())
+    Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid,
+                   submenuframe As Frame, _lstauditSched As AuditSched(), aideService As AideServiceClient)
+
+        _logger.Debug("Start : Constructor mode = Add")
+
         Try
+            aide = aideService
+
             Me._frame = mainframe
             Me._addframe = addframe
             Me._menugrid = menugrid
@@ -48,11 +57,19 @@ Class AuditSchedAddPage
             LoadauditSched()
             mode = "Add"
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : Constructor")
     End Sub
     'Update Constructor
-    Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame, _auditSched As AuditSchedModel)
+    Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid,
+                   submenuframe As Frame, _auditSched As AuditSchedModel, aideService As AideServiceClient)
+
+        _logger.Debug("Start : Constructor mode=Update")
+
         Try
             Me._frame = mainframe
             Me._addframe = addframe
@@ -74,27 +91,48 @@ Class AuditSchedAddPage
 
             mode = "Update"
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : Constructor")
     End Sub
 #End Region
 
 #Region "Methods/Functions"
     Public Function InitializeService() As Boolean
+        _logger.Debug("Start : InitializeService")
+
         Dim bInitialize As Boolean = False
         Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            aide = New AideServiceClient(Context)
-            aide.Open()
+
+            If aide.State = CommunicationState.Faulted Then
+
+                _logger.Debug("Service is faulted, reinitializing ...")
+
+                Dim Context As InstanceContext = New InstanceContext(Me)
+                aide = New AideServiceClient(Context)
+                aide.Open()
+            End If
+
             bInitialize = True
         Catch ex As SystemException
+            _logger.Error(ex.ToString())
+
             aide.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : InitializeService")
+
         Return bInitialize
     End Function
 
     Public Sub LoadauditSched()
+
+        _logger.Debug("Start : LoadauditSched")
+
         Try
             Dim lstauditSchedList As New ObservableCollection(Of AuditSchedModel)
             Dim auditSchedDBProvider As New AuditSchedDBProvider
@@ -114,11 +152,17 @@ Class AuditSchedAddPage
 
             Me.DataContext = auditSchedVM
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : LoadauditSched")
     End Sub
 
     Public Sub LoadControls()
+        _logger.Debug("Start : LoadControls")
+
         Try
             Dim getmonth As String = ""
             getmonth = txtBlockMonth.Text
@@ -144,8 +188,12 @@ Class AuditSchedAddPage
             ''cbMonthly.SelectedValue = txtBlockMonth.Text
             'cbYear.SelectedValue = txtBlockYear.Text
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : LoadControls")
     End Sub
 
     Public Sub LoadMonth()
@@ -197,6 +245,8 @@ Class AuditSchedAddPage
     End Function
 
     Public Sub LoadYears()
+        _logger.Debug("Start : LoadYears")
+
         Try
             cbYear.DisplayMemberPath = "Text"
             cbYear.SelectedValuePath = "Value"
@@ -205,22 +255,34 @@ Class AuditSchedAddPage
                 cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
             Next
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : LoadYears")
     End Sub
 
     Public Sub LoadYear()
+        _logger.Debug("Start : LoadYear")
+
         Try
             If InitializeService() Then
                 lstFiscalYear = aide.GetAllFiscalYear()
                 LoadFiscalYear()
             End If
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : LoadYear")
     End Sub
 
     Public Sub LoadFiscalYear()
+        _logger.Debug("Start : LoadFiscalYear")
+
         Try
             Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
             Dim FYDBProvider As New SelectionListDBProvider
@@ -236,22 +298,35 @@ Class AuditSchedAddPage
             fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : LoadFiscalYear")
     End Sub
 
     Public Sub LoadSChed()
+        _logger.Debug("Start : LoadSChed")
+
         Try
             If InitializeService() Then
                 lstAuditSchedMonth = aide.GetAuditSChed_Month(2, Date.Now.Year, Date.Now.Month)
                 LoadYear()
             End If
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : LoadSched")
     End Sub
 
     Public Sub LoadEmpNickName()
+
+        _logger.Debug("Start :LoadEmpNickName")
+
         Try
             If InitializeService() Then
                 Dim lstNickname As Nickname() = aide.ViewNicknameByDeptID(profile.Email_Address, dsplyByDept)
@@ -274,8 +349,12 @@ Class AuditSchedAddPage
                 cbWeekly.DataContext = nicknameVM
             End If
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : LoadEmpNickname")
     End Sub
 
     Public Sub GetAllMondayOfWeekPerMonth(ByVal month As Integer, ByVal year As Integer, ByVal dayOfWeek As DayOfWeek)
@@ -340,7 +419,7 @@ Class AuditSchedAddPage
                         MsgBox("An application error was encountered. Please contact your AIDE Administrator. ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                     End If
 
-                    _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
+                    _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe, aide))
                     _frame.IsEnabled = True
                     _frame.Opacity = 1
                     _menugrid.IsEnabled = True
@@ -386,7 +465,7 @@ Class AuditSchedAddPage
                     MsgBox("An application error was encountered. Please contact your AIDE Administrator. ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 End If
 
-                _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
+                _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe, aide))
                 _frame.IsEnabled = True
                 _frame.Opacity = 1
                 _menugrid.IsEnabled = True
@@ -404,7 +483,7 @@ Class AuditSchedAddPage
     End Sub
 
     Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
-        _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
+        _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe, aide))
         _frame.IsEnabled = True
         _frame.Opacity = 1
         _menugrid.IsEnabled = True
