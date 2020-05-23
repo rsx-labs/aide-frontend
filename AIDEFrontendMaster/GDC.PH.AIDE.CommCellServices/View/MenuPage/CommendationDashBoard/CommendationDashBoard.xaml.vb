@@ -51,9 +51,13 @@ Class CommendationDashBoard
 #Region "Constructor"
 
     Public Sub New(mainFrame As Frame, _position As String, _empID As Integer,
-                   _addFrame As Frame, _menuGrid As Grid, _subMenuFrame As Frame, _email As String, _profile As Profile, _commendFrame As Frame)
+                   _addFrame As Frame, _menuGrid As Grid, _subMenuFrame As Frame,
+                   _email As String, _profile As Profile, _commendFrame As Frame,
+                   aideService As ServiceReference1.AideServiceClient)
 
         InitializeComponent()
+
+        _AideService = aideService
         Me.position = _position
         Me.empID = _empID
         Me.mainFrame = mainFrame
@@ -84,12 +88,12 @@ Class CommendationDashBoard
 
     Public Sub SetData()
         Try
-            If InitializeService() Then
-                lstCommendation = _AideService.GetCommendations(empID)
-                lstFiscalYear = _AideService.GetAllFiscalYear()
-                LoadFiscalYear()
-                LoadCommendations()
-            End If
+            'If InitializeService() Then
+            lstCommendation = _AideService.GetCommendations(empID)
+            lstFiscalYear = _AideService.GetAllFiscalYear()
+            LoadFiscalYear()
+            LoadCommendations()
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try

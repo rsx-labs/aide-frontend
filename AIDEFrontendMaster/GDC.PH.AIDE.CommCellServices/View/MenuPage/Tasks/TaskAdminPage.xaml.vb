@@ -43,8 +43,12 @@ Class TaskAdminPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_frame As Frame, _mainWindow As MainWindow, _profile As Profile,
+                   _addframe As Frame, _menugrid As Grid, _submenuframe As Frame,
+                   aideService As AideServiceClient)
+
         InitializeComponent()
+        client = aideService
         frame = _frame
         mainWindow = _mainWindow
         addframe = _addframe
@@ -147,11 +151,11 @@ Class TaskAdminPage
 
     Private Sub LoadEmployeeTaskAll()
         Try
-            If Me.InitializeService Then
-                lstTasks = client.ViewTaskSummaryAll(Convert.ToDateTime(Date.Now).ToString("yyyy-MM-dd"), email)
-                LoadData()
-                DisplayPagingInfo()
-            End If
+            'If Me.InitializeService Then
+            lstTasks = client.ViewTaskSummaryAll(Convert.ToDateTime(Date.Now).ToString("yyyy-MM-dd"), email)
+            LoadData()
+            DisplayPagingInfo()
+            'End If
         Catch ex As Exception
            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -208,6 +212,7 @@ Class TaskAdminPage
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = client
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then

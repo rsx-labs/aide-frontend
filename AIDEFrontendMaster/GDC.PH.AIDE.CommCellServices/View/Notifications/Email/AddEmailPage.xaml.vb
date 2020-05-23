@@ -23,10 +23,11 @@ Class AddEmailPage
 
     Private aide As ServiceReference1.AideServiceClient
 
-    Public Sub New(emailframe As Frame, windows As AddEmailWindow)
+    Public Sub New(emailframe As Frame, windows As AddEmailWindow, aideService As AideServiceClient)
 
         ' This call is required by the designer.
         InitializeComponent()
+        aide = aideService
         email_frame = emailframe
         mainwindow = windows
         Me.DataContext = SendCodeViewModel
@@ -46,7 +47,7 @@ Class AddEmailPage
                     check = checkEmailEntry()
                     If check Then
                         CodeCombination = getCode()
-                        email_frame.Navigate(New EmailCodeRequest(email_frame, CodeCombination, mainwindow, SendCodeViewModel))
+                        email_frame.Navigate(New EmailCodeRequest(email_frame, CodeCombination, mainwindow, SendCodeViewModel, aide))
                     Else
                         MsgBox("Email is not registered to AIDE.", MsgBoxStyle.Exclamation, "AIDE")
                     End If
@@ -137,17 +138,18 @@ Class AddEmailPage
 #Region "Services Function/Method"
 
     Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            aide = New AideServiceClient(Context)
-            aide.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            aide.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
+        'Dim bInitialize As Boolean = False
+        'Try
+        '    Dim Context As InstanceContext = New InstanceContext(Me)
+        '    aide = New AideServiceClient(Context)
+        '    aide.Open()
+        '    bInitialize = True
+        'Catch ex As SystemException
+        '    aide.Abort()
+        '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        'End Try
+        'Return bInitialize
+        Return True
     End Function
 
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError

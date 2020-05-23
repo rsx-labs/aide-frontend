@@ -40,10 +40,14 @@ Public Class AssetsInventoryAddPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_assetsModel As AssetsModel, mainFrame As Frame, _profile As Profile, _fromPage As String, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_assetsModel As AssetsModel, mainFrame As Frame, _profile As Profile,
+                   _fromPage As String, _addframe As Frame, _menugrid As Grid,
+                   _submenuframe As Frame, aideService As AideServiceClient)
 
         InitializeComponent()
 
+        client = aideService
+        mailConfigVM = New MailConfigViewModel(client)
         Me.mainFrame = mainFrame
         Me._addframe = _addframe
         Me._menugrid = _menugrid
@@ -451,20 +455,21 @@ Public Class AssetsInventoryAddPage
     End Sub
 
     Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            'DisplayText("Opening client service...")
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(Context)
-            client.Open()
-            bInitialize = True
-            'DisplayText("Service opened successfully...")
-            'Return True
-        Catch ex As SystemException
-            client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
+        'Dim bInitialize As Boolean = False
+        'Try
+        '    'DisplayText("Opening client service...")
+        '    Dim Context As InstanceContext = New InstanceContext(Me)
+        '    client = New AideServiceClient(Context)
+        '    client.Open()
+        '    bInitialize = True
+        '    'DisplayText("Service opened successfully...")
+        '    'Return True
+        'Catch ex As SystemException
+        '    client.Abort()
+        '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        'End Try
+        'Return bInitialize
+        Return True
     End Function
 
     Public Function CheckMissingField() As Boolean
@@ -648,6 +653,7 @@ Public Class AssetsInventoryAddPage
     Private Sub GetAssetMovementData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer)
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = client
             _option = New OptionModel
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList

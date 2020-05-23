@@ -501,7 +501,7 @@ Class TaskAddPage
             frame.Navigate(New TaskListPage(frame, mainWindow, profile, addframe, menugrid, submenuframe))
             ExitPage()
         Else
-            frame.Navigate(New TaskAdminPage(frame, mainWindow, Profile, addframe, menugrid, submenuframe))
+            frame.Navigate(New TaskAdminPage(frame, mainWindow, profile, addframe, menugrid, submenuframe, client))
             ExitPage()
         End If
     End Sub
@@ -514,7 +514,7 @@ Class TaskAddPage
                         client.CreateTask(tasks)
                         MsgBox("Task has been added.", MsgBoxStyle.Information, "AIDE")
                         ClearValues()
-                        frame.Navigate(New TaskAdminPage(frame, mainWindow, profile, addframe, menugrid, submenuframe))
+                        frame.Navigate(New TaskAdminPage(frame, mainWindow, profile, addframe, menugrid, submenuframe, client))
                         ExitPage()
                     End If
                 End If

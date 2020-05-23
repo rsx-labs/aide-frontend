@@ -55,9 +55,12 @@ Public Class ContactListPage
 
 #Region "Constructor"
 
-    Public Sub New(mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _attendanceFrame As Frame)
+    Public Sub New(mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid,
+                   _submenuframe As Frame, _attendanceFrame As Frame, aideService As AideServiceClient)
 
         InitializeComponent()
+
+        _AideService = aideService
         Me.email = _profile.Email_Address
         Me.empID = _profile.Emp_ID
         Me.mainFrame = mainFrame
@@ -109,25 +112,25 @@ Public Class ContactListPage
 
     Public Sub SetData()
         Try
-            If InitializeService() Then
-                If ContactsTC.SelectedIndex = 0 Then
-                    lstContacts = _AideService.ViewContactListAll(empID, 0)
-                    If profile.Permission_ID = 1 Then
-                        btnCreate.Visibility = Windows.Visibility.Visible
-                    End If
-                ElseIf ContactsTC.SelectedIndex = 1 Then
-                    lstContacts = _AideService.ViewContactListAll(empID, 1)
-                    btnCreate.Visibility = Windows.Visibility.Hidden
-                Else
-                    lstContacts = _AideService.ViewContactListAll(empID, 2)
-                    btnCreate.Visibility = Windows.Visibility.Hidden
+            'If InitializeService() Then
+            If ContactsTC.SelectedIndex = 0 Then
+                lstContacts = _AideService.ViewContactListAll(empID, 0)
+                If profile.Permission_ID = 1 Then
+                    btnCreate.Visibility = Windows.Visibility.Visible
                 End If
-
-                LoadData()
-                totalRecords = lstContacts.Length
-                DisplayPagingInfo()
-                ' SetPaging(PagingMode._First)
+            ElseIf ContactsTC.SelectedIndex = 1 Then
+                lstContacts = _AideService.ViewContactListAll(empID, 1)
+                btnCreate.Visibility = Windows.Visibility.Hidden
+            Else
+                lstContacts = _AideService.ViewContactListAll(empID, 2)
+                btnCreate.Visibility = Windows.Visibility.Hidden
             End If
+
+            LoadData()
+            totalRecords = lstContacts.Length
+            DisplayPagingInfo()
+            ' SetPaging(PagingMode._First)
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -194,6 +197,7 @@ Public Class ContactListPage
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = _AideService
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then

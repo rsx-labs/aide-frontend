@@ -306,7 +306,7 @@ Class NewSuccessRegister
     End Sub
 
     Private Sub ExitPage()
-        mainFrame.Navigate(New SuccessRegisterPage(mainFrame, addframe, menugrid, submenuframe, profile))
+        mainFrame.Navigate(New SuccessRegisterPage(mainFrame, addframe, menugrid, submenuframe, profile, client))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         menugrid.IsEnabled = True

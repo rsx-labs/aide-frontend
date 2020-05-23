@@ -129,7 +129,7 @@ Class ComcellClockAddPage
 
     Private Sub ExitPage()
         Dim mainWindow As MainWindow = DirectCast(window, MainWindow)
-        comcellFrame.Navigate(New ComcellClockPage(profile, comcellFrame, window))
+        comcellFrame.Navigate(New ComcellClockPage(profile, comcellFrame, window, aideService))
         mainWindow.MenuGrid.IsEnabled = True
         mainWindow.MenuGrid.Opacity = 1
         mainWindow.PagesFrame.Opacity = 1

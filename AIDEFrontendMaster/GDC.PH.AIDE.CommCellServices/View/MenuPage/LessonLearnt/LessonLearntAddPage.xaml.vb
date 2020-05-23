@@ -37,9 +37,9 @@ Class LessonLearntAddPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
+    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile, aideService As AideServiceClient)
         InitializeComponent()
-
+        client = aideService
         frame = _frame
         addframe = _addframe
         menugrid = _menugrid
@@ -54,17 +54,18 @@ Class LessonLearntAddPage
     End Sub
 
     Private Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(Context)
-            client.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
+        'Dim bInitialize As Boolean = False
+        'Try
+        '    Dim Context As InstanceContext = New InstanceContext(Me)
+        '    client = New AideServiceClient(Context)
+        '    client.Open()
+        '    bInitialize = True
+        'Catch ex As SystemException
+        '    client.Abort()
+        '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        'End Try
+        'Return bInitialize
+        Return True
     End Function
 #End Region
 
@@ -179,7 +180,7 @@ Class LessonLearntAddPage
     End Sub
 
     Private Sub ExitPage()
-        frame.Navigate(New LessonLearntPage(frame, addframe, menugrid, submenuframe, profile))
+        frame.Navigate(New LessonLearntPage(frame, addframe, menugrid, submenuframe, profile, client))
         frame.IsEnabled = True
         frame.Opacity = 1
         menugrid.IsEnabled = True

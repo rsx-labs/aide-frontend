@@ -107,7 +107,7 @@ Class InsertActionListPage
     End Function
 
     Private Sub ExitPage()
-        frame.Navigate(New HomeActionListsPage(frame, addframe, menugrid, submenuframe, profile))
+        frame.Navigate(New HomeActionListsPage(frame, addframe, menugrid, submenuframe, profile, aide))
         frame.IsEnabled = True
         frame.Opacity = 1
         menugrid.IsEnabled = True

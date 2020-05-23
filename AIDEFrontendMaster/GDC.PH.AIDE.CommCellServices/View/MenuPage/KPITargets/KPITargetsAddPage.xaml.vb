@@ -127,7 +127,7 @@ Class KPITargetsAddPage
                 _kpitargets.Subject = Nothing
                 _kpitargets.KPI_ReferenceNo = Nothing
 
-                mainframe.Navigate(New HomePage(mainframe, profile.Position, empID, addframe, menugrid, submenuframe, email, profile))
+                mainframe.Navigate(New HomePage(mainframe, profile.Position, empID, addframe, menugrid, submenuframe, email, profile, aide))
                 mainframe.IsEnabled = True
                 mainframe.Opacity = 1
                 menugrid.IsEnabled = True

@@ -133,7 +133,7 @@ Class KPITargetsUpdatePage
                 _kpiTargets.Subject = Nothing
                 _kpiTargets.Description = Nothing
 
-                mainframe.Navigate(New HomePage(mainframe, profile.Position, Me.empID, addframe, menugrid, submenuframe, Me.email, Me.profile))
+                mainframe.Navigate(New HomePage(mainframe, profile.Position, Me.empID, addframe, menugrid, submenuframe, Me.email, Me.profile, _client))
                 mainframe.IsEnabled = True
                 mainframe.Opacity = 1
                 menugrid.IsEnabled = True

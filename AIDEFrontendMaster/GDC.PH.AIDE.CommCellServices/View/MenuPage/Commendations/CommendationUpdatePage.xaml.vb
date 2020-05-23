@@ -216,28 +216,32 @@ Class CommendationUpdatePage
 
             'CreateTaskID()
             Dim comm As New Commendations
-                Dim textRange As New TextRange(txtCommendationReason.Document.ContentStart, txtCommendationReason.Document.ContentEnd)
+            Dim textRange As New TextRange(txtCommendationReason.Document.ContentStart, txtCommendationReason.Document.ContentEnd)
 
-                comm.COMMEND_ID = commendationVM._commendationModel.CommendID
-                comm.SENT_BY = txtSentBy.Text
-                comm.PROJECT = comboProject.Text
-                comm.REASON = textRange.Text
-                comm.EMPLOYEE = UCase(txtCommendationEmployees.Text)
-                comm.DATE_SENT = dateInput.SelectedDate
-                comm.EMP_ID = empID
+            comm.COMMEND_ID = commendationVM._commendationModel.CommendID
+            comm.SENT_BY = txtSentBy.Text
+            comm.PROJECT = comboProject.Text
+            comm.REASON = textRange.Text
+            comm.EMPLOYEE = UCase(txtCommendationEmployees.Text)
+            comm.DATE_SENT = dateInput.SelectedDate
+            comm.EMP_ID = empID
             client.UpdateCommendations(comm)
             MsgBox("Commendation has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
             'mainFrame.Navigate(New HomePage(mainFrame, position, empID, _addframe, _menugrid, _submenuframe, _))
-            commendFrame.Navigate(New CommendationDashBoard(mainFrame, Me.position, Me.empID, _addframe, _menugrid, _submenuframe, Me.profiles.Email_Address, Me.profiles, commendFrame))
-                mainFrame.IsEnabled = True
-                mainFrame.Opacity = 1
-                _menugrid.IsEnabled = True
-                _menugrid.Opacity = 1
-                _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
+            commendFrame.Navigate(
+                New CommendationDashBoard(mainFrame, Me.position, Me.empID, _addframe,
+                                          _menugrid, _submenuframe, Me.profiles.Email_Address,
+                                          Me.profiles, commendFrame, client))
 
-                _addframe.Visibility = Visibility.Hidden
-            End If
+            mainFrame.IsEnabled = True
+            mainFrame.Opacity = 1
+            _menugrid.IsEnabled = True
+            _menugrid.Opacity = 1
+            _submenuframe.IsEnabled = True
+            _submenuframe.Opacity = 1
+
+            _addframe.Visibility = Visibility.Hidden
+        End If
 
     End Sub
 #End Region

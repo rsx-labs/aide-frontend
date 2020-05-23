@@ -40,9 +40,10 @@ Public Class ThreeC_Page
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_profile As Profile, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_profile As Profile, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, aideService As AideServiceClient)
         InitializeComponent()
-        InitializeService()
+        'InitializeService()
+        client = aideService
 
         profile = _profile
         frame = _frame
@@ -56,7 +57,7 @@ Public Class ThreeC_Page
         PermissionSettings()
     End Sub
 #End Region
-    
+
 #Region "Methods"
     Public Function InitializeService() As Boolean
         Dim bInitialize As Boolean = False
@@ -160,6 +161,7 @@ Public Class ThreeC_Page
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = client
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then

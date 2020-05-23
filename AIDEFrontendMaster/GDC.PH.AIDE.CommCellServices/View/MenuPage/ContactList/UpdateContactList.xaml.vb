@@ -76,9 +76,9 @@ Class UpdateContactList
                         client.UpdateContactListByEmpID(contactList, 0)
                     MsgBox("Contacts have been updated.", MsgBoxStyle.Information, "AIDE")
                     ClearFields()
-                        attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
-                        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
-                        mainFrame.IsEnabled = True
+                    attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile, client))
+                    mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame, client))
+                    mainFrame.IsEnabled = True
                         mainFrame.Opacity = 1
                         menugrid.IsEnabled = True
                         menugrid.Opacity = 1
@@ -94,7 +94,7 @@ Class UpdateContactList
     End Sub
 
     Private Sub btnCCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCCancel.Click
-        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame, client))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         menugrid.IsEnabled = True

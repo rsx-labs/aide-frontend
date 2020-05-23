@@ -43,9 +43,13 @@ Class AnnouncementDashboard
 
 #Region "Constructor"
 
-    Public Sub New(_mainframe As Frame, _empID As Integer, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _email As String, _profile As Profile)
+    Public Sub New(_mainframe As Frame, _empID As Integer, _addframe As Frame,
+                   _menugrid As Grid, _submenuframe As Frame, _email As String,
+                   _profile As Profile, aideService As ServiceReference1.AideServiceClient)
 
         InitializeComponent()
+
+        _AideService = aideService
         Me.empID = _empID
         Me.mainframe = _mainframe
         Me.addframe = _addframe
@@ -81,11 +85,11 @@ Class AnnouncementDashboard
 
     Public Sub SetData()
         Try
-            If InitializeService() Then
-                lstAnnouncements = _AideService.GetAnnouncements(empID)
-                LoadAnnouncements()
-                DisplayPagingInfo()
-            End If
+            'If InitializeService() Then
+            lstAnnouncements = _AideService.GetAnnouncements(empID)
+            LoadAnnouncements()
+            DisplayPagingInfo()
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try

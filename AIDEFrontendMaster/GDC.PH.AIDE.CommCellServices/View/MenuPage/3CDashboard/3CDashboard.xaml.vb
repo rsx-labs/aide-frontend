@@ -38,12 +38,12 @@ Class _3CDashboard
     Private isDateBetweenUsed As Integer = 0
 
 #Region "Constructor"
-    Public Sub New(_email As String, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
+    Public Sub New(_email As String, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile, aideService As AideServiceClient)
 
         ' This call is required by the designer.
         InitializeComponent()
-        Me.InitializeService()
-
+        'Me.InitializeService()
+        _AIDEClientService = aideService
         Dim offsetVal As Integer = 0
         Dim nextVal As Integer = 10
         email = _email
@@ -180,8 +180,8 @@ Class _3CDashboard
     Public Property SeriesCollection As SeriesCollection
 
     Private Sub btnthreeC(sender As Object, e As RoutedEventArgs)
-        frame.Navigate(New ThreeC_Page(profile, frame, addframe, menugrid, submenuframe))
-        submenuframe.Navigate(New ImproveSubMenuPage(frame, email, Profile, addframe, menugrid, submenuframe))
+        frame.Navigate(New ThreeC_Page(profile, frame, addframe, menugrid, submenuframe, _AIDEClientService))
+        submenuframe.Navigate(New ImproveSubMenuPage(frame, email, profile, addframe, menugrid, submenuframe, _AIDEClientService))
     End Sub
 
 End Class

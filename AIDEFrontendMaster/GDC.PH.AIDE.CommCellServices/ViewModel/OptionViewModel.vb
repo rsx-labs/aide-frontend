@@ -42,20 +42,29 @@ Public Class OptionViewModel
         End Set
     End Property
 
+    Public WriteOnly Property Service As AideServiceClient
+        'Get
+        '    Return _optionValue
+        'End Get
+        Set(value As AideServiceClient)
+            aide = value
+        End Set
+    End Property
+
 #End Region
 
 #Region "Main Methods"
     Public Function GetOptions(ByVal _optionID As Integer, ByVal _moduleID As Integer, ByVal _functionID As Integer) As Boolean
         Try
             Dim opt As Boolean = False
-            If Me.InitializeService Then
-                Dim _option As Options() = aide.GetOptions(_optionID, _moduleID, _functionID)
-                If _option.Length = 0 Then
-                    opt = False
-                End If
-                SetOptions(_option)
-                opt = True
+            'If Me.InitializeService Then
+            Dim _option As Options() = aide.GetOptions(_optionID, _moduleID, _functionID)
+            If _option.Length = 0 Then
+                opt = False
             End If
+            SetOptions(_option)
+            opt = True
+            'End If
             Return opt
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -64,13 +73,13 @@ Public Class OptionViewModel
     End Function
     Public Function GetOption(ByVal _optionID As Integer) As String
         Try
-            If Me.InitializeService Then
-                Dim _option As Options() = aide.GetOptions(_optionID, 0, 0)
-                If _option.Length = 0 Then
-                    Return String.Empty
-                End If
-                SetOption(_option)
+            'If Me.InitializeService Then
+            Dim _option As Options() = aide.GetOptions(_optionID, 0, 0)
+            If _option.Length = 0 Then
+                Return String.Empty
             End If
+            SetOption(_option)
+            'End If
             Return _optionValue
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
