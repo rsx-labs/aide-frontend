@@ -6,10 +6,12 @@ Class AuditSchedSubMenuPage
     Private addframe As Frame
     Private menugrid As Grid
     Private submenuframe As Frame
+    Private _client As AideServiceClient
 
-    Public Sub New(_pageframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_pageframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, aideService As AideServiceClient)
         ' This call is required by the designer.
         InitializeComponent()
+        _client = aideService
         Me.email = _profile.Email_Address
         Me.pageframe = _pageframe
         Me.addframe = _addframe
@@ -20,23 +22,23 @@ Class AuditSchedSubMenuPage
     End Sub
 
     Private Sub Schedule_Click(sender As Object, e As RoutedEventArgs)
-        pageframe.Navigate(New AuditSchedMainPage(pageframe, profile, addframe, menugrid, submenuframe))
+        pageframe.Navigate(New AuditSchedMainPage(pageframe, profile, addframe, menugrid, submenuframe, _client))
     End Sub
 
     Private Sub Daily_Click(sender As Object, e As RoutedEventArgs)
-        pageframe.Navigate(New DailyAuditPage(pageframe, profile, addframe, menugrid, submenuframe))
+        pageframe.Navigate(New DailyAuditPage(pageframe, profile, addframe, menugrid, submenuframe, _client))
     End Sub
 
     Private Sub Weekly_Click(sender As Object, e As RoutedEventArgs)
         'pageframe.Navigate(New AuditSchedMainPage(pageframe, profile, addframe, menugrid, submenuframe))
-        pageframe.Navigate(New WeeklyAuditPage(pageframe, profile, addframe, menugrid, submenuframe))
+        pageframe.Navigate(New WeeklyAuditPage(pageframe, profile, addframe, menugrid, submenuframe, _client))
     End Sub
 
     Private Sub Monthly_Click(sender As Object, e As RoutedEventArgs)
-        pageframe.Navigate(New MonthlyAuditPage(pageframe, profile, addframe, menugrid, submenuframe))
+        pageframe.Navigate(New MonthlyAuditPage(pageframe, profile, addframe, menugrid, submenuframe, _client))
     End Sub
 
     Private Sub Quarterly_Click(sender As Object, e As RoutedEventArgs)
-        pageframe.Navigate(New QuarterlyAuditPage(pageframe, profile, addframe, menugrid, submenuframe))
+        pageframe.Navigate(New QuarterlyAuditPage(pageframe, profile, addframe, menugrid, submenuframe, _client))
     End Sub
 End Class

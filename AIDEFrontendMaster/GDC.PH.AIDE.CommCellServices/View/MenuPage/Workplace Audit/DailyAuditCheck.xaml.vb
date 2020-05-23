@@ -2,6 +2,7 @@
 Imports System.Collections.ObjectModel
 Imports UI_AIDE_CommCellServices.ServiceReference1
 Imports System.ServiceModel
+Imports NLog
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class DailyAuditCheck
     Implements UI_AIDE_CommCellServices.ServiceReference1.IAideServiceCallback
@@ -21,6 +22,8 @@ Class DailyAuditCheck
     Private _AideService As ServiceReference1.AideServiceClient
     Private _lstAuditQuestionSelected As New ObservableCollection(Of WorkplaceAuditModel)
     Private auditDisplay As Integer
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
 #Region "Constructors"
@@ -48,17 +51,30 @@ Class DailyAuditCheck
 
 #Region "Methods/Functions"
     Public Function InitializeService() As Boolean
+        _logger.Debug("Start : InitializeService")
+
         Dim bInitialize As Boolean = False
         Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            _AideService = New AideServiceClient(Context)
-            _AideService.Open()
+
+            If _AideService.State = CommunicationState.Faulted Then
+
+                _logger.Debug("Service is faulted, reinitializing ...")
+
+                Dim Context As InstanceContext = New InstanceContext(Me)
+                _AideService = New AideServiceClient(Context)
+                _AideService.Open()
+            End If
 
             bInitialize = True
         Catch ex As SystemException
+            _logger.Error(ex.ToString())
+
             _AideService.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : InitializeService")
+
         Return bInitialize
     End Function
 
@@ -72,7 +88,7 @@ Class DailyAuditCheck
 
     Private Sub ReturnToLastPage()
         If auditDisplay = 1 Then
-            _frame.Navigate(New DailyAuditPage(_frame, profile, _addframe, _menugrid, _submenuframe))
+            _frame.Navigate(New DailyAuditPage(_frame, profile, _addframe, _menugrid, _submenuframe, aide))
             _frame.IsEnabled = True
             _frame.Opacity = 1
             _menugrid.IsEnabled = True
@@ -81,7 +97,7 @@ Class DailyAuditCheck
             _submenuframe.Opacity = 1
             _addframe.Visibility = Visibility.Hidden
         ElseIf auditDisplay = 2 Then
-            _frame.Navigate(New WeeklyAuditPage(_frame, profile, _addframe, _menugrid, _submenuframe))
+            _frame.Navigate(New WeeklyAuditPage(_frame, profile, _addframe, _menugrid, _submenuframe, aide))
             _frame.IsEnabled = True
             _frame.Opacity = 1
             _menugrid.IsEnabled = True
@@ -90,7 +106,7 @@ Class DailyAuditCheck
             _submenuframe.Opacity = 1
             _addframe.Visibility = Visibility.Hidden
         ElseIf auditDisplay = 3 Then
-            _frame.Navigate(New MonthlyAuditPage(_frame, profile, _addframe, _menugrid, _submenuframe))
+            _frame.Navigate(New MonthlyAuditPage(_frame, profile, _addframe, _menugrid, _submenuframe, aide))
             _frame.IsEnabled = True
             _frame.Opacity = 1
             _menugrid.IsEnabled = True
@@ -99,7 +115,7 @@ Class DailyAuditCheck
             _submenuframe.Opacity = 1
             _addframe.Visibility = Visibility.Hidden
         ElseIf auditDisplay = 4 Then
-            _frame.Navigate(New QuarterlyAuditPage(_frame, profile, _addframe, _menugrid, _submenuframe))
+            _frame.Navigate(New QuarterlyAuditPage(_frame, profile, _addframe, _menugrid, _submenuframe, aide))
             _frame.IsEnabled = True
             _frame.Opacity = 1
             _menugrid.IsEnabled = True

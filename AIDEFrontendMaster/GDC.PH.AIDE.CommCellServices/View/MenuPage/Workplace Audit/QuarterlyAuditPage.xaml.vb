@@ -2,6 +2,7 @@
 Imports System.Collections.ObjectModel
 Imports UI_AIDE_CommCellServices.ServiceReference1
 Imports System.ServiceModel
+Imports NLog
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class QuarterlyAuditPage
     Implements ServiceReference1.IAideServiceCallback
@@ -30,7 +31,13 @@ Class QuarterlyAuditPage
     Dim year As Integer
     Dim isInitialize As Boolean
 
-    Public Sub New(_pageframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
+
+    Public Sub New(_pageframe As Frame, _profile As Profile, _addframe As Frame,
+                   _menugrid As Grid, _submenuframe As Frame, aideService As AideServiceClient)
+
+        _logger.Debug("Start : Constructor")
+
         Me.pageframe = _pageframe
         Me.profile = _profile
         Me.addframe = _addframe
@@ -38,7 +45,8 @@ Class QuarterlyAuditPage
         Me.submenuframe = _submenuframe
         ' This call is required by the designer.
         InitializeComponent()
-        InitializeService()
+
+        _AideService = aideService
 
         ' Add any initialization after the InitializeComponent() call.
         isInitialize = True
@@ -52,8 +60,13 @@ Class QuarterlyAuditPage
         End If
 
         isInitialize = False
+
+        _logger.Debug("End: Constructor")
+
     End Sub
     Public Sub SetFiscalYear()
+        _logger.Debug("Start : SetFiscalYear")
+
         Try
             month = Date.Now.Month
 
@@ -78,13 +91,19 @@ Class QuarterlyAuditPage
 
 
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : SetFiscalYear")
     End Sub
 
-    Private Sub generateQuestions()
+    Private Sub GenerateQuestions()
         Dim questModel As New QuestionsDayModel
         Dim imgdtcheck As String
+
+        _logger.Debug("Start : GenerateQuestions")
 
         Try
 
@@ -152,12 +171,18 @@ Class QuarterlyAuditPage
             QuarterLVQuestions.ItemsSource = dailyVMM.QuestionDayList
             DataContext = dailyVMM.QuestionDayList
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : GenerateQuestions")
 
     End Sub
 
     Private Sub InitEmpAuditDailybyWeekData()
+
+        _logger.Debug("Start : InitEmpAuditDailybyWeekData")
         Try
             Dim statusAudit As String = ""
             Dim LstAuditDailySchedByWeek As New ObservableCollection(Of WorkplaceAuditModel)
@@ -235,34 +260,61 @@ Class QuarterlyAuditPage
             DataContext = dailyVMM.Days
 
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : InitEmpAuditDailybyWeekData")
     End Sub
     Public Function InitializeService() As Boolean
+        _logger.Debug("Start : InitializeService")
+
         Dim bInitialize As Boolean = False
         Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            _AideService = New AideServiceClient(Context)
-            _AideService.Open()
+
+            If _AideService.State = CommunicationState.Faulted Then
+
+                _logger.Debug("Service is faulted, reinitializing ...")
+
+                Dim Context As InstanceContext = New InstanceContext(Me)
+                _AideService = New AideServiceClient(Context)
+                _AideService.Open()
+            End If
 
             bInitialize = True
         Catch ex As SystemException
+            _logger.Error(ex.ToString())
+
             _AideService.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : InitializeService")
+
         Return bInitialize
     End Function
     Public Sub LoadYear()
+
+        _logger.Debug("Start : LoadYear")
+
         Try
             If InitializeService() Then
                 lstFiscalYear = _AideService.GetAllFiscalYear()
                 LoadFiscalYear()
             End If
         Catch ex As Exception
+            _logger.Error(ex.ToString())
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : LoadYear")
+
     End Sub
     Public Sub LoadFiscalYear()
+
+        _logger.Debug("Start : LoadFiscalYear")
+
         Try
             Dim lstFiscalYearList As New ObservableCollection(Of FiscalYearModel)
             Dim FYDBProvider As New SelectionListDBProvider
@@ -278,18 +330,30 @@ Class QuarterlyAuditPage
             fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : LoadFiscalYear")
+
     End Sub
     Public Sub LoadSChed()
+
+        _logger.Debug("Start : LoadSChed")
+
         Try
             If InitializeService() Then
                 lstAuditSchedMonth = _AideService.GetAuditSChed_Month(2, Date.Now.Year, Date.Now.Month)
                 LoadYear()
             End If
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : LoadSChed")
     End Sub
     Private Sub ListViewItem_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
         Dim item = (TryCast(sender, FrameworkElement)).DataContext
@@ -342,6 +406,9 @@ Class QuarterlyAuditPage
     End Sub
 
     Private Sub SetSelectedDay(sender As Object, e As SelectionChangedEventArgs)
+
+        _logger.Debug("Start : SetSelectedDay")
+
         Dim item As Object
         Dim questModel As New QuestionsDayModel
         Dim imgdtcheck As String
@@ -376,8 +443,12 @@ Class QuarterlyAuditPage
             QuarterLVQuestions.ItemsSource = dailyVMM.QuestionDayList
             DataContext = dailyVMM.QuestionDayList
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : SetSelectedDay")
 
     End Sub
 
@@ -388,7 +459,7 @@ Class QuarterlyAuditPage
             dailyVMM.Days.Clear()
             InitEmpAuditDailybyWeekData()
             If dailyVMM.Days.Count <> 0 Then
-                generateQuestions()
+                GenerateQuestions()
             End If
         End If
     End Sub
