@@ -170,7 +170,7 @@ Class ThreeC_UpdatePage
     End Sub
 
     Private Sub ExitPage()
-        frame.Navigate(New ThreeC_Page(profile, frame, addframe, menugrid, submenuframe))
+        frame.Navigate(New ThreeC_Page(profile, frame, addframe, menugrid, submenuframe, AIDEClientService))
         frame.IsEnabled = True
         frame.Opacity = 1
         menugrid.IsEnabled = True

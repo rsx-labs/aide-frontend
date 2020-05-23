@@ -23,11 +23,13 @@ Class EmailCodeRequest
     Private TimeExpire As Integer
     Private inMinute As TimeSpan
 #End Region
-   
+
 #Region "Constructor"
-    Public Sub New(emailFrame As Frame, codecom As Integer, main As AddEmailWindow, _sendViewModel As SendCodeViewModel)
+    Public Sub New(emailFrame As Frame, codecom As Integer, main As AddEmailWindow, _sendViewModel As SendCodeViewModel, aideService As AideServiceClient)
         ' This call is required by the designer.
         InitializeComponent()
+        aide = aideService
+        mailConfigVM = New MailConfigViewModel(aide)
         sendVM = _sendViewModel
         email_frame = emailFrame
         codecombo = codecom
@@ -166,17 +168,18 @@ Class EmailCodeRequest
 
 #Region "Service Methods"
     Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            aide = New AideServiceClient(Context)
-            aide.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            aide.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
+        'Dim bInitialize As Boolean = False
+        'Try
+        '    Dim Context As InstanceContext = New InstanceContext(Me)
+        '    aide = New AideServiceClient(Context)
+        '    aide.Open()
+        '    bInitialize = True
+        'Catch ex As SystemException
+        '    aide.Abort()
+        '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        'End Try
+        'Return bInitialize
+        Return True
     End Function
 
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
@@ -235,7 +238,7 @@ Class EmailCodeRequest
 #Region "Event Handling"
     Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
         If MsgBox("A new access code will be required for your next login once you exit.", vbYesNo, "AIDE") = vbYes Then
-            email_frame.Navigate(New AddEmailPage(email_frame, mainwindow))
+            email_frame.Navigate(New AddEmailPage(email_frame, mainwindow, aide))
         End If
     End Sub
 

@@ -38,14 +38,14 @@ Class HomeActionListsPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
+    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile, aideService As AideServiceClient)
         frame = _frame
         addframe = _addframe
         menugrid = _menugrid
         submenuframe = _submenuframe
         profile = _profile
         InitializeComponent()
-
+        aide = aideService
         pagingRecordPerPage = GetOptionData(24, 9, 12)
         paginatedCollection = New PaginatedObservableCollection(Of ActionModel)(pagingRecordPerPage)
 
@@ -85,6 +85,7 @@ Class HomeActionListsPage
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = aide
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then

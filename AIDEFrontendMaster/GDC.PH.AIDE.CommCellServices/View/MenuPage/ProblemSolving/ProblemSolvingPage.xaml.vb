@@ -25,12 +25,13 @@ Public Class ProblemSolvingPage
     Private listEmpID As String
 #End Region
 #Region "Constructor"
-    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, aideService As AideServiceClient)
         Me._profile = _profile
         Me._mainFrame = mFrame
         Me._addFrame = _addframe
         Me._menuGrid = _menugrid
         Me._subMenuFrame = _submenuframe
+        client = aideService
         Me.InitializeComponent()
         ControlsOff()
         LoadProblem()
@@ -43,17 +44,18 @@ Public Class ProblemSolvingPage
 #End Region
 #Region "Function"
     Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(Context)
-            client.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
+        'Dim bInitialize As Boolean = False
+        'Try
+        '    Dim Context As InstanceContext = New InstanceContext(Me)
+        '    client = New AideServiceClient(Context)
+        '    client.Open()
+        '    bInitialize = True
+        'Catch ex As SystemException
+        '    client.Abort()
+        '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        'End Try
+        'Return bInitialize
+        Return True
     End Function
     Public Sub loadAll()
         If InitializeService() Then
@@ -259,7 +261,7 @@ Public Class ProblemSolvingPage
 
     Private Sub ProblemAddBtn_Click(sender As Object, e As RoutedEventArgs) Handles ProblemAddBtn.Click
         Try
-            _addFrame.Navigate(New ProblemAddPage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame))
+            _addFrame.Navigate(New ProblemAddPage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, client))
             _mainFrame.IsEnabled = False
             _mainFrame.Opacity = 0.3
             _menuGrid.IsEnabled = False
@@ -281,7 +283,7 @@ Public Class ProblemSolvingPage
                 If ProblemLV.SelectedItem IsNot Nothing Then
                     Dim objProblem As ProblemModel = CType(ProblemLV.SelectedItem, ProblemModel)
 
-                    _addFrame.Navigate(New ProblemCauseAddPage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem))
+                    _addFrame.Navigate(New ProblemCauseAddPage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem, client))
                     _mainFrame.IsEnabled = False
                     _mainFrame.Opacity = 0.3
                     _menuGrid.IsEnabled = False
@@ -303,7 +305,7 @@ Public Class ProblemSolvingPage
                 If ProblemCauseLV.SelectedItem IsNot Nothing Then
                     Dim objProblem As ProblemModel = CType(ProblemCauseLV.SelectedItem, ProblemModel)
                     objProblem.PROBLEM_DESCR = CType(ProblemLV.SelectedItem, ProblemModel).PROBLEM_DESCR
-                    _addFrame.Navigate(New ProblemCauseUpdatePage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem))
+                    _addFrame.Navigate(New ProblemCauseUpdatePage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem, client))
                     _mainFrame.IsEnabled = False
                     _mainFrame.Opacity = 0.3
                     _menuGrid.IsEnabled = False
@@ -326,7 +328,7 @@ Public Class ProblemSolvingPage
                 If ProblemLV.SelectedItem IsNot Nothing Then
                     Dim objProblem As ProblemModel = CType(ProblemLV.SelectedItem, ProblemModel)
 
-                    _addFrame.Navigate(New ProblemOptionAddPage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem))
+                    _addFrame.Navigate(New ProblemOptionAddPage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem, client))
                     _mainFrame.IsEnabled = False
                     _mainFrame.Opacity = 0.3
                     _menuGrid.IsEnabled = False
@@ -348,7 +350,7 @@ Public Class ProblemSolvingPage
                 If ProblemOptionLV.SelectedItem IsNot Nothing Then
                     Dim objProblem As ProblemModel = CType(ProblemOptionLV.SelectedItem, ProblemModel)
                     objProblem.PROBLEM_DESCR = CType(ProblemLV.SelectedItem, ProblemModel).PROBLEM_DESCR
-                    _addFrame.Navigate(New ProblemOptionUpdatePage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem))
+                    _addFrame.Navigate(New ProblemOptionUpdatePage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem, client))
                     _mainFrame.IsEnabled = False
                     _mainFrame.Opacity = 0.3
                     _menuGrid.IsEnabled = False
@@ -371,7 +373,7 @@ Public Class ProblemSolvingPage
                 If ProblemOptionLV.SelectedItem IsNot Nothing Then
                     Dim objProblem As ProblemModel = CType(ProblemOptionLV.SelectedItem, ProblemModel)
 
-                    _addFrame.Navigate(New ProblemSolutionAddPage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem))
+                    _addFrame.Navigate(New ProblemSolutionAddPage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem, client))
                     _mainFrame.IsEnabled = False
                     _mainFrame.Opacity = 0.3
                     _menuGrid.IsEnabled = False
@@ -393,7 +395,7 @@ Public Class ProblemSolvingPage
                 If ProblemSolutionLV.SelectedItem IsNot Nothing Then
                     Dim objProblem As ProblemModel = CType(ProblemSolutionLV.SelectedItem, ProblemModel)
                     objProblem.OPTION_DESCR = CType(ProblemOptionLV.SelectedItem, ProblemModel).OPTION_DESCR
-                    _addFrame.Navigate(New ProblemSolutionUpdatePage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem))
+                    _addFrame.Navigate(New ProblemSolutionUpdatePage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem, client))
                     _mainFrame.IsEnabled = False
                     _mainFrame.Opacity = 0.3
                     _menuGrid.IsEnabled = False
@@ -416,7 +418,7 @@ Public Class ProblemSolvingPage
                 If ProblemOptionLV.SelectedItem IsNot Nothing Then
                     Dim objProblem As ProblemModel = CType(ProblemOptionLV.SelectedItem, ProblemModel)
 
-                    _addFrame.Navigate(New ProblemImplementAddPage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem))
+                    _addFrame.Navigate(New ProblemImplementAddPage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem, client))
                     _mainFrame.IsEnabled = False
                     _mainFrame.Opacity = 0.3
                     _menuGrid.IsEnabled = False
@@ -439,7 +441,7 @@ Public Class ProblemSolvingPage
                 If ProblemImplementLV.SelectedItem IsNot Nothing Then
                     Dim objProblem As ProblemModel = CType(ProblemImplementLV.SelectedItem, ProblemModel)
                     objProblem.OPTION_DESCR = CType(ProblemOptionLV.SelectedItem, ProblemModel).OPTION_DESCR
-                    _addFrame.Navigate(New ProblemImplementUpdatePage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem))
+                    _addFrame.Navigate(New ProblemImplementUpdatePage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem, client))
                     _mainFrame.IsEnabled = False
                     _mainFrame.Opacity = 0.3
                     _menuGrid.IsEnabled = False
@@ -462,7 +464,7 @@ Public Class ProblemSolvingPage
                 If ProblemLV.SelectedItem IsNot Nothing Then
                     Dim objProblem As ProblemModel = CType(ProblemLV.SelectedItem, ProblemModel)
 
-                    _addFrame.Navigate(New ProblemUpdatePage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem))
+                    _addFrame.Navigate(New ProblemUpdatePage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem, client))
                     _mainFrame.IsEnabled = False
                     _mainFrame.Opacity = 0.3
                     _menuGrid.IsEnabled = False
@@ -484,7 +486,7 @@ Public Class ProblemSolvingPage
                 If ProblemLV.SelectedItem IsNot Nothing Then
                     Dim objProblem As ProblemModel = CType(ProblemLV.SelectedItem, ProblemModel)
 
-                    _addFrame.Navigate(New ProblemViewPage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem))
+                    _addFrame.Navigate(New ProblemViewPage(_mainFrame, _profile, _addFrame, _menuGrid, _subMenuFrame, objProblem, client))
                     _mainFrame.IsEnabled = False
                     _mainFrame.Opacity = 0.3
                     _menuGrid.IsEnabled = False

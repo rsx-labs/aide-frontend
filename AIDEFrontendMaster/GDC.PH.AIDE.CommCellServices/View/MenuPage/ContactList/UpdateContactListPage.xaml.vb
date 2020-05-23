@@ -301,6 +301,7 @@ Class UpdateContactListPage
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = client
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -348,7 +349,7 @@ Class UpdateContactListPage
 
 #Region "Events"
     Private Sub btnCCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCCancel.Click
-        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame, client))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         menugrid.IsEnabled = True
@@ -422,8 +423,8 @@ Class UpdateContactListPage
                     client.UpdateContactListByEmpID(contactList, 0)
                     MsgBox("Contacts have been updated.", MsgBoxStyle.Information, "AIDE")
                     'ClearFields()
-                    attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
-                    mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+                    attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile, client))
+                    mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame, client))
                     mainFrame.IsEnabled = True
                     mainFrame.Opacity = 1
                     menugrid.IsEnabled = True
@@ -479,8 +480,8 @@ Class UpdateContactListPage
                         client.UpdateContactListByEmpID(contactList, 0)
                         'ClearFields()
                         MsgBox("Employee has been deleted.", MsgBoxStyle.OkOnly, "AIDE")
-                        attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
-                        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+                        attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile, client))
+                        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame, client))
                         mainFrame.IsEnabled = True
                         mainFrame.Opacity = 1
                         menugrid.IsEnabled = True

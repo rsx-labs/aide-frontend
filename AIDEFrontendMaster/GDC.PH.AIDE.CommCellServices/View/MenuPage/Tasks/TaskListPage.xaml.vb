@@ -386,7 +386,7 @@ Public Class TaskListPage
     End Sub
 
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs)
-        mainFrame.Navigate(New TaskAdminPage(mainFrame, mainWindow, profile, addframe, menugrid, submenuframe))
+        mainFrame.Navigate(New TaskAdminPage(mainFrame, mainWindow, profile, addframe, menugrid, submenuframe, aideService))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         menugrid.IsEnabled = True

@@ -7,6 +7,7 @@ Imports System.Collections.ObjectModel
 Imports System.Windows.Xps.Packaging
 Imports System.Windows.Xps
 Imports System.Printing
+Imports NLog
 
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Public Class AttendanceDashBoard
@@ -19,16 +20,28 @@ Public Class AttendanceDashBoard
     Dim setStatus As Integer
     Dim profile As Profile
     Dim AEmployee As MyAttendance()
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
 #Region "Constructor"
-    Public Sub New(mainFrame As Frame, _profile As Profile)
+    Public Sub New(mainFrame As Frame, profile As Profile, aideService As ServiceReference1.AideServiceClient)
+
+        _logger.Debug("Start : Constructor")
+
         InitializeComponent()
+
         Me.mainFrame = mainFrame
-        Me.profile = _profile
+        Me.profile = profile
+        _AideService = aideService
+
         SetData()
+
         Me.DataContext = AttendanceListVM
+
         LoadDataForHeader()
+
+        _logger.Debug("End : Constructor")
     End Sub
 #End Region
 
@@ -49,40 +62,43 @@ Public Class AttendanceDashBoard
 
     Public Sub SetData()
         Try
-            If InitializeService() Then
-                AEmployee = _AideService.GetAttendanceToday(profile.Emp_ID)
+            _logger.Debug("Start : SetData")
 
-                Dim d As DateTime? = Nothing
-                Dim lstAEmployeeList As New ObservableCollection(Of AttendanceModel)
-                Dim aemployeeListDBProvider As New AttendanceListDBProvider
+            AEmployee = _AideService.GetAttendanceToday(profile.Emp_ID)
 
-                For Each objaemp As MyAttendance In AEmployee
-                    aemployeeListDBProvider.SetAllAttendanceList(objaemp)
-                Next
+            Dim d As DateTime? = Nothing
+            Dim lstAEmployeeList As New ObservableCollection(Of AttendanceModel)
+            Dim aemployeeListDBProvider As New AttendanceListDBProvider
 
-                For Each rawUser As myAttendanceList In aemployeeListDBProvider.GetAllEmpRPList()
-                    setStatus = rawUser.Status
-                    SetCategory(rawUser)
-                    If rawUser.Status = 11 Then 'For Late
-                        SetCategoryDisplay(rawUser)
-                    End If
+            For Each objaemp As MyAttendance In AEmployee
+                aemployeeListDBProvider.SetAllAttendanceList(objaemp)
+            Next
 
-                    d = rawUser.Logoff_Time
-                    If d.Value = Nothing Then
-                        rawUser.Logoff_Time = ""
-                    End If
+            For Each rawUser As myAttendanceList In aemployeeListDBProvider.GetAllEmpRPList()
+                setStatus = rawUser.Status
+                SetCategory(rawUser)
+                If rawUser.Status = 11 Then 'For Late
+                    SetCategoryDisplay(rawUser)
+                End If
 
-                    lstAEmployeeList.Add(New AttendanceModel(rawUser))
-                Next
+                d = rawUser.Logoff_Time
+                If d.Value = Nothing Then
+                    rawUser.Logoff_Time = ""
+                End If
 
-                AttendanceListVM.EmployeeListAttendance = lstAEmployeeList
-                Me.DataContext = AttendanceListVM
+                lstAEmployeeList.Add(New AttendanceModel(rawUser))
+            Next
 
-            End If
+            AttendanceListVM.EmployeeListAttendance = lstAEmployeeList
+            Me.DataContext = AttendanceListVM
 
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+
+            _logger.Error(ex.ToString())
         End Try
+
+        _logger.Debug("End : SetData")
     End Sub
 
     Public Sub SetDataForSearch(input As String)

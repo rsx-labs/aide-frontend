@@ -71,8 +71,11 @@ Class ComcellClockPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_profile As Profile, _comcellFrame As Frame, _window As Window)
+    Public Sub New(_profile As Profile, _comcellFrame As Frame, _window As Window, aideService As AideServiceClient)
         InitializeComponent()
+
+        Me.aideService = aideService
+        mailConfigVM = New MailConfigViewModel(aideService)
 
         year = Date.Now.Year
         monthToday = Date.Now.Month
@@ -338,9 +341,12 @@ Class ComcellClockPage
     End Sub
 
     Public Sub refreshClock()
-        Dim timer As DispatcherTimer = New DispatcherTimer(New TimeSpan(0, 5, 0), DispatcherPriority.Normal, Function()
-                                                                                                                 comcellFrame.Navigate(New ComcellClockPage(profile, comcellFrame, window))
-                                                                                                             End Function, Me.Dispatcher)
+        Dim timer As DispatcherTimer = New DispatcherTimer(
+            New TimeSpan(0, 5, 0),
+            DispatcherPriority.Normal,
+            Function()
+                comcellFrame.Navigate(New ComcellClockPage(profile, comcellFrame, window, aideService))
+            End Function, Me.Dispatcher)
     End Sub
 
     Public Sub SetComcellMinutes()
@@ -425,6 +431,7 @@ Class ComcellClockPage
     Private Sub GetWeeklyReportConfig()
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(4, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -439,6 +446,7 @@ Class ComcellClockPage
     Private Sub GetWeeklyReportEmailData()
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = aideService
             _option = New OptionModel
             If _OptionsViewModel.GetOptions(5, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
@@ -456,6 +464,7 @@ Class ComcellClockPage
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -517,6 +526,7 @@ Class ComcellClockPage
     Private Sub GetAttendanceConfig()
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(2, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -547,6 +557,7 @@ Class ComcellClockPage
     Private Sub GetAttendanceEmailData()
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = aideService
             _option = New OptionModel
             If _OptionsViewModel.GetOptions(3, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
@@ -661,6 +672,7 @@ Class ComcellClockPage
     Private Sub GetContactsConfig()
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(33, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -675,6 +687,7 @@ Class ComcellClockPage
     Private Sub GetContactsEmailData()
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = aideService
             _option = New OptionModel
             If _OptionsViewModel.GetOptions(34, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
@@ -704,6 +717,7 @@ Class ComcellClockPage
     Private Sub GetSkillsConfig()
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(35, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -718,6 +732,7 @@ Class ComcellClockPage
     Private Sub GetSkillsEmailData()
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = aideService
             _option = New OptionModel
             If _OptionsViewModel.GetOptions(36, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
@@ -748,6 +763,7 @@ Class ComcellClockPage
     Private Sub GetWorkPlaceAuditConfig()
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(38, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -763,6 +779,7 @@ Class ComcellClockPage
     Private Sub GetWADailyConfig()
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(39, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -778,6 +795,7 @@ Class ComcellClockPage
     Private Sub GetWorkPlaceAuditEmailData()
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = aideService
             _option = New OptionModel
             If _OptionsViewModel.GetOptions(42, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
@@ -805,6 +823,7 @@ Class ComcellClockPage
     Private Sub GetWAWeeklyConfig()
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(40, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -832,6 +851,7 @@ Class ComcellClockPage
     Private Sub GetWAMonthlyConfig()
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(41, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then

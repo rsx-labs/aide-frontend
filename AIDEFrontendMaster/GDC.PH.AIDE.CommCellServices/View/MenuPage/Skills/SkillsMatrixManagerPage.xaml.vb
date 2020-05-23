@@ -44,13 +44,15 @@ Class SkillsMatrixManagerPage
 
 #Region "Constructor"
 
-    Public Sub New(_profile As Profile, _isManager As Boolean)
+    Public Sub New(_profile As Profile, _isManager As Boolean, aideClient As AideServiceClient)
         ' This call is required by the designer.
         profile = _profile
         email = _profile.Email_Address
         empID = _profile.Emp_ID
         isManager = _isManager
         InitializeComponent()
+
+        client = aideClient
 
         LoadSkillsList()
         LoadEmployeeList()
@@ -127,7 +129,7 @@ Class SkillsMatrixManagerPage
     '''By Hyacinth Amarles 
     Public Sub LoadSkillsList()
         Try
-            InitializeService()
+            'InitializeService()
             _SkillDBProvider.GetSkillList.Clear()
 
             lstSkills = client.GetSkillsList(empID)

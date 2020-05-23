@@ -44,9 +44,15 @@ Class KPITargetsPage
 
 #Region "Constructor"
 
-    Public Sub New(_mainframe As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, permissionId As Short, employeeID As Integer, _email As String, _profile As Profile)
+    Public Sub New(_mainframe As Frame, _addframe As Frame,
+                   _menugrid As Grid, _submenuframe As Frame,
+                   permissionId As Short, employeeID As Integer,
+                   _email As String, _profile As Profile,
+                   aideService As ServiceReference1.AideServiceClient)
 
         InitializeComponent()
+
+        _client = aideService
         Me.mainframe = _mainframe
         Me.addframe = _addframe
         Me.menugrid = _menugrid
@@ -83,12 +89,12 @@ Class KPITargetsPage
 
     Public Sub SetData()
         Try
-            If InitializeService() Then
-                Dim fiscalYear As Date = Date.Now()
-                _lstKPITargets = _client.GetAllKPITargets(Me._currentEmployeeID, fiscalYear)
-                LoadKPITargets()
-                DisplayPagingInfo()
-            End If
+            'If InitializeService() Then
+            Dim fiscalYear As Date = Date.Now()
+            _lstKPITargets = _client.GetAllKPITargets(Me._currentEmployeeID, fiscalYear)
+            LoadKPITargets()
+            DisplayPagingInfo()
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try

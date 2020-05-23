@@ -158,6 +158,7 @@ Public Class AssetsInventoryListPage
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = _AideService
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -299,7 +300,7 @@ Public Class AssetsInventoryListPage
                 assetsModel.ISAPPROVED = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).ISAPPROVED
                 assetsModel.APPROVAL = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).APPROVAL
                 assetsModel.PREVIOUS_ID = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).PREVIOUS_ID
-                _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Personal", _addframe, _menugrid, _submenuframe))
+                _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Personal", _addframe, _menugrid, _submenuframe, _AideService))
                 frame.IsEnabled = False
                 frame.Opacity = 0.3
                 _menugrid.IsEnabled = False
@@ -334,7 +335,7 @@ Public Class AssetsInventoryListPage
                         assetsModel.STATUS = CType(lv_assetInventoryList.SelectedItem, AssetsModel).STATUS
                         assetsModel.OTHER_INFO = CType(lv_assetInventoryList.SelectedItem, AssetsModel).OTHER_INFO
                         assetsModel.FULL_NAME = CType(lv_assetInventoryList.SelectedItem, AssetsModel).FULL_NAME
-                        _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Update", _addframe, _menugrid, _submenuframe))
+                        _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Update", _addframe, _menugrid, _submenuframe, _AideService))
                         frame.IsEnabled = False
                         frame.Opacity = 0.3
                         _menugrid.IsEnabled = False
@@ -368,7 +369,7 @@ Public Class AssetsInventoryListPage
                 assetsModel.OTHER_INFO = CType(lv_assetInventoryListUnapproved.SelectedItem, AssetsModel).OTHER_INFO
                 assetsModel.FULL_NAME = CType(lv_assetInventoryListUnapproved.SelectedItem, AssetsModel).FULL_NAME
                 assetsModel.PREVIOUS_ID = CType(lv_assetInventoryListUnapproved.SelectedItem, AssetsModel).PREVIOUS_ID
-                _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Approval", _addframe, _menugrid, _submenuframe))
+                _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Approval", _addframe, _menugrid, _submenuframe, _AideService))
                 frame.IsEnabled = False
                 frame.Opacity = 0.3
                 _menugrid.IsEnabled = False

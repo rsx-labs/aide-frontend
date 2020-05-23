@@ -40,15 +40,16 @@ Public Class SuccessRegisterPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_mainFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
+    Public Sub New(_mainFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile, aideService As AideServiceClient)
         InitializeComponent()
+        Me.aideService = aideService
         mainFrame = _mainFrame
         addframe = _addframe
         menugrid = _menugrid
         submenuframe = _submenuframe
         profile = _profile
-        
-		pagingRecordPerPage = GetOptionData(26, 11, 12)
+
+        pagingRecordPerPage = GetOptionData(26, 11, 12)
         paginatedCollection = New PaginatedObservableCollection(Of SuccessRegisterModel)(pagingRecordPerPage)
 
         LoadSuccessRegister()
@@ -58,17 +59,18 @@ Public Class SuccessRegisterPage
 
 #Region "Methods"
     Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            aideService = New AideServiceClient(Context)
-            aideService.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            aideService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
+        'Dim bInitialize As Boolean = False
+        'Try
+        '    Dim Context As InstanceContext = New InstanceContext(Me)
+        '    aideService = New AideServiceClient(Context)
+        '    aideService.Open()
+        '    bInitialize = True
+        'Catch ex As SystemException
+        '    aideService.Abort()
+        '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        'End Try
+        'Return bInitialize
+        Return True
     End Function
 
     Public Sub LoadSuccessRegister()
@@ -153,6 +155,7 @@ Public Class SuccessRegisterPage
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then

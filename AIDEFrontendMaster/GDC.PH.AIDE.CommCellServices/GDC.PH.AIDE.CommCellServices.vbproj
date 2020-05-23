@@ -218,6 +218,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Model\ActionModel.vb" />
+    <Compile Include="Model\AppState.vb" />
     <Compile Include="Model\AssignedProjectModel.vb" />
     <Compile Include="Model\KPISummaryModel.vb" />
     <Compile Include="Model\KPITargetsModel.vb" />

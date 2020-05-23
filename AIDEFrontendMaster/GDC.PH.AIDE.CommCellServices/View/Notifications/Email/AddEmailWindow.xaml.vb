@@ -1,10 +1,12 @@
-﻿Public Class AddEmailWindow
+﻿Imports UI_AIDE_CommCellServices.ServiceReference1
+
+Public Class AddEmailWindow
     Private _emailaddress As String
-    Public Sub New()
+    Public Sub New(aideService As AideServiceClient)
 
         ' This call is required by the designer.
         InitializeComponent()
-        EmailFrame.Navigate(New AddEmailPage(EmailFrame, Me))
+        EmailFrame.Navigate(New AddEmailPage(EmailFrame, Me, aideService))
         ' Add any initialization after the InitializeComponent() call.
 
     End Sub

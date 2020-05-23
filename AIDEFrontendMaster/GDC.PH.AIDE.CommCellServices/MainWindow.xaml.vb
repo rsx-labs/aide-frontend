@@ -12,6 +12,7 @@ Imports System.Configuration
 Imports NLog
 Imports Microsoft.VisualBasic.ApplicationServices
 
+
 Class MainWindow
     Implements IAideServiceCallback
 
@@ -26,10 +27,12 @@ Class MainWindow
     Dim profileDBProvider As New ProfileDBProvider
     Dim profileViewModel As New ProfileViewModel
     Dim profile As Profile
-    Dim aideClientService As AideServiceClient
-    Dim enableOutlook As String = ConfigurationManager.AppSettings("enableOutlook")
+
     Dim machineOS As String = My.Computer.Info.OSFullName
     Dim guestPermission As Integer = 5
+
+    Private _aideClientService As AideServiceClient
+    Private _appState As AppState = New AppState()
 
     Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
@@ -124,10 +127,10 @@ Class MainWindow
         InitializeService()
         GetTime()
 
-        Dim useOutlook As Boolean = False
-        Boolean.TryParse(enableOutlook, useOutlook)
+        'Dim useOutlook As Boolean = False
+        'Boolean.TryParse(enableOutlook, useOutlook)
 
-        If useOutlook Then
+        If _appState.UseOutlook Then
             CheckOutlook()
         Else
             email = GetOptionData(optIDDefUser, modIdDefUser, funcIdDefUser)
@@ -167,7 +170,7 @@ Class MainWindow
         _logger.Info("Show greeting box and navigate to home screen")
 
         MsgBox("Welcome " & email & ".", MsgBoxStyle.Information, "AIDE")
-        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
+        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile, _aideClientService))
         SubMenuFrame.Navigate(New BlankSubMenu())
 
         _logger.Debug("End : InitializeData")
@@ -189,7 +192,7 @@ Class MainWindow
             _logger.Error(ex.ToString())
 
             If MsgBox("Outlook is not running. Do you want to proceed with AIDE without Outlook?", MsgBoxStyle.Critical + vbYesNo, "AIDE") = vbYes Then
-                Dim addwindow As New AddEmailWindow()
+                Dim addwindow As New AddEmailWindow(_aideClientService)
                 addwindow.ShowDialog()
                 email = addwindow.GetEmail
             Else
@@ -206,11 +209,11 @@ Class MainWindow
     Public Sub LoadSideBar()
         _logger.Debug("Start : LoadSideBar")
 
-        AttendanceFrame.Navigate(New AttendanceDashBoard(PagesFrame, profile))
-        genericFrame.Navigate(New _3CDashboard(email, PagesFrame, AddFrame, MenuGrid, SubMenuFrame, profile))
+        AttendanceFrame.Navigate(New AttendanceDashBoard(PagesFrame, profile, _aideClientService))
+        genericFrame.Navigate(New _3CDashboard(email, PagesFrame, AddFrame, MenuGrid, SubMenuFrame, profile, _aideClientService))
         'CommendationFrame.Navigate(New CommendationDashBoard(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, profile.Email_Address, profile, CommendationFrame))
-        BirthdayFrame.Navigate(New BirthdayDashboard(profile.Email_Address))
-        ComcellClockFrame.Navigate(New ComcellClockPage(profile, ComcellClockFrame, Me))
+        'BirthdayFrame.Navigate(New BirthdayDashboard(profile.Email_Address, _aideClientService))
+        ComcellClockFrame.Navigate(New ComcellClockPage(profile, ComcellClockFrame, Me, _aideClientService))
 
         _logger.Debug("End : LoadSideBar")
     End Sub
@@ -222,17 +225,17 @@ Class MainWindow
         Dim bInitialize As Boolean = False
         Try
             Dim Context As InstanceContext = New InstanceContext(Me)
-            aideClientService = New AideServiceClient(Context)
+            _aideClientService = New AideServiceClient(Context)
 
             _logger.Info("Opening AIDE service ...")
 
-            aideClientService.Open()
+            _aideClientService.Open()
             bInitialize = True
         Catch ex As SystemException
 
             _logger.Error($"Failed to initialize service. {ex.ToString()}")
 
-            aideClientService.Abort()
+            _aideClientService.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
@@ -247,7 +250,7 @@ Class MainWindow
 
         Try
             If InitializeService() Then
-                profile = aideClientService.SignOn(email)
+                profile = _aideClientService.SignOn(email)
                 szReturn = True
             Else
                 szReturn = False
@@ -255,7 +258,7 @@ Class MainWindow
         Catch ex As SystemException
             _logger.Error(ex.ToString())
 
-            aideClientService.Abort()
+            _aideClientService.Abort()
             szReturn = False
         End Try
 
@@ -365,7 +368,7 @@ Class MainWindow
 
                     _logger.Info("Recording attendance ...")
 
-                    aideClientService.InsertAttendanceByEmpID(attendanceSummarry)
+                    _aideClientService.InsertAttendanceByEmpID(attendanceSummarry)
                 End If
             End If
         Catch ex As Exception
@@ -435,6 +438,7 @@ Class MainWindow
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
+            _OptionsViewModel.Service = _aideClientService
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -492,8 +496,8 @@ Class MainWindow
 
         LoadSideBar()
 
-        PagesFrame.Navigate(New ThreeC_Page(profile, PagesFrame, AddFrame, MenuGrid, SubMenuFrame))
-        SubMenuFrame.Navigate(New ImproveSubMenuPage(PagesFrame, email, profile, AddFrame, MenuGrid, SubMenuFrame))
+        PagesFrame.Navigate(New ThreeC_Page(profile, PagesFrame, AddFrame, MenuGrid, SubMenuFrame, _aideClientService))
+        SubMenuFrame.Navigate(New ImproveSubMenuPage(PagesFrame, email, profile, AddFrame, MenuGrid, SubMenuFrame, _aideClientService))
 
         _logger.Debug("End : ImprovementBtn_Click")
     End Sub
@@ -503,7 +507,7 @@ Class MainWindow
         _logger.Debug("Start : HomeBtn2_Click")
 
         LoadSideBar()
-        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
+        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile, _aideClientService))
         SubMenuFrame.Navigate(New BlankSubMenu())
 
         _logger.Debug("End : HomeBtn2_Click")
@@ -553,7 +557,7 @@ Class MainWindow
                     _logger.Info("Inserting logoff time ...")
                     _logger.Info("****** Closing AIDE ******")
 
-                    aideClientService.InsertLogoffTime(profile.Emp_ID, logoffTime)
+                    _aideClientService.InsertLogoffTime(profile.Emp_ID, logoffTime)
                     Environment.Exit(0)
                 End If
             ElseIf result = MsgBoxResult.No Then
@@ -570,7 +574,7 @@ Class MainWindow
         _logger.Debug("Start : EmployeesBtn_Click")
 
         LoadSideBar()
-        PagesFrame.Navigate(New ContactListPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame))
+        PagesFrame.Navigate(New ContactListPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame, _aideClientService))
         SubMenuFrame.Navigate(New BlankSubMenu())
 
         _logger.Debug("Start : EmployeesBtn_Click")
@@ -583,7 +587,7 @@ Class MainWindow
 
         LoadSideBar()
 
-        PagesFrame.Navigate(New SkillsMatrixManagerPage(profile, IsManagerSignedOn))
+        PagesFrame.Navigate(New SkillsMatrixManagerPage(profile, IsManagerSignedOn, _aideClientService))
         SubMenuFrame.Navigate(New BlankSubMenu())
 
         _logger.Debug("End : SkillsBtn_Click")
@@ -608,8 +612,8 @@ Class MainWindow
 
         _logger.Debug("Start : TaskBtn_Click")
 
-        PagesFrame.Navigate(New TaskAdminPage(PagesFrame, Me, profile, AddFrame, MenuGrid, SubMenuFrame))
-        SubMenuFrame.Navigate(New TaskSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, Me))
+        PagesFrame.Navigate(New TaskAdminPage(PagesFrame, Me, profile, AddFrame, MenuGrid, SubMenuFrame, _aideClientService))
+        SubMenuFrame.Navigate(New TaskSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, Me, _aideClientService))
         LoadSideBar()
 
         _logger.Debug("End : TaskBtn_Click")
@@ -674,7 +678,7 @@ Class MainWindow
         _logger.Debug("Start : DashboardBtn_Click")
 
         LoadSideBar()
-        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
+        PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile, _aideClientService))
         SubMenuFrame.Navigate(New BlankSubMenu())
 
         _logger.Debug("End : DashboardBtn_Click")

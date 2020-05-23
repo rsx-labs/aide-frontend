@@ -114,7 +114,7 @@ Class AnnouncementDashboardAddPage
                 _announce.END_DATE = Nothing
                 _announce.EMP_ID = Nothing
 
-                mainframe.Navigate(New HomePage(mainframe, profile.Position, empID, addframe, menugrid, submenuframe, email, profile))
+                mainframe.Navigate(New HomePage(mainframe, profile.Position, empID, addframe, menugrid, submenuframe, email, profile, aide))
                 mainframe.IsEnabled = True
                 mainframe.Opacity = 1
                 menugrid.IsEnabled = True

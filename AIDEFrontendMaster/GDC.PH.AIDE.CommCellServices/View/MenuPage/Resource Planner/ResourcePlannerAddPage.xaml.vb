@@ -116,7 +116,7 @@ Class ResourcePlannerAddPage
                             If ans = MsgBoxResult.Yes Then
                                 InsertResourcePlanner()
                                 dtpTo.IsEnabled = True
-                                attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
+                                attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile, client))
                                 ExitPage()
                             End If
                         End If
