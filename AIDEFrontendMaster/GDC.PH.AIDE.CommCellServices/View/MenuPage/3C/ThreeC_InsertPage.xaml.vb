@@ -11,7 +11,7 @@ Class ThreeC_InsertPage
     Implements ServiceReference1.IAideServiceCallback
 
 #Region "Fields"
-    Public _AIDEClientService As ServiceReference1.AideServiceClient
+    'Public _AIDEClientService As ServiceReference1.AideServiceClient
 
     Private profile As Profile
     Private email As String
@@ -39,36 +39,36 @@ Class ThreeC_InsertPage
     End Sub
 
 #Region "Initialize Service"
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            'DisplayText("Opening client service...")
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            _AIDEClientService = New AideServiceClient(Context)
-            _AIDEClientService.Open()
-            bInitialize = True
-            'DisplayText("Service opened successfully...")
-            'Return True
-        Catch ex As SystemException
-            _AIDEClientService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        'DisplayText("Opening client service...")
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        _AIDEClientService = New AideServiceClient(Context)
+    '        _AIDEClientService.Open()
+    '        bInitialize = True
+    '        'DisplayText("Service opened successfully...")
+    '        'Return True
+    '    Catch ex As SystemException
+    '        _AIDEClientService.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 #End Region
-   
+
 #Region "Methods"
     'Get Generated RefNo
     Public Function GetGeneRatedRefNo() As Boolean
-        InitializeService()
+        'InitializeService()
         Try
             'DisplayText("Signing on as: " & Globals.OutlookAddIn.EmailAddress)
             Dim objConcern As Object = Nothing
-            Dim _concern As ServiceReference1.Concern = _AIDEClientService.GetGeneratedRefNo()
+            Dim _concern As ServiceReference1.Concern = AideClient.GetClient().GetGeneratedRefNo()
             SavegeneratedRefNo(_concern)
             Return True
         Catch ex As SystemException
-            _AIDEClientService.Abort()
+            '_AIDEClientService.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             Return False
         End Try
@@ -115,7 +115,7 @@ Class ThreeC_InsertPage
     End Sub
 
     Private Sub ExitPage()
-        frame.Navigate(New ThreeC_Page(profile, frame, addframe, menugrid, submenuframe, _AIDEClientService))
+        frame.Navigate(New ThreeC_Page(profile, frame, addframe, menugrid, submenuframe))
         frame.IsEnabled = True
         frame.Opacity = 1
         menugrid.IsEnabled = True
@@ -159,12 +159,12 @@ Class ThreeC_InsertPage
     End Sub
 
     Private Sub btnCreate3C(sender As Object, e As RoutedEventArgs)
-        InitializeService()
+        'InitializeService()
         Dim isValidate As Boolean
         isValidate = ValidateFields(Me.DataContext())
 
         If isValidate Then
-            _AIDEClientService.InsertIntoConcern(concern, email)
+            AideClient.GetClient().InsertIntoConcern(concern, email)
             MsgBox("3C has been added.", MsgBoxStyle.Information, "AIDE")
 
             txtRefNo.Text = String.Empty
@@ -173,7 +173,7 @@ Class ThreeC_InsertPage
             txtCounterMeasure.Clear()
             GetGeneRatedRefNo()
             setDate()
-            _AIDEClientService.Close()
+            '_AIDEClientService.Close()
             ExitPage()
         End If
     End Sub

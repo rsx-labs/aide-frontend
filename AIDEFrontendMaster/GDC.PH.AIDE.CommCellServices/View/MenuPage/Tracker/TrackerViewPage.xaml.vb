@@ -16,7 +16,7 @@ Class TrackerViewPage
 
 #Region "Fields"
 
-    Private _AideService As ServiceReference1.AideServiceClient
+    'Private _AideService As ServiceReference1.AideServiceClient
     Private empID As Integer
     Private mainframe As Frame
     Private addframe As Frame
@@ -67,19 +67,19 @@ Class TrackerViewPage
 
 #Region "Functions/Methods"
 
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            _AideService = New AideServiceClient(Context)
-            _AideService.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            _AideService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        _AideService = New AideServiceClient(Context)
+    '        _AideService.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        _AideService.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Public Sub BindModel(SabaModel As SabaLearningModel, empID As Integer)
         SabaLearningListVM.SabaLearningVMModel.EMP_ID = empID
@@ -88,11 +88,11 @@ Class TrackerViewPage
 
     Public Sub SetData()
         Try
-            If InitializeService() Then
-                lstSabaLearning = _AideService.GetAllSabaXref(empID, sabacoursemodel.SABA_ID)
-                LoadSabaCourses()
-                LoadSabaCoursesNot()
-            End If
+            'If InitializeService() Then
+            lstSabaLearning = AideClient.GetClient().GetAllSabaXref(empID, sabacoursemodel.SABA_ID)
+            LoadSabaCourses()
+            LoadSabaCoursesNot()
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -107,7 +107,7 @@ Class TrackerViewPage
 
     Public Function getDataUpdate(ByVal SabaModel As SabaLearningModel)
         Try
-            InitializeService()
+            'InitializeService()
             If dtDate.Text = String.Empty Then
             Else
                 SabaLearning.SABA_ID = SabaModel.SABA_ID
@@ -147,7 +147,7 @@ Class TrackerViewPage
             SabaLearningListVM.ObjectCompletedSabaLearningSet = lstSabaLearningList
             lstEmpCompleted.ItemsSource = SabaLearningListVM.ObjectCompletedSabaLearningSet
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -174,7 +174,7 @@ Class TrackerViewPage
             SabaLearningListVM.ObjectNotCompletedSabaLearningSet = lstSabaLearningList
             lstEmpNotCompleted.ItemsSource = SabaLearningListVM.ObjectNotCompletedSabaLearningSet
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -240,9 +240,9 @@ Class TrackerViewPage
 
     Private Sub UpdateCourseBtn_Click(sender As Object, e As RoutedEventArgs)
         Try
-            InitializeService()
+            'InitializeService()
 
-            _AideService.UpdateSabaXref(getDataUpdate(SabaLearningListVM.SabaLearningVMModel))
+            AideClient.GetClient().UpdateSabaXref(getDataUpdate(SabaLearningListVM.SabaLearningVMModel))
             If SabaLearning.DATE_COMPLETED = Nothing Then
                 MsgBox("Please Fill Up All Fields!", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 addframe.Navigate(New TrackerViewPage(sabacoursemodel, mainframe, addframe, menugrid, submenuframe, profile))

@@ -17,7 +17,7 @@ Class InsertActionListPage
     Private addframe As Frame
     Private menugrid As Grid
     Private submenuframe As Frame
-    Private aide As AideServiceClient
+    'Private aide As AideServiceClient
     Private action As New Action
     Private actionModel As New ActionModel()
     Private dsplyByDiv As Integer = 1
@@ -43,12 +43,12 @@ Class InsertActionListPage
 #Region "Main Function/Method"
     Private Sub GenerateActionRef()
         Try
-            InitializeService()
+            'InitializeService()
             Dim actionModel As New ActionModel
             Dim refCode As String = "ACT"
             Dim refNoCount As Integer
             Dim refNo As String
-            Dim action As Action() = aide.GetActionSummary(email)
+            Dim action As Action() = AideClient.GetClient().GetActionSummary(email)
             refNoCount = action.Count + 1
             refNo = refCode + "-" + Convert.ToString(Today.Date.ToString("MM/dd/yy")) + "-" + Convert.ToString(refNoCount)
             actionModel.REF_NO = refNo
@@ -63,25 +63,25 @@ Class InsertActionListPage
 
     Public Sub PopulateComboBox()
         Try
-            If InitializeService() Then
-                Dim lstNickname As Nickname() = aide.ViewNicknameByDeptID(email, dsplyByDiv)
-                Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
-                Dim successRegisterDBProvider As New SuccessRegisterDBProvider
-                Dim nicknameVM As New NicknameViewModel()
+            'If InitializeService() Then
+            Dim lstNickname As Nickname() = AideClient.GetClient().ViewNicknameByDeptID(email, dsplyByDiv)
+            Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
+            Dim successRegisterDBProvider As New SuccessRegisterDBProvider
+            Dim nicknameVM As New NicknameViewModel()
 
-                For Each objLessonLearnt As Nickname In lstNickname
-                    successRegisterDBProvider.SetMyNickname(objLessonLearnt)
-                Next
+            For Each objLessonLearnt As Nickname In lstNickname
+                successRegisterDBProvider.SetMyNickname(objLessonLearnt)
+            Next
 
-                For Each rawUser As MyNickname In successRegisterDBProvider.GetMyNickname()
-                    lstNicknameList.Add(New NicknameModel(rawUser))
-                Next
+            For Each rawUser As MyNickname In successRegisterDBProvider.GetMyNickname()
+                lstNicknameList.Add(New NicknameModel(rawUser))
+            Next
 
-                nicknameVM.NicknameList = lstNicknameList
+            nicknameVM.NicknameList = lstNicknameList
 
-                Act_AssigneeCB.DataContext = nicknameVM
+            Act_AssigneeCB.DataContext = nicknameVM
 
-            End If
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -89,7 +89,7 @@ Class InsertActionListPage
 
     Public Function getDataInsert(ByVal ActionModel As ActionModel)
         Try
-            InitializeService()
+            'InitializeService()
             If ActionModel.REF_NO = Nothing Or ActionModel.ACTION_MESSAGE = Nothing Or Act_AssigneeCB.SelectedValue = Nothing Or ActionModel.DUE_DATE = Nothing Or ActionModel.DATE_CLOSED = Nothing Then
             Else
                 action.Act_ID = ActionModel.REF_NO
@@ -107,7 +107,7 @@ Class InsertActionListPage
     End Function
 
     Private Sub ExitPage()
-        frame.Navigate(New HomeActionListsPage(frame, addframe, menugrid, submenuframe, profile, aide))
+        frame.Navigate(New HomeActionListsPage(frame, addframe, menugrid, submenuframe, profile))
         frame.IsEnabled = True
         frame.Opacity = 1
         menugrid.IsEnabled = True
@@ -119,19 +119,19 @@ Class InsertActionListPage
 #End Region
 
 #Region "Services Function/Method"
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            aide = New AideServiceClient(Context)
-            aide.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            aide.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        aide = New AideServiceClient(Context)
+    '        aide.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        aide.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
@@ -158,9 +158,9 @@ Class InsertActionListPage
 #Region "Events Trigger"
     Private Sub AddBtn_Click(sender As Object, e As RoutedEventArgs)
         Try
-            InitializeService()
+            'InitializeService()
 
-            aide.InsertActionList(getDataInsert(Me.DataContext()))
+            AideClient.GetClient().InsertActionList(getDataInsert(Me.DataContext()))
             If action.Act_ID = Nothing Or action.Act_Message = Nothing Or action.Act_Assignee = Nothing Or action.Act_DueDate = Nothing Then
                 MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else

@@ -28,7 +28,7 @@ Class AuditSchedMainPage
 
 #Region "Fields"
 
-    Private _client As ServiceReference1.AideServiceClient
+    'Private _client As ServiceReference1.AideServiceClient
     Private empID As Integer
     Private mainframe As Frame
     Private addframe As Frame
@@ -54,13 +54,13 @@ Class AuditSchedMainPage
 
     Public Sub New(_mainframe As Frame, _profile As Profile,
                    _addframe As Frame, _menugrid As Grid,
-                   _submenuframe As Frame, aideService As AideServiceClient)
+                   _submenuframe As Frame)
 
         _logger.Debug("Start : Constructor")
 
         InitializeComponent()
 
-        _client = aideService
+        '_client = aideService
         Me.empID = _profile.Emp_ID
         Me.mainframe = _mainframe
         Me.addframe = _addframe
@@ -86,43 +86,44 @@ Class AuditSchedMainPage
 
 #Region "Functions/Methods"
 
-    Public Function InitializeService() As Boolean
-        _logger.Debug("Start : InitializeService")
+    'Public Function InitializeService() As Boolean
+    '    _logger.Debug("Start : InitializeService")
 
-        Dim bInitialize As Boolean = False
-        Try
+    '    Dim bInitialize As Boolean = False
+    '    Try
 
-            If _client.State = CommunicationState.Faulted Then
+    '        If _client.State = CommunicationState.Faulted Then
 
-                _logger.Debug("Service is faulted, reinitializing ...")
+    '            _logger.Debug("Service is faulted, reinitializing ...")
 
-                Dim Context As InstanceContext = New InstanceContext(Me)
-                _client = New AideServiceClient(Context)
-                _client.Open()
-            End If
+    '            Dim Context As InstanceContext = New InstanceContext(Me)
+    '            _client = New AideServiceClient(Context)
+    '            _client.Open()
+    '        End If
 
-            bInitialize = True
-        Catch ex As SystemException
-            _logger.Error(ex.ToString())
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        _logger.Error(ex.ToString())
 
-            _client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
+    '        _client.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
 
-        _logger.Debug("End : InitializeService")
+    '    _logger.Debug("End : InitializeService")
 
-        Return bInitialize
-    End Function
+    '    Return bInitialize
+    'End Function
 
     Public Sub LoadYear()
 
         _logger.Debug("Start : LoadYear")
 
         Try
-            If InitializeService() Then
-                lstFiscalYear = _client.GetAllFiscalYear()
-                LoadFiscalYear()
-            End If
+            'If InitializeService() Then
+            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
+
+            LoadFiscalYear()
+            'End If
         Catch ex As Exception
             _logger.Error(ex.ToString())
 
@@ -137,11 +138,11 @@ Class AuditSchedMainPage
         _logger.Debug("Start : SetData")
 
         Try
-            If InitializeService() Then
-                lstauditSched = _client.GetAuditSched(empID, year)
-                LoadAuditSched()
-                DisplayPagingInfo()
-            End If
+            'If InitializeService() Then
+            lstauditSched = AideClient.GetClient().GetAuditSched(empID, year)
+            LoadAuditSched()
+            DisplayPagingInfo()
+            'End If
         Catch ex As Exception
             _logger.Error(ex.ToString())
 
@@ -359,7 +360,7 @@ Class AuditSchedMainPage
                         auditSched.AUDIT_SCHED_ID = CType(AuditSchedLV.SelectedItem, AuditSchedModel).AUDIT_SCHED_ID
                         auditSched.FY_START = CType(AuditSchedLV.SelectedItem, AuditSchedModel).FY_START
 
-                        addframe.Navigate(New AuditSchedAddPage(profile, mainframe, addframe, menugrid, submenuframe, auditSched, _client))
+                        addframe.Navigate(New AuditSchedAddPage(profile, mainframe, addframe, menugrid, submenuframe, auditSched))
                         mainframe.IsEnabled = False
                         mainframe.Opacity = 0.3
                         menugrid.IsEnabled = False
@@ -381,7 +382,7 @@ Class AuditSchedMainPage
     End Sub
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
-        addframe.Navigate(New AuditSchedAddPage(profile, mainframe, addframe, menugrid, submenuframe, lstauditSched, _client))
+        addframe.Navigate(New AuditSchedAddPage(profile, mainframe, addframe, menugrid, submenuframe, lstauditSched))
         mainframe.IsEnabled = False
         mainframe.Opacity = 0.3
         menugrid.IsEnabled = False

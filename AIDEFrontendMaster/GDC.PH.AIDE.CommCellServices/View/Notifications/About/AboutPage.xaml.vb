@@ -11,7 +11,7 @@ Class AboutPage
 
 #Region "Fields"
 
-    Private _AideService As ServiceReference1.AideServiceClient
+    'Private _AideService As ServiceReference1.AideServiceClient
     Private lstContributors As Contributors()
     Private lstMessage As MessageDetail()
     Private ContriVM As New ContributorsViewModel()
@@ -52,27 +52,27 @@ Class AboutPage
 
 #Region "Main Functions"
 
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            _AideService = New AideServiceClient(Context)
-            _AideService.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            _AideService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        _AideService = New AideServiceClient(Context)
+    '        _AideService.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        _AideService.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Public Sub SetData2()
         Try
-            If InitializeService() Then
-                lstMessage = _AideService.GetMessage(1015, 20)                
-                LoadData2()
-                messageTotalRecords = lstMessage.Length
-            End If
+            'If InitializeService() Then
+            lstMessage = AideClient.GetClient().GetMessage(1015, 20)
+            LoadData2()
+            messageTotalRecords = lstMessage.Length
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -98,17 +98,17 @@ Class AboutPage
 
     Public Sub SetData()
         Try
-            If InitializeService() Then
-                lstMessage = _AideService.GetMessage(1015, 20)
-                If ContributorsTC.SelectedIndex = 0 Then
-                    lstContributors = _AideService.GetAllContributors(1)
-                Else
-                    lstContributors = _AideService.GetAllContributors(2)
-                End If
-                LoadData()
-                totalRecords = lstContributors.Length
-                messageTotalRecords = lstMessage.Length
+            'If InitializeService() Then
+            lstMessage = AideClient.GetClient().GetMessage(1015, 20)
+            If ContributorsTC.SelectedIndex = 0 Then
+                lstContributors = AideClient.GetClient().GetAllContributors(1)
+            Else
+                lstContributors = AideClient.GetClient().GetAllContributors(2)
             End If
+            LoadData()
+            totalRecords = lstContributors.Length
+            messageTotalRecords = lstMessage.Length
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try

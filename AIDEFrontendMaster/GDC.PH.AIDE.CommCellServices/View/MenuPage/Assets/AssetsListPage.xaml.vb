@@ -74,17 +74,17 @@ Public Class AssetsListPage
 
     Public Sub LoadAssets()
         Try
-            If InitializeService() Then
-                If Assets.SelectedIndex = 0 Then
-                    lstAssets = _AideService.GetAllAssetsByEmpID(profile.Emp_ID)
-                    btnPrint.Visibility = Windows.Visibility.Hidden
+            'If InitializeService() Then
+            If Assets.SelectedIndex = 0 Then
+                lstAssets = AideClient.GetClient().GetAllAssetsByEmpID(profile.Emp_ID)
+                btnPrint.Visibility = Windows.Visibility.Hidden
                 Else
-                    lstAssets = _AideService.GetAllDeletedAssetsByEmpID(profile.Emp_ID)
-                    btnPrint.Visibility = Windows.Visibility.Hidden
+                lstAssets = AideClient.GetClient().GetAllDeletedAssetsByEmpID(profile.Emp_ID)
+                btnPrint.Visibility = Windows.Visibility.Hidden
                 End If
 
                 SetLists(lstAssets)
-            End If
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try

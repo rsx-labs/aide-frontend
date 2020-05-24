@@ -9,7 +9,7 @@ Class AuditSchedAddPage
 
 #Region "Page Declaration"
     Public _frame As Frame
-    Private aide As AideServiceClient
+    'Private aide As AideServiceClient
     Private auditSched As New AuditSched
     Private AuditSchedModel As New AuditSchedModel
     Private _addframe As Frame
@@ -36,12 +36,12 @@ Class AuditSchedAddPage
 #Region "Constructors"
     'Add Constructor
     Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid,
-                   submenuframe As Frame, _lstauditSched As AuditSched(), aideService As AideServiceClient)
+                   submenuframe As Frame, _lstauditSched As AuditSched())
 
         _logger.Debug("Start : Constructor mode = Add")
 
         Try
-            aide = aideService
+            'aide = aideService
 
             Me._frame = mainframe
             Me._addframe = addframe
@@ -66,7 +66,7 @@ Class AuditSchedAddPage
     End Sub
     'Update Constructor
     Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid,
-                   submenuframe As Frame, _auditSched As AuditSchedModel, aideService As AideServiceClient)
+                   submenuframe As Frame, _auditSched As AuditSchedModel)
 
         _logger.Debug("Start : Constructor mode=Update")
 
@@ -101,33 +101,33 @@ Class AuditSchedAddPage
 #End Region
 
 #Region "Methods/Functions"
-    Public Function InitializeService() As Boolean
-        _logger.Debug("Start : InitializeService")
+    'Public Function InitializeService() As Boolean
+    '    _logger.Debug("Start : InitializeService")
 
-        Dim bInitialize As Boolean = False
-        Try
+    '    Dim bInitialize As Boolean = False
+    '    Try
 
-            If aide.State = CommunicationState.Faulted Then
+    '        If aide.State = CommunicationState.Faulted Then
 
-                _logger.Debug("Service is faulted, reinitializing ...")
+    '            _logger.Debug("Service is faulted, reinitializing ...")
 
-                Dim Context As InstanceContext = New InstanceContext(Me)
-                aide = New AideServiceClient(Context)
-                aide.Open()
-            End If
+    '            Dim Context As InstanceContext = New InstanceContext(Me)
+    '            aide = New AideServiceClient(Context)
+    '            aide.Open()
+    '        End If
 
-            bInitialize = True
-        Catch ex As SystemException
-            _logger.Error(ex.ToString())
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        _logger.Error(ex.ToString())
 
-            aide.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
+    '        aide.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
 
-        _logger.Debug("End : InitializeService")
+    '    _logger.Debug("End : InitializeService")
 
-        Return bInitialize
-    End Function
+    '    Return bInitialize
+    'End Function
 
     Public Sub LoadauditSched()
 
@@ -267,10 +267,11 @@ Class AuditSchedAddPage
         _logger.Debug("Start : LoadYear")
 
         Try
-            If InitializeService() Then
-                lstFiscalYear = aide.GetAllFiscalYear()
-                LoadFiscalYear()
-            End If
+            'If InitializeService() Then
+            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
+
+            LoadFiscalYear()
+            'End If
         Catch ex As Exception
             _logger.Error(ex.ToString())
 
@@ -310,10 +311,10 @@ Class AuditSchedAddPage
         _logger.Debug("Start : LoadSChed")
 
         Try
-            If InitializeService() Then
-                lstAuditSchedMonth = aide.GetAuditSChed_Month(2, Date.Now.Year, Date.Now.Month)
-                LoadYear()
-            End If
+            'If InitializeService() Then
+            lstAuditSchedMonth = AideClient.GetClient().GetAuditSChed_Month(2, Date.Now.Year, Date.Now.Month)
+            LoadYear()
+            'End If
         Catch ex As Exception
             _logger.Error(ex.ToString())
 
@@ -328,26 +329,30 @@ Class AuditSchedAddPage
         _logger.Debug("Start :LoadEmpNickName")
 
         Try
-            If InitializeService() Then
-                Dim lstNickname As Nickname() = aide.ViewNicknameByDeptID(profile.Email_Address, dsplyByDept)
+            'If InitializeService() Then
+            Dim lstNickname As Nickname() = AideClient.GetClient().ViewNicknameByDeptID(profile.Email_Address, dsplyByDept)
 
-                Dim successRegisterDBProvider As New SuccessRegisterDBProvider
-                Dim nicknameVM As New NicknameViewModel()
+            Dim successRegisterDBProvider As New SuccessRegisterDBProvider
+            Dim nicknameVM As New NicknameViewModel()
 
-                For Each objLessonLearnt As Nickname In lstNickname
-                    successRegisterDBProvider.SetMyNickname(objLessonLearnt)
-                Next
 
-                For Each rawUser As MyNickname In successRegisterDBProvider.GetMyNickname()
-                    lstNicknameList.Add(New NicknameModel(rawUser))
-                Next
+            For Each objLessonLearnt As Nickname In lstNickname
+                successRegisterDBProvider.SetMyNickname(objLessonLearnt)
+            Next
 
-                nicknameVM.NicknameList = lstNicknameList
+            For Each rawUser As MyNickname In successRegisterDBProvider.GetMyNickname()
+                lstNicknameList.Add(New NicknameModel(rawUser))
+            Next
 
-                cbDaily.DataContext = nicknameVM
-                cbMonthly.DataContext = nicknameVM
-                cbWeekly.DataContext = nicknameVM
-            End If
+            nicknameVM.NicknameList = lstNicknameList
+
+            cbDaily.DataContext = nicknameVM
+
+            cbMonthly.DataContext = nicknameVM
+
+            cbWeekly.DataContext = nicknameVM
+
+            'End If
         Catch ex As Exception
             _logger.Error(ex.ToString())
 
@@ -397,7 +402,7 @@ Class AuditSchedAddPage
 #Region "Events"
     Private Sub AddBtn_Click(sender As Object, e As RoutedEventArgs)
         Try
-            InitializeService()
+            'InitializeService()
             If mode = "Add" Then
                 If cbMonth.SelectedValue = Nothing Or cbDaily.SelectedValue = Nothing Or cbMonthly.SelectedValue = Nothing Or cbWeekly.SelectedValue = Nothing Or cbPeriodStart.SelectedValue = Nothing Or cbYear.SelectedValue.ToString.Substring(0, 4) = Nothing Then
                     MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
@@ -412,14 +417,14 @@ Class AuditSchedAddPage
                     auditSched.MONTHLY = cbMonthly.SelectedValue
                     auditSched.YEAR = cbYear.SelectedValue.ToString.Substring(0, 4)
 
-                    Dim isMessageSuccessfuly As Boolean = aide.InsertAuditSched(auditSched)
+                    Dim isMessageSuccessfuly As Boolean = AideClient.GetClient().InsertAuditSched(auditSched)
                     If isMessageSuccessfuly Then
                         MsgBox("Employees have been assigned to workplace audit.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                     Else
                         MsgBox("An application error was encountered. Please contact your AIDE Administrator. ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                     End If
 
-                    _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe, aide))
+                    _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
                     _frame.IsEnabled = True
                     _frame.Opacity = 1
                     _menugrid.IsEnabled = True
@@ -458,14 +463,14 @@ Class AuditSchedAddPage
                         End If
                     End If
                 Next
-                Dim isMessageSuccessfuly As Boolean = aide.UpdateAuditSched(auditSched)
+                Dim isMessageSuccessfuly As Boolean = AideClient.GetClient().UpdateAuditSched(auditSched)
                 If isMessageSuccessfuly Then
                     MsgBox("Wokrplace Schedule have been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 Else
                     MsgBox("An application error was encountered. Please contact your AIDE Administrator. ", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 End If
 
-                _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe, aide))
+                _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
                 _frame.IsEnabled = True
                 _frame.Opacity = 1
                 _menugrid.IsEnabled = True
@@ -483,7 +488,7 @@ Class AuditSchedAddPage
     End Sub
 
     Private Sub BackBtn_Click(sender As Object, e As RoutedEventArgs)
-        _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe, aide))
+        _frame.Navigate(New AuditSchedMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
         _frame.IsEnabled = True
         _frame.Opacity = 1
         _menugrid.IsEnabled = True

@@ -17,7 +17,7 @@ Class UpdateActionListPage
     Private menugrid As Grid
     Private addframe As Frame
     Private submenuframe As Frame
-    Private aide As AideServiceClient
+    'Private aide As AideServiceClient
     Private action As New Action
     Private actionModel As New ActionModel()
     Private action_provider As New ActionListDBProvider
@@ -50,7 +50,7 @@ Class UpdateActionListPage
 
     Public Function showUpdateItems()
         Try
-            InitializeService()
+            'InitializeService()
             actionModel.REF_NO = action.Act_ID
             actionModel.ACTION_MESSAGE = action.Act_Message
             actionModel.EMP_ID = profile.Emp_ID
@@ -66,7 +66,7 @@ Class UpdateActionListPage
 
     Public Function getDataUpdate(ByVal ActionModel As ActionModel)
         Try
-            InitializeService()
+            'InitializeService()
             If ActionModel.REF_NO = Nothing Or ActionModel.ACTION_MESSAGE = Nothing Or Act_AssignedAll.Text = String.Empty Or ActionModel.DUE_DATE = Nothing Or ActionModel.DATE_CLOSED = Nothing Then
                 action.Act_ID = ActionModel.REF_NO
                 action.Act_Message = ActionModel.ACTION_MESSAGE
@@ -92,31 +92,31 @@ Class UpdateActionListPage
 
     Public Sub PopulateComboBox()
         Try
-            If InitializeService() Then
-                Dim lstNickname As Nickname() = aide.ViewNicknameByDeptID(email, dsplyByDiv)
-                Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
-                Dim successRegisterDBProvider As New SuccessRegisterDBProvider
-                Dim nicknameVM As New NicknameViewModel()
+            'If InitializeService() Then
+            Dim lstNickname As Nickname() = AideClient.GetClient().ViewNicknameByDeptID(email, dsplyByDiv)
+            Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
+            Dim successRegisterDBProvider As New SuccessRegisterDBProvider
+            Dim nicknameVM As New NicknameViewModel()
 
-                For Each objLessonLearnt As Nickname In lstNickname
-                    successRegisterDBProvider.SetMyNickname(objLessonLearnt)
-                Next
+            For Each objLessonLearnt As Nickname In lstNickname
+                successRegisterDBProvider.SetMyNickname(objLessonLearnt)
+            Next
 
-                For Each rawUser As MyNickname In successRegisterDBProvider.GetMyNickname()
-                    lstNicknameList.Add(New NicknameModel(rawUser))
-                Next
+            For Each rawUser As MyNickname In successRegisterDBProvider.GetMyNickname()
+                lstNicknameList.Add(New NicknameModel(rawUser))
+            Next
 
-                nicknameVM.NicknameList = lstNicknameList
-                Act_AssigneeCB2.DataContext = nicknameVM
+            nicknameVM.NicknameList = lstNicknameList
+            Act_AssigneeCB2.DataContext = nicknameVM
 
-            End If
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
     Private Sub ExitPage()
-        frame.Navigate(New HomeActionListsPage(frame, addframe, menugrid, submenuframe, profile, aide))
+        frame.Navigate(New HomeActionListsPage(frame, addframe, menugrid, submenuframe, profile))
         frame.IsEnabled = True
         frame.Opacity = 1
         menugrid.IsEnabled = True
@@ -129,19 +129,19 @@ Class UpdateActionListPage
 
 #Region "Services Function/Method"
 
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            aide = New AideServiceClient(Context)
-            aide.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            aide.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        aide = New AideServiceClient(Context)
+    '        aide.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        aide.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
@@ -168,11 +168,11 @@ Class UpdateActionListPage
 #Region "Events Trigger"
     Private Sub UpdateBtn_Click(sender As Object, e As RoutedEventArgs)
         Try
-            InitializeService()
+            'InitializeService()
             If actionModel.REF_NO = Nothing Or actionModel.ACTION_MESSAGE = Nothing Or Act_AssignedAll.Text = String.Empty Or actionModel.DUE_DATE = Nothing Or actionModel.DATE_CLOSED = Nothing Then
                 If actionModel.DATE_CLOSED = Nothing And actionModel.ACTION_MESSAGE <> Nothing And actionModel.DUE_DATE <> Nothing And Act_AssignedAll.Text <> String.Empty Then
                     If MsgBox("Are you sure you want to proceed without a closing date?", MsgBoxStyle.Information + vbYesNo, "AIDE") = vbYes Then
-                        aide.UpdateActionList(getDataUpdate(Me.DataContext()))
+                        AideClient.GetClient().UpdateActionList(getDataUpdate(Me.DataContext()))
                         MsgBox("Action item has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                         action.Act_ID = Nothing
                         action.Act_Message = Nothing
@@ -186,7 +186,7 @@ Class UpdateActionListPage
                     MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 End If
             Else
-                aide.UpdateActionList(getDataUpdate(Me.DataContext()))
+                AideClient.GetClient().UpdateActionList(getDataUpdate(Me.DataContext()))
                 MsgBox("Action item has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 action.Act_ID = Nothing
                 action.Act_Message = Nothing

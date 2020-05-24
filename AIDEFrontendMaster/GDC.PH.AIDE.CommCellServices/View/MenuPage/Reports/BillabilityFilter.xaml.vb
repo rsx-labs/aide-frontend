@@ -11,7 +11,7 @@ Public Class BillabilityFilter
     Private mainFrame As Frame
     Private fromPage As String
     Private approvalStatus As Integer
-    Private client As AideServiceClient
+    'Private client As AideServiceClient
     Private reportsModel As New ReportsModel
     Private profile As New Profile
     Private _addframe As Frame
@@ -341,10 +341,10 @@ Public Class BillabilityFilter
 
     Public Sub LoadYear()
         Try
-            If InitializeService() Then
-                lstFiscalYear = client.GetAllFiscalYear()
-                LoadFiscalYear()
-            End If
+            'If InitializeService() Then
+            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
+            LoadFiscalYear()
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -397,26 +397,26 @@ Public Class BillabilityFilter
         End If
 
         If result = 6 Then
-            If InitializeService() Then
-                'client.InsertAssetsBorrowing(assets)
+            'If InitializeService() Then
+            'client.InsertAssetsBorrowing(assets)
 
-                If approval = 1 Then
-                    MsgBox("Asset borrowing request has been Approved.", MsgBoxStyle.Information, "AIDE")
-                ElseIf approval = 2 Then
-                    MsgBox("Asset borrowing request has been Rejected.", MsgBoxStyle.Information, "AIDE")
-                End If
-                ClearFields()
-                'mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
-                mainFrame.Navigate(New AssetBorrowingPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
-                mainFrame.IsEnabled = True
-                mainFrame.Opacity = 1
-                _menugrid.IsEnabled = True
-                _menugrid.Opacity = 1
-                _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
-
-                _addframe.Visibility = Visibility.Hidden
+            If approval = 1 Then
+                MsgBox("Asset borrowing request has been Approved.", MsgBoxStyle.Information, "AIDE")
+            ElseIf approval = 2 Then
+                MsgBox("Asset borrowing request has been Rejected.", MsgBoxStyle.Information, "AIDE")
             End If
+            ClearFields()
+            'mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
+            mainFrame.Navigate(New AssetBorrowingPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
+            mainFrame.IsEnabled = True
+            mainFrame.Opacity = 1
+            _menugrid.IsEnabled = True
+            _menugrid.Opacity = 1
+            _submenuframe.IsEnabled = True
+            _submenuframe.Opacity = 1
+
+            _addframe.Visibility = Visibility.Hidden
+            'End If
         Else
             Exit Sub
         End If
@@ -518,22 +518,22 @@ Public Class BillabilityFilter
 
     End Sub
 
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            'DisplayText("Opening client service...")
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(Context)
-            client.Open()
-            bInitialize = True
-            'DisplayText("Service opened successfully...")
-            'Return True
-        Catch ex As SystemException
-            client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        'DisplayText("Opening client service...")
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        client = New AideServiceClient(Context)
+    '        client.Open()
+    '        bInitialize = True
+    '        'DisplayText("Service opened successfully...")
+    '        'Return True
+    '    Catch ex As SystemException
+    '        client.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Public Function CheckMissingField() As Boolean
         'If txtEmpID.Text = String.Empty Then
@@ -570,7 +570,7 @@ Public Class BillabilityFilter
     End Sub
 
     Public Sub ListOfCustodians()
-        Dim lstMangers As Assets() = client.GetAllAssetsCustodian(profile.Emp_ID)
+        Dim lstMangers As Assets() = AideClient.GetClient().GetAllAssetsCustodian(profile.Emp_ID)
         Dim lstMangersList As New ObservableCollection(Of AssetsModel)
         Dim assetsDBProvider As New AssetsDBProvider
         Dim assetsVM As New AssetsViewModel()
@@ -590,7 +590,7 @@ Public Class BillabilityFilter
     End Sub
 
     Public Sub ListOfAllUser()
-        lstNickname = client.ViewNicknameByDeptID(profile.Email_Address, dsplyByDiv)
+        lstNickname = AideClient.GetClient().ViewNicknameByDeptID(profile.Email_Address, dsplyByDiv)
         Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
         Dim successRegisterDBProvider As New SuccessRegisterDBProvider
 
@@ -610,24 +610,24 @@ Public Class BillabilityFilter
 
     Public Sub PopulateComboBoxAssetID()
         Try
-            If InitializeService() Then
-                ' For Asset ID Combobox
-                lstAssets = client.GetAllAssetsUnAssigned(profile.Emp_ID)
-                Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
+            'If InitializeService() Then
+            '    ' For Asset ID Combobox
+            lstAssets = AideClient.GetClient().GetAllAssetsUnAssigned(profile.Emp_ID)
+            Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
 
-                For Each objAsset As Assets In lstAssets
-                    assetDBProvider.SetAssetList(objAsset)
-                Next
+            For Each objAsset As Assets In lstAssets
+                assetDBProvider.SetAssetList(objAsset)
+            Next
 
-                For Each rawUser As MyAssets In assetDBProvider.GetAssetList()
-                    lstAssetsList.Add(New AssetsModel(rawUser))
-                Next
+            For Each rawUser As MyAssets In assetDBProvider.GetAssetList()
+                lstAssetsList.Add(New AssetsModel(rawUser))
+            Next
 
-                assetVM.AssetList = lstAssetsList
+            assetVM.AssetList = lstAssetsList
 
-                'cbAssetID.ItemsSource = assetVM.AssetList
+            'cbAssetID.ItemsSource = assetVM.AssetList
 
-            End If
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -635,26 +635,26 @@ Public Class BillabilityFilter
 
     Public Sub ListOfAssetType()
         Try
-            If InitializeService() Then
-                Dim lstAssets As Assets() = client.GetAssetDescription()
-                Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
-                Dim assetsDBProvider As New AssetsDBProvider
-                Dim assetsVM As New AssetsViewModel()
+            'If InitializeService() Then
+            Dim lstAssets As Assets() = AideClient.GetClient().GetAssetDescription()
+            Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
+            Dim assetsDBProvider As New AssetsDBProvider
+            Dim assetsVM As New AssetsViewModel()
 
-                ' Set the MyLessonLearntList 
-                For Each objAssets As Assets In lstAssets
-                    assetsDBProvider.SetAssetTypeList(objAssets)
-                Next
+            ' Set the MyLessonLearntList 
+            For Each objAssets As Assets In lstAssets
+                assetsDBProvider.SetAssetTypeList(objAssets)
+            Next
 
-                For Each rawUser As MyAssets In assetsDBProvider.GetAssetTypeList()
-                    lstAssetsList.Add(New AssetsModel(rawUser))
-                Next
+            For Each rawUser As MyAssets In assetsDBProvider.GetAssetTypeList()
+                lstAssetsList.Add(New AssetsModel(rawUser))
+            Next
 
-                'assetsVM.AssetTypeList = Nothing
-                'cbAssetType.ItemsSource = Nothing
-                'assetsVM.AssetTypeList = lstAssetsList
-                'cbAssetType.ItemsSource = assetsVM.AssetTypeList
-            End If
+            'assetsVM.AssetTypeList = Nothing
+            'cbAssetType.ItemsSource = Nothing
+            'assetsVM.AssetTypeList = lstAssetsList
+            'cbAssetType.ItemsSource = assetsVM.AssetTypeList
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -662,26 +662,26 @@ Public Class BillabilityFilter
 
     Public Sub ListOfAssetManufacturer()
         Try
-            If InitializeService() Then
-                Dim lstAssets As Assets() = client.GetAssetManufacturer()
-                Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
-                Dim assetsDBProvider As New AssetsDBProvider
-                Dim assetsVM As New AssetsViewModel()
+            'If InitializeService() Then
+            Dim lstAssets As Assets() = AideClient.GetClient().GetAssetManufacturer()
+            Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
+            Dim assetsDBProvider As New AssetsDBProvider
+            Dim assetsVM As New AssetsViewModel()
 
-                ' Set the MyLessonLearntList 
-                For Each objAssets As Assets In lstAssets
-                    assetsDBProvider.SetAssetManufacturerList(objAssets)
-                Next
+            ' Set the MyLessonLearntList 
+            For Each objAssets As Assets In lstAssets
+                assetsDBProvider.SetAssetManufacturerList(objAssets)
+            Next
 
-                For Each rawUser As MyAssets In assetsDBProvider.GetAssetManufacturerList()
-                    lstAssetsList.Add(New AssetsModel(rawUser))
-                Next
+            For Each rawUser As MyAssets In assetsDBProvider.GetAssetManufacturerList()
+                lstAssetsList.Add(New AssetsModel(rawUser))
+            Next
 
-                assetsVM.AssetManufacturerList = Nothing
-                'cbAssetManufacturer.ItemsSource = Nothing
-                'assetsVM.AssetManufacturerList = lstAssetsList
-                'cbAssetManufacturer.ItemsSource = assetsVM.AssetManufacturerList
-            End If
+            assetsVM.AssetManufacturerList = Nothing
+            'cbAssetManufacturer.ItemsSource = Nothing
+            'assetsVM.AssetManufacturerList = lstAssetsList
+            'cbAssetManufacturer.ItemsSource = assetsVM.AssetManufacturerList
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try

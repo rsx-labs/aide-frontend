@@ -13,7 +13,7 @@ Class InsertContactList
 
 #Region "Declarations"
     Private mainFrame As Frame
-    Private client As ServiceReference1.AideServiceClient
+    'Private client As ServiceReference1.AideServiceClient
     Private contacts As New ContactListModel
     Private email As String
     Private menugrid As Grid
@@ -78,48 +78,48 @@ Class InsertContactList
     End Sub
 
     Private Sub LoadLocation()
-        If InitializeService() Then
-            Dim lstLocation As LocationList() = client.GetAllLocation()
-            Dim lstLocationList As New ObservableCollection(Of LocationModel)
-            Dim selectionDBProvider As New SelectionListDBProvider
-            Dim selectionListVM As New SelectionListViewModel()
+        'If InitializeService() Then
+        Dim lstLocation As LocationList() = AideClient.GetClient().GetAllLocation()
+        Dim lstLocationList As New ObservableCollection(Of LocationModel)
+        Dim selectionDBProvider As New SelectionListDBProvider
+        Dim selectionListVM As New SelectionListViewModel()
 
-            For Each objLocation As LocationList In lstLocation
-                selectionDBProvider._setlistofLocation(objLocation)
-            Next
+        For Each objLocation As LocationList In lstLocation
+            selectionDBProvider._setlistofLocation(objLocation)
+        Next
 
-            For Each rawUser As myLocationSet In selectionDBProvider._getobjLocation()
-                lstLocationList.Add(New LocationModel(rawUser))
-            Next
+        For Each rawUser As myLocationSet In selectionDBProvider._getobjLocation()
+            lstLocationList.Add(New LocationModel(rawUser))
+        Next
 
-            selectionListVM.ObjectLocationSet = lstLocationList
+        selectionListVM.ObjectLocationSet = lstLocationList
 
-            cbContactLocation.DataContext = selectionListVM
-            cbContactLocation.ItemsSource = selectionListVM.ObjectLocationSet
-        End If
+        cbContactLocation.DataContext = selectionListVM
+        cbContactLocation.ItemsSource = selectionListVM.ObjectLocationSet
+        'End If
     End Sub
 
     Private Sub LoadJobPosition()
         Try
-            If InitializeService() Then
-                Dim lstPosition As PositionList() = client.GetAllPosition()
-                Dim lstPositionList As New ObservableCollection(Of PositionModel)
-                Dim selectionDBProvider As New SelectionListDBProvider
-                Dim selectionListVM As New SelectionListViewModel()
+            'If InitializeService() Then
+            Dim lstPosition As PositionList() = AideClient.GetClient().GetAllPosition()
+            Dim lstPositionList As New ObservableCollection(Of PositionModel)
+            Dim selectionDBProvider As New SelectionListDBProvider
+            Dim selectionListVM As New SelectionListViewModel()
 
-                For Each objposition As PositionList In lstPosition
-                    selectionDBProvider._setlistofPosition(objposition)
-                Next
+            For Each objposition As PositionList In lstPosition
+                selectionDBProvider._setlistofPosition(objposition)
+            Next
 
-                For Each rawUser As myPositionSet In selectionDBProvider._getobjPosition()
-                    lstPositionList.Add(New PositionModel(rawUser))
-                Next
+            For Each rawUser As myPositionSet In selectionDBProvider._getobjPosition()
+                lstPositionList.Add(New PositionModel(rawUser))
+            Next
 
-                selectionListVM.ObjectPositionSet = lstPositionList
+            selectionListVM.ObjectPositionSet = lstPositionList
 
-                cbContactPosition.DataContext = selectionListVM
-                cbContactPosition.ItemsSource = selectionListVM.ObjectPositionSet
-            End If
+            cbContactPosition.DataContext = selectionListVM
+            cbContactPosition.ItemsSource = selectionListVM.ObjectPositionSet
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -127,25 +127,25 @@ Class InsertContactList
 
     Private Sub LoadPermission()
         Try
-            If InitializeService() Then
-                Dim lstPermission As PermissionList() = client.GetAllPermission()
-                Dim lstPermissionList As New ObservableCollection(Of PermissionModel)
-                Dim selectionDBProvider As New SelectionListDBProvider
-                Dim selectionListVM As New SelectionListViewModel()
+            'If InitializeService() Then
+            Dim lstPermission As PermissionList() = AideClient.GetClient().GetAllPermission()
+            Dim lstPermissionList As New ObservableCollection(Of PermissionModel)
+            Dim selectionDBProvider As New SelectionListDBProvider
+            Dim selectionListVM As New SelectionListViewModel()
 
-                For Each objpermission As PermissionList In lstPermission
-                    selectionDBProvider._setlistofPermission(objpermission)
-                Next
+            For Each objpermission As PermissionList In lstPermission
+                selectionDBProvider._setlistofPermission(objpermission)
+            Next
 
-                For Each rawUser As myPermissionSet In selectionDBProvider._getobjPermission()
-                    lstPermissionList.Add(New PermissionModel(rawUser))
-                Next
+            For Each rawUser As myPermissionSet In selectionDBProvider._getobjPermission()
+                lstPermissionList.Add(New PermissionModel(rawUser))
+            Next
 
-                selectionListVM.ObjectPermissionSet = lstPermissionList
+            selectionListVM.ObjectPermissionSet = lstPermissionList
 
-                cbContactGroup.DataContext = selectionListVM
-                cbContactGroup.ItemsSource = selectionListVM.ObjectPermissionSet
-            End If
+            cbContactGroup.DataContext = selectionListVM
+            cbContactGroup.ItemsSource = selectionListVM.ObjectPermissionSet
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -153,25 +153,25 @@ Class InsertContactList
 
     Private Sub LoadMaritalStatus()
         Try
-            If InitializeService() Then
-                Dim lstMarital As StatusList() = client.GetAllStatus("EMPLOYEE")
-                Dim lstStatusList As New ObservableCollection(Of MaritalModel)
-                Dim selectionDBProvider As New SelectionListDBProvider
-                Dim selectionListVM As New SelectionListViewModel()
+            'If InitializeService() Then
+            Dim lstMarital As StatusList() = AideClient.GetClient().GetAllStatus("EMPLOYEE")
+            Dim lstStatusList As New ObservableCollection(Of MaritalModel)
+            Dim selectionDBProvider As New SelectionListDBProvider
+            Dim selectionListVM As New SelectionListViewModel()
 
-                For Each objMarital As StatusList In lstMarital
-                    selectionDBProvider._setlistofStatus(objMarital)
-                Next
+            For Each objMarital As StatusList In lstMarital
+                selectionDBProvider._setlistofStatus(objMarital)
+            Next
 
-                For Each rawUser As myStatusSet In selectionDBProvider._getobjStatus()
-                    lstStatusList.Add(New MaritalModel(rawUser))
-                Next
+            For Each rawUser As myStatusSet In selectionDBProvider._getobjStatus()
+                lstStatusList.Add(New MaritalModel(rawUser))
+            Next
 
-                selectionListVM.ObjectMaritalSet = lstStatusList
+            selectionListVM.ObjectMaritalSet = lstStatusList
 
-                cbContactMaritalStatus.DataContext = selectionListVM
-                cbContactMaritalStatus.ItemsSource = selectionListVM.ObjectMaritalSet
-            End If
+            cbContactMaritalStatus.DataContext = selectionListVM
+            cbContactMaritalStatus.ItemsSource = selectionListVM.ObjectMaritalSet
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -179,25 +179,25 @@ Class InsertContactList
 
     Private Sub LoadWorkShift()
         Try
-            If InitializeService() Then
-                Dim lstWorkShift As StatusList() = client.GetAllStatus("WORK_SHIFT")
-                Dim lstWorkList As New ObservableCollection(Of WorkShiftModel)
-                Dim selectionDBProvider As New SelectionListDBProvider
-                Dim selectionListVM As New SelectionListViewModel()
+            'If InitializeService() Then
+            Dim lstWorkShift As StatusList() = AideClient.GetClient().GetAllStatus("WORK_SHIFT")
+            Dim lstWorkList As New ObservableCollection(Of WorkShiftModel)
+            Dim selectionDBProvider As New SelectionListDBProvider
+            Dim selectionListVM As New SelectionListViewModel()
 
-                For Each objWork As StatusList In lstWorkShift
-                    selectionDBProvider._setlistofStatus(objWork)
-                Next
+            For Each objWork As StatusList In lstWorkShift
+                selectionDBProvider._setlistofStatus(objWork)
+            Next
 
-                For Each rawUser As myStatusSet In selectionDBProvider._getobjStatus()
-                    lstWorkList.Add(New WorkShiftModel(rawUser))
-                Next
+            For Each rawUser As myStatusSet In selectionDBProvider._getobjStatus()
+                lstWorkList.Add(New WorkShiftModel(rawUser))
+            Next
 
-                selectionListVM.ObjectWorkShiftSet = lstWorkList
+            selectionListVM.ObjectWorkShiftSet = lstWorkList
 
-                cbContactShiftStatus.DataContext = selectionListVM
-                cbContactShiftStatus.ItemsSource = selectionListVM.ObjectWorkShiftSet
-            End If
+            cbContactShiftStatus.DataContext = selectionListVM
+            cbContactShiftStatus.ItemsSource = selectionListVM.ObjectWorkShiftSet
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -207,7 +207,7 @@ Class InsertContactList
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = client
+            '_OptionsViewModel.Service = client
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -239,7 +239,7 @@ Class InsertContactList
 
 #Region "Events"
     Private Sub btnCCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCCancel.Click
-        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame, client))
+        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         menugrid.IsEnabled = True
@@ -314,20 +314,20 @@ Class InsertContactList
 
 
 
-                If InitializeService() Then
-                    client.CreateNewContactByEmpID(contactList)
-                    'ClearFields()
-                    MsgBox("Contacts has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
-                    attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile, client))
-                    mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame, client))
-                    mainFrame.IsEnabled = True
-                    mainFrame.Opacity = 1
-                    menugrid.IsEnabled = True
-                    menugrid.Opacity = 1
-                    submenuframe.IsEnabled = True
-                    submenuframe.Opacity = 1
-                    addframe.Visibility = Visibility.Hidden
-                End If
+                'If InitializeService() Then
+                AideClient.GetClient().CreateNewContactByEmpID(contactList)
+                'ClearFields()
+                MsgBox("Contacts has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
+                mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+                mainFrame.IsEnabled = True
+                mainFrame.Opacity = 1
+                menugrid.IsEnabled = True
+                menugrid.Opacity = 1
+                submenuframe.IsEnabled = True
+                submenuframe.Opacity = 1
+                addframe.Visibility = Visibility.Hidden
+                'End If
             End If
 
         Catch ex As Exception
@@ -350,19 +350,19 @@ Class InsertContactList
 #End Region
 
 #Region "Service methods"
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(Context)
-            client.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        client = New AideServiceClient(Context)
+    '        client.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        client.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 

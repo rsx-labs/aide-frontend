@@ -15,7 +15,7 @@ Public Class LatePage
     Implements IAideServiceCallback
 
 #Region "Fields"
-    Private client As AideServiceClient
+    'Private client As AideServiceClient
     Private _LateDBProvider As New LateDBProvider
     Private _LateViewModel As New LateViewModel
     Private mainFrame As Frame
@@ -60,19 +60,19 @@ Public Class LatePage
 
 #Region "Private Methods"
 
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(Context)
-            client.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        client = New AideServiceClient(Context)
+    '        client.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        client.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Private Sub SetTitle()
 
@@ -88,9 +88,9 @@ Public Class LatePage
 
     Private Sub LoadStackLateFY()
         Try
-            InitializeService()
+            'InitializeService()
             _LateDBProvider._lateList.Clear()
-            Dim lstlate = client.GetLate(empID, month, year, displayDataFiscalYear)
+            Dim lstlate = AideClient.GetClient().GetLate(empID, month, year, displayDataFiscalYear)
             Dim latelist As New ObservableCollection(Of LateModel)
             Dim latelistVM As New LateViewModel()
             Dim LatesFY As New ChartValues(Of Double)()
@@ -125,15 +125,15 @@ Public Class LatePage
             chartLateFY.AxisX.First().Labels = employeeFY
             chartLateFY.AxisY.First().LabelFormatter = Function(value) value
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
     Private Sub LoadStackLate()
         Try
-            InitializeService()
+            'InitializeService()
             _LateDBProvider._lateList.Clear()
-            Dim lstlate = client.GetLate(empID, month, year, displayDataMonthly)
+            Dim lstlate = AideClient.GetClient().GetLate(empID, month, year, displayDataMonthly)
             Dim latelist As New ObservableCollection(Of LateModel)
             Dim latelistVM As New LateViewModel()
             Dim Lates As New ChartValues(Of Double)()
@@ -168,7 +168,7 @@ Public Class LatePage
             chartLate.AxisX.First().Labels = employee
             chartLate.AxisY.First().LabelFormatter = Function(value) value
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -199,11 +199,11 @@ Public Class LatePage
 
     Public Sub SetData()
         Try
-            If InitializeService() Then
+            'If InitializeService() Then
 
-                lstFiscalYear = client.GetAllFiscalYear()
-                LoadFiscalYear()
-            End If
+            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
+            LoadFiscalYear()
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -225,7 +225,7 @@ Public Class LatePage
             fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

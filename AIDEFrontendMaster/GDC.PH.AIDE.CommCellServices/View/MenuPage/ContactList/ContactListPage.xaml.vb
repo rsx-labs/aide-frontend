@@ -35,7 +35,7 @@ Public Class ContactListPage
 #End Region
 
 #Region "Fields"
-    Private _AideService As ServiceReference1.AideServiceClient
+    'Private _AideService As ServiceReference1.AideServiceClient
     Private mainFrame As Frame
     Private isEmpty As Boolean
     Private email As String
@@ -56,11 +56,11 @@ Public Class ContactListPage
 #Region "Constructor"
 
     Public Sub New(mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid,
-                   _submenuframe As Frame, _attendanceFrame As Frame, aideService As AideServiceClient)
+                   _submenuframe As Frame, _attendanceFrame As Frame)
 
         InitializeComponent()
 
-        _AideService = aideService
+        '_AideService = aideService
         Me.email = _profile.Email_Address
         Me.empID = _profile.Emp_ID
         Me.mainFrame = mainFrame
@@ -81,19 +81,19 @@ Public Class ContactListPage
         'LoadData()
     End Sub
 
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            _AideService = New AideServiceClient(Context)
-            _AideService.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            _AideService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        _AideService = New AideServiceClient(Context)
+    '        _AideService.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        _AideService.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
 #End Region
 
@@ -114,15 +114,15 @@ Public Class ContactListPage
         Try
             'If InitializeService() Then
             If ContactsTC.SelectedIndex = 0 Then
-                lstContacts = _AideService.ViewContactListAll(empID, 0)
+                lstContacts = AideClient.GetClient().ViewContactListAll(empID, 0)
                 If profile.Permission_ID = 1 Then
                     btnCreate.Visibility = Windows.Visibility.Visible
                 End If
             ElseIf ContactsTC.SelectedIndex = 1 Then
-                lstContacts = _AideService.ViewContactListAll(empID, 1)
+                lstContacts = AideClient.GetClient().ViewContactListAll(empID, 1)
                 btnCreate.Visibility = Windows.Visibility.Hidden
             Else
-                lstContacts = _AideService.ViewContactListAll(empID, 2)
+                lstContacts = AideClient.GetClient().ViewContactListAll(empID, 2)
                 btnCreate.Visibility = Windows.Visibility.Hidden
             End If
 
@@ -197,7 +197,7 @@ Public Class ContactListPage
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = _AideService
+            '_OptionsViewModel.Service = _AideService
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -408,7 +408,7 @@ Public Class ContactListPage
                         contactList.DEPARTMENT_ID = contactListMod.DEPARTMENT_ID
                         contactList.DIVISION_ID = contactListMod.DIVISION_ID
                         contactList.OLD_EMP_ID = profile.Emp_ID
-                        _AideService.UpdateContactListByEmpID(contactList, 1)
+                        AideClient.GetClient().UpdateContactListByEmpID(contactList, 1)
                         MsgBox("Employee has been assigned to your team.", MsgBoxStyle.OkOnly, "AIDE")
                         paginatedCollection.Clear()
                         SetData()
@@ -465,13 +465,13 @@ Public Class ContactListPage
 
                     If MsgBox("Are you sure to assign " + contactListMod.FULL_NAME + " on your team?", vbYesNo, "AIDE") = vbYes Then
                         contactList.ACTIVE = 1
-                        _AideService.UpdateContactListByEmpID(contactList, 2)
+                        AideClient.GetClient().UpdateContactListByEmpID(contactList, 2)
                         MsgBox("Employee has been assigned to your team.", MsgBoxStyle.OkOnly, "AIDE")
                         paginatedCollection.Clear()
                         SetData()
                     Else
                         contactList.ACTIVE = 2
-                        _AideService.UpdateContactListByEmpID(contactList, 2)
+                        AideClient.GetClient().UpdateContactListByEmpID(contactList, 2)
                         paginatedCollection.Clear()
                         SetData()
                     End If

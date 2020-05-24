@@ -35,15 +35,15 @@ Public Class ThreeC_Page
     Dim guestAccount As Integer = 5
     Dim lstConcern As Concern()
     Dim concernDBProvider As New ConcernDBProvider
-    Dim client As AideServiceClient
+    'Dim client As AideServiceClient
     Dim paginatedCollection As PaginatedObservableCollection(Of ConcernModel) = New PaginatedObservableCollection(Of ConcernModel)(pagingRecordPerPage)
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_profile As Profile, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, aideService As AideServiceClient)
+    Public Sub New(_profile As Profile, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         InitializeComponent()
         'InitializeService()
-        client = aideService
+        'client = aideService
 
         profile = _profile
         frame = _frame
@@ -59,30 +59,30 @@ Public Class ThreeC_Page
 #End Region
 
 #Region "Methods"
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(Context)
-            client.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        client = New AideServiceClient(Context)
+    '        client.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        client.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     ''DISPLAY to DATAGIRD VIEW
     Public Sub LoadConcernList()
         Try
-            If InitializeService() Then
-                lstConcern = client.GetAllConcernLst(profile.Emp_ID)
-                SetLists(lstConcern)
-            End If
+            'If InitializeService() Then
+            lstConcern = AideClient.GetClient().GetAllConcernLst(profile.Emp_ID)
+            SetLists(lstConcern)
+            'End If
         Catch ex As SystemException
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-            client.Abort()
+            'client.Abort()
         End Try
     End Sub
 
@@ -161,7 +161,7 @@ Public Class ThreeC_Page
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = client
+            '_OptionsViewModel.Service = client
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
