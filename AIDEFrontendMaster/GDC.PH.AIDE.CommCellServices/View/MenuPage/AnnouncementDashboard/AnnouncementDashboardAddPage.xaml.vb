@@ -7,7 +7,7 @@ Class AnnouncementDashboardAddPage
     Implements UI_AIDE_CommCellServices.ServiceReference1.IAideServiceCallback
 
 
-    Private aide As ServiceReference1.AideServiceClient
+    'Private aide As ServiceReference1.AideServiceClient
     Private empID As Integer
     Private mainframe As Frame
     Private addframe As Frame
@@ -70,7 +70,7 @@ Class AnnouncementDashboardAddPage
 
     Public Function getDataInsert(ByVal _announcementmodel As AnnouncementModel)
         Try
-            InitializeService()
+            'InitializeService()
             Dim textRange As New TextRange(txtAnnouncementMessage.Document.ContentStart, txtAnnouncementMessage.Document.ContentEnd)
             If Not IsNothing(textRange.Text) Or Not _announcementmodel.TITLE = Nothing Then
                 _announce.MESSAGE = textRange.Text
@@ -85,36 +85,36 @@ Class AnnouncementDashboardAddPage
         End Try
     End Function
 
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            aide = New AideServiceClient(Context)
-            aide.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            aide.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        aide = New AideServiceClient(Context)
+    '        aide.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        aide.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Private Sub btnAnnouncementCreate_Click(sender As Object, e As RoutedEventArgs)
         Try
-            InitializeService()
+            'InitializeService()
             Dim textRange As New TextRange(txtAnnouncementMessage.Document.ContentStart, txtAnnouncementMessage.Document.ContentEnd)
 
             If _announcemodel.TITLE = Nothing Or textRange.Text.Trim() = String.Empty Then
                 MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else
-                aide.InsertAnnouncements(getDataInsert(Me.DataContext()))
+                AideClient.GetClient().InsertAnnouncements(getDataInsert(Me.DataContext()))
                 MsgBox("Announcement has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 _announce.TITLE = Nothing
                 _announce.MESSAGE = Nothing
                 _announce.END_DATE = Nothing
                 _announce.EMP_ID = Nothing
 
-                mainframe.Navigate(New HomePage(mainframe, profile.Position, empID, addframe, menugrid, submenuframe, email, profile, aide))
+                mainframe.Navigate(New HomePage(mainframe, profile.Position, empID, addframe, menugrid, submenuframe, email, profile))
                 mainframe.IsEnabled = True
                 mainframe.Opacity = 1
                 menugrid.IsEnabled = True

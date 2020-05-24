@@ -23,7 +23,7 @@ Class AssignedProjectMainPage
         ' This call is required by the designer.
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
-        InitializeService()
+        'InitializeService()
         Me.DataContext = _assignedProjVM
         Me._mainFrame = _mainframe
         Me._profile = _profile
@@ -41,7 +41,7 @@ Class AssignedProjectMainPage
 #Region "Methods/Functions"
     Public Sub LoadAssignedProjectList()
         Try
-            Dim lstAssignedProjects As ViewProject() = _aide.ViewProjectListofEmployee(_empID)
+            Dim lstAssignedProjects As ViewProject() = AideClient.GetClient().ViewProjectListofEmployee(_empID)
             For Each objAssigned As ViewProject In lstAssignedProjects
                 _assignedProjDB.SetAssignedProjectList(objAssigned)
             Next

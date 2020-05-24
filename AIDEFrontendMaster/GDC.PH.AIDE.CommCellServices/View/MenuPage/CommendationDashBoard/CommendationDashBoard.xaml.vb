@@ -15,7 +15,7 @@ Class CommendationDashBoard
 
 #Region "Fields"
 
-    Private _AideService As ServiceReference1.AideServiceClient
+    'Private _AideService As ServiceReference1.AideServiceClient
     Private mainFrame As Frame
     Private _addframe As Frame
     Private _menugrid As Grid
@@ -52,12 +52,11 @@ Class CommendationDashBoard
 
     Public Sub New(mainFrame As Frame, _position As String, _empID As Integer,
                    _addFrame As Frame, _menuGrid As Grid, _subMenuFrame As Frame,
-                   _email As String, _profile As Profile, _commendFrame As Frame,
-                   aideService As ServiceReference1.AideServiceClient)
+                   _email As String, _profile As Profile, _commendFrame As Frame)
 
         InitializeComponent()
 
-        _AideService = aideService
+        '_AideService = aideService
         Me.position = _position
         Me.empID = _empID
         Me.mainFrame = mainFrame
@@ -89,8 +88,8 @@ Class CommendationDashBoard
     Public Sub SetData()
         Try
             'If InitializeService() Then
-            lstCommendation = _AideService.GetCommendations(empID)
-            lstFiscalYear = _AideService.GetAllFiscalYear()
+            lstCommendation = AideClient.GetClient().GetCommendations(empID)
+            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
             LoadFiscalYear()
             LoadCommendations()
             'End If
@@ -167,8 +166,8 @@ Class CommendationDashBoard
 
     Public Sub LoadCommendationsBySearch()
         Try
-            InitializeService()
-            lstCommendation = _AideService.GetCommendationsBySearch(empID, month, year)
+            'InitializeService()
+            lstCommendation = AideClient.GetClient().GetCommendationsBySearch(empID, month, year)
             Dim lstCommendationList As New ObservableCollection(Of CommendationModel)
             Dim commendationsDBProvider As New CommendationDBProvider
 
@@ -187,19 +186,19 @@ Class CommendationDashBoard
         End Try
     End Sub
 
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            _AideService = New AideServiceClient(Context)
-            _AideService.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            _AideService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        _AideService = New AideServiceClient(Context)
+    '        _AideService.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        _AideService.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 #End Region
 
 #Region "Events"

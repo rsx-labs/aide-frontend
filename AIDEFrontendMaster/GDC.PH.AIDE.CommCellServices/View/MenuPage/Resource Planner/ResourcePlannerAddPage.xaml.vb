@@ -11,7 +11,7 @@ Class ResourcePlannerAddPage
     Implements ServiceReference1.IAideServiceCallback
 
 #Region "Fields"
-    Private client As AideServiceClient
+    'Private client As AideServiceClient
     Private _ResourceDBProvider As New ResourcePlannerDBProvider
     Private _ResourceViewModel As New ResourcePlannerViewModel
     Private mainFrame As Frame
@@ -38,8 +38,7 @@ Class ResourcePlannerAddPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid,
-                   _submenuframe As Frame, _attendanceFrame As Frame, aideService As AideServiceClient)
+    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _attendanceFrame As Frame)
 
         _logger.Debug("Start : Constructor")
 
@@ -50,9 +49,6 @@ Class ResourcePlannerAddPage
         Me._submenuframe = _submenuframe
         Me.attendanceFrame = _attendanceFrame
         Me.InitializeComponent()
-
-        client = aideService
-
         LoadData()
         LoadCategory()
         LoadSchedule()
@@ -62,8 +58,7 @@ Class ResourcePlannerAddPage
 
     End Sub
 
-    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame,
-                   _attendanceFrame As Frame, _isToDate As String, aideService As AideServiceClient)
+    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _attendanceFrame As Frame, _isToDate As String)
 
         _logger.Debug("Start : Constructor")
 
@@ -74,9 +69,6 @@ Class ResourcePlannerAddPage
         Me._submenuframe = _submenuframe
         Me.attendanceFrame = _attendanceFrame
         Me.InitializeComponent()
-
-        client = aideService
-
         dtpFrom.SelectedDate = _isToDate
         isFromNoty = True
         LoadData()
@@ -140,7 +132,7 @@ Class ResourcePlannerAddPage
                             If ans = MsgBoxResult.Yes Then
                                 InsertResourcePlanner()
                                 dtpTo.IsEnabled = True
-                                attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile, client))
+                                attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
                                 ExitPage()
                             End If
                         End If
@@ -202,38 +194,24 @@ Class ResourcePlannerAddPage
 
 #Region "Function"
 
-    Public Function InitializeService() As Boolean
-        _logger.Debug("Start : InitializeService")
-
-        Dim bInitialize As Boolean = False
-        Try
-
-            If client.State = CommunicationState.Faulted Then
-
-                _logger.Debug("Service is faulted, reinitializing ...")
-
-                Dim Context As InstanceContext = New InstanceContext(Me)
-                client = New AideServiceClient(Context)
-                client.Open()
-            End If
-
-            bInitialize = True
-        Catch ex As SystemException
-            _logger.Error(ex.ToString())
-
-            client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-
-        _logger.Debug("End : InitializeService")
-
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        client = New AideServiceClient(Context)
+    '        client.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        client.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Public Sub LoadEmployee()
         Try
-            InitializeService()
-            Dim lstresource As ResourcePlanner() = client.ViewEmpResourcePlanner(profile.Email_Address)
+            'InitializeService()
+            Dim lstresource As ResourcePlanner() = AideClient.GetClient().ViewEmpResourcePlanner(profile.Email_Address)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
 
             For Each objResource As ResourcePlanner In lstresource
@@ -263,9 +241,9 @@ Class ResourcePlannerAddPage
         Resource.dateTo = dateTo
         Resource.Status = cbCategory.SelectedValue
 
-        If InitializeService() Then
-            client.InsertAttendanceForLeaves(Resource)
-        End If
+        'If InitializeService() Then
+        AideClient.GetClient().InsertAttendanceForLeaves(Resource)
+        'End If
 
         'If profile.Emp_ID <> txtEmpID.Text Then
         '    client.InsertResourcePlanner(Resource)
@@ -279,8 +257,8 @@ Class ResourcePlannerAddPage
 
     Public Sub LoadCategory()
         Try
-            InitializeService()
-            Dim lstresource As ResourcePlanner() = client.GetStatusResourcePlanner(profile.Emp_ID)
+            'InitializeService()
+            Dim lstresource As ResourcePlanner() = AideClient.GetClient().GetStatusResourcePlanner(profile.Emp_ID)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
 
             For Each objResource As ResourcePlanner In lstresource
@@ -304,10 +282,10 @@ Class ResourcePlannerAddPage
         Dim empID As Integer
 
         Try
-            InitializeService()
+            'InitializeService()
 
             empID = Integer.Parse(txtEmpID.Text)
-            Dim lstresource As ResourcePlanner() = client.GetLeavesByDateAndEmpID(empID, cbCategory.SelectedValue, dateFrom, dateTo)
+            Dim lstresource As ResourcePlanner() = AideClient.GetClient().GetLeavesByDateAndEmpID(empID, cbCategory.SelectedValue, dateFrom, dateTo)
 
             If lstresource.Count > 0 Then
                 bLeaveExists = True
@@ -393,7 +371,7 @@ Class ResourcePlannerAddPage
     End Sub
 
     Private Sub ExitPage()
-        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame, client))
+        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         _menugrid.IsEnabled = True

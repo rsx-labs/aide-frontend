@@ -26,7 +26,7 @@ Public Class BillabilityManagerVLLeavePage
 #End Region
 
 #Region "Fields"
-    Private client As AideServiceClient
+    'Private client As AideServiceClient
     Private _ResourceDBProvider As New ResourcePlannerDBProvider
     Private _ResourceViewModel As New ResourcePlannerViewModel
     Private lstresource() As ResourcePlanner
@@ -48,8 +48,7 @@ Public Class BillabilityManagerVLLeavePage
     Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
-    Public Sub New(_profile As Profile, mFrame As Frame, addframe As Frame, menugrid As Grid,
-                   submenuframe As Frame, attendanceFrame As Frame, aideService As AideServiceClient)
+    Public Sub New(_profile As Profile, mFrame As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame, attendanceFrame As Frame)
 
         _logger.Debug("Start : Constructor")
 
@@ -61,8 +60,6 @@ Public Class BillabilityManagerVLLeavePage
         Me._attendanceFrame = attendanceFrame
         Me.InitializeComponent()
 
-        client = aideService
-
         month = Date.Now.Month
         year = Date.Now.Year
 
@@ -71,43 +68,29 @@ Public Class BillabilityManagerVLLeavePage
 
 #Region "Private Methods"
 
-    Public Function InitializeService() As Boolean
-        _logger.Debug("Start : InitializeService")
-
-        Dim bInitialize As Boolean = False
-        Try
-
-            If client.State = CommunicationState.Faulted Then
-
-                _logger.Debug("Service is faulted, reinitializing ...")
-
-                Dim Context As InstanceContext = New InstanceContext(Me)
-                client = New AideServiceClient(Context)
-                client.Open()
-            End If
-
-            bInitialize = True
-        Catch ex As SystemException
-            _logger.Error(ex.ToString())
-
-            client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-
-        _logger.Debug("End : InitializeService")
-
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        client = New AideServiceClient(Context)
+    '        client.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        client.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Private Sub LoadDataActive()
         Try
-            InitializeService()
+            'InitializeService()
             _ResourceDBProvider._AllLeavesList.Clear()
             paginatedCollection = New PaginatedObservableCollection(Of ResourcePlannerModel)(pagingRecordPerPage)
             If selection = 0 Then
-                lstresource = client.GetAllLeavesByEmployee(profile.Emp_ID, vlStatus)
+                lstresource = AideClient.GetClient().GetAllLeavesByEmployee(profile.Emp_ID, vlStatus)
             Else
-                lstresource = client.GetAllLeavesHistoryByEmployee(profile.Emp_ID, vlStatus)
+                lstresource = AideClient.GetClient().GetAllLeavesHistoryByEmployee(profile.Emp_ID, vlStatus)
             End If
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
             Dim resourceListVM As New ResourcePlannerViewModel()
@@ -189,9 +172,9 @@ Public Class BillabilityManagerVLLeavePage
             resourcePlanner.Status = CType(lv_ActiveLeaves.SelectedItem, ResourcePlannerModel).Status
             resourcePlanner.EmpID = Me.profile.Emp_ID
 
-            If InitializeService() Then
-                client.CancelLeave(resourcePlanner)
-            End If
+            'If InitializeService() Then
+            AideClient.GetClient().CancelLeave(resourcePlanner)
+            'End If
 
             Return True
         Else
@@ -240,7 +223,7 @@ Public Class BillabilityManagerVLLeavePage
     End Sub
 
     Private Sub backbtn_Click(sender As Object, e As RoutedEventArgs) Handles btnCCancel.Click
-        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, _attendanceFrame, client))
+        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, _attendanceFrame))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         _menugrid.IsEnabled = True

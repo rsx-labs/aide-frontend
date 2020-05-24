@@ -13,7 +13,7 @@ Class ComcellClockPage
     Implements ServiceReference1.IAideServiceCallback
 
 #Region "Declaration"
-    Private aideService As ServiceReference1.AideServiceClient
+    'Private aideService As ServiceReference1.AideServiceClient
     Private empID As Integer
     Private comcellclock As New ComcellClock
     Private comcellClockVM As New ComcellClockViewModel
@@ -71,11 +71,11 @@ Class ComcellClockPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_profile As Profile, _comcellFrame As Frame, _window As Window, aideService As AideServiceClient)
+    Public Sub New(_profile As Profile, _comcellFrame As Frame, _window As Window)
         InitializeComponent()
 
-        Me.aideService = aideService
-        mailConfigVM = New MailConfigViewModel(aideService)
+        'Me.aideService = aideService
+        mailConfigVM = New MailConfigViewModel()
 
         year = Date.Now.Year
         monthToday = Date.Now.Month
@@ -100,22 +100,22 @@ Class ComcellClockPage
 #End Region
 
 #Region "Service Methods"
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
 
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            aideService = New AideServiceClient(Context)
-            aideService.Open()
-            bInitialize = True
-            isServiceEnabled = True
-        Catch ex As SystemException
-            aideService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        aideService = New AideServiceClient(Context)
+    '        aideService.Open()
+    '        bInitialize = True
+    '        isServiceEnabled = True
+    '    Catch ex As SystemException
+    '        aideService.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
 
-        Return bInitialize
-    End Function
+    '    Return bInitialize
+    'End Function
 
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
@@ -141,10 +141,10 @@ Class ComcellClockPage
 #Region "Methods/Functions"
     Private Sub GetAlarmClockData()
         Try
-            If InitializeService() Then
-                comcellclock = aideService.GetClockTimeByEmployee(empID)
-                LoadData()
-            End If
+            'If InitializeService() Then
+            comcellclock = AideClient.GetClient().GetClockTimeByEmployee(empID)
+            LoadData()
+            'End If
 
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -345,16 +345,16 @@ Class ComcellClockPage
             New TimeSpan(0, 5, 0),
             DispatcherPriority.Normal,
             Function()
-                comcellFrame.Navigate(New ComcellClockPage(profile, comcellFrame, window, aideService))
+                comcellFrame.Navigate(New ComcellClockPage(profile, comcellFrame, window))
             End Function, Me.Dispatcher)
     End Sub
 
     Public Sub SetComcellMinutes()
         Try
-            If InitializeService() Then
-                lstComcell = aideService.GetComcellMeeting(empID, year)
-                LoadComcellMinutes()
-            End If
+            'If InitializeService() Then
+            lstComcell = AideClient.GetClient().GetComcellMeeting(empID, year)
+            LoadComcellMinutes()
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -431,7 +431,7 @@ Class ComcellClockPage
     Private Sub GetWeeklyReportConfig()
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = aideService
+            '_OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(4, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -446,7 +446,7 @@ Class ComcellClockPage
     Private Sub GetWeeklyReportEmailData()
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = aideService
+            '_OptionsViewModel.Service = aideService
             _option = New OptionModel
             If _OptionsViewModel.GetOptions(5, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
@@ -464,7 +464,7 @@ Class ComcellClockPage
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = aideService
+            '_OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -482,7 +482,7 @@ Class ComcellClockPage
     Public Sub SetMissingReports()
         Try
             Dim weekrange As String = lastWeekSaturday.ToShortDateString + " - " + lastWeekFriday.ToShortDateString
-            lstMissingReports = aideService.GetMissingReportsByEmpID(empID, lastWeekSaturday)
+            lstMissingReports = AideClient.GetClient().GetMissingReportsByEmpID(empID, lastWeekSaturday)
             If lstMissingReports.Count > 0 Then
                 For Each objContacts As ContactList In lstMissingReports
                     mailConfigVM.SendEmail(mailConfigVM, _option, objContacts.EMADDRESS, "", 1, weekrange)
@@ -494,10 +494,10 @@ Class ComcellClockPage
     End Sub
     Private Sub GetMailConfig()
         Try
-            If InitializeService() Then
-                mailConfig = aideService.GetMailConfig()
-                LoadMailConfig()
-            End If
+            'If InitializeService() Then
+            mailConfig = AideClient.GetClient().GetMailConfig()
+            LoadMailConfig()
+            'End If
 
         Catch ex As Exception
 
@@ -526,7 +526,7 @@ Class ComcellClockPage
     Private Sub GetAttendanceConfig()
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = aideService
+            '_OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(2, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -557,7 +557,7 @@ Class ComcellClockPage
     Private Sub GetAttendanceEmailData()
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = aideService
+            '_OptionsViewModel.Service = aideService
             _option = New OptionModel
             If _OptionsViewModel.GetOptions(3, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
@@ -572,7 +572,7 @@ Class ComcellClockPage
     End Sub
     Public Sub SetMissingAttendance(choice As Integer)
         Try
-            lstMissingAttendance = aideService.GetMissingAttendanceForToday(empID, choice)
+            lstMissingAttendance = AideClient.GetClient().GetMissingAttendanceForToday(empID, choice)
             Dim employeeCCLst As New List(Of String)
             Dim managerToLst As New List(Of String)
 
@@ -672,7 +672,7 @@ Class ComcellClockPage
     Private Sub GetContactsConfig()
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = aideService
+            '_OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(33, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -687,7 +687,7 @@ Class ComcellClockPage
     Private Sub GetContactsEmailData()
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = aideService
+            '_OptionsViewModel.Service = aideService
             _option = New OptionModel
             If _OptionsViewModel.GetOptions(34, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
@@ -702,7 +702,7 @@ Class ComcellClockPage
     End Sub
     Public Sub SetUpdateContacts()
         Try
-            lstMissingAttendance = aideService.GetSkillAndContactsNotUpdated(empID, 1)
+            lstMissingAttendance = AideClient.GetClient().GetSkillAndContactsNotUpdated(empID, 1)
             If lstMissingAttendance.Count > 0 Then
                 For Each objEmployee As Employee In lstMissingAttendance
                     mailConfigVM.SendEmail(mailConfigVM, _option, objEmployee.EmailAddress, "", 1, MonthName(Now.Month(), False))
@@ -717,7 +717,7 @@ Class ComcellClockPage
     Private Sub GetSkillsConfig()
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = aideService
+            '_OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(35, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -732,7 +732,7 @@ Class ComcellClockPage
     Private Sub GetSkillsEmailData()
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = aideService
+            '_OptionsViewModel.Service = aideService
             _option = New OptionModel
             If _OptionsViewModel.GetOptions(36, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
@@ -747,7 +747,7 @@ Class ComcellClockPage
     End Sub
     Public Sub SetUpdateSkills()
         Try
-            lstMissingAttendance = aideService.GetSkillAndContactsNotUpdated(empID, 2)
+            lstMissingAttendance = AideClient.GetClient().GetSkillAndContactsNotUpdated(empID, 2)
             If lstMissingAttendance.Count > 0 Then
                 For Each objEmployee As Employee In lstMissingAttendance
                     mailConfigVM.SendEmail(mailConfigVM, _option, objEmployee.EmailAddress, "", 1, MonthName(Now.Month(), False))
@@ -763,7 +763,7 @@ Class ComcellClockPage
     Private Sub GetWorkPlaceAuditConfig()
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = aideService
+            '_OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(38, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -779,7 +779,7 @@ Class ComcellClockPage
     Private Sub GetWADailyConfig()
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = aideService
+            '_OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(39, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -795,7 +795,7 @@ Class ComcellClockPage
     Private Sub GetWorkPlaceAuditEmailData()
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = aideService
+            '_OptionsViewModel.Service = aideService
             _option = New OptionModel
             If _OptionsViewModel.GetOptions(42, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
@@ -810,7 +810,7 @@ Class ComcellClockPage
     End Sub
     Public Sub SetUpdateWADaily()
         Try
-            objAuditor = aideService.GetWorkPlaceAuditor(empID, 1)
+            objAuditor = AideClient.GetClient().GetWorkPlaceAuditor(empID, 1)
             If Not objAuditor Is Nothing Then
                 mailConfigVM.SendEmail(mailConfigVM, _option, objAuditor.EmailAddress, "", 1, "Daily Auditor")
             End If
@@ -823,7 +823,7 @@ Class ComcellClockPage
     Private Sub GetWAWeeklyConfig()
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = aideService
+            '_OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(40, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -837,7 +837,7 @@ Class ComcellClockPage
     End Sub
     Public Sub SetUpdateWAWeekly()
         Try
-            objAuditor = aideService.GetWorkPlaceAuditor(empID, 2)
+            objAuditor = AideClient.GetClient().GetWorkPlaceAuditor(empID, 2)
             If Not objAuditor Is Nothing Then
                 mailConfigVM.SendEmail(mailConfigVM, _option, objAuditor.EmailAddress, "", 1, "Weekly Auditor")
             End If
@@ -851,7 +851,7 @@ Class ComcellClockPage
     Private Sub GetWAMonthlyConfig()
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = aideService
+            '_OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(41, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -866,7 +866,7 @@ Class ComcellClockPage
 
     Public Sub SetUpdateWAMonthly()
         Try
-            objAuditor = aideService.GetWorkPlaceAuditor(empID, 3)
+            objAuditor = AideClient.GetClient().GetWorkPlaceAuditor(empID, 3)
             If Not objAuditor Is Nothing Then
                 mailConfigVM.SendEmail(mailConfigVM, _option, objAuditor.EmailAddress, "", 1, "Monthly Auditor")
             End If

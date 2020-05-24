@@ -173,6 +173,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AideClient.vb" />
     <Compile Include="BindingProxy.vb" />
     <Compile Include="DataProviderService\ActionListDBProvider.vb" />
     <Compile Include="DataProviderService\AssignedProjectDBProvider.vb" />
@@ -1808,6 +1809,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Button\ProblemViewLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GDC.PH.AIDE.ServiceFactory\GDC.PH.AIDE.ServiceFactory.csproj">
+      <Project>{3A654E69-984A-4B02-97A5-D8FF45A2AC72}</Project>
+      <Name>GDC.PH.AIDE.ServiceFactory</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

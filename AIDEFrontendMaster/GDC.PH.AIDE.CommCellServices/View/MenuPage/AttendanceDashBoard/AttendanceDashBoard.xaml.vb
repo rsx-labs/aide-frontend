@@ -14,7 +14,7 @@ Public Class AttendanceDashBoard
     Implements ServiceReference1.IAideServiceCallback
 
 #Region "Declarations"
-    Private _AideService As ServiceReference1.AideServiceClient
+    'Private _AideService As ServiceReference1.AideServiceClient
     Private mainFrame As New Frame
     Dim AttendanceListVM As New AttendanceListViewModel
     Dim setStatus As Integer
@@ -25,7 +25,7 @@ Public Class AttendanceDashBoard
 #End Region
 
 #Region "Constructor"
-    Public Sub New(mainFrame As Frame, profile As Profile, aideService As ServiceReference1.AideServiceClient)
+    Public Sub New(mainFrame As Frame, profile As Profile)
 
         _logger.Debug("Start : Constructor")
 
@@ -33,8 +33,7 @@ Public Class AttendanceDashBoard
 
         Me.mainFrame = mainFrame
         Me.profile = profile
-
-        _AideService = aideService
+        '_AideService = aideService
 
         SetData()
 
@@ -47,67 +46,52 @@ Public Class AttendanceDashBoard
 #End Region
 
 #Region "Functions"
-    Public Function InitializeService() As Boolean
-        _logger.Debug("Start : InitializeService")
-
-        Dim bInitialize As Boolean = False
-        Try
-
-            If _AideService.State = CommunicationState.Faulted Then
-
-                _logger.Debug("Service is faulted, reinitializing ...")
-
-                Dim Context As InstanceContext = New InstanceContext(Me)
-                _AideService = New AideServiceClient(Context)
-                _AideService.Open()
-            End If
-
-            bInitialize = True
-        Catch ex As SystemException
-            _logger.Error(ex.ToString())
-
-            '_AideService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-
-        _logger.Debug("End : InitializeService")
-
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        _AideService = New AideServiceClient(Context)
+    '        _AideService.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        _AideService.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Public Sub SetData()
         Try
             _logger.Debug("Start : SetData")
 
-            If InitializeService() Then
-                AEmployee = _AideService.GetAttendanceToday(profile.Emp_ID)
+            AEmployee = AideClient.GetClient().GetAttendanceToday(profile.Emp_ID)
 
-                Dim d As DateTime? = Nothing
-                Dim lstAEmployeeList As New ObservableCollection(Of AttendanceModel)
-                Dim aemployeeListDBProvider As New AttendanceListDBProvider
+            Dim d As DateTime? = Nothing
+            Dim lstAEmployeeList As New ObservableCollection(Of AttendanceModel)
+            Dim aemployeeListDBProvider As New AttendanceListDBProvider
 
-                For Each objaemp As MyAttendance In AEmployee
-                    aemployeeListDBProvider.SetAllAttendanceList(objaemp)
-                Next
+            For Each objaemp As MyAttendance In AEmployee
+                aemployeeListDBProvider.SetAllAttendanceList(objaemp)
+            Next
 
-                For Each rawUser As myAttendanceList In aemployeeListDBProvider.GetAllEmpRPList()
-                    setStatus = rawUser.Status
-                    SetCategory(rawUser)
-                    If rawUser.Status = 11 Then 'For Late
-                        SetCategoryDisplay(rawUser)
-                    End If
+            For Each rawUser As myAttendanceList In aemployeeListDBProvider.GetAllEmpRPList()
+                setStatus = rawUser.Status
+                SetCategory(rawUser)
+                If rawUser.Status = 11 Then 'For Late
+                    SetCategoryDisplay(rawUser)
+                End If
 
-                    d = rawUser.Logoff_Time
-                    If d.Value = Nothing Then
-                        rawUser.Logoff_Time = ""
-                    End If
+                d = rawUser.Logoff_Time
+                If d.Value = Nothing Then
+                    rawUser.Logoff_Time = ""
+                End If
 
-                    lstAEmployeeList.Add(New AttendanceModel(rawUser))
-                Next
+                lstAEmployeeList.Add(New AttendanceModel(rawUser))
+            Next
 
-                AttendanceListVM.EmployeeListAttendance = lstAEmployeeList
-                Me.DataContext = AttendanceListVM
-            End If
+            AttendanceListVM.EmployeeListAttendance = lstAEmployeeList
+            Me.DataContext = AttendanceListVM
+
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
 
@@ -119,8 +103,8 @@ Public Class AttendanceDashBoard
 
     Public Sub SetDataForSearch(input As String)
         Try
-            If InitializeService() Then
-                Dim d As DateTime? = Nothing
+            'If InitializeService() Then
+            Dim d As DateTime? = Nothing
                 Dim aemployeeListDBProvider As New AttendanceListDBProvider
                 Dim lstAEmployeeList As New ObservableCollection(Of AttendanceModel)
 
@@ -148,7 +132,7 @@ Public Class AttendanceDashBoard
                 Next
                 AttendanceListVM.EmployeeListAttendance = lstAEmployeeList
                 Me.DataContext = AttendanceListVM
-            End If
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try

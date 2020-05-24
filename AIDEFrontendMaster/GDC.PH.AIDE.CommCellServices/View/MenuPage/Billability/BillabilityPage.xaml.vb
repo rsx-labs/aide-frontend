@@ -16,7 +16,7 @@ Public Class BillabilityPage
     Implements IAideServiceCallback
 
 #Region "Fields"
-    Private client As AideServiceClient
+    'Private client As AideServiceClient
     Private _ResourceDBProvider As New ResourcePlannerDBProvider
     Private _ResourceViewModel As New ResourcePlannerViewModel
     Private mainFrame As Frame
@@ -33,15 +33,13 @@ Public Class BillabilityPage
     Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
-    Public Sub New(_profile As Profile, mFrame As Frame, aideClient As AideServiceClient)
-
+    Public Sub New(_profile As Profile, mFrame As Frame)
+    
         _logger.Debug("Start : Constructor")
 
         Me.profile = _profile
         Me.mainFrame = mFrame
         Me.InitializeComponent()
-
-        client = aideClient
 
         LoadMonth()
         LoadYear()
@@ -55,40 +53,26 @@ Public Class BillabilityPage
 
 #Region "Private Methods"
 
-    Public Function InitializeService() As Boolean
-        _logger.Debug("Start : InitializeService")
-
-        Dim bInitialize As Boolean = False
-        Try
-
-            If client.State = CommunicationState.Faulted Then
-
-                _logger.Debug("Service is faulted, reinitializing ...")
-
-                Dim Context As InstanceContext = New InstanceContext(Me)
-                client = New AideServiceClient(Context)
-                client.Open()
-            End If
-
-            bInitialize = True
-        Catch ex As SystemException
-            _logger.Error(ex.ToString())
-
-            client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-
-        _logger.Debug("End : InitializeService")
-
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        client = New AideServiceClient(Context)
+    '        client.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        client.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Public Sub LoadYear()
         Try
-            If InitializeService() Then
-                lstFiscalYear = client.GetAllFiscalYear()
-                LoadFiscalYear()
-            End If
+            'If InitializeService() Then
+            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
+            LoadFiscalYear()
+            'End If
         Catch ex As Exception
             _logger.Error($"Error at LoadYear = {ex.ToString()}")
 
@@ -166,12 +150,12 @@ Public Class BillabilityPage
 
     Private Sub LoadNonBillMonthSummary()
         Try
-            InitializeService()
+            'InitializeService()
             _ResourceDBProvider._splist.Clear()
 
             displayData = 1 'Display data per Week
 
-            Dim lstResource = client.GetNonBillableHours(profile.Email_Address, displayData, month, year)
+            Dim lstResource = AideClient.GetClient().GetNonBillableHours(profile.Email_Address, displayData, month, year)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
             Dim resourceListVM As New ResourcePlannerViewModel()
             Dim holidayHours As New ChartValues(Of Double)()
@@ -235,11 +219,11 @@ Public Class BillabilityPage
 
     Private Sub LoadNonBillMonth()
         Try
-            InitializeService()
+            'InitializeService()
             _ResourceDBProvider._splist.Clear()
             displayData = 2 'Display data per Month
 
-            Dim lstResource = client.GetNonBillableHours(profile.Email_Address, displayData, month, year)
+            Dim lstResource = AideClient.GetClient().GetNonBillableHours(profile.Email_Address, displayData, month, year)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
             Dim resourceListVM As New ResourcePlannerViewModel()
             Dim holidayHours As New ChartValues(Of Double)()

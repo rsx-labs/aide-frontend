@@ -9,7 +9,7 @@ Class KPISummaryAddPage
 
 #Region "Page Declaration"
     Public _frame As Frame
-    Private aide As AideServiceClient
+    'Private aide As AideServiceClient
     Private comcell As New Comcell
     Private _kpiSummaryModel As New KPISummaryModel
     Private _addframe As Frame
@@ -35,8 +35,7 @@ Class KPISummaryAddPage
 
 #Region "Constructors"
     'Add Constructor
-    Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame,
-                   menugrid As Grid, submenuframe As Frame, aideService As AideServiceClient)
+    Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame)
 
         _logger.Debug("Start : Constructor Mode=Add")
 
@@ -48,7 +47,7 @@ Class KPISummaryAddPage
             Me.profile = _profile
             InitializeComponent()
 
-            aide = aideService
+            'aide = aideService
 
             SetData()
             LoadMonth()
@@ -64,8 +63,7 @@ Class KPISummaryAddPage
     End Sub
 
     'Update Constructor
-    Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame,
-                   menugrid As Grid, submenuframe As Frame, kpi As KPISummary, aideService As AideServiceClient)
+    Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame, kpi As KPISummary)
 
         _logger.Debug("Start : Constructor Mode=Update")
 
@@ -78,9 +76,6 @@ Class KPISummaryAddPage
             Me._kpiSummary = kpi
 
             InitializeComponent()
-
-            aide = aideService
-
             LoadMonth()
             LoadYears(_kpiSummary.FYStart.Year, _kpiSummary.FYEnd.Year)
             'LoadControls()
@@ -123,33 +118,20 @@ Class KPISummaryAddPage
 #End Region
 
 #Region "Methods/Functions"
-    Public Function InitializeService() As Boolean
-        _logger.Debug("Start : InitializeService")
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        aide = New AideServiceClient(Context)
+    '        aide.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        aide.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
-        Dim bInitialize As Boolean = False
-        Try
-
-            If aide.State = CommunicationState.Faulted Then
-
-                _logger.Debug("Service is faulted, reinitializing ...")
-
-                Dim Context As InstanceContext = New InstanceContext(Me)
-                aide = New AideServiceClient(Context)
-                aide.Open()
-            End If
-
-            bInitialize = True
-        Catch ex As SystemException
-            _logger.Error(ex.ToString())
-
-            aide.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-
-        _logger.Debug("End : InitializeService")
-
-        Return bInitialize
-    End Function
 
     Public Sub LoadControls()
         txtHeader.Text = "Monthly KPI Targets and Actual"
@@ -198,13 +180,13 @@ Class KPISummaryAddPage
 
     Public Sub SetData()
         Try
-            If InitializeService() Then
-                Dim fiscalYear As Date = Date.Now()
+            'If InitializeService() Then
+            Dim fiscalYear As Date = Date.Now()
 
-                _lstKPITargets = aide.GetAllKPITargets(Me.profile.Emp_ID, fiscalYear)
+            _lstKPITargets = AideClient.GetClient().GetAllKPITargets(Me.profile.Emp_ID, fiscalYear)
 
-                LoadKPITargets()
-            End If
+            LoadKPITargets()
+            'End If
         Catch ex As Exception
             _logger.Error($"Error at SetData = {ex.ToString()}")
 
@@ -243,7 +225,7 @@ Class KPISummaryAddPage
     End Sub
 
     Private Sub ExitPage()
-        _frame.Navigate(New KPISummaryPage(Me.profile, Me._frame, _addframe, _menugrid, _submenuframe, aide))
+        _frame.Navigate(New KPISummaryPage(Me.profile, Me._frame, _addframe, _menugrid, _submenuframe))
         _frame.IsEnabled = True
         _frame.Opacity = 1
         _menugrid.IsEnabled = True
@@ -262,55 +244,55 @@ Class KPISummaryAddPage
                 Exit Sub
             End If
 
-            If InitializeService() Then
-                If Me.mode = "Add" Then
-                    Dim lstkpiSummary As KPISummary() = aide.GetKPISummaryListMonthly(Me.profile.Emp_ID, _dtStartYear, _dtEndYear, cbMonth.SelectedValue, cbKPI.SelectedValue)
-                    If Not IsNothing(lstkpiSummary) Then
-                        If lstkpiSummary.Count > 0 Then
-                            MsgBox("KPI Summary already exists.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
-                            Exit Sub
+            'If InitializeService() Then
+            If Me.mode = "Add" Then
+                Dim lstkpiSummary As KPISummary() = AideClient.GetClient().GetKPISummaryListMonthly(Me.profile.Emp_ID, _dtStartYear, _dtEndYear, cbMonth.SelectedValue, cbKPI.SelectedValue)
+                If Not IsNothing(lstkpiSummary) Then
+                    If lstkpiSummary.Count > 0 Then
+                        MsgBox("KPI Summary already exists.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                        Exit Sub
+                    Else
+                        _kpiSummary.EmployeeId = Me.profile.Emp_ID
+                        _kpiSummary.FYStart = _dtStartYear
+                        _kpiSummary.FYEnd = _dtEndYear
+                        _kpiSummary.KPI_Reference = cbKPI.SelectedValue
+                        _kpiSummary.KPI_Month = cbMonth.SelectedValue
+                        If CDbl(txtTarget.Text) = 0 Then
+                            _kpiSummary.KPIActual = 0
+                            _kpiSummary.KPITarget = 0
+                            _kpiSummary.KPIOverall = 0
+
                         Else
-                            _kpiSummary.EmployeeId = Me.profile.Emp_ID
-                            _kpiSummary.FYStart = _dtStartYear
-                            _kpiSummary.FYEnd = _dtEndYear
-                            _kpiSummary.KPI_Reference = cbKPI.SelectedValue
-                            _kpiSummary.KPI_Month = cbMonth.SelectedValue
-                            If CDbl(txtTarget.Text) = 0 Then
-                                _kpiSummary.KPIActual = 0
-                                _kpiSummary.KPITarget = 0
-                                _kpiSummary.KPIOverall = 0
+                            _kpiSummary.KPIActual = Convert.ToDouble(CDbl(txtActual.Text) / 100)
+                            _kpiSummary.KPITarget = Convert.ToDouble(CDbl(txtTarget.Text) / 100)
+                            _kpiSummary.KPIOverall = Convert.ToDouble(CDbl(txtActual.Text) / CDbl(txtTarget.Text))
+                        End If
+                        _kpiSummary.DatePosted = Date.Now
 
-                            Else
-                                _kpiSummary.KPIActual = Convert.ToDouble(CDbl(txtActual.Text) / 100)
-                                _kpiSummary.KPITarget = Convert.ToDouble(CDbl(txtTarget.Text) / 100)
-                                _kpiSummary.KPIOverall = Convert.ToDouble(CDbl(txtActual.Text) / CDbl(txtTarget.Text))
-                            End If
-                            _kpiSummary.DatePosted = Date.Now
-
-                            If aide.InsertKPISummary(_kpiSummary) = True Then
-                                MsgBox("KPI Summary has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
-                            End If
+                        If AideClient.GetClient().InsertKPISummary(_kpiSummary) = True Then
+                            MsgBox("KPI Summary has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                         End If
                     End If
-                Else
-                    If CDbl(txtTarget.Text) = 0 Then
-                        _kpiSummary.KPIActual = 0
-                        _kpiSummary.KPITarget = 0
-                        _kpiSummary.KPIOverall = 0
-
-                    Else
-                        _kpiSummary.KPITarget = Convert.ToDouble(Convert.ToDouble(txtTarget.Text) / 100)
-                        _kpiSummary.KPIActual = Convert.ToDouble(Convert.ToDouble(txtActual.Text) / 100)
-                        _kpiSummary.KPIOverall = Convert.ToDouble(_kpiSummary.KPIActual / _kpiSummary.KPITarget)
-                    End If
-                    _kpiSummary.DatePosted = Date.Now
-
-                    If aide.UpdateKPISummary(_kpiSummary) Then
-                        MsgBox("KPI Summary has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
-                    End If
                 End If
-                ExitPage()
+            Else
+                If CDbl(txtTarget.Text) = 0 Then
+                    _kpiSummary.KPIActual = 0
+                    _kpiSummary.KPITarget = 0
+                    _kpiSummary.KPIOverall = 0
+
+                Else
+                    _kpiSummary.KPITarget = Convert.ToDouble(Convert.ToDouble(txtTarget.Text) / 100)
+                    _kpiSummary.KPIActual = Convert.ToDouble(Convert.ToDouble(txtActual.Text) / 100)
+                    _kpiSummary.KPIOverall = Convert.ToDouble(_kpiSummary.KPIActual / _kpiSummary.KPITarget)
+                End If
+                _kpiSummary.DatePosted = Date.Now
+
+                If AideClient.GetClient().UpdateKPISummary(_kpiSummary) Then
+                    MsgBox("KPI Summary has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+                End If
             End If
+            ExitPage()
+            'End If
 
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")

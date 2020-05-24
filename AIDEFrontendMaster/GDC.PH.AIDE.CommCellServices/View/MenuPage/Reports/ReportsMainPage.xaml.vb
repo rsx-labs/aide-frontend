@@ -28,7 +28,7 @@ Class ReportsMainPage
 
 #Region "Fields"
 
-    Private _AideService As ServiceReference1.AideServiceClient
+    'Private _AideService As ServiceReference1.AideServiceClient
     Private mainframe As Frame
     Private addframe As Frame
     Private menugrid As Grid
@@ -64,27 +64,27 @@ Class ReportsMainPage
 
 #Region "Functions/Methods"
 
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            _AideService = New AideServiceClient(Context)
-            _AideService.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            _AideService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        _AideService = New AideServiceClient(Context)
+    '        _AideService.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        _AideService.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Public Sub SetData()
         Try
-            If InitializeService() Then
-                lstReports = _AideService.GetAllReports()
-                LoadSabaCourses()
-                DisplayPagingInfo()
-            End If
+            'If InitializeService() Then
+            lstReports = AideClient.GetClient().GetAllReports()
+            LoadSabaCourses()
+            DisplayPagingInfo()
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -366,7 +366,7 @@ Class ReportsMainPage
                     Process.Start("C:\GeneratedReports\Retail Services Contact List.xlsx")
                 End If
             Catch ex As SystemException
-                _AideService.Abort()
+                '_AideService.Abort()
                 MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             End Try
 
@@ -385,7 +385,7 @@ Class ReportsMainPage
                     Process.Start("C:\GeneratedReports\Retail Services Skills Matrix.xlsx")
                 End If
             Catch ex As SystemException
-                _AideService.Abort()
+                '_AideService.Abort()
                 MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             End Try
 

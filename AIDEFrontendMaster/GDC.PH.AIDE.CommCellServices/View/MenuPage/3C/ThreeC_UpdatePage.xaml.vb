@@ -20,7 +20,7 @@ Class ThreeC_UpdatePage
     Private menugrid As Grid
     Private addframe As Frame
     Private submenuframe As Frame
-    Private AIDEClientService As ServiceReference1.AideServiceClient
+    'Private AIDEClientService As ServiceReference1.AideServiceClient
     Private concernRefID As String
     Private isSearchTextIsUsed As Integer = 0
 
@@ -51,31 +51,31 @@ Class ThreeC_UpdatePage
     End Sub
 
 #Region "Initialize Service"
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            AIDEClientService = New AideServiceClient(Context)
-            AIDEClientService.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            AIDEClientService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        AIDEClientService = New AideServiceClient(Context)
+    '        AIDEClientService.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        AIDEClientService.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 #End Region
 
 #Region "Methods"
     Private Sub GetActionList()
         Try
-            If InitializeService() Then
-                lstConcernActionList.Clear()
-                concernDBProvider = New ConcernDBProvider
+            'If InitializeService() Then
+            lstConcernActionList.Clear()
+            concernDBProvider = New ConcernDBProvider
 
-                Dim lstConcern As Concern() = AIDEClientService.GetListOfACtion(concernModel.REF_ID, email)
+            Dim lstConcern As Concern() = AideClient.GetClient().GetListOfACtion(concernModel.REF_ID, email)
 
-                For Each objConcern As Concern In lstConcern
+            For Each objConcern As Concern In lstConcern
                     concernDBProvider.SetToComBoBox(objConcern)
                 Next
 
@@ -84,7 +84,7 @@ Class ThreeC_UpdatePage
                 Next
 
                 lvAction.ItemsSource = lstConcernActionList
-            End If
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -92,13 +92,13 @@ Class ThreeC_UpdatePage
 
     Private Sub GetReferenceActionList()
         Try
-            If InitializeService() Then
-                lstReferenceActionList.Clear()
-                concernDBProvider = New ConcernDBProvider
+            'If InitializeService() Then
+            lstReferenceActionList.Clear()
+            concernDBProvider = New ConcernDBProvider
 
-                Dim lstConcern As Concern() = AIDEClientService.GetListOfACtionsReferences(concernModel.REF_ID)
+            Dim lstConcern As Concern() = AideClient.GetClient().GetListOfACtionsReferences(concernModel.REF_ID)
 
-                For Each objConcern As Concern In lstConcern
+            For Each objConcern As Concern In lstConcern
                     concernDBProvider.SetTollistViewActionReference(objConcern)
                 Next
 
@@ -107,7 +107,7 @@ Class ThreeC_UpdatePage
                 Next
 
                 lvActionRef.ItemsSource = lstReferenceActionList
-            End If
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -170,7 +170,7 @@ Class ThreeC_UpdatePage
     End Sub
 
     Private Sub ExitPage()
-        frame.Navigate(New ThreeC_Page(profile, frame, addframe, menugrid, submenuframe, AIDEClientService))
+        frame.Navigate(New ThreeC_Page(profile, frame, addframe, menugrid, submenuframe))
         frame.IsEnabled = True
         frame.Opacity = 1
         menugrid.IsEnabled = True
@@ -184,27 +184,25 @@ Class ThreeC_UpdatePage
 #Region "Events"
     Private Sub btnUpdateClick(sender As Object, e As RoutedEventArgs)
         Try
-            If InitializeService() Then
-                AIDEClientService.UpdateSelectedConcern(UpdateSelectedConcern(Me.DataContext()))
-                MsgBox("3C has been updated.", MsgBoxStyle.Information, "AIDE")
-                AIDEClientService.Close()
-
-                ExitPage()
-            End If
+            ' If InitializeService() Then
+            AideClient.GetClient().UpdateSelectedConcern(UpdateSelectedConcern(Me.DataContext()))
+            MsgBox("3C has been updated.", MsgBoxStyle.Information, "AIDE")
+            ExitPage()
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
     Private Sub btnSaveActionRef(sender As Object, e As RoutedEventArgs)
-        InitializeService()
+        'InitializeService()
         Try
             If lvAction.SelectedIndex = -1 Then
                 MsgBox("Please select an action item.")
             Else
-                AIDEClientService.insertAndDeleteSelectedAction(InsertSelectedAction())
+                AideClient.GetClient().insertAndDeleteSelectedAction(InsertSelectedAction())
                 MsgBox("Action reference has been added to 3C.", MsgBoxStyle.Information, "AIDE")
-                AIDEClientService.Close()
+                'AIDEClientService.Close()
 
                 GetActionList()
                 GetReferenceActionList()
@@ -217,21 +215,21 @@ Class ThreeC_UpdatePage
 
     Private Sub btnRemoveSelectedAction(sender As Object, e As RoutedEventArgs)
         Try
-            If InitializeService() Then
-                If lvActionRef.SelectedIndex = -1 Then
-                    MsgBox("Please select an item first!", MsgBoxStyle.Exclamation, "AIDE")
-                Else
-                    If MsgBox("Are you sure you want to remove action from 3C?", MsgBoxStyle.Question + vbYesNo, "AIDE") = vbYes Then
-                        AIDEClientService.insertAndDeleteSelectedAction(DeleteSelectedActionReference())
-                        MsgBox("Action has been removed from the 3C.", MsgBoxStyle.Information, "AIDE")
-                        AIDEClientService.Close()
+            'If InitializeService() Then
+            If lvActionRef.SelectedIndex = -1 Then
+                MsgBox("Please select an item first!", MsgBoxStyle.Exclamation, "AIDE")
+            Else
+                If MsgBox("Are you sure you want to remove action from 3C?", MsgBoxStyle.Question + vbYesNo, "AIDE") = vbYes Then
+                    AideClient.GetClient().insertAndDeleteSelectedAction(DeleteSelectedActionReference())
+                    MsgBox("Action has been removed from the 3C.", MsgBoxStyle.Information, "AIDE")
+                    'AIDEClientService.Close()
 
-                        GetActionList()
-                        GetReferenceActionList()
-                        ConfigureButtons()
-                    End If
+                    GetActionList()
+                    GetReferenceActionList()
+                    ConfigureButtons()
                 End If
             End If
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try

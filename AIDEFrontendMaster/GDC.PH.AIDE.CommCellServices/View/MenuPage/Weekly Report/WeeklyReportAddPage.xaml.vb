@@ -9,7 +9,7 @@ Class WeeklyReportAddPage
     Implements ServiceReference1.IAideServiceCallback
 
 #Region "Fields"
-    Private AideServiceClient As ServiceReference1.AideServiceClient
+    'Private AideServiceClient As ServiceReference1.AideServiceClient
     Private _ProjectViewModel As New ProjectViewModel
     Public email As String
     Private frame As Frame
@@ -77,7 +77,7 @@ Class WeeklyReportAddPage
     Public Sub New(_frame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         ' This call is required by the designer.
         InitializeComponent()
-        InitializeService()
+        'InitializeService()
         ' Add any initialization after the InitializeComponent() call.
         Me.email = _profile.Email_Address
         Me.frame = _frame
@@ -92,19 +92,19 @@ Class WeeklyReportAddPage
         PopulateWeeklyReportData() ' Get data for the tasks that are not completed yet
     End Sub
 
-    Private Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim context As InstanceContext = New InstanceContext(Me)
-            AideServiceClient = New AideServiceClient(context)
-            AideServiceClient.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            AideServiceClient.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Private Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim context As InstanceContext = New InstanceContext(Me)
+    '        AideServiceClient = New AideServiceClient(context)
+    '        AideServiceClient.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        AideServiceClient.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 #End Region
 
 #Region "Sub Procedures"
@@ -113,9 +113,9 @@ Class WeeklyReportAddPage
         Try
             Dim weekRange As New WeekRange
             weekRange.StartWeek = Date.Now
-            AideServiceClient.CreateWeekRange(weekRange)
+            AideClient.GetClient().CreateWeekRange(weekRange)
         Catch ex As Exception
-            AideServiceClient.Abort()
+            'AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -126,55 +126,55 @@ Class WeeklyReportAddPage
             lstWeeklyReportsData = New ObservableCollection(Of WeeklyReportModel)
             weeklyReportDBProvider.GetWeeklyReportList().Clear()
 
-            If InitializeService() Then
-                Dim lstWeeklyReport As WeeklyReport() = AideServiceClient.GetTasksDataByEmpID(cbDateRange.SelectedValue, empID)
+            'If InitializeService() Then
+            Dim lstWeeklyReport As WeeklyReport() = AideClient.GetClient().GetTasksDataByEmpID(cbDateRange.SelectedValue, empID)
 
-                For Each objWeeklyReport As WeeklyReport In lstWeeklyReport
-                    weeklyReportDBProvider.SetWeeklyReportList(objWeeklyReport)
-                Next
+            For Each objWeeklyReport As WeeklyReport In lstWeeklyReport
+                weeklyReportDBProvider.SetWeeklyReportList(objWeeklyReport)
+            Next
 
-                For Each weeklyReport As MyWeeklyReport In weeklyReportDBProvider.GetWeeklyReportList()
-                    lstWeeklyReportsData.Add(New WeeklyReportModel With {
-                                                .WeekID = weeklyReport.WeekID,
-                                                .WeekRangeID = weeklyReport.WeekRangeID,
-                                                .ProjectID = weeklyReport.ProjectID,
-                                                .ProjectDesc = listProjects.Where(Function(x) x.ProjectID = weeklyReport.ProjectID).First().ProjectName,
-                                                .Rework = weeklyReport.Rework,
-                                                .ReworkDesc = getReworkValue(weeklyReport.Rework),
-                                                .RefID = weeklyReport.RefID,
-                                                .Subject = weeklyReport.Subject,
-                                                .Severity = weeklyReport.Severity,
-                                                .SeverityDesc = getSeverityValue(weeklyReport.Severity),
-                                                .IncidentType = weeklyReport.IncType,
-                                                .IncidentDesc = getIncidentValue(weeklyReport.IncType),
-                                                .EmpID = weeklyReport.EmpID,
-                                                .Phase = weeklyReport.Phase,
-                                                .PhaseDesc = getPhaseValue(weeklyReport.Phase),
-                                                .Status = weeklyReport.Status,
-                                                .StatusDesc = getStatusValue(weeklyReport.Status),
-                                                .DateStarted = weeklyReport.DateStarted,
-                                                .DateTarget = weeklyReport.DateTarget,
-                                                .DateFinished = weeklyReport.DateFinished,
-                                                .EffortEst = weeklyReport.EffortEst,
-                                                .ActualEffort = weeklyReport.ActEffort,
-                                                .ActualEffortWk = weeklyReport.ActEffortWk,
-                                                .Comments = weeklyReport.Comment,
-                                                .InboundContacts = weeklyReport.InboundContacts,
-                                                .ProjectCode = weeklyReport.ProjectCode,
-                                                .TaskID = weeklyReport.TaskID
-                                             })
-                Next
+            For Each weeklyReport As MyWeeklyReport In weeklyReportDBProvider.GetWeeklyReportList()
+                lstWeeklyReportsData.Add(New WeeklyReportModel With {
+                                            .WeekID = weeklyReport.WeekID,
+                                            .WeekRangeID = weeklyReport.WeekRangeID,
+                                            .ProjectID = weeklyReport.ProjectID,
+                                            .ProjectDesc = listProjects.Where(Function(x) x.ProjectID = weeklyReport.ProjectID).First().ProjectName,
+                                            .Rework = weeklyReport.Rework,
+                                            .ReworkDesc = getReworkValue(weeklyReport.Rework),
+                                            .RefID = weeklyReport.RefID,
+                                            .Subject = weeklyReport.Subject,
+                                            .Severity = weeklyReport.Severity,
+                                            .SeverityDesc = getSeverityValue(weeklyReport.Severity),
+                                            .IncidentType = weeklyReport.IncType,
+                                            .IncidentDesc = getIncidentValue(weeklyReport.IncType),
+                                            .EmpID = weeklyReport.EmpID,
+                                            .Phase = weeklyReport.Phase,
+                                            .PhaseDesc = getPhaseValue(weeklyReport.Phase),
+                                            .Status = weeklyReport.Status,
+                                            .StatusDesc = getStatusValue(weeklyReport.Status),
+                                            .DateStarted = weeklyReport.DateStarted,
+                                            .DateTarget = weeklyReport.DateTarget,
+                                            .DateFinished = weeklyReport.DateFinished,
+                                            .EffortEst = weeklyReport.EffortEst,
+                                            .ActualEffort = weeklyReport.ActEffort,
+                                            .ActualEffortWk = weeklyReport.ActEffortWk,
+                                            .Comments = weeklyReport.Comment,
+                                            .InboundContacts = weeklyReport.InboundContacts,
+                                            .ProjectCode = weeklyReport.ProjectCode,
+                                            .TaskID = weeklyReport.TaskID
+                                         })
+            Next
 
-                dgWeeklyReport.ItemsSource = lstWeeklyReportsData
+            dgWeeklyReport.ItemsSource = lstWeeklyReportsData
 
-                If lstWeeklyReportsData.Count > 0 Then
-                    btnSave.IsEnabled = True
-                    GetTotalHours()
-                End If
+            If lstWeeklyReportsData.Count > 0 Then
+                btnSave.IsEnabled = True
+                GetTotalHours()
             End If
-            
+            'End If
+
         Catch ex As Exception
-            AideServiceClient.Abort()
+            'AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -183,7 +183,7 @@ Class WeeklyReportAddPage
         ' Load Items For Projects
         Try
             Dim displayStatus As Integer = 1
-            Dim lstProjects As Project() = AideServiceClient.GetProjectList(empID, displayStatus)
+            Dim lstProjects As Project() = AideClient.GetClient().GetProjectList(empID, displayStatus)
 
             For Each objProjects As Project In lstProjects
                 projectDBProvider.setProjectList(objProjects)
@@ -196,13 +196,13 @@ Class WeeklyReportAddPage
             projectViewModel.ProjectList = listProjects
             cbProject.DataContext = projectViewModel
         Catch ex As Exception
-            AideServiceClient.Abort()
+            'AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Rework Combobox
         Try
-            Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(reworkID)
+            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(reworkID)
 
             For Each objStatus As StatusGroup In lstStatus
                 taskDBProvider.SetMyReworkStatusList(objStatus)
@@ -215,13 +215,13 @@ Class WeeklyReportAddPage
             taskViewModel.ReworkStatusList = listReworkStatus
             cbRework.DataContext = taskViewModel
         Catch ex As SystemException
-            AideServiceClient.Abort()
+            'AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Severity Combobox
         Try
-            Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(severityID)
+            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(severityID)
 
             For Each objStatus As StatusGroup In lstStatus
                 taskDBProvider.SetMySeverityStatusList(objStatus)
@@ -234,13 +234,13 @@ Class WeeklyReportAddPage
             taskViewModel.SeverityStatusList = listSeverityStatus
             cbSeverity.DataContext = taskViewModel
         Catch ex As SystemException
-            AideServiceClient.Abort()
+            'AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Incident Type Combobox
         Try
-            Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(incidentTypeID)
+            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(incidentTypeID)
 
             For Each objStatus As StatusGroup In lstStatus
                 taskDBProvider.SetMyCategoryStatusList(objStatus)
@@ -253,13 +253,13 @@ Class WeeklyReportAddPage
             taskViewModel.CategoryStatusList = listCategoryStatus
             cbIncidentType.DataContext = taskViewModel
         Catch ex As SystemException
-            AideServiceClient.Abort()
+            'AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Phase Status Combobox
         Try
-            Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(phaseID)
+            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(phaseID)
 
             For Each objStatus As StatusGroup In lstStatus
                 taskDBProvider.SetMyPhaseStatusList(objStatus)
@@ -272,13 +272,13 @@ Class WeeklyReportAddPage
             taskViewModel.PhaseStatusList = listPhaseStatus
             cbPhase.DataContext = taskViewModel
         Catch ex As SystemException
-            AideServiceClient.Abort()
+            'AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Task Status Combobox
         Try
-            Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(statusID)
+            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(statusID)
 
             For Each objStatus As StatusGroup In lstStatus
                 taskDBProvider.SetMyTaskStatusList(objStatus)
@@ -291,13 +291,13 @@ Class WeeklyReportAddPage
             taskViewModel.TaskStatusList = listTaskStatus
             cbStatus.DataContext = taskViewModel
         Catch ex As SystemException
-            AideServiceClient.Abort()
+            'AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items for Week Range Combobox
         Try
-            lstWeekRange = AideServiceClient.GetWeekRange(Date.Now, 0, empID)
+            lstWeekRange = AideClient.GetClient().GetWeekRange(Date.Now, 0, empID)
             Dim listWeekRange As New ObservableCollection(Of WeekRangeModel)
 
             For Each objWeekRange As WeekRange In lstWeekRange
@@ -316,7 +316,7 @@ Class WeeklyReportAddPage
             cbDateRange.DataContext = weekRangeViewModel
             cbDateRange.SelectedValue = selectedValue
         Catch ex As SystemException
-            AideServiceClient.Abort()
+            'AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
@@ -576,11 +576,11 @@ Class WeeklyReportAddPage
                         Dim result As Integer = MsgBox("Submit weekly report for the week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
 
                         If result = vbYes Then
-                            If InitializeService() Then
-                                AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, deletedWeeklyReport.ToArray, weeklyReportXref)
-                                MsgBox("Weekly report has been added.", MsgBoxStyle.Information, "AIDE")
-                                ExitPage()
-                            End If
+                            'If InitializeService() Then
+                            AideClient.GetClient().CreateWeeklyReport(weeklyReport.ToArray, deletedWeeklyReport.ToArray, weeklyReportXref)
+                            MsgBox("Weekly report has been added.", MsgBoxStyle.Information, "AIDE")
+                            ExitPage()
+                            'End If
                         End If
                     End If
 
@@ -660,11 +660,11 @@ Class WeeklyReportAddPage
                     Dim result As Integer = MsgBox("Save weekly report for the week " + cbDateRange.Text + "?", MsgBoxStyle.YesNo, "AIDE")
 
                     If result = vbYes Then
-                        If InitializeService() Then
-                            AideServiceClient.CreateWeeklyReport(weeklyReport.ToArray, deletedWeeklyReport.ToArray, weeklyReportXref)
-                            MsgBox("Weekly report has been saved.", MsgBoxStyle.Information)
-                            ExitPage()
-                        End If
+                        'If InitializeService() Then
+                        AideClient.GetClient().CreateWeeklyReport(weeklyReport.ToArray, deletedWeeklyReport.ToArray, weeklyReportXref)
+                        MsgBox("Weekly report has been saved.", MsgBoxStyle.Information)
+                        ExitPage()
+                        'End If
                     End If
 
                 Catch ex As Exception

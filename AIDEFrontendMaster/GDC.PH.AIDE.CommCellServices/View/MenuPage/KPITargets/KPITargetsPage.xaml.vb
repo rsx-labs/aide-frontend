@@ -26,7 +26,7 @@ Class KPITargetsPage
 #End Region
 
 #Region "Fields"
-    Private _client As ServiceReference1.AideServiceClient
+    'Private _client As ServiceReference1.AideServiceClient
     Private mainframe As Frame
     Private addframe As Frame
     Private menugrid As Grid
@@ -47,12 +47,11 @@ Class KPITargetsPage
     Public Sub New(_mainframe As Frame, _addframe As Frame,
                    _menugrid As Grid, _submenuframe As Frame,
                    permissionId As Short, employeeID As Integer,
-                   _email As String, _profile As Profile,
-                   aideService As ServiceReference1.AideServiceClient)
+                   _email As String, _profile As Profile)
 
         InitializeComponent()
 
-        _client = aideService
+        '_client = aideService
         Me.mainframe = _mainframe
         Me.addframe = _addframe
         Me.menugrid = _menugrid
@@ -73,25 +72,25 @@ Class KPITargetsPage
 
 #Region "Functions/Methods"
 
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            _client = New AideServiceClient(Context)
-            _client.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            _client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        _client = New AideServiceClient(Context)
+    '        _client.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        _client.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Public Sub SetData()
         Try
             'If InitializeService() Then
             Dim fiscalYear As Date = Date.Now()
-            _lstKPITargets = _client.GetAllKPITargets(Me._currentEmployeeID, fiscalYear)
+            _lstKPITargets = AideClient.GetClient().GetAllKPITargets(Me._currentEmployeeID, fiscalYear)
             LoadKPITargets()
             DisplayPagingInfo()
             'End If

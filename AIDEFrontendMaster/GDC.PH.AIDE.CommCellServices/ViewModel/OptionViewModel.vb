@@ -69,14 +69,14 @@ Public Class OptionViewModel
 
         Try
             Dim opt As Boolean = False
-            If Me.InitializeService Then
-                Dim _option As Options() = aide.GetOptions(_optionID, _moduleID, _functionID)
-                If _option.Length = 0 Then
-                    opt = False
-                End If
-                SetOptions(_option)
-                opt = True
+            'If Me.InitializeService Then
+            Dim _option As Options() = AideClient.GetClient().GetOptions(_optionID, _moduleID, _functionID)
+            If _option.Length = 0 Then
+                opt = False
             End If
+            SetOptions(_option)
+            opt = True
+            'End If
             Return opt
         Catch ex As Exception
             _logger.Error(ex.ToString())
@@ -93,13 +93,13 @@ Public Class OptionViewModel
         _logger.Debug("Start : GetOption")
 
         Try
-            If Me.InitializeService Then
-                Dim _option As Options() = aide.GetOptions(_optionID, 0, 0)
-                If _option.Length = 0 Then
-                    Return String.Empty
-                End If
-                SetOption(_option)
+            'If Me.InitializeService Then
+            Dim _option As Options() = AideClient.GetClient().GetOptions(_optionID, 0, 0)
+            If _option.Length = 0 Then
+                Return String.Empty
             End If
+            SetOption(_option)
+            'End If
             Return _optionValue
         Catch ex As Exception
             _logger.Error(ex.ToString())
@@ -161,33 +161,7 @@ Public Class OptionViewModel
 #End Region
 
 #Region "Service Function/Methods"
-    Public Function InitializeService() As Boolean
-        _logger.Debug("Start : InitializeService")
 
-        Dim bInitialize As Boolean = False
-        Try
-
-            If aide.State = CommunicationState.Faulted Then
-
-                _logger.Debug("Service is faulted, reinitializing ...")
-
-                Dim Context As InstanceContext = New InstanceContext(Me)
-                aide = New AideServiceClient(Context)
-                aide.Open()
-            End If
-
-            bInitialize = True
-        Catch ex As SystemException
-            _logger.Error(ex.ToString())
-
-            'aide.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-
-        _logger.Debug("End : InitializeService")
-
-        Return bInitialize
-    End Function
     Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess
         Throw New NotImplementedException()
     End Sub

@@ -21,13 +21,13 @@ Class AddEmailPage
     Private send_code As SendCode
     Private email As String
 
-    Private aide As ServiceReference1.AideServiceClient
+    'Private aide As ServiceReference1.AideServiceClient
 
-    Public Sub New(emailframe As Frame, windows As AddEmailWindow, aideService As AideServiceClient)
+    Public Sub New(emailframe As Frame, windows As AddEmailWindow)
 
         ' This call is required by the designer.
         InitializeComponent()
-        aide = aideService
+        'aide = aideService
         email_frame = emailframe
         mainwindow = windows
         Me.DataContext = SendCodeViewModel
@@ -47,7 +47,7 @@ Class AddEmailPage
                     check = checkEmailEntry()
                     If check Then
                         CodeCombination = getCode()
-                        email_frame.Navigate(New EmailCodeRequest(email_frame, CodeCombination, mainwindow, SendCodeViewModel, aide))
+                        email_frame.Navigate(New EmailCodeRequest(email_frame, CodeCombination, mainwindow, SendCodeViewModel))
                     Else
                         MsgBox("Email is not registered to AIDE.", MsgBoxStyle.Exclamation, "AIDE")
                     End If
@@ -66,14 +66,16 @@ Class AddEmailPage
 
     Public Function checkEmailEntry() As Boolean
         Try
-            If Me.InitializeService() Then
-                send_code = aide.GetWorkEmailbyEmail(UserEmail.Text)
-                If IsNothing(send_code) Then
-                    Return False
-                End If
-                LoadEmployeeProfile(UserEmail.Text)
-                Return True
+            'If Me.InitializeService() Then
+            send_code = AideClient.GetClient().GetWorkEmailbyEmail(UserEmail.Text)
+            If IsNothing(send_code) Then
+                Return False
             End If
+
+            LoadEmployeeProfile(UserEmail.Text)
+
+            Return True
+            'End If
 
         Catch ex As Exception
 
@@ -137,20 +139,20 @@ Class AddEmailPage
 
 #Region "Services Function/Method"
 
-    Public Function InitializeService() As Boolean
-        'Dim bInitialize As Boolean = False
-        'Try
-        '    Dim Context As InstanceContext = New InstanceContext(Me)
-        '    aide = New AideServiceClient(Context)
-        '    aide.Open()
-        '    bInitialize = True
-        'Catch ex As SystemException
-        '    aide.Abort()
-        '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        'End Try
-        'Return bInitialize
-        Return True
-    End Function
+    'Public Function InitializeService() As Boolean
+    'Dim bInitialize As Boolean = False
+    'Try
+    '    Dim Context As InstanceContext = New InstanceContext(Me)
+    '    aide = New AideServiceClient(Context)
+    '    aide.Open()
+    '    bInitialize = True
+    'Catch ex As SystemException
+    '    aide.Abort()
+    '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    'End Try
+    'Return bInitialize
+    'Return True
+    'End Function
 
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 

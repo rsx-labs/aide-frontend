@@ -10,7 +10,7 @@ Class DailyAuditCheck
 
 #Region "Page Declaration"
     Public _frame As Frame
-    Private aide As AideServiceClient
+    'Private aide As AideServiceClient
     Private auditSched As New AuditSched
     Private _addframe As Frame
     Private _menugrid As Grid
@@ -19,7 +19,7 @@ Class DailyAuditCheck
     Private auditSchedID As Integer
 
     Private dailyVMM As New dayVM
-    Private _AideService As ServiceReference1.AideServiceClient
+    'Private _AideService As ServiceReference1.AideServiceClient
     Private _lstAuditQuestionSelected As New ObservableCollection(Of WorkplaceAuditModel)
     Private auditDisplay As Integer
 
@@ -50,33 +50,33 @@ Class DailyAuditCheck
 #End Region
 
 #Region "Methods/Functions"
-    Public Function InitializeService() As Boolean
-        _logger.Debug("Start : InitializeService")
+    'Public Function InitializeService() As Boolean
+    '    _logger.Debug("Start : InitializeService")
 
-        Dim bInitialize As Boolean = False
-        Try
+    '    Dim bInitialize As Boolean = False
+    '    Try
 
-            If _AideService.State = CommunicationState.Faulted Then
+    '        If _AideService.State = CommunicationState.Faulted Then
 
-                _logger.Debug("Service is faulted, reinitializing ...")
+    '            _logger.Debug("Service is faulted, reinitializing ...")
 
-                Dim Context As InstanceContext = New InstanceContext(Me)
-                _AideService = New AideServiceClient(Context)
-                _AideService.Open()
-            End If
+    '            Dim Context As InstanceContext = New InstanceContext(Me)
+    '            _AideService = New AideServiceClient(Context)
+    '            _AideService.Open()
+    '        End If
 
-            bInitialize = True
-        Catch ex As SystemException
-            _logger.Error(ex.ToString())
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        _logger.Error(ex.ToString())
 
-            _AideService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
+    '        _AideService.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
 
-        _logger.Debug("End : InitializeService")
+    '    _logger.Debug("End : InitializeService")
 
-        Return bInitialize
-    End Function
+    '    Return bInitialize
+    'End Function
 
 #End Region
 
@@ -88,7 +88,7 @@ Class DailyAuditCheck
 
     Private Sub ReturnToLastPage()
         If auditDisplay = 1 Then
-            _frame.Navigate(New DailyAuditPage(_frame, profile, _addframe, _menugrid, _submenuframe, aide))
+            _frame.Navigate(New DailyAuditPage(_frame, profile, _addframe, _menugrid, _submenuframe))
             _frame.IsEnabled = True
             _frame.Opacity = 1
             _menugrid.IsEnabled = True
@@ -97,7 +97,7 @@ Class DailyAuditCheck
             _submenuframe.Opacity = 1
             _addframe.Visibility = Visibility.Hidden
         ElseIf auditDisplay = 2 Then
-            _frame.Navigate(New WeeklyAuditPage(_frame, profile, _addframe, _menugrid, _submenuframe, aide))
+            _frame.Navigate(New WeeklyAuditPage(_frame, profile, _addframe, _menugrid, _submenuframe))
             _frame.IsEnabled = True
             _frame.Opacity = 1
             _menugrid.IsEnabled = True
@@ -106,7 +106,7 @@ Class DailyAuditCheck
             _submenuframe.Opacity = 1
             _addframe.Visibility = Visibility.Hidden
         ElseIf auditDisplay = 3 Then
-            _frame.Navigate(New MonthlyAuditPage(_frame, profile, _addframe, _menugrid, _submenuframe, aide))
+            _frame.Navigate(New MonthlyAuditPage(_frame, profile, _addframe, _menugrid, _submenuframe))
             _frame.IsEnabled = True
             _frame.Opacity = 1
             _menugrid.IsEnabled = True
@@ -115,7 +115,7 @@ Class DailyAuditCheck
             _submenuframe.Opacity = 1
             _addframe.Visibility = Visibility.Hidden
         ElseIf auditDisplay = 4 Then
-            _frame.Navigate(New QuarterlyAuditPage(_frame, profile, _addframe, _menugrid, _submenuframe, aide))
+            _frame.Navigate(New QuarterlyAuditPage(_frame, profile, _addframe, _menugrid, _submenuframe))
             _frame.IsEnabled = True
             _frame.Opacity = 1
             _menugrid.IsEnabled = True
@@ -186,24 +186,24 @@ Class DailyAuditCheck
     Private Sub Save_Btn(sender As Object, e As RoutedEventArgs)
 
         Try
-            If InitializeService() Then
-                Dim InsertUpdatedDataInAudit As New WorkplaceAudit
-                For Each quest As WorkplaceAuditModel In _lstAuditQuestionSelected.ToList
-                    InsertUpdatedDataInAudit.DT_CHECKED = quest.DT_CHECKED
-                    InsertUpdatedDataInAudit.DT_CHECK_FLG = quest.DT_CHECK_FLG
-                    InsertUpdatedDataInAudit.AUDIT_QUESTIONS_ID = quest.AUDIT_QUESTIONS_ID
-                    InsertUpdatedDataInAudit.FY_WEEK = quest.FY_WEEK
-                    InsertUpdatedDataInAudit.AUDIT_DAILY_ID = quest.AUDIT_DAILY_ID
-                    InsertUpdatedDataInAudit.WEEKDATE = quest.WEEKDATE
-                    InsertUpdatedDataInAudit.AUDIT_QUESTIONS_GROUP = quest.AUDIT_QUESTIONS_GROUP
-                    _AideService.UpdateCheckAuditQuestionStatus(InsertUpdatedDataInAudit)
-                Next
+            'If InitializeService() Then
+            Dim InsertUpdatedDataInAudit As New WorkplaceAudit
+            For Each quest As WorkplaceAuditModel In _lstAuditQuestionSelected.ToList
+                InsertUpdatedDataInAudit.DT_CHECKED = quest.DT_CHECKED
+                InsertUpdatedDataInAudit.DT_CHECK_FLG = quest.DT_CHECK_FLG
+                InsertUpdatedDataInAudit.AUDIT_QUESTIONS_ID = quest.AUDIT_QUESTIONS_ID
+                InsertUpdatedDataInAudit.FY_WEEK = quest.FY_WEEK
+                InsertUpdatedDataInAudit.AUDIT_DAILY_ID = quest.AUDIT_DAILY_ID
+                InsertUpdatedDataInAudit.WEEKDATE = quest.WEEKDATE
+                InsertUpdatedDataInAudit.AUDIT_QUESTIONS_GROUP = quest.AUDIT_QUESTIONS_GROUP
+                AideClient.GetClient().UpdateCheckAuditQuestionStatus(InsertUpdatedDataInAudit)
+            Next
 
-                MsgBox(DisplayPageTitle() & " have been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
+            MsgBox(DisplayPageTitle() & " have been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
 
-                ReturnToLastPage()
-            End If
+            ReturnToLastPage()
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try

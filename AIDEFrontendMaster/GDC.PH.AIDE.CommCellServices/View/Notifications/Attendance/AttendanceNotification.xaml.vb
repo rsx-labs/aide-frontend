@@ -13,7 +13,7 @@ Public Class AttendanceNotification
     Implements ServiceReference1.IAideServiceCallback
 
 #Region "Declarations"
-    Private client As AideServiceClient
+    'Private client As AideServiceClient
     Private _ResourceDBProvider As New ResourcePlannerDBProvider
     Private _ResourceViewModel As New ResourcePlannerViewModel
     Private lstresource As ResourcePlanner()
@@ -88,7 +88,7 @@ Public Class AttendanceNotification
         If LeaveNotyLV.SelectedItem IsNot Nothing Then
             Dim _date As DateTime = CType(LeaveNotyLV.SelectedItem, ResourcePlannerModel).DATE_ENTRY.ToString("MM/dd/yyyy")
 
-            _addframe.Navigate(New ResourcePlannerAddPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame, _date.ToString("MM/dd/yyyy"), client))
+            _addframe.Navigate(New ResourcePlannerAddPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame, _date.ToString("MM/dd/yyyy")))
             mainFrame.IsEnabled = False
             mainFrame.Opacity = 0.3
             _menugrid.IsEnabled = False
@@ -125,25 +125,25 @@ Public Class AttendanceNotification
 
 #Region "Function"
 
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(Context)
-            client.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        client = New AideServiceClient(Context)
+    '        client.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        client.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Public Sub LoadMissingLeave()
         Try
-            InitializeService()
+            'InitializeService()
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
-            lstresource = client.GetAllNotFiledLeaves(profile.Emp_ID)
+            lstresource = AideClient.GetClient().GetAllNotFiledLeaves(profile.Emp_ID)
             paginatedCollection = New PaginatedObservableCollection(Of ResourcePlannerModel)(pagingRecordPerPage)
 
             For Each objResource As ResourcePlanner In lstresource
@@ -164,7 +164,7 @@ Public Class AttendanceNotification
     End Sub
 
     Private Sub ExitPage()
-        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame, client))
+        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         _menugrid.IsEnabled = True

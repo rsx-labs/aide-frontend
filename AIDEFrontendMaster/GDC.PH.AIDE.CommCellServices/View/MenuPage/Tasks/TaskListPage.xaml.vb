@@ -34,7 +34,7 @@ Public Class TaskListPage
 #End Region
 
 #Region "Fields"
-    Private aideService As ServiceReference1.AideServiceClient
+    'Private aideService As ServiceReference1.AideServiceClient
     Private mainFrame As Frame
     Private mainWindow As MainWindow
     Private addframe As Frame
@@ -94,12 +94,12 @@ Public Class TaskListPage
 
 #Region "Sub Procedures"
     Private Sub LoadDescriptionData()
-        InitializeService()
+        'InitializeService()
 
         ' Load Items For Projects
         Try
             Dim displayStatus As Integer = 0
-            Dim lstProjects As Project() = aideService.GetProjectList(empID, displayStatus)
+            Dim lstProjects As Project() = AideClient.GetClient().GetProjectList(empID, displayStatus)
 
             For Each objProjects As Project In lstProjects
                 projectDBProvider.setProjectList(objProjects)
@@ -111,13 +111,13 @@ Public Class TaskListPage
 
             projectViewModel.ProjectList = listProjects
         Catch ex As Exception
-            aideService.Abort()
+            'aideService.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Rework 
         Try
-            Dim lstStatus As StatusGroup() = aideService.GetStatusList(reworkID)
+            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(reworkID)
 
             For Each objStatus As StatusGroup In lstStatus
                 tasksDBProvider.SetMyReworkStatusList(objStatus)
@@ -129,13 +129,13 @@ Public Class TaskListPage
 
             tasksViewModel.ReworkStatusList = listReworkStatus
         Catch ex As SystemException
-            aideService.Abort()
+            'aideService.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Severity 
         Try
-            Dim lstStatus As StatusGroup() = aideService.GetStatusList(severityID)
+            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(severityID)
 
             For Each objStatus As StatusGroup In lstStatus
                 tasksDBProvider.SetMySeverityStatusList(objStatus)
@@ -147,13 +147,13 @@ Public Class TaskListPage
 
             tasksViewModel.SeverityStatusList = listSeverityStatus
         Catch ex As SystemException
-            aideService.Abort()
+            'aideService.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Incident Type 
         Try
-            Dim lstStatus As StatusGroup() = aideService.GetStatusList(incidentTypeID)
+            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(incidentTypeID)
 
             For Each objStatus As StatusGroup In lstStatus
                 tasksDBProvider.SetMyCategoryStatusList(objStatus)
@@ -165,13 +165,13 @@ Public Class TaskListPage
 
             tasksViewModel.CategoryStatusList = listCategoryStatus
         Catch ex As SystemException
-            aideService.Abort()
+            'aideService.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Phase Status 
         Try
-            Dim lstStatus As StatusGroup() = aideService.GetStatusList(phaseID)
+            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(phaseID)
 
             For Each objStatus As StatusGroup In lstStatus
                 tasksDBProvider.SetMyPhaseStatusList(objStatus)
@@ -183,13 +183,13 @@ Public Class TaskListPage
 
             tasksViewModel.PhaseStatusList = listPhaseStatus
         Catch ex As SystemException
-            aideService.Abort()
+            'aideService.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Task Status
         Try
-            Dim lstStatus As StatusGroup() = aideService.GetStatusList(statusID)
+            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(statusID)
 
             For Each objStatus As StatusGroup In lstStatus
                 tasksDBProvider.SetMyTaskStatusList(objStatus)
@@ -201,42 +201,42 @@ Public Class TaskListPage
 
             tasksViewModel.TaskStatusList = listTaskStatus
         Catch ex As SystemException
-            aideService.Abort()
+            'aideService.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
-    Public Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            aideService = New AideServiceClient(Context)
-            aideService.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            aideService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        aideService = New AideServiceClient(Context)
+    '        aideService.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        aideService.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Public Sub SetData()
         Try
-            If InitializeService() Then
-                lstTask = aideService.GetTasksByEmpID(empID)
-                If lstTask.Count <> 0 Then
-                    LoadData()
-                    totalRecords = lstTask.Length
-                    DisplayPagingInfo()
-                Else
-                    lv_taskList.Visibility = Windows.Visibility.Collapsed
-                    lbl_noOT.Visibility = Windows.Visibility.Visible
-                    taskborder.Visibility = Windows.Visibility.Hidden
+            'If InitializeService() Then
+            lstTask = AideClient.GetClient().GetTasksByEmpID(empID)
+            If lstTask.Count <> 0 Then
+                LoadData()
+                totalRecords = lstTask.Length
+                DisplayPagingInfo()
+            Else
+                lv_taskList.Visibility = Windows.Visibility.Collapsed
+                lbl_noOT.Visibility = Windows.Visibility.Visible
+                taskborder.Visibility = Windows.Visibility.Hidden
 
-                    btnNext.Visibility = Windows.Visibility.Collapsed
-                    btnPrev.Visibility = Windows.Visibility.Collapsed
-                End If
+                btnNext.Visibility = Windows.Visibility.Collapsed
+                btnPrev.Visibility = Windows.Visibility.Collapsed
             End If
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -386,7 +386,7 @@ Public Class TaskListPage
     End Sub
 
     Private Sub btnBack_Click(sender As Object, e As RoutedEventArgs)
-        mainFrame.Navigate(New TaskAdminPage(mainFrame, mainWindow, profile, addframe, menugrid, submenuframe, aideService))
+        mainFrame.Navigate(New TaskAdminPage(mainFrame, mainWindow, profile, addframe, menugrid, submenuframe))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         menugrid.IsEnabled = True

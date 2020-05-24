@@ -13,7 +13,7 @@ Class ResourcePlannerPage
     Implements IAideServiceCallback
 
 #Region "Fields"
-    Private client As AideServiceClient
+    'Private client As AideServiceClient
     Private _ResourceDBProvider As New ResourcePlannerDBProvider
     Private _ResourcePADBProvider As New ResourcePlannerDBProvider
     Private _ResourceViewModel As New ResourcePlannerViewModel
@@ -46,8 +46,7 @@ Class ResourcePlannerPage
 
 #End Region
 
-    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid,
-                   _submenuframe As Frame, _attendanceFrame As Frame, aideService As AideServiceClient)
+    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _attendanceFrame As Frame)
 
         _logger.Debug("Start : Constructor")
 
@@ -58,8 +57,6 @@ Class ResourcePlannerPage
         Me._submenuframe = _submenuframe
         Me.attendanceFrame = _attendanceFrame
         Me.InitializeComponent()
-
-        client = aideService
 
         LoadMonth()
         LoadYear()
@@ -74,33 +71,19 @@ Class ResourcePlannerPage
 
     End Sub
 
-    Public Function InitializeService() As Boolean
-        _logger.Debug("Start : InitializeService")
-
-        Dim bInitialize As Boolean = False
-        Try
-
-            If client.State = CommunicationState.Faulted Then
-
-                _logger.Debug("Service is faulted, reinitializing ...")
-
-                Dim Context As InstanceContext = New InstanceContext(Me)
-                client = New AideServiceClient(Context)
-                client.Open()
-            End If
-
-            bInitialize = True
-        Catch ex As SystemException
-            _logger.Error(ex.ToString())
-
-            client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-
-        _logger.Debug("End : InitializeService")
-
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        client = New AideServiceClient(Context)
+    '        client.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        client.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
 #Region "Methods"
     Public Sub LoadMonth()
@@ -122,9 +105,9 @@ Class ResourcePlannerPage
 
     Public Sub CountMissingLeave()
         Try
-            InitializeService()
+            'InitializeService()
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
-            lstresource = client.GetAllNotFiledLeaves(profile.Emp_ID)
+            lstresource = AideClient.GetClient().GetAllNotFiledLeaves(profile.Emp_ID)
 
             If lstresource.Count = 0 Then
                 NotiCountBorder.Visibility = Visibility.Hidden
@@ -139,10 +122,10 @@ Class ResourcePlannerPage
 
     Public Sub LoadYear()
         Try
-            If InitializeService() Then
-                lstFiscalYear = client.GetAllFiscalYear()
-                LoadFiscalYear()
-            End If
+            'If InitializeService() Then
+            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
+            LoadFiscalYear()
+            'End If
         Catch ex As Exception
            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -287,13 +270,13 @@ Class ResourcePlannerPage
 
     Public Sub LoadAllEmpResourcePlanner()
         Try
-            InitializeService()
+            'InitializeService()
             _ResourceDBProvider._splist.Clear()
             _ResourcePADBProvider._palist.Clear()
             
 
             Dim currentDate As DateTime = DateTime.Now
-            Dim lstresource As ResourcePlanner() = client.GetAllEmpResourcePlanner(profile.Email_Address, month, year)
+            Dim lstresource As ResourcePlanner() = AideClient.GetClient().GetAllEmpResourcePlanner(profile.Email_Address, month, year)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
             Dim emp_id As Integer
             Dim bool As Boolean
@@ -324,7 +307,7 @@ Class ResourcePlannerPage
                     If cbDisplayMonth.SelectedValue <> currentDate.Month Then
                         _ResourcePADBProvider._palist.Clear()
 
-                        Dim perfectAttendancelstresource As ResourcePlanner() = client.GetAllPerfectAttendance(profile.Email_Address, month, year)
+                        Dim perfectAttendancelstresource As ResourcePlanner() = AideClient.GetClient().GetAllPerfectAttendance(profile.Email_Address, month, year)
                         Dim resourcePAlist As New ObservableCollection(Of ResourcePlannerModel)
 
                         If perfectAttendancelstresource.Length = 0 Then
@@ -536,7 +519,7 @@ Class ResourcePlannerPage
     'End Sub
 
     Private Sub btnCreateLeave_Click(sender As Object, e As RoutedEventArgs) Handles btnCreateLeave.Click
-        _addframe.Navigate(New ResourcePlannerAddPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame, client))
+        _addframe.Navigate(New ResourcePlannerAddPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
         mainFrame.IsEnabled = False
         mainFrame.Opacity = 0.3
         _menugrid.IsEnabled = False
@@ -560,7 +543,7 @@ Class ResourcePlannerPage
     End Sub
 
     Private Sub btnManage_Click(sender As Object, e As RoutedEventArgs)
-        _addframe.Navigate(New BillabilityManagerVLLeavePage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame, client))
+        _addframe.Navigate(New BillabilityManagerVLLeavePage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
         mainFrame.IsEnabled = False
         mainFrame.Opacity = 0.3
         _menugrid.IsEnabled = False

@@ -37,18 +37,17 @@ Class TaskAdminPage
     Dim currentPage As Integer
     Dim lastPage As Integer
     Dim lstTasks As TaskSummary()
-    Dim client As AideServiceClient
+    'Dim client As AideServiceClient
     Dim paginatedCollection As PaginatedObservableCollection(Of TasksSpModel)
 
 #End Region
 
 #Region "Constructor"
     Public Sub New(_frame As Frame, _mainWindow As MainWindow, _profile As Profile,
-                   _addframe As Frame, _menugrid As Grid, _submenuframe As Frame,
-                   aideService As AideServiceClient)
+                   _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
 
         InitializeComponent()
-        client = aideService
+        'client = aideService
         frame = _frame
         mainWindow = _mainWindow
         addframe = _addframe
@@ -69,19 +68,19 @@ Class TaskAdminPage
 #End Region
 
 #Region "Common Methods"
-    Private Function InitializeService() As Boolean
-        Dim bInitialize As Boolean = False
-        Try
-            Dim context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(context)
-            client.Open()
-            bInitialize = True
-        Catch ex As SystemException
-            client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return bInitialize
-    End Function
+    'Private Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim context As InstanceContext = New InstanceContext(Me)
+    '        client = New AideServiceClient(context)
+    '        client.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        client.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
@@ -152,7 +151,7 @@ Class TaskAdminPage
     Private Sub LoadEmployeeTaskAll()
         Try
             'If Me.InitializeService Then
-            lstTasks = client.ViewTaskSummaryAll(Convert.ToDateTime(Date.Now).ToString("yyyy-MM-dd"), email)
+            lstTasks = AideClient.GetClient().ViewTaskSummaryAll(Convert.ToDateTime(Date.Now).ToString("yyyy-MM-dd"), email)
             LoadData()
             DisplayPagingInfo()
             'End If
@@ -212,7 +211,7 @@ Class TaskAdminPage
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = client
+            '_OptionsViewModel.Service = client
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then

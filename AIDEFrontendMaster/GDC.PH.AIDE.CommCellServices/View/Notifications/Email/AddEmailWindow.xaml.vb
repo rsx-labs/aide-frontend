@@ -2,11 +2,11 @@
 
 Public Class AddEmailWindow
     Private _emailaddress As String
-    Public Sub New(aideService As AideServiceClient)
+    Public Sub New()
 
         ' This call is required by the designer.
         InitializeComponent()
-        EmailFrame.Navigate(New AddEmailPage(EmailFrame, Me, aideService))
+        EmailFrame.Navigate(New AddEmailPage(EmailFrame, Me))
         ' Add any initialization after the InitializeComponent() call.
 
     End Sub

@@ -9,11 +9,9 @@ Class AttendanceSubMenuPage
     Private submenuframe As Frame
     Private AttendanceFrame As Frame
 
-    Private _client As AideServiceClient
     Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 
-    Public Sub New(_pFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid,
-                   _submenuframe As Frame, _attendanceFrame As Frame, aideService As AideServiceClient)
+    Public Sub New(_pFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _attendanceFrame As Frame)
 
         _logger.Debug("Start : Constructor")
 
@@ -25,22 +23,20 @@ Class AttendanceSubMenuPage
         AttendanceFrame = _attendanceFrame
         InitializeComponent()
 
-        _client = aideService
-
         _logger.Debug("End : Constructor")
 
     End Sub
 
     Private Sub ResourcePlanner_Click(sender As Object, e As RoutedEventArgs)
-        pFrame.Navigate(New ResourcePlannerPage(profile, pFrame, addframe, menugrid, submenuframe, AttendanceFrame, _client))
+        pFrame.Navigate(New ResourcePlannerPage(profile, pFrame, addframe, menugrid, submenuframe, AttendanceFrame))
     End Sub
 
     Private Sub VacationLeave_Click(sender As Object, e As RoutedEventArgs)
-        pFrame.Navigate(New BillabilityVacationLeavePage(profile, pFrame, addframe, menugrid, submenuframe, AttendanceFrame, _client))
+        pFrame.Navigate(New BillabilityVacationLeavePage(profile, pFrame, addframe, menugrid, submenuframe, AttendanceFrame))
     End Sub
 
     Private Sub SickLeave_Click(sender As Object, e As RoutedEventArgs)
-        pFrame.Navigate(New BillabilitySickLeavePage(profile, pFrame, _client))
+        pFrame.Navigate(New BillabilitySickLeavePage(profile, pFrame))
     End Sub
 
     Private Sub Late_Click(sender As Object, e As RoutedEventArgs)

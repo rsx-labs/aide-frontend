@@ -11,7 +11,7 @@ Public Class AssetsInventoryAddPage
     Private mainFrame As Frame
     Private fromPage As String
     Private approvalStatus As Integer
-    Private client As AideServiceClient
+    'Private client As AideServiceClient
     Private assetsModel As New AssetsModel
     Private profile As New Profile
     Private _addframe As Frame
@@ -42,12 +42,12 @@ Public Class AssetsInventoryAddPage
 #Region "Constructor"
     Public Sub New(_assetsModel As AssetsModel, mainFrame As Frame, _profile As Profile,
                    _fromPage As String, _addframe As Frame, _menugrid As Grid,
-                   _submenuframe As Frame, aideService As AideServiceClient)
+                   _submenuframe As Frame)
 
         InitializeComponent()
 
-        client = aideService
-        mailConfigVM = New MailConfigViewModel(client)
+        'client = aideService
+        mailConfigVM = New MailConfigViewModel()
         Me.mainFrame = mainFrame
         Me._addframe = _addframe
         Me._menugrid = _menugrid
@@ -126,31 +126,31 @@ Public Class AssetsInventoryAddPage
                 Else
                     assets.APPROVAL = assetsModel.APPROVAL
                 End If
-            If InitializeService() Then
-                    client.UpdateAssetsInventory(assets)
+                'If InitializeService() Then
+                AideClient.GetClient().UpdateAssetsInventory(assets)
 
-                    If isAINotifAllow Then
-                        If profile.Permission_ID = 4 And cbStatus.SelectedValue = 3 Then
-                            GetAssetMovementData(16, 0, 0)
-                            SetAssetAssignEmailNotification(assets, cbNickname.SelectedValue)
-                        End If
-                        If cbStatus.SelectedValue = 4 Then
-                            GetAssetMovementData(19, 0, 0)
-                            SetAssetUnAssignEmailNotification(assets, cbNickname.SelectedValue)
-                        End If
+                If isAINotifAllow Then
+                    If profile.Permission_ID = 4 And cbStatus.SelectedValue = 3 Then
+                        GetAssetMovementData(16, 0, 0)
+                        SetAssetAssignEmailNotification(assets, cbNickname.SelectedValue)
                     End If
-                    MsgBox("Asset inventory have been updated.", MsgBoxStyle.Information, "AIDE")
-                    ClearFields()
-                    mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
-                    mainFrame.IsEnabled = True
-                    mainFrame.Opacity = 1
-                    _menugrid.IsEnabled = True
-                    _menugrid.Opacity = 1
-                    _submenuframe.IsEnabled = True
-                    _submenuframe.Opacity = 1
+                    If cbStatus.SelectedValue = 4 Then
+                        GetAssetMovementData(19, 0, 0)
+                        SetAssetUnAssignEmailNotification(assets, cbNickname.SelectedValue)
+                    End If
+                End If
+                MsgBox("Asset inventory have been updated.", MsgBoxStyle.Information, "AIDE")
+                ClearFields()
+                mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
+                mainFrame.IsEnabled = True
+                mainFrame.Opacity = 1
+                _menugrid.IsEnabled = True
+                _menugrid.Opacity = 1
+                _submenuframe.IsEnabled = True
+                _submenuframe.Opacity = 1
 
-                    _addframe.Visibility = Visibility.Hidden
-            End If
+                _addframe.Visibility = Visibility.Hidden
+                'End If
             End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -267,19 +267,19 @@ Public Class AssetsInventoryAddPage
 
             Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.OKCancel, "AIDE")
             If result = 1 Then
-                If InitializeService() Then
-                    client.UpdateAssetsInventoryCancel(assets)
-                    ClearFields()
-                    mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
-                    mainFrame.IsEnabled = True
-                    mainFrame.Opacity = 1
-                    _menugrid.IsEnabled = True
-                    _menugrid.Opacity = 1
-                    _submenuframe.IsEnabled = True
-                    _submenuframe.Opacity = 1
+                'If InitializeService() Then
+                AideClient.GetClient().UpdateAssetsInventoryCancel(assets)
+                ClearFields()
+                mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
+                mainFrame.IsEnabled = True
+                mainFrame.Opacity = 1
+                _menugrid.IsEnabled = True
+                _menugrid.Opacity = 1
+                _submenuframe.IsEnabled = True
+                _submenuframe.Opacity = 1
 
-                    _addframe.Visibility = Visibility.Hidden
-                End If
+                _addframe.Visibility = Visibility.Hidden
+                'End If
             Else
                 Exit Sub
             End If
@@ -345,25 +345,25 @@ Public Class AssetsInventoryAddPage
         assets.STATUS = status
         assets.ASSIGNED_TO = 999 'USED JUST TO BE NOT NULL
 
-        If InitializeService() Then
-            client.UpdateAssetsInventoryApproval(assets)
-            If isAINotifAllow Then
-                GetAssetMovementData(18, 0, 0)
-                SetAssetApprovalEmailNotification(assetsModel, cbNickname.SelectedValue)
-            End If
-            MsgBox("Asset inventory have been updated.", MsgBoxStyle.Information, "AIDE")
-            ClearFields()
-            mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
-            mainFrame.IsEnabled = True
-            mainFrame.Opacity = 1
-            _menugrid.IsEnabled = True
-            _menugrid.Opacity = 1
-            _submenuframe.IsEnabled = True
-            _submenuframe.Opacity = 1
-
-            _addframe.Visibility = Visibility.Hidden
-
+        'If InitializeService() Then
+        AideClient.GetClient().UpdateAssetsInventoryApproval(assets)
+        If isAINotifAllow Then
+            GetAssetMovementData(18, 0, 0)
+            SetAssetApprovalEmailNotification(assetsModel, cbNickname.SelectedValue)
         End If
+        MsgBox("Asset inventory have been updated.", MsgBoxStyle.Information, "AIDE")
+        ClearFields()
+        mainFrame.Navigate(New AssetsInventoryListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe, fromPage))
+        mainFrame.IsEnabled = True
+        mainFrame.Opacity = 1
+        _menugrid.IsEnabled = True
+        _menugrid.Opacity = 1
+        _submenuframe.IsEnabled = True
+        _submenuframe.Opacity = 1
+
+        _addframe.Visibility = Visibility.Hidden
+
+        'End If
     End Sub
 
     Private Sub AssignEvents()
@@ -454,23 +454,23 @@ Public Class AssetsInventoryAddPage
 
     End Sub
 
-    Public Function InitializeService() As Boolean
-        'Dim bInitialize As Boolean = False
-        'Try
-        '    'DisplayText("Opening client service...")
-        '    Dim Context As InstanceContext = New InstanceContext(Me)
-        '    client = New AideServiceClient(Context)
-        '    client.Open()
-        '    bInitialize = True
-        '    'DisplayText("Service opened successfully...")
-        '    'Return True
-        'Catch ex As SystemException
-        '    client.Abort()
-        '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        'End Try
-        'Return bInitialize
-        Return True
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    'Dim bInitialize As Boolean = False
+    '    'Try
+    '    '    'DisplayText("Opening client service...")
+    '    '    Dim Context As InstanceContext = New InstanceContext(Me)
+    '    '    client = New AideServiceClient(Context)
+    '    '    client.Open()
+    '    '    bInitialize = True
+    '    '    'DisplayText("Service opened successfully...")
+    '    '    'Return True
+    '    'Catch ex As SystemException
+    '    '    client.Abort()
+    '    '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    'End Try
+    '    'Return bInitialize
+    '    Return True
+    'End Function
 
     Public Function CheckMissingField() As Boolean
         If txtEmpID.Text = String.Empty Then
@@ -482,31 +482,31 @@ Public Class AssetsInventoryAddPage
 
     Public Sub PopulateComboBoxAssignedTo()
         Try
-            If InitializeService() Then
-                If profile.Permission_ID = 2 Then ' User
-                    If cbStatus.SelectedIndex = 1 Then ' Assigned
-                        txtEmpID.Text = profile.Emp_ID
-                        cbNickname.IsEnabled = False
-                    Else ' Unassigned
-                        cbNickname.IsEnabled = True
-                        ListOfCustodians()
-                    End If
-                Else ' Manager or Custodian
-                    If cbStatus.SelectedIndex = 1 Then ' Assigned
-                        ListOfAllUser()
-                    Else ' Unassigned
-                        cbNickname.IsEnabled = True
-                        ListOfCustodians()
-                    End If
+            'If InitializeService() Then
+            If profile.Permission_ID = 2 Then ' User
+                If cbStatus.SelectedIndex = 1 Then ' Assigned
+                    txtEmpID.Text = profile.Emp_ID
+                    cbNickname.IsEnabled = False
+                Else ' Unassigned
+                    cbNickname.IsEnabled = True
+                    ListOfCustodians()
+                End If
+            Else ' Manager or Custodian
+                If cbStatus.SelectedIndex = 1 Then ' Assigned
+                    ListOfAllUser()
+                Else ' Unassigned
+                    cbNickname.IsEnabled = True
+                    ListOfCustodians()
                 End If
             End If
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
     Public Sub ListOfCustodians()
-        Dim lstMangers As Assets() = client.GetAllAssetsCustodian(profile.Emp_ID)
+        Dim lstMangers As Assets() = AideClient.GetClient().GetAllAssetsCustodian(profile.Emp_ID)
         Dim lstMangersList As New ObservableCollection(Of AssetsModel)
         Dim assetsDBProvider As New AssetsDBProvider
         Dim assetsVM As New AssetsViewModel()
@@ -526,7 +526,7 @@ Public Class AssetsInventoryAddPage
     End Sub
 
     Public Sub ListOfAllUser()
-        lstNickname = client.ViewNicknameByDeptID(profile.Email_Address, dsplyByDiv)
+        lstNickname = AideClient.GetClient().ViewNicknameByDeptID(profile.Email_Address, dsplyByDiv)
         Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
         Dim successRegisterDBProvider As New SuccessRegisterDBProvider
 
@@ -546,23 +546,23 @@ Public Class AssetsInventoryAddPage
 
     Public Sub PopulateComboBoxAssetID()
         Try
-            If InitializeService() Then
-                ' For Asset ID Combobox
-                lstAssets = client.GetAllAssetsUnAssigned(profile.Emp_ID)
-                Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
+            'If InitializeService() Then
+            ' For Asset ID Combobox
+            lstAssets = AideClient.GetClient().GetAllAssetsUnAssigned(profile.Emp_ID)
+            Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
 
-                For Each objAsset As Assets In lstAssets
-                    assetDBProvider.SetAssetList(objAsset)
-                Next
+            For Each objAsset As Assets In lstAssets
+                assetDBProvider.SetAssetList(objAsset)
+            Next
 
-                For Each rawUser As MyAssets In assetDBProvider.GetAssetList()
-                    lstAssetsList.Add(New AssetsModel(rawUser))
-                Next
+            For Each rawUser As MyAssets In assetDBProvider.GetAssetList()
+                lstAssetsList.Add(New AssetsModel(rawUser))
+            Next
 
-                assetVM.AssetList = lstAssetsList
-                cbAssetID.ItemsSource = assetVM.AssetList
+            assetVM.AssetList = lstAssetsList
+            cbAssetID.ItemsSource = assetVM.AssetList
 
-            End If
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -570,26 +570,26 @@ Public Class AssetsInventoryAddPage
 
     Public Sub ListOfAssetType()
         Try
-            If InitializeService() Then
-                Dim lstAssets As Assets() = client.GetAssetDescription()
-                Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
-                Dim assetsDBProvider As New AssetsDBProvider
-                Dim assetsVM As New AssetsViewModel()
+            'If InitializeService() Then
+            Dim lstAssets As Assets() = AideClient.GetClient().GetAssetDescription()
+            Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
+            Dim assetsDBProvider As New AssetsDBProvider
+            Dim assetsVM As New AssetsViewModel()
 
-                ' Set the MyLessonLearntList 
-                For Each objAssets As Assets In lstAssets
-                    assetsDBProvider.SetAssetTypeList(objAssets)
-                Next
+            ' Set the MyLessonLearntList 
+            For Each objAssets As Assets In lstAssets
+                assetsDBProvider.SetAssetTypeList(objAssets)
+            Next
 
-                For Each rawUser As MyAssets In assetsDBProvider.GetAssetTypeList()
-                    lstAssetsList.Add(New AssetsModel(rawUser))
-                Next
+            For Each rawUser As MyAssets In assetsDBProvider.GetAssetTypeList()
+                lstAssetsList.Add(New AssetsModel(rawUser))
+            Next
 
-                assetsVM.AssetTypeList = Nothing
-                cbAssetType.ItemsSource = Nothing
-                assetsVM.AssetTypeList = lstAssetsList
-                cbAssetType.ItemsSource = assetsVM.AssetTypeList
-            End If
+            assetsVM.AssetTypeList = Nothing
+            cbAssetType.ItemsSource = Nothing
+            assetsVM.AssetTypeList = lstAssetsList
+            cbAssetType.ItemsSource = assetsVM.AssetTypeList
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -597,37 +597,37 @@ Public Class AssetsInventoryAddPage
 
     Public Sub ListOfAssetManufacturer()
         Try
-            If InitializeService() Then
-                Dim lstAssets As Assets() = client.GetAssetManufacturer()
-                Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
-                Dim assetsDBProvider As New AssetsDBProvider
-                Dim assetsVM As New AssetsViewModel()
+            'If InitializeService() Then
+            Dim lstAssets As Assets() = AideClient.GetClient().GetAssetManufacturer()
+            Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
+            Dim assetsDBProvider As New AssetsDBProvider
+            Dim assetsVM As New AssetsViewModel()
 
-                ' Set the MyLessonLearntList 
-                For Each objAssets As Assets In lstAssets
-                    assetsDBProvider.SetAssetManufacturerList(objAssets)
-                Next
+            ' Set the MyLessonLearntList 
+            For Each objAssets As Assets In lstAssets
+                assetsDBProvider.SetAssetManufacturerList(objAssets)
+            Next
 
-                For Each rawUser As MyAssets In assetsDBProvider.GetAssetManufacturerList()
-                    lstAssetsList.Add(New AssetsModel(rawUser))
-                Next
+            For Each rawUser As MyAssets In assetsDBProvider.GetAssetManufacturerList()
+                lstAssetsList.Add(New AssetsModel(rawUser))
+            Next
 
-                assetsVM.AssetManufacturerList = Nothing
-                cbAssetManufacturer.ItemsSource = Nothing
-                assetsVM.AssetManufacturerList = lstAssetsList
-                cbAssetManufacturer.ItemsSource = assetsVM.AssetManufacturerList
-            End If
+            assetsVM.AssetManufacturerList = Nothing
+            cbAssetManufacturer.ItemsSource = Nothing
+            assetsVM.AssetManufacturerList = lstAssetsList
+            cbAssetManufacturer.ItemsSource = assetsVM.AssetManufacturerList
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Private Sub GetMailConfig()
         Try
-            If InitializeService() Then
-                mailConfig = client.GetMailConfig()
-                LoadMailConfig()
-                isAINotifAllow = mailConfigVM.isSendEmail(10, 0, 0)
-            End If
+            'If InitializeService() Then
+            mailConfig = AideClient.GetClient().GetMailConfig()
+            LoadMailConfig()
+            isAINotifAllow = mailConfigVM.isSendEmail(10, 0, 0)
+            'End If
 
         Catch ex As Exception
 
@@ -653,7 +653,7 @@ Public Class AssetsInventoryAddPage
     Private Sub GetAssetMovementData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer)
         Try
             _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = client
+            '_OptionsViewModel.Service = client
             _option = New OptionModel
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
@@ -669,7 +669,7 @@ Public Class AssetsInventoryAddPage
     Public Sub SetAssetAssignEmailNotification(ByVal asset As Assets, ByVal emp_id As Integer)
         Try
             Dim assetinfo As String = GetAssetInfo(asset)
-            lstMissingAttendance = client.GetEmployeeEmailForAssetMovement(emp_id)
+            lstMissingAttendance = AideClient.GetClient().GetEmployeeEmailForAssetMovement(emp_id)
             If lstMissingAttendance.Count > 0 Then
                 For Each objEmployee As Employee In lstMissingAttendance
                     mailConfigVM.SendEmail(mailConfigVM, _option, objEmployee.EmailAddress, objEmployee.ManagerEmail, 2, assetinfo)
@@ -682,7 +682,7 @@ Public Class AssetsInventoryAddPage
     Public Sub SetAssetUnAssignEmailNotification(ByVal asset As Assets, ByVal emp_id As Integer)
         Try
             Dim assetinfo As String = GetAssetInfo(asset)
-            lstMissingAttendance = client.GetEmployeeEmailForAssetMovement(emp_id)
+            lstMissingAttendance = AideClient.GetClient().GetEmployeeEmailForAssetMovement(emp_id)
             If lstMissingAttendance.Count > 0 Then
                 For Each objEmployee As Employee In lstMissingAttendance
                     mailConfigVM.SendEmail(mailConfigVM, _option, objEmployee.EmployeeName, objEmployee.ManagerEmail, 3, assetinfo, assetsModel.FULL_NAME)
@@ -695,7 +695,7 @@ Public Class AssetsInventoryAddPage
     Public Sub SetAssetVerifyEmailNotification(ByVal asset As AssetsModel, ByVal emp_id As Integer)
         Try
             Dim assetinfo As String = GetAssetInfo2(asset)
-            lstMissingAttendance = client.GetEmployeeEmailForAssetMovement(emp_id)
+            lstMissingAttendance = AideClient.GetClient().GetEmployeeEmailForAssetMovement(emp_id)
             If lstMissingAttendance.Count > 0 Then
                 For Each objEmployee As Employee In lstMissingAttendance
                     mailConfigVM.SendEmail(mailConfigVM, _option, objEmployee.ManagerEmail, objEmployee.EmployeeName, 3, assetinfo, asset.FULL_NAME)
@@ -709,7 +709,7 @@ Public Class AssetsInventoryAddPage
         Try
             Dim assetinfo As String = GetAssetInfo2(asset)
             Dim opt2 As String = asset.FULL_NAME + "," + approvalDescr + "," + Me.profile.FirstName + " " + Me.profile.LastName
-            lstMissingAttendance = client.GetEmployeeEmailForAssetMovement(emp_id)
+            lstMissingAttendance = AideClient.GetClient().GetEmployeeEmailForAssetMovement(emp_id)
             If lstMissingAttendance.Count > 0 Then
                 For Each objEmployee As Employee In lstMissingAttendance
                     mailConfigVM.SendEmail(mailConfigVM, _option, objEmployee.EmployeeName, objEmployee.EmailAddress, 4, assetinfo, opt2)

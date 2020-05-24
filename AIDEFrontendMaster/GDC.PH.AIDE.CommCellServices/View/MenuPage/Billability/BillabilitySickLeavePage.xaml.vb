@@ -16,7 +16,7 @@ Public Class BillabilitySickLeavePage
     Implements IAideServiceCallback
 
 #Region "Fields"
-    Private client As AideServiceClient
+    'Private client As AideServiceClient
     Private _ResourceDBProvider As New ResourcePlannerDBProvider
     Private _ResourceViewModel As New ResourcePlannerViewModel
     Private mainFrame As Frame
@@ -35,7 +35,8 @@ Public Class BillabilitySickLeavePage
     Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
-    Public Sub New(_profile As Profile, mFrame As Frame, aideService As AideServiceClient)
+    Public Sub New(_profile As Profile, mFrame As Frame)
+
 
         _logger.Debug("Start : Constructor")
 
@@ -43,7 +44,6 @@ Public Class BillabilitySickLeavePage
         Me.mainFrame = mFrame
         Me.InitializeComponent()
 
-        client = aideService
 
         LoadYear()
         SetFiscalYear()
@@ -58,50 +58,34 @@ Public Class BillabilitySickLeavePage
 
 #Region "Private Methods"
 
-    Public Function InitializeService() As Boolean
-        _logger.Debug("Start : InitializeService")
-
-        Dim bInitialize As Boolean = False
-        Try
-
-            If client.State = CommunicationState.Faulted Then
-
-                _logger.Debug("Service is faulted, reinitializing ...")
-
-                Dim Context As InstanceContext = New InstanceContext(Me)
-                client = New AideServiceClient(Context)
-                client.Open()
-            End If
-
-            bInitialize = True
-        Catch ex As SystemException
-            _logger.Error(ex.ToString())
-
-            client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-
-        _logger.Debug("End : InitializeService")
-
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        client = New AideServiceClient(Context)
+    '        client.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        client.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Private Sub SetTitle()
         lblYear.Content = "Sick Leave For Fiscal Year " + cbYear.SelectedValue
     End Sub
 
     Private Sub GenerateLeaveCredits()
-        If InitializeService() Then
-            Try
-                If Date.Today.Month = 4 And Date.Today.Day <= 7 Then
-                    client.InsertLeaveCredits(profile.Emp_ID, year)
-                End If
-            Catch ex As Exception
-                _logger.Error($"Error at GeneratedLeaveCredits = {ex.ToString()}")
-
-                MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-            End Try
-        End If
+        'If InitializeService() Then
+        Try
+            If Date.Today.Month = 4 And Date.Today.Day <= 7 Then
+                AideClient.GetClient().InsertLeaveCredits(profile.Emp_ID, year)
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        'End If
     End Sub
 
     Private Sub SetFiscalYear()
@@ -125,10 +109,10 @@ Public Class BillabilitySickLeavePage
 
     Public Sub LoadYear()
         Try
-            If InitializeService() Then
-                lstFiscalYear = client.GetAllFiscalYear()
-                LoadFiscalYear()
-            End If
+            'If InitializeService() Then
+            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
+            LoadFiscalYear()
+            'End If
         Catch ex As Exception
             _logger.Error($"Error at LoadYear = {ex.ToString()}")
 
@@ -165,10 +149,10 @@ Public Class BillabilitySickLeavePage
 
     Private Sub LoadDataSLYearly()
         Try
-            InitializeService()
+            'InitializeService()
             _ResourceDBProvider._splist.Clear()
 
-            Dim lstresource As ResourcePlanner() = client.GetResourcePlanner(profile.Email_Address, slStatus, displayFiscalYear, year)
+            Dim lstresource As ResourcePlanner() = AideClient.GetClient().GetResourcePlanner(profile.Email_Address, slStatus, displayFiscalYear, year)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
             Dim resourceListVM As New ResourcePlannerViewModel()
             Dim UsedSL As New ChartValues(Of Double)()

@@ -16,7 +16,7 @@ Public Class BillabilityVacationLeavePage
     Implements IAideServiceCallback
 
 #Region "Fields"
-    Private client As AideServiceClient
+    'Private client As AideServiceClient
     Private _ResourceDBProvider As New ResourcePlannerDBProvider
     Private _ResourceViewModel As New ResourcePlannerViewModel
     Private mainFrame As Frame
@@ -38,8 +38,7 @@ Public Class BillabilityVacationLeavePage
     Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
-    Public Sub New(_profile As Profile, mFrame As Frame, addframe As Frame, menugrid As Grid,
-                   submenuframe As Frame, attendanceFrame As Frame, aideSrvice As AideServiceClient)
+    Public Sub New(_profile As Profile, mFrame As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame, attendanceFrame As Frame)
 
         _logger.Debug("Start : Constructor")
 
@@ -50,8 +49,6 @@ Public Class BillabilityVacationLeavePage
         Me._submenuframe = submenuframe
         Me._attendanceFrame = attendanceFrame
         Me.InitializeComponent()
-
-        client = aideSrvice
 
         LoadYear()
         SetFiscalYear()
@@ -65,48 +62,34 @@ Public Class BillabilityVacationLeavePage
 
 #Region "Private Methods"
 
-    Public Function InitializeService() As Boolean
-        _logger.Debug("Start : InitializeService")
-
-        Dim bInitialize As Boolean = False
-        Try
-
-            If client.State = CommunicationState.Faulted Then
-
-                _logger.Debug("Service is faulted, reinitializing ...")
-
-                Dim Context As InstanceContext = New InstanceContext(Me)
-                client = New AideServiceClient(Context)
-                client.Open()
-            End If
-
-            bInitialize = True
-        Catch ex As SystemException
-            _logger.Error(ex.ToString())
-
-            client.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-
-        _logger.Debug("End : InitializeService")
-
-        Return bInitialize
-    End Function
+    'Public Function InitializeService() As Boolean
+    '    Dim bInitialize As Boolean = False
+    '    Try
+    '        Dim Context As InstanceContext = New InstanceContext(Me)
+    '        client = New AideServiceClient(Context)
+    '        client.Open()
+    '        bInitialize = True
+    '    Catch ex As SystemException
+    '        client.Abort()
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return bInitialize
+    'End Function
 
     Private Sub SetTitle()
         lblYear.Content = "Vacation Leave For Fiscal Year " + cbYear.SelectedValue
     End Sub
 
     Private Sub GenerateLeaveCredits()
-        If InitializeService() Then
-            Try
-                If Date.Today.Month = 4 And Date.Today.Day <= 7 Then
-                    client.InsertLeaveCredits(profile.Emp_ID, year)
-                End If
-            Catch ex As Exception
-               MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-            End Try
-        End If
+        'If InitializeService() Then
+        Try
+            If Date.Today.Month = 4 And Date.Today.Day <= 7 Then
+                AideClient.GetClient().InsertLeaveCredits(profile.Emp_ID, year)
+            End If
+        Catch ex As Exception
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        'End If
     End Sub
 
     Private Sub SetFiscalYear()
@@ -127,10 +110,10 @@ Public Class BillabilityVacationLeavePage
 
     Public Sub LoadYear()
         Try
-            If InitializeService() Then
-                lstFiscalYear = client.GetAllFiscalYear()
-                LoadFiscalYear()
-            End If
+            'If InitializeService() Then
+            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
+            LoadFiscalYear()
+            'End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -163,10 +146,10 @@ Public Class BillabilityVacationLeavePage
 
     Private Sub LoadDataVLYearly()
         Try
-            InitializeService()
+            'InitializeService()
             _ResourceDBProvider._splist.Clear()
 
-            Dim lstresource = client.GetResourcePlanner(profile.Email_Address, vlStatus, displayFiscalYear, year)
+            Dim lstresource = AideClient.GetClient().GetResourcePlanner(profile.Email_Address, vlStatus, displayFiscalYear, year)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
             Dim resourceListVM As New ResourcePlannerViewModel()
             Dim UsedVL As New ChartValues(Of Double)()
@@ -273,7 +256,7 @@ Public Class BillabilityVacationLeavePage
 #End Region
 
     Private Sub btnManage_Click(sender As Object, e As RoutedEventArgs)
-        _addframe.Navigate(New BillabilityManagerVLLeavePage(profile, mainFrame, _addframe, _menugrid, _submenuframe, _attendanceFrame, client))
+        _addframe.Navigate(New BillabilityManagerVLLeavePage(profile, mainFrame, _addframe, _menugrid, _submenuframe, _attendanceFrame))
         mainFrame.IsEnabled = False
         mainFrame.Opacity = 0.3
         _menugrid.IsEnabled = False
