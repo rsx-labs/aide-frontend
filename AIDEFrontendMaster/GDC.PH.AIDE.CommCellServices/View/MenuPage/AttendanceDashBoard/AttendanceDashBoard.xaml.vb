@@ -33,6 +33,7 @@ Public Class AttendanceDashBoard
 
         Me.mainFrame = mainFrame
         Me.profile = profile
+
         _AideService = aideService
 
         SetData()
@@ -47,16 +48,30 @@ Public Class AttendanceDashBoard
 
 #Region "Functions"
     Public Function InitializeService() As Boolean
+        _logger.Debug("Start : InitializeService")
+
         Dim bInitialize As Boolean = False
         Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            _AideService = New AideServiceClient(Context)
-            _AideService.Open()
+
+            If _AideService.State = CommunicationState.Faulted Then
+
+                _logger.Debug("Service is faulted, reinitializing ...")
+
+                Dim Context As InstanceContext = New InstanceContext(Me)
+                _AideService = New AideServiceClient(Context)
+                _AideService.Open()
+            End If
+
             bInitialize = True
         Catch ex As SystemException
-            _AideService.Abort()
+            _logger.Error(ex.ToString())
+
+            '_AideService.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : InitializeService")
+
         Return bInitialize
     End Function
 
@@ -64,34 +79,35 @@ Public Class AttendanceDashBoard
         Try
             _logger.Debug("Start : SetData")
 
-            AEmployee = _AideService.GetAttendanceToday(profile.Emp_ID)
+            If InitializeService() Then
+                AEmployee = _AideService.GetAttendanceToday(profile.Emp_ID)
 
-            Dim d As DateTime? = Nothing
-            Dim lstAEmployeeList As New ObservableCollection(Of AttendanceModel)
-            Dim aemployeeListDBProvider As New AttendanceListDBProvider
+                Dim d As DateTime? = Nothing
+                Dim lstAEmployeeList As New ObservableCollection(Of AttendanceModel)
+                Dim aemployeeListDBProvider As New AttendanceListDBProvider
 
-            For Each objaemp As MyAttendance In AEmployee
-                aemployeeListDBProvider.SetAllAttendanceList(objaemp)
-            Next
+                For Each objaemp As MyAttendance In AEmployee
+                    aemployeeListDBProvider.SetAllAttendanceList(objaemp)
+                Next
 
-            For Each rawUser As myAttendanceList In aemployeeListDBProvider.GetAllEmpRPList()
-                setStatus = rawUser.Status
-                SetCategory(rawUser)
-                If rawUser.Status = 11 Then 'For Late
-                    SetCategoryDisplay(rawUser)
-                End If
+                For Each rawUser As myAttendanceList In aemployeeListDBProvider.GetAllEmpRPList()
+                    setStatus = rawUser.Status
+                    SetCategory(rawUser)
+                    If rawUser.Status = 11 Then 'For Late
+                        SetCategoryDisplay(rawUser)
+                    End If
 
-                d = rawUser.Logoff_Time
-                If d.Value = Nothing Then
-                    rawUser.Logoff_Time = ""
-                End If
+                    d = rawUser.Logoff_Time
+                    If d.Value = Nothing Then
+                        rawUser.Logoff_Time = ""
+                    End If
 
-                lstAEmployeeList.Add(New AttendanceModel(rawUser))
-            Next
+                    lstAEmployeeList.Add(New AttendanceModel(rawUser))
+                Next
 
-            AttendanceListVM.EmployeeListAttendance = lstAEmployeeList
-            Me.DataContext = AttendanceListVM
-
+                AttendanceListVM.EmployeeListAttendance = lstAEmployeeList
+                Me.DataContext = AttendanceListVM
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
 

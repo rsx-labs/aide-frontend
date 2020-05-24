@@ -5,6 +5,7 @@ Imports UI_AIDE_CommCellServices.ServiceReference1
 Imports System.Windows.Forms
 Imports System.Text.RegularExpressions
 Imports System.ServiceModel
+Imports NLog
 
 Class ResourcePlannerAddPage
     Implements ServiceReference1.IAideServiceCallback
@@ -31,10 +32,17 @@ Class ResourcePlannerAddPage
     Dim dateTo As Date
     Dim dateFromNoty As String
     Dim isFromNoty As Boolean
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
+
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _attendanceFrame As Frame)
+    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid,
+                   _submenuframe As Frame, _attendanceFrame As Frame, aideService As AideServiceClient)
+
+        _logger.Debug("Start : Constructor")
+
         Me.profile = _profile
         Me.mainFrame = mFrame
         Me._addframe = _addframe
@@ -42,13 +50,23 @@ Class ResourcePlannerAddPage
         Me._submenuframe = _submenuframe
         Me.attendanceFrame = _attendanceFrame
         Me.InitializeComponent()
+
+        client = aideService
+
         LoadData()
         LoadCategory()
         LoadSchedule()
         cbSchedule.IsEnabled = False
+
+        _logger.Debug("End : Constructor")
+
     End Sub
 
-    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _attendanceFrame As Frame, _isToDate As String)
+    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame,
+                   _attendanceFrame As Frame, _isToDate As String, aideService As AideServiceClient)
+
+        _logger.Debug("Start : Constructor")
+
         Me.profile = _profile
         Me.mainFrame = mFrame
         Me._addframe = _addframe
@@ -56,6 +74,9 @@ Class ResourcePlannerAddPage
         Me._submenuframe = _submenuframe
         Me.attendanceFrame = _attendanceFrame
         Me.InitializeComponent()
+
+        client = aideService
+
         dtpFrom.SelectedDate = _isToDate
         isFromNoty = True
         LoadData()
@@ -63,6 +84,9 @@ Class ResourcePlannerAddPage
         LoadSchedule()
 
         cbSchedule.IsEnabled = False
+
+        _logger.Debug("End : Constructor")
+
     End Sub
 #End Region
 
@@ -179,16 +203,30 @@ Class ResourcePlannerAddPage
 #Region "Function"
 
     Public Function InitializeService() As Boolean
+        _logger.Debug("Start : InitializeService")
+
         Dim bInitialize As Boolean = False
         Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(Context)
-            client.Open()
+
+            If client.State = CommunicationState.Faulted Then
+
+                _logger.Debug("Service is faulted, reinitializing ...")
+
+                Dim Context As InstanceContext = New InstanceContext(Me)
+                client = New AideServiceClient(Context)
+                client.Open()
+            End If
+
             bInitialize = True
         Catch ex As SystemException
+            _logger.Error(ex.ToString())
+
             client.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : InitializeService")
+
         Return bInitialize
     End Function
 
@@ -208,7 +246,9 @@ Class ResourcePlannerAddPage
             _ResourceViewModel.ResourceList = resourcelist
             lstEmployee.DataContext = _ResourceViewModel
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Error($"Error at LoadEmployee = {ex.ToString()}")
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -253,7 +293,9 @@ Class ResourcePlannerAddPage
             _ResourceViewModel.CategoryList = resourcelist
             cbCategory.DataContext = _ResourceViewModel
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Error($"Error at LoadCategory = {ex.ToString()}")
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -272,7 +314,9 @@ Class ResourcePlannerAddPage
             End If
 
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Error($"Error at CheckLeaveExist = {ex.ToString()}")
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         Return bLeaveExists
@@ -342,12 +386,14 @@ Class ResourcePlannerAddPage
             cbSchedule.Items.Add(New With {.Text = "Morning"})
             cbSchedule.Items.Add(New With {.Text = "Afternoon"})
         Catch ex As Exception
+            _logger.Error($"Error at LoadSchedule = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
     Private Sub ExitPage()
-        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
+        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame, client))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         _menugrid.IsEnabled = True

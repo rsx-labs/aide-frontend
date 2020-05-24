@@ -8,6 +8,7 @@ Imports System.ServiceModel
 Imports System.Windows.Xps
 Imports System.Windows.Xps.Packaging
 Imports System.Printing
+Imports NLog
 Class ResourcePlannerPage
     Implements IAideServiceCallback
 
@@ -41,9 +42,15 @@ Class ResourcePlannerPage
     Dim displayOption As Integer = 1 'Weekly is the Default Display Options
     Dim perfectAttendanceID As Integer
 
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
+
 #End Region
 
-    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _attendanceFrame As Frame)
+    Public Sub New(_profile As Profile, mFrame As Frame, _addframe As Frame, _menugrid As Grid,
+                   _submenuframe As Frame, _attendanceFrame As Frame, aideService As AideServiceClient)
+
+        _logger.Debug("Start : Constructor")
+
         Me.profile = _profile
         Me.mainFrame = mFrame
         Me._addframe = _addframe
@@ -51,6 +58,8 @@ Class ResourcePlannerPage
         Me._submenuframe = _submenuframe
         Me.attendanceFrame = _attendanceFrame
         Me.InitializeComponent()
+
+        client = aideService
 
         LoadMonth()
         LoadYear()
@@ -60,19 +69,36 @@ Class ResourcePlannerPage
         CountMissingLeave()
 
         PermissionSettings()
+
+        _logger.Debug("End : Constructor")
+
     End Sub
 
     Public Function InitializeService() As Boolean
+        _logger.Debug("Start : InitializeService")
+
         Dim bInitialize As Boolean = False
         Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(Context)
-            client.Open()
+
+            If client.State = CommunicationState.Faulted Then
+
+                _logger.Debug("Service is faulted, reinitializing ...")
+
+                Dim Context As InstanceContext = New InstanceContext(Me)
+                client = New AideServiceClient(Context)
+                client.Open()
+            End If
+
             bInitialize = True
         Catch ex As SystemException
+            _logger.Error(ex.ToString())
+
             client.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : InitializeService")
+
         Return bInitialize
     End Function
 
@@ -510,7 +536,7 @@ Class ResourcePlannerPage
     'End Sub
 
     Private Sub btnCreateLeave_Click(sender As Object, e As RoutedEventArgs) Handles btnCreateLeave.Click
-        _addframe.Navigate(New ResourcePlannerAddPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
+        _addframe.Navigate(New ResourcePlannerAddPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame, client))
         mainFrame.IsEnabled = False
         mainFrame.Opacity = 0.3
         _menugrid.IsEnabled = False
@@ -534,7 +560,7 @@ Class ResourcePlannerPage
     End Sub
 
     Private Sub btnManage_Click(sender As Object, e As RoutedEventArgs)
-        _addframe.Navigate(New BillabilityManagerVLLeavePage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
+        _addframe.Navigate(New BillabilityManagerVLLeavePage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame, client))
         mainFrame.IsEnabled = False
         mainFrame.Opacity = 0.3
         _menugrid.IsEnabled = False

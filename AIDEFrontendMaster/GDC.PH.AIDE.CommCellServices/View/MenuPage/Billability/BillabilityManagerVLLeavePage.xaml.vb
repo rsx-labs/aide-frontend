@@ -4,6 +4,7 @@ Imports System.IO
 Imports System.Diagnostics
 Imports System.ServiceModel
 Imports System.Collections.ObjectModel
+Imports NLog
 
 Public Class BillabilityManagerVLLeavePage
     Implements IAideServiceCallback
@@ -43,9 +44,15 @@ Public Class BillabilityManagerVLLeavePage
     Dim year As Integer
     Dim day As Integer
     Dim selection As Integer
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
-    Public Sub New(_profile As Profile, mFrame As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame, attendanceFrame As Frame)
+    Public Sub New(_profile As Profile, mFrame As Frame, addframe As Frame, menugrid As Grid,
+                   submenuframe As Frame, attendanceFrame As Frame, aideService As AideServiceClient)
+
+        _logger.Debug("Start : Constructor")
+
         Me.profile = _profile
         Me.mainFrame = mFrame
         Me._addframe = addframe
@@ -54,23 +61,41 @@ Public Class BillabilityManagerVLLeavePage
         Me._attendanceFrame = attendanceFrame
         Me.InitializeComponent()
 
+        client = aideService
+
         month = Date.Now.Month
         year = Date.Now.Year
+
+        _logger.Debug("End : Constructor")
     End Sub
 
 #Region "Private Methods"
 
     Public Function InitializeService() As Boolean
+        _logger.Debug("Start : InitializeService")
+
         Dim bInitialize As Boolean = False
         Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(Context)
-            client.Open()
+
+            If client.State = CommunicationState.Faulted Then
+
+                _logger.Debug("Service is faulted, reinitializing ...")
+
+                Dim Context As InstanceContext = New InstanceContext(Me)
+                client = New AideServiceClient(Context)
+                client.Open()
+            End If
+
             bInitialize = True
         Catch ex As SystemException
+            _logger.Error(ex.ToString())
+
             client.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : InitializeService")
+
         Return bInitialize
     End Function
 
@@ -118,7 +143,9 @@ Public Class BillabilityManagerVLLeavePage
             currentPage = paginatedCollection.CurrentPage + 1
             lastPage = Math.Ceiling(lstresource.Length / pagingRecordPerPage)
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Error($"Error at LoadDataActive = {ex.ToString()}")
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -213,7 +240,7 @@ Public Class BillabilityManagerVLLeavePage
     End Sub
 
     Private Sub backbtn_Click(sender As Object, e As RoutedEventArgs) Handles btnCCancel.Click
-        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, _attendanceFrame))
+        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, _attendanceFrame, client))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         _menugrid.IsEnabled = True
