@@ -7,7 +7,7 @@ Class ProblemAddPage
 
 #Region "Declarations"
     Private mainFrame As Frame
-    'Private client As ServiceReference1.AideServiceClient
+    Private client As ServiceReference1.AideServiceClient
     Private menugrid As Grid
     Private addframe As Frame
     Private submenuframe As Frame
@@ -20,10 +20,10 @@ Class ProblemAddPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
+    Public Sub New(_mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, aideService As AideServiceClient)
         ' This call is required by the designer.
         InitializeComponent()
-        'client = aideService
+        client = aideService
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
         Me.addframe = _addframe
@@ -65,7 +65,7 @@ Class ProblemAddPage
                 MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + vbCritical, "AIDE")
             Else
                 Dim _problem As Problem = setData()
-                AideClient.GetClient().InsertProblem(_problem)
+                client.InsertProblem(_problem)
                 MsgBox("Problem has been added.", vbOKOnly + vbInformation, "AIDE")
                 ExitPage()
             End If
@@ -76,24 +76,24 @@ Class ProblemAddPage
 #End Region
 
 #Region "Methods"
-    'Public Function InitializeService() As Boolean
-    '    'Dim bInitialize As Boolean = False
-    '    'Try
-    '    '    Dim Context As InstanceContext = New InstanceContext(Me)
-    '    '    client = New AideServiceClient(Context)
-    '    '    client.Open()
-    '    '    bInitialize = True
-    '    'Catch ex As SystemException
-    '    '    client.Abort()
-    '    '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    'End Try
-    '    'Return bInitialize
-    '    Return True
-    'End Function
+    Public Function InitializeService() As Boolean
+        'Dim bInitialize As Boolean = False
+        'Try
+        '    Dim Context As InstanceContext = New InstanceContext(Me)
+        '    client = New AideServiceClient(Context)
+        '    client.Open()
+        '    bInitialize = True
+        'Catch ex As SystemException
+        '    client.Abort()
+        '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        'End Try
+        'Return bInitialize
+        Return True
+    End Function
     Public Sub loadAll()
-        'If InitializeService() Then
-        lstnickName = AideClient.GetClient().ViewNicknameByDeptID(email, 1)
-        'End If
+        If InitializeService() Then
+            lstnickName = client.ViewNicknameByDeptID(email, 1)
+        End If
     End Sub
     Public Function setData() As Problem
         Try
@@ -196,7 +196,7 @@ Class ProblemAddPage
 
     End Function
     Private Sub ExitPage()
-        mainFrame.Navigate(New ProblemSolvingPage(profile, mainFrame, addframe, menugrid, submenuframe))
+        mainFrame.Navigate(New ProblemSolvingPage(profile, mainFrame, addframe, menugrid, submenuframe, client))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         menugrid.IsEnabled = True

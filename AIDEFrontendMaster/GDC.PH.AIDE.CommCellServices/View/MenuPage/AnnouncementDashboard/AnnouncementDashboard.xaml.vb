@@ -26,7 +26,7 @@ Class AnnouncementDashboard
 #End Region
 
 #Region "Fields"
-    'Private _AideService As ServiceReference1.AideServiceClient
+    Private _AideService As ServiceReference1.AideServiceClient
     Private empID As Integer
     Private mainframe As Frame
     Private addframe As Frame
@@ -45,11 +45,11 @@ Class AnnouncementDashboard
 
     Public Sub New(_mainframe As Frame, _empID As Integer, _addframe As Frame,
                    _menugrid As Grid, _submenuframe As Frame, _email As String,
-                   _profile As Profile)
+                   _profile As Profile, aideService As ServiceReference1.AideServiceClient)
 
         InitializeComponent()
 
-        '_AideService = aideService
+        _AideService = aideService
         Me.empID = _empID
         Me.mainframe = _mainframe
         Me.addframe = _addframe
@@ -69,24 +69,24 @@ Class AnnouncementDashboard
 
 #Region "Functions/Methods"
 
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        _AideService = New AideServiceClient(Context)
-    '        _AideService.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        _AideService.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            _AideService = New AideServiceClient(Context)
+            _AideService.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            _AideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Public Sub SetData()
         Try
             'If InitializeService() Then
-            lstAnnouncements = AideClient.GetClient().GetAnnouncements(empID)
+            lstAnnouncements = _AideService.GetAnnouncements(empID)
             LoadAnnouncements()
             DisplayPagingInfo()
             'End If

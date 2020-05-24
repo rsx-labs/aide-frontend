@@ -29,7 +29,7 @@ Public Class AssetsInventoryListPage
     Private _menugrid As Grid
     Private _submenuframe As Frame
     Private _OptionsViewModel As OptionViewModel
-    'Private _AideService As ServiceReference1.AideServiceClient
+    Private _AideService As ServiceReference1.AideServiceClient
     Dim show As Boolean = True
     Dim lstAssets As Assets()
     Dim assetsDBProvider As New AssetsDBProvider
@@ -73,20 +73,20 @@ Public Class AssetsInventoryListPage
 
     Public Sub LoadAssets()
         Try
-            'If InitializeService() Then
-            If SR.SelectedIndex = 0 Then
-                lstAssets = AideClient.GetClient().GetMyAssets(profile.Emp_ID)
-                btnPrint.Visibility = Windows.Visibility.Hidden
-            ElseIf SR.SelectedIndex = 1 Then
-                lstAssets = AideClient.GetClient().GetAllAssetsInventoryByEmpID(profile.Emp_ID)
-                btnPrint.Visibility = Windows.Visibility.Hidden
-            Else
-                lstAssets = AideClient.GetClient().GetAllAssetsInventoryUnApproved(profile.Emp_ID)
-                btnPrint.Visibility = Windows.Visibility.Hidden
-            End If
+            If InitializeService() Then
+                If SR.SelectedIndex = 0 Then
+                    lstAssets = _AideService.GetMyAssets(profile.Emp_ID)
+                    btnPrint.Visibility = Windows.Visibility.Hidden
+                ElseIf SR.SelectedIndex = 1 Then
+                    lstAssets = _AideService.GetAllAssetsInventoryByEmpID(profile.Emp_ID)
+                    btnPrint.Visibility = Windows.Visibility.Hidden
+                Else
+                    lstAssets = _AideService.GetAllAssetsInventoryUnApproved(profile.Emp_ID)
+                    btnPrint.Visibility = Windows.Visibility.Hidden
+                End If
 
-            SetLists(lstAssets)
-            'End If
+                SetLists(lstAssets)
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -140,25 +140,25 @@ Public Class AssetsInventoryListPage
         End Try
     End Sub
 
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        _AideService = New AideServiceClient(Context)
-    '        _AideService.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        _AideService.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            _AideService = New AideServiceClient(Context)
+            _AideService.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            _AideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = _AideService
+            _OptionsViewModel.Service = _AideService
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -300,7 +300,7 @@ Public Class AssetsInventoryListPage
                 assetsModel.ISAPPROVED = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).ISAPPROVED
                 assetsModel.APPROVAL = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).APPROVAL
                 assetsModel.PREVIOUS_ID = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).PREVIOUS_ID
-                _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Personal", _addframe, _menugrid, _submenuframe))
+                _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Personal", _addframe, _menugrid, _submenuframe, _AideService))
                 frame.IsEnabled = False
                 frame.Opacity = 0.3
                 _menugrid.IsEnabled = False
@@ -335,7 +335,7 @@ Public Class AssetsInventoryListPage
                         assetsModel.STATUS = CType(lv_assetInventoryList.SelectedItem, AssetsModel).STATUS
                         assetsModel.OTHER_INFO = CType(lv_assetInventoryList.SelectedItem, AssetsModel).OTHER_INFO
                         assetsModel.FULL_NAME = CType(lv_assetInventoryList.SelectedItem, AssetsModel).FULL_NAME
-                        _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Update", _addframe, _menugrid, _submenuframe))
+                        _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Update", _addframe, _menugrid, _submenuframe, _AideService))
                         frame.IsEnabled = False
                         frame.Opacity = 0.3
                         _menugrid.IsEnabled = False
@@ -369,7 +369,7 @@ Public Class AssetsInventoryListPage
                 assetsModel.OTHER_INFO = CType(lv_assetInventoryListUnapproved.SelectedItem, AssetsModel).OTHER_INFO
                 assetsModel.FULL_NAME = CType(lv_assetInventoryListUnapproved.SelectedItem, AssetsModel).FULL_NAME
                 assetsModel.PREVIOUS_ID = CType(lv_assetInventoryListUnapproved.SelectedItem, AssetsModel).PREVIOUS_ID
-                _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Approval", _addframe, _menugrid, _submenuframe))
+                _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Approval", _addframe, _menugrid, _submenuframe, _AideService))
                 frame.IsEnabled = False
                 frame.Opacity = 0.3
                 _menugrid.IsEnabled = False

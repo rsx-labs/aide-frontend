@@ -91,10 +91,10 @@ Class BirthdayPage
 
     Public Sub SetData()
         Try
-            'If InitializeService() Then
-            lstBirthday = AideClient.GetClient().ViewBirthdayListAll(email)
-            lstBirthdayMonth = AideClient.GetClient().ViewBirthdayListByCurrentMonth(email)
-            LoadData()
+            If InitializeService() Then
+                lstBirthday = _AideService.ViewBirthdayListAll(email)
+                lstBirthdayMonth = _AideService.ViewBirthdayListByCurrentMonth(email)
+                LoadData()
                 LoadDataMonthly()
                 If lstBirthdayMonth.Length = 0 Then
                     Me.lbl_headerMonth.Foreground = Brushes.White
@@ -102,7 +102,7 @@ Class BirthdayPage
                 Else
                     Me.lbl_headerMonth.Text = "Birthday Celebrant(s) this " + SetMonths() + ": " + lstBirthdayMonth.Length.ToString
                 End If
-            'End If
+            End If
             If cbFilterDsiplay.Text = String.Empty Then
                 btnPrint.IsEnabled = False
             End If

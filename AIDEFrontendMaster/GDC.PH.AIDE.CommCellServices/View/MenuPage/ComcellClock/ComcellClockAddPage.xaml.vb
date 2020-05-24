@@ -10,7 +10,7 @@ Class ComcellClockAddPage
     Private empID As Integer
     Private comcellFrame As Frame
     Private addframe As Frame
-    'Private aideService As ServiceReference1.AideServiceClient
+    Private aideService As ServiceReference1.AideServiceClient
     Private comcellclock As New ComcellClock
     Private comcellClockVM As New ComcellClockViewModel
     Private window As Window
@@ -38,19 +38,19 @@ Class ComcellClockAddPage
 #End Region
 
 #Region "Service Methods"
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        aideService = New AideServiceClient(Context)
-    '        aideService.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        aideService.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            aideService = New AideServiceClient(Context)
+            aideService.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            aideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
@@ -105,17 +105,17 @@ Class ComcellClockAddPage
             SetDataDay()
             If Not clockVM.CLOCK_DAY = 0 AndAlso Not clockVM.CLOCK_HOUR = 0 AndAlso Not clockVM.MIDDAY = String.Empty Then
                 If checkLimit() Then
-                    'If InitializeService() Then
-                    comcellclock.Clock_Day = clockVM.CLOCK_DAY
-                    comcellclock.Clock_Hour = clockVM.CLOCK_HOUR
-                    comcellclock.Clock_Minute = clockVM.CLOCK_MINUTE
-                    comcellclock.Emp_ID = clockVM.EMP_ID
-                    comcellclock.MIDDAY = clockVM.MIDDAY
-                    AideClient.GetClient().UpdateComcellClock(comcellclock)
-                    MsgBox("The Comm. Cell time has been set.", MsgBoxStyle.OkOnly, "AIDE")
-                    comcellClockPage.timer.IsEnabled = False 'Stop the previous timer
-                    ExitPage()
-                    'End If
+                    If InitializeService() Then
+                        comcellclock.Clock_Day = clockVM.CLOCK_DAY
+                        comcellclock.Clock_Hour = clockVM.CLOCK_HOUR
+                        comcellclock.Clock_Minute = clockVM.CLOCK_MINUTE
+                        comcellclock.Emp_ID = clockVM.EMP_ID
+                        comcellclock.MIDDAY = clockVM.MIDDAY
+                        aideService.UpdateComcellClock(comcellclock)
+                        MsgBox("The Comm. Cell time has been set.", MsgBoxStyle.OkOnly, "AIDE")
+                        comcellClockPage.timer.IsEnabled = False 'Stop the previous timer
+                        ExitPage()
+                    End If
                 Else
                     MsgBox("Please enter a valid time.", MsgBoxStyle.Exclamation, "AIDE")
                 End If
@@ -129,7 +129,7 @@ Class ComcellClockAddPage
 
     Private Sub ExitPage()
         Dim mainWindow As MainWindow = DirectCast(window, MainWindow)
-        comcellFrame.Navigate(New ComcellClockPage(profile, comcellFrame, window))
+        comcellFrame.Navigate(New ComcellClockPage(profile, comcellFrame, window, aideService))
         mainWindow.MenuGrid.IsEnabled = True
         mainWindow.MenuGrid.Opacity = 1
         mainWindow.PagesFrame.Opacity = 1

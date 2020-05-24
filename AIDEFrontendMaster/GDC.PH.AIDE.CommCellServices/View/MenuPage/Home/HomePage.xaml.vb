@@ -17,7 +17,7 @@ Class HomePage
 
 #Region "Fields"
 
-    'Private _AideService As ServiceReference1.AideServiceClient
+    Private _AideService As ServiceReference1.AideServiceClient
     Private mainFrame As Frame
     Private _addframe As Frame
     Private _menugrid As Grid
@@ -48,11 +48,11 @@ Class HomePage
 
     Public Sub New(mainFrame As Frame, _position As String, _empID As Integer,
                    _addFrame As Frame, _menuGrid As Grid, _subMenuFrame As Frame,
-                   _email As String, _profile As Profile)
+                   _email As String, _profile As Profile, aideService As ServiceReference1.AideServiceClient)
 
         InitializeComponent()
 
-        '_AideService = aideService
+        _AideService = aideService
         Me.position = _position
         Me.empID = _empID
         Me.mainFrame = mainFrame
@@ -118,15 +118,15 @@ Class HomePage
 
     Public Sub LoadAllDashBoard()
         genericFrame1.Navigate(
-            New KPITargetsPage(mainFrame, _addframe, _menugrid, _submenuframe, profile.Permission_ID, empID, email, profile))
+            New KPITargetsPage(mainFrame, _addframe, _menugrid, _submenuframe, profile.Permission_ID, empID, email, profile, _AideService))
 
         'dashboardframeBday2.Navigate(New _3CDashboard(email, mainFrame, _addframe, _menugrid, _submenuframe, profile))
         genericFrame2.Navigate(
-            New AnnouncementDashboard(mainFrame, empID, _addframe, _menugrid, _submenuframe, email, profile))
+            New AnnouncementDashboard(mainFrame, empID, _addframe, _menugrid, _submenuframe, email, profile, _AideService))
 
         genericFrame3.Navigate(
             New CommendationDashBoard(mainFrame, profile.Position, profile.Emp_ID, _addframe, _menugrid, _submenuframe,
-                                      profile.Email_Address, profile, genericFrame3))
+                                      profile.Email_Address, profile, genericFrame3, _AideService))
 
         'dashboardframeBday3.Navigate(New BirthdayDashboard(email))
     End Sub

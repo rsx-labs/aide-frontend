@@ -10,7 +10,7 @@ Class ComcellMainPage
 
 #Region "Fields"
 
-    'Private _AideService As ServiceReference1.AideServiceClient
+    Private _AideService As ServiceReference1.AideServiceClient
     Private empID As Integer
     Private mainframe As Frame
     Private addframe As Frame
@@ -66,27 +66,27 @@ Class ComcellMainPage
 
 #Region "Functions"
 
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        _AideService = New AideServiceClient(Context)
-    '        _AideService.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        _AideService.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            _AideService = New AideServiceClient(Context)
+            _AideService.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            _AideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Public Sub SetData()
         Try
-            'If InitializeService() Then
-            lstComcell = AideClient.GetClient().GetComcellMeeting(empID, year)
-            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
-            SetPaging(PagingMode._First)
-            'End If
+            If InitializeService() Then
+                lstComcell = _AideService.GetComcellMeeting(empID, year)
+                lstFiscalYear = _AideService.GetAllFiscalYear()
+                SetPaging(PagingMode._First)
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -121,7 +121,7 @@ Class ComcellMainPage
 
             Me.DataContext = ComcellVM
         Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -141,7 +141,7 @@ Class ComcellMainPage
             fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
         Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -205,7 +205,7 @@ Class ComcellMainPage
             End Select
 
         Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
     End Sub
@@ -222,9 +222,9 @@ Class ComcellMainPage
 #Region "Events"
     Private Sub ComcellLV_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
         e.Handled = True
-        If ComcellLV.SelectedIndex <> -1 And
-            profile.Permission_ID = 1 Or
-            profile.FirstName.ToUpper = CType(ComcellLV.SelectedItem, ComcellModel).FACILITATOR_NAME Or
+        If ComcellLV.SelectedIndex <> -1 And _
+            profile.Permission_ID = 1 Or _
+            profile.FirstName.ToUpper = CType(ComcellLV.SelectedItem, ComcellModel).FACILITATOR_NAME Or _
             profile.FirstName.ToUpper = CType(ComcellLV.SelectedItem, ComcellModel).MINUTES_TAKER_NAME Then
             If ComcellLV.SelectedItem IsNot Nothing Then
                 Dim comcell As New ComcellModel
@@ -288,5 +288,5 @@ Class ComcellMainPage
 
     End Sub
 #End Region
-
+    
 End Class

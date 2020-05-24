@@ -21,7 +21,7 @@ Class CreateProjectPage
     Private profile As Profile
     Private empID As Integer
     Private projectDBProvider As New ProjectDBProvider
-    'Private client As AideServiceClient
+    Private client As AideServiceClient
     Private _OptionsViewModel As OptionViewModel
 
     Dim billabiltiy As Short
@@ -47,19 +47,19 @@ Class CreateProjectPage
 #End Region
 
 #Region "Sub Procedure"
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        client = New AideServiceClient(Context)
-    '        client.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        client.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            client = New AideServiceClient(Context)
+            client.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     ''' <summary>
     ''' Load project into textbox to be edit or updated
@@ -68,12 +68,12 @@ Class CreateProjectPage
     ''' 
     Public Sub LoadProject()
         Try
-            'If InitializeService() Then
-            Dim displayStatus As Integer = 1
+            If InitializeService() Then
+                Dim displayStatus As Integer = 1
 
-            lstProjects = AideClient.GetClient().GetProjectList(empID, displayStatus)
-            SetLists(lstProjects)
-            'End If
+                lstProjects = client.GetProjectList(empID, displayStatus)
+                SetLists(lstProjects)
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -122,7 +122,7 @@ Class CreateProjectPage
 
     Public Sub LoadProject(projid As Integer)
         Try
-            Dim lstProject As Project = AideClient.GetClient().GetProjectByID(projid)
+            Dim lstProject As Project = client.GetProjectByID(projid)
             If Not IsNothing(lstProject) Then
                 Dim projects As New ObservableCollection(Of ProjectModel)
                 projectDBProvider.setProject(lstProject)
@@ -154,7 +154,7 @@ Class CreateProjectPage
             newProject.Category = category
             newProject.Billability = billabiltiy
 
-            AideClient.GetClient().CreateProject(newProject)
+            client.CreateProject(newProject)
 
             LoadProject()
             ClearSelection()
@@ -182,7 +182,7 @@ Class CreateProjectPage
             selectedProject.Category = category
             selectedProject.Billability = billabiltiy
 
-            AideClient.GetClient().UpdateProject(selectedProject)
+            client.UpdateProject(selectedProject)
 
             ClearSelection()
             LoadProject()
@@ -244,7 +244,7 @@ Class CreateProjectPage
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = client
+            _OptionsViewModel.Service = client
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -324,7 +324,7 @@ Class CreateProjectPage
             lblProjIdValidation.Content = String.Empty
         Else
             Try
-                Dim lstProject As Project = AideClient.GetClient().GetProjectByID(txtProjCD.Text)
+                Dim lstProject As Project = client.GetProjectByID(txtProjCD.Text)
                 If Not IsNothing(lstProject) Then
                     lblProjIdValidation.Content = "Project ID already exists."
                 Else

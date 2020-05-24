@@ -7,7 +7,7 @@ Class KPITargetsAddPage
     Implements UI_AIDE_CommCellServices.ServiceReference1.IAideServiceCallback
 
 
-    'Private aide As ServiceReference1.AideServiceClient
+    Private aide As ServiceReference1.AideServiceClient
     Private empID As Integer
     Private mainframe As Frame
     Private addframe As Frame
@@ -98,36 +98,36 @@ Class KPITargetsAddPage
         End If
     End Sub
 
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        aide = New AideServiceClient(Context)
-    '        aide.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        aide.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            aide = New AideServiceClient(Context)
+            aide.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
         Try
-            'InitializeService()
+            InitializeService()
             Dim textRange As New TextRange(txtDescription.Document.ContentStart, txtDescription.Document.ContentEnd)
 
             If _kpiModel.Subject = Nothing Or textRange.Text.Trim() = String.Empty Then
                 MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else
-                AideClient.GetClient().InsertKPITarget(getDataInsert(Me.DataContext()))
+                aide.InsertKPITarget(getDataInsert(Me.DataContext()))
                 MsgBox("KPI Target has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 _kpitargets.KPI_Id = Nothing
                 _kpitargets.Description = Nothing
                 _kpitargets.Subject = Nothing
                 _kpitargets.KPI_ReferenceNo = Nothing
 
-                mainframe.Navigate(New HomePage(mainframe, profile.Position, empID, addframe, menugrid, submenuframe, email, profile))
+                mainframe.Navigate(New HomePage(mainframe, profile.Position, empID, addframe, menugrid, submenuframe, email, profile, aide))
                 mainframe.IsEnabled = True
                 mainframe.Opacity = 1
                 menugrid.IsEnabled = True

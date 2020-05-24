@@ -28,7 +28,7 @@ Class HomeActionListsPage
     Private menugrid As Grid
     Private submenuframe As Frame
 
-    'Private aide As ServiceReference1.AideServiceClient
+    Private aide As ServiceReference1.AideServiceClient
     Private lstAction As Action()
     Private actionListDBProvider As New ActionListDBProvider
 
@@ -38,14 +38,14 @@ Class HomeActionListsPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
+    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile, aideService As AideServiceClient)
         frame = _frame
         addframe = _addframe
         menugrid = _menugrid
         submenuframe = _submenuframe
         profile = _profile
         InitializeComponent()
-        'aide = aideService
+        aide = aideService
         pagingRecordPerPage = GetOptionData(24, 9, 12)
         paginatedCollection = New PaginatedObservableCollection(Of ActionModel)(pagingRecordPerPage)
 
@@ -56,26 +56,26 @@ Class HomeActionListsPage
 
 #Region "Methods"
 
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        aide = New AideServiceClient(Context)
-    '        aide.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        aide.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            aide = New AideServiceClient(Context)
+            aide.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Private Sub LoadActionList()
         Try
-            'If InitializeService() Then
-            lstAction = AideClient.GetClient().GetActionSummary(profile.Email_Address)
-            SetLists(lstAction)
-            'End If
+            If InitializeService() Then
+                lstAction = aide.GetActionSummary(profile.Email_Address)
+                SetLists(lstAction)
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -85,7 +85,7 @@ Class HomeActionListsPage
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aide
+            _OptionsViewModel.Service = aide
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then

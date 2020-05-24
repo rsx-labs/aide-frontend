@@ -7,7 +7,7 @@ Class ComcellAddPage
 
 #Region "Page Declaration"
     Public _frame As Frame
-    'Private aide As AideServiceClient
+    Private aide As AideServiceClient
     Private comcell As New Comcell
     Private ComcellModel As New ComcellModel
     Private _addframe As Frame
@@ -61,19 +61,19 @@ Class ComcellAddPage
 #End Region
 
 #Region "Methods/Functions"
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        aide = New AideServiceClient(Context)
-    '        aide.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        aide.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            aide = New AideServiceClient(Context)
+            aide.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Public Sub LoadControls()
         txtHeader.Text = "Update Facilitator and Minutes Taker"
@@ -123,25 +123,25 @@ Class ComcellAddPage
 
     Public Sub LoadEmpNickName()
         Try
-            'If InitializeService() Then
-            Dim lstNickname As Nickname() = AideClient.GetClient().ViewNicknameByDeptID(profile.Email_Address, dsplyByDiv)
-            Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
-            Dim successRegisterDBProvider As New SuccessRegisterDBProvider
-            Dim nicknameVM As New NicknameViewModel()
+            If InitializeService() Then
+                Dim lstNickname As Nickname() = aide.ViewNicknameByDeptID(profile.Email_Address, dsplyByDiv)
+                Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
+                Dim successRegisterDBProvider As New SuccessRegisterDBProvider
+                Dim nicknameVM As New NicknameViewModel()
 
-            For Each objLessonLearnt As Nickname In lstNickname
-                successRegisterDBProvider.SetMyNickname(objLessonLearnt)
-            Next
+                For Each objLessonLearnt As Nickname In lstNickname
+                    successRegisterDBProvider.SetMyNickname(objLessonLearnt)
+                Next
 
-            For Each rawUser As MyNickname In successRegisterDBProvider.GetMyNickname()
-                lstNicknameList.Add(New NicknameModel(rawUser))
-            Next
+                For Each rawUser As MyNickname In successRegisterDBProvider.GetMyNickname()
+                    lstNicknameList.Add(New NicknameModel(rawUser))
+                Next
 
-            nicknameVM.NicknameList = lstNicknameList
+                nicknameVM.NicknameList = lstNicknameList
 
-            cbFacilitator.DataContext = nicknameVM
-            cbMinTaker.DataContext = nicknameVM
-            'End If
+                cbFacilitator.DataContext = nicknameVM
+                cbMinTaker.DataContext = nicknameVM
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -151,7 +151,7 @@ Class ComcellAddPage
 #Region "Events"
     Private Sub AddBtn_Click(sender As Object, e As RoutedEventArgs)
         Try
-            'InitializeService()
+            InitializeService()
             If mode = "Add" Then
                 If cbMonth.Text = Nothing Or cbFacilitator.Text = Nothing Or cbMinTaker.Text = Nothing Or cbYear.Text = Nothing Then
                     MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
@@ -166,7 +166,7 @@ Class ComcellAddPage
                     comcell.MINUTES_TAKER = CType(cbMinTaker.SelectedItem, NicknameModel).Emp_ID.ToString()
                     comcell.YEAR = cbYear.SelectedValue
 
-                    AideClient.GetClient().InsertComcellMeeting(comcell)
+                    aide.InsertComcellMeeting(comcell)
 
 
                     _frame.Navigate(New ComcellMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
@@ -193,7 +193,7 @@ Class ComcellAddPage
                     comcell.MINUTES_TAKER = CType(cbMinTaker.SelectedItem, NicknameModel).Emp_ID.ToString()
                     comcell.YEAR = cbYear.SelectedValue
 
-                    AideClient.GetClient().UpdateComcellMeeting(comcell)
+                    aide.UpdateComcellMeeting(comcell)
 
 
                     _frame.Navigate(New ComcellMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))

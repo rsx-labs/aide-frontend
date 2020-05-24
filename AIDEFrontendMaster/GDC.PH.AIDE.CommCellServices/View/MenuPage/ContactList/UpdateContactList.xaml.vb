@@ -15,7 +15,7 @@ Class UpdateContactList
 #Region "Fields"
 
     Private mainFrame As Frame
-    'Private client As ServiceReference1.AideServiceClient
+    Private client As ServiceReference1.AideServiceClient
     Private contacts As New ContactListModel
     Private email As String
     Private menugrid As Grid
@@ -72,21 +72,21 @@ Class UpdateContactList
                 contactList.DateReviewed = DateTime.Now.Date
                 contactList.Nick_Name = txtCNickName.Text
 
-                'If InitializeService() Then
-                AideClient.GetClient().UpdateContactListByEmpID(contactList, 0)
-                MsgBox("Contacts have been updated.", MsgBoxStyle.Information, "AIDE")
-                ClearFields()
-                attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
-                mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
-                mainFrame.IsEnabled = True
-                mainFrame.Opacity = 1
-                menugrid.IsEnabled = True
-                menugrid.Opacity = 1
-                submenuframe.IsEnabled = True
-                submenuframe.Opacity = 1
-                addframe.Visibility = Visibility.Hidden
+                If InitializeService() Then
+                        client.UpdateContactListByEmpID(contactList, 0)
+                    MsgBox("Contacts have been updated.", MsgBoxStyle.Information, "AIDE")
+                    ClearFields()
+                    attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile, client))
+                    mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame, client))
+                    mainFrame.IsEnabled = True
+                        mainFrame.Opacity = 1
+                        menugrid.IsEnabled = True
+                        menugrid.Opacity = 1
+                        submenuframe.IsEnabled = True
+                        submenuframe.Opacity = 1
+                        addframe.Visibility = Visibility.Hidden
 
-                'End If
+                End If
             End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -94,7 +94,7 @@ Class UpdateContactList
     End Sub
 
     Private Sub btnCCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCCancel.Click
-        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame, client))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         menugrid.IsEnabled = True
@@ -157,19 +157,19 @@ Class UpdateContactList
         txtCNickName.Text = contacts.NICK_NAME
     End Sub
 
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        client = New AideServiceClient(Context)
-    '        client.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        client.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            client = New AideServiceClient(Context)
+            client.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
 #End Region
 

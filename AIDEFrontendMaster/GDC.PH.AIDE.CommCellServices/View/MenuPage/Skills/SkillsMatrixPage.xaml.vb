@@ -18,7 +18,7 @@ Class SkillsMatrixPage
     Private _SkillsViewModel As New SkillsViewModel
     Private _ProfileDBProvider As New ProfileDBProvider
     Private _ProfileViewModel As New ProfileViewModel
-    'Private client As AideServiceClient
+    Private client As AideServiceClient
 
     Dim emails As String
     Dim empid As Integer
@@ -32,9 +32,7 @@ Class SkillsMatrixPage
         ' This call is required by the designer.
         Me.empid = empid
         InitializeComponent()
-        _SkillDBProvider = New SkillsDBProvider
-        _SkillsViewModel = New SkillsViewModel
-        _SkillsViewModel.Service = Nothing
+
         LoadProjectList()
         LoadSkillsProf()
         loadProfile()
@@ -70,19 +68,19 @@ Class SkillsMatrixPage
     ''' Initialize Service
     ''' </summary>
     ''' By Hyacinth Amarles
-    'Private Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim context As InstanceContext = New InstanceContext(Me)
-    '        client = New AideServiceClient(context)
-    '        client.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        client.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Private Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim context As InstanceContext = New InstanceContext(Me)
+            client = New AideServiceClient(context)
+            client.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Public Function checkRB() As Boolean
         If rbSkill1.IsChecked = False And rbSkill2.IsChecked = False And rbSkill3.IsChecked = False And rbSkill4.IsChecked = False Then
@@ -101,7 +99,7 @@ Class SkillsMatrixPage
     Public Sub InsertSkillsProficiency()
         Dim skillid As Integer = cbSkillList.SelectedValue
         Try
-            'InitializeService()
+            InitializeService()
             Dim Skills As New Skills
             GetProfLevel()
             Skills.DESCR = String.Empty
@@ -111,7 +109,7 @@ Class SkillsMatrixPage
             Skills.Prof_LVL = proflevel
             Skills.SkillID = cbSkillList.SelectedValue
             Skills.Last_Reviewed = Date.Now
-            AideClient.GetClient().InsertNewSkills(Skills)
+            client.InsertNewSkills(Skills)
             MsgBox(cbSkillList.Text.ToUpper & "has been added. ", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -123,7 +121,7 @@ Class SkillsMatrixPage
     ''' By Hyacinth Amarles
     Public Sub UpdateSkillsProficiency()
         Try
-            'InitializeService()
+            InitializeService()
             Dim Skills As New Skills
             GetProfLevel()
             Skills.DESCR = String.Empty
@@ -133,7 +131,7 @@ Class SkillsMatrixPage
             Skills.Prof_LVL = proflevel
             Skills.SkillID = cbSkillList.SelectedValue
             Skills.Last_Reviewed = Date.Now
-            AideClient.GetClient().UpdateSkills(Skills)
+            client.UpdateSkills(Skills)
             MsgBox(cbSkillList.Text.ToUpper & "has been updated. ", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -145,8 +143,8 @@ Class SkillsMatrixPage
     ''' By Hyacinth Amarles
     Public Sub LoadProjectList()
         Try
-            'InitializeService()
-            Dim lstskill As Skills() = AideClient.GetClient().GetSkillsList(empid)
+            InitializeService()
+            Dim lstskill As Skills() = client.GetSkillsList(empid)
             Dim skillslist As New ObservableCollection(Of SkillsModel)
 
             For Each objSkill As Skills In lstskill
@@ -171,8 +169,8 @@ Class SkillsMatrixPage
     ''' By Hyacinth Amarles
     Public Sub LoadSkillsProf()
         Try
-            'InitializeService()
-            Dim lstskill As Skills() = AideClient.GetClient().GetSkillsProfByEmpID(empid)
+            InitializeService()
+            Dim lstskill As Skills() = client.GetSkillsProfByEmpID(empid)
             Dim skillslist As New ObservableCollection(Of SkillsModel)
 
             Dim it As New List(Of Dictionary(Of String, Integer))()
@@ -200,8 +198,8 @@ Class SkillsMatrixPage
     ''' </summary>
     ''' By Jhunell G. Barcenas
     Public Sub loadProfile()
-        'InitializeService()
-        Dim lstProfile As Profile = AideClient.GetClient().GetProfileInformation(empid)
+        InitializeService()
+        Dim lstProfile As Profile = client.GetProfileInformation(empid)
         Dim profileList As New ObservableCollection(Of ProfileModel)
 
         _ProfileDBProvider = New ProfileDBProvider
@@ -285,7 +283,7 @@ Class SkillsMatrixPage
 #Region "Events"
     Private Sub btnAddUpdate_Click(sender As Object, e As RoutedEventArgs) Handles btnAddUpdate.Click
         Try
-            'InitializeService()
+            InitializeService()
             Dim skillid As Integer = cbSkillList.SelectedValue
             GetProfLevel()
             If cbSkillList.SelectedValue = 0 Or checkRB() = True Then
@@ -295,11 +293,11 @@ Class SkillsMatrixPage
                 If proficiency = proflevel Then
                     MsgBox("There is no change in proficiency level. " & vbNewLine & "Please select another skill to update." & cbSkillList.Text.ToUpper, MsgBoxStyle.Critical, "AIDE")
                 Else
-                    If AideClient.GetClient().GetProfLvlByEmpIDSkillIDs(empid, skillid).Prof_LVL = 1 Then
+                    If client.GetProfLvlByEmpIDSkillIDs(empid, skillid).Prof_LVL = 1 Then
 
                         UpdateSkillsProficiency()
 
-                    Else
+                        Else
 
                         InsertSkillsProficiency()
 
@@ -318,8 +316,8 @@ Class SkillsMatrixPage
 
     Private Sub cbSkillList_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbSkillList.SelectionChanged
         EnableControls()
-        'InitializeService()
-        Dim lstSkills As Skills = AideClient.GetClient().GetSkillsLastReviewByEmpIDSkillID(empid, cbSkillList.SelectedValue)
+        InitializeService()
+        Dim lstSkills As Skills = client.GetSkillsLastReviewByEmpIDSkillID(empid, cbSkillList.SelectedValue)
 
         If IsNothing(lstSkills) Then
             ClearControl()
@@ -328,8 +326,8 @@ Class SkillsMatrixPage
             ClearControl()
             Dim SkillsList As New ObservableCollection(Of SkillsModel)
 
-            '_SkillDBProvider = New SkillsDBProvider
-            '_SkillsViewModel = New SkillsViewModel
+            _SkillDBProvider = New SkillsDBProvider
+            _SkillsViewModel = New SkillsViewModel
 
             _SkillDBProvider.SetSkillsLastReviewedProfLvl(lstSkills)
 

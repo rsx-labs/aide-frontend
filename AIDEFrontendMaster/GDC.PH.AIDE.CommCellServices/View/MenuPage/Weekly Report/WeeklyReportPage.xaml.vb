@@ -33,7 +33,7 @@ Class WeeklyReportPage
 #End Region
 
 #Region "Fields"
-    'Private AideServiceClient As ServiceReference1.AideServiceClient
+    Private AideServiceClient As ServiceReference1.AideServiceClient
     Private mainFrame As Frame
     Private isEmpty As Boolean
     Private email As String
@@ -82,7 +82,7 @@ Class WeeklyReportPage
 #Region "Constructor"
     Public Sub New(_mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         InitializeComponent()
-        'InitializeService()
+        InitializeService()
         Me.email = _profile.Email_Address
         Me.mainFrame = _mainFrame
         Me.empID = _profile.Emp_ID
@@ -110,19 +110,19 @@ Class WeeklyReportPage
         End If
     End Sub
 
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        AideServiceClient = New AideServiceClient(Context)
-    '        AideServiceClient.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        AideServiceClient.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            AideServiceClient = New AideServiceClient(Context)
+            AideServiceClient.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            AideServiceClient.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
 #End Region
 
@@ -130,7 +130,7 @@ Class WeeklyReportPage
 
     Public Sub LoadStatusData()
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(statusID)
+            Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(statusID)
 
             For Each objStatus As StatusGroup In lstStatus
                 weeklyReportDBProvider.SetMyWeeklyReportStatusList(objStatus)
@@ -142,17 +142,17 @@ Class WeeklyReportPage
 
             weekRangeViewModel.WeeklyReportStatusList = listWeeklyReportStatus
         Catch ex As SystemException
-            'AideServiceClient.Abort()
+            AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
     Public Sub SetWeeklyReports()
         Try
-            'If InitializeService() Then
-            lstWeekRange = AideClient.GetClient().GetWeeklyReportsByEmpID(empID, month, startFiscalYear)
-            LoadWeeklyReports()
-            'End If
+            If InitializeService() Then
+                lstWeekRange = AideServiceClient.GetWeeklyReportsByEmpID(empID, month, startFiscalYear)
+                LoadWeeklyReports()
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -187,7 +187,7 @@ Class WeeklyReportPage
 
     Public Sub SetMissingReports()
         Try
-            lstMissingReports = AideClient.GetClient().GetMissingReportsByEmpID(empID, lastWeekSaturday)
+            lstMissingReports = AideServiceClient.GetMissingReportsByEmpID(empID, lastWeekSaturday)
             If lstMissingReports.Count > 0 Then
                 LoadMissingReports()
                 DisplayPagingInfo()
@@ -244,10 +244,10 @@ Class WeeklyReportPage
 
     Public Sub LoadYear()
         Try
-            'If InitializeService() Then
-            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
-            LoadFiscalYear()
-            'End If
+            If InitializeService() Then
+                lstFiscalYear = AideServiceClient.GetAllFiscalYear()
+                LoadFiscalYear()
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -316,7 +316,7 @@ Class WeeklyReportPage
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = AideServiceClient
+            _OptionsViewModel.Service = AideServiceClient
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then

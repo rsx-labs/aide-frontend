@@ -13,7 +13,7 @@ Class TrackerUpdatePage
 
 #Region "Page Declaration"
     Public _frame As Frame
-    'Private aide As AideServiceClient
+    Private aide As AideServiceClient
     Private sabalearning As New SabaLearning
     Private _sabaModel As New SabaLearningModel()
     Private _email As String
@@ -46,19 +46,19 @@ Class TrackerUpdatePage
 #End Region
 
 #Region "Service Methods"
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        aide = New AideServiceClient(Context)
-    '        aide.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        aide.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            aide = New AideServiceClient(Context)
+            aide.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
@@ -88,7 +88,7 @@ Class TrackerUpdatePage
 
     Public Function getDataInsert(ByVal SabaModel As SabaLearningModel)
         Try
-            'InitializeService()
+            InitializeService()
             If SabaModel.TITLE = Nothing Or SabaModel.END_DATE = Nothing Then
             Else
                 sabalearning.SABA_ID = SabaModel.SABA_ID
@@ -119,9 +119,9 @@ Class TrackerUpdatePage
 
     Private Sub UpdateBtn_Click(sender As Object, e As RoutedEventArgs)
         Try
-            'InitializeService()
+            InitializeService()
 
-            AideClient.GetClient().UpdateSabaCourses(getDataInsert(Me.DataContext()))
+            aide.UpdateSabaCourses(getDataInsert(Me.DataContext()))
             If sabalearning.TITLE = Nothing Or sabalearning.END_DATE = Nothing Then
                 MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else

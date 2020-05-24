@@ -30,7 +30,7 @@ Public Class SuccessRegisterPage
     Private submenuframe As Frame
     Private profile As Profile
     Private isEmpty As Boolean
-    'Private aideService As ServiceReference1.AideServiceClient
+    Private aideService As ServiceReference1.AideServiceClient
     Private _OptionsViewModel As OptionViewModel
 
     Dim successRegisterDBProvider As New SuccessRegisterDBProvider
@@ -40,9 +40,9 @@ Public Class SuccessRegisterPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_mainFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
+    Public Sub New(_mainFrame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile, aideService As AideServiceClient)
         InitializeComponent()
-        'Me.aideService = aideService
+        Me.aideService = aideService
         mainFrame = _mainFrame
         addframe = _addframe
         menugrid = _menugrid
@@ -58,27 +58,27 @@ Public Class SuccessRegisterPage
 #End Region
 
 #Region "Methods"
-    'Public Function InitializeService() As Boolean
-    '    'Dim bInitialize As Boolean = False
-    '    'Try
-    '    '    Dim Context As InstanceContext = New InstanceContext(Me)
-    '    '    aideService = New AideServiceClient(Context)
-    '    '    aideService.Open()
-    '    '    bInitialize = True
-    '    'Catch ex As SystemException
-    '    '    aideService.Abort()
-    '    '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    'End Try
-    '    'Return bInitialize
-    '    Return True
-    'End Function
+    Public Function InitializeService() As Boolean
+        'Dim bInitialize As Boolean = False
+        'Try
+        '    Dim Context As InstanceContext = New InstanceContext(Me)
+        '    aideService = New AideServiceClient(Context)
+        '    aideService.Open()
+        '    bInitialize = True
+        'Catch ex As SystemException
+        '    aideService.Abort()
+        '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        'End Try
+        'Return bInitialize
+        Return True
+    End Function
 
     Public Sub LoadSuccessRegister()
         Try
-            'If InitializeService() Then
-            lstSuccess = AideClient.GetClient().ViewSuccessRegisterAll(profile.Email_Address)
-            SetLists(lstSuccess)
-            'End If
+            If InitializeService() Then
+                lstSuccess = aideService.ViewSuccessRegisterAll(profile.Email_Address)
+                SetLists(lstSuccess)
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -151,11 +151,11 @@ Public Class SuccessRegisterPage
         btnNext.IsEnabled = True
     End Sub
 
-    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+	Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aideService
+            _OptionsViewModel.Service = aideService
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -169,7 +169,7 @@ Public Class SuccessRegisterPage
         End Try
         Return strData
     End Function
-
+    
     Private Sub NavigatePage()
         mainFrame.IsEnabled = False
         mainFrame.Opacity = 0.3

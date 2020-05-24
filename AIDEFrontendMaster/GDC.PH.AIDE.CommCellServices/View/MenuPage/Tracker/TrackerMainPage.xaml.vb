@@ -16,7 +16,7 @@ Class SabaLearningMainPage
 #End Region
 
 #Region "Fields"
-    'Private _AideService As ServiceReference1.AideServiceClient
+    Private _AideService As ServiceReference1.AideServiceClient
     Private mainframe As Frame
     Private addframe As Frame
     Private menugrid As Grid
@@ -47,26 +47,26 @@ Class SabaLearningMainPage
 #End Region
 
 #Region "Functions/Methods"
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        _AideService = New AideServiceClient(Context)
-    '        _AideService.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        _AideService.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            _AideService = New AideServiceClient(Context)
+            _AideService.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            _AideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Public Sub LoadSabaCourses()
         Try
-            'If InitializeService() Then
-            lstSabaLearning = AideClient.GetClient().GetAllSabaCourses(profile.Emp_ID)
-            SetLists(lstSabaLearning)
-            'End If
+            If InitializeService() Then
+                lstSabaLearning = _AideService.GetAllSabaCourses(profile.Emp_ID)
+                SetLists(lstSabaLearning)
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -95,12 +95,12 @@ Class SabaLearningMainPage
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
-
-    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+    
+	Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = _AideService
+            _OptionsViewModel.Service = _AideService
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then

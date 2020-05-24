@@ -24,7 +24,7 @@ Public Class AssetsHistory
     Private frame As Frame
     Private profile As New Profile
     Private _OptionsViewModel As OptionViewModel
-    'Private _AideService As ServiceReference1.AideServiceClient
+    Private _AideService As ServiceReference1.AideServiceClient
     Dim lstAssets As Assets()
     Dim assetsDBProvider As New AssetsDBProvider
     Dim paginatedCollection As PaginatedObservableCollection(Of AssetsModel) = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
@@ -49,26 +49,26 @@ Public Class AssetsHistory
 
 #Region "METHODS"
 
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        _AideService = New AideServiceClient(Context)
-    '        _AideService.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        _AideService.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            _AideService = New AideServiceClient(Context)
+            _AideService.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            _AideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Public Sub LoadAssets()
         Try
-            'If InitializeService() Then
-            lstAssets = AideClient.GetClient().GetAllAssetsHistory(profile.Emp_ID)
-            SetLists(lstAssets)
-            'End If
+            If InitializeService() Then
+                lstAssets = _AideService.GetAllAssetsHistory(profile.Emp_ID)
+                SetLists(lstAssets)
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -132,7 +132,7 @@ Public Class AssetsHistory
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = _AideService
+            _OptionsViewModel.Service = _AideService
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then

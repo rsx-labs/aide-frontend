@@ -14,7 +14,7 @@ Class WeeklyAuditPage
     Private addframe As Frame
     Private menugrid As Grid
     Private submenuframe As Frame
-    'Private _AideService As ServiceReference1.AideServiceClient
+    Private _AideService As ServiceReference1.AideServiceClient
     Dim lstAuditSchedMonth As WorkplaceAudit()
     Dim AuditSchedMonthVM As New SelectionListViewModel
     Dim workPlaceAuditVM As New WorkplaceAuditViewModel
@@ -34,7 +34,7 @@ Class WeeklyAuditPage
     Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 
     Public Sub New(_pageframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid,
-                   _submenuframe As Frame)
+                   _submenuframe As Frame, aideService As AideServiceClient)
 
         _logger.Debug("Start : Constructor")
 
@@ -46,9 +46,9 @@ Class WeeklyAuditPage
         ' This call is required by the designer.
         InitializeComponent()
 
-        '_AideService = aideService
+        _AideService = aideService
 
-        'InitializeService()
+        InitializeService()
         ' Add any initialization after the InitializeComponent() call.
         isInitialize = True
         LoadYear()
@@ -70,10 +70,10 @@ Class WeeklyAuditPage
         _logger.Debug("Start : LoadYear")
 
         Try
-            'If InitializeService() Then
-            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
-            LoadFiscalYear()
-            'End If
+            If InitializeService() Then
+                lstFiscalYear = _AideService.GetAllFiscalYear()
+                LoadFiscalYear()
+            End If
         Catch ex As Exception
             _logger.Error(ex.ToString())
 
@@ -150,9 +150,9 @@ Class WeeklyAuditPage
 
         Try
 
-            'If InitializeService() Then
-            lstAuditQuestions = AideClient.GetClient().GetAuditQuestions(profile.Emp_ID, "2")
-            'End If
+            If InitializeService() Then
+                lstAuditQuestions = _AideService.GetAuditQuestions(profile.Emp_ID, "2")
+            End If
 
             Dim FYDBProvider As New WorkplaceAuditDBProvider
             LstAuditDailySchedByWeek.Clear()
@@ -249,9 +249,9 @@ Class WeeklyAuditPage
 
             defaultDisplay = year.ToString() & "-" & defaultDisplay & "-" & "01"
 
-            'If InitializeService() Then
-            lstEmployee = AideClient.GetClient().GetWeeklyAuditor(profile.Emp_ID, Date.Parse(defaultDisplay))
-            'End If
+            If InitializeService() Then
+                lstEmployee = _AideService.GetWeeklyAuditor(profile.Emp_ID, Date.Parse(defaultDisplay))
+            End If
 
 
             For Each objFiscal As WorkplaceAudit In lstEmployee
@@ -290,44 +290,44 @@ Class WeeklyAuditPage
 
     End Sub
 
-    'Public Function InitializeService() As Boolean
+    Public Function InitializeService() As Boolean
 
-    '    _logger.Debug("Start : InitializeService")
+        _logger.Debug("Start : InitializeService")
 
-    '    Dim bInitialize As Boolean = False
-    '    Try
+        Dim bInitialize As Boolean = False
+        Try
 
-    '        If _AideService.State = CommunicationState.Faulted Then
+            If _AideService.State = CommunicationState.Faulted Then
 
-    '            _logger.Debug("Service is faulted, reinitializing ...")
+                _logger.Debug("Service is faulted, reinitializing ...")
 
-    '            Dim Context As InstanceContext = New InstanceContext(Me)
-    '            _AideService = New AideServiceClient(Context)
-    '            _AideService.Open()
-    '        End If
+                Dim Context As InstanceContext = New InstanceContext(Me)
+                _AideService = New AideServiceClient(Context)
+                _AideService.Open()
+            End If
 
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        _logger.Error(ex.ToString())
+            bInitialize = True
+        Catch ex As SystemException
+            _logger.Error(ex.ToString())
 
-    '        _AideService.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
+            _AideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
 
-    '    _logger.Debug("End : InitializeService")
+        _logger.Debug("End : InitializeService")
 
-    '    Return bInitialize
-    'End Function
+        Return bInitialize
+    End Function
 
     Public Sub LoadSChed()
 
         _logger.Debug("Start : LoadSched")
 
         Try
-            'If InitializeService() Then
-            lstAuditSchedMonth = AideClient.GetClient().GetAuditSChed_Month(2, Date.Now.Year, Date.Now.Month)
-            LoadPerWeekSchedule()
-            'End If
+            If InitializeService() Then
+                lstAuditSchedMonth = _AideService.GetAuditSChed_Month(2, Date.Now.Year, Date.Now.Month)
+                LoadPerWeekSchedule()
+            End If
         Catch ex As Exception
             _logger.Error(ex.ToString())
 

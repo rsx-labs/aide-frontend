@@ -9,7 +9,7 @@ Public Class AssetsUpdatePage
 #Region "Fields"
 
     Private mainFrame As Frame
-    'Private client As AideServiceClient
+    Private client As AideServiceClient
     Private assetsModel As New AssetsModel
     Private profile As New Profile
     Private _addframe As Frame
@@ -60,21 +60,21 @@ Public Class AssetsUpdatePage
                 assets.STATUS = status
                 assets.PREVIOUS_ID = assetsModel.EMP_ID
 
-                'If InitializeService() Then
-                AideClient.GetClient().UpdateAssets(assets)
-                MsgBox("Assets have been updated.", MsgBoxStyle.Information, "AIDE")
-                ClearFields()
-                mainFrame.Navigate(New AssetsListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
-                mainFrame.IsEnabled = True
-                mainFrame.Opacity = 1
-                _menugrid.IsEnabled = True
-                _menugrid.Opacity = 1
-                _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
+                If InitializeService() Then
+                        client.UpdateAssets(assets)
+                        MsgBox("Assets have been updated.", MsgBoxStyle.Information, "AIDE")
+                        ClearFields()
+                        mainFrame.Navigate(New AssetsListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
+                        mainFrame.IsEnabled = True
+                        mainFrame.Opacity = 1
+                        _menugrid.IsEnabled = True
+                        _menugrid.Opacity = 1
+                        _submenuframe.IsEnabled = True
+                        _submenuframe.Opacity = 1
 
-                _addframe.Visibility = Visibility.Hidden
+                        _addframe.Visibility = Visibility.Hidden
 
-                'End If
+                End If
 
             End If
         Catch ex As Exception
@@ -112,18 +112,18 @@ Public Class AssetsUpdatePage
                 assets.OTHER_INFO = txtOtherInfo.Text
                 assets.ASSIGNED_TO = 999
 
-                'If InitializeService() Then
-                AideClient.GetClient().DeleteAsset(assets)
-                MsgBox("Assets have been deleted.", MsgBoxStyle.Information, "AIDE")
-                ClearFields()
-                mainFrame.Navigate(New AssetsListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
-                mainFrame.IsEnabled = True
-                mainFrame.Opacity = 1
-                _menugrid.IsEnabled = True
-                _menugrid.Opacity = 1
-                _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
-                'End If
+                If InitializeService() Then
+                        client.DeleteAsset(assets)
+                        MsgBox("Assets have been deleted.", MsgBoxStyle.Information, "AIDE")
+                        ClearFields()
+                        mainFrame.Navigate(New AssetsListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
+                        mainFrame.IsEnabled = True
+                        mainFrame.Opacity = 1
+                        _menugrid.IsEnabled = True
+                        _menugrid.Opacity = 1
+                        _submenuframe.IsEnabled = True
+                    _submenuframe.Opacity = 1
+                End If
             End If
         Catch ex As Exception
              MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -174,9 +174,9 @@ Public Class AssetsUpdatePage
 
     Public Sub SetData()
         Try
-            'If InitializeService() Then
-            LoadDepartment()
-            'End If
+            If InitializeService() Then
+                LoadDepartment()
+            End If
             LoadData()
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -209,7 +209,7 @@ Public Class AssetsUpdatePage
 
     Public Sub LoadDepartment()
         Try
-            Dim lstDepartment As DepartmentList() = AideClient.GetClient().GetAllDepartment()
+            Dim lstDepartment As DepartmentList() = client.GetAllDepartment()
             Dim lstDepartmentList As New ObservableCollection(Of DepartmentModel)
             Dim selectionDBProvider As New SelectionListDBProvider
             Dim selectionListVM As New SelectionListViewModel()
@@ -233,7 +233,7 @@ Public Class AssetsUpdatePage
 
     Public Sub LoadDivision()
         Try
-            Dim lstDivision As DivisionList() = AideClient.GetClient().GetAllDivision(cbDepartment.SelectedValue)
+            Dim lstDivision As DivisionList() = client.GetAllDivision(cbDepartment.SelectedValue)
             Dim lstDivisionList As New ObservableCollection(Of DivisionModel)
             Dim selectionDBProvider As New SelectionListDBProvider
             Dim selectionListVM As New SelectionListViewModel()
@@ -260,7 +260,7 @@ Public Class AssetsUpdatePage
     End Sub
 
     Public Sub ListOfManagers()
-        Dim lstMangers As Assets() = AideClient.GetClient().GetAllManagersByDeptorDiv(cbDepartment.SelectedValue, cbDivision.SelectedValue)
+        Dim lstMangers As Assets() = client.GetAllManagersByDeptorDiv(cbDepartment.SelectedValue, cbDivision.SelectedValue)
         Dim lstMangersList As New ObservableCollection(Of AssetsModel)
         Dim assetsDBProvider As New AssetsDBProvider
         Dim assetsVM As New AssetsViewModel()
@@ -279,22 +279,22 @@ Public Class AssetsUpdatePage
         cbManager.ItemsSource = assetsVM.AssetManagerList
     End Sub
 
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        'DisplayText("Opening client service...")
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        client = New AideServiceClient(Context)
-    '        client.Open()
-    '        bInitialize = True
-    '        'DisplayText("Service opened successfully...")
-    '        'Return True
-    '    Catch ex As SystemException
-    '        client.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            'DisplayText("Opening client service...")
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            client = New AideServiceClient(Context)
+            client.Open()
+            bInitialize = True
+            'DisplayText("Service opened successfully...")
+            'Return True
+        Catch ex As SystemException
+            client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Public Function CheckMissingField() As Boolean
         If txtAssetTag.Text = String.Empty Then

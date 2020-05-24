@@ -9,7 +9,7 @@ Class WeeklyEmployeeStatusReportPage
     Implements ServiceReference1.IAideServiceCallback
 
 #Region "Fields"
-    'Private AideServiceClient As ServiceReference1.AideServiceClient
+    Private AideServiceClient As ServiceReference1.AideServiceClient
     Private _ProjectViewModel As New ProjectViewModel
     Private frame As Frame
     Private addframe As Frame
@@ -69,7 +69,7 @@ Class WeeklyEmployeeStatusReportPage
     Public Sub New(_frame As Frame, _profile As Profile, _empID As Integer, _weekRangeID As Integer, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         ' This call is required by the designer.
         InitializeComponent()
-        'InitializeService()
+        InitializeService()
         ' Add any initialization after the InitializeComponent() call.
         Me.frame = _frame
         Me.addframe = _addframe
@@ -84,19 +84,19 @@ Class WeeklyEmployeeStatusReportPage
         PopulateWeeklyReportData() ' Get data for the tasks that are not completed yet
     End Sub
 
-    'Private Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim context As InstanceContext = New InstanceContext(Me)
-    '        AideServiceClient = New AideServiceClient(context)
-    '        AideServiceClient.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        AideServiceClient.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Private Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim context As InstanceContext = New InstanceContext(Me)
+            AideServiceClient = New AideServiceClient(context)
+            AideServiceClient.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            AideServiceClient.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 #End Region
 
 #Region "Sub Procedures"
@@ -105,7 +105,7 @@ Class WeeklyEmployeeStatusReportPage
         ' Load Items For Projects
         Try
             Dim displayStatus As Integer = 1
-            Dim lstProjects As Project() = AideClient.GetClient().GetProjectList(empID, displayStatus)
+            Dim lstProjects As Project() = AideServiceClient.GetProjectList(empID, displayStatus)
 
             For Each objProjects As Project In lstProjects
                 projectDBProvider.setProjectList(objProjects)
@@ -117,13 +117,13 @@ Class WeeklyEmployeeStatusReportPage
 
             projectViewModel.ProjectList = listProjects
         Catch ex As Exception
-            'AideServiceClient.Abort()
+            AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Rework Combobox
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(reworkID)
+            Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(reworkID)
 
             For Each objStatus As StatusGroup In lstStatus
                 taskDBProvider.SetMyReworkStatusList(objStatus)
@@ -135,13 +135,13 @@ Class WeeklyEmployeeStatusReportPage
 
             taskViewModel.ReworkStatusList = listReworkStatus
         Catch ex As SystemException
-            'AideServiceClient.Abort()
+            AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Severity Combobox
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(severityID)
+            Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(severityID)
 
             For Each objStatus As StatusGroup In lstStatus
                 taskDBProvider.SetMySeverityStatusList(objStatus)
@@ -153,13 +153,13 @@ Class WeeklyEmployeeStatusReportPage
 
             taskViewModel.SeverityStatusList = listSeverityStatus
         Catch ex As SystemException
-            'AideServiceClient.Abort()
+            AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Incident Type Combobox
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(incidentTypeID)
+            Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(incidentTypeID)
 
             For Each objStatus As StatusGroup In lstStatus
                 taskDBProvider.SetMyCategoryStatusList(objStatus)
@@ -171,13 +171,13 @@ Class WeeklyEmployeeStatusReportPage
 
             taskViewModel.CategoryStatusList = listCategoryStatus
         Catch ex As SystemException
-            'AideServiceClient.Abort()
+            AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Phase Status Combobox
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(phaseID)
+            Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(phaseID)
 
             For Each objStatus As StatusGroup In lstStatus
                 taskDBProvider.SetMyPhaseStatusList(objStatus)
@@ -189,13 +189,13 @@ Class WeeklyEmployeeStatusReportPage
 
             taskViewModel.PhaseStatusList = listPhaseStatus
         Catch ex As SystemException
-            'AideServiceClient.Abort()
+            AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         ' Load Items For Task Status Combobox
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(statusID)
+            Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(statusID)
 
             For Each objStatus As StatusGroup In lstStatus
                 taskDBProvider.SetMyTaskStatusList(objStatus)
@@ -207,7 +207,7 @@ Class WeeklyEmployeeStatusReportPage
 
             taskViewModel.TaskStatusList = listTaskStatus
         Catch ex As SystemException
-            'AideServiceClient.Abort()
+            AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
@@ -215,9 +215,9 @@ Class WeeklyEmployeeStatusReportPage
 
     Private Sub PopulateWeeklyReportData()
         Try
-            'InitializeService()
+            InitializeService()
 
-            Dim lstWeeklyReport As WeeklyReport() = AideClient.GetClient().GetTasksDataByEmpID(weekRangeID, empID)
+            Dim lstWeeklyReport As WeeklyReport() = AideServiceClient.GetTasksDataByEmpID(weekRangeID, empID)
 
             For Each objWeeklyReport As WeeklyReport In lstWeeklyReport
                 weeklyReportDBProvider.SetWeeklyReportList(objWeeklyReport)
@@ -258,7 +258,7 @@ Class WeeklyEmployeeStatusReportPage
             End If
 
         Catch ex As Exception
-            'AideServiceClient.Abort()
+            AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub

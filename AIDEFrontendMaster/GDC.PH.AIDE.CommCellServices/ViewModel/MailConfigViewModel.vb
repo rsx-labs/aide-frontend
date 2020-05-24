@@ -9,12 +9,12 @@ Public Class MailConfigViewModel
     Private _objectMailConfigSet As New MailConfigModel
     Private MailConfigProvider As New MailConfigDBProvider
     Private _OptionsViewModel As New OptionViewModel
-    'Private _client As AideServiceClient
+    Private _client As AideServiceClient
 
-    'Public Sub New()
-    '    '_client = aideService
-    '    _objectMailConfigSet = New MailConfigModel(MailConfigProvider._getobjmailconfig)
-    'End Sub
+    Public Sub New(aideService As AideServiceClient)
+        _client = aideService
+        _objectMailConfigSet = New MailConfigModel(MailConfigProvider._getobjmailconfig)
+    End Sub
 
     Public Sub New()
         _objectMailConfigSet = New MailConfigModel(MailConfigProvider._getobjmailconfig)
@@ -33,7 +33,7 @@ Public Class MailConfigViewModel
         Try
             Dim allowSend As Boolean = False
             _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = _client
+            _OptionsViewModel.Service = _client
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If CBool(opt.VALUE) Then

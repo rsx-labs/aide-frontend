@@ -28,7 +28,7 @@ Public Class AssetBorrowingPage
     Private _addframe As New Frame
     Private _menugrid As Grid
     Private _submenuframe As Frame
-    'Private client As AideServiceClient
+    Private client As AideServiceClient
     Private assetVM As New AssetsViewModel()
     Private _OptionsViewModel As OptionViewModel
     Private _AideService As ServiceReference1.AideServiceClient
@@ -77,19 +77,19 @@ Public Class AssetBorrowingPage
 #End Region
 
 #Region "Methods"
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        _AideService = New AideServiceClient(Context)
-    '        _AideService.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        _AideService.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            _AideService = New AideServiceClient(Context)
+            _AideService.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            _AideService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Public Sub SetUnApprovedtTabVisible()
         'If profile.Permission_ID = 1 Then
@@ -105,25 +105,25 @@ Public Class AssetBorrowingPage
 
     Public Sub SetData()
         Try
-            'If InitializeService() Then
-            If SR.SelectedIndex = 0 Then
-                lstAssets = AideClient.GetClient().GetMyAssets(profile.Emp_ID)
-            ElseIf SR.SelectedIndex = 1 Then
-                lstAssets = AideClient.GetClient().GetAllAssetsInventoryByEmpID(profile.Emp_ID)
-            ElseIf SR.SelectedIndex = 2 Then
-                lstAssets = AideClient.GetClient().GetAllAssetsBorrowingByEmpID(profile.Emp_ID)
-            ElseIf SR.SelectedIndex = 3 Then
-                lstAssets = AideClient.GetClient().GetAllAssetsBorrowingRequestByEmpID(profile.Emp_ID)
-            ElseIf SR.SelectedIndex = 4 Then
-                lstAssets = AideClient.GetClient().GetAllAssetsReturnsByEmpID(profile.Emp_ID)
-            ElseIf SR.SelectedIndex = 5 Then
-                lstAssets = AideClient.GetClient().GetAssetBorrowersLog(profile.Emp_ID, 0)
-            Else
-                lstAssets = AideClient.GetClient().GetAllAssetsInventoryUnApproved(profile.Emp_ID)
-            End If
+            If InitializeService() Then
+                If SR.SelectedIndex = 0 Then
+                    lstAssets = _AideService.GetMyAssets(profile.Emp_ID)
+                ElseIf SR.SelectedIndex = 1 Then
+                    lstAssets = _AideService.GetAllAssetsInventoryByEmpID(profile.Emp_ID)
+                ElseIf SR.SelectedIndex = 2 Then
+                    lstAssets = _AideService.GetAllAssetsBorrowingByEmpID(profile.Emp_ID)
+                ElseIf SR.SelectedIndex = 3 Then
+                    lstAssets = _AideService.GetAllAssetsBorrowingRequestByEmpID(profile.Emp_ID)
+                ElseIf SR.SelectedIndex = 4 Then
+                    lstAssets = _AideService.GetAllAssetsReturnsByEmpID(profile.Emp_ID)
+                ElseIf SR.SelectedIndex = 5 Then
+                    lstAssets = _AideService.GetAssetBorrowersLog(profile.Emp_ID, 0)
+                Else
+                    lstAssets = _AideService.GetAllAssetsInventoryUnApproved(profile.Emp_ID)
+                End If
 
-            SetLists(lstAssets)
-            'End If
+                SetLists(lstAssets)
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -189,7 +189,7 @@ Public Class AssetBorrowingPage
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = _AideService
+            _OptionsViewModel.Service = _AideService
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -350,7 +350,7 @@ Public Class AssetBorrowingPage
                 assetsModel.COMMENTS = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).COMMENTS
                 assetsModel.FULL_NAME = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).FULL_NAME
                 assetsModel.ISAPPROVED = CType(lv_assetInventoryListOwn.SelectedItem, AssetsModel).ISAPPROVED
-                _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Personal", _addframe, _menugrid, _submenuframe))
+                _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Personal", _addframe, _menugrid, _submenuframe, _AideService))
                 frame.IsEnabled = False
                 frame.Opacity = 0.3
                 _menugrid.IsEnabled = False
@@ -385,7 +385,7 @@ Public Class AssetBorrowingPage
                         assetsModel.STATUS = CType(lv_assetInventoryList.SelectedItem, AssetsModel).STATUS
                         assetsModel.OTHER_INFO = CType(lv_assetInventoryList.SelectedItem, AssetsModel).OTHER_INFO
                         assetsModel.FULL_NAME = CType(lv_assetInventoryList.SelectedItem, AssetsModel).FULL_NAME
-                        _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Update", _addframe, _menugrid, _submenuframe))
+                        _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Update", _addframe, _menugrid, _submenuframe, _AideService))
                         frame.IsEnabled = False
                         frame.Opacity = 0.3
                         _menugrid.IsEnabled = False
@@ -534,7 +534,7 @@ Public Class AssetBorrowingPage
                 assetsModel.OTHER_INFO = CType(lv_assetInventoryListUnapproved.SelectedItem, AssetsModel).OTHER_INFO
                 assetsModel.FULL_NAME = CType(lv_assetInventoryListUnapproved.SelectedItem, AssetsModel).FULL_NAME
                 assetsModel.PREVIOUS_ID = CType(lv_assetInventoryListUnapproved.SelectedItem, AssetsModel).PREVIOUS_ID
-                _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Approval", _addframe, _menugrid, _submenuframe))
+                _addframe.Navigate(New AssetsInventoryAddPage(assetsModel, frame, profile, "Approval", _addframe, _menugrid, _submenuframe, _AideService))
                 frame.IsEnabled = False
                 frame.Opacity = 0.3
                 _menugrid.IsEnabled = False
@@ -634,23 +634,23 @@ Public Class AssetBorrowingPage
     Public Sub PopulateComboBoxAssetID()
         Try
             Dim assetDBProvider As New AssetsDBProvider
-            'If InitializeService() Then
-            ' For Asset ID Combobox
-            lstAssets = AideClient.GetClient().GetAllAssetsUnAssigned(profile.Emp_ID)
-            Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
+            If InitializeService() Then
+                ' For Asset ID Combobox
+                lstAssets = _AideService.GetAllAssetsUnAssigned(profile.Emp_ID)
+                Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
 
-            For Each objAsset As Assets In lstAssets
-                assetDBProvider.SetAssetList(objAsset)
-            Next
+                For Each objAsset As Assets In lstAssets
+                    assetDBProvider.SetAssetList(objAsset)
+                Next
 
-            For Each rawUser As MyAssets In assetDBProvider.GetAssetList()
-                lstAssetsList.Add(New AssetsModel(rawUser))
-            Next
+                For Each rawUser As MyAssets In assetDBProvider.GetAssetList()
+                    lstAssetsList.Add(New AssetsModel(rawUser))
+                Next
 
-            assetVM.AssetList = lstAssetsList
-            'cbAssetID.ItemsSource = assetVM.AssetList
+                assetVM.AssetList = lstAssetsList
+                'cbAssetID.ItemsSource = assetVM.AssetList
 
-            'End If
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try

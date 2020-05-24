@@ -283,6 +283,44 @@
                                   IsReadOnly="True"/>
                     </StackPanel>
                 </ScrollViewer>
+                <!--<Grid Grid.Row="1" Background="White" Opacity=".9">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Viewbox>
+                            <TextBlock TextWrapping="Wrap" Text="Search Employee ID" Margin="20,18,10,18" Foreground="#FF303030" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </Viewbox>
+                    </Grid>
+                    <Grid Grid.Column="1" HorizontalAlignment="Stretch">
+                        <TextBox x:Name="txtSearch" PreviewTextInput="NumberValidationTextBox" TextWrapping="Wrap" Margin="0,13,200,13" Width="auto" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                     
+                    </Grid>
+                </Grid>
+                <Grid Grid.Column="1">
+
+                    <Button x:Name="btnPrint" Margin="50,11,30,11" Style="{DynamicResource buttonStyle}">
+                        <Viewbox>
+                            <TextBlock Text="Print" TextWrapping="Wrap" Margin="5"/>
+                        </Viewbox>
+                    </Button>
+                </Grid>
+                <Grid Grid.Column="2">
+   
+                    <Button x:Name="btnViewEmp" Margin="50,11,30,11" Style="{DynamicResource buttonStyle}">
+                        <Viewbox>
+                            <TextBlock Text="View All Employee" TextWrapping="Wrap" Margin="5"/>
+                        </Viewbox>
+                    </Button>
+                </Grid>
+            </Grid>-->
                 <Grid Grid.Row="3" Background="White" Visibility="Collapsed">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>

@@ -7,10 +7,10 @@ Class TaskSubMenuPage
     Private menugrid As Grid
     Private submenuframe As Frame
     Private currentWindow As MainWindow
-    'Private client As AideServiceClient
+    Private client As AideServiceClient
 
     Public Sub New(_pFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid,
-                   _submenuframe As Frame, _mainWindow As MainWindow)
+                   _submenuframe As Frame, _mainWindow As MainWindow, aideService As AideServiceClient)
         pFrame = _pFrame
         profile = _profile
         addframe = _addframe
@@ -18,11 +18,11 @@ Class TaskSubMenuPage
         submenuframe = _submenuframe
         currentWindow = _mainWindow
         InitializeComponent()
-        'client = aideService
+        client = aideService
     End Sub
 
     Private Sub Task_Click(sender As Object, e As RoutedEventArgs)
-        pFrame.Navigate(New TaskAdminPage(pFrame, currentWindow, profile, addframe, menugrid, submenuframe))
+        pFrame.Navigate(New TaskAdminPage(pFrame, currentWindow, profile, addframe, menugrid, submenuframe, client))
     End Sub
 
     Private Sub Weekly_Click(sender As Object, e As RoutedEventArgs)

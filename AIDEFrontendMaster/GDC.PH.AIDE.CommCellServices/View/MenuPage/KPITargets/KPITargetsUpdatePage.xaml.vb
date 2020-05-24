@@ -11,7 +11,7 @@ Class KPITargetsUpdatePage
     Implements UI_AIDE_CommCellServices.ServiceReference1.IAideServiceCallback
 
     Private _kpiTargetsVM As New KPITargetsViewModel
-    'Private _client As ServiceReference1.AideServiceClient
+    Private _client As ServiceReference1.AideServiceClient
     Private empID As Integer
     Private mainframe As Frame
     Private addframe As Frame
@@ -37,19 +37,19 @@ Class KPITargetsUpdatePage
         Me.empID = _empID
     End Sub
 
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        _client = New AideServiceClient(Context)
-    '        _client.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        _client.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            _client = New AideServiceClient(Context)
+            _client.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            _client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
@@ -98,7 +98,7 @@ Class KPITargetsUpdatePage
 
     Public Function getDataUpdate(ByVal _kpiTargetModel As KPITargetsModel)
         Try
-            'InitializeService()
+            InitializeService()
             Dim textRange As New TextRange(txtKPIDescription.Document.ContentStart, txtKPIDescription.Document.ContentEnd)
             If textRange.Text = Nothing Or _kpiTargetModel.Subject = Nothing Then
             Else
@@ -120,7 +120,7 @@ Class KPITargetsUpdatePage
 
     Private Sub btnKPITargetUpdate_Click(sender As Object, e As RoutedEventArgs)
         Try
-            'InitializeService()
+            InitializeService()
             Dim textRange As New TextRange(txtKPIDescription.Document.ContentStart, txtKPIDescription.Document.ContentEnd)
 
 
@@ -128,12 +128,12 @@ Class KPITargetsUpdatePage
                 MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else
                 Me.DataContext = _kpiTargetsVM.KPITargetsSet
-                AideClient.GetClient().UpdatePITarget(getDataUpdate(Me.DataContext()))
+                _client.UpdatePITarget(getDataUpdate(Me.DataContext()))
                 MsgBox("KPI target have been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
                 _kpiTargets.Subject = Nothing
                 _kpiTargets.Description = Nothing
 
-                mainframe.Navigate(New HomePage(mainframe, profile.Position, Me.empID, addframe, menugrid, submenuframe, Me.email, Me.profile))
+                mainframe.Navigate(New HomePage(mainframe, profile.Position, Me.empID, addframe, menugrid, submenuframe, Me.email, Me.profile, _client))
                 mainframe.IsEnabled = True
                 mainframe.Opacity = 1
                 menugrid.IsEnabled = True

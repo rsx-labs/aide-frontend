@@ -12,7 +12,7 @@ Class UpdateContactListPage
 
 #Region "Declarations"
     Private mainFrame As Frame
-    'Private client As ServiceReference1.AideServiceClient
+    Private client As ServiceReference1.AideServiceClient
     Private contacts As New ContactListModel
     Private email As String
     Private menugrid As Grid
@@ -117,49 +117,49 @@ Class UpdateContactListPage
     End Sub
 
     Private Sub LoadLocation()
-        'If InitializeService() Then
-        Dim lstLocation As LocationList() = AideClient.GetClient().GetAllLocation()
-        Dim lstLocationList As New ObservableCollection(Of LocationModel)
-        Dim selectionDBProvider As New SelectionListDBProvider
-        Dim selectionListVM As New SelectionListViewModel()
+        If InitializeService() Then
+            Dim lstLocation As LocationList() = client.GetAllLocation()
+            Dim lstLocationList As New ObservableCollection(Of LocationModel)
+            Dim selectionDBProvider As New SelectionListDBProvider
+            Dim selectionListVM As New SelectionListViewModel()
 
-        For Each objLocation As LocationList In lstLocation
-            selectionDBProvider._setlistofLocation(objLocation)
-        Next
+            For Each objLocation As LocationList In lstLocation
+                selectionDBProvider._setlistofLocation(objLocation)
+            Next
 
-        For Each rawUser As myLocationSet In selectionDBProvider._getobjLocation()
-            lstLocationList.Add(New LocationModel(rawUser))
-        Next
+            For Each rawUser As myLocationSet In selectionDBProvider._getobjLocation()
+                lstLocationList.Add(New LocationModel(rawUser))
+            Next
 
-        selectionListVM.ObjectLocationSet = lstLocationList
+            selectionListVM.ObjectLocationSet = lstLocationList
 
-        cbContactLocation.DataContext = selectionListVM
-        cbContactLocation.ItemsSource = selectionListVM.ObjectLocationSet
-        'End If
+            cbContactLocation.DataContext = selectionListVM
+            cbContactLocation.ItemsSource = selectionListVM.ObjectLocationSet
+        End If
     End Sub
 
     Public Sub LoadJobPosition()
         Try
-            'If InitializeService() Then
-            Dim lstPosition As PositionList() = AideClient.GetClient().GetAllPosition()
-            Dim lstPositionList As New ObservableCollection(Of PositionModel)
-            Dim selectionDBProvider As New SelectionListDBProvider
-            Dim selectionListVM As New SelectionListViewModel()
+            If InitializeService() Then
+                Dim lstPosition As PositionList() = client.GetAllPosition()
+                Dim lstPositionList As New ObservableCollection(Of PositionModel)
+                Dim selectionDBProvider As New SelectionListDBProvider
+                Dim selectionListVM As New SelectionListViewModel()
 
-            For Each objposition As PositionList In lstPosition
-                selectionDBProvider._setlistofPosition(objposition)
-            Next
+                For Each objposition As PositionList In lstPosition
+                    selectionDBProvider._setlistofPosition(objposition)
+                Next
 
-            For Each rawUser As myPositionSet In selectionDBProvider._getobjPosition()
-                lstPositionList.Add(New PositionModel(rawUser))
-            Next
+                For Each rawUser As myPositionSet In selectionDBProvider._getobjPosition()
+                    lstPositionList.Add(New PositionModel(rawUser))
+                Next
 
-            selectionListVM.ObjectPositionSet = lstPositionList
+                selectionListVM.ObjectPositionSet = lstPositionList
 
-            cbContactPosition.DataContext = selectionListVM
-            cbContactPosition.ItemsSource = selectionListVM.ObjectPositionSet
+                cbContactPosition.DataContext = selectionListVM
+                cbContactPosition.ItemsSource = selectionListVM.ObjectPositionSet
 
-            'End If
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -167,26 +167,26 @@ Class UpdateContactListPage
 
     Public Sub LoadPermission()
         Try
-            'If InitializeService() Then
-            Dim lstPermission As PermissionList() = AideClient.GetClient().GetAllPermission()
-            Dim lstPermissionList As New ObservableCollection(Of PermissionModel)
-            Dim selectionDBProvider As New SelectionListDBProvider
-            Dim selectionListVM As New SelectionListViewModel()
+            If InitializeService() Then
+                Dim lstPermission As PermissionList() = client.GetAllPermission()
+                Dim lstPermissionList As New ObservableCollection(Of PermissionModel)
+                Dim selectionDBProvider As New SelectionListDBProvider
+                Dim selectionListVM As New SelectionListViewModel()
 
-            For Each objpermission As PermissionList In lstPermission
-                selectionDBProvider._setlistofPermission(objpermission)
-            Next
+                For Each objpermission As PermissionList In lstPermission
+                    selectionDBProvider._setlistofPermission(objpermission)
+                Next
 
-            For Each rawUser As myPermissionSet In selectionDBProvider._getobjPermission()
-                lstPermissionList.Add(New PermissionModel(rawUser))
-            Next
+                For Each rawUser As myPermissionSet In selectionDBProvider._getobjPermission()
+                    lstPermissionList.Add(New PermissionModel(rawUser))
+                Next
 
-            selectionListVM.ObjectPermissionSet = lstPermissionList
+                selectionListVM.ObjectPermissionSet = lstPermissionList
 
-            cbContactGroup.DataContext = selectionListVM
-            cbContactGroup.ItemsSource = selectionListVM.ObjectPermissionSet
+                cbContactGroup.DataContext = selectionListVM
+                cbContactGroup.ItemsSource = selectionListVM.ObjectPermissionSet
 
-            'End If
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -194,25 +194,25 @@ Class UpdateContactListPage
 
     Public Sub LoadDepartment()
         Try
-            'If InitializeService() Then
-            Dim lstDepartment As DepartmentList() = AideClient.GetClient().GetAllDepartment()
-            Dim lstDepartmentList As New ObservableCollection(Of DepartmentModel)
-            Dim selectionDBProvider As New SelectionListDBProvider
-            Dim selectionListVM As New SelectionListViewModel()
+            If InitializeService() Then
+                Dim lstDepartment As DepartmentList() = client.GetAllDepartment()
+                Dim lstDepartmentList As New ObservableCollection(Of DepartmentModel)
+                Dim selectionDBProvider As New SelectionListDBProvider
+                Dim selectionListVM As New SelectionListViewModel()
 
-            For Each objdepartment As DepartmentList In lstDepartment
-                selectionDBProvider._setlistofDepartment(objdepartment)
-            Next
+                For Each objdepartment As DepartmentList In lstDepartment
+                    selectionDBProvider._setlistofDepartment(objdepartment)
+                Next
 
-            For Each rawUser As myDepartmentSet In selectionDBProvider._getobjDepartment()
-                lstDepartmentList.Add(New DepartmentModel(rawUser))
-            Next
+                For Each rawUser As myDepartmentSet In selectionDBProvider._getobjDepartment()
+                    lstDepartmentList.Add(New DepartmentModel(rawUser))
+                Next
 
-            selectionListVM.ObjectDepartmentSet = lstDepartmentList
+                selectionListVM.ObjectDepartmentSet = lstDepartmentList
 
-            cbContactDepartment.DataContext = selectionListVM
-            cbContactDepartment.ItemsSource = selectionListVM.ObjectDepartmentSet
-            'End If
+                cbContactDepartment.DataContext = selectionListVM
+                cbContactDepartment.ItemsSource = selectionListVM.ObjectDepartmentSet
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -220,26 +220,26 @@ Class UpdateContactListPage
 
     Public Sub LoadDivision(ByVal DeptID As Integer)
         Try
-            'If InitializeService() Then
-            Dim lstDivision As DivisionList() = AideClient.GetClient().GetAllDivision(DeptID)
-            Dim lstDivisionList As New ObservableCollection(Of DivisionModel)
-            Dim selectionDBProvider As New SelectionListDBProvider
-            Dim selectionListVM As New SelectionListViewModel()
+            If InitializeService() Then
+                Dim lstDivision As DivisionList() = client.GetAllDivision(DeptID)
+                Dim lstDivisionList As New ObservableCollection(Of DivisionModel)
+                Dim selectionDBProvider As New SelectionListDBProvider
+                Dim selectionListVM As New SelectionListViewModel()
 
-            For Each objdivision As DivisionList In lstDivision
-                selectionDBProvider._setlistofDivision(objdivision)
-            Next
+                For Each objdivision As DivisionList In lstDivision
+                    selectionDBProvider._setlistofDivision(objdivision)
+                Next
 
-            For Each rawUser As myDivisionSet In selectionDBProvider._getobjDivision()
-                lstDivisionList.Add(New DivisionModel(rawUser))
-            Next
+                For Each rawUser As myDivisionSet In selectionDBProvider._getobjDivision()
+                    lstDivisionList.Add(New DivisionModel(rawUser))
+                Next
 
-            selectionListVM.ObjectDivisionSet = lstDivisionList
+                selectionListVM.ObjectDivisionSet = lstDivisionList
 
-            cbContactDivision.DataContext = selectionListVM
-            cbContactDivision.ItemsSource = selectionListVM.ObjectDivisionSet
+                cbContactDivision.DataContext = selectionListVM
+                cbContactDivision.ItemsSource = selectionListVM.ObjectDivisionSet
 
-            'End If
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -247,25 +247,25 @@ Class UpdateContactListPage
 
     Public Sub LoadMaritalStatus()
         Try
-            'If InitializeService() Then
-            Dim lstMarital As StatusList() = AideClient.GetClient().GetAllStatus("EMPLOYEE")
-            Dim lstStatusList As New ObservableCollection(Of MaritalModel)
-            Dim selectionDBProvider As New SelectionListDBProvider
-            Dim selectionListVM As New SelectionListViewModel()
+            If InitializeService() Then
+                Dim lstMarital As StatusList() = client.GetAllStatus("EMPLOYEE")
+                Dim lstStatusList As New ObservableCollection(Of MaritalModel)
+                Dim selectionDBProvider As New SelectionListDBProvider
+                Dim selectionListVM As New SelectionListViewModel()
 
-            For Each objMarital As StatusList In lstMarital
-                selectionDBProvider._setlistofStatus(objMarital)
-            Next
+                For Each objMarital As StatusList In lstMarital
+                    selectionDBProvider._setlistofStatus(objMarital)
+                Next
 
-            For Each rawUser As myStatusSet In selectionDBProvider._getobjStatus()
-                lstStatusList.Add(New MaritalModel(rawUser))
-            Next
+                For Each rawUser As myStatusSet In selectionDBProvider._getobjStatus()
+                    lstStatusList.Add(New MaritalModel(rawUser))
+                Next
 
-            selectionListVM.ObjectMaritalSet = lstStatusList
+                selectionListVM.ObjectMaritalSet = lstStatusList
 
-            cbContactMaritalStatus.DataContext = selectionListVM
-            cbContactMaritalStatus.ItemsSource = selectionListVM.ObjectMaritalSet
-            'End If
+                cbContactMaritalStatus.DataContext = selectionListVM
+                cbContactMaritalStatus.ItemsSource = selectionListVM.ObjectMaritalSet
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -273,25 +273,25 @@ Class UpdateContactListPage
 
     Public Sub LoadWorkShift()
         Try
-            'If InitializeService() Then
-            Dim lstWorkShift As StatusList() = AideClient.GetClient().GetAllStatus("WORK_SHIFT")
-            Dim lstWorkList As New ObservableCollection(Of WorkShiftModel)
-            Dim selectionDBProvider As New SelectionListDBProvider
-            Dim selectionListVM As New SelectionListViewModel()
+            If InitializeService() Then
+                Dim lstWorkShift As StatusList() = client.GetAllStatus("WORK_SHIFT")
+                Dim lstWorkList As New ObservableCollection(Of WorkShiftModel)
+                Dim selectionDBProvider As New SelectionListDBProvider
+                Dim selectionListVM As New SelectionListViewModel()
 
-            For Each objWork As StatusList In lstWorkShift
-                selectionDBProvider._setlistofStatus(objWork)
-            Next
+                For Each objWork As StatusList In lstWorkShift
+                    selectionDBProvider._setlistofStatus(objWork)
+                Next
 
-            For Each rawUser As myStatusSet In selectionDBProvider._getobjStatus()
-                lstWorkList.Add(New WorkShiftModel(rawUser))
-            Next
+                For Each rawUser As myStatusSet In selectionDBProvider._getobjStatus()
+                    lstWorkList.Add(New WorkShiftModel(rawUser))
+                Next
 
-            selectionListVM.ObjectWorkShiftSet = lstWorkList
+                selectionListVM.ObjectWorkShiftSet = lstWorkList
 
-            cbContactShiftStatus.DataContext = selectionListVM
-            cbContactShiftStatus.ItemsSource = selectionListVM.ObjectWorkShiftSet
-            'End If
+                cbContactShiftStatus.DataContext = selectionListVM
+                cbContactShiftStatus.ItemsSource = selectionListVM.ObjectWorkShiftSet
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -301,7 +301,7 @@ Class UpdateContactListPage
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = client
+            _OptionsViewModel.Service = client
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -331,25 +331,25 @@ Class UpdateContactListPage
         AddHandler btnCDelete.Click, AddressOf btnCDelete_Click
     End Sub 'Assign events to buttons
 
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        client = New AideServiceClient(Context)
-    '        client.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        client.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            client = New AideServiceClient(Context)
+            client.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
 #End Region
 
 #Region "Events"
     Private Sub btnCCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCCancel.Click
-        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
+        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame, client))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         menugrid.IsEnabled = True
@@ -383,56 +383,56 @@ Class UpdateContactListPage
                 MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Else
 
-                'If InitializeService() Then
-                contactList.EmpID = contactVM.ContactProfile.EMP_ID
-                contactList.LAST_NAME = contactVM.ContactProfile.LAST_NAME.ToUpper()
-                contactList.FIRST_NAME = contactVM.ContactProfile.FIRST_NAME.ToUpper()
-                contactList.MIDDLE_NAME = contactVM.ContactProfile.MIDDLE_NAME.ToUpper()
-                contactList.Nick_Name = contactVM.ContactProfile.NICK_NAME.ToUpper()
-                contactList.ACTIVE = contactVM.ContactProfile.ACTIVE
-                contactList.BIRTHDATE = contactVM.ContactProfile.BDATE
-                contactList.DT_HIRED = contactVM.ContactProfile.DT_HIRED
-                contactList.EMADDRESS = contactVM.ContactProfile.EMAIL_ADDRESS
-                contactList.EMADDRESS2 = contactVM.ContactProfile.EMAIL_ADDRESS2
-                contactList.CELL_NO = contactVM.ContactProfile.CEL_NO
-                contactList.lOCAL = contactVM.ContactProfile.LOCAL
-                contactList.HOUSEPHONE = contactVM.ContactProfile.HOMEPHONE
-                contactList.OTHERPHONE = contactVM.ContactProfile.OTHER_PHONE
-                contactList.DateReviewed = DateTime.Now.Date
+                If InitializeService() Then
+                    contactList.EmpID = contactVM.ContactProfile.EMP_ID
+                    contactList.LAST_NAME = contactVM.ContactProfile.LAST_NAME.ToUpper()
+                    contactList.FIRST_NAME = contactVM.ContactProfile.FIRST_NAME.ToUpper()
+                    contactList.MIDDLE_NAME = contactVM.ContactProfile.MIDDLE_NAME.ToUpper()
+                    contactList.Nick_Name = contactVM.ContactProfile.NICK_NAME.ToUpper()
+                    contactList.ACTIVE = contactVM.ContactProfile.ACTIVE
+                    contactList.BIRTHDATE = contactVM.ContactProfile.BDATE
+                    contactList.DT_HIRED = contactVM.ContactProfile.DT_HIRED
+                    contactList.EMADDRESS = contactVM.ContactProfile.EMAIL_ADDRESS
+                    contactList.EMADDRESS2 = contactVM.ContactProfile.EMAIL_ADDRESS2
+                    contactList.CELL_NO = contactVM.ContactProfile.CEL_NO
+                    contactList.lOCAL = contactVM.ContactProfile.LOCAL
+                    contactList.HOUSEPHONE = contactVM.ContactProfile.HOMEPHONE
+                    contactList.OTHERPHONE = contactVM.ContactProfile.OTHER_PHONE
+                    contactList.DateReviewed = DateTime.Now.Date
 
-                contactList.LOC = cbContactLocation.SelectedValue.ToString
-                contactList.POSITION = cbContactPosition.Text
-                contactList.PERMISSION_GROUP = cbContactGroup.Text
-                contactList.DEPARTMENT = cbContactDepartment.Text
-                contactList.DIVISION = cbContactDivision.Text
-                contactList.MARITAL_STATUS = cbContactMaritalStatus.Text
+                    contactList.LOC = cbContactLocation.SelectedValue.ToString
+                    contactList.POSITION = cbContactPosition.Text
+                    contactList.PERMISSION_GROUP = cbContactGroup.Text
+                    contactList.DEPARTMENT = cbContactDepartment.Text
+                    contactList.DIVISION = cbContactDivision.Text
+                    contactList.MARITAL_STATUS = cbContactMaritalStatus.Text
 
-                contactList.MARITAL_STATUS_ID = cbContactMaritalStatus.SelectedValue
-                contactList.POSITION_ID = cbContactPosition.SelectedValue
-                contactList.PERMISSION_GROUP_ID = cbContactGroup.SelectedValue
-                contactList.DEPARTMENT_ID = cbContactDepartment.SelectedValue
-                contactList.DIVISION_ID = cbContactDivision.SelectedValue
-                contactList.SHIFT = cbContactShiftStatus.Text
+                    contactList.MARITAL_STATUS_ID = cbContactMaritalStatus.SelectedValue
+                    contactList.POSITION_ID = cbContactPosition.SelectedValue
+                    contactList.PERMISSION_GROUP_ID = cbContactGroup.SelectedValue
+                    contactList.DEPARTMENT_ID = cbContactDepartment.SelectedValue
+                    contactList.DIVISION_ID = cbContactDivision.SelectedValue
+                    contactList.SHIFT = cbContactShiftStatus.Text
 
-                contactList.OLD_EMP_ID = old_empid
-                contactList.IMAGE_PATH = photoPath + empPhoto
-                If empPhoto = Nothing Then
-                    contactList.IMAGE_PATH = contactVM.ContactProfile.IMAGE_PATH
+                    contactList.OLD_EMP_ID = old_empid
+                    contactList.IMAGE_PATH = photoPath + empPhoto
+                    If empPhoto = Nothing Then
+                        contactList.IMAGE_PATH = contactVM.ContactProfile.IMAGE_PATH
+                    End If
+
+                    client.UpdateContactListByEmpID(contactList, 0)
+                    MsgBox("Contacts have been updated.", MsgBoxStyle.Information, "AIDE")
+                    'ClearFields()
+                    attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile, client))
+                    mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame, client))
+                    mainFrame.IsEnabled = True
+                    mainFrame.Opacity = 1
+                    menugrid.IsEnabled = True
+                    menugrid.Opacity = 1
+                    submenuframe.IsEnabled = True
+                    submenuframe.Opacity = 1
+                    addframe.Visibility = Visibility.Hidden
                 End If
-
-                AideClient.GetClient().UpdateContactListByEmpID(contactList, 0)
-                MsgBox("Contacts have been updated.", MsgBoxStyle.Information, "AIDE")
-                'ClearFields()
-                attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
-                mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
-                mainFrame.IsEnabled = True
-                mainFrame.Opacity = 1
-                menugrid.IsEnabled = True
-                menugrid.Opacity = 1
-                submenuframe.IsEnabled = True
-                submenuframe.Opacity = 1
-                addframe.Visibility = Visibility.Hidden
-                'End If
             End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -476,21 +476,21 @@ Class UpdateContactListPage
                 contactList.OLD_EMP_ID = old_empid
 
                 If MsgBox("Are you sure you want to delete the Employee?", vbYesNo, "AIDE") = vbYes Then
-                    'If InitializeService() Then
-                    AideClient.GetClient().UpdateContactListByEmpID(contactList, 0)
-                    'ClearFields()
-                    MsgBox("Employee has been deleted.", MsgBoxStyle.OkOnly, "AIDE")
-                    attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile))
-                    mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame))
-                    mainFrame.IsEnabled = True
-                    mainFrame.Opacity = 1
-                    menugrid.IsEnabled = True
-                    menugrid.Opacity = 1
-                    submenuframe.IsEnabled = True
-                    submenuframe.Opacity = 1
-                    addframe.Visibility = Visibility.Hidden
+                    If InitializeService() Then
+                        client.UpdateContactListByEmpID(contactList, 0)
+                        'ClearFields()
+                        MsgBox("Employee has been deleted.", MsgBoxStyle.OkOnly, "AIDE")
+                        attendanceFrame.Navigate(New AttendanceDashBoard(mainFrame, profile, client))
+                        mainFrame.Navigate(New ContactListPage(mainFrame, profile, addframe, menugrid, submenuframe, attendanceFrame, client))
+                        mainFrame.IsEnabled = True
+                        mainFrame.Opacity = 1
+                        menugrid.IsEnabled = True
+                        menugrid.Opacity = 1
+                        submenuframe.IsEnabled = True
+                        submenuframe.Opacity = 1
+                        addframe.Visibility = Visibility.Hidden
 
-                    'End If
+                    End If
                 Else
                     Exit Sub
                 End If

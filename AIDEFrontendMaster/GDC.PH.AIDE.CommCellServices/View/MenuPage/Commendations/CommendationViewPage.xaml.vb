@@ -12,7 +12,7 @@ Class CommendationViewPage
     Private _addframe As Frame
     Private _menugrid As Grid
     Private _submenuframe As Frame
-    'Private client As ServiceReference1.AideServiceClient
+    Private client As ServiceReference1.AideServiceClient
     Private commendationModel As New CommendationModel
     Private empID As Integer
     Private position As String
@@ -100,69 +100,69 @@ Class CommendationViewPage
 
     End Sub
 
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        'DisplayText("Opening client service...")
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        client = New AideServiceClient(Context)
-    '        client.Open()
-    '        bInitialize = True
-    '        'DisplayText("Service opened successfully...")
-    '        'Return True
-    '    Catch ex As SystemException
-    '        client.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            'DisplayText("Opening client service...")
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            client = New AideServiceClient(Context)
+            client.Open()
+            bInitialize = True
+            'DisplayText("Service opened successfully...")
+            'Return True
+        Catch ex As SystemException
+            client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     ''' <summary>
     ''' load employee per project in comboProject
     ''' </summary>
     ''' <remarks></remarks>
-
+   
 
     Public Sub LoadAllProjectName()
 
         Try
-            'If InitializeService() Then
-            Dim _GetAllConcernDBProvider As New ProjectDBProvider
-            Dim _projectViewModel As New ProjectViewModel
+            If InitializeService() Then
+                Dim _GetAllConcernDBProvider As New ProjectDBProvider
+                Dim _projectViewModel As New ProjectViewModel
 
-            Dim displayStatus As Integer = 0
-            Dim lstConcern As Project() = AideClient.GetClient().GetAllListOfProject(empID, displayStatus)
-            Dim lstConcernList As New ObservableCollection(Of ProjectModel)
+                Dim displayStatus As Integer = 0
+                Dim lstConcern As Project() = client.GetAllListOfProject(empID, displayStatus)
+                Dim lstConcernList As New ObservableCollection(Of ProjectModel)
 
 
-            For Each objConcern As Project In lstConcern
-                _GetAllConcernDBProvider.setProjectList(objConcern)
-            Next
+                For Each objConcern As Project In lstConcern
+                    _GetAllConcernDBProvider.setProjectList(objConcern)
+                Next
 
-            For Each iConcern As myProjectList In _GetAllConcernDBProvider.getProjectList()
+                For Each iConcern As myProjectList In _GetAllConcernDBProvider.getProjectList()
 
-                lstConcernList.Add(New ProjectModel(iConcern))
+                    lstConcernList.Add(New ProjectModel(iConcern))
 
-            Next
-            _projectViewModel.ProjectList = lstConcernList
+                Next
+                _projectViewModel.ProjectList = lstConcernList
 
-            comboProject.ItemsSource = _projectViewModel.ProjectList
-            'End If
+                comboProject.ItemsSource = _projectViewModel.ProjectList
+            End If
         Catch ex As SystemException
 
              MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-            'client.Abort()
+            client.Abort()
 
         End Try
     End Sub
 
     Private Sub CreateTaskID()
         Try
-            'If Me.InitializeService() Then
-            Dim lstTasks As Tasks() = AideClient.GetClient().GetAllTasks()
+            If Me.InitializeService() Then
+                Dim lstTasks As Tasks() = client.GetAllTasks()
 
-            totalCount = lstTasks.Length + 1
-            'End If
+                totalCount = lstTasks.Length + 1
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try

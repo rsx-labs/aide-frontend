@@ -7,7 +7,7 @@ Class AssignedProjectAddPage
     Implements IAideServiceCallback
 
 #Region "Declarations"
-    'Private _aide As ServiceReference1.AideServiceClient
+    Private _aide As ServiceReference1.AideServiceClient
     Private _employeeListVM As New EmployeeListViewModel
     Private _employeeList As New ObservableCollection(Of EmployeeModel)
     Private _ProjectVM As New ProjectViewModel
@@ -34,36 +34,36 @@ Class AssignedProjectAddPage
         Me._menuGrid = _menugrid
         Me._subMenuFrame = _submenuframe
         Me._empID = _profile.Emp_ID
-        'InitializeService()
+        InitializeService()
         LoadEmployeeList()
         LoadAllProjectName()
     End Sub
 #End Region
 
 #Region "Methods"
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        'DisplayText("Opening client service...")
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        _aide = New AideServiceClient(Context)
-    '        _aide.Open()
-    '        bInitialize = True
-    '        'DisplayText("Service opened successfully...")
-    '        'Return True
-    '    Catch ex As SystemException
-    '        _aide.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            'DisplayText("Opening client service...")
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            _aide = New AideServiceClient(Context)
+            _aide.Open()
+            bInitialize = True
+            'DisplayText("Service opened successfully...")
+            'Return True
+        Catch ex As SystemException
+            _aide.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Public Sub LoadEmployeeList()
         Try
             Dim _EmployeeListDBProvider As New EmployeeListProvider
 
             Dim _Employee1DBProvider As New EmployeeProvider1
-            Dim lstEmployees As Employee() = AideClient.GetClient().GetNicknameByDeptID(_email)
+            Dim lstEmployees As Employee() = _aide.GetNicknameByDeptID(_email)
 
             For Each objEmployee As Employee In lstEmployees
                 _EmployeeListDBProvider.SetEmployeeList(objEmployee)
@@ -85,19 +85,19 @@ Class AssignedProjectAddPage
             _ProjectVM.EmployeeLists = lstEmployee2
             Me.DataContext = _ProjectVM
         Catch ex As SystemException
-            '_aide.Abort()
+            _aide.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
     Public Sub LoadAllProjectName()
         Try
-            'InitializeService()
+            InitializeService()
             Dim _GetAllConcernDBProvider As New ProjectDBProvider
             Dim _projectViewModel As New ProjectViewModel
 
             Dim displayStatus As Integer = 0
-            Dim lstProject As Project() = AideClient.GetClient().GetAllListOfProject(_empID, displayStatus)
+            Dim lstProject As Project() = _aide.GetAllListOfProject(_empID, displayStatus)
             Dim lstProjectList As New ObservableCollection(Of ProjectModel)
 
             For Each objProject As Project In lstProject
@@ -113,7 +113,7 @@ Class AssignedProjectAddPage
             cbProjectName.DataContext = _projectViewModel
         Catch ex As SystemException
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-            '_aide.Abort()
+            _aide.Abort()
         End Try
     End Sub
 
@@ -149,7 +149,7 @@ Class AssignedProjectAddPage
 
     Private Sub LoadAssignedEmployees()
         Dim projID As Integer = CType(cbProjectName.SelectedItem, ProjectModel).ProjectID
-        Dim lstAssignedEmployees As Object = AideClient.GetClient().GetAssignedProjects(projID)
+        Dim lstAssignedEmployees As Object = _aide.GetAssignedProjects(projID)
         If Not IsNothing(lstAssignedEmployees) Then
             For Each assigned As AssignedProject In lstAssignedEmployees
 

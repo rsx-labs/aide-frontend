@@ -13,7 +13,7 @@ Class BirthdayDashboard
     Implements ServiceReference1.IAideServiceCallback
 
 #Region "constructor"
-    'Private _client As ServiceReference1.AideServiceClient
+    Private _client As ServiceReference1.AideServiceClient
     Private isEmpty As Boolean
     Private email As String
     Private month As Integer = Date.Now.Month
@@ -22,11 +22,11 @@ Class BirthdayDashboard
     Dim birthdayListVM As New BirthdayListViewModel()
 
 
-    Public Sub New(_email As String)
+    Public Sub New(_email As String, aideService As AideServiceClient)
 
         ' This call is required by the designer.
         InitializeComponent()
-        '_client = aideService
+        _client = aideService
         email = _email
         SetData()
         Me.DataContext = birthdayListVM
@@ -37,33 +37,33 @@ Class BirthdayDashboard
 
 
 #Region "common functions"
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        _client = New AideServiceClient(Context)
-    '        _client.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        _client.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            _client = New AideServiceClient(Context)
+            _client.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            _client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
 
 
 
     Public Sub SetData()
         Try
-            'If InitializeService() Then
-            lstBirthdayToday = AideClient.GetClient().ViewBirthdayListByCurrentDay(email)
+            If InitializeService() Then
+                lstBirthdayToday = _client.ViewBirthdayListByCurrentDay(email)
                 LoadDataDaily()
                 If lstBirthdayToday.Length = 0 Then
                     Me.BdayTitle.Text = "No Birthday Today!"
                     Me.Bdayquote.Visibility = Windows.Visibility.Collapsed
                 End If
-            'End If
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try

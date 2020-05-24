@@ -35,7 +35,7 @@ Class WeeklyTeamStatusReportPage
 #End Region
 
 #Region "Fields"
-    'Private AideServiceClient As ServiceReference1.AideServiceClient
+    Private AideServiceClient As ServiceReference1.AideServiceClient
     Private mainFrame As Frame
     Private isEmpty As Boolean
     Private email As String
@@ -83,7 +83,7 @@ Class WeeklyTeamStatusReportPage
 #Region "Constructor"
     Public Sub New(_mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         InitializeComponent()
-        'InitializeService()
+        InitializeService()
 
         Me.email = _profile.Email_Address
         Me.mainFrame = _mainFrame
@@ -102,7 +102,7 @@ Class WeeklyTeamStatusReportPage
 
     Public Sub New(_mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _weekRangeID As Integer, _month As Integer, _year As Integer)
         InitializeComponent()
-        'InitializeService()
+        InitializeService()
         Me.email = _profile.Email_Address
         Me.mainFrame = _mainFrame
         Me.empID = _profile.Emp_ID
@@ -122,19 +122,19 @@ Class WeeklyTeamStatusReportPage
         InitializeData()
     End Sub
 
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        AideServiceClient = New AideServiceClient(Context)
-    '        AideServiceClient.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        AideServiceClient.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            AideServiceClient = New AideServiceClient(Context)
+            AideServiceClient.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            AideServiceClient.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Public Sub InitializeData()
         LoadMonth()
@@ -153,7 +153,7 @@ Class WeeklyTeamStatusReportPage
 
     Public Sub LoadStatusData()
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(statusID)
+            Dim lstStatus As StatusGroup() = AideServiceClient.GetStatusList(statusID)
 
             For Each objStatus As StatusGroup In lstStatus
                 weeklyReportDBProvider.SetMyWeeklyReportStatusList(objStatus)
@@ -165,7 +165,7 @@ Class WeeklyTeamStatusReportPage
 
             weekRangeViewModel.WeeklyReportStatusList = listWeeklyReportStatus
         Catch ex As SystemException
-            'AideServiceClient.Abort()
+            AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -176,13 +176,13 @@ Class WeeklyTeamStatusReportPage
                 EntryType = 1
             End If
 
-            'If InitializeService() Then
-            lstWeeklyTeamStatusReport = AideClient.GetClient().GetWeeklyTeamStatusReport(empID, month, startFiscalYear, selectedValue, EntryType)
-            LoadWeeklyTeamStatusReports()
+            If InitializeService() Then
+                lstWeeklyTeamStatusReport = AideServiceClient.GetWeeklyTeamStatusReport(empID, month, startFiscalYear, selectedValue, EntryType)
+                LoadWeeklyTeamStatusReports()
 
-            totalRecords = lstWeeklyTeamStatusReport.Length
-            DisplayPagingInfo()
-            'End If
+                totalRecords = lstWeeklyTeamStatusReport.Length
+                DisplayPagingInfo()
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -236,10 +236,10 @@ Class WeeklyTeamStatusReportPage
 
     Public Sub LoadYear()
         Try
-            'If InitializeService() Then
-            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
-            LoadFiscalYear()
-            'End If
+            If InitializeService() Then
+                lstFiscalYear = AideServiceClient.GetAllFiscalYear()
+                LoadFiscalYear()
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -248,51 +248,51 @@ Class WeeklyTeamStatusReportPage
     Private Sub LoadWeeks()
         ' Load Items for Week Range Combobox
         Try
-            'If InitializeService() Then
-            ' Clear combo box data
-            cbDateRange.DataContext = Nothing
-            weeklyReportDBProvider.GetWeekRangeList().Clear()
+            If InitializeService() Then
+                ' Clear combo box data
+                cbDateRange.DataContext = Nothing
+                weeklyReportDBProvider.GetWeekRangeList().Clear()
 
-            Dim listWeekRange As New ObservableCollection(Of WeekRangeModel)
-            weekRangeViewModel = New WeekRangeViewModel
+                Dim listWeekRange As New ObservableCollection(Of WeekRangeModel)
+                weekRangeViewModel = New WeekRangeViewModel
 
-            lstWeekRange = AideClient.GetClient().GetWeekRangeByMonthYear(profile.Emp_ID, month, startFiscalYear)
+                lstWeekRange = AideServiceClient.GetWeekRangeByMonthYear(profile.Emp_ID, month, startFiscalYear)
 
-            For Each objWeekRange As WeekRange In lstWeekRange
-                weeklyReportDBProvider.SetWeekRangeList(objWeekRange)
-            Next
+                For Each objWeekRange As WeekRange In lstWeekRange
+                    weeklyReportDBProvider.SetWeekRangeList(objWeekRange)
+                Next
 
-            For Each weekRange As MyWeekRange In weeklyReportDBProvider.GetWeekRangeList()
-                listWeekRange.Add(New WeekRangeModel(weekRange))
+                For Each weekRange As MyWeekRange In weeklyReportDBProvider.GetWeekRangeList()
+                    listWeekRange.Add(New WeekRangeModel(weekRange))
 
-                'If monday.Month = dateToday.Month Then
-                If currentWeekSaturday = weekRange.StartWeek Then
-                    If selectedValue = -1 Then
-                        selectedValue = weekRange.WeekRangeID
+                    'If monday.Month = dateToday.Month Then
+                    If currentWeekSaturday = weekRange.StartWeek Then
+                        If selectedValue = -1 Then
+                            selectedValue = weekRange.WeekRangeID
+                        End If
                     End If
+                    'Else
+                    '    If lastWeekSaturday = weekRange.StartWeek Then
+                    '        If selectedValue = -1 Then
+                    '            selectedValue = weekRange.WeekRangeID
+                    '        End If
+                    '    End If
+                    'End If
+
+                    weekID = weekRange.WeekRangeID
+                Next
+
+                ' Set selectedValue to last week of month
+                If selectedValue = -1 AndAlso lstWeekRange.Count > 0 Then
+                    selectedValue = weekID
                 End If
-                'Else
-                '    If lastWeekSaturday = weekRange.StartWeek Then
-                '        If selectedValue = -1 Then
-                '            selectedValue = weekRange.WeekRangeID
-                '        End If
-                '    End If
-                'End If
 
-                weekID = weekRange.WeekRangeID
-            Next
-
-            ' Set selectedValue to last week of month
-            If selectedValue = -1 AndAlso lstWeekRange.Count > 0 Then
-                selectedValue = weekID
+                weekRangeViewModel.WeekRangeList = listWeekRange
+                cbDateRange.DataContext = weekRangeViewModel
+                cbDateRange.SelectedValue = selectedValue
             End If
-
-            weekRangeViewModel.WeekRangeList = listWeekRange
-            cbDateRange.DataContext = weekRangeViewModel
-            cbDateRange.SelectedValue = selectedValue
-            'End If
         Catch ex As SystemException
-            'AideServiceClient.Abort()
+            AideServiceClient.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -460,7 +460,7 @@ Class WeeklyTeamStatusReportPage
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = AideServiceClient
+            _OptionsViewModel.Service = AideServiceClient
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then

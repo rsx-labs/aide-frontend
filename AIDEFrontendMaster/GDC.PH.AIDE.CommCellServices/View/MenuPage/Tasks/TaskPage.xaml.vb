@@ -16,7 +16,7 @@ Class TaskPage
     Dim taskSpViewModel As New TasksSpViewModel
     Dim lstTasks As TaskSummary()
 
-    'Dim client As AideServiceClient
+    Dim client As AideServiceClient
 
     Public Sub New(_frame As Frame, _mainWindow As MainWindow, _empID As Integer)
         InitializeComponent()
@@ -29,19 +29,19 @@ Class TaskPage
     End Sub
 
 #Region "Commom Methods"
-    'Private Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        Dim context As InstanceContext = New InstanceContext(Me)
-    '        client = New AideServiceClient(context)
-    '        client.Open()
-    '        bInitialize = True
-    '    Catch ex As SystemException
-    '        client.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Private Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            Dim context As InstanceContext = New InstanceContext(Me)
+            client = New AideServiceClient(context)
+            client.Open()
+            bInitialize = True
+        Catch ex As SystemException
+            client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Public Sub NotifyError(message As String) Implements IAideServiceCallback.NotifyError
 
@@ -100,24 +100,24 @@ Class TaskPage
 
     Private Sub LoadEmployeeTask()
         Try
-            'If Me.InitializeService Then
+            If Me.InitializeService Then
 
-            lstTasks = AideClient.GetClient().ViewTaskSummary(Convert.ToDateTime(Date.Now).ToString("yyyy-MM-dd"), mainWindow.EmployeeID)
+                lstTasks = client.ViewTaskSummary(Convert.ToDateTime(Date.Now).ToString("yyyy-MM-dd"), mainWindow.EmployeeID)
 
-            For Each objTasks As TaskSummary In lstTasks
-                taskDBProvider.SetTasksSpList(objTasks)
-            Next
+                For Each objTasks As TaskSummary In lstTasks
+                    taskDBProvider.SetTasksSpList(objTasks)
+                Next
 
-            For Each iTasks As MyTasksSp In taskDBProvider.GetTasksSp()
-                lstMyTasks.Add(New TasksSpModel(iTasks))
-                ' Set total outstanding task
-                Outstanding = iTasks.FriOt
-            Next
+                For Each iTasks As MyTasksSp In taskDBProvider.GetTasksSp()
+                    lstMyTasks.Add(New TasksSpModel(iTasks))
+                    ' Set total outstanding task
+                    Outstanding = iTasks.FriOt
+                Next
 
-            taskSpViewModel.TasksSpList = lstMyTasks
+                taskSpViewModel.TasksSpList = lstMyTasks
 
-            Me.DataContext = taskSpViewModel
-            'End If
+                Me.DataContext = taskSpViewModel
+            End If
         Catch ex As Exception
            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try

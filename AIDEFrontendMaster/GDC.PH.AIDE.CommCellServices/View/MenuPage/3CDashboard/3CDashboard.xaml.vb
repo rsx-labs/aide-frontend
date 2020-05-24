@@ -20,7 +20,7 @@ Class _3CDashboard
     Implements ServiceReference1.IAideServiceCallback
 
 
-    'Public _AIDEClientService As ServiceReference1.AideServiceClient
+    Public _AIDEClientService As ServiceReference1.AideServiceClient
     Private email As String
     Private frame As Frame
     Private addframe As Frame
@@ -38,12 +38,12 @@ Class _3CDashboard
     Private isDateBetweenUsed As Integer = 0
 
 #Region "Constructor"
-    Public Sub New(_email As String, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
+    Public Sub New(_email As String, _frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile, aideService As AideServiceClient)
 
         ' This call is required by the designer.
         InitializeComponent()
         'Me.InitializeService()
-        '_AIDEClientService = aideService
+        _AIDEClientService = aideService
         Dim offsetVal As Integer = 0
         Dim nextVal As Integer = 10
         email = _email
@@ -81,28 +81,28 @@ Class _3CDashboard
     End Sub
 #End Region
 
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        'DisplayText("Opening client service...")
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        _AIDEClientService = New AideServiceClient(Context)
-    '        _AIDEClientService.Open()
-    '        bInitialize = True
-    '        'DisplayText("Service opened successfully...")
-    '        'Return True
-    '    Catch ex As SystemException
-    '        _AIDEClientService.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            'DisplayText("Opening client service...")
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            _AIDEClientService = New AideServiceClient(Context)
+            _AIDEClientService.Open()
+            bInitialize = True
+            'DisplayText("Service opened successfully...")
+            'Return True
+        Catch ex As SystemException
+            _AIDEClientService.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
 
     Public Sub CalculateConcernList(offSet As Integer, NextVal As Integer)
 
         Try
-            Dim lstConcern As Concern() = AideClient.GetClient().GetAllConcernLst(profile.Emp_ID)
+            Dim lstConcern As Concern() = _AIDEClientService.GetAllConcernLst(profile.Emp_ID)
 
             For Each objConcern As Concern In lstConcern
                 Select Case objConcern.Due_Date
@@ -128,7 +128,7 @@ Class _3CDashboard
 
         Catch ex As SystemException
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-            '_AIDEClientService.Abort()
+            _AIDEClientService.Abort()
         End Try
     End Sub
 
@@ -180,8 +180,8 @@ Class _3CDashboard
     Public Property SeriesCollection As SeriesCollection
 
     Private Sub btnthreeC(sender As Object, e As RoutedEventArgs)
-        frame.Navigate(New ThreeC_Page(profile, frame, addframe, menugrid, submenuframe))
-        submenuframe.Navigate(New ImproveSubMenuPage(frame, email, profile, addframe, menugrid, submenuframe))
+        frame.Navigate(New ThreeC_Page(profile, frame, addframe, menugrid, submenuframe, _AIDEClientService))
+        submenuframe.Navigate(New ImproveSubMenuPage(frame, email, profile, addframe, menugrid, submenuframe, _AIDEClientService))
     End Sub
 
 End Class

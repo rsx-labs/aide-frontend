@@ -29,15 +29,15 @@ Class LessonLearntPage
 
     Dim lstLesson As LessonLearnt()
     Dim lessonLearntDBProvider As New LessonLearntDBProvider
-    'Dim client As AideServiceClient
+    Dim client As AideServiceClient
     Private _OptionsViewModel As OptionViewModel
     Dim paginatedCollection As PaginatedObservableCollection(Of LessonLearntModel) = New PaginatedObservableCollection(Of LessonLearntModel)(pagingRecordPerPage)
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
+    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile, aideService As AideServiceClient)
         InitializeComponent()
-        'client = aideService
+        client = aideService
         frame = _frame
         addframe = _addframe
         menugrid = _menugrid
@@ -54,27 +54,27 @@ Class LessonLearntPage
 
 #Region "Methods"
 
-    'Private Function InitializeService() As Boolean
-    'Dim bInitialize As Boolean = False
-    'Try
-    '    Dim context As InstanceContext = New InstanceContext(Me)
-    '    client = New AideServiceClient(context)
-    '    client.Open()
-    '    bInitialize = True
-    'Catch ex As SystemException
-    '    client.Abort()
-    '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    'End Try
-    'Return bInitialize
-    'Return True
-    'End Function
+    Private Function InitializeService() As Boolean
+        'Dim bInitialize As Boolean = False
+        'Try
+        '    Dim context As InstanceContext = New InstanceContext(Me)
+        '    client = New AideServiceClient(context)
+        '    client.Open()
+        '    bInitialize = True
+        'Catch ex As SystemException
+        '    client.Abort()
+        '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        'End Try
+        'Return bInitialize
+        Return True
+    End Function
 
     Private Sub LoadLessonLearntList()
         Try
-            'If InitializeService() Then
-            lstLesson = AideClient.GetClient().GetLessonLearntList(profile.Email_Address)
-            SetData(lstLesson)
-            'End If
+            If InitializeService() Then
+                lstLesson = client.GetLessonLearntList(profile.Email_Address)
+                SetData(lstLesson)
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -124,11 +124,11 @@ Class LessonLearntPage
         End Try
     End Sub
 
-    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+	Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = client
+            _OptionsViewModel.Service = client
             If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
@@ -179,7 +179,7 @@ Class LessonLearntPage
 
 #Region "Events"
     Private Sub btnAddLessonLearnt_Click(sender As Object, e As RoutedEventArgs) Handles btnAddLessonLearnt.Click
-        addframe.Navigate(New LessonLearntAddPage(frame, addframe, menugrid, submenuframe, profile))
+        addframe.Navigate(New LessonLearntAddPage(frame, addframe, menugrid, submenuframe, profile, client))
         frame.IsEnabled = False
         frame.Opacity = 0.3
         menugrid.IsEnabled = False
@@ -205,7 +205,7 @@ Class LessonLearntPage
                     lessonLearnt.Resolution = CType(dgLessonLearnt.SelectedItem, LessonLearntModel).Resolution
                     lessonLearnt.ActionNo = CType(dgLessonLearnt.SelectedItem, LessonLearntModel).ActionNo
 
-                    addframe.Navigate(New LessonLearntUpdatePage(frame, addframe, menugrid, submenuframe, lessonLearnt, profile))
+                    addframe.Navigate(New LessonLearntUpdatePage(frame, addframe, menugrid, submenuframe, lessonLearnt, profile, client))
                     frame.IsEnabled = False
                     frame.Opacity = 0.3
                     menugrid.IsEnabled = False

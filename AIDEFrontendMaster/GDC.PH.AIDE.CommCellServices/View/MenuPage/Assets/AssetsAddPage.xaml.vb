@@ -10,7 +10,7 @@ Public Class AssetsAddPage
 #Region "Fields"
 
     Private mainFrame As Frame
-    'Private client As AideServiceClient
+    Private client As AideServiceClient
     Private assetsModel As New AssetsModel
     Private profile As New Profile
     Private _addframe As Frame
@@ -77,20 +77,20 @@ Public Class AssetsAddPage
                 assets.OTHER_INFO = txtOtherInfo.Text
                 assets.ASSIGNED_TO = 999
 
-                'If InitializeService() Then
-                AideClient.GetClient().UpdateAssets(assets)
-                MsgBox("Asset has been updated.", MsgBoxStyle.Information, "AIDE")
-                ClearFields()
-                mainFrame.Navigate(New AssetsListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
-                mainFrame.IsEnabled = True
-                mainFrame.Opacity = 1
-                _menugrid.IsEnabled = True
-                _menugrid.Opacity = 1
-                _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
+                If InitializeService() Then
+                    client.UpdateAssets(assets)
+                    MsgBox("Asset has been updated.", MsgBoxStyle.Information, "AIDE")
+                    ClearFields()
+                    mainFrame.Navigate(New AssetsListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
+                    mainFrame.IsEnabled = True
+                    mainFrame.Opacity = 1
+                    _menugrid.IsEnabled = True
+                    _menugrid.Opacity = 1
+                    _submenuframe.IsEnabled = True
+                    _submenuframe.Opacity = 1
 
-                _addframe.Visibility = Visibility.Hidden
-                'End If
+                    _addframe.Visibility = Visibility.Hidden
+                End If
             End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -114,20 +114,20 @@ Public Class AssetsAddPage
                 assets.ASSIGNED_TO = cbNickname.SelectedValue
                 assets.OTHER_INFO = txtOtherInfo.Text
 
-                'If InitializeService() Then
-                AideClient.GetClient().InsertAssets(assets)
-                MsgBox("Asset has been added.", MsgBoxStyle.Information, "AIDE")
-                ClearFields()
-                mainFrame.Navigate(New AssetsListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
-                mainFrame.IsEnabled = True
-                mainFrame.Opacity = 1
-                _menugrid.IsEnabled = True
-                _menugrid.Opacity = 1
-                _submenuframe.IsEnabled = True
-                _submenuframe.Opacity = 1
+                If InitializeService() Then
+                    client.InsertAssets(assets)
+                    MsgBox("Asset has been added.", MsgBoxStyle.Information, "AIDE")
+                    ClearFields()
+                    mainFrame.Navigate(New AssetsListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
+                    mainFrame.IsEnabled = True
+                    mainFrame.Opacity = 1
+                    _menugrid.IsEnabled = True
+                    _menugrid.Opacity = 1
+                    _submenuframe.IsEnabled = True
+                    _submenuframe.Opacity = 1
 
-                _addframe.Visibility = Visibility.Hidden
-                'End If
+                    _addframe.Visibility = Visibility.Hidden
+                End If
             End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -154,7 +154,7 @@ Public Class AssetsAddPage
             Else
                 Dim result As Integer = MsgBox("Are you sure you want to delete this asset?", MessageBoxButton.YesNo, "AIDE")
                 If result = 6 Then
-                    AideClient.GetClient().DeleteSuccessRegisterBySuccessID(CUInt(txtID.Text))
+                    client.DeleteSuccessRegisterBySuccessID(CUInt(txtID.Text))
                     ClearFields()
                     mainFrame.Navigate(New AssetsListPage(mainFrame, profile, _addframe, _menugrid, _submenuframe))
                     mainFrame.IsEnabled = True
@@ -226,22 +226,22 @@ Public Class AssetsAddPage
         dateInput.Text = assetsModel.DATE_PURCHASED
     End Sub
 
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        'DisplayText("Opening client service...")
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        client = New AideServiceClient(Context)
-    '        client.Open()
-    '        bInitialize = True
-    '        'DisplayText("Service opened successfully...")
-    '        'Return True
-    '    Catch ex As SystemException
-    '        client.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            'DisplayText("Opening client service...")
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            client = New AideServiceClient(Context)
+            client.Open()
+            bInitialize = True
+            'DisplayText("Service opened successfully...")
+            'Return True
+        Catch ex As SystemException
+            client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     Public Function CheckMissingField() As Boolean
         If cbAssetType.SelectedValue = Nothing AndAlso _
@@ -256,25 +256,25 @@ Public Class AssetsAddPage
 
     Public Sub ListOfCustodians()
         Try
-            'If InitializeService() Then
-            Dim lstMangers As Assets() = AideClient.GetClient().GetAllAssetsCustodian(profile.Emp_ID)
-            Dim lstMangersList As New ObservableCollection(Of AssetsModel)
-            Dim assetsDBProvider As New AssetsDBProvider
-            Dim assetsVM As New AssetsViewModel()
+            If InitializeService() Then
+                Dim lstMangers As Assets() = client.GetAllAssetsCustodian(profile.Emp_ID)
+                Dim lstMangersList As New ObservableCollection(Of AssetsModel)
+                Dim assetsDBProvider As New AssetsDBProvider
+                Dim assetsVM As New AssetsViewModel()
 
-            For Each objAssets As Assets In lstMangers
-                assetsDBProvider.SetManagerList(objAssets)
-            Next
+                For Each objAssets As Assets In lstMangers
+                    assetsDBProvider.SetManagerList(objAssets)
+                Next
 
-            For Each rawUser As MyAssets In assetsDBProvider.GetManagerList()
-                lstMangersList.Add(New AssetsModel(rawUser))
-            Next
+                For Each rawUser As MyAssets In assetsDBProvider.GetManagerList()
+                    lstMangersList.Add(New AssetsModel(rawUser))
+                Next
 
-            assetsVM.AssetManagerList = lstMangersList
+                assetsVM.AssetManagerList = lstMangersList
 
-            cbNickname.DataContext = assetsVM
-            cbNickname.ItemsSource = assetsVM.AssetManagerList
-            'End If
+                cbNickname.DataContext = assetsVM
+                cbNickname.ItemsSource = assetsVM.AssetManagerList
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -282,26 +282,26 @@ Public Class AssetsAddPage
 
     Public Sub ListOfAssetType()
         Try
-            'If InitializeService() Then
-            Dim lstAssets As Assets() = AideClient.GetClient().GetAssetDescription()
-            Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
-            Dim assetsDBProvider As New AssetsDBProvider
-            Dim assetsVM As New AssetsViewModel()
+            If InitializeService() Then
+                Dim lstAssets As Assets() = client.GetAssetDescription()
+                Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
+                Dim assetsDBProvider As New AssetsDBProvider
+                Dim assetsVM As New AssetsViewModel()
 
-            ' Set the MyLessonLearntList 
-            For Each objAssets As Assets In lstAssets
-                assetsDBProvider.SetAssetTypeList(objAssets)
-            Next
+                ' Set the MyLessonLearntList 
+                For Each objAssets As Assets In lstAssets
+                    assetsDBProvider.SetAssetTypeList(objAssets)
+                Next
 
-            For Each rawUser As MyAssets In assetsDBProvider.GetAssetTypeList()
-                lstAssetsList.Add(New AssetsModel(rawUser))
-            Next
+                For Each rawUser As MyAssets In assetsDBProvider.GetAssetTypeList()
+                    lstAssetsList.Add(New AssetsModel(rawUser))
+                Next
 
-            assetsVM.AssetTypeList = Nothing
-            cbAssetType.ItemsSource = Nothing
-            assetsVM.AssetTypeList = lstAssetsList
-            cbAssetType.ItemsSource = assetsVM.AssetTypeList
-            'End If
+                assetsVM.AssetTypeList = Nothing
+                cbAssetType.ItemsSource = Nothing
+                assetsVM.AssetTypeList = lstAssetsList
+                cbAssetType.ItemsSource = assetsVM.AssetTypeList
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -309,26 +309,26 @@ Public Class AssetsAddPage
 
     Public Sub ListOfAssetManufacturer()
         Try
-            'If InitializeService() Then
-            Dim lstAssets As Assets() = AideClient.GetClient().GetAssetManufacturer()
-            Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
-            Dim assetsDBProvider As New AssetsDBProvider
-            Dim assetsVM As New AssetsViewModel()
+            If InitializeService() Then
+                Dim lstAssets As Assets() = client.GetAssetManufacturer()
+                Dim lstAssetsList As New ObservableCollection(Of AssetsModel)
+                Dim assetsDBProvider As New AssetsDBProvider
+                Dim assetsVM As New AssetsViewModel()
 
-            ' Set the MyLessonLearntList 
-            For Each objAssets As Assets In lstAssets
-                assetsDBProvider.SetAssetManufacturerList(objAssets)
-            Next
+                ' Set the MyLessonLearntList 
+                For Each objAssets As Assets In lstAssets
+                    assetsDBProvider.SetAssetManufacturerList(objAssets)
+                Next
 
-            For Each rawUser As MyAssets In assetsDBProvider.GetAssetManufacturerList()
-                lstAssetsList.Add(New AssetsModel(rawUser))
-            Next
+                For Each rawUser As MyAssets In assetsDBProvider.GetAssetManufacturerList()
+                    lstAssetsList.Add(New AssetsModel(rawUser))
+                Next
 
-            assetsVM.AssetManufacturerList = Nothing
-            cbAssetManufacturer.ItemsSource = Nothing
-            assetsVM.AssetManufacturerList = lstAssetsList
-            cbAssetManufacturer.ItemsSource = assetsVM.AssetManufacturerList
-            'End If
+                assetsVM.AssetManufacturerList = Nothing
+                cbAssetManufacturer.ItemsSource = Nothing
+                assetsVM.AssetManufacturerList = lstAssetsList
+                cbAssetManufacturer.ItemsSource = assetsVM.AssetManufacturerList
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try

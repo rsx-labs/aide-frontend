@@ -15,7 +15,7 @@ Class NewSuccessRegister
     Private submenuframe As Frame
     Private email As String
     Private profile As Profile
-    'Private client As ServiceReference1.AideServiceClient
+    Private client As ServiceReference1.AideServiceClient
     Private successRegister As New SuccessRegisterModel
     Private dsplyByDiv As Integer = 1
     'Private srmodel As SuccessRegisterModel
@@ -79,7 +79,7 @@ Class NewSuccessRegister
                 SuccessRegisters.DetailsOfSuccess = txtSRDetails.Text
                 SuccessRegisters.WhosInvolve = txtSRWhosInvolve.Text
                 SuccessRegisters.AdditionalInformation = txtSRAdditional.Text
-                AideClient.GetClient().UpdateSuccessRegisterByEmpID(SuccessRegisters)
+                client.UpdateSuccessRegisterByEmpID(SuccessRegisters)
                 MsgBox("Success register has been updated.", MsgBoxStyle.Information, "AIDE")
                 ClearFields()
                 ExitPage()
@@ -106,7 +106,7 @@ Class NewSuccessRegister
                 SuccessRegisters.WhosInvolve = txtSRWhosInvolve.Text
                 SuccessRegisters.AdditionalInformation = txtSRAdditional.Text
 
-                AideClient.GetClient().CreateNewSuccessRegister(SuccessRegisters)
+                client.CreateNewSuccessRegister(SuccessRegisters)
                 MsgBox("Success Register has been added.", MsgBoxStyle.Information, "AIDE")
                 ClearFields()
                 ExitPage()
@@ -152,7 +152,7 @@ Class NewSuccessRegister
             Else
                 Dim result As Integer = MsgBox("Are you sure you want to continue?", MessageBoxButton.YesNo, "AIDE")
                 If result = 6 Then
-                    AideClient.GetClient().DeleteSuccessRegisterBySuccessID(CUInt(txtSRID.Text))
+                    client.DeleteSuccessRegisterBySuccessID(CUInt(txtSRID.Text))
                     MsgBox("Success Register has been deleted.", MsgBoxStyle.Information, "AIDE")
                     ClearFields()
                     ExitPage()
@@ -258,22 +258,22 @@ Class NewSuccessRegister
     ''' By Aevan Camille Batongbacal
     ''' </summary>
     ''' <remarks></remarks>
-    'Public Function InitializeService() As Boolean
-    '    Dim bInitialize As Boolean = False
-    '    Try
-    '        'DisplayText("Opening client service...")
-    '        Dim Context As InstanceContext = New InstanceContext(Me)
-    '        client = New AideServiceClient(Context)
-    '        client.Open()
-    '        bInitialize = True
-    '        'DisplayText("Service opened successfully...")
-    '        'Return True
-    '    Catch ex As SystemException
-    '        client.Abort()
-    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    '    End Try
-    '    Return bInitialize
-    'End Function
+    Public Function InitializeService() As Boolean
+        Dim bInitialize As Boolean = False
+        Try
+            'DisplayText("Opening client service...")
+            Dim Context As InstanceContext = New InstanceContext(Me)
+            client = New AideServiceClient(Context)
+            client.Open()
+            bInitialize = True
+            'DisplayText("Service opened successfully...")
+            'Return True
+        Catch ex As SystemException
+            client.Abort()
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        End Try
+        Return bInitialize
+    End Function
 
     ''' <summary>
     ''' By Aevan Camille Batongbacal
@@ -281,32 +281,32 @@ Class NewSuccessRegister
     ''' <remarks></remarks>
     Public Sub PopulateComboBox()
         Try
-            'If InitializeService() Then
-            Dim lstNickname As Nickname() = AideClient.GetClient().ViewNicknameByDeptID(email, dsplyByDiv)
-            Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
-            Dim successRegisterDBProvider As New SuccessRegisterDBProvider
-            Dim nicknameVM As New NicknameViewModel()
+            If InitializeService() Then
+                Dim lstNickname As Nickname() = client.ViewNicknameByDeptID(email, dsplyByDiv)
+                Dim lstNicknameList As New ObservableCollection(Of NicknameModel)
+                Dim successRegisterDBProvider As New SuccessRegisterDBProvider
+                Dim nicknameVM As New NicknameViewModel()
 
-            For Each objLessonLearnt As Nickname In lstNickname
-                successRegisterDBProvider.SetMyNickname(objLessonLearnt)
-            Next
+                For Each objLessonLearnt As Nickname In lstNickname
+                    successRegisterDBProvider.SetMyNickname(objLessonLearnt)
+                Next
 
-            For Each rawUser As MyNickname In successRegisterDBProvider.GetMyNickname()
-                lstNicknameList.Add(New NicknameModel(rawUser))
-            Next
+                For Each rawUser As MyNickname In successRegisterDBProvider.GetMyNickname()
+                    lstNicknameList.Add(New NicknameModel(rawUser))
+                Next
 
-            nicknameVM.NicknameList = lstNicknameList
+                nicknameVM.NicknameList = lstNicknameList
 
-            comboRaisedBy.DataContext = nicknameVM
-            comboAddEmployee.DataContext = nicknameVM
-            'End If
+                comboRaisedBy.DataContext = nicknameVM
+                comboAddEmployee.DataContext = nicknameVM
+            End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
     Private Sub ExitPage()
-        mainFrame.Navigate(New SuccessRegisterPage(mainFrame, addframe, menugrid, submenuframe, profile))
+        mainFrame.Navigate(New SuccessRegisterPage(mainFrame, addframe, menugrid, submenuframe, profile, client))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         menugrid.IsEnabled = True

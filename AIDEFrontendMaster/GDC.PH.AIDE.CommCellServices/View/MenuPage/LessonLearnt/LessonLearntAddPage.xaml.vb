@@ -19,7 +19,7 @@ Class LessonLearntAddPage
 
     Dim lstActionList As New ObservableCollection(Of ActionModel)
     Dim lessonLearnt As New LessonLearnt
-    'Dim client As AideServiceClient
+    Dim client As AideServiceClient
 #End Region
 
 #Region "Provider Declaration"
@@ -37,9 +37,9 @@ Class LessonLearntAddPage
 #End Region
 
 #Region "Constructor"
-    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile)
+    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _profile As Profile, aideService As AideServiceClient)
         InitializeComponent()
-        'client = aideService
+        client = aideService
         frame = _frame
         addframe = _addframe
         menugrid = _menugrid
@@ -53,43 +53,42 @@ Class LessonLearntAddPage
         ConfigureButtons()
     End Sub
 
-    'Private Function InitializeService() As Boolean
-    'Dim bInitialize As Boolean = False
-    'Try
-    '    Dim Context As InstanceContext = New InstanceContext(Me)
-    '    client = New AideServiceClient(Context)
-    '    client.Open()
-    '    bInitialize = True
-    'Catch ex As SystemException
-    '    client.Abort()
-    '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-    'End Try
-    'Return bInitialize
-    'Return True
-    'End Function
+    Private Function InitializeService() As Boolean
+        'Dim bInitialize As Boolean = False
+        'Try
+        '    Dim Context As InstanceContext = New InstanceContext(Me)
+        '    client = New AideServiceClient(Context)
+        '    client.Open()
+        '    bInitialize = True
+        'Catch ex As SystemException
+        '    client.Abort()
+        '    MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+        'End Try
+        'Return bInitialize
+        Return True
+    End Function
 #End Region
 
 #Region "Private Functions"
     Private Sub CreateReferenceNo()
         Try
-            'If InitializeService() Then
-            Dim refNo As String
-            Dim dateNow As String = Date.Today.ToString("MM/dd/yy")
-            Dim totalCount As Integer
-            Dim lstLesson As LessonLearnt() = AideClient.GetClient().GetLessonLearntList(profile.Email_Address)
+            If InitializeService() Then
+                Dim refNo As String
+                Dim dateNow As String = Date.Today.ToString("MM/dd/yy")
+                Dim totalCount As Integer
+                Dim lstLesson As LessonLearnt() = client.GetLessonLearntList(profile.Email_Address)
 
-            totalCount = lstLesson.Length + 1
+                totalCount = lstLesson.Length + 1
 
-            If totalCount < 10 Then
-                refNo = "LL-" & dateNow & "-0" & totalCount
-            Else
-                refNo = "LL-" & dateNow & "-" & totalCount
+                If totalCount < 10 Then
+                    refNo = "LL-" & dateNow & "-0" & totalCount
+                Else
+                    refNo = "LL-" & dateNow & "-" & totalCount
+                End If
+
+                lessonLearntModel.ReferenceNo = refNo
+                lessonLearntModel.EmployeeID = profile.Emp_ID
             End If
-
-            lessonLearntModel.ReferenceNo = refNo
-            lessonLearntModel.EmployeeID = profile.Emp_ID
-
-            'End If
         Catch ex As Exception
            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -97,22 +96,22 @@ Class LessonLearntAddPage
 
     Public Sub GetActionLists()
         Try
-            'If InitializeService() Then
-            lstActionList.Clear()
-            actionListProvider = New ActionListDBProvider
+            If InitializeService() Then
+                lstActionList.Clear()
+                actionListProvider = New ActionListDBProvider
 
-            Dim lstAction As Action() = AideClient.GetClient().GetLessonLearntListOfActionSummary(profile.Emp_ID)
+                Dim lstAction As Action() = client.GetLessonLearntListOfActionSummary(profile.Emp_ID)
 
-            For Each objAction As Action In lstAction
-                actionListProvider._setlistofitems(objAction)
-            Next
+                For Each objAction As Action In lstAction
+                    actionListProvider._setlistofitems(objAction)
+                Next
 
-            For Each iAction As myActionSet In actionListProvider._getobAction()
-                lstActionList.Add(New ActionModel(iAction))
-            Next
+                For Each iAction As myActionSet In actionListProvider._getobAction()
+                    lstActionList.Add(New ActionModel(iAction))
+                Next
 
-            lvAction.ItemsSource = lstActionList
-            'End If
+                lvAction.ItemsSource = lstActionList
+            End If
         Catch ex As Exception
            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -181,7 +180,7 @@ Class LessonLearntAddPage
     End Sub
 
     Private Sub ExitPage()
-        frame.Navigate(New LessonLearntPage(frame, addframe, menugrid, submenuframe, profile))
+        frame.Navigate(New LessonLearntPage(frame, addframe, menugrid, submenuframe, profile, client))
         frame.IsEnabled = True
         frame.Opacity = 1
         menugrid.IsEnabled = True
@@ -202,12 +201,12 @@ Class LessonLearntAddPage
                 MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Else
                 Try
-                    'If Me.InitializeService Then
-                    AideClient.GetClient().CreateLessonLearnt(lessonLearnt)
-                    MsgBox("Lesson learned has been added.", MsgBoxStyle.Information, "AIDE")
-                    ClearValues()
-                    ExitPage()
-                    'End If
+                    If Me.InitializeService Then
+                        client.CreateLessonLearnt(lessonLearnt)
+                        MsgBox("Lesson learned has been added.", MsgBoxStyle.Information, "AIDE")
+                        ClearValues()
+                        ExitPage()
+                    End If
                 Catch ex As Exception
                     MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
                 End Try
