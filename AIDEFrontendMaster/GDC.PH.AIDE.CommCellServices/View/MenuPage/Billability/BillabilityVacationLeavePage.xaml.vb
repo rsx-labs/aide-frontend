@@ -10,6 +10,7 @@ Imports System.Printing
 Imports System.Drawing.Printing
 Imports LiveCharts
 Imports LiveCharts.Wpf
+Imports NLog
 
 Public Class BillabilityVacationLeavePage
     Implements IAideServiceCallback
@@ -33,9 +34,15 @@ Public Class BillabilityVacationLeavePage
     Dim vlStatus As Integer = 4
     Dim year As Integer
     Dim day As Integer
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
-    Public Sub New(_profile As Profile, mFrame As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame, attendanceFrame As Frame)
+    Public Sub New(_profile As Profile, mFrame As Frame, addframe As Frame, menugrid As Grid,
+                   submenuframe As Frame, attendanceFrame As Frame, aideSrvice As AideServiceClient)
+
+        _logger.Debug("Start : Constructor")
+
         Me.profile = _profile
         Me.mainFrame = mFrame
         Me._addframe = addframe
@@ -44,26 +51,45 @@ Public Class BillabilityVacationLeavePage
         Me._attendanceFrame = attendanceFrame
         Me.InitializeComponent()
 
+        client = aideSrvice
+
         LoadYear()
         SetFiscalYear()
         GenerateLeaveCredits()
         LoadData()
         PermissionSettings()
+
+        _logger.Debug("End : Constructor")
+
     End Sub
 
 #Region "Private Methods"
 
     Public Function InitializeService() As Boolean
+        _logger.Debug("Start : InitializeService")
+
         Dim bInitialize As Boolean = False
         Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(Context)
-            client.Open()
+
+            If client.State = CommunicationState.Faulted Then
+
+                _logger.Debug("Service is faulted, reinitializing ...")
+
+                Dim Context As InstanceContext = New InstanceContext(Me)
+                client = New AideServiceClient(Context)
+                client.Open()
+            End If
+
             bInitialize = True
         Catch ex As SystemException
+            _logger.Error(ex.ToString())
+
             client.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : InitializeService")
+
         Return bInitialize
     End Function
 
@@ -247,7 +273,7 @@ Public Class BillabilityVacationLeavePage
 #End Region
 
     Private Sub btnManage_Click(sender As Object, e As RoutedEventArgs)
-        _addframe.Navigate(New BillabilityManagerVLLeavePage(profile, mainFrame, _addframe, _menugrid, _submenuframe, _attendanceFrame))
+        _addframe.Navigate(New BillabilityManagerVLLeavePage(profile, mainFrame, _addframe, _menugrid, _submenuframe, _attendanceFrame, client))
         mainFrame.IsEnabled = False
         mainFrame.Opacity = 0.3
         _menugrid.IsEnabled = False

@@ -2,6 +2,7 @@
 Imports UI_AIDE_CommCellServices.ServiceReference1
 Imports System.Collections.ObjectModel
 Imports System.ServiceModel
+Imports NLog
 Class KPISummaryAddPage
     Implements UI_AIDE_CommCellServices.ServiceReference1.IAideServiceCallback
 
@@ -28,11 +29,17 @@ Class KPISummaryAddPage
     Dim _KPITargetsVM As New KPITargetsViewModel()
     Dim _kpiSummary As New KPISummary
     Private _dictMonths As New Dictionary(Of String, String)
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
 #Region "Constructors"
     'Add Constructor
-    Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame)
+    Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame,
+                   menugrid As Grid, submenuframe As Frame, aideService As AideServiceClient)
+
+        _logger.Debug("Start : Constructor Mode=Add")
+
         Try
             Me._frame = mainframe
             Me._addframe = addframe
@@ -41,17 +48,27 @@ Class KPISummaryAddPage
             Me.profile = _profile
             InitializeComponent()
 
+            aide = aideService
+
             SetData()
             LoadMonth()
             LoadControls()
             mode = "Add"
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : Constructor Mode=Add")
     End Sub
 
     'Update Constructor
-    Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame, kpi As KPISummary)
+    Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame,
+                   menugrid As Grid, submenuframe As Frame, kpi As KPISummary, aideService As AideServiceClient)
+
+        _logger.Debug("Start : Constructor Mode=Update")
+
         Try
             Me._frame = mainframe
             Me._addframe = addframe
@@ -61,6 +78,9 @@ Class KPISummaryAddPage
             Me._kpiSummary = kpi
 
             InitializeComponent()
+
+            aide = aideService
+
             LoadMonth()
             LoadYears(_kpiSummary.FYStart.Year, _kpiSummary.FYEnd.Year)
             'LoadControls()
@@ -92,23 +112,42 @@ Class KPISummaryAddPage
             txtBlockButton.Text = mode
             AddBtn.Style = FindResource("RoundCornerUpdate")
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : Constructor Mode=Update")
+
     End Sub
 #End Region
 
 #Region "Methods/Functions"
     Public Function InitializeService() As Boolean
+        _logger.Debug("Start : InitializeService")
+
         Dim bInitialize As Boolean = False
         Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            aide = New AideServiceClient(Context)
-            aide.Open()
+
+            If aide.State = CommunicationState.Faulted Then
+
+                _logger.Debug("Service is faulted, reinitializing ...")
+
+                Dim Context As InstanceContext = New InstanceContext(Me)
+                aide = New AideServiceClient(Context)
+                aide.Open()
+            End If
+
             bInitialize = True
         Catch ex As SystemException
+            _logger.Error(ex.ToString())
+
             aide.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : InitializeService")
+
         Return bInitialize
     End Function
 
@@ -151,6 +190,8 @@ Class KPISummaryAddPage
                 cbYear.Items.Add(New With {.Text = i.ToString, .Value = i})
             Next
         Catch ex As Exception
+            _logger.Error($"Error at LoadYears = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -165,6 +206,8 @@ Class KPISummaryAddPage
                 LoadKPITargets()
             End If
         Catch ex As Exception
+            _logger.Error($"Error at SetData = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -194,12 +237,13 @@ Class KPISummaryAddPage
             cbKPI.DisplayMemberPath = "Value"
             cbKPI.SelectedValuePath = "Key"
         Catch ex As Exception
+            _logger.Error($"Error at LoadKPITargets = {ex.ToString()}")
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
     Private Sub ExitPage()
-        _frame.Navigate(New KPISummaryPage(Me.profile, Me._frame, _addframe, _menugrid, _submenuframe))
+        _frame.Navigate(New KPISummaryPage(Me.profile, Me._frame, _addframe, _menugrid, _submenuframe, aide))
         _frame.IsEnabled = True
         _frame.Opacity = 1
         _menugrid.IsEnabled = True

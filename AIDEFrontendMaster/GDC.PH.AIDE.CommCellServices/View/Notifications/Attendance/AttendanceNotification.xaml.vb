@@ -88,7 +88,7 @@ Public Class AttendanceNotification
         If LeaveNotyLV.SelectedItem IsNot Nothing Then
             Dim _date As DateTime = CType(LeaveNotyLV.SelectedItem, ResourcePlannerModel).DATE_ENTRY.ToString("MM/dd/yyyy")
 
-            _addframe.Navigate(New ResourcePlannerAddPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame, _date.ToString("MM/dd/yyyy")))
+            _addframe.Navigate(New ResourcePlannerAddPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame, _date.ToString("MM/dd/yyyy"), client))
             mainFrame.IsEnabled = False
             mainFrame.Opacity = 0.3
             _menugrid.IsEnabled = False
@@ -164,7 +164,7 @@ Public Class AttendanceNotification
     End Sub
 
     Private Sub ExitPage()
-        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame))
+        mainFrame.Navigate(New ResourcePlannerPage(profile, mainFrame, _addframe, _menugrid, _submenuframe, attendanceFrame, client))
         mainFrame.IsEnabled = True
         mainFrame.Opacity = 1
         _menugrid.IsEnabled = True

@@ -10,6 +10,7 @@ Imports System.Printing
 Imports System.Drawing.Printing
 Imports LiveCharts
 Imports LiveCharts.Wpf
+Imports NLog
 
 Public Class BillablesPage
     Implements IAideServiceCallback
@@ -45,6 +46,8 @@ Public Class BillablesPage
     Dim lstFiscalYear As FiscalYear()
     Dim commendationVM As New CommendationViewModel()
     Dim fiscalyearVM As New SelectionListViewModel
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
 #Region "Provider Declaration"
@@ -59,10 +62,16 @@ Public Class BillablesPage
     Dim weekRangeViewModel As New WeekRangeViewModel
 #End Region
 
-    Public Sub New(_profile As Profile, mFrame As Frame)
+    Public Sub New(_profile As Profile, mFrame As Frame, aideService As AideServiceClient)
+
+        _logger.Debug("Start : Constructor")
+
         Me.profile = _profile
         Me.mainFrame = mFrame
         Me.InitializeComponent()
+
+        client = aideService
+
         InitializeService()
 
         GenerateColors()
@@ -74,25 +83,45 @@ Public Class BillablesPage
         LoadWeeks()
         LoadDataWeekly()
         LoadDataMonthly()
+
+        _logger.Debug("End : Constructor")
+
     End Sub
 
 #Region "Sub Procedures"
 
     Public Function InitializeService() As Boolean
+        _logger.Debug("Start : InitializeService")
+
         Dim bInitialize As Boolean = False
         Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(Context)
-            client.Open()
+
+            If client.State = CommunicationState.Faulted Then
+
+                _logger.Debug("Service is faulted, reinitializing ...")
+
+                Dim Context As InstanceContext = New InstanceContext(Me)
+                client = New AideServiceClient(Context)
+                client.Open()
+            End If
+
             bInitialize = True
         Catch ex As SystemException
+            _logger.Error(ex.ToString())
+
             client.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : InitializeService")
+
         Return bInitialize
     End Function
 
     Public Sub LoadDataWeekly()
+
+        _logger.Debug("Start : LoadDataWeekly")
+
         Try
             If InitializeService() Then
                 Dim nonBillable As Double
@@ -145,15 +174,23 @@ Public Class BillablesPage
                 percentBillable = (billable / totalWeekly) * 100
                 percentNonBillable = (nonBillable / totalWeekly) * 100
 
-                WNonBillableHours.Content = percentNonBillable.ToString("N2") + "%"
-                WBillableHours.Content = percentBillable.ToString("N2") + "%"
+                WNonBillableHours.Content = If(Not Double.IsNaN(percentNonBillable), percentNonBillable.ToString("N2") + "%", String.Empty)
+                WBillableHours.Content = If(Not Double.IsNaN(percentBillable), percentBillable.ToString("N2") + "%", String.Empty)
             End If
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Error(ex.ToString())
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : LoadDataWeekly")
+
     End Sub
 
     Public Sub LoadDataMonthly()
+
+        _logger.Debug("Start : LoadDataMonthly")
+
         Try
             If InitializeService() Then
                 Dim nonBillable As Double
@@ -207,16 +244,23 @@ Public Class BillablesPage
                 percentBillable = (billable / totalMonthly) * 100
                 percentNonBillable = (nonBillable / totalMonthly) * 100
 
-                MNonBillableHours.Content = percentNonBillable.ToString("N2") + "%"
-                MBillableHours.Content = percentBillable.ToString("N2") + "%"
+                MNonBillableHours.Content = If(Not Double.IsNaN(percentNonBillable), percentNonBillable.ToString("N2") + "%", String.Empty)
+                MBillableHours.Content = If(Not Double.IsNaN(percentBillable), percentBillable.ToString("N2") + "%", String.Empty)
             End If
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Error(ex.ToString())
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : LoadDataMonthly")
     End Sub
 
     Private Sub LoadWeeks()
         ' Load Items for Week Range Combobox
+
+        _logger.Debug("Start : LoadWeeks")
+
         Try
             If InitializeService() Then
                 ' Clear combo box data
@@ -253,9 +297,14 @@ Public Class BillablesPage
                 cbDateRange.SelectedValue = selectedValue
             End If
         Catch ex As SystemException
+            _logger.Error(ex.ToString())
+
             client.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : LoadWeeks")
+
     End Sub
 
     Private Sub LoadMonth()
@@ -276,14 +325,21 @@ Public Class BillablesPage
     End Sub
 
     Public Sub LoadYear()
+
+        _logger.Debug("Start : LoadYear")
+
         Try
             If InitializeService() Then
                 lstFiscalYear = client.GetAllFiscalYear()
                 LoadFiscalYear()
             End If
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("Start : LoadYear")
     End Sub
 
     Public Sub LoadFiscalYear()
@@ -302,7 +358,9 @@ Public Class BillablesPage
             fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Error($"Error at LoadFiscalYear = {ex.ToString()}")
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -329,7 +387,9 @@ Public Class BillablesPage
             cbYear.SelectedValue = startFiscalYear & "-" & endFiscalYear
 
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Error($"Error at SetFiscalYear = {ex.ToString()}")
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

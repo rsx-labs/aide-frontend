@@ -2,6 +2,7 @@
 Imports System.Collections.ObjectModel
 Imports UI_AIDE_CommCellServices.ServiceReference1
 Imports System.ServiceModel
+Imports NLog
 Public Class OptionViewModel
     Implements INotifyPropertyChanged
     Implements IAideServiceCallback
@@ -13,12 +14,20 @@ Public Class OptionViewModel
     Private _optionDB As OptionDBProvider
     Private _optionValue As String
     Private aide As ServiceReference1.AideServiceClient
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
 #Region "Constructors"
     Sub New()
+
+        _logger.Debug("Start : Constructor")
+
         _optionLst = New ObservableCollection(Of OptionModel)
         _optionDB = New OptionDBProvider
+
+        _logger.Debug("End : Constructor")
+
     End Sub
 #End Region
 
@@ -55,39 +64,58 @@ Public Class OptionViewModel
 
 #Region "Main Methods"
     Public Function GetOptions(ByVal _optionID As Integer, ByVal _moduleID As Integer, ByVal _functionID As Integer) As Boolean
+
+        _logger.Debug("Start : GetOptions")
+
         Try
             Dim opt As Boolean = False
-            'If Me.InitializeService Then
-            Dim _option As Options() = aide.GetOptions(_optionID, _moduleID, _functionID)
-            If _option.Length = 0 Then
-                opt = False
+            If Me.InitializeService Then
+                Dim _option As Options() = aide.GetOptions(_optionID, _moduleID, _functionID)
+                If _option.Length = 0 Then
+                    opt = False
+                End If
+                SetOptions(_option)
+                opt = True
             End If
-            SetOptions(_option)
-            opt = True
-            'End If
             Return opt
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             Return False
         End Try
+
+        _logger.Debug("End : GetOptions")
+
     End Function
     Public Function GetOption(ByVal _optionID As Integer) As String
+
+        _logger.Debug("Start : GetOption")
+
         Try
-            'If Me.InitializeService Then
-            Dim _option As Options() = aide.GetOptions(_optionID, 0, 0)
-            If _option.Length = 0 Then
-                Return String.Empty
+            If Me.InitializeService Then
+                Dim _option As Options() = aide.GetOptions(_optionID, 0, 0)
+                If _option.Length = 0 Then
+                    Return String.Empty
+                End If
+                SetOption(_option)
             End If
-            SetOption(_option)
-            'End If
             Return _optionValue
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             Return String.Empty
         End Try
+
+        _logger.Debug("End : GetOption")
+
     End Function
 
     Private Sub SetOptions(ByVal _opt As Options())
+
+        _logger.Debug("Start : SetOptions")
+
         Try
             For Each objOption As Options In _opt
                 _optionDB._setlistofitems(objOption)
@@ -97,10 +125,18 @@ Public Class OptionViewModel
             Next
 
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : SetOptions")
+
     End Sub
     Private Sub SetOption(ByVal _opt As Options())
+
+        _logger.Debug("Start : SetOption")
+
         Try
             For Each objOption As Options In _opt
                 _optionDB._setlistofitems(objOption)
@@ -110,8 +146,13 @@ Public Class OptionViewModel
             Next
 
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : SetOption")
+
     End Sub
     Private Sub NotifyPropertyChanged(ByVal propertyName As String)
         RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
@@ -121,16 +162,30 @@ Public Class OptionViewModel
 
 #Region "Service Function/Methods"
     Public Function InitializeService() As Boolean
+        _logger.Debug("Start : InitializeService")
+
         Dim bInitialize As Boolean = False
         Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            aide = New AideServiceClient(Context)
-            aide.Open()
+
+            If aide.State = CommunicationState.Faulted Then
+
+                _logger.Debug("Service is faulted, reinitializing ...")
+
+                Dim Context As InstanceContext = New InstanceContext(Me)
+                aide = New AideServiceClient(Context)
+                aide.Open()
+            End If
+
             bInitialize = True
         Catch ex As SystemException
-            aide.Abort()
+            _logger.Error(ex.ToString())
+
+            'aide.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : InitializeService")
+
         Return bInitialize
     End Function
     Public Sub NotifySuccess(message As String) Implements IAideServiceCallback.NotifySuccess

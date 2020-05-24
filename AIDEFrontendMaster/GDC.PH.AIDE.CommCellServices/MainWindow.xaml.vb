@@ -235,7 +235,7 @@ Class MainWindow
 
             _logger.Error($"Failed to initialize service. {ex.ToString()}")
 
-            _aideClientService.Abort()
+            '_aideClientService.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
@@ -627,8 +627,8 @@ Class MainWindow
         email = profile.Email_Address
         empID = profile.Emp_ID
 
-        PagesFrame.Navigate(New ResourcePlannerPage(profile, PagesFrame, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame))
-        SubMenuFrame.Navigate(New AttendanceSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame))
+        PagesFrame.Navigate(New ResourcePlannerPage(profile, PagesFrame, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame, _aideClientService))
+        SubMenuFrame.Navigate(New AttendanceSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame, _aideClientService))
 
         _logger.Debug("End : AttendanceBtn_Click")
 
@@ -650,8 +650,8 @@ Class MainWindow
 
         _logger.Debug("Start : BillabilityBtn_Click")
 
-        PagesFrame.Navigate(New BillablesPage(profile, PagesFrame))
-        SubMenuFrame.Navigate(New BillabilitySubMenu(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
+        PagesFrame.Navigate(New BillablesPage(profile, PagesFrame, _aideClientService))
+        SubMenuFrame.Navigate(New BillabilitySubMenu(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, _aideClientService))
         LoadSideBar()
 
         _logger.Debug("End : BillabilityBtn_Click")

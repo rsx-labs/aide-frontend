@@ -4,6 +4,7 @@ Imports System.ServiceModel
 Imports LiveCharts
 Imports LiveCharts.Wpf
 Imports UI_AIDE_CommCellServices.ServiceReference1
+Imports NLog
 
 Public Class KPISummaryPage
     Implements IAideServiceCallback
@@ -25,15 +26,23 @@ Public Class KPISummaryPage
     Dim lstFiscalYear As FiscalYear()
     Dim commendationVM As New CommendationViewModel()
     Dim fiscalyearVM As New SelectionListViewModel
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
-    Public Sub New(_profile As Profile, mFrame As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame)
+    Public Sub New(_profile As Profile, mFrame As Frame, addframe As Frame,
+                   menugrid As Grid, submenuframe As Frame, aideService As AideServiceClient)
+
+        _logger.Debug("Start : Constructor")
+
         Me._profile = _profile
         Me._mainFrame = mFrame
         Me._menugrid = menugrid
         Me._addFrame = addframe
         Me._submenuFrame = submenuframe
         Me.InitializeComponent()
+
+        client = aideService
 
         _month = Date.Now.Month
 
@@ -46,23 +55,40 @@ Public Class KPISummaryPage
 
         dgKPISummary.SelectionMode = DataGridSelectionMode.Single
         dgKPISummary.SelectionUnit = DataGridSelectionUnit.Cell
-        
+
         PermissionSettings()
+
+        _logger.Debug("End : Constructor")
+
     End Sub
 
 #Region "Private Methods"
 
     Public Function InitializeService() As Boolean
+        _logger.Debug("Start : InitializeService")
+
         Dim bInitialize As Boolean = False
         Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(Context)
-            client.Open()
+
+            If client.State = CommunicationState.Faulted Then
+
+                _logger.Debug("Service is faulted, reinitializing ...")
+
+                Dim Context As InstanceContext = New InstanceContext(Me)
+                client = New AideServiceClient(Context)
+                client.Open()
+            End If
+
             bInitialize = True
         Catch ex As SystemException
-            client.Abort()
+            _logger.Error(ex.ToString())
+
+            'client.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : InitializeService")
+
         Return bInitialize
     End Function
 
@@ -74,6 +100,8 @@ Public Class KPISummaryPage
                 LoadFiscalYear()
             End If
         Catch ex As Exception
+            _logger.Error($"Error at SetData = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -94,6 +122,8 @@ Public Class KPISummaryPage
             fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
         Catch ex As Exception
+            _logger.Error($"Error at LoadFiscalYear = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -286,6 +316,8 @@ Public Class KPISummaryPage
 
 
         Catch ex As Exception
+            _logger.Error($"Error at LoadKPISummary = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -543,7 +575,7 @@ Public Class KPISummaryPage
     End Sub
 
     Private Sub btnCreate_Click(sender As Object, e As RoutedEventArgs)
-        _addFrame.Navigate(New KPISummaryAddPage(Me._profile, Me._mainFrame, Me._addFrame, Me._menugrid, Me._submenuFrame))
+        _addFrame.Navigate(New KPISummaryAddPage(Me._profile, Me._mainFrame, Me._addFrame, Me._menugrid, Me._submenuFrame, client))
         _mainFrame.IsEnabled = False
         _mainFrame.Opacity = 0.3
         _menugrid.IsEnabled = False
@@ -576,7 +608,7 @@ Public Class KPISummaryPage
                             kpi.Subject = dgKPISummary.CurrentCell.Item(4)
                             kpi.KPI_Month = Convert.ToDateTime(dgKPISummary.CurrentColumn.Header).Month
 
-                            _addFrame.Navigate(New KPISummaryAddPage(Me._profile, Me._mainFrame, Me._addFrame, Me._menugrid, Me._submenuFrame, kpi))
+                            _addFrame.Navigate(New KPISummaryAddPage(Me._profile, Me._mainFrame, Me._addFrame, Me._menugrid, Me._submenuFrame, kpi, client))
                             _mainFrame.IsEnabled = False
                             _mainFrame.Opacity = 0.3
                             _menugrid.IsEnabled = False

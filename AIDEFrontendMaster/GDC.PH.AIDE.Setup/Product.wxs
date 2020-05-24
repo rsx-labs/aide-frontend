@@ -112,6 +112,12 @@
       <Component Id="favicon.ico" Guid="87BB1B2C-0519-4EB6-9DE3-A8B2C64D33E4">
         <File Id="favicon.ico" Name="favicon.ico" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)favicon.ico" />
       </Component>
+      <Component Id="NLog.dll" Guid="9A5E15B3-D899-4A24-93E3-4F5C5885A68C">
+        <File Id="NLog.dll" Name="NLog.dll" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)NLog.dll" />
+      </Component>
+      <Component Id="NLog.config" Guid="6EBA422B-B0B6-447D-86D9-EFB5671C1F10">
+        <File Id="NLog.config" Name="NLog.config" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)NLog.config" />
+      </Component>
     </ComponentGroup>
 	</Fragment>
   <!--Script Files-->

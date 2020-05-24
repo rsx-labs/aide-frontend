@@ -10,6 +10,7 @@ Imports System.Printing
 Imports System.Drawing.Printing
 Imports LiveCharts
 Imports LiveCharts.Wpf
+Imports NLog
 
 Public Class BillabilityPage
     Implements IAideServiceCallback
@@ -28,33 +29,57 @@ Public Class BillabilityPage
     Dim lstFiscalYear As FiscalYear()
     Dim commendationVM As New CommendationViewModel()
     Dim fiscalyearVM As New SelectionListViewModel
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
-    Public Sub New(_profile As Profile, mFrame As Frame)
+    Public Sub New(_profile As Profile, mFrame As Frame, aideClient As AideServiceClient)
+
+        _logger.Debug("Start : Constructor")
+
         Me.profile = _profile
         Me.mainFrame = mFrame
         Me.InitializeComponent()
+
+        client = aideClient
 
         LoadMonth()
         LoadYear()
 
         SetFiscalYear()
         LoadData()
+
+        _logger.Debug("End : Constructor")
+
     End Sub
 
 #Region "Private Methods"
 
     Public Function InitializeService() As Boolean
+        _logger.Debug("Start : InitializeService")
+
         Dim bInitialize As Boolean = False
         Try
-            Dim Context As InstanceContext = New InstanceContext(Me)
-            client = New AideServiceClient(Context)
-            client.Open()
+
+            If client.State = CommunicationState.Faulted Then
+
+                _logger.Debug("Service is faulted, reinitializing ...")
+
+                Dim Context As InstanceContext = New InstanceContext(Me)
+                client = New AideServiceClient(Context)
+                client.Open()
+            End If
+
             bInitialize = True
         Catch ex As SystemException
+            _logger.Error(ex.ToString())
+
             client.Abort()
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Debug("End : InitializeService")
+
         Return bInitialize
     End Function
 
@@ -65,6 +90,8 @@ Public Class BillabilityPage
                 LoadFiscalYear()
             End If
         Catch ex As Exception
+            _logger.Error($"Error at LoadYear = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -85,7 +112,9 @@ Public Class BillabilityPage
             fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Error($"Error at LoadFiscalYear = {ex.ToString()}")
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -121,7 +150,9 @@ Public Class BillabilityPage
             year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
 
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Error($"Error at SetFiscalYear = {ex.ToString()}")
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -196,7 +227,9 @@ Public Class BillabilityPage
             chartMonthSummary.AxisX.First().LabelsRotation = 135
 
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Error($"Error at LoadNonBillMonthSummary = {ex.ToString()}")
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -262,7 +295,9 @@ Public Class BillabilityPage
             chartMonth.AxisX.First().LabelsRotation = 135
 
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Error($"Error at LoadNonBillMonth = {ex.ToString()}")
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
