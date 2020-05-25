@@ -30,7 +30,7 @@ Public Class AssetBorrowingPage
     Private _submenuframe As Frame
     'Private client As AideServiceClient
     Private assetVM As New AssetsViewModel()
-    Private _OptionsViewModel As OptionViewModel
+    'Private _OptionsViewModel As OptionViewModel
     Private _AideService As ServiceReference1.AideServiceClient
     Dim show As Boolean = True
     Dim guestAccount = 5
@@ -43,7 +43,7 @@ Public Class AssetBorrowingPage
     Public Sub New(_frame As Frame, _profile As Profile, addframe As Frame, menugrid As Grid, submenuframe As Frame, page As String)
 
         ' This call is required by the designer.
-        pagingRecordPerPage = GetOptionData(30, 14, 12)
+        pagingRecordPerPage = AppState.GetInstance().OptionValueDictionary(Constants.OPT_PAGING_ABORROWING)
         paginatedCollection = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
         InitializeComponent()
 
@@ -185,25 +185,25 @@ Public Class AssetBorrowingPage
         End Try
     End Sub
 
-	Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
-        Dim strData As String = String.Empty
-        Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = _AideService
-            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        strData = opt.VALUE
-                        Exit For
-                    End If
-                Next
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return strData
-    End Function
-    
+    'Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+    '       Dim strData As String = String.Empty
+    '       Try
+    '           _OptionsViewModel = New OptionViewModel
+    '           '_OptionsViewModel.Service = _AideService
+    '           If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+    '               For Each opt As OptionModel In _OptionsViewModel.OptionList
+    '                   If Not opt Is Nothing Then
+    '                       strData = opt.VALUE
+    '                       Exit For
+    '                   End If
+    '               Next
+    '           End If
+    '       Catch ex As Exception
+    '           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '       End Try
+    '       Return strData
+    '   End Function
+
     Private Sub DisplayPagingInfo()
         ' If there has no data found
         If totalRecords = 0 Then

@@ -65,7 +65,7 @@ Public Class OptionViewModel
 #Region "Main Methods"
     Public Function GetOptions(ByVal _optionID As Integer, ByVal _moduleID As Integer, ByVal _functionID As Integer) As Boolean
 
-        _logger.Debug("Start : GetOptions")
+        _logger.Debug($"Start : GetOptions {_optionID}")
 
         Try
             Dim opt As Boolean = False

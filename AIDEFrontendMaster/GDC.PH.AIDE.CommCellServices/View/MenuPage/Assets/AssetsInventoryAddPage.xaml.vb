@@ -31,7 +31,7 @@ Public Class AssetsInventoryAddPage
 
     Private mailConfig As New MailConfig
     Private mailConfigVM As New MailConfigViewModel
-    Private _OptionsViewModel As OptionViewModel
+    'Private _OptionsViewModel As OptionViewModel
     Private _option As OptionModel
     Private lstMissingAttendance As Employee()
     Private isAINotifAllow As Boolean
@@ -652,16 +652,18 @@ Public Class AssetsInventoryAddPage
     End Sub
     Private Sub GetAssetMovementData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer)
         Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = client
-            _option = New OptionModel
-            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        _option = opt
-                    End If
-                Next
-            End If
+            '_OptionsViewModel = New OptionViewModel
+            ''_OptionsViewModel.Service = client
+            '_option = New OptionModel
+            'If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+            '    For Each opt As OptionModel In _OptionsViewModel.OptionList
+            '        If Not opt Is Nothing Then
+            '            _option = opt
+            '        End If
+            '    Next
+            'End If
+
+            _option = AppState.GetInstance().OptionDictionary(optID)
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try

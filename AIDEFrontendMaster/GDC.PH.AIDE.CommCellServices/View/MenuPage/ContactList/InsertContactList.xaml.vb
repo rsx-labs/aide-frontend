@@ -5,6 +5,7 @@ Imports System.ServiceModel
 Imports System.Text.RegularExpressions
 Imports System.Configuration
 Imports System.Windows.Forms
+Imports NLog
 
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class InsertContactList
@@ -23,14 +24,19 @@ Class InsertContactList
     Private profile As Profile
     Private user_empid As Integer
     Private contactVM As New ContactListViewModel
-    Private _OptionsViewModel As OptionViewModel
+    'Private _OptionsViewModel As OptionViewModel
     Dim empPhoto As String
     Dim photoPath As String
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
 #Region "Constructor"
     Public Sub New(_mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _attendanceFrame As Frame)
         ' This call is required by the designer.
+
+        _logger.Debug("Start : Constructor")
+
         InitializeComponent()
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
@@ -42,11 +48,13 @@ Class InsertContactList
         DataContext = contactVM.ContactProfile
         ClearTextVal()
         user_empid = Me.profile.Emp_ID
-        photoPath = GetOptionData(46, 6, 16)
+        photoPath = AppState.GetInstance().OptionValueDictionary(Constants.OPT_PHOTO_PATH)
         txtPhotoNote.Text = "Note: Copy your picture to this path (" + photoPath + ")"
         AssignEvents()
         textLimits()
         LoadAllCB()
+
+        _logger.Debug("End : Constructor")
     End Sub
 #End Region
 
@@ -121,6 +129,8 @@ Class InsertContactList
             cbContactPosition.ItemsSource = selectionListVM.ObjectPositionSet
             'End If
         Catch ex As Exception
+            _logger.Debug($"Error at LoadJobPosition = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -147,6 +157,7 @@ Class InsertContactList
             cbContactGroup.ItemsSource = selectionListVM.ObjectPermissionSet
             'End If
         Catch ex As Exception
+            _logger.Debug($"Error at LoadJobPermission = {ex.ToString()}")
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -173,6 +184,7 @@ Class InsertContactList
             cbContactMaritalStatus.ItemsSource = selectionListVM.ObjectMaritalSet
             'End If
         Catch ex As Exception
+            _logger.Debug($"Error at LoadMaritalStatus = {ex.ToString()}")
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -199,28 +211,29 @@ Class InsertContactList
             cbContactShiftStatus.ItemsSource = selectionListVM.ObjectWorkShiftSet
             'End If
         Catch ex As Exception
+            _logger.Debug($"Error at LoadWorkShift = {ex.ToString()}")
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
-    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
-        Dim strData As String = String.Empty
-        Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = client
-            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        strData = opt.VALUE
-                        Exit For
-                    End If
-                Next
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return strData
-    End Function
+    'Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+    '    Dim strData As String = String.Empty
+    '    Try
+    '        _OptionsViewModel = New OptionViewModel
+    '        '_OptionsViewModel.Service = client
+    '        If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+    '            For Each opt As OptionModel In _OptionsViewModel.OptionList
+    '                If Not opt Is Nothing Then
+    '                    strData = opt.VALUE
+    '                    Exit For
+    '                End If
+    '            Next
+    '        End If
+    '    Catch ex As Exception
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return strData
+    'End Function
 
     Private Sub ClearTextVal()
         txtContactEmpID.Text = String.Empty

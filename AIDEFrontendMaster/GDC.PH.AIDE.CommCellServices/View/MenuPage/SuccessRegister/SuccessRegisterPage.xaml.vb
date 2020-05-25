@@ -31,7 +31,7 @@ Public Class SuccessRegisterPage
     Private profile As Profile
     Private isEmpty As Boolean
     'Private aideService As ServiceReference1.AideServiceClient
-    Private _OptionsViewModel As OptionViewModel
+    'Private _OptionsViewModel As OptionViewModel
 
     Dim successRegisterDBProvider As New SuccessRegisterDBProvider
     Dim lstSuccess As SuccessRegister()
@@ -49,7 +49,7 @@ Public Class SuccessRegisterPage
         submenuframe = _submenuframe
         profile = _profile
 
-        pagingRecordPerPage = GetOptionData(26, 11, 12)
+        pagingRecordPerPage = AppState.GetInstance().OptionValueDictionary(Constants.OPT_PAGING_SREGISTERS)
         paginatedCollection = New PaginatedObservableCollection(Of SuccessRegisterModel)(pagingRecordPerPage)
 
         LoadSuccessRegister()
@@ -151,24 +151,24 @@ Public Class SuccessRegisterPage
         btnNext.IsEnabled = True
     End Sub
 
-    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
-        Dim strData As String = String.Empty
-        Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aideService
-            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        strData = opt.VALUE
-                        Exit For
-                    End If
-                Next
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return strData
-    End Function
+    'Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+    '    Dim strData As String = String.Empty
+    '    Try
+    '        _OptionsViewModel = New OptionViewModel
+    '        '_OptionsViewModel.Service = aideService
+    '        If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+    '            For Each opt As OptionModel In _OptionsViewModel.OptionList
+    '                If Not opt Is Nothing Then
+    '                    strData = opt.VALUE
+    '                    Exit For
+    '                End If
+    '            Next
+    '        End If
+    '    Catch ex As Exception
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return strData
+    'End Function
 
     Private Sub NavigatePage()
         mainFrame.IsEnabled = False

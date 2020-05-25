@@ -23,7 +23,7 @@ Public Class AssetsHistory
 #Region "FIELDS"
     Private frame As Frame
     Private profile As New Profile
-    Private _OptionsViewModel As OptionViewModel
+    'Private _OptionsViewModel As OptionViewModel
     'Private _AideService As ServiceReference1.AideServiceClient
     Dim lstAssets As Assets()
     Dim assetsDBProvider As New AssetsDBProvider
@@ -39,7 +39,7 @@ Public Class AssetsHistory
         ' Add any initialization after the InitializeComponent() call.
         frame = _frame
         profile = _profile
-        pagingRecordPerPage = GetOptionData(29, 13, 12)
+        pagingRecordPerPage = AppState.GetInstance().OptionValueDictionary(Constants.OPT_PAGING_AHISTORY)
         paginatedCollection = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
         
         LoadAssets()
@@ -127,25 +127,25 @@ Public Class AssetsHistory
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
-    
-	Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
-        Dim strData As String = String.Empty
-        Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = _AideService
-            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        strData = opt.VALUE
-                        Exit For
-                    End If
-                Next
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return strData
-    End Function
+
+    'Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+    '       Dim strData As String = String.Empty
+    '       Try
+    '           _OptionsViewModel = New OptionViewModel
+    '           '_OptionsViewModel.Service = _AideService
+    '           If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+    '               For Each opt As OptionModel In _OptionsViewModel.OptionList
+    '                   If Not opt Is Nothing Then
+    '                       strData = opt.VALUE
+    '                       Exit For
+    '                   End If
+    '               Next
+    '           End If
+    '       Catch ex As Exception
+    '           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '       End Try
+    '       Return strData
+    '   End Function
 
     Private Sub DisplayPagingInfo()
         ' If there has no data found

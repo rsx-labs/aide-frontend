@@ -33,7 +33,7 @@ Class TaskAdminPage
     Private menugrid As Grid
     Private submenuframe As Frame
     Private profile As Profile
-    Private _OptionsViewModel As OptionViewModel
+    'Private _OptionsViewModel As OptionViewModel
     Dim currentPage As Integer
     Dim lastPage As Integer
     Dim lstTasks As TaskSummary()
@@ -57,7 +57,7 @@ Class TaskAdminPage
         email = _profile.Email_Address
         profile = _profile
 
-        pagingRecordPerPage = GetOptionData(21, 7, 12)
+        pagingRecordPerPage = AppState.GetInstance().OptionValueDictionary(Constants.OPT_PAGING_TASK)
         paginatedCollection = New PaginatedObservableCollection(Of TasksSpModel)(pagingRecordPerPage)
 
         SetDates()
@@ -207,24 +207,24 @@ Class TaskAdminPage
         End Try
     End Sub
 
-    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
-        Dim strData As String = String.Empty
-        Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = client
-            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        strData = opt.VALUE
-                        Exit For
-                    End If
-                Next
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return strData
-    End Function
+    'Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+    '    Dim strData As String = String.Empty
+    '    Try
+    '        _OptionsViewModel = New OptionViewModel
+    '        '_OptionsViewModel.Service = client
+    '        If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+    '            For Each opt As OptionModel In _OptionsViewModel.OptionList
+    '                If Not opt Is Nothing Then
+    '                    strData = opt.VALUE
+    '                    Exit For
+    '                End If
+    '            Next
+    '        End If
+    '    Catch ex As Exception
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return strData
+    'End Function
 
     Private Sub SetPaging(mode As Integer)
         Try
