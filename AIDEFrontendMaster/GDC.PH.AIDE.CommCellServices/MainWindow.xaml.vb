@@ -506,7 +506,7 @@ Class MainWindow
 
         _logger.Debug("Start : ImprovementBtn_Click")
 
-        If _appState.ReloadSideBar Then
+        If AppState.GetInstance().ReloadSideBar Then
             LoadSideBar()
         End If
         PagesFrame.Navigate(New ThreeC_Page(profile, PagesFrame, AddFrame, MenuGrid, SubMenuFrame))
@@ -587,7 +587,7 @@ Class MainWindow
 
         _logger.Debug("Start : EmployeesBtn_Click")
 
-        If _appState.ReloadSideBar Then
+        If AppState.GetInstance().ReloadSideBar Then
             LoadSideBar()
         End If
         PagesFrame.Navigate(New ContactListPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame))
@@ -601,7 +601,7 @@ Class MainWindow
 
         _logger.Debug("Start : SkillsBtn_Click")
 
-        If _appState.ReloadSideBar Then
+        If AppState.GetInstance().ReloadSideBar Then
             LoadSideBar()
         End If
         PagesFrame.Navigate(New SkillsMatrixManagerPage(profile, IsManagerSignedOn))
@@ -615,7 +615,7 @@ Class MainWindow
 
         _logger.Debug("Start : ProjectBtn_Click")
 
-        If _appState.ReloadSideBar Then
+        If AppState.GetInstance().ReloadSideBar Then
             LoadSideBar()
         End If
         PagesFrame.Navigate(New CreateProjectPage(PagesFrame, profile))
@@ -632,7 +632,7 @@ Class MainWindow
 
         _logger.Debug("Start : TaskBtn_Click")
 
-        If _appState.ReloadSideBar Then
+        If AppState.GetInstance().ReloadSideBar Then
             LoadSideBar()
         End If
 
@@ -651,7 +651,7 @@ Class MainWindow
         email = profile.Email_Address
         empID = profile.Emp_ID
 
-        If _appState.ReloadSideBar Then
+        If AppState.GetInstance().ReloadSideBar Then
             LoadSideBar()
         End If
 
@@ -666,7 +666,7 @@ Class MainWindow
 
         _logger.Debug("Start : AssetsBtn_Click")
 
-        If _appState.ReloadSideBar Then
+        If AppState.GetInstance().ReloadSideBar Then
             LoadSideBar()
         End If
 
@@ -681,7 +681,7 @@ Class MainWindow
 
         _logger.Debug("Start : BillabilityBtn_Click")
 
-        If _appState.ReloadSideBar Then
+        If AppState.GetInstance().ReloadSideBar Then
             LoadSideBar()
         End If
 
@@ -699,7 +699,7 @@ Class MainWindow
 
         _logger.Debug("Start : OtherBtn_Click")
 
-        If _appState.ReloadSideBar Then
+        If AppState.GetInstance().ReloadSideBar Then
             LoadSideBar()
         End If
 
@@ -727,7 +727,7 @@ Class MainWindow
 
         _logger.Debug("Start : WorkPlaceAuditBtn_Click")
 
-        If _appState.ReloadSideBar Then
+        If AppState.GetInstance().ReloadSideBar Then
             LoadSideBar()
         End If
         PagesFrame.Navigate(New AuditSchedMainPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
