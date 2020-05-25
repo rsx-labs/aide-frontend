@@ -147,7 +147,7 @@ Class MainWindow
         _logger.Debug($"Start : Constructor with {_email}")
 
         InitializeComponent()
-        InitializeService()
+        'InitializeService()
         GetTime()
         email = _email
 
@@ -506,10 +506,12 @@ Class MainWindow
 
         _logger.Debug("Start : ImprovementBtn_Click")
 
-        LoadSideBar()
-
+        If _appState.ReloadSideBar Then
+            LoadSideBar()
+        End If
         PagesFrame.Navigate(New ThreeC_Page(profile, PagesFrame, AddFrame, MenuGrid, SubMenuFrame))
         SubMenuFrame.Navigate(New ImproveSubMenuPage(PagesFrame, email, profile, AddFrame, MenuGrid, SubMenuFrame))
+
 
         _logger.Debug("End : ImprovementBtn_Click")
     End Sub
@@ -585,7 +587,9 @@ Class MainWindow
 
         _logger.Debug("Start : EmployeesBtn_Click")
 
-        LoadSideBar()
+        If _appState.ReloadSideBar Then
+            LoadSideBar()
+        End If
         PagesFrame.Navigate(New ContactListPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame))
         SubMenuFrame.Navigate(New BlankSubMenu())
 
@@ -597,8 +601,9 @@ Class MainWindow
 
         _logger.Debug("Start : SkillsBtn_Click")
 
-        LoadSideBar()
-
+        If _appState.ReloadSideBar Then
+            LoadSideBar()
+        End If
         PagesFrame.Navigate(New SkillsMatrixManagerPage(profile, IsManagerSignedOn))
         SubMenuFrame.Navigate(New BlankSubMenu())
 
@@ -610,9 +615,12 @@ Class MainWindow
 
         _logger.Debug("Start : ProjectBtn_Click")
 
+        If _appState.ReloadSideBar Then
+            LoadSideBar()
+        End If
         PagesFrame.Navigate(New CreateProjectPage(PagesFrame, profile))
         SubMenuFrame.Navigate(New ProjectSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
-        LoadSideBar()
+
 
         _logger.Debug("End : ProjectBtn_Click")
 
@@ -624,9 +632,13 @@ Class MainWindow
 
         _logger.Debug("Start : TaskBtn_Click")
 
+        If _appState.ReloadSideBar Then
+            LoadSideBar()
+        End If
+
         PagesFrame.Navigate(New TaskAdminPage(PagesFrame, Me, profile, AddFrame, MenuGrid, SubMenuFrame))
         SubMenuFrame.Navigate(New TaskSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, Me))
-        LoadSideBar()
+
 
         _logger.Debug("End : TaskBtn_Click")
 
@@ -639,6 +651,10 @@ Class MainWindow
         email = profile.Email_Address
         empID = profile.Emp_ID
 
+        If _appState.ReloadSideBar Then
+            LoadSideBar()
+        End If
+
         PagesFrame.Navigate(New ResourcePlannerPage(profile, PagesFrame, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame))
         SubMenuFrame.Navigate(New AttendanceSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame, AttendanceFrame))
 
@@ -650,9 +666,12 @@ Class MainWindow
 
         _logger.Debug("Start : AssetsBtn_Click")
 
+        If _appState.ReloadSideBar Then
+            LoadSideBar()
+        End If
+
         PagesFrame.Navigate(New AssetsListPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
         SubMenuFrame.Navigate(New AssetsSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
-        LoadSideBar()
 
         _logger.Debug("End : AssetsBtn_Click")
 
@@ -662,9 +681,12 @@ Class MainWindow
 
         _logger.Debug("Start : BillabilityBtn_Click")
 
+        If _appState.ReloadSideBar Then
+            LoadSideBar()
+        End If
+
         PagesFrame.Navigate(New BillablesPage(profile, PagesFrame))
         SubMenuFrame.Navigate(New BillabilitySubMenu(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
-        LoadSideBar()
 
         _logger.Debug("End : BillabilityBtn_Click")
 
@@ -677,9 +699,13 @@ Class MainWindow
 
         _logger.Debug("Start : OtherBtn_Click")
 
+        If _appState.ReloadSideBar Then
+            LoadSideBar()
+        End If
+
         PagesFrame.Navigate(New BirthdayPage(PagesFrame, email))
         SubMenuFrame.Navigate(New OtherSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
-        LoadSideBar()
+
 
         _logger.Debug("End : OtherBtn_Click")
 
@@ -701,7 +727,9 @@ Class MainWindow
 
         _logger.Debug("Start : WorkPlaceAuditBtn_Click")
 
-        LoadSideBar()
+        If _appState.ReloadSideBar Then
+            LoadSideBar()
+        End If
         PagesFrame.Navigate(New AuditSchedMainPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
         SubMenuFrame.Navigate(New AuditSchedSubMenuPage(PagesFrame, profile, AddFrame, MenuGrid, SubMenuFrame))
 

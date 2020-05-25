@@ -44,6 +44,13 @@ Public Class AppState
         End Get
     End Property
 
+    Public ReadOnly Property ReloadSideBar As Boolean
+        Get
+            Dim temp As String = CBool(ConfigurationManager.AppSettings("reloadSidebar"))
+            Return If(String.Compare(temp.ToLower, "true") = 0, True, False)
+        End Get
+    End Property
+
     Public CurrentMenu As Integer
     Public CurrentSubMenu As Integer
 
