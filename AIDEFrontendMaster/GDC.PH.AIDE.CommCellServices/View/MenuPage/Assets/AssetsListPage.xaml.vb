@@ -27,7 +27,7 @@ Public Class AssetsListPage
     Private _menugrid As Grid
     Private _submenuframe As Frame
     Private _AideService As ServiceReference1.AideServiceClient
-	Private _OptionsViewModel As OptionViewModel
+    'Private _OptionsViewModel As OptionViewModel
     Dim lstAssets As Assets()
     Dim assetsDBProvider As New AssetsDBProvider
     Dim paginatedCollection As PaginatedObservableCollection(Of AssetsModel) = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
@@ -37,7 +37,7 @@ Public Class AssetsListPage
 
     Public Sub New(_frame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
         ' This call is required by the designer.
-        pagingRecordPerPage = GetOptionData(27, 12, 12)
+        pagingRecordPerPage = AppState.GetInstance().OptionValueDictionary(Constants.OPT_PAGING_ALIST)
         paginatedCollection = New PaginatedObservableCollection(Of AssetsModel)(pagingRecordPerPage)
 
         InitializeComponent()
@@ -160,26 +160,26 @@ Public Class AssetsListPage
         btnPrev.IsEnabled = True
         btnNext.IsEnabled = True
     End Sub
-    
-	Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
-        Dim strData As String = String.Empty
-        Try
-            _OptionsViewModel = New OptionViewModel
-            _OptionsViewModel.Service = _AideService
-            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        strData = opt.VALUE
-                        Exit For
-                    End If
-                Next
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return strData
-    End Function
-    
+
+    'Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+    '       Dim strData As String = String.Empty
+    '       Try
+    '           _OptionsViewModel = New OptionViewModel
+    '           _OptionsViewModel.Service = _AideService
+    '           If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+    '               For Each opt As OptionModel In _OptionsViewModel.OptionList
+    '                   If Not opt Is Nothing Then
+    '                       strData = opt.VALUE
+    '                       Exit For
+    '                   End If
+    '               Next
+    '           End If
+    '       Catch ex As Exception
+    '           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '       End Try
+    '       Return strData
+    '   End Function
+
     Private Sub PermissionSettings()
         If profile.Permission_ID = 4 Then 'Allow custodian only to add assets
             btnAdd.Visibility = Windows.Visibility.Visible

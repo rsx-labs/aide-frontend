@@ -22,7 +22,7 @@ Class CreateProjectPage
     Private empID As Integer
     Private projectDBProvider As New ProjectDBProvider
     'Private client As AideServiceClient
-    Private _OptionsViewModel As OptionViewModel
+    'Private _OptionsViewModel As OptionViewModel
 
     Dim billabiltiy As Short
     Dim category As Short
@@ -37,9 +37,9 @@ Class CreateProjectPage
         empID = _profile.Emp_ID
 
         InitializeComponent()
-        
-        
-        pagingRecordPerPage = GetOptionData(31, 15, 12)
+
+
+        pagingRecordPerPage = AppState.GetInstance().OptionValueDictionary(Constants.OPT_PAGING_PROJECT)
 
         LoadProject()
         PermissionSettings()
@@ -239,25 +239,25 @@ Class CreateProjectPage
             grdCreate.Visibility = Visibility.Visible
         End If
     End Sub
-    
-    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
-        Dim strData As String = String.Empty
-        Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = client
-            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        strData = opt.VALUE
-                        Exit For
-                    End If
-                Next
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return strData
-    End Function
+
+    'Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+    '    Dim strData As String = String.Empty
+    '    Try
+    '        _OptionsViewModel = New OptionViewModel
+    '        '_OptionsViewModel.Service = client
+    '        If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+    '            For Each opt As OptionModel In _OptionsViewModel.OptionList
+    '                If Not opt Is Nothing Then
+    '                    strData = opt.VALUE
+    '                    Exit For
+    '                End If
+    '            Next
+    '        End If
+    '    Catch ex As Exception
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return strData
+    'End Function
 #End Region
 
 #Region "Common Procedure"

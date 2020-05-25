@@ -9,6 +9,7 @@ Imports System.Windows.Xps
 Imports System.Printing
 Imports System.Configuration
 Imports Excel = Microsoft.Office.Interop.Excel
+Imports NLog
 
 ''' <summary>
 ''' By Aevan Camille Batongbacal
@@ -46,10 +47,12 @@ Public Class ContactListPage
     Private attendanceFrame As Frame
     Private profile As Profile
     Private page As String
-    Private _OptionsViewModel As OptionViewModel
+    'Private _OptionsViewModel As OptionViewModel
     Dim totalRecords As Integer
     Dim lstContacts As ContactList()
     Dim paginatedCollection As PaginatedObservableCollection(Of ContactListModel) = New PaginatedObservableCollection(Of ContactListModel)(pagingRecordPerPage)
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 
 #End Region
 
@@ -57,6 +60,8 @@ Public Class ContactListPage
 
     Public Sub New(mainFrame As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid,
                    _submenuframe As Frame, _attendanceFrame As Frame)
+
+        _logger.Debug("Start : Constructor")
 
         InitializeComponent()
 
@@ -70,13 +75,14 @@ Public Class ContactListPage
         Me.attendanceFrame = _attendanceFrame
         Me.profile = _profile
 
-        pagingRecordPerPage = GetOptionData(20, 6, 12)
+        pagingRecordPerPage = AppState.GetInstance().OptionValueDictionary(Constants.OPT_PAGING_CONTACTS)
 
         If profile.Permission_ID = 1 Then
             AllEmployeeDetailsTab.Visibility = Windows.Visibility.Visible
             UnapprovedEmployeeDetailsTab.Visibility = Windows.Visibility.Visible
         End If
 
+        _logger.Debug("Start : Constructor")
         'SetData()
         'LoadData()
     End Sub
@@ -132,6 +138,8 @@ Public Class ContactListPage
             ' SetPaging(PagingMode._First)
             'End If
         Catch ex As Exception
+            _logger.Debug($"Error at SetData = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -163,7 +171,9 @@ Public Class ContactListPage
             lastPage = Math.Ceiling(lstContacts.Length / pagingRecordPerPage)
             LoadDataForPrint()
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Debug($"Error at LoadData = {ex.ToString()}")
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
@@ -193,24 +203,24 @@ Public Class ContactListPage
         End Try
     End Sub
 
-    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
-        Dim strData As String = String.Empty
-        Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = _AideService
-            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        strData = opt.VALUE
-                        Exit For
-                    End If
-                Next
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return strData
-    End Function
+    'Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+    '    Dim strData As String = String.Empty
+    '    Try
+    '        _OptionsViewModel = New OptionViewModel
+    '        '_OptionsViewModel.Service = _AideService
+    '        If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+    '            For Each opt As OptionModel In _OptionsViewModel.OptionList
+    '                If Not opt Is Nothing Then
+    '                    strData = opt.VALUE
+    '                    Exit For
+    '                End If
+    '            Next
+    '        End If
+    '    Catch ex As Exception
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return strData
+    'End Function
 
     Private Sub SetPaging(mode As Integer)
         Try
@@ -273,7 +283,9 @@ Public Class ContactListPage
 
             DisplayPagingInfo()
         Catch ex As Exception
-           MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Debug($"Error at SetPaging = {ex.ToString()}")
+
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 

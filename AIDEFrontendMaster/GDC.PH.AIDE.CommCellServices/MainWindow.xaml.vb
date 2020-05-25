@@ -32,7 +32,7 @@ Class MainWindow
     Dim guestPermission As Integer = 5
 
     'Private _aideClientService As AideServiceClient
-    Private _appState As AppState = New AppState()
+    Private _appState As AppState
 
     Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
@@ -127,13 +127,14 @@ Class MainWindow
         InitializeService()
         GetTime()
 
+        GetOptionData()
         'Dim useOutlook As Boolean = False
         'Boolean.TryParse(enableOutlook, useOutlook)
 
-        If _appState.UseOutlook Then
+        If AppState.GetInstance().UseOutlook Then
             CheckOutlook()
         Else
-            email = GetOptionData(optIDDefUser, modIdDefUser, funcIdDefUser)
+            email = AppState.GetInstance().OptionValueDictionary(Constants.OPT_DEFAULT_EMAIL)
         End If
 
         InitializeData()
@@ -319,15 +320,12 @@ Class MainWindow
     End Sub
 
     Public Sub Attendance()
-        Dim optIDStartupId As Integer = 14
-        Dim modIdStartupId As Integer = 4
-        Dim funcIdStartupId As Integer = 6
 
         _logger.Debug("Start : Attendance")
 
         Try
             'Get Login Time
-            Dim eventStartUpId As String = GetOptionData(optIDStartupId, modIdStartupId, funcIdStartupId)
+            Dim eventStartUpId As String = AppState.GetInstance().OptionValueDictionary(Constants.OPT_STARTUP_ID)
             If machineOS.Contains("Windows 7") Then
                 eventStartUpId = "12"
             End If
@@ -435,29 +433,39 @@ Class MainWindow
         End With
     End Sub
 
-    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+    Private Function GetOptionData() As Boolean
 
         _logger.Debug("Start : GetOptionData")
 
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = _aideClientService
-            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+            _OptionsViewModel.Service = AideClient.GetClient()
+            If _OptionsViewModel.GetOptions(0, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
-                        strData = opt.VALUE
-                        Exit For
+                        AppState.GetInstance().OptionValueDictionary.Add(
+                                opt.OPTION_ID,
+                                opt.VALUE
+                            )
+                        AppState.GetInstance().OptionDictionary.Add(
+                            opt.OPTION_ID,
+                            opt
+                        )
                     End If
                 Next
             End If
+
+            Return True
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             _logger.Error($"Error : {ex.ToString()}")
+
+            Return False
         End Try
 
         _logger.Debug("End : GetOptionData")
-        Return strData
+
     End Function
 
 #End Region

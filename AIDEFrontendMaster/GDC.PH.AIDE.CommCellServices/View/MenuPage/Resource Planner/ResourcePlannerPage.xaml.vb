@@ -18,7 +18,7 @@ Class ResourcePlannerPage
     Private _ResourcePADBProvider As New ResourcePlannerDBProvider
     Private _ResourceViewModel As New ResourcePlannerViewModel
     Private lstresource As ResourcePlanner()
-    Private _OptionsViewModel As OptionViewModel
+    'Private _OptionsViewModel As OptionViewModel
     Private mainFrame As Frame
     Private _addframe As Frame
     Private _menugrid As Grid

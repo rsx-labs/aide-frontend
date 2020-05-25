@@ -7,6 +7,7 @@ Imports System.Collections.ObjectModel
 Imports System.Globalization
 Imports System.Net.Mail
 Imports System.Configuration
+Imports NLog
 
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class ComcellClockPage
@@ -27,7 +28,7 @@ Class ComcellClockPage
     Private comcellVM As New ComcellViewModel
     Private profile As Profile
     Private comcellClockModel As New ComcellClockModel
-    Private _OptionsViewModel As OptionViewModel
+    'Private _OptionsViewModel As OptionViewModel
     Private _option As OptionModel
     Private isServiceEnabled As Boolean
 
@@ -68,10 +69,15 @@ Class ComcellClockPage
     Public timer As DispatcherTimer = New DispatcherTimer()
 
     Dim enableNotification As Boolean = CBool(ConfigurationManager.AppSettings("enableNotification"))
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
 #Region "Constructor"
     Public Sub New(_profile As Profile, _comcellFrame As Frame, _window As Window)
+
+        _logger.Debug("Start : Constructor")
+
         InitializeComponent()
 
         'Me.aideService = aideService
@@ -96,6 +102,9 @@ Class ComcellClockPage
 
         'load controls
         ManagerAuth()
+
+        _logger.Debug("End : Constructor")
+
     End Sub
 #End Region
 
@@ -147,6 +156,8 @@ Class ComcellClockPage
             'End If
 
         Catch ex As Exception
+            _logger.Error($"Error at GetAlarmClockData = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -178,7 +189,7 @@ Class ComcellClockPage
             comcellClockDB._setlistofitems(comcellclock)
             comcellClockModel = New ComcellClockModel(comcellClockDB._getobjClock)
 
-            comcellClockVM.objectComcellClockSet = ComcellClockModel
+            comcellClockVM.objectComcellClockSet = comcellClockModel
 
             If comcellClockModel.MIDDAY = "PM" Then
                 newHour = comcellClockModel.CLOCK_HOUR
@@ -194,6 +205,8 @@ Class ComcellClockPage
 
             comcellClockVM.objectComcellSetAlarm = GetDayValue(comcellClockModel.CLOCK_DAY) + newHour.ToString() + comcellClockModel.CLOCK_MINUTE.ToString() + "1"
         Catch ex As Exception
+            _logger.Error($"Error at LoadData = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -229,6 +242,8 @@ Class ComcellClockPage
             Dim dayconvert As String = GetDayValue(comcellClockVM.objectComcellClockSet.CLOCK_DAY)
             comcellClockVM.objectComcellDayOnly = dayconvert & " " & comcellclock.Clock_Hour.ToString("00") & ":" & comcellclock.Clock_Minute.ToString().PadLeft(2, "0") & ":00" & " " & comcellclock.MIDDAY
         Catch ex As Exception
+            _logger.Error($"Error at GetCommCellDay = {ex.ToString()}")
+
             MsgBox("Please set Comm. Cell time.", MsgBoxStyle.Critical, "AIDE")
         End Try
     End Sub
@@ -356,6 +371,8 @@ Class ComcellClockPage
             LoadComcellMinutes()
             'End If
         Catch ex As Exception
+            _logger.Error($"Error at SetComCellMinutes = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -394,8 +411,8 @@ Class ComcellClockPage
         isCNotifAllow = mailConfigVM.isSendEmail(11, 0, 0)
         isSMNotifAllow = mailConfigVM.isSendEmail(12, 0, 0)
         isWANotifAllow = mailConfigVM.isSendEmail(37, 0, 0)
-        allowRPDays = GetOptionData(13, 0, 0)
-        allowRPDaysDispatch = GetOptionData(45, 0, 0)
+        allowRPDays = AppState.GetInstance().OptionValueDictionary(Constants.OPT_RPDAYS)
+        allowRPDaysDispatch = AppState.GetInstance().OptionValueDictionary(Constants.OPT_RPDAYSDISPATCH)
     End Sub
 
 
@@ -430,54 +447,51 @@ Class ComcellClockPage
 #Region "Email Notification - Missing Weekly Report"
     Private Sub GetWeeklyReportConfig()
         Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aideService
-            If _OptionsViewModel.GetOptions(4, 0, 0) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        configMissingWeeklyStatus = New List(Of String)(opt.VALUE.Split(","c))
-                    End If
-                Next
+
+            If Not AppState.GetInstance().OptionValueDictionary(Constants.OPT_REPORT_WEEKLY_CONFIG) Is Nothing Then
+                configMissingWeeklyStatus = New List(Of String)(
+                    AppState.GetInstance().OptionValueDictionary(Constants.OPT_REPORT_WEEKLY_CONFIG).Split(","c)
+                 )
             End If
         Catch ex As Exception
+            _logger.Error($"Error at GetWeeklyReportConfig = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Private Sub GetWeeklyReportEmailData()
         Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aideService
             _option = New OptionModel
-            If _OptionsViewModel.GetOptions(5, 0, 0) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        _option = opt
-                    End If
-                Next
+            If Not AppState.GetInstance().OptionDictionary(Constants.OPT_REPORT_MISSING_WEEKLY_REPORT) Is Nothing Then
+                _option =
+                    AppState.GetInstance().OptionDictionary(Constants.OPT_REPORT_MISSING_WEEKLY_REPORT)
+
             End If
         Catch ex As Exception
+            _logger.Error($"Error at GetWeeklyReportData = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
-    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
-        Dim strData As String = String.Empty
-        Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aideService
-            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        strData = opt.VALUE
-                        Exit For
-                    End If
-                Next
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return strData
-    End Function
+    'Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+    '    Dim strData As String = String.Empty
+    '    Try
+    '        _OptionsViewModel = New OptionViewModel
+    '        '_OptionsViewModel.Service = aideService
+    '        If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+    '            For Each opt As OptionModel In _OptionsViewModel.OptionList
+    '                If Not opt Is Nothing Then
+    '                    strData = opt.VALUE
+    '                    Exit For
+    '                End If
+    '            Next
+    '        End If
+    '    Catch ex As Exception
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return strData
+    'End Function
 
     Public Sub SetMissingReports()
         Try
@@ -489,6 +503,8 @@ Class ComcellClockPage
                 Next
             End If
         Catch ex As Exception
+            _logger.Error($"Error at SetMissingReports = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -516,6 +532,7 @@ Class ComcellClockPage
             mailConfigVM.objectMailConfigSet = MConfigModel
 
         Catch ex As Exception
+            _logger.Error($"Error at LoadMailConfig = {ex.ToString()}")
 
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -525,48 +542,40 @@ Class ComcellClockPage
 #Region "Email Notification - Missing Attendance"
     Private Sub GetAttendanceConfig()
         Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aideService
-            If _OptionsViewModel.GetOptions(2, 0, 0) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        configMissingAttendanceSemiFlex = New List(Of String)(opt.VALUE.Split(","c))
-                    End If
-                Next
+            If Not AppState.GetInstance().OptionValueDictionary(Constants.OPT_CHECK_ATTENDANCE_SEMI_FLEX) Is Nothing Then
+                configMissingAttendanceSemiFlex = New List(Of String)(
+                    AppState.GetInstance().OptionValueDictionary(Constants.OPT_CHECK_ATTENDANCE_SEMI_FLEX).Split(","c)
+                 )
             End If
 
-            If _OptionsViewModel.GetOptions(43, 0, 0) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        configMissingAttendanceFlex = New List(Of String)(opt.VALUE.Split(","c))
-                    End If
-                Next
+            If Not AppState.GetInstance().OptionValueDictionary(Constants.OPT_CHECK_ATTENDANCE_FLEXI) Is Nothing Then
+                configMissingAttendanceFlex = New List(Of String)(
+                    AppState.GetInstance().OptionValueDictionary(Constants.OPT_CHECK_ATTENDANCE_FLEXI).Split(","c)
+                 )
             End If
 
-            If _OptionsViewModel.GetOptions(44, 0, 0) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        configMissingAttendanceDispatch = New List(Of String)(opt.VALUE.Split(","c))
-                    End If
-                Next
+            If Not AppState.GetInstance().OptionValueDictionary(Constants.OPT_CHECK_ATTENDANCE_DISPATCH) Is Nothing Then
+                configMissingAttendanceDispatch = New List(Of String)(
+                    AppState.GetInstance().OptionValueDictionary(Constants.OPT_CHECK_ATTENDANCE_DISPATCH).Split(","c)
+                 )
             End If
         Catch ex As Exception
+            _logger.Error($"Error at GetAttendanceConfig = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Private Sub GetAttendanceEmailData()
         Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aideService
             _option = New OptionModel
-            If _OptionsViewModel.GetOptions(3, 0, 0) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        _option = opt
-                    End If
-                Next
+            If Not AppState.GetInstance().OptionDictionary(Constants.OPT_REPORT_MISSING_ATTENDANCE) Is Nothing Then
+                _option =
+                    AppState.GetInstance().OptionDictionary(Constants.OPT_REPORT_MISSING_ATTENDANCE)
+
             End If
         Catch ex As Exception
+            _logger.Error($"Error at GetAttendanceEmailData = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -595,6 +604,8 @@ Class ComcellClockPage
                 SendEmail(mailConfigVM, _option, managerToLst, employeeCCLst, 1, lstMissingAttendance)
             End If
         Catch ex As Exception
+            _logger.Error($"Error atSetMissingAttendace = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -605,7 +616,7 @@ Class ComcellClockPage
             Dim sentFrom As String = mcVM.objectMailConfigSet.SENDER_EMAIL
             Dim subject As String = mcVM.objectMailConfigSet.SUBJECT
 
-            Dim body As String = composeBody(optmodel, bodyType, EmployeeList)
+            Dim body As String = ComposeBody(optmodel, bodyType, EmployeeList)
             Dim client As SmtpClient = New SmtpClient()
 
             client.Port = mcVM.objectMailConfigSet.PORT
@@ -637,10 +648,12 @@ Class ComcellClockPage
 
             client.Send(mail)
         Catch ex As Exception
+            _logger.Error($"Error at SendEmail = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
-    Private Function composeBody(ByVal optmodel As OptionModel, ByVal choice As Integer, ByVal EmpList As Employee()) As String
+    Private Function ComposeBody(ByVal optmodel As OptionModel, ByVal choice As Integer, ByVal EmpList As Employee()) As String
         Dim body As String
         Dim bodyList As New List(Of String)(optmodel.VALUE.Split(","c))
         Dim strOptionLst As List(Of String) = Nothing
@@ -671,32 +684,28 @@ Class ComcellClockPage
 #Region "Update Contact List"
     Private Sub GetContactsConfig()
         Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aideService
-            If _OptionsViewModel.GetOptions(33, 0, 0) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        configUpdateContacts = New List(Of String)(opt.VALUE.Split(","c))
-                    End If
-                Next
+            If Not AppState.GetInstance().OptionValueDictionary(Constants.OPT_REPORT_UPDATE_CONTACT) Is Nothing Then
+                configUpdateContacts = New List(Of String)(
+                    AppState.GetInstance().OptionValueDictionary(Constants.OPT_REPORT_UPDATE_CONTACT).Split(","c)
+                 )
             End If
         Catch ex As Exception
+            _logger.Error($"Error at GetContactsConfig = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Private Sub GetContactsEmailData()
         Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aideService
             _option = New OptionModel
-            If _OptionsViewModel.GetOptions(34, 0, 0) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        _option = opt
-                    End If
-                Next
+            If Not AppState.GetInstance().OptionDictionary(Constants.OPT_REPORT_UPDATE_CONTACT_DATA) Is Nothing Then
+                _option =
+                    AppState.GetInstance().OptionDictionary(Constants.OPT_REPORT_UPDATE_CONTACT_DATA)
+
             End If
         Catch ex As Exception
+            _logger.Error($"Error at GetContactsEmailData = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -709,6 +718,8 @@ Class ComcellClockPage
                 Next
             End If
         Catch ex As Exception
+            _logger.Error($"Error at SetUpdateConfigs = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -716,32 +727,28 @@ Class ComcellClockPage
 #Region "Update Skill Matrix"
     Private Sub GetSkillsConfig()
         Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aideService
-            If _OptionsViewModel.GetOptions(35, 0, 0) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        configUpdateSkills = New List(Of String)(opt.VALUE.Split(","c))
-                    End If
-                Next
+            If Not AppState.GetInstance().OptionValueDictionary(Constants.OPT_REPORT_UPDATE_SKILLS) Is Nothing Then
+                configUpdateContacts = New List(Of String)(
+                    AppState.GetInstance().OptionValueDictionary(Constants.OPT_REPORT_UPDATE_SKILLS).Split(","c)
+                 )
             End If
         Catch ex As Exception
+            _logger.Error($"Error at GetSkillsConfig = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
     Private Sub GetSkillsEmailData()
         Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aideService
             _option = New OptionModel
-            If _OptionsViewModel.GetOptions(36, 0, 0) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        _option = opt
-                    End If
-                Next
+            If Not AppState.GetInstance().OptionDictionary(Constants.OPT_REPORT_UPDATE_SKILLS_DATA) Is Nothing Then
+                _option =
+                    AppState.GetInstance().OptionDictionary(Constants.OPT_REPORT_UPDATE_SKILLS_DATA)
+
             End If
         Catch ex As Exception
+            _logger.Error($"Error at GetSkillsEmailData = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -754,6 +761,8 @@ Class ComcellClockPage
                 Next
             End If
         Catch ex As Exception
+            _logger.Error($"Error at SetUpdateSkills = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -762,49 +771,43 @@ Class ComcellClockPage
 #Region "Workplace Audit - Daily"
     Private Sub GetWorkPlaceAuditConfig()
         Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aideService
-            If _OptionsViewModel.GetOptions(38, 0, 0) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        configUpdateWorkPlaceAudit = New List(Of String)(opt.VALUE.Split(","c))
-                    End If
-                Next
+            If Not AppState.GetInstance().OptionValueDictionary(Constants.OPT_REPORT_DAILY_WPA_TIME) Is Nothing Then
+                configUpdateWorkPlaceAudit = New List(Of String)(
+                    AppState.GetInstance().OptionValueDictionary(Constants.OPT_REPORT_DAILY_WPA_TIME).Split(","c)
+                 )
             End If
         Catch ex As Exception
+            _logger.Error($"Error at GetWorkplaceAuditConfig = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
     Private Sub GetWADailyConfig()
         Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aideService
-            If _OptionsViewModel.GetOptions(39, 0, 0) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        configUpdateWorkPlaceAuditDaily = New List(Of String)(opt.VALUE.Split(","c))
-                    End If
-                Next
+            If Not AppState.GetInstance().OptionValueDictionary(Constants.OPT_REPORT_DAILY_WPA_DAY) Is Nothing Then
+                configUpdateWorkPlaceAuditDaily = New List(Of String)(
+                    AppState.GetInstance().OptionValueDictionary(Constants.OPT_REPORT_DAILY_WPA_DAY).Split(","c)
+                 )
             End If
         Catch ex As Exception
+            _logger.Error($"Error at GetWADailyConfig = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
 
     Private Sub GetWorkPlaceAuditEmailData()
         Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aideService
             _option = New OptionModel
-            If _OptionsViewModel.GetOptions(42, 0, 0) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        _option = opt
-                    End If
-                Next
+            If Not AppState.GetInstance().OptionDictionary(Constants.OPT_REPORT_DAILY_WPA_DATA) Is Nothing Then
+                _option =
+                    AppState.GetInstance().OptionDictionary(Constants.OPT_REPORT_DAILY_WPA_DATA)
+
             End If
         Catch ex As Exception
+            _logger.Error($"Error at GetWAAuditEmailData = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -815,6 +818,8 @@ Class ComcellClockPage
                 mailConfigVM.SendEmail(mailConfigVM, _option, objAuditor.EmailAddress, "", 1, "Daily Auditor")
             End If
         Catch ex As Exception
+            _logger.Error($"Error at SetUpdateWADaily = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -822,16 +827,14 @@ Class ComcellClockPage
 #Region "Workplace Audit - Weekly"
     Private Sub GetWAWeeklyConfig()
         Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aideService
-            If _OptionsViewModel.GetOptions(40, 0, 0) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        configUpdateWorkPlaceAuditWeekly = New List(Of String)(opt.VALUE.Split(","c))
-                    End If
-                Next
+            If Not AppState.GetInstance().OptionValueDictionary(Constants.OPT_REPORT_DAILY_WPA_WEEKLY) Is Nothing Then
+                configUpdateWorkPlaceAuditWeekly = New List(Of String)(
+                    AppState.GetInstance().OptionValueDictionary(Constants.OPT_REPORT_DAILY_WPA_WEEKLY).Split(","c)
+                 )
             End If
         Catch ex As Exception
+            _logger.Error($"Error at GetWAWeeklyConfig = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -842,6 +845,8 @@ Class ComcellClockPage
                 mailConfigVM.SendEmail(mailConfigVM, _option, objAuditor.EmailAddress, "", 1, "Weekly Auditor")
             End If
         Catch ex As Exception
+            _logger.Error($"Error at SetUpdateWAWeekly = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -850,16 +855,14 @@ Class ComcellClockPage
 #Region "Workplace Audit - Weekly"
     Private Sub GetWAMonthlyConfig()
         Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = aideService
-            If _OptionsViewModel.GetOptions(41, 0, 0) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        configUpdateWorkPlaceAuditMonthly = New List(Of String)(opt.VALUE.Split(","c))
-                    End If
-                Next
+            If Not AppState.GetInstance().OptionValueDictionary(Constants.OPT_REPORT_DAILY_WPA_MONTHLY) Is Nothing Then
+                configUpdateWorkPlaceAuditMonthly = New List(Of String)(
+                    AppState.GetInstance().OptionValueDictionary(Constants.OPT_REPORT_DAILY_WPA_MONTHLY).Split(","c)
+                 )
             End If
         Catch ex As Exception
+            _logger.Error($"Error at GetWAMonthlyConfig= {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -871,6 +874,8 @@ Class ComcellClockPage
                 mailConfigVM.SendEmail(mailConfigVM, _option, objAuditor.EmailAddress, "", 1, "Monthly Auditor")
             End If
         Catch ex As Exception
+            _logger.Error($"Error at SetUpdateWAMonthly = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub

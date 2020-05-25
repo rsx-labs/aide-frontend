@@ -31,23 +31,27 @@ Public Class MailConfigViewModel
     End Property
     Public Function isSendEmail(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As Boolean
         Try
-            Dim allowSend As Boolean = False
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = _client
-            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If CBool(opt.VALUE) Then
-                        allowSend = True
-                    End If
-                Next
-            End If
-            Return allowSend
+            'Dim allowSend As Boolean = False
+            '_OptionsViewModel = New OptionViewModel
+            ''_OptionsViewModel.Service = _client
+            'If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+            '    For Each opt As OptionModel In _OptionsViewModel.OptionList
+            '        If CBool(opt.VALUE) Then
+            '            allowSend = True
+            '        End If
+            '    Next
+            'End If
+            'Return allowSend
+
+            Dim allowEmail As String = AppState.GetInstance().OptionValueDictionary(optID)
+            Return CBool(allowEmail)
+
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             Return False
         End Try
     End Function
-    Public Function composeBody(ByVal optmodel As OptionModel, ByVal choice As Integer, Optional ByVal objOptional As Object = Nothing, Optional ByVal objOptional2 As Object = Nothing) As String
+    Public Function ComposeBody(ByVal optmodel As OptionModel, ByVal choice As Integer, Optional ByVal objOptional As Object = Nothing, Optional ByVal objOptional2 As Object = Nothing) As String
         Dim body As String
         Dim bodyList As New List(Of String)(optmodel.VALUE.Split(","c))
         Dim strOption As String = String.Empty
@@ -107,7 +111,7 @@ Public Class MailConfigViewModel
             Dim sentFrom As String = mcVM.objectMailConfigSet.SENDER_EMAIL
             Dim subject As String = mcVM.objectMailConfigSet.SUBJECT
 
-            Dim body As String = composeBody(optmodel, bodyType, optionaObj, optionaObj2)
+            Dim body As String = ComposeBody(optmodel, bodyType, optionaObj, optionaObj2)
             Dim client As SmtpClient = New SmtpClient()
 
             client.Port = mcVM.objectMailConfigSet.PORT

@@ -48,7 +48,7 @@ Class WeeklyTeamStatusReportPage
     Private year As Integer
     Private startFiscalYear As Integer
     Private endFiscalYear As Integer
-    Private _OptionsViewModel As OptionViewModel
+    'Private _OptionsViewModel As OptionViewModel
 
     Dim dateToday As Date = Date.Today
     Dim monday As DateTime = Today.AddDays((Today.DayOfWeek - DayOfWeek.Monday) * -1)
@@ -93,7 +93,7 @@ Class WeeklyTeamStatusReportPage
         Me.submenuframe = _submenuframe
         Me.profile = _profile
 
-        pagingRecordPerPage = GetOptionData(22, 3, 12)
+        pagingRecordPerPage = AppState.GetInstance().OptionValueDictionary(Constants.OPT_PAGING_WREPORT)
         weeklyTeamStatusReportCollection = New PaginatedObservableCollection(Of WeeklyTeamStatusReportModel)(pagingRecordPerPage)
         selectedValue = -1
 
@@ -112,7 +112,7 @@ Class WeeklyTeamStatusReportPage
         Me.profile = _profile
         Me.weekID = _weekRangeID
 
-        pagingRecordPerPage = GetOptionData(22, 3, 12)
+        pagingRecordPerPage = AppState.GetInstance().OptionValueDictionary(Constants.OPT_PAGING_WREPORT)
         weeklyTeamStatusReportCollection = New PaginatedObservableCollection(Of WeeklyTeamStatusReportModel)(pagingRecordPerPage)
 
         selectedValue = _weekRangeID
@@ -456,24 +456,24 @@ Class WeeklyTeamStatusReportPage
         End If
     End Function
 
-    Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
-        Dim strData As String = String.Empty
-        Try
-            _OptionsViewModel = New OptionViewModel
-            '_OptionsViewModel.Service = AideServiceClient
-            If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
-                For Each opt As OptionModel In _OptionsViewModel.OptionList
-                    If Not opt Is Nothing Then
-                        strData = opt.VALUE
-                        Exit For
-                    End If
-                Next
-            End If
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-        Return strData
-    End Function
+    'Private Function GetOptionData(ByVal optID As Integer, ByVal moduleID As Integer, ByVal funcID As Integer) As String
+    '    Dim strData As String = String.Empty
+    '    Try
+    '        _OptionsViewModel = New OptionViewModel
+    '        '_OptionsViewModel.Service = AideServiceClient
+    '        If _OptionsViewModel.GetOptions(optID, moduleID, funcID) Then
+    '            For Each opt As OptionModel In _OptionsViewModel.OptionList
+    '                If Not opt Is Nothing Then
+    '                    strData = opt.VALUE
+    '                    Exit For
+    '                End If
+    '            Next
+    '        End If
+    '    Catch ex As Exception
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    '    Return strData
+    'End Function
 #End Region
 
 #Region "ICallBack Function"
