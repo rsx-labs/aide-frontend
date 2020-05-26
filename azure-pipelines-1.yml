@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
 trigger:
-- master
+- release
 
 pool:
   vmImage: 'windows-latest'
@@ -47,7 +47,7 @@ steps:
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Pipeline.Workspace)'
-    artifact: 'every-checkin-drop'
+    artifact: 'release-build'
 
 - task: ArchiveFiles@2
   inputs:
