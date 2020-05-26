@@ -1,9 +1,10 @@
 # AIDE Frontend
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)[![release version](https://img.shields.io/badge/release%20version-3.3.4.0-blue)]
 
-Development main branch [![Build Status](https://dev.azure.com/rsx-labs/aide/_apis/build/status/rsx-labs.aide-frontend?branchName=master)](https://dev.azure.com/rsx-labs/aide/_build/latest?definitionId=1&branchName=master) [![Build status](https://ci.appveyor.com/api/projects/status/kth1cyh42tqy11vb?svg=true)](https://ci.appveyor.com/project/trashvin/aide-frontend)  
+| Main Dev Branch  | [![Build Status](https://dev.azure.com/rsx-labs/aide/_apis/build/status/rsx-labs.aide-frontend?branchName=master)](https://dev.azure.com/rsx-labs/aide/_build/latest?definitionId=1&branchName=master) [![Build status](https://ci.appveyor.com/api/projects/status/kth1cyh42tqy11vb?svg=true)](https://ci.appveyor.com/project/trashvin/aide-frontend)    |
+|---|---|
+| Release Branch  | [![Build Status](https://dev.azure.com/rsx-labs/aide/_apis/build/status/manual-build?branchName=release)](https://dev.azure.com/rsx-labs/aide/_build/latest?definitionId=4&branchName=release)  |
 
-Release branch [![Build Status](https://dev.azure.com/rsx-labs/aide/_apis/build/status/manual-build?branchName=release)](https://dev.azure.com/rsx-labs/aide/_build/latest?definitionId=4&branchName=release)
 
 ## Overview
 
