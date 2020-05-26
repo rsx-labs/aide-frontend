@@ -32,7 +32,7 @@ Class MainWindow
     Dim guestPermission As Integer = 5
 
     'Private _aideClientService As AideServiceClient
-    Private _appState As AppState
+    'Private AppState.GetInstance() As AppState
 
     Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
