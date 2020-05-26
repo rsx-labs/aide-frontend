@@ -118,6 +118,11 @@
       <Component Id="NLog.config" Guid="6EBA422B-B0B6-447D-86D9-EFB5671C1F10">
         <File Id="NLog.config" Name="NLog.config" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)NLog.config" />
       </Component>
+      <Component Id="GDC.PH.AIDE.ServiceFactory.dll" Guid="E1C98311-95A9-498E-871F-B241923EC198">
+        <File Id="GDC.PH.AIDE.ServiceFactory.dll" 
+              Name="GDC.PH.AIDE.ServiceFactory.dll" 
+              Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)GDC.PH.AIDE.ServiceFactory.dll" />
+      </Component>
     </ComponentGroup>
 	</Fragment>
   <!--Script Files-->
