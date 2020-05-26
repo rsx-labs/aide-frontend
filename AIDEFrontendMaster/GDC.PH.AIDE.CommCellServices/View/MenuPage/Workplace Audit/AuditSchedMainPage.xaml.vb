@@ -173,6 +173,8 @@ Class AuditSchedMainPage
             currentPage = lstauditSchedList.CurrentPage + 1
             lastPage = Math.Ceiling(lstauditSched.Length / pagingRecordPerPage)
 
+
+            lstauditSchedList.CurrentPage = pagingPageIndex
             AuditSchedLV.ItemsSource = lstauditSchedList
         Catch ex As Exception
             _logger.Error(ex.ToString())
@@ -264,11 +266,12 @@ Class AuditSchedMainPage
                         lastRowIndex = totalRecords - 1
                     End If
                     ' Bind data to the Data Grid
+
                     LoadAuditSched()
                     Exit Select
                 Case CInt(PagingMode._Previous)
                     ' Set the Previous Page if the page index is greater than 1
-                    If pagingPageIndex > 1 Then
+                    If pagingPageIndex > 0 Then
                         pagingPageIndex -= 1
 
                         startRowIndex = ((pagingPageIndex * pagingRecordPerPage) - pagingRecordPerPage)
@@ -317,7 +320,7 @@ Class AuditSchedMainPage
             txtPageNo.Text = "No Results Found "
             GUISettingsOff()
         Else
-            txtPageNo.Text = "page " & currentPage & " of " & lastPage
+            txtPageNo.Text = "page " & pagingPageIndex + 1 & " of " & lastPage
             GUISettingsOn()
         End If
     End Sub
