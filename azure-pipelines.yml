@@ -36,6 +36,8 @@ steps:
 - task: MSBuild@1
   inputs:
     solution: '**/*.sln'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
 
 - task: CopyFiles@2
   inputs:
