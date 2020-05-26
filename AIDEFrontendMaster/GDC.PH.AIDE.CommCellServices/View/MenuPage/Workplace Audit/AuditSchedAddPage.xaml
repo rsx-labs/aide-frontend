@@ -175,7 +175,7 @@
                     </Grid>
                     
                     <Grid Grid.Row="4">
-                        <ComboBox ItemsSource="{Binding NicknameList}" Style="{DynamicResource StyleComboBox}" SelectedValuePath="EMP_ID" DisplayMemberPath="First_Name" x:Name="cbDaily" Margin="5"/>
+                        <ComboBox ItemsSource="{Binding NicknameList}" Style="{DynamicResource StyleComboBox}" SelectedValuePath="EMP_ID" DisplayMemberPath="EMPLOYEE_NAME" x:Name="cbDaily" Margin="5"/>
                         
                         <TextBlock x:Name="txtBlockDaily" Text="Select Daily Auditor *">
                             <TextBlock.Style>
@@ -205,7 +205,7 @@
                     </Grid>
                     
                     <Grid Grid.Row="5">
-                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbWeekly" Margin="5" ItemsSource="{Binding NicknameList}"  SelectedValuePath="EMP_ID" DisplayMemberPath="First_Name"/>
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbWeekly" Margin="5" ItemsSource="{Binding NicknameList}"  SelectedValuePath="EMP_ID" DisplayMemberPath="EMPLOYEE_NAME"/>
                         
                         <TextBlock x:Name="txtBlockWeekly" Text="Select Weekly Auditor *">
                             <TextBlock.Style>
@@ -235,7 +235,7 @@
                     </Grid>
                     
                     <Grid Grid.Row="6">
-                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonthly" Margin="5" ItemsSource="{Binding NicknameList}" DisplayMemberPath="First_Name" SelectedValuePath="EMP_ID"/>
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonthly" Margin="5" ItemsSource="{Binding NicknameList}" DisplayMemberPath="EMPLOYEE_NAME" SelectedValuePath="EMP_ID"/>
                         
                         <TextBlock x:Name="txtBlockMonthly" Text="Select Monthly Auditor *">
                             <TextBlock.Style>
