@@ -47,7 +47,7 @@ steps:
 - task: PublishPipelineArtifact@1
   inputs:
     targetPath: '$(Pipeline.Workspace)'
-    artifact: 'every-checkin-drop'
+    artifact: 'main-ci-build'
 
 - task: ArchiveFiles@2
   inputs:
