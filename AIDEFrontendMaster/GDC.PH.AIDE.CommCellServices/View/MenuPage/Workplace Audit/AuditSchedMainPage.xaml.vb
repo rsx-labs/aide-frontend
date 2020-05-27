@@ -250,7 +250,7 @@ Class AuditSchedMainPage
             Select Case mode
                 Case CInt(PagingMode._Next)
                     ' Set the rows to be displayed if the total records is more than the (Record per Page * Page Index)
-                    If totalRecords > (pagingPageIndex * pagingRecordPerPage) Then
+                    If totalRecords > ((pagingPageIndex + 1) * pagingRecordPerPage) Then
 
                         ' Set the last row to be displayed if the total records is more than the (Record per Page * Page Index) + Record per Page
                         If totalRecords >= ((pagingPageIndex * pagingRecordPerPage) + pagingRecordPerPage) Then
