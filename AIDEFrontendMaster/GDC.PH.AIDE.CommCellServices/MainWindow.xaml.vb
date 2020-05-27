@@ -330,7 +330,7 @@ Class MainWindow
                 eventStartUpId = "12"
             End If
 
-            Dim dateToday As Date = DateTime.Now.ToString("MM/dd/yyyy")
+            Dim dateToday As Date = DateTime.Now.Date
             Dim logName As EventLog = New EventLog()
             logName.Log = "System"
 
