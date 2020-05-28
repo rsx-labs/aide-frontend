@@ -124,20 +124,33 @@ Class MainWindow
 
         LoadOnce()
         InitializeComponent()
-        InitializeService()
-        GetTime()
 
-        GetOptionData()
-        'Dim useOutlook As Boolean = False
-        'Boolean.TryParse(enableOutlook, useOutlook)
+        If InitializeService() Then
+            GetTime()
 
-        If AppState.GetInstance().UseOutlook Then
-            CheckOutlook()
+            If GetOptionData() Then
+                'Dim useOutlook As Boolean = False
+                'Boolean.TryParse(enableOutlook, useOutlook)
+
+                If AppState.GetInstance().UseOutlook Then
+                    CheckOutlook()
+                Else
+                    email = AppState.GetInstance().OptionValueDictionary(Constants.OPT_DEFAULT_EMAIL)
+                End If
+
+                InitializeData()
+            Else
+                MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+                _logger.Info("****** Closing AIDE ******")
+                Environment.Exit(0)
+            End If
+
         Else
-            email = AppState.GetInstance().OptionValueDictionary(Constants.OPT_DEFAULT_EMAIL)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Info("****** Closing AIDE ******")
+            Environment.Exit(0)
         End If
 
-        InitializeData()
 
         _logger.Debug("End : Constructor")
     End Sub
@@ -414,10 +427,7 @@ Class MainWindow
             Me.Focus()
             Me.Topmost = True
 
-            'display the error only once
-            If _instance = 2 Then
-                MessageBox.Show("Another instance of AIDE is already running.")
-            End If
+            MessageBox.Show("Another instance of AIDE is already running.")
 
             _logger.Error("Another instance of AIDE is already running.")
             End
