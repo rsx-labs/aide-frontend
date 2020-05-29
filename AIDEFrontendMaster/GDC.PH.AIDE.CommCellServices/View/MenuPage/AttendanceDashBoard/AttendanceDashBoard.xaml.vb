@@ -77,7 +77,9 @@ Public Class AttendanceDashBoard
             For Each rawUser As myAttendanceList In aemployeeListDBProvider.GetAllEmpRPList()
                 setStatus = rawUser.Status
                 SetCategory(rawUser)
-                If rawUser.Status = 11 Then 'For Late
+                If rawUser.Status = Constants.STAT_ATT_LPRESENT Or
+                    rawUser.Status = Constants.STAT_ATT_LONSITE Or
+                    rawUser.Status = Constants.STAT_ATT_LATE Then 'For Late
                     SetCategoryDisplay(rawUser)
                 End If
 
@@ -103,37 +105,40 @@ Public Class AttendanceDashBoard
 
     Public Sub SetDataForSearch(input As String)
         Try
-            'If InitializeService() Then
+
             Dim d As DateTime? = Nothing
-                Dim aemployeeListDBProvider As New AttendanceListDBProvider
-                Dim lstAEmployeeList As New ObservableCollection(Of AttendanceModel)
+            Dim aemployeeListDBProvider As New AttendanceListDBProvider
+            Dim lstAEmployeeList As New ObservableCollection(Of AttendanceModel)
 
-                Dim items = From i In AEmployee Where i.Name.ToLower.Contains(input.ToLower) Or i.EmployeeID.ToString.ToLower.Contains(input.ToLower)
+            Dim items = From i In AEmployee Where i.Name.ToLower.Contains(input.ToLower) Or i.EmployeeID.ToString.ToLower.Contains(input.ToLower)
 
-                Dim searchAssets = New ObservableCollection(Of MyAttendance)(items)
+            Dim searchAssets = New ObservableCollection(Of MyAttendance)(items)
 
-                For Each objaemp As MyAttendance In searchAssets
-                    aemployeeListDBProvider.SetAllAttendanceList(objaemp)
-                Next
+            For Each objaemp As MyAttendance In searchAssets
+                aemployeeListDBProvider.SetAllAttendanceList(objaemp)
+            Next
 
-                For Each rawUser As myAttendanceList In aemployeeListDBProvider.GetAllEmpRPList()
-                    setStatus = rawUser.Status
-                    SetCategory(rawUser)
-                    If rawUser.Status = 11 Then 'For Late
-                        SetCategoryDisplay(rawUser)
-                    End If
+            For Each rawUser As myAttendanceList In aemployeeListDBProvider.GetAllEmpRPList()
 
-                    d = rawUser.Logoff_Time
-                    If d.Value = Nothing Then
-                        rawUser.Logoff_Time = ""
-                    End If
+                If rawUser.Status = Constants.STAT_ATT_LPRESENT Or
+                   rawUser.Status = Constants.STAT_ATT_LONSITE Or
+                   rawUser.Status = Constants.STAT_ATT_LATE Then 'For Late
+                    SetCategoryDisplay(rawUser)
+                End If
 
-                    lstAEmployeeList.Add(New AttendanceModel(rawUser))
-                Next
-                AttendanceListVM.EmployeeListAttendance = lstAEmployeeList
-                Me.DataContext = AttendanceListVM
-            'End If
+                d = rawUser.Logoff_Time
+                If d.Value = Nothing Then
+                    rawUser.Logoff_Time = ""
+                End If
+
+                lstAEmployeeList.Add(New AttendanceModel(rawUser))
+            Next
+            AttendanceListVM.EmployeeListAttendance = lstAEmployeeList
+            Me.DataContext = AttendanceListVM
+
         Catch ex As Exception
+            _logger.Debug($"Error at SetdataForSearch = {ex.ToString()}")
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -146,44 +151,68 @@ Public Class AttendanceDashBoard
         End Try
     End Sub
 
-    Public Sub SetCategoryDisplay(rawUser_ As myAttendanceList)
-        If setStatus = 1 Then
-            rawUser_.Desc = "Onsite"
-        ElseIf setStatus = 2 Then
-            rawUser_.Desc = "Present"
-        ElseIf setStatus = 3 Then
-            rawUser_.Desc = "Sick Leave"
-        ElseIf setStatus = 4 Then
-            rawUser_.Desc = "Vacation Leave"
-        ElseIf setStatus = 5 Then
-            rawUser_.Desc = "(H) Sick Leave"
-        ElseIf setStatus = 6 Then
-            rawUser_.Desc = "(H) Vacation Leave"
-        ElseIf setStatus = 7 Then
-            rawUser_.Desc = "Holiday"
-        ElseIf setStatus = 8 Then
-            rawUser_.Desc = "Emergency Leave"
-        ElseIf setStatus = 9 Then
-            rawUser_.Desc = "(H) Emergency Leave"
-        ElseIf setStatus = 10 Then
-            rawUser_.Desc = "Other Leaves"
-        ElseIf setStatus = 11 Then
-            rawUser_.Desc = "(Late)"
-        End If
+    Public Sub SetCategoryDisplay(rawUser As myAttendanceList)
+
+        Select Case rawUser.Status
+            Case Constants.STAT_ATT_ONSITE
+                rawUser.Desc = "Onsite"
+            Case Constants.STAT_ATT_OBA
+                rawUser.Desc = "Onsite"
+            Case Constants.STAT_ATT_HOBA
+                rawUser.Desc = "(H) Onsite"
+            Case Constants.STAT_ATT_LONSITE,
+                 Constants.STAT_ATT_LATE
+                rawUser.Desc = "(Late)"
+            Case Constants.STAT_ATT_PRESENT
+                rawUser.Desc = "Present"
+            Case Constants.STAT_ATT_LPRESENT
+                rawUser.Desc = "(Late)"
+            Case Constants.STAT_ATT_HSL
+                rawUser.Desc = "(H) Sick Leave"
+            Case Constants.STAT_ATT_SL
+                rawUser.Desc = "Sick Leave"
+            Case Constants.STAT_ATT_HOLIDAY
+                rawUser.Desc = "Holiday"
+            Case Constants.STAT_ATT_VL
+                rawUser.Desc = "Vacation Leave"
+            Case Constants.STAT_ATT_HVL
+                rawUser.Desc = "(H) Vacation Leave"
+            Case Constants.STAT_ATT_EL
+                rawUser.Desc = "Emergency Leave"
+            Case Constants.STAT_ATT_HEL
+                rawUser.Desc = "(H) Emergency Leave"
+        End Select
     End Sub
 
-    Public Sub SetCategory(rawUser_ As myAttendanceList)
-        If setStatus = 1 Or setStatus = 13 Or setStatus = 14 Then
-            rawUser_.Display_Status = "..\..\..\Assets\Attendance\onsite.png"
-        ElseIf setStatus = 2 Or setStatus = 11 Then
-            rawUser_.Display_Status = "..\..\..\Assets\Attendance\present.png"
-        ElseIf setStatus = 3 Or setStatus = 5 Then
-            rawUser_.Display_Status = "..\..\..\Assets\Attendance\sick.png"
-        ElseIf setStatus = 7 Then
-            rawUser_.Display_Status = "..\..\..\Assets\Attendance\holiday.png"
-        ElseIf setStatus = 4 Or setStatus = 6 Or setStatus = 8 Or setStatus = 9 Or setStatus = 10 Or setStatus = 12 Then
-            rawUser_.Display_Status = "..\..\..\Assets\Attendance\vacation.png"
-        End If
+    Public Sub SetCategory(rawUser As myAttendanceList)
+
+        Select Case rawUser.Status
+            Case Constants.STAT_ATT_ONSITE,
+                Constants.STAT_ATT_OBA,
+                Constants.STAT_ATT_HOBA,
+                Constants.STAT_ATT_LONSITE
+
+                rawUser.Display_Status = "..\..\..\Assets\Attendance\onsite.png"
+            Case Constants.STAT_ATT_PRESENT,
+                Constants.STAT_ATT_LPRESENT,
+                Constants.STAT_ATT_LATE
+
+                rawUser.Display_Status = "..\..\..\Assets\Attendance\present.png"
+            Case Constants.STAT_ATT_HSL,
+                Constants.STAT_ATT_SL
+
+                rawUser.Display_Status = "..\..\..\Assets\Attendance\sick.png"
+            Case Constants.STAT_ATT_HOLIDAY
+
+                rawUser.Display_Status = "..\..\..\Assets\Attendance\holiday.png"
+            Case Constants.STAT_ATT_VL,
+                Constants.STAT_ATT_HVL,
+                Constants.STAT_ATT_EL,
+                Constants.STAT_ATT_HEL
+
+                rawUser.Display_Status = "..\..\..\Assets\Attendance\vacation.png"
+        End Select
+
     End Sub
 
 #End Region
