@@ -1334,11 +1334,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Animation\T3py.gif" />
-    <Resource Include="Assets\Attendance\AbsentIcon.png" />
-    <Resource Include="Assets\Attendance\OnSiteIcon.png" />
-    <Resource Include="Assets\Attendance\PresentIcon.png" />
-    <Resource Include="Assets\Attendance\SickLeaveIcon.png" />
-    <Resource Include="Assets\Attendance\VacationLeaveIcon.png" />
     <Resource Include="Assets\Button1\AddAnnouncement.png" />
     <Resource Include="Assets\Button1\DropDownMenuButton.png" />
     <Resource Include="Assets\Button1\EditAnnouncement.png" />
@@ -1366,34 +1361,6 @@
     <Resource Include="Assets\Button\SettingsButton.png" />
     <Resource Include="Assets\Button\SkillsIcon.png" />
     <Resource Include="Assets\Button\TaskIcon.png" />
-    <Resource Include="Assets\CoverPhotos\BonifacioAguilar.jpg" />
-    <Resource Include="Assets\CoverPhotos\ChristopherGuevara.jpg" />
-    <Resource Include="Assets\CoverPhotos\EdwardIlagan.jpg" />
-    <Resource Include="Assets\CoverPhotos\EldrenReyBalane.jpg" />
-    <Resource Include="Assets\CoverPhotos\GliffCeasarPareja.jpg" />
-    <Resource Include="Assets\CoverPhotos\JazelRoAnnVasquez.jpg" />
-    <Resource Include="Assets\CoverPhotos\JohnCarloDejaresco.jpg" />
-    <Resource Include="Assets\CoverPhotos\JohnPauloMataac.jpg" />
-    <Resource Include="Assets\CoverPhotos\NinaBiancaDeJesus.jpg" />
-    <Resource Include="Assets\CoverPhotos\RosalindaPiloto.jpg" />
-    <Resource Include="Assets\CoverPhotos\WenceslaoBulauitan.jpg" />
-    <Resource Include="Assets\CoverPhotos\ZedrizDeGuia.jpg" />
-    <Resource Include="Assets\EmployeePhotos\BonifacioAguilar.jpg" />
-    <Resource Include="Assets\EmployeePhotos\ChristopherGuevara.jpg" />
-    <Resource Include="Assets\EmployeePhotos\EdwardIlagan.jpg" />
-    <Resource Include="Assets\EmployeePhotos\EldrenReyBalane.jpg" />
-    <Resource Include="Assets\EmployeePhotos\GliffCeasarPareja.jpg" />
-    <Resource Include="Assets\EmployeePhotos\JazelRoAnnVasquez.jpg" />
-    <Resource Include="Assets\EmployeePhotos\JohnCarloDejaresco.jpg" />
-    <Resource Include="Assets\EmployeePhotos\JohnPauloMataac.jpg" />
-    <Resource Include="Assets\EmployeePhotos\NinaBiancaDeJesus.jpg" />
-    <Resource Include="Assets\EmployeePhotos\RosalindaPiloto.jpg" />
-    <Resource Include="Assets\EmployeePhotos\WenceslaoBulauitan.jpg" />
-    <Resource Include="Assets\EmployeePhotos\ZedrizDeGuia.jpg" />
-    <Resource Include="Assets\Icon\FujitsuLogo.png" />
-    <Resource Include="Assets\LockScreenLogo.scale-200.png" />
-    <Resource Include="Assets\Logo\EpadLogo.png" />
-    <Resource Include="Assets\Logo\FujitsuLogo.png" />
     <Resource Include="Assets\Menu\AbsentIcon.png" />
     <Resource Include="Assets\Menu\AnnouncementCaption.png" />
     <Resource Include="Assets\Menu\AttendanceIcon.png" />
@@ -1415,25 +1382,10 @@
     <Resource Include="Assets\Menu\SkillsIcon.png" />
     <Resource Include="Assets\Menu\TaskIcon.png" />
     <Resource Include="Assets\Menu\VacationLeaveIcon.png" />
-    <Resource Include="Assets\SplashScreen.scale-200.png" />
-    <Resource Include="Assets\Square150x150Logo.scale-200.png" />
-    <Resource Include="Assets\Square44x44Logo.scale-200.png" />
-    <Resource Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Resource Include="Assets\StoreLogo.png" />
-    <Resource Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Buttons\" />
     <Folder Include="View\Extras\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\fujitsu.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Fujitsu_logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Fujitsu-Logo.svg.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Menu\HomeIcon.png" />
@@ -1443,9 +1395,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Logo\AIDE_Logo4.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\FujitsuBG.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icon\addTowhosInvolve.png" />
@@ -1484,9 +1433,6 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
       <Private>True</Private>
     </COMReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\EmployeePhotos\AevanBatongbacal.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Button\addnew.png" />
@@ -1636,16 +1582,10 @@
     <Resource Include="Assets\Button\OtherIcon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Icon\AideVengers.png" />
     <Resource Include="Assets\Icon\Balloons.jpg" />
-    <Resource Include="Assets\Icon\bday.png" />
     <Resource Include="Assets\Icon\bdaybg.jpg" />
     <Resource Include="Assets\Icon\cake.png" />
     <Resource Include="Assets\Icon\favicon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Icon\happybirthdaybanner.png" />
-    <Resource Include="Assets\Icon\happybirthdaygreet.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icon\search.png" />
@@ -1714,16 +1654,10 @@
     <Resource Include="Assets\Button\Wrong.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\EmployeePhotos\shadowImage.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Button\AboutLogo.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Button\Dashboard2Logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Background\bgg.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Button\NextAbout.png" />
