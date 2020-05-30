@@ -22,7 +22,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <Grid Grid.Column="0">
-                    <Image Margin="0,10,10,10" Source="../../../Assets/Menu/schedule.png"/>
+                    <Image Margin="0,10,10,10" Source="../../../Assets/Menu/ResourcePlannerIcon.png"/>
                 </Grid>
                 
                 <Grid Grid.Column="1" VerticalAlignment="Center">
@@ -39,7 +39,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <Grid Grid.Column="0">
-                    <Image Margin="0,10,10,10" Source="../../../Assets/Menu/daily.png"/>
+                    <Image Margin="0,10,10,10" Source="../../../Assets/Menu/wpaudit_check.png"/>
                 </Grid>
                 
                 <Grid Grid.Column="1" VerticalAlignment="Center">
@@ -56,7 +56,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <Grid Grid.Column="0">
-                    <Image Margin="0,10,10,10" Source="../../../Assets/Menu/weekly.png" />
+                    <Image Margin="0,10,10,10" Source="../../../Assets/Menu/wpaudit_check.png" />
                 </Grid>
                 
                 <Grid Grid.Column="1" VerticalAlignment="Center">
@@ -73,7 +73,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <Grid Grid.Column="0">
-                    <Image Margin="0,10,10,10" Source="../../../Assets/Menu/monthly.png"/>
+                    <Image Margin="0,10,10,10" Source="../../../Assets/Menu/wpaudit_check.png"/>
                 </Grid>
                 
                 <Grid Grid.Column="1" VerticalAlignment="Center">
@@ -90,7 +90,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <Grid Grid.Column="0">
-                    <Image Margin="0,10,10,10" Source="../../../Assets/Menu/quarterly.png"/>
+                    <Image Margin="0,10,10,10" Source="../../../Assets/Menu/wpaudit_check.png"/>
                 </Grid>
                 
                 <Grid Grid.Column="1" VerticalAlignment="Center">
