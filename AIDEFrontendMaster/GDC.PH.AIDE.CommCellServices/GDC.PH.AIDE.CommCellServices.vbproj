@@ -1169,6 +1169,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <Resource Include="Assets\Menu\wpaudit.png" />
+    <Resource Include="Assets\Menu\wpaudit_check.png" />
     <Content Include="ReportsCommands\generateactionlistreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
