@@ -9,7 +9,7 @@
         WindowState="Maximized"
         WindowStyle="None"
         ResizeMode="CanMinimize"
-        mc:Ignorable="d">
+        mc:Ignorable="d" Activated="Window_Activated">
     
     <Grid>
         <Grid.RowDefinitions>

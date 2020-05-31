@@ -267,6 +267,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="SplashScreen.xaml.vb">
+      <DependentUpon>SplashScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\ActionListViewModel.vb" />
     <Compile Include="ViewModel\AssignedProjectViewModel.vb" />
     <Compile Include="ViewModel\KPISummaryViewModel.vb" />
@@ -660,6 +663,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SplashScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Charts\DoughnutChart.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1171,6 +1178,13 @@
     <None Include="packages.config" />
     <Resource Include="Assets\Menu\wpaudit.png" />
     <Resource Include="Assets\Menu\wpaudit_check.png" />
+    <Resource Include="loader.gif" />
+    <Resource Include="Assets\Images\afternoon.png" />
+    <Resource Include="Assets\Images\evening.png" />
+    <Resource Include="Assets\Images\morning.png" />
+    <Resource Include="Assets\Images\night.png" />
+    <Resource Include="Assets\Images\noon.png" />
+    <Resource Include="Assets\Images\sunrise.png" />
     <Content Include="ReportsCommands\generateactionlistreport.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
