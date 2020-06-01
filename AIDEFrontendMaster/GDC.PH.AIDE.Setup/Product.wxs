@@ -83,7 +83,7 @@
 			  <File Id="UI_AIDE_CommCellServices.exe" Name="UI_AIDE_CommCellServices.exe" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)UI_AIDE_CommCellServices.exe" />
 			</Component>
 			<Component Id="UI_AIDE_CommCellServices.exe.config" Guid="3681c6fb-41fb-446b-a004-25d7f2eeb452">
-			  <File Id="UI_AIDE_CommCellServices.exe.config" Name="UI_AIDE_CommCellServices.exe.config" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)UI_AIDE_CommCellServices.exe.config" />
+			  <File Id="UI_AIDE_CommCellServices.exe.config" Name="UI_AIDE_CommCellServices.exe.config" Source="Configurations\UI_AIDE_CommCellServices.exe.config" />
 			</Component>    
       <Component Id="LiveCharts.dll" Guid="98D027A1-59A9-4639-8148-B8F4799CCF55">
         <File Id="LiveCharts.dll" Name="LiveCharts.dll" Source="$(var.GDC.PH.AIDE.CommCellServices_TargetDir)LiveCharts.dll" />

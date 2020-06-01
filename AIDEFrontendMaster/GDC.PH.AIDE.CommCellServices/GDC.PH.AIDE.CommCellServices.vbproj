@@ -1178,7 +1178,6 @@
     <None Include="packages.config" />
     <Resource Include="Assets\Menu\wpaudit.png" />
     <Resource Include="Assets\Menu\wpaudit_check.png" />
-    <Resource Include="loader.gif" />
     <Resource Include="Assets\Images\afternoon.png" />
     <Resource Include="Assets\Images\evening.png" />
     <Resource Include="Assets\Images\morning.png" />

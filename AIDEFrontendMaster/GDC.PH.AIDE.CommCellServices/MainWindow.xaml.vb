@@ -186,12 +186,9 @@ Class MainWindow
         _loader.Show()
         _loaderOn = True
 
-
-
         Attendance()
 
         LoadSideBar()
-
 
         PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
         SubMenuFrame.Navigate(New BlankSubMenu())
