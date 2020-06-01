@@ -1,0 +1,96 @@
+﻿<Window x:Class="SplashScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        xmlns:local="clr-namespace:UI_AIDE_CommCellServices"
+        
+        mc:Ignorable="d"
+        Title="SplashScreen" 
+        Height="120" 
+        Width="266.038" 
+        Opacity="0.95" 
+        ShowInTaskbar="False" 
+        Topmost="True" 
+        AllowsTransparency="True"
+        WindowStyle="None" ResizeMode="NoResize">
+    <Window.Background>
+        <SolidColorBrush Opacity="0.90" Color="White" />
+    </Window.Background>
+    <Border BorderThickness="0.25" BorderBrush="Gainsboro" >
+        
+        <Grid >
+            <Grid.Effect>
+                <DropShadowEffect ShadowDepth="4" Color="Gray" />
+            </Grid.Effect>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30*" />
+            <RowDefinition Height="20*" />
+        </Grid.RowDefinitions>
+
+            <Grid Background="{Binding Background}"  Grid.Row="0" Opacity="0.95">
+                <Grid.Effect>
+                    <DropShadowEffect ShadowDepth="4" />
+                </Grid.Effect>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="74" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                    <Image Source="{Binding ImageSource}"  
+                           Stretch="Fill"
+                           StretchDirection="Both"/>
+                </Grid>
+            <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="40*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Label x:Name="labelWelcome" 
+                           Foreground="{Binding Foreground}"  
+                           Content="{Binding Message}" 
+                           HorizontalAlignment="Left" 
+                           Margin="5,2,0,0" 
+                           VerticalAlignment="Top" 
+                           Background="{x:Null}" 
+                           FontSize="16"/>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Label Name="labelUser" 
+                           Foreground="{Binding Foreground}" 
+                           Content="{Binding UserName}" 
+                           HorizontalAlignment="Left" 
+                           Margin="5,0,0,0" 
+                           VerticalAlignment="Top" 
+                           Background="{x:Null}" 
+                           FontSize="16" 
+                           Width="175"/>
+                    </Grid>
+            </Grid>
+                
+            </Grid>
+        <Grid Grid.Row="1" Background="White" Opacity="0.95" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Background="White">
+                    <Label x:Name="labelWait"  
+                       Content="Please wait while AIDE is loading ..." 
+                       HorizontalAlignment="Left" Margin="10,5,0,0" 
+                       VerticalAlignment="Top" 
+                       FontSize="14"/>  
+                </Grid>
+                
+            </Grid>
+            
+          
+
+
+       
+
+    </Grid>
+    </Border>
+</Window>
