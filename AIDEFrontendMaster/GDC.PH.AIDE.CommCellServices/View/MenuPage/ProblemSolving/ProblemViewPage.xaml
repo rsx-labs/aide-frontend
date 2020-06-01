@@ -29,7 +29,7 @@
                     </Viewbox>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Background="{DynamicResource GradientDesign}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="2*"/>
@@ -66,22 +66,22 @@
                          BorderThickness="0" Focusable="False">
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" />
+                                <StackPanel Orientation="Vertical" />
                             </ItemsPanelTemplate>
                         </ListView.ItemsPanel>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Vertical">
 
-                                    <Image Source="{Binding Image_Path}" Width="40">
+                                    <!--<Image Source="{Binding Image_Path}" Width="40">
                                         <Image.OpacityMask>
                                             <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
                                                 <GradientStop Color="#ffffffff" Offset="1" />
                                                 <GradientStop Color="#00ffffff" Offset="1" />
                                             </RadialGradientBrush>
                                         </Image.OpacityMask>
-                                    </Image>
-
+                                    </Image>-->
+                                    <TextBlock Text="{Binding First_Name}" FontSize="9" Style="{StaticResource TextBlockStyleForTextbox}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
