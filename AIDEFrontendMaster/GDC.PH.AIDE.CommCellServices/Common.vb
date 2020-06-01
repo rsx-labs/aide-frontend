@@ -34,4 +34,25 @@
     Public Const OPT_CHECK_ATTENDANCE_DISPATCH As Integer = 45
     Public Const OPT_RPDAYSDISPATCH As Integer = 45
     Public Const OPT_PHOTO_PATH As Integer = 46
+
+    Public Const STAT_ATT_ONSITE As Integer = 1
+    Public Const STAT_ATT_PRESENT As Integer = 2
+    Public Const STAT_ATT_SL As Integer = 3
+    Public Const STAT_ATT_VL As Integer = 4
+    Public Const STAT_ATT_HSL As Integer = 5
+    Public Const STAT_ATT_HVL As Integer = 6
+    Public Const STAT_ATT_HOLIDAY As Integer = 7
+    Public Const STAT_ATT_EL As Integer = 8
+    Public Const STAT_ATT_HEL As Integer = 9
+    Public Const STAT_ATT_OL As Integer = 10
+    Public Const STAT_ATT_LATE As Integer = 11
+    Public Const STAT_ATT_LPRESENT As Integer = 110
+    Public Const STAT_ATT_LONSITE As Integer = 111
+    Public Const STAT_ATT_HOL As Integer = 12
+    Public Const STAT_ATT_OBA As Integer = 13
+    Public Const STAT_ATT_HOBA As Integer = 14
+
+
+
+
 End Class

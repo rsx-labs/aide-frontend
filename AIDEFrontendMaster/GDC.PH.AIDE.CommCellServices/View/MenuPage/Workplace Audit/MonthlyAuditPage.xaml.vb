@@ -281,21 +281,21 @@ Class MonthlyAuditPage
 
 
     Private Sub ListViewItem_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
-        Dim item = (TryCast(sender, FrameworkElement)).DataContext
-        Dim FYDBProvider As New WorkplaceAuditDBProvider
-
-        For Each objFiscal As WorkplaceAudit In lstAuditQuestions
-            If objFiscal.WEEKDATE.ToString.Trim() = item.WEEKDATE.ToString.Trim() Then
-                FYDBProvider.SetMyWorkplaceAudit(objFiscal)
-            End If
-
-        Next
-        LstAuditDailySchedByWeek.Clear()
-        For Each rawUser As MyWorkplaceAudit In FYDBProvider.GetMyWorkplaceAudit()
-            LstAuditDailySchedByWeek.Add(New WorkplaceAuditModel(rawUser))
-        Next
-
         If profile.Emp_ID = currDailyAuditAssigned OrElse profile.Permission_ID = 1 Then
+            Dim item = (TryCast(sender, FrameworkElement)).DataContext
+            Dim FYDBProvider As New WorkplaceAuditDBProvider
+
+            For Each objFiscal As WorkplaceAudit In lstAuditQuestions
+                If objFiscal.WEEKDATE.ToString.Trim() = item.WEEKDATE.ToString.Trim() Then
+                    FYDBProvider.SetMyWorkplaceAudit(objFiscal)
+                End If
+
+            Next
+            LstAuditDailySchedByWeek.Clear()
+            For Each rawUser As MyWorkplaceAudit In FYDBProvider.GetMyWorkplaceAudit()
+                LstAuditDailySchedByWeek.Add(New WorkplaceAuditModel(rawUser))
+            Next
+
             addframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 3))
             pageframe.IsEnabled = False
             pageframe.Opacity = 0.3
@@ -357,7 +357,7 @@ Class MonthlyAuditPage
                     Else
                         imgdtcheck = "..\..\..\Assets\Button\wrong.png"
                     End If
-
+                    currDailyAuditAssigned = quest.EMP_ID
                     dailyVMM.QuestionDayList.Add(New QuestionsDayModel(quest.AUDIT_QUESTIONS, quest.OWNER, quest.DT_CHECK_FLG, imgdtcheck, quest.WEEKDATE))
                 End If
             Next

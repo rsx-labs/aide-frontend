@@ -31,6 +31,9 @@ Class MainWindow
     Dim machineOS As String = My.Computer.Info.OSFullName
     Dim guestPermission As Integer = 5
 
+    Dim _loader As SplashScreen
+    Dim _loaderOn As Boolean
+
     'Private _aideClientService As AideServiceClient
     'Private AppState.GetInstance() As AppState
 
@@ -124,20 +127,29 @@ Class MainWindow
 
         LoadOnce()
         InitializeComponent()
-        InitializeService()
-        GetTime()
 
-        GetOptionData()
-        'Dim useOutlook As Boolean = False
-        'Boolean.TryParse(enableOutlook, useOutlook)
+        If InitializeService() Then
 
-        If AppState.GetInstance().UseOutlook Then
-            CheckOutlook()
+            If Not GetOptionData() Then
+                MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+                _logger.Info("****** Closing AIDE ******")
+                Environment.Exit(0)
+            End If
+
+            If AppState.GetInstance().UseOutlook Then
+                CheckOutlook()
+            Else
+                email = AppState.GetInstance().OptionValueDictionary(Constants.OPT_DEFAULT_EMAIL)
+            End If
+
+            InitializeData()
+            GetTime()
         Else
-            email = AppState.GetInstance().OptionValueDictionary(Constants.OPT_DEFAULT_EMAIL)
+            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Info("****** Closing AIDE ******")
+            Environment.Exit(0)
         End If
 
-        InitializeData()
 
         _logger.Debug("End : Constructor")
     End Sub
@@ -164,13 +176,20 @@ Class MainWindow
         _logger.Debug("Start : InitializeData")
 
         SetEmployeeData()
-        Attendance()
         LoadVersionNo()
-        LoadSideBar()
 
         _logger.Info("Show greeting box and navigate to home screen")
 
-        MsgBox("Welcome " & email & ".", MsgBoxStyle.Information, "AIDE")
+        _loader = New SplashScreen(email)
+        _loader.Top = 25
+        _loader.Left = 25
+        _loader.Show()
+        _loaderOn = True
+
+        Attendance()
+
+        LoadSideBar()
+
         PagesFrame.Navigate(New HomePage(PagesFrame, profile.Position, profile.Emp_ID, AddFrame, MenuGrid, SubMenuFrame, email, profile))
         SubMenuFrame.Navigate(New BlankSubMenu())
 
@@ -330,7 +349,7 @@ Class MainWindow
                 eventStartUpId = "12"
             End If
 
-            Dim dateToday As Date = DateTime.Now.ToString("MM/dd/yyyy")
+            Dim dateToday As Date = DateTime.Now.Date
             Dim logName As EventLog = New EventLog()
             logName.Log = "System"
 
@@ -414,10 +433,7 @@ Class MainWindow
             Me.Focus()
             Me.Topmost = True
 
-            'display the error only once
-            If _instance = 2 Then
-                MessageBox.Show("Another instance of AIDE is already running.")
-            End If
+            MessageBox.Show("Another instance of AIDE is already running.")
 
             _logger.Error("Another instance of AIDE is already running.")
             End
@@ -735,6 +751,13 @@ Class MainWindow
 
         _logger.Debug("End : WorkPlaceAuditBtn_Click")
 
+    End Sub
+
+    Private Sub Window_Activated(sender As Object, e As EventArgs)
+        If _loaderOn Then
+            _loaderOn = False
+            _loader.Close()
+        End If
     End Sub
 #End Region
 
