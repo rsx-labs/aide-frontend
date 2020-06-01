@@ -356,21 +356,21 @@ Class QuarterlyAuditPage
         _logger.Debug("End : LoadSChed")
     End Sub
     Private Sub ListViewItem_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs)
-        Dim item = (TryCast(sender, FrameworkElement)).DataContext
-        Dim FYDBProvider As New WorkplaceAuditDBProvider
-
-        For Each objFiscal As WorkplaceAudit In lstAuditQuestions
-            If objFiscal.WEEKDATE.ToString.Trim() = item.WEEKDATE.ToString.Trim() Then
-                FYDBProvider.SetMyWorkplaceAudit(objFiscal)
-            End If
-
-        Next
-        LstAuditDailySchedByWeek.Clear()
-        For Each rawUser As MyWorkplaceAudit In FYDBProvider.GetMyWorkplaceAudit()
-            LstAuditDailySchedByWeek.Add(New WorkplaceAuditModel(rawUser))
-        Next
-
         If profile.Permission_ID = 1 Then
+            Dim item = (TryCast(sender, FrameworkElement)).DataContext
+            Dim FYDBProvider As New WorkplaceAuditDBProvider
+
+            For Each objFiscal As WorkplaceAudit In lstAuditQuestions
+                If objFiscal.WEEKDATE.ToString.Trim() = item.WEEKDATE.ToString.Trim() Then
+                    FYDBProvider.SetMyWorkplaceAudit(objFiscal)
+                End If
+
+            Next
+            LstAuditDailySchedByWeek.Clear()
+            For Each rawUser As MyWorkplaceAudit In FYDBProvider.GetMyWorkplaceAudit()
+                LstAuditDailySchedByWeek.Add(New WorkplaceAuditModel(rawUser))
+            Next
+
             addframe.Navigate(New DailyAuditCheck(pageframe, profile, addframe, menugrid, submenuframe, LstAuditDailySchedByWeek, 4))
             pageframe.IsEnabled = False
             pageframe.Opacity = 0.3
