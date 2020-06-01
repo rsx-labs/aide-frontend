@@ -23,6 +23,7 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Configurations\UI_AIDE_CommCellServices.exe.config" />
     <Content Include="GDC.PH.AIDE.SETUP.wax" />
     <Content Include="Resources\BackgroundLogo.jpg" />
     <Content Include="Resources\License.rtf" />
@@ -49,6 +50,7 @@
     </WixExtension>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Configurations" />
     <Folder Include="Resources" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />

@@ -75,7 +75,6 @@
         <Grid Grid.Row="1" Background="White" Opacity="0.95" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80*" />
-                    <ColumnDefinition Width="10*" />
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0" Background="White">
                     <Label x:Name="labelWait"  
@@ -84,10 +83,7 @@
                        VerticalAlignment="Top" 
                        FontSize="14"/>  
                 </Grid>
-                <Grid Grid.Column="1" Visibility="Hidden">
-                    <Image gif:ImageBehavior.AnimatedSource=".\Assets\loader.gif" />
-                </Grid>
-            
+                
             </Grid>
             
           
