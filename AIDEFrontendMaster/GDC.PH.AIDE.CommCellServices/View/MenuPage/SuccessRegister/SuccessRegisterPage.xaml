@@ -92,7 +92,7 @@
                                                   Width="auto" BorderBrush="Transparent" IsReadOnly="True">
                         <DataGrid.Columns>
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="ID" Width="2*" Binding="{Binding SuccessID}" Visibility="Hidden" />
-                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Created" Width="2*" Binding="{Binding DateInput, StringFormat=MM/dd/yyyy}" />
+                            <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Date Created" Width="2*" Binding="{Binding DateInput, StringFormat='dd-MMM-yy'}" />
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Raised By" Width="2*" Binding="{Binding Nick_Name}" />
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Details of Success" Width="5*" Binding="{Binding DetailsOfSuccess}" />
                             <DataGridTextColumn ElementStyle="{StaticResource ColumnElementStyle}" Header="Who's Involved" Width="5*" Binding="{Binding WhosInvolve}" />

@@ -183,7 +183,7 @@
                     
                     <Grid Grid.Row="4">
                         <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                            <DatePicker Style="{DynamicResource styleDatePickerfrom}" Name="Act_DueDate" Text="{Binding DUE_DATE,StringFormat=MM/dd/yyyy ,Mode=TwoWay}"/>
+                            <DatePicker Style="{DynamicResource styleDatePickerfrom}" Name="Act_DueDate" Text="{Binding DUE_DATE, Mode=TwoWay, StringFormat=yyyy-MM-dd}"/>
                         </Border>
                         
                         <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select due date *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">

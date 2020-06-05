@@ -33,7 +33,8 @@ Class InsertActionListPage
             profile = _profile
             InitializeComponent()
             PopulateComboBox()
-            DataContext = actionModel
+            setDate()
+            'DataContext = actionModel
             GenerateActionRef()
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -44,7 +45,7 @@ Class InsertActionListPage
     Private Sub GenerateActionRef()
         Try
             'InitializeService()
-            Dim actionModel As New ActionModel
+            'Dim actionModel As New ActionModel
             Dim refCode As String = "ACT"
             Dim refNoCount As Integer
             Dim refNo As String
@@ -52,10 +53,11 @@ Class InsertActionListPage
             refNoCount = action.Count + 1
             refNo = refCode + "-" + Convert.ToString(Today.Date.ToString("MM/dd/yy")) + "-" + Convert.ToString(refNoCount)
             actionModel.REF_NO = refNo
-            actionModel.DUE_DATE = Today.Date
-            actionModel.DATE_CLOSED = Today.Date
+            'Act_DueDate.DisplayDate = DateTime.Now
+            actionModel.DUE_DATE = Act_DueDate.DisplayDate
+            actionModel.DATE_CLOSED = Act_DueDate.DisplayDate
 
-            DataContext = actionModel
+            Me.DataContext = actionModel
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -90,12 +92,12 @@ Class InsertActionListPage
     Public Function getDataInsert(ByVal ActionModel As ActionModel)
         Try
             'InitializeService()
-            If ActionModel.REF_NO = Nothing Or ActionModel.ACTION_MESSAGE = Nothing Or Act_AssigneeCB.SelectedValue = Nothing Or ActionModel.DUE_DATE = Nothing Or ActionModel.DATE_CLOSED = Nothing Then
+            If ActionModel.REF_NO = Nothing Or ActionModel.ACTION_MESSAGE = Nothing Or Act_AssigneeCB.SelectedValue = Nothing Or ActionModel.DUE_DATE = Nothing Then
             Else
                 action.Act_ID = ActionModel.REF_NO
                 action.Act_Message = ActionModel.ACTION_MESSAGE
                 action.Act_Assignee = profile.Emp_ID
-                action.Act_DueDate = ActionModel.DUE_DATE
+                action.Act_DueDate = Act_DueDate.SelectedDate.Value 'ActionModel.DUE_DATE
                 action.Act_DateClosed = String.Empty
                 action.Act_NickName = Act_AssignedAll.Text
             End If
@@ -165,7 +167,7 @@ Class InsertActionListPage
                 MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
             Else
                 MsgBox("Action item has been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
-                GenerateActionRef()
+                'GenerateActionRef()
                 action.Act_ID = Nothing
                 action.Act_Message = Nothing
                 action.Act_Assignee = Nothing
@@ -186,7 +188,7 @@ Class InsertActionListPage
     Private Sub Act_DueDate_SelectedDateChanged(sender As Object, e As SelectionChangedEventArgs)
         If Act_DueDate.SelectedDate < Today.Date Then
             MsgBox("Please enter date on or before the current date.", MsgBoxStyle.Exclamation, "AIDE")
-            Act_DueDate.Text = Today.Date
+            'Act_DueDate.Text = Today.Date
         End If
     End Sub
 
@@ -234,6 +236,19 @@ Class InsertActionListPage
                 MsgBox("No assigned employee to remove.", MsgBoxStyle.Exclamation, "AIDE")
             End If
         End If
+    End Sub
+
+    'Set DateTime Now in DatePicker
+    Private Sub setDate()
+        Dim ob As New ActionModel
+
+        If Act_DueDate.SelectedDate.HasValue Then
+            ob.DUE_DATE = Act_DueDate.SelectedDate.Value
+        Else
+            ob.DUE_DATE = DateTime.Now
+        End If
+
+        Me.DataContext = ob
     End Sub
 #End Region
 

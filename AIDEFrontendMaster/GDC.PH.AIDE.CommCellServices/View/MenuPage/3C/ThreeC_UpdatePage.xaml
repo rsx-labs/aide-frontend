@@ -174,7 +174,7 @@
                         
                         <Grid Grid.Row="4">
                             <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
-                                <DatePicker Style="{DynamicResource styleDatePickerfrom}" x:Name="dtDate" BorderBrush="Transparent" Margin="0" FontSize="12" Text="{Binding SelectedConcern.DUE_DATE, Mode=TwoWay}" />
+                                <DatePicker Style="{DynamicResource styleDatePickerfrom}" x:Name="dtDate" BorderBrush="Transparent" Margin="0" FontSize="12" Text="{Binding SelectedConcern.DUE_DATE, Mode=TwoWay, StringFormat=yyyy-MM-dd}" />
                             </Border>
                             
                             <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select a date *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Foreground="DarkGray">

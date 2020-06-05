@@ -18,7 +18,7 @@ Class UpdateActionListPage
     Private addframe As Frame
     Private submenuframe As Frame
     'Private aide As AideServiceClient
-    Private action As New Action
+    Private action As New ActionModel
     Private actionModel As New ActionModel()
     Private action_provider As New ActionListDBProvider
     Private actionPage_ As HomeActionListsPage
@@ -26,20 +26,22 @@ Class UpdateActionListPage
     Private dsplyByDiv As Integer = 1
 #End Region
 
-    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _action As Action, _profile As Profile)
+    Public Sub New(_frame As Frame, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame, _actionModel As ActionModel, _profile As Profile)
         Try
             frame = _frame
             addframe = _addframe
             menugrid = _menugrid
             submenuframe = _submenuframe
-            action = _action
+            actionModel = _actionModel
             email = _profile.Email_Address
             profile = _profile
 
             InitializeComponent()
-            DataContext = actionModel
-            showUpdateItems()
+            'DataContext = actionModel
             PopulateComboBox()
+            'showUpdateItems()
+            Me.DataContext = actionModel
+            Act_AssignedAll.Text = actionModel.NICK_NAME
             hold_Duedate = actionModel.DUE_DATE
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -48,42 +50,44 @@ Class UpdateActionListPage
 
 #Region "Main Function/Method"
 
-    Public Function showUpdateItems()
-        Try
-            'InitializeService()
-            actionModel.REF_NO = action.Act_ID
-            actionModel.ACTION_MESSAGE = action.Act_Message
-            actionModel.EMP_ID = profile.Emp_ID
-            actionModel.NICK_NAME = action.Act_NickName
-            actionModel.DUE_DATE = action.Act_DueDate
-            actionModel.DATE_CLOSED = action.Act_DateClosed
-            Act_AssignedAll.Text = action.Act_NickName
-            Return actionModel
-        Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
-        End Try
-    End Function
+    'Public Function showUpdateItems()
+    '    Try
+    '        'InitializeService()
+    '        'actionModel.REF_NO = action.Act_ID
+    '        'actionModel.ACTION_MESSAGE = action.Act_Message
+    '        'actionModel.EMP_ID = profile.Emp_ID
+    '        'actionModel.NICK_NAME = action.Act_NickName
+    '        'actionModel.DUE_DATE = action.Act_DueDate
+    '        'actionModel.DATE_CLOSED = action.Act_DateClosed
+    '        'Act_AssignedAll.Text = action.Act_NickName
+    '        Me.DataContext = actionModel
+    '        Return actionModel
+    '    Catch ex As Exception
+    '        MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+    '    End Try
+    'End Function
 
     Public Function getDataUpdate(ByVal ActionModel As ActionModel)
         Try
-            'InitializeService()
-            If ActionModel.REF_NO = Nothing Or ActionModel.ACTION_MESSAGE = Nothing Or Act_AssignedAll.Text = String.Empty Or ActionModel.DUE_DATE = Nothing Or ActionModel.DATE_CLOSED = Nothing Then
-                action.Act_ID = ActionModel.REF_NO
-                action.Act_Message = ActionModel.ACTION_MESSAGE
-                action.Act_Assignee = ActionModel.EMP_ID
-                action.Act_DueDate = ActionModel.DUE_DATE
-                action.Act_DateClosed = ActionModel.DATE_CLOSED
-                action.Act_NickName = Act_AssignedAll.Text
-            Else
-                action.Act_ID = ActionModel.REF_NO
-                action.Act_Message = ActionModel.ACTION_MESSAGE
-                action.Act_Assignee = ActionModel.EMP_ID
-                action.Act_DueDate = ActionModel.DUE_DATE
-                action.Act_DateClosed = ActionModel.DATE_CLOSED
-                action.Act_NickName = Act_AssignedAll.Text
+            Dim newAction As New Action
+            If Act_DueDate.SelectedDate.HasValue Then
+                Me.actionModel.DUE_DATE = Act_DueDate.SelectedDate.Value
             End If
 
-            Return action
+
+            If Act_DateClosed.SelectedDate.HasValue Then
+                Me.actionModel.DATE_CLOSED = Act_DateClosed.SelectedDate.Value.ToString("yyyy-MM-dd")
+            End If
+
+            Me.actionModel.NICK_NAME = Act_AssignedAll.Text
+            newAction.Act_Assignee = Me.actionModel.EMP_ID
+            newAction.Act_NickName = Me.actionModel.NICK_NAME
+            newAction.Act_ID = Me.actionModel.REF_NO
+            newAction.Act_Message = Me.actionModel.ACTION_MESSAGE
+            newAction.Act_DueDate = Me.actionModel.DUE_DATE
+            newAction.Act_DateClosed = Me.actionModel.DATE_CLOSED
+
+            Return newAction
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             Return ex
@@ -169,17 +173,12 @@ Class UpdateActionListPage
     Private Sub UpdateBtn_Click(sender As Object, e As RoutedEventArgs)
         Try
             'InitializeService()
-            If actionModel.REF_NO = Nothing Or actionModel.ACTION_MESSAGE = Nothing Or Act_AssignedAll.Text = String.Empty Or actionModel.DUE_DATE = Nothing Or actionModel.DATE_CLOSED = Nothing Then
-                If actionModel.DATE_CLOSED = Nothing And actionModel.ACTION_MESSAGE <> Nothing And actionModel.DUE_DATE <> Nothing And Act_AssignedAll.Text <> String.Empty Then
+            If Me.actionModel.DATE_CLOSED = Nothing Then
+                If Me.actionModel.ACTION_MESSAGE <> Nothing And actionModel.DUE_DATE <> Nothing And Act_AssignedAll.Text <> String.Empty Then
                     If MsgBox("Are you sure you want to proceed without a closing date?", MsgBoxStyle.Information + vbYesNo, "AIDE") = vbYes Then
                         AideClient.GetClient().UpdateActionList(getDataUpdate(Me.DataContext()))
                         MsgBox("Action item has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
-                        action.Act_ID = Nothing
-                        action.Act_Message = Nothing
-                        action.Act_Assignee = Nothing
-                        action.Act_DueDate = Nothing
-                        action.Act_DateClosed = Nothing
-
+                        Me.actionModel = Nothing
                         ExitPage()
                     End If
                 Else
@@ -188,12 +187,7 @@ Class UpdateActionListPage
             Else
                 AideClient.GetClient().UpdateActionList(getDataUpdate(Me.DataContext()))
                 MsgBox("Action item has been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
-                action.Act_ID = Nothing
-                action.Act_Message = Nothing
-                action.Act_Assignee = Nothing
-                action.Act_DueDate = Nothing
-                action.Act_DateClosed = Nothing
-
+                Me.actionModel = Nothing
                 ExitPage()
             End If
         Catch ex As Exception
@@ -296,6 +290,7 @@ Class UpdateActionListPage
             End If
         End If
     End Sub
+
 #End Region
 
 End Class

@@ -176,7 +176,7 @@
                         <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
                             <DatePicker BorderThickness="0" 
                                         Style="{DynamicResource styleDatePickerfrom}" 
-                                        x:Name="dtDate"  Text="{Binding SelectedConcern.DUE_DATE, Mode=TwoWay, StringFormat=dd-mm-yyyy}" 
+                                        x:Name="dtDate"  Text="{Binding SelectedConcern.DUE_DATE, Mode=TwoWay, StringFormat=yyyy-MM-dd}" 
                                         Margin="0" FontSize="12" BorderBrush="Transparent"/>
                         </Border>
 
