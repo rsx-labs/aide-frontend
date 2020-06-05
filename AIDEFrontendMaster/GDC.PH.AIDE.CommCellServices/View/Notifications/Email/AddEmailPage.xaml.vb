@@ -40,7 +40,7 @@ Class AddEmailPage
         Dim check As Boolean = False
         Dim CodeCombination As Integer
         If UserEmail.Text = String.Empty Then
-            MsgBox("Please enter your personal email.", MsgBoxStyle.Exclamation, "AIDE")
+            MsgBox("Please enter your office email.", MsgBoxStyle.Exclamation, "AIDE")
         Else
             Try
                 If CheckEmailValidity(UserEmail.Text) Then
