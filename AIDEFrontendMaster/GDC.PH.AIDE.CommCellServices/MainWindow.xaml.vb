@@ -136,6 +136,21 @@ Class MainWindow
                 Environment.Exit(0)
             End If
 
+            _logger.Debug("Check for updates ....")
+
+            If AppState.GetInstance().NotifyUpdate Then
+
+                _logger.Info("Checking for update is enabled.")
+
+                NotifyUpdate()
+
+                If AppState.GetInstance().IsUpdateAvailable = True Then
+                    updateLink.NavigateUri = New Uri(AppState.GetInstance().OptionValueDictionary(Constants.CONFIG_UPDATE_URL_FEED))
+                    updateRun.Text = "A new version of AIDE is now available for download!"
+
+                End If
+            End If
+
             If AppState.GetInstance().UseOutlook Then
                 CheckOutlook()
             Else
@@ -154,6 +169,78 @@ Class MainWindow
         _logger.Debug("End : Constructor")
     End Sub
 
+    Private Function UpdateAIDE() As Boolean
+
+        Dim feed As Xml.XmlDocument = Helpers.GetUpdateFeedFromURL(AppState.GetInstance().OptionValueDictionary(Constants.CONFIG_UPDATE_URL_FEED))
+
+        AppState.GetInstance().IsUpdateAvailable = False
+
+        Try
+            If feed.GetElementsByTagName("update").Item(0).Attributes(0).Value.ToLower() = "true" Then
+
+                Dim latestCommCellVersion As String = feed.GetElementsByTagName("frontend").Item(0).Attributes(0).Value
+                'Dim backendVersion As String = feed.GetElementsByTagName("backend").Item(0).Attributes(0).Value
+
+                Dim currentCommCellVersion As String = Helpers.GetCurrentVersionFromRegistry()
+
+                If latestCommCellVersion > currentCommCellVersion Then
+
+                    _logger.Info($"Update {latestCommCellVersion} is available")
+
+                    AppState.GetInstance().IsUpdateAvailable = True
+
+                    If MessageBox.Show(
+                        "AIDE update is now available. Do you want to update now? " + Environment.NewLine + Environment.NewLine +
+                        "Note : By selecting YES, you will be directed to a site where you can download the new version. You will have to install the update manually.",
+                        "AIDE Update",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Question) = MessageBoxResult.Yes Then
+
+                        _logger.Info("User choose to update now")
+
+                        Return True
+                    Else
+
+                        _logger.Info("User choose to update later")
+
+                        Return False
+                    End If
+                End If
+            Else
+
+                _logger.Info("No update is available right now")
+
+                Return False
+            End If
+
+        Catch ex As Exception
+            _logger.Warn($"There was an error while reading update feed = {ex.ToString()}")
+            Return False
+        End Try
+
+
+    End Function
+
+    Private Sub NotifyUpdate()
+        If UpdateAIDE() = True Then
+            _logger.Debug("User selects to get the update now")
+            Try
+                Process.Start(AppState.GetInstance().OptionValueDictionary(Constants.CONFIG_UPDATE_URL_FEED))
+            Catch ex As Exception
+                _logger.Warn(ex.ToString())
+                MessageBox.Show(
+                    "There was an error opening the update site, please open the site From the browser.",
+                    "AIDE Update",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                )
+            End Try
+
+            _logger.Info("Closing AIDE for update")
+            _logger.Info("****** Closing AIDE ******")
+            Environment.Exit(0)
+        End If
+    End Sub
     Public Sub New(_email As String)
 
         _logger.Debug($"Start : Constructor with {_email}")
@@ -758,6 +845,14 @@ Class MainWindow
             _loaderOn = False
             _loader.Close()
         End If
+    End Sub
+
+    Private Sub updateLink_RequestNavigate(sender As Object, e As RequestNavigateEventArgs) Handles updateLink.RequestNavigate
+        Try
+            Process.Start(New ProcessStartInfo(e.Uri.AbsoluteUri))
+        Catch ex As Exception
+            _logger.Warn($"Error at request navigate = {ex.ToString()}")
+        End Try
     End Sub
 #End Region
 
