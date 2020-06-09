@@ -907,7 +907,11 @@
                 <Image x:Name="sendImg" Source="..\..\..\Assets\Menu\Mail.png" />
             </Grid>
             <Grid Grid.Row="2">
-                <TextBlock FontStyle="Italic" HorizontalAlignment="Center" TextWrapping="WrapWithOverflow" Text="Please enter your personal email associated to your AIDE account." Foreground="DimGray"></TextBlock>
+                <TextBlock FontStyle="Italic" 
+                           HorizontalAlignment="Center" 
+                           TextWrapping="WrapWithOverflow" 
+                           Text="Please enter your office email associated to your AIDE account." 
+                           Foreground="DimGray"></TextBlock>
             </Grid>
             <Grid Grid.Row="3">
                 <Border Margin="5,2,5,2" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
