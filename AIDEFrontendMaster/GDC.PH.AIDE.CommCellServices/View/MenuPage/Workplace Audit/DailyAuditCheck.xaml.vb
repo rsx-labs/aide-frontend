@@ -171,7 +171,7 @@ Class DailyAuditCheck
         dailyVMM.QuestionDayList.Clear()
         For Each quest As WorkplaceAuditModel In _lstAuditQuestionSelected.ToList
             If quest.AUDIT_QUESTIONS.ToString.Trim() = item.Questions.ToString.Trim() Then
-                quest.DT_CHECKED = Date.Now.ToString
+                quest.DT_CHECKED = Date.Now.ToString("yyyy-MM-dd HH:mm:ss")
                 quest.DT_CHECK_FLG = dt_check_flg
             End If
             dailyVMM.QuestionDayList.Add(New QuestionsDayModel(quest.AUDIT_QUESTIONS, quest.OWNER, quest.DT_CHECKED, iquestioNumber, quest.DT_CHECK_FLG))
