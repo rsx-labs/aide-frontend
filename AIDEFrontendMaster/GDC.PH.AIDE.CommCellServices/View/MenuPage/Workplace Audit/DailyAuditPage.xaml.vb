@@ -3,6 +3,8 @@ Imports System.Collections.ObjectModel
 Imports UI_AIDE_CommCellServices.ServiceReference1
 Imports System.ServiceModel
 Imports NLog
+Imports System.Runtime.CompilerServices
+
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class DailyAuditPage
     Implements ServiceReference1.IAideServiceCallback
@@ -44,7 +46,7 @@ Class DailyAuditPage
         Me.addframe = _addframe
         Me.menugrid = _menugrid
         Me.submenuframe = _submenuframe
-
+        defaultFy_Week = 0
         '_AideService = aideService
 
         ' This call is required by the designer.
@@ -118,7 +120,7 @@ Class DailyAuditPage
     End Sub
 
     Public Shared Function GetWeekNumber(ByVal datum As Date) As Integer
-        Return (datum.Day - 1) \ 7 + 1
+        Return WeekOfMonth(datum)
     End Function
 
     Public Sub LoadMonthLst()
@@ -314,7 +316,7 @@ Class DailyAuditPage
                 DateString = stringMonth.Substring(0, 13)
                 stringMonth = CDate(DateString).Date.Year & "-" & CDate(DateString).Date.Month.ToString("00") & "-" & CDate(DateString).Date.Day.ToString("00")
                 DateNow = Date.Now.Year & "-" & Date.Now.Month.ToString("00") & "-" & Date.Now.Day.ToString("00")
-                defaultFy_Week = 0
+                'defaultFy_Week = 0
                 If notequalToDateNow = String.Empty Then
                     notequalToDateNow = rawUser._fy_week
                 End If
@@ -832,3 +834,11 @@ Public Class QuestionsDayModel
     End Property
 End Class
 
+Public Module DateTimeExtensions
+    <Extension()>
+    Public Function WeekOfMonth(ByVal d As Date) As Integer
+        Dim isExact = d.Day Mod 7 = 0
+        Dim offset = If(isExact, 0, 1)
+        Return CInt(Math.Floor(d.Day / 7.0)) + offset
+    End Function
+End Module
