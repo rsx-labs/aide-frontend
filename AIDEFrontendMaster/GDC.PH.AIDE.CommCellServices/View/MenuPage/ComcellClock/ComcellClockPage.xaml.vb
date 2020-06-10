@@ -382,7 +382,8 @@ Class ComcellClockPage
         Dim ComcellDBProvider As New ComcellDBProvider
 
         For Each comcellItem As Comcell In lstComcell
-            If DateTime.ParseExact(comcellItem.MONTH, "MMMM", CultureInfo.CurrentCulture).Month = monthToday Then
+            If DateTime.ParseExact(comcellItem.MONTH, "MMMM", CultureInfo.CurrentCulture).Month = monthToday AndAlso
+                comcellItem.WEEK = AppState.GetInstance().CurrentWeek Then
                 ComcellDBProvider.SetMyComcellItem(comcellItem)
                 Exit For
             End If

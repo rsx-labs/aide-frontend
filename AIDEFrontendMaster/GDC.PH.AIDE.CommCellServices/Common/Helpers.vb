@@ -24,4 +24,16 @@ Public NotInheritable Class Helpers
         End Try
     End Function
 
+    Public Shared Function GetMonthNumber(MonthName As String) As Integer
+        Return DateTime.ParseExact(MonthName, "MMMM", System.Globalization.CultureInfo.CurrentCulture).Month
+    End Function
+
+    Public Shared Function GetFYStart(MonthNow As Integer) As Integer
+        If MonthNow < 4 Then
+            Return DateTime.Now.Year - 1
+        Else
+            Return DateTime.Now.Year
+        End If
+    End Function
+
 End Class

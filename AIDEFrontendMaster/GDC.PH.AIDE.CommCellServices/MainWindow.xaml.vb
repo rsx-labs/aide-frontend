@@ -265,6 +265,7 @@ Class MainWindow
         SetEmployeeData()
         LoadVersionNo()
 
+
         _logger.Info("Show greeting box and navigate to home screen")
 
         _loader = New SplashScreen(email)
@@ -272,6 +273,8 @@ Class MainWindow
         _loader.Left = 25
         _loader.Show()
         _loaderOn = True
+
+        LoadAdditionalGlobalData()
 
         Attendance()
 
@@ -281,6 +284,24 @@ Class MainWindow
         SubMenuFrame.Navigate(New BlankSubMenu())
 
         _logger.Debug("End : InitializeData")
+    End Sub
+
+    Private Sub LoadAdditionalGlobalData()
+        Dim lstWeekRange As WeekRange()
+
+        AppState.GetInstance().CurrentFY = Helpers.GetFYStart(DateTime.Now.Month)
+
+        lstWeekRange = AideClient.GetClient().GetWeekRangeByMonthYear(
+            profile.Emp_ID,
+            DateTime.Now.Month,
+            AppState.GetInstance().CurrentFY
+        )
+
+        For Each objWeekRange As WeekRange In lstWeekRange
+            If DateTime.Now >= objWeekRange.StartWeek And DateTime.Now <= objWeekRange.EndWeek Then
+                AppState.GetInstance().CurrentWeek = objWeekRange.WeekRangeID
+            End If
+        Next
     End Sub
 
     Public Function CheckOutlook() As Boolean

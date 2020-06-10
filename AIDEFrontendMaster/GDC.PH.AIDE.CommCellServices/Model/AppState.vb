@@ -60,6 +60,8 @@ Public Class AppState
 
     Public CurrentMenu As Integer
     Public CurrentSubMenu As Integer
+    Public CurrentFY As Integer
+    Public CurrentWeek As Integer
     Public IsUpdateAvailable As Boolean
 
     Public OptionValueDictionary As Dictionary(Of Integer, String) = New Dictionary(Of Integer, String)()
