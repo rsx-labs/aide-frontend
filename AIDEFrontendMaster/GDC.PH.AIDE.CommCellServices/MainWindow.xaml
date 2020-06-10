@@ -321,7 +321,6 @@
                         <Hyperlink Name="updateLink" >
                             <Hyperlink.Inlines>
                                 <Run Name="updateRun" 
-                                     Text="Test Link"
                                      Foreground="AntiqueWhite"
                                      FontSize="14"
                                      />

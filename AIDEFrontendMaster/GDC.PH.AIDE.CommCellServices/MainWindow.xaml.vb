@@ -190,7 +190,7 @@ Class MainWindow
                     AppState.GetInstance().IsUpdateAvailable = True
 
                     If MessageBox.Show(
-                        "AIDE update is now available. Do you want to update now? " + Environment.NewLine + Environment.NewLine +
+                        $"AIDE {latestCommCellVersion} update is now available. Do you want to update now? " + Environment.NewLine + Environment.NewLine +
                         "Note : By selecting YES, you will be directed to a site where you can download the new version. You will have to install the update manually.",
                         "AIDE Update",
                         MessageBoxButton.YesNo,
