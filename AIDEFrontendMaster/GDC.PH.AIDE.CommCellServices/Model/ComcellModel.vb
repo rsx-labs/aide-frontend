@@ -19,6 +19,9 @@ Public Class ComcellModel
     Private _fyEnd As DateTime
     Private _facilitatorName As String
     Private _minsTakerName As String
+    Private _week As Integer
+    Private _weekStart As String
+
     Public Sub New()
     End Sub
 
@@ -32,6 +35,9 @@ Public Class ComcellModel
         Me.FY_END = rawComcell.FY_END
         Me.FACILITATOR_NAME = rawComcell.FACILITATOR_NAME
         Me.MINUTES_TAKER_NAME = rawComcell.MINUTES_TAKER_NAME
+        Me.WEEK = rawComcell.WEEK
+        ' lets just assume that for valid date , year should be greater that 2000
+        Me.WEEK_START = If(rawComcell.WEEK_START.Year > 2000, rawComcell.WEEK_START.ToString("d"), String.Empty)
     End Sub
 
     Public Property COMCELL_ID As Integer
@@ -121,6 +127,26 @@ Public Class ComcellModel
         Set(value As String)
             _minsTakerName = value
             NotifyPropertyChanged("MINUTES_TAKER_NAME")
+        End Set
+    End Property
+
+    Public Property WEEK As Integer
+        Get
+            Return _week
+        End Get
+        Set(value As Integer)
+            _week = value
+            NotifyPropertyChanged("WEEK")
+        End Set
+    End Property
+
+    Public Property WEEK_START As String
+        Get
+            Return _weekStart
+        End Get
+        Set(value As String)
+            _weekStart = value
+            NotifyPropertyChanged("WEEK_START")
         End Set
     End Property
 

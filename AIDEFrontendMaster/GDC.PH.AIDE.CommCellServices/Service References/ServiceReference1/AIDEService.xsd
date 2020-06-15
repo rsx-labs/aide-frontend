@@ -302,6 +302,8 @@
       <xs:element minOccurs="0" name="MINUTES_TAKER_NAME" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MONTH" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SCHEDULE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WEEK" type="xs:int" />
+      <xs:element minOccurs="0" name="WEEK_START" type="xs:dateTime" />
       <xs:element minOccurs="0" name="YEAR" type="xs:int" />
     </xs:sequence>
   </xs:complexType>

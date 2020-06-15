@@ -175,7 +175,7 @@
     </ApplicationDefinition>
     <Compile Include="AideClient.vb" />
     <Compile Include="BindingProxy.vb" />
-    <Compile Include="Common.vb" />
+    <Compile Include="Common\Constants.vb" />
     <Compile Include="DataProviderService\ActionListDBProvider.vb" />
     <Compile Include="DataProviderService\AssignedProjectDBProvider.vb" />
     <Compile Include="DataProviderService\KPISummaryDBProvider.vb" />
@@ -219,6 +219,7 @@
     <Compile Include="ElementHosts\ProfileElementHost.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Common\Helpers.vb" />
     <Compile Include="Model\ActionModel.vb" />
     <Compile Include="Model\AppState.vb" />
     <Compile Include="Model\AssignedProjectModel.vb" />
@@ -266,9 +267,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="SplashScreen.xaml.vb">
-      <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ActionListViewModel.vb" />
     <Compile Include="ViewModel\AssignedProjectViewModel.vb" />
@@ -609,6 +607,9 @@
     <Compile Include="View\MenuPage\Workplace Audit\WeeklyAuditPage.xaml.vb">
       <DependentUpon>WeeklyAuditPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Misc\SplashScreen.xaml.vb">
+      <DependentUpon>SplashScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Notifications\About\AboutPage.xaml.vb">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
@@ -663,10 +664,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="SplashScreen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Charts\DoughnutChart.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1067,6 +1064,10 @@
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
+    <Page Include="View\Misc\SplashScreen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Notifications\About\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1400,7 +1401,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Buttons\" />
-    <Folder Include="View\Extras\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Menu\HomeIcon.png" />

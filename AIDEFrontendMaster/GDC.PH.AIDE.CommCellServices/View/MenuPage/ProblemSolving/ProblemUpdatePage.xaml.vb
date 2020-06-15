@@ -13,6 +13,7 @@ Class ProblemUpdatePage
     Private profile As Profile
     Private lstnickName As Nickname()
     Private lstOfEmployees As New ObservableCollection(Of NicknameModel)
+    Private newLstOfEmployees As New ObservableCollection(Of NicknameModel)
     Private lstEmpString As List(Of String)
     Private empid As Integer
     Private email As String
@@ -45,20 +46,20 @@ Class ProblemUpdatePage
     End Sub
     Private Sub btnAddEmp_Click(sender As Object, e As RoutedEventArgs) Handles btnAddEmp.Click
         e.Handled = True
-        If EmployeeListProblemLV.SelectedIndex <> -1 Then
+        If cboEmployeeListProblem.SelectedIndex <> -1 Then
 
-            If EmployeeListProblemLV.SelectedItem IsNot Nothing Then
-                Dim objNickName As NicknameModel = CType(EmployeeListProblemLV.SelectedItem, NicknameModel)
+            If cboEmployeeListProblem.SelectedItem IsNot Nothing Then
+                Dim objNickName As NicknameModel = CType(cboEmployeeListProblem.SelectedItem, NicknameModel)
                 AddItemToNewEmpList(objNickName)
             End If
         End If
     End Sub
     Private Sub btnRemoveEmp_Click(sender As Object, e As RoutedEventArgs) Handles btnRemoveEmp.Click
         e.Handled = True
-        If NewListProblemLV.SelectedIndex <> -1 Then
+        If cboEmployeeListProblem.SelectedIndex <> -1 Then
 
-            If NewListProblemLV.SelectedItem IsNot Nothing Then
-                Dim objNickName As NicknameModel = CType(NewListProblemLV.SelectedItem, NicknameModel)
+            If cboEmployeeListProblem.SelectedItem IsNot Nothing Then
+                Dim objNickName As NicknameModel = CType(cboEmployeeListProblem.SelectedItem, NicknameModel)
                 RemoveItemToNewEmpList(objNickName)
             End If
         End If
@@ -115,9 +116,15 @@ Class ProblemUpdatePage
                 Next
                 For Each rawUser As MyNickname In successRegisterDBProvider.GetMyNickname()
                     lstOfEmployees.Add(New NicknameModel(rawUser))
+                    If Problem_AssignedAll.Text = String.Empty Then
+                        Problem_AssignedAll.Text = rawUser.FirstName
+                    Else
+                        Problem_AssignedAll.Text += ", " & rawUser.FirstName
+                    End If
                 Next
                 addPartTxt.Visibility = Visibility.Hidden
-                NewListProblemLV.ItemsSource = lstOfEmployees
+                'cboEmployeeListProblem.ItemsSource = lstOfEmployees
+
             End If
 
         Catch ex As Exception
@@ -158,7 +165,7 @@ Class ProblemUpdatePage
                     nicknameVM.NicknameList.Add(New NicknameModel(rawUser))
                 Next
 
-                EmployeeListProblemLV.ItemsSource = nicknameVM.NicknameList
+                cboEmployeeListProblem.ItemsSource = nicknameVM.NicknameList
             End If
 
         Catch ex As Exception
@@ -168,28 +175,24 @@ Class ProblemUpdatePage
 
     Public Sub AddItemToNewEmpList(ByVal objEmp As NicknameModel)
         Try
-            Dim found As Boolean = False
-
-
-            If lstOfEmployees.Count > 0 Then
-                For Each objEmployee As NicknameModel In lstOfEmployees
-                    If objEmployee.EMP_ID = objEmp.EMP_ID Then
-                        found = True
-                        MsgBox(objEmp.EMPLOYEE_NAME + " was already added to the list.", MsgBoxStyle.Information, "AIDE")
-                        Exit For
-                    End If
-                Next
-                If Not found Then
+            If Problem_AssignedAll.Text = String.Empty Then
+                Problem_AssignedAll.Text += cboEmployeeListProblem.SelectedValue
+                If Not lstOfEmployees.Contains(objEmp) Then
                     lstOfEmployees.Add(objEmp)
                 End If
             Else
-                lstOfEmployees.Add(objEmp)
-                addPartTxt.Visibility = Visibility.Hidden
+                Dim txtBox As String = Problem_AssignedAll.Text
+                Dim cbBox As String = cboEmployeeListProblem.SelectedValue
+                Dim ifYes As Integer = txtBox.IndexOf(cbBox)
+                If ifYes = -1 Then
+                    Problem_AssignedAll.Text += ", " + cboEmployeeListProblem.SelectedValue
+                    If Not lstOfEmployees.Contains(objEmp) Then
+                        lstOfEmployees.Add(objEmp)
+                    End If
+                Else
+                    MsgBox("Employee already assigned. Please select a different employee.", MsgBoxStyle.Exclamation, "AIDE")
+                End If
             End If
-            NewListProblemLV.ItemsSource = Nothing
-            NewListProblemLV.ItemsSource = lstOfEmployees
-
-
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
@@ -197,22 +200,43 @@ Class ProblemUpdatePage
 
     Public Sub RemoveItemToNewEmpList(ByVal objEmp As NicknameModel)
         Try
+            If Problem_AssignedAll.Text = String.Empty Then
+                MsgBox("No assigned employee to remove.", MsgBoxStyle.Exclamation, "AIDE")
+            ElseIf cboEmployeeListProblem.SelectedValue = String.Empty Then
+                MsgBox("Please select an employee", MsgBoxStyle.Exclamation, "AIDE")
+            Else
+                Dim txtBox As String = Problem_AssignedAll.Text
+                Dim cbBox As String = String.Empty
+                Dim ifYes As Integer = txtBox.IndexOf(cboEmployeeListProblem.SelectedValue)
 
-            If lstOfEmployees.Count > 0 Then
-                For Each objEmployee As NicknameModel In lstOfEmployees
-                    If objEmployee.EMP_ID = objEmp.EMP_ID Then
-                        lstOfEmployees.Remove(objEmp)
-                        Exit For
+                If ifYes <> -1 Then
+                    If ifYes <> 0 Then
+                        cbBox = ", " & cboEmployeeListProblem.SelectedValue
+                        Dim ifYesAgain As Integer = txtBox.IndexOf(cbBox)
+                        Problem_AssignedAll.Text = Problem_AssignedAll.Text.Remove(ifYesAgain, cbBox.Length)
+                        For Each user As NicknameModel In lstOfEmployees
+                            If cboEmployeeListProblem.SelectedValue = user.First_Name Then
+                                lstOfEmployees.Remove(user)
+                                Exit For
+                            End If
+                        Next
+                    Else
+                        If txtBox.Length = cboEmployeeListProblem.SelectedValue.Length Then
+                            cbBox = Problem_AssignedAll.Text
+                        Else
+                            cbBox = cboEmployeeListProblem.SelectedValue & ", "
+                        End If
+                        Problem_AssignedAll.Text = txtBox.Remove(ifYes, cbBox.Length)
+                        For Each user As NicknameModel In lstOfEmployees
+                            If cboEmployeeListProblem.SelectedValue = user.First_Name Then
+                                lstOfEmployees.Remove(user)
+                                Exit For
+                            End If
+                        Next
                     End If
-                Next
-
-                If lstOfEmployees.Count = 0 Then
-                    addPartTxt.Visibility = Visibility.Visible
+                Else
+                    MsgBox("No assigned employee to remove.", MsgBoxStyle.Exclamation, "AIDE")
                 End If
-
-                NewListProblemLV.ItemsSource = Nothing
-                NewListProblemLV.ItemsSource = lstOfEmployees
-
             End If
 
         Catch ex As Exception

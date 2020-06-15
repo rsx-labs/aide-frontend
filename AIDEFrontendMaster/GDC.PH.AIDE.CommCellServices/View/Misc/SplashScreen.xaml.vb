@@ -19,37 +19,37 @@ Public Class SplashScreen
         Select Case DateTime.Now.Hour
             Case <= 4
                 data.Message = "Good morning,"
-                data.ImageSource = ".\Assets\Images\night.png"
+                data.ImageSource = "..\..\Assets\Images\night.png"
                 data.Background = "#616161"
                 data.Foreground = "#fafafa"
             Case <= 7
                 data.Message = "Good morning,"
-                data.ImageSource = ".\Assets\Images\sunrise.png"
+                data.ImageSource = "..\..\Assets\Images\sunrise.png"
                 data.Background = "#f44336"
                 data.Foreground = "#fafafa"
             Case <= 11
                 data.Message = "Good morning,"
-                data.ImageSource = ".\Assets\Images\morning.png"
+                data.ImageSource = "..\..\Assets\Images\morning.png"
                 data.Background = "#ffebee"
                 data.Foreground = "#4e342e"
             Case <= 14
                 data.Message = "Good afternoon,"
-                data.ImageSource = ".\Assets\Images\noon.png"
+                data.ImageSource = "..\..\Assets\Images\noon.png"
                 data.Background = "#ffebee"
                 data.Foreground = "#4e342e"
             Case <= 17
                 data.Message = "Good afternoon,"
-                data.ImageSource = ".\Assets\Images\afternoon.png"
+                data.ImageSource = "..\..\Assets\Images\afternoon.png"
                 data.Background = "#f44336"
                 data.Foreground = "#fafafa"
             Case <= 20
                 data.Message = "Good evening,"
-                data.ImageSource = ".\Assets\Images\evening.png"
+                data.ImageSource = "..\..\Assets\Images\evening.png"
                 data.Background = "#b71c1c"
                 data.Foreground = "#fafafa"
             Case Else
                 data.Message = "Good evening,"
-                data.ImageSource = ".\Assets\Images\night.png"
+                data.ImageSource = "..\..\Assets\Images\night.png"
                 data.Background = "#616161"
                 data.Foreground = "#fafafa"
         End Select

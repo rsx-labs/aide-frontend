@@ -2797,6 +2797,12 @@ Namespace ServiceReference1
         Private SCHEDULEField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private WEEKField As Integer
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private WEEK_STARTField As Date
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private YEARField As Integer
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
@@ -2935,6 +2941,32 @@ Namespace ServiceReference1
                 If (Object.ReferenceEquals(Me.SCHEDULEField, value) <> true) Then
                     Me.SCHEDULEField = value
                     Me.RaisePropertyChanged("SCHEDULE")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property WEEK() As Integer
+            Get
+                Return Me.WEEKField
+            End Get
+            Set
+                If (Me.WEEKField.Equals(value) <> true) Then
+                    Me.WEEKField = value
+                    Me.RaisePropertyChanged("WEEK")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property WEEK_START() As Date
+            Get
+                Return Me.WEEK_STARTField
+            End Get
+            Set
+                If (Me.WEEK_STARTField.Equals(value) <> true) Then
+                    Me.WEEK_STARTField = value
+                    Me.RaisePropertyChanged("WEEK_START")
                 End If
             End Set
         End Property

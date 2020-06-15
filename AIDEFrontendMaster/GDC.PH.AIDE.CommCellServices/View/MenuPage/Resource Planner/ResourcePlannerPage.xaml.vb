@@ -289,7 +289,7 @@ Class ResourcePlannerPage
                 _ResourceDBProvider.SetAllEmpRPList(objResource)
             Next
 
-            Dim dateFirstSTR As String = month.ToString + "/1/" + getSelectedMonth(year, month).ToString()
+            Dim dateFirstSTR As String = getSelectedMonth(year, month).ToString() & "-" & month.ToString().PadLeft(2, "0") & "-" & "01"
             Dim dateFirst As Date = Date.Parse(dateFirstSTR)
             For Each iResource As myResourceList In _ResourceDBProvider.GetAllEmpRPList()
                 resourcelist.Add(New ResourcePlannerModel(iResource))
@@ -300,7 +300,7 @@ Class ResourcePlannerPage
                     If emp_id > 0 Then
                         it.Add(dict)
                     End If
-                    dateFirstSTR = month.ToString + "/1/" + getSelectedMonth(year, month).ToString()
+                    dateFirstSTR = getSelectedMonth(year, month).ToString() & "-" & month.ToString().PadLeft(2, "0") & "-" & "01"
                     dateFirst = Date.Parse(dateFirstSTR)
                     dict = New Dictionary(Of String, String)()
 

@@ -117,7 +117,7 @@ Public Class AssetsInventoryAddPage
                 assets.TRANSFER_ID = cbNickname.SelectedValue
                 If profile.Permission_ID = 1 Then 'Manage
                     If assetsModel.APPROVAL <> 0 Then
-                        assets.APPROVAL = 5
+                        assets.APPROVAL = 6
                     Else
                         assets.APPROVAL = assetsModel.APPROVAL
                     End If

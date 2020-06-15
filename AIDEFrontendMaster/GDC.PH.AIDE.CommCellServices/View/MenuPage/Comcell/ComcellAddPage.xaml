@@ -877,89 +877,9 @@
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Margin="10,5,5,5"/>
-                        <TextBlock x:Name="txtBlockMonth" FontSize="12" IsHitTestVisible="False" Text="Select month *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray" Margin="5,0,5,0">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                        <TextBlock x:Name="txtlabelMonth" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Month" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </Grid>
-                    <Grid Grid.Row="1">
-                        <ComboBox ItemsSource="{Binding NicknameList}" SelectedValuePath="First_Name" DisplayMemberPath="EMPLOYEE_NAME" Style="{DynamicResource StyleComboBox}" x:Name="cbFacilitator" Margin="10,5,5,5"/>
-                        <TextBlock x:Name="txtBlockFacilitator" FontSize="12" IsHitTestVisible="False" Text="Select facilitator *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray" Margin="5,0,5,0">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=cbFacilitator}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                        <TextBlock x:Name="txtlabelFacilitator" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Facilitator" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=cbFacilitator}" Value="">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </Grid>
-                    <Grid Grid.Row="2">
-                        <ComboBox ItemsSource="{Binding NicknameList}" Style="{DynamicResource StyleComboBox}" SelectedValuePath="First_Name" DisplayMemberPath="EMPLOYEE_NAME" x:Name="cbMinTaker" Margin="10,5,5,5"/>
-                        <TextBlock x:Name="txtBlockMinsTaker" FontSize="12" IsHitTestVisible="False" Text="Select minutes taker *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray" Margin="5,0,5,0">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=cbMinTaker}" Value="">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                        <TextBlock x:Name="txtlabelMinutesTaker" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Minutes Taker" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Text, ElementName=cbMinTaker}" Value="">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </Grid>
-                    <Grid Grid.Row="3">
                         <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbYear" Margin="10,5,5,5"/>
                         <TextBlock x:Name="txtBlockYear" FontSize="12" IsHitTestVisible="False" Text="Select fiscal year *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray" Margin="5,0,5,0">
                             <TextBlock.Style>
@@ -986,7 +906,116 @@
                             </TextBlock.Style>
                         </TextBlock>
                     </Grid>
+
+                    <Grid Grid.Row="1">
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbMonth" Margin="10,5,5,5"/>
+                        <TextBlock x:Name="txtBlockMonth" FontSize="12" IsHitTestVisible="False" Text="Select month *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray" Margin="5,0,5,0">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock x:Name="txtlabelMonth" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Month" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbMonth}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <ComboBox Style="{DynamicResource StyleComboBox}" x:Name="cbWeek" Margin="10,5,5,5"/>
+                        <TextBlock x:Name="txtBlockWeek" FontSize="12" IsHitTestVisible="False" Text="Select week *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray" Margin="5,0,5,0">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbWeek}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock x:Name="txtlabelWeek" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Week" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbWeek}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                    <Grid Grid.Row="3">
+                        <ComboBox ItemsSource="{Binding NicknameList}" SelectedValuePath="First_Name" DisplayMemberPath="EMPLOYEE_NAME" Style="{DynamicResource StyleComboBox}" x:Name="cbFacilitator" Margin="10,5,5,5"/>
+                        <TextBlock x:Name="txtBlockFacilitator" FontSize="12" IsHitTestVisible="False" Text="Select facilitator *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray" Margin="5,0,5,0">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbFacilitator}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock x:Name="txtlabelFacilitator" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Facilitator" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbFacilitator}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
                     <Grid Grid.Row="4">
+                        <ComboBox ItemsSource="{Binding NicknameList}" Style="{DynamicResource StyleComboBox}" SelectedValuePath="First_Name" DisplayMemberPath="EMPLOYEE_NAME" x:Name="cbMinTaker" Margin="10,5,5,5"/>
+                        <TextBlock x:Name="txtBlockMinsTaker" FontSize="12" IsHitTestVisible="False" Text="Select minutes taker *" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGray" Margin="5,0,5,0">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbMinTaker}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock x:Name="txtlabelMinutesTaker" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Minutes Taker" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cbMinTaker}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                    <Grid Grid.Row="5">
                         <Button Style="{DynamicResource RoundCornerCreate}" Name="AddBtn" Margin="0,5" Click="AddBtn_Click">
                             <TextBlock x:Name="txtBlockButton" Text="CREATE" TextWrapping="Wrap" Margin="5"/>
                         </Button>

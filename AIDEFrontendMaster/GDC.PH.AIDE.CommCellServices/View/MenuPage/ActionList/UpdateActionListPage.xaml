@@ -181,7 +181,7 @@
                     
                     <Grid Grid.Row="4">
                         <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                            <DatePicker Name="Act_DateClosed" Style="{DynamicResource styleDatePickerfrom}" Text="{Binding DATE_CLOSED,Mode=TwoWay}"/>
+                            <DatePicker Name="Act_DateClosed" Style="{DynamicResource styleDatePickerfrom}" Text="{Binding DATE_CLOSED,Mode=TwoWay, StringFormat=yyyy-MM-dd}"/>
                         </Border>
                         
                         <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select close date *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
@@ -210,10 +210,41 @@
                             </TextBlock.Style>
                         </TextBlock>
                     </Grid>
-                    
                     <Grid Grid.Row="5">
+                        <Border Margin="0,5,5,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15" Grid.ColumnSpan="3">
+                            <DatePicker Style="{DynamicResource styleDatePickerfrom}" x:Name="Act_DueDate" BorderBrush="Transparent" Margin="0" FontSize="12" Text="{Binding DUE_DATE, Mode=TwoWay, StringFormat=yyyy-MM-dd}" />
+                        </Border>
+
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select due date *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=Act_DueDate}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <TextBlock x:Name="txtlabelDate" Margin="5,0,5,0" Width="120" TextAlignment="Center" Text="Due Date" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=Act_DueDate}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+
+                    <!--<Grid Grid.Row="5">
                         <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
-                            <DatePicker Style="{DynamicResource styleDatePickerfrom}" Name="Act_DueDate" Text="{Binding DUE_DATE, StringFormat=MM/dd/yyyy ,Mode=TwoWay}" SelectedDateChanged="Act_DueDate_SelectedDateChanged"/>
+                            <DatePicker Style="{DynamicResource styleDatePickerfrom}" Name="Act_DueDate" Text="{Binding DUE_DATE,Mode=TwoWay}"/>
                         </Border>
                         
                         <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select due date" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
@@ -241,7 +272,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                    </Grid>
+                    </Grid>-->
                     
                     <Grid Grid.Row="6">
                         <Button Style="{DynamicResource RoundCornerUpdate}" Name="UpdateBtn" Margin="0,5" Click="UpdateBtn_Click">

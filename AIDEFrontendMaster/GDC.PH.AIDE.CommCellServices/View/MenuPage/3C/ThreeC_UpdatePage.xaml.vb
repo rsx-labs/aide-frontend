@@ -138,7 +138,12 @@ Class ThreeC_UpdatePage
         updatedSelectedConcern.Concerns = _updatedSelectedConcern.SelectedConcern.CONCERN
         updatedSelectedConcern.Cause = _updatedSelectedConcern.SelectedConcern.CAUSE
         updatedSelectedConcern.CounterMeasure = _updatedSelectedConcern.SelectedConcern.COUNTERMEASURE
-        updatedSelectedConcern.Due_Date = _updatedSelectedConcern.SelectedConcern.DUE_DATE
+        If dtDate.SelectedDate.HasValue Then
+            updatedSelectedConcern.Due_Date = dtDate.SelectedDate.Value
+        Else
+            updatedSelectedConcern.Due_Date = _updatedSelectedConcern.SelectedConcern.DUE_DATE
+        End If
+
 
         Return updatedSelectedConcern
     End Function

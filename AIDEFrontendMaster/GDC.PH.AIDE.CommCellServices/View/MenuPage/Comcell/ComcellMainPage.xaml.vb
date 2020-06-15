@@ -4,6 +4,7 @@ Imports System.IO
 Imports System.Diagnostics
 Imports System.ServiceModel
 Imports System.Collections.ObjectModel
+Imports NLog
 <CallbackBehavior(ConcurrencyMode:=ConcurrencyMode.Single, UseSynchronizationContext:=False)>
 Class ComcellMainPage
     Implements ServiceReference1.IAideServiceCallback
@@ -34,6 +35,12 @@ Class ComcellMainPage
     Dim lastRowIndex As Integer
     Dim pagingPageIndex As Integer
     Dim pagingRecordPerPage As Integer = 12
+    Dim totalRecords As Integer
+    Dim currentPage As Integer
+    Dim lastPage As Integer
+
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
+    Dim paginatedCollection As PaginatedObservableCollection(Of ComcellModel) = New PaginatedObservableCollection(Of ComcellModel)(pagingRecordPerPage)
 
     Private Enum PagingMode
         _First = 1
@@ -47,6 +54,8 @@ Class ComcellMainPage
 
     Public Sub New(_mainframe As Frame, _profile As Profile, _addframe As Frame, _menugrid As Grid, _submenuframe As Frame)
 
+        _logger.Info("Start : Constructor")
+
         InitializeComponent()
         Me.empID = _profile.Emp_ID
         Me.mainframe = _mainframe
@@ -56,10 +65,24 @@ Class ComcellMainPage
         Me.DataContext = ComcellVM
         Me.profile = _profile
 
+        _logger.Debug("Load year ...")
+
         LoadYear()
+
+        _logger.Debug("Set data ...")
+
         SetData()
+
+        _logger.Debug("Load fiscal year ...")
+
         LoadFiscalYear()
+
+        _logger.Debug("Load permission setting ...")
+
         PermissionSettings()
+
+        _logger.Info("End : Constructor")
+
     End Sub
 
 #End Region
@@ -85,9 +108,14 @@ Class ComcellMainPage
             'If InitializeService() Then
             lstComcell = AideClient.GetClient().GetComcellMeeting(empID, year)
             lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
+
+            totalRecords = lstComcell.Count
             SetPaging(PagingMode._First)
+            DisplayPagingInfo()
             'End If
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -108,19 +136,28 @@ Class ComcellMainPage
             Dim ComcellDBProvider As New ComcellDBProvider
             Dim objComcell As New Comcell
 
+            paginatedCollection = New PaginatedObservableCollection(Of ComcellModel)(pagingRecordPerPage)
+
             For i As Integer = startRowIndex To lastRowIndex
                 objComcell = lstComcell(i)
                 ComcellDBProvider.SetMyComcell(objComcell)
             Next
 
             For Each rawUser As MyComcell In ComcellDBProvider.GetMyComcell()
-                lstComcellList.Add(New ComcellModel(rawUser))
+                'lstComcellList.Add(New ComcellModel(rawUser))
+                paginatedCollection.Add(New ComcellModel(rawUser))
             Next
 
-            ComcellVM.ComcellList = lstComcellList
+            'currentPage = lstauditSchedList.CurrentPage + 1
+            lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+
+            'paginatedCollection.CurrentPage = pagingPageIndex
+            ComcellVM.ComcellList = paginatedCollection
 
             Me.DataContext = ComcellVM
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -141,6 +178,8 @@ Class ComcellMainPage
             fiscalyearVM.ObjectFiscalYearSet = lstFiscalYearList
             cbYear.ItemsSource = fiscalyearVM.ObjectFiscalYearSet
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -205,6 +244,8 @@ Class ComcellMainPage
             End Select
 
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
@@ -235,6 +276,8 @@ Class ComcellMainPage
                 comcell.MINUTES_TAKER_NAME = CType(ComcellLV.SelectedItem, ComcellModel).MINUTES_TAKER_NAME
                 comcell.COMCELL_ID = CType(ComcellLV.SelectedItem, ComcellModel).COMCELL_ID
                 comcell.FY_START = CType(ComcellLV.SelectedItem, ComcellModel).FY_START
+                comcell.WEEK = CType(ComcellLV.SelectedItem, ComcellModel).WEEK
+                comcell.WEEK_START = CType(ComcellLV.SelectedItem, ComcellModel).WEEK_START
 
                 addframe.Navigate(New ComcellAddPage(profile, mainframe, addframe, menugrid, submenuframe, comcell))
                 mainframe.IsEnabled = False
@@ -286,6 +329,56 @@ Class ComcellMainPage
 
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
 
+    End Sub
+
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
+        'If totalRecords >= ((paginatedCollection.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
+        '    paginatedCollection.CurrentPage = paginatedCollection.CurrentPage + 1
+        '    currentPage = paginatedCollection.CurrentPage + 1
+        '    lastPage = Math.Ceiling(totalRecords / pagingRecordPerPage)
+        'End If
+        SetPaging(PagingMode._Next)
+
+        DisplayPagingInfo()
+    End Sub
+
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
+        'paginatedCollection.CurrentPage = paginatedCollection.CurrentPage - 1
+        'If currentPage > 1 Then
+        '    currentPage -= 1
+        'End If
+        SetPaging(PagingMode._Previous)
+
+        DisplayPagingInfo()
+    End Sub
+
+    Private Sub DisplayPagingInfo()
+        ' If there has no data found
+        If totalRecords = 0 Then
+            txtPageNo.Text = "No Results Found "
+            GUISettingsOff()
+        Else
+            txtPageNo.Text = "page " & pagingPageIndex & " of " & lastPage
+            GUISettingsOn()
+        End If
+    End Sub
+
+    Private Sub GUISettingsOff()
+        'lv_team.Visibility = Windows.Visibility.Hidden
+        'lv_all.Visibility = Windows.Visibility.Hidden
+        'lv_unapproved.Visibility = Windows.Visibility.Hidden
+
+        btnPrev.IsEnabled = False
+        btnNext.IsEnabled = False
+    End Sub
+
+    Private Sub GUISettingsOn()
+        'lv_team.Visibility = Windows.Visibility.Visible
+        'lv_all.Visibility = Windows.Visibility.Visible
+        'lv_unapproved.Visibility = Windows.Visibility.Visible
+
+        btnPrev.IsEnabled = True
+        btnNext.IsEnabled = True
     End Sub
 #End Region
 

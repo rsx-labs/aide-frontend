@@ -74,37 +74,35 @@
                         <ColumnDefinition Width="4.5*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0" >
-                        <ListView x:Name="NewListProblemLV" Margin="10,5" ScrollViewer.CanContentScroll="False" 
-                        ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" 
-                        Height="auto" Width="auto" BorderBrush="{x:Null}" SelectionMode="Single" 
-                        TextOptions.TextFormattingMode="Display" AllowDrop="True" 
-                         BorderThickness="0" Focusable="False">
-                            <ListView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ListView.ItemsPanel>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
+                    <Grid Grid.Row="0">
+                        <Border Margin="0,5" Background="white" BorderBrush="Gainsboro" BorderThickness="3" CornerRadius="15">
+                            <TextBox FontSize="12" Template="{DynamicResource TextBoxBaseControlTemplate}" Name="Problem_AssignedAll" IsEnabled="False" BorderThickness="0" />
+                        </Border>
 
-                                        <Image Source="{Binding Image_Path}" Width="40">
-                                            <Image.OpacityMask>
-                                                <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
-                                                    <GradientStop Color="#ffffffff" Offset="1" />
-                                                    <GradientStop Color="#00ffffff" Offset="1" />
-                                                </RadialGradientBrush>
-                                            </Image.OpacityMask>
-                                        </Image>
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Add Participants below *" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray" x:Name="addPartTxt">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=Problem_AssignedAll}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
 
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-
-                        </ListView>
-                        <TextBlock x:Name="addPartTxt" Text="Add participants *" FontStyle="Italic" Style="{StaticResource TextBlockStyleForTextbox}">
-
+                        <TextBlock x:Name="txtlabelAssignee" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Assigned Employee" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=Problem_AssignedAll}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
                         </TextBlock>
                     </Grid>
                     <Grid Grid.Column="1">
@@ -117,35 +115,37 @@
                         <ColumnDefinition Width="4.5*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0" >
-                        <ListView x:Name="EmployeeListProblemLV" Margin="10,5" ScrollViewer.CanContentScroll="False" 
-                        ScrollViewer.VerticalScrollBarVisibility="Auto" HorizontalContentAlignment="Stretch" 
-                        Height="auto" Width="auto" BorderBrush="{x:Null}" SelectionMode="Single" 
-                        TextOptions.TextFormattingMode="Display" AllowDrop="True" 
-                         BorderThickness="0" Focusable="False">
-                            <ListView.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ListView.ItemsPanel>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
+                    <Grid Grid.Column="0">
+                        <ComboBox FontSize="12" Style="{DynamicResource StyleComboBox}" 
+                                      Name="cboEmployeeListProblem" Margin="0,5,2.5,5" 
+                                      SelectedValuePath="First_Name" DisplayMemberPath="EMPLOYEE_NAME" 
+                                      ItemsSource="{Binding NicknameList}"/>
 
-                                        <Image Source="{Binding Image_Path}" Width="40">
-                                            <Image.OpacityMask>
-                                                <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
-                                                    <GradientStop Color="#ffffffff" Offset="1" />
-                                                    <GradientStop Color="#00ffffff" Offset="1" />
-                                                </RadialGradientBrush>
-                                            </Image.OpacityMask>
-                                        </Image>
+                        <TextBlock Background="Transparent" IsHitTestVisible="False" Text="Select employee" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cboEmployeeListProblem}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
 
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-
-                        </ListView>
+                        <TextBlock x:Name="txtlabelSelectedAssignee" Width="120" TextAlignment="Center" Margin="5,0,5,0" Text="Selected Employee" Padding="5,0,5,0" Background="Gray" VerticalAlignment="Top" HorizontalAlignment="Center" Foreground="White" FontSize="9">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=cboEmployeeListProblem}" Value="">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </Grid>
                     <Grid Grid.Column="1">
                         <Button x:Name="btnAddEmp" Style="{DynamicResource ButtonAdd}" Margin="8,15"></Button>

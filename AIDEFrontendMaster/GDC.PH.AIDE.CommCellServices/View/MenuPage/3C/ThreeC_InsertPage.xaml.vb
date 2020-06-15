@@ -103,7 +103,7 @@ Class ThreeC_InsertPage
             concern.Cause = obj.SelectedConcern.CAUSE
             concern.Concerns = obj.SelectedConcern.CONCERN
             concern.CounterMeasure = obj.SelectedConcern.COUNTERMEASURE
-            concern.Due_Date = obj.SelectedConcern.DUE_DATE
+            concern.Due_Date = dtDate.SelectedDate.Value
             Return True
         End If
     End Function
@@ -111,7 +111,14 @@ Class ThreeC_InsertPage
     'Set DateTime Now in DatePicker
     Private Sub setDate()
         Dim ob As New ConcernViewModel
-        ob.SelectedConcern.DUE_DATE = DateTime.Now
+
+        If dtDate.SelectedDate.HasValue Then
+            ob.SelectedConcern.DUE_DATE = dtDate.SelectedDate.Value
+        Else
+            ob.SelectedConcern.DUE_DATE = DateTime.Now
+        End If
+
+
     End Sub
 
     Private Sub ExitPage()

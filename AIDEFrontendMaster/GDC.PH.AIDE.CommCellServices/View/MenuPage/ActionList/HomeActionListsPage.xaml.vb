@@ -176,15 +176,15 @@ Class HomeActionListsPage
         Try
             If Not ActionLV.SelectedIndex = -1 Then
                 If Not profile.Permission_ID = guestAccount Then
-                    Dim selectedAction As New Action
+                    Dim selectedAction As New ActionModel
 
-                    selectedAction.Act_ID = CType(ActionLV.SelectedItem, ActionModel).REF_NO
-                    selectedAction.Act_Message = CType(ActionLV.SelectedItem, ActionModel).ACTION_MESSAGE
-                    selectedAction.Act_NickName = CType(ActionLV.SelectedItem, ActionModel).NICK_NAME
-                    selectedAction.Act_DueDate = CType(ActionLV.SelectedItem, ActionModel).DUE_DATE
-                    selectedAction.Act_DateClosed = CType(ActionLV.SelectedItem, ActionModel).DATE_CLOSED
+                    selectedAction.REF_NO = CType(ActionLV.SelectedItem, ActionModel).REF_NO
+                    selectedAction.ACTION_MESSAGE = CType(ActionLV.SelectedItem, ActionModel).ACTION_MESSAGE
+                    selectedAction.NICK_NAME = CType(ActionLV.SelectedItem, ActionModel).NICK_NAME
+                    selectedAction.DUE_DATE = CType(ActionLV.SelectedItem, ActionModel).DUE_DATE
+                    selectedAction.DATE_CLOSED = CType(ActionLV.SelectedItem, ActionModel).DATE_CLOSED
 
-                    If Not selectedAction.Act_DateClosed = String.Empty Then
+                    If Not selectedAction.DATE_CLOSED = String.Empty Then
                         MsgBox("Selected action list has already been closed. Please select open action list.", vbOKOnly + vbInformation, "Action List")
                     Else
                         addframe.Navigate(New UpdateActionListPage(frame, addframe, menugrid, submenuframe, selectedAction, profile))
@@ -241,6 +241,9 @@ Class HomeActionListsPage
                 e.Row.Background = New BrushConverter().ConvertFrom("#CCFFD8D8")
             End If
         End If
+        'If RowDataContaxt.DATE_CLOSED <> String.Empty Then
+        '    RowDataContaxt.DATE_CLOSED = RowDataContaxt.DATE_CLOSED.ToString("dd-MMM-yy")
+        'End If
     End Sub
 
     Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
