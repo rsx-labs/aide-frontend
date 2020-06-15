@@ -326,10 +326,12 @@ Class ComcellClockPage
 
         If isSMNotifAllow And enableNotification Then
             actualTime = Now.ToString("MM/dd/yyyy") & " " & dateNow.ToString("hh:mm:ss tt")
-            Dim SkillsTime As String = Now.Month.ToString("00") & "/" & CInt(configUpdateSkills(0)).ToString("00") & "/" & Now.Year.ToString("0000") & " " & configUpdateSkills(1)
-            If actualTime = SkillsTime Then
-                GetSkillsEmailData()
-                SetUpdateSkills()
+            If configUpdateSkills.Count > 0 Then
+                Dim SkillsTime As String = Now.Month.ToString("00") & "/" & CInt(configUpdateSkills(0)).ToString("00") & "/" & Now.Year.ToString("0000") & " " & configUpdateSkills(1)
+                If actualTime = SkillsTime Then
+                    GetSkillsEmailData()
+                    SetUpdateSkills()
+                End If
             End If
         End If
 
