@@ -367,7 +367,7 @@ Class MainWindow
             _logger.Error($"Failed to initialize service. {ex.ToString()}")
 
             '_aideClientService.Abort()
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            'MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
 
         _logger.Debug("End : InitializeService")
@@ -582,7 +582,7 @@ Class MainWindow
 
             Return True
         Catch ex As Exception
-            MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            'MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             _logger.Error($"Error : {ex.ToString()}")
 
             Return False
