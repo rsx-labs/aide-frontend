@@ -52,7 +52,7 @@
     Public Const STAT_ATT_OBA As Integer = 13
     Public Const STAT_ATT_HOBA As Integer = 14
 
-
+    Public Const CONFIG_UPDATE_URL_FEED As Integer = 47
 
 
 End Class

@@ -2,6 +2,8 @@
 Imports UI_AIDE_CommCellServices.ServiceReference1
 Imports System.Collections.ObjectModel
 Imports System.ServiceModel
+Imports NLog
+
 Class ComcellAddPage
     Implements UI_AIDE_CommCellServices.ServiceReference1.IAideServiceCallback
 
@@ -18,28 +20,49 @@ Class ComcellAddPage
     Private mode As String
     Private comcellID As Integer
     Private dsplyByDiv As Integer = 1
+    Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
 #End Region
 
 #Region "Constructors"
     'Add Constructor
     Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame)
+
+        _logger.Info("Start : Add CommCell mode=Add")
+
         Try
+
             Me._frame = mainframe
             Me._addframe = addframe
             Me._menugrid = menugrid
             Me._submenuframe = submenuframe
             Me.profile = _profile
             InitializeComponent()
+
+            _logger.Info("Load months ...")
+
             LoadMonth()
+
+            _logger.Info("Load years ...")
+
             LoadYears()
+
+            _logger.Info("Load nicknames ...")
+
             LoadEmpNickName()
             mode = "Add"
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Info("End : Add CommCell")
     End Sub
     'Update Constructor
     Public Sub New(_profile As Profile, mainframe As Frame, addframe As Frame, menugrid As Grid, submenuframe As Frame, _comcell As ComcellModel)
+
+        _logger.Info("Start : Add CommCell mode=Update")
+
         Try
             Me._frame = mainframe
             Me._addframe = addframe
@@ -49,14 +72,30 @@ Class ComcellAddPage
             Me.ComcellModel = _comcell
             Me.comcellID = ComcellModel.COMCELL_ID
             InitializeComponent()
+
+            _logger.Info("Load controls ...")
+
             LoadControls()
+
+            _logger.Info("Load months ...")
+
             LoadMonth()
+
+            _logger.Info("Load years ...")
+
             LoadYears()
+
+            _logger.Info("Load nickname ...")
+
             LoadEmpNickName()
             mode = "Update"
         Catch ex As Exception
+            _logger.Error(ex.ToString())
+
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
+
+        _logger.Info("End : Add CommCell")
     End Sub
 #End Region
 
@@ -78,14 +117,18 @@ Class ComcellAddPage
     Public Sub LoadControls()
         txtHeader.Text = "Update Facilitator and Minutes Taker"
         txtBlockMonth.Text = ComcellModel.MONTH
+        txtBlockWeek.Text = ComcellModel.WEEK_START
         txtBlockFacilitator.Text = ComcellModel.FACILITATOR_NAME
         txtBlockMinsTaker.Text = ComcellModel.MINUTES_TAKER_NAME
         txtBlockButton.Text = "UPDATE"
         txtBlockYear.Text = ComcellModel.FY_START
 
+        Dim selectedWeek As Integer = ComcellModel.WEEK
+
         AddBtn.Style = FindResource("RoundCornerUpdate")
 
-        cbMonth.SelectedValue = txtBlockMonth.Text
+        cbMonth.SelectedValue = Helpers.GetMonthNumber(txtBlockMonth.Text)
+        cbWeek.SelectedValue = selectedWeek
         cbFacilitator.SelectedValue = txtBlockFacilitator.Text
         cbMinTaker.SelectedValue = txtBlockMinsTaker.Text
         cbYear.SelectedValue = ComcellModel.FY_START.Year
@@ -93,7 +136,7 @@ Class ComcellAddPage
 
     Public Sub LoadMonth()
         cbMonth.DisplayMemberPath = "Text"
-        cbMonth.SelectedValuePath = "Text"
+        cbMonth.SelectedValuePath = "Value"
         cbMonth.Items.Add(New With {.Text = "January", .Value = 1})
         cbMonth.Items.Add(New With {.Text = "February", .Value = 2})
         cbMonth.Items.Add(New With {.Text = "March", .Value = 3})
@@ -108,6 +151,17 @@ Class ComcellAddPage
         cbMonth.Items.Add(New With {.Text = "December", .Value = 12})
     End Sub
 
+    Public Sub LoadWeek()
+        cbWeek.DisplayMemberPath = "Text"
+        cbWeek.SelectedValuePath = "Value"
+        cbWeek.Items.Add(New With {.Text = "First Week", .Value = 1})
+        cbWeek.Items.Add(New With {.Text = "Second Week", .Value = 2})
+        cbWeek.Items.Add(New With {.Text = "Third Week", .Value = 3})
+        cbWeek.Items.Add(New With {.Text = "Fourth Week", .Value = 4})
+        cbWeek.Items.Add(New With {.Text = "Fifth Week", .Value = 5})
+
+    End Sub
+
     Public Sub LoadYears()
         Try
             cbYear.DisplayMemberPath = "Text"
@@ -117,6 +171,7 @@ Class ComcellAddPage
                 cbYear.Items.Add(New With {.Text = i.ToString + "-" + nextYear.ToString, .Value = i})
             Next
         Catch ex As Exception
+            _logger.Error(ex.ToString())
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -143,6 +198,7 @@ Class ComcellAddPage
             cbMinTaker.DataContext = nicknameVM
             'End If
         Catch ex As Exception
+            _logger.Error(ex.ToString())
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try
     End Sub
@@ -158,15 +214,16 @@ Class ComcellAddPage
                     'ElseIf cbFacilitator.Text = cbMinTaker.Text Then
                     '    MsgBox("Selected facilitator and minutes taker are the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 Else
-                    MsgBox("Facilitator and Minutes Taker have been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
-
                     comcell.EMP_ID = profile.Emp_ID
                     comcell.MONTH = cbMonth.Text
                     comcell.FACILITATOR = CType(cbFacilitator.SelectedItem, NicknameModel).Emp_ID.ToString()
                     comcell.MINUTES_TAKER = CType(cbMinTaker.SelectedItem, NicknameModel).Emp_ID.ToString()
                     comcell.YEAR = cbYear.SelectedValue
+                    comcell.WEEK = cbWeek.SelectedValue
 
                     AideClient.GetClient().InsertComcellMeeting(comcell)
+
+                    MsgBox("Facilitator and Minutes Taker have been added.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
 
                     _frame.Navigate(New ComcellMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
@@ -185,16 +242,16 @@ Class ComcellAddPage
                     'ElseIf cbFacilitator.Text = cbMinTaker.Text Then
                     '    MsgBox("Selected facilitator and minutes taker are the same", vbOKOnly + MsgBoxStyle.Exclamation, "AIDE")
                 Else
-                    MsgBox("Facilitator and Minutes Taker have been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
-
                     comcell.COMCELL_ID = comcellID
                     comcell.MONTH = cbMonth.Text
                     comcell.FACILITATOR = CType(cbFacilitator.SelectedItem, NicknameModel).Emp_ID.ToString()
                     comcell.MINUTES_TAKER = CType(cbMinTaker.SelectedItem, NicknameModel).Emp_ID.ToString()
                     comcell.YEAR = cbYear.SelectedValue
+                    comcell.WEEK = cbWeek.SelectedValue
 
                     AideClient.GetClient().UpdateComcellMeeting(comcell)
 
+                    MsgBox("Facilitator and Minutes Taker have been updated.", vbOKOnly + MsgBoxStyle.Information, "AIDE")
 
                     _frame.Navigate(New ComcellMainPage(_frame, profile, _addframe, _menugrid, _submenuframe))
                     _frame.IsEnabled = True
@@ -209,6 +266,7 @@ Class ComcellAddPage
             End If
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
+            _logger.Error($"Error at addbtn_click = {ex.ToString()}")
         End Try
     End Sub
 
@@ -242,6 +300,33 @@ Class ComcellAddPage
     End Sub
 
     Public Sub NotifyUpdate(objData As Object) Implements IAideServiceCallback.NotifyUpdate
+
+    End Sub
+
+    Private Sub cbMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbMonth.SelectionChanged
+
+        Dim listWeekRange As WeekRange()
+
+        listWeekRange = AideClient.GetClient().GetWeekRangeByMonthYear(
+            profile.Emp_ID,
+            cbMonth.SelectedValue,
+            cbYear.SelectedValue
+        )
+
+        cbWeek.DisplayMemberPath = "Text"
+        cbWeek.SelectedValuePath = "Value"
+        cbWeek.Items.Clear()
+
+
+        For Each objWeekRange As WeekRange In listWeekRange
+            cbWeek.Items.Add(
+                New With
+                {
+                    .Text = $"{objWeekRange.StartWeek.ToString("d")} - {objWeekRange.EndWeek.ToString("d")}",
+                    .Value = objWeekRange.WeekRangeID
+                }
+            )
+        Next
 
     End Sub
 #End Region

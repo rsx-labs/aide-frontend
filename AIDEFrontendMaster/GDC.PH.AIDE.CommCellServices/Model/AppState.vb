@@ -51,8 +51,18 @@ Public Class AppState
         End Get
     End Property
 
+    Public ReadOnly Property NotifyUpdate As Boolean
+        Get
+            Dim temp As String = CBool(ConfigurationManager.AppSettings("notifyUpdate"))
+            Return If(String.Compare(temp.ToLower, "true") = 0, True, False)
+        End Get
+    End Property
+
     Public CurrentMenu As Integer
     Public CurrentSubMenu As Integer
+    Public CurrentFY As Integer
+    Public CurrentWeek As Integer
+    Public IsUpdateAvailable As Boolean
 
     Public OptionValueDictionary As Dictionary(Of Integer, String) = New Dictionary(Of Integer, String)()
     Public OptionDictionary As Dictionary(Of Integer, OptionModel) = New Dictionary(Of Integer, OptionModel)()
