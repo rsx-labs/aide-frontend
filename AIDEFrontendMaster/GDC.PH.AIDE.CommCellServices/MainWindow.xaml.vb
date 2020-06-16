@@ -13,6 +13,8 @@ Imports NLog
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports GDC.PH.AIDE.ServiceFactory
 Imports System.Text
+Imports Microsoft.Office.Interop.Excel
+Imports System.Data
 
 Class MainWindow
     Implements IAideServiceCallback
@@ -137,6 +139,14 @@ Class MainWindow
                 Environment.Exit(0)
             End If
 
+            _logger.Debug("checking for minimum allowed version ...")
+
+            If Not IsMinimumVersionMet() Then
+                MsgBox("Your AIDE version is no longer supported. Please install the latest update now.", vbOKOnly + vbCritical, "AIDE")
+                _logger.Info("****** Closing AIDE ******")
+                Environment.Exit(0)
+            End If
+
             _logger.Debug("Check for updates ....")
 
             If AppState.GetInstance().NotifyUpdate Then
@@ -169,6 +179,21 @@ Class MainWindow
 
         _logger.Debug("End : Constructor")
     End Sub
+
+    Private Function IsMinimumVersionMet() As Boolean
+        Try
+            Dim minVersion As String = AppState.GetInstance().OptionValueDictionary(Constants.CONFIG_MIN_VERSION)
+
+            If String.Compare(Helpers.GetCurrentVersionFromRegistry(), minVersion) >= 0 Then
+                Return True
+            Else
+                Return False
+            End If
+        Catch ex As Exception
+            _logger.Warn(ex.ToString())
+            Return False
+        End Try
+    End Function
 
     Private Function UpdateAIDE() As Boolean
 
@@ -819,7 +844,7 @@ Class MainWindow
 
     End Sub
     Private Sub MinimizeBtn_Click(sender As Object, e As RoutedEventArgs)
-        Me.WindowState = Windows.WindowState.Minimized
+        Me.WindowState = System.Windows.WindowState.Minimized
     End Sub
 
     Private Sub OtherBtn_Click(sender As Object, e As RoutedEventArgs)
