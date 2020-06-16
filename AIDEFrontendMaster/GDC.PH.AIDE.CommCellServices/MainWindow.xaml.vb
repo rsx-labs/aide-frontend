@@ -12,6 +12,7 @@ Imports System.Configuration
 Imports NLog
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports GDC.PH.AIDE.ServiceFactory
+Imports System.Text
 
 Class MainWindow
     Implements IAideServiceCallback
@@ -171,11 +172,11 @@ Class MainWindow
 
     Private Function UpdateAIDE() As Boolean
 
-        Dim feed As Xml.XmlDocument = Helpers.GetUpdateFeedFromURL(AppState.GetInstance().OptionValueDictionary(Constants.CONFIG_UPDATE_URL_FEED))
-
-        AppState.GetInstance().IsUpdateAvailable = False
-
         Try
+            Dim feed As Xml.XmlDocument = Helpers.GetUpdateFeedFromURL(AppState.GetInstance().OptionValueDictionary(Constants.CONFIG_UPDATE_URL_FEED))
+
+            AppState.GetInstance().IsUpdateAvailable = False
+
             If feed.GetElementsByTagName("update").Item(0).Attributes(0).Value.ToLower() = "true" Then
 
                 Dim latestCommCellVersion As String = feed.GetElementsByTagName("frontend").Item(0).Attributes(0).Value
@@ -561,6 +562,7 @@ Class MainWindow
 
         _logger.Debug("Start : GetOptionData")
 
+        Dim loadedOptions As StringBuilder = New StringBuilder("aide settings" + Environment.NewLine)
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
@@ -568,6 +570,7 @@ Class MainWindow
             If _OptionsViewModel.GetOptions(0, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
+                        loadedOptions.AppendLine($"loaded setting = {opt.OPTION_ID}:{opt.VALUE}")
                         AppState.GetInstance().OptionValueDictionary.Add(
                                 opt.OPTION_ID,
                                 opt.VALUE
@@ -579,7 +582,7 @@ Class MainWindow
                     End If
                 Next
             End If
-
+            _logger.Debug(loadedOptions.ToString())
             Return True
         Catch ex As Exception
             'MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
