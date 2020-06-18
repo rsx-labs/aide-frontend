@@ -231,7 +231,8 @@ Class TaskAddPage
 
         ' Load Items For Projects
         Try
-            Dim displayStatus As Integer = 0
+            'display only assigned projects
+            Dim displayStatus As Integer = 2
             Dim lstProjects As Project() = AideClient.GetClient().GetProjectList(empID, displayStatus)
 
             For Each objProjects As Project In lstProjects

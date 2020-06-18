@@ -12,6 +12,9 @@ Imports System.Configuration
 Imports NLog
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports GDC.PH.AIDE.ServiceFactory
+Imports System.Text
+Imports Microsoft.Office.Interop.Excel
+Imports System.Data
 
 Class MainWindow
     Implements IAideServiceCallback
@@ -136,6 +139,14 @@ Class MainWindow
                 Environment.Exit(0)
             End If
 
+            _logger.Debug("checking for minimum allowed version ...")
+
+            If Not IsMinimumVersionMet() Then
+                MsgBox("Your AIDE version is no longer supported. Please install the latest update now.", vbOKOnly + vbCritical, "AIDE")
+                _logger.Info("****** Closing AIDE ******")
+                Environment.Exit(0)
+            End If
+
             _logger.Debug("Check for updates ....")
 
             If AppState.GetInstance().NotifyUpdate Then
@@ -169,13 +180,28 @@ Class MainWindow
         _logger.Debug("End : Constructor")
     End Sub
 
+    Private Function IsMinimumVersionMet() As Boolean
+        Try
+            Dim minVersion As String = AppState.GetInstance().OptionValueDictionary(Constants.CONFIG_MIN_VERSION)
+
+            If String.Compare(Helpers.GetCurrentVersionFromRegistry(), minVersion) >= 0 Then
+                Return True
+            Else
+                Return False
+            End If
+        Catch ex As Exception
+            _logger.Warn(ex.ToString())
+            Return False
+        End Try
+    End Function
+
     Private Function UpdateAIDE() As Boolean
 
-        Dim feed As Xml.XmlDocument = Helpers.GetUpdateFeedFromURL(AppState.GetInstance().OptionValueDictionary(Constants.CONFIG_UPDATE_URL_FEED))
-
-        AppState.GetInstance().IsUpdateAvailable = False
-
         Try
+            Dim feed As Xml.XmlDocument = Helpers.GetUpdateFeedFromURL(AppState.GetInstance().OptionValueDictionary(Constants.CONFIG_UPDATE_URL_FEED))
+
+            AppState.GetInstance().IsUpdateAvailable = False
+
             If feed.GetElementsByTagName("update").Item(0).Attributes(0).Value.ToLower() = "true" Then
 
                 Dim latestCommCellVersion As String = feed.GetElementsByTagName("frontend").Item(0).Attributes(0).Value
@@ -561,6 +587,7 @@ Class MainWindow
 
         _logger.Debug("Start : GetOptionData")
 
+        Dim loadedOptions As StringBuilder = New StringBuilder("aide settings" + Environment.NewLine)
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
@@ -568,6 +595,7 @@ Class MainWindow
             If _OptionsViewModel.GetOptions(0, 0, 0) Then
                 For Each opt As OptionModel In _OptionsViewModel.OptionList
                     If Not opt Is Nothing Then
+                        loadedOptions.AppendLine($"loaded setting = {opt.OPTION_ID}:{opt.VALUE}")
                         AppState.GetInstance().OptionValueDictionary.Add(
                                 opt.OPTION_ID,
                                 opt.VALUE
@@ -579,7 +607,7 @@ Class MainWindow
                     End If
                 Next
             End If
-
+            _logger.Debug(loadedOptions.ToString())
             Return True
         Catch ex As Exception
             'MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
@@ -816,7 +844,7 @@ Class MainWindow
 
     End Sub
     Private Sub MinimizeBtn_Click(sender As Object, e As RoutedEventArgs)
-        Me.WindowState = Windows.WindowState.Minimized
+        Me.WindowState = System.Windows.WindowState.Minimized
     End Sub
 
     Private Sub OtherBtn_Click(sender As Object, e As RoutedEventArgs)

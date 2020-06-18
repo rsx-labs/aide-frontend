@@ -53,6 +53,6 @@
     Public Const STAT_ATT_HOBA As Integer = 14
 
     Public Const CONFIG_UPDATE_URL_FEED As Integer = 47
-
+    Public Const CONFIG_MIN_VERSION As Integer = 48
 
 End Class

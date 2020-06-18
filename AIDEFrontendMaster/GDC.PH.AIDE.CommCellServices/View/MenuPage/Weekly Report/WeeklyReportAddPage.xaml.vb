@@ -182,7 +182,8 @@ Class WeeklyReportAddPage
     Private Sub LoadData()
         ' Load Items For Projects
         Try
-            Dim displayStatus As Integer = 1
+            'display projects assigned only to employee
+            Dim displayStatus As Integer = 2
             Dim lstProjects As Project() = AideClient.GetClient().GetProjectList(empID, displayStatus)
 
             For Each objProjects As Project In lstProjects
