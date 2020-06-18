@@ -297,7 +297,7 @@ Class SkillsMatrixManagerPage
                             Exit For
                         Else
                             level = ""
-                            Exit For
+                            'Exit For
                         End If
                     Next
 
