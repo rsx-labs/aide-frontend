@@ -85,6 +85,11 @@ Class ThreeC_InsertPage
                 _ConcernDBProvider.SetToMyRefNo(_concern)
 
                 _ConcernViewModel.GeneratedRefNo = New ConcernModel(_ConcernDBProvider.GetRefNo())
+                If dtDate.SelectedDate.HasValue Then
+                    _ConcernViewModel.SelectedConcern.DUE_DATE = dtDate.SelectedDate.Value
+                Else
+                    _ConcernViewModel.SelectedConcern.DUE_DATE = DateTime.Now
+                End If
                 Me.DataContext = _ConcernViewModel
             End If
         Catch ex As SystemException
