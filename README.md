@@ -1,6 +1,7 @@
 # AIDE CommCell ![release version](https://img.shields.io/badge/release%20version-3.3.7.0-blue) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues) 
 
-Release > [![Build Status](https://dev.azure.com/rsx-labs/aide/_apis/build/status/manual-build?branchName=release)](https://dev.azure.com/rsx-labs/aide/_build/latest?definitionId=4&branchName=release) Main Dev Branch > [![Build Status](https://dev.azure.com/rsx-labs/aide/_apis/build/status/rsx-labs.aide-frontend?branchName=master)](https://dev.azure.com/rsx-labs/aide/_build/latest?definitionId=1&branchName=master)
+- Release [![Build Status](https://dev.azure.com/rsx-labs/aide/_apis/build/status/manual-build?branchName=release)](https://dev.azure.com/rsx-labs/aide/_build/latest?definitionId=4&branchName=release) 
+- Main Dev Branch [![Build Status](https://dev.azure.com/rsx-labs/aide/_apis/build/status/rsx-labs.aide-frontend?branchName=master)](https://dev.azure.com/rsx-labs/aide/_build/latest?definitionId=1&branchName=master)
 
 ## Overview
 
