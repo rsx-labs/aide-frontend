@@ -388,7 +388,7 @@ Class SkillsMatrixManagerPage
             Skills.SkillID = cbProjectList.SelectedValue
             Skills.Last_Reviewed = Date.Now
             AideClient.GetClient().UpdateSkills(Skills)
-            MsgBox(cbProjectList.Text.ToUpper & " haave been updated.", MsgBoxStyle.Information, "AIDE")
+            MsgBox(cbProjectList.Text.ToUpper & " have been updated.", MsgBoxStyle.Information, "AIDE")
         Catch ex As Exception
             MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
         End Try

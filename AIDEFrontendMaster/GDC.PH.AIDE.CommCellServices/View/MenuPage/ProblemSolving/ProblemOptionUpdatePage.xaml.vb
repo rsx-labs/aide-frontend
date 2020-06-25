@@ -66,7 +66,7 @@ Class ProblemOptionUpdatePage
                 'If InitializeService() Then
                 Dim _problem As Problem = setData()
                 AideClient.GetClient().UpdateProblemOption(_problem)
-                MsgBox("Option has been updated.", vbOKOnly + vbInformation, "AIDE")
+                MsgBox("Problem Solving has been updated.", vbOKOnly + vbInformation, "AIDE")
                 ExitPageReload()
                 'End If
             End If

@@ -68,7 +68,7 @@ Class ProblemImplementUpdatePage
                 'If InitializeService() Then
                 Dim _problem As Problem = setData()
                 AideClient.GetClient().UpdateProblemImplement(_problem)
-                MsgBox("Implement has been updated.", vbOKOnly + vbInformation, "AIDE")
+                MsgBox("Problem Solving has been updated.", vbOKOnly + vbInformation, "AIDE")
                 ExitPageReload()
                 'End If
             End If
