@@ -27,9 +27,9 @@
                     </Grid.ColumnDefinitions>
                     
                     <Grid Grid.Column="0">
-                        <!--<Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
-                            <Image Source="..\..\..\Assets\Icon\SabaIcon.png" />
-                        </Viewbox>-->
+                        <Viewbox HorizontalAlignment="Left" Margin="10,10,0,10">
+                            <Image Source="..\..\..\Assets\Button\TaskLogo.png" />
+                        </Viewbox>
                     </Grid>
 
                     <Grid Grid.Column="1">
