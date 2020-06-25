@@ -191,7 +191,7 @@ Class MainWindow
             End If
         Catch ex As Exception
             _logger.Warn(ex.ToString())
-            Return False
+            Return True
         End Try
     End Function
 
@@ -588,6 +588,7 @@ Class MainWindow
         _logger.Debug("Start : GetOptionData")
 
         Dim loadedOptions As StringBuilder = New StringBuilder("aide settings" + Environment.NewLine)
+        Dim loadedCount As Integer = 0
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
@@ -604,11 +605,20 @@ Class MainWindow
                             opt.OPTION_ID,
                             opt
                         )
+
+                        loadedCount += 1
                     End If
                 Next
             End If
             _logger.Debug(loadedOptions.ToString())
-            Return True
+
+            If loadedCount > 0 Then
+                Return True
+            Else
+                _logger.Warn("No option has been loaded!")
+                Return True
+            End If
+
         Catch ex As Exception
             'MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             _logger.Error($"Error : {ex.ToString()}")
