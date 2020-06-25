@@ -324,7 +324,7 @@ Class MainWindow
         )
 
         For Each objWeekRange As WeekRange In lstWeekRange
-            If DateTime.Now >= objWeekRange.StartWeek And DateTime.Now <= objWeekRange.EndWeek Then
+            If DateTime.Now >= objWeekRange.StartWeek And DateTime.Now <= objWeekRange.EndWeek.AddDays(1) Then
                 AppState.GetInstance().CurrentWeek = objWeekRange.WeekRangeID
             End If
         Next
@@ -721,7 +721,7 @@ Class MainWindow
             If result = MsgBoxResult.Yes Then
                 'If InitializeService() Then
                 _logger.Info("Inserting logoff time ...")
-                    _logger.Info("****** Closing AIDE ******")
+                _logger.Info("****** Closing AIDE ******")
 
                 AideClient.GetClient().InsertLogoffTime(profile.Emp_ID, logoffTime)
                 Environment.Exit(0)
