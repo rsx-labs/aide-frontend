@@ -67,7 +67,7 @@ Class ProblemCauseUpdatePage
                 'If InitializeService() Then
                 Dim _problem As Problem = setData()
                 AideClient.GetClient().UpdateProblemCause(_problem)
-                MsgBox("Root Cause has been updated.", vbOKOnly + vbInformation, "AIDE")
+                MsgBox("Problem Solving has been updated.", vbOKOnly + vbInformation, "AIDE")
                 ExitPageReload()
                 'End If
             End If
