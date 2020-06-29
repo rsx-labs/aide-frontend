@@ -57,8 +57,8 @@ Class BirthdayDashboard
     Public Sub SetData()
         Try
             'If InitializeService() Then
-            lstBirthdayToday = AideClient.GetClient().ViewBirthdayListByCurrentDay(email)
-                LoadDataDaily()
+            lstBirthdayToday = CommonUtility.Instance().BirthdayToday 'AideClient.GetClient().ViewBirthdayListByCurrentDay(email)
+            LoadDataDaily()
                 If lstBirthdayToday.Length = 0 Then
                     Me.BdayTitle.Text = "No Birthday Today!"
                     Me.Bdayquote.Visibility = Windows.Visibility.Collapsed

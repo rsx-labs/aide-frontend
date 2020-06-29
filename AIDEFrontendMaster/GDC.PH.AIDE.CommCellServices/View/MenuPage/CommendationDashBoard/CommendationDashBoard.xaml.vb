@@ -88,8 +88,8 @@ Class CommendationDashBoard
     Public Sub SetData()
         Try
             'If InitializeService() Then
-            lstCommendation = AideClient.GetClient().GetCommendations(empID)
-            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
+            lstCommendation = CommonUtility.Instance().Commendations 'AideClient.GetClient().GetCommendations(empID)
+            lstFiscalYear = CommonUtility.Instance().FiscalYears 'AideClient.GetClient().GetAllFiscalYear()
             LoadFiscalYear()
             LoadCommendations()
             'End If

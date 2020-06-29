@@ -92,8 +92,8 @@ Class BirthdayPage
     Public Sub SetData()
         Try
             'If InitializeService() Then
-            lstBirthday = AideClient.GetClient().ViewBirthdayListAll(email)
-            lstBirthdayMonth = AideClient.GetClient().ViewBirthdayListByCurrentMonth(email)
+            lstBirthday = CommonUtility.Instance().BirthdayAll 'AideClient.GetClient().ViewBirthdayListAll(email)
+            lstBirthdayMonth = CommonUtility.Instance().BirthdayMonth 'AideClient.GetClient().ViewBirthdayListByCurrentMonth(email)
             LoadData()
                 LoadDataMonthly()
                 If lstBirthdayMonth.Length = 0 Then

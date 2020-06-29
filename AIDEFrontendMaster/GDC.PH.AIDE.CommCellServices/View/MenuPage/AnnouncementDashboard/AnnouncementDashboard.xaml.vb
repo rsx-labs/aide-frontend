@@ -86,7 +86,7 @@ Class AnnouncementDashboard
     Public Sub SetData()
         Try
             'If InitializeService() Then
-            lstAnnouncements = AideClient.GetClient().GetAnnouncements(empID)
+            lstAnnouncements = CommonUtility.Instance().Announcements 'AideClient.GetClient().GetAnnouncements(empID)
             LoadAnnouncements()
             DisplayPagingInfo()
             'End If

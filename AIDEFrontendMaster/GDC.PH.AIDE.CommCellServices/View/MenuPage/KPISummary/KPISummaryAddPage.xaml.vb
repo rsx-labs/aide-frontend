@@ -181,9 +181,9 @@ Class KPISummaryAddPage
     Public Sub SetData()
         Try
             'If InitializeService() Then
-            Dim fiscalYear As Date = Date.Now()
+            'Dim fiscalYear As Date = Date.Now()
 
-            _lstKPITargets = AideClient.GetClient().GetAllKPITargets(Me.profile.Emp_ID, fiscalYear)
+            _lstKPITargets = CommonUtility.Instance().KPITargetList 'AideClient.GetClient().GetAllKPITargets(Me.profile.Emp_ID, fiscalYear)
 
             LoadKPITargets()
             'End If

@@ -300,6 +300,7 @@ Class MainWindow
         _loader.Show()
         _loaderOn = True
 
+        LoadGlobalData()
         LoadAdditionalGlobalData()
 
         Attendance()
@@ -310,6 +311,20 @@ Class MainWindow
         SubMenuFrame.Navigate(New BlankSubMenu())
 
         _logger.Debug("End : InitializeData")
+    End Sub
+
+    Public Sub LoadGlobalData()
+        CommonUtility.Instance().LoadFiscalYears()
+        CommonUtility.Instance().LoadMyProfile(CommonUtility.Instance().MyEmployeeID)
+        CommonUtility.Instance().LoadBirthdayToday(CommonUtility.Instance().MyEmail)
+        CommonUtility.Instance().LoadBirthdayForTheMonth(CommonUtility.Instance().MyEmail)
+        CommonUtility.Instance().LoadBirthdayAll(CommonUtility.Instance().MyEmail)
+        CommonUtility.Instance().LoadAnnouncements(CommonUtility.Instance().MyEmployeeID)
+        CommonUtility.Instance().LoadCommendations(CommonUtility.Instance().MyEmployeeID)
+        CommonUtility.Instance().LoadProjects(CommonUtility.Instance().MyEmployeeID)
+        CommonUtility.Instance().LoadAssignedProjects(CommonUtility.Instance().MyEmployeeID)
+        CommonUtility.Instance().LoadKPITargets(CommonUtility.Instance().MyEmployeeID, DateTime.Now)
+        CommonUtility.Instance().LoadKPISummary(CommonUtility.Instance().MyEmployeeID)
     End Sub
 
     Private Sub LoadAdditionalGlobalData()
@@ -411,6 +426,9 @@ Class MainWindow
             If profile Is Nothing Then
                 szReturn = False
             Else
+                CommonUtility.Instance().MyProfile = profile
+                CommonUtility.Instance().MyEmployeeID = profile.Emp_ID
+                CommonUtility.Instance().MyEmail = profile.Email_Address
                 szReturn = True
             End If
         Catch ex As SystemException

@@ -300,7 +300,7 @@ Class QuarterlyAuditPage
 
         Try
             'If InitializeService() Then
-            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
+            lstFiscalYear = CommonUtility.Instance().FiscalYears ' AideClient.GetClient().GetAllFiscalYear()
             LoadFiscalYear()
             'End If
         Catch ex As Exception
