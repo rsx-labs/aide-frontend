@@ -89,7 +89,7 @@ Class MonthlyAuditPage
         Try
 
             'If InitializeService() Then
-            lstAuditQuestions = AideClient.GetClient().GetAuditQuestions(profile.Emp_ID, "3")
+            lstAuditQuestions = CommonUtility.Instance().AuditQuestions(2) 'AideClient.GetClient().GetAuditQuestions(profile.Emp_ID, "3")
             'End If
 
             Dim FYDBProvider As New WorkplaceAuditDBProvider

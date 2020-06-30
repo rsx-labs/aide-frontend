@@ -76,7 +76,7 @@ Class DailyAuditPage
 
         Try
             'If InitializeService() Then
-            lstAuditQuestions = AideClient.GetClient().GetAuditQuestions(profile.Emp_ID, "1")
+            lstAuditQuestions = CommonUtility.Instance().AuditQuestions(0) 'AideClient.GetClient().GetAuditQuestions(profile.Emp_ID, "1")
             'End If
 
             Dim FYDBProvider As New WorkplaceAuditDBProvider
@@ -185,13 +185,15 @@ Class DailyAuditPage
 
             LstAuditDailySchedByWeek.Clear()
             FYDBProvider.GetMyWorkplaceAudit.Clear()
-            If Not cbWeek.SelectedItem.AUDITSCHED_MONTH Is Nothing Then
+            If Not cbWeek.SelectedItem Is Nothing Then
                 Dim stringMonth As String = cbWeek.SelectedItem.AUDITSCHED_MONTH
                 Dim DateString As String = stringMonth.Substring(0, 13)
 
                 defaultDisplay = CDate(DateString).Date.Year & "-" & CDate(DateString).Date.Month.ToString("00") & "-" & CDate(DateString).Date.Day.ToString("00")
                 cbMonth.SelectedValue = CDate(defaultDisplay).Month
                 dateNow = Date.Now.Year & "-" & Date.Now.Month.ToString("00") & "-" & Date.Now.Day.ToString("00")
+            Else
+                Exit Sub
             End If
             If Date.Parse(defaultDisplay).Year = Date.Parse(dateNow).Year Then
                 If Date.Parse(defaultDisplay).Month = Date.Parse(dateNow).Month Then
@@ -527,7 +529,10 @@ Class DailyAuditPage
 
         isthereAnyRecord = True
         isMessageAlreadyPopupInCbyear = True
-        LoadSChed()
+
+        If Not isInitialize Then
+            LoadSChed()
+        End If
     End Sub
 
     Private Sub cbMonth_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbMonth.SelectionChanged
@@ -552,7 +557,10 @@ Class DailyAuditPage
             isthereAnyRecord = True
         End If
 
-        LoadSChed()
+        If Not isInitialize Then
+            LoadSChed()
+        End If
+
 
         If cbWeek.SelectedValue Is Nothing Then
             cbWeek.SelectedValue = defaultFy_Week

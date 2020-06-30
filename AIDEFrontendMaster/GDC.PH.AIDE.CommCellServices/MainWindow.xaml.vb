@@ -325,6 +325,7 @@ Class MainWindow
         CommonUtility.Instance().LoadAssignedProjects(CommonUtility.Instance().MyEmployeeID)
         CommonUtility.Instance().LoadKPITargets(CommonUtility.Instance().MyEmployeeID, DateTime.Now)
         CommonUtility.Instance().LoadKPISummary(CommonUtility.Instance().MyEmployeeID)
+        CommonUtility.Instance().LoadAuditQuestions(CommonUtility.Instance().MyEmployeeID)
     End Sub
 
     Private Sub LoadAdditionalGlobalData()

@@ -138,6 +138,23 @@ Public NotInheritable Class CommonUtility
         End Try
     End Sub
 
+    Public Sub LoadAuditQuestions(ByVal empID As Integer)
+        Try
+            Dim lstAuditQuestion As Dictionary(Of Integer, WorkplaceAudit()) = New Dictionary(Of Integer, WorkplaceAudit())
+            Dim auditQuestions As WorkplaceAudit() = AideClient.GetClient().GetAuditQuestions(empID, "1")
+            lstAuditQuestion.Add(0, auditQuestions)
+            auditQuestions = AideClient.GetClient().GetAuditQuestions(empID, "2")
+            lstAuditQuestion.Add(1, auditQuestions)
+            auditQuestions = AideClient.GetClient().GetAuditQuestions(empID, "3")
+            lstAuditQuestion.Add(2, auditQuestions)
+            auditQuestions = AideClient.GetClient().GetAuditQuestions(empID, "4")
+            lstAuditQuestion.Add(3, auditQuestions)
+            Me.AuditQuestions = lstAuditQuestion
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
     Private _fiscalYears As FiscalYear()
     Public Property FiscalYears() As FiscalYear()
         Get
@@ -278,6 +295,17 @@ Public NotInheritable Class CommonUtility
         Set(ByVal value As ViewProject())
             _assignedProjects = value
             NotifyPropertyChanged("AssignedProjects")
+        End Set
+    End Property
+
+    Private _auditquestions As Dictionary(Of Integer, WorkplaceAudit())
+    Public Property AuditQuestions As Dictionary(Of Integer, WorkplaceAudit())
+        Get
+            Return _auditquestions
+        End Get
+        Set(ByVal value As Dictionary(Of Integer, WorkplaceAudit()))
+            _auditquestions = value
+            NotifyPropertyChanged("AuditQuestions")
         End Set
     End Property
 
