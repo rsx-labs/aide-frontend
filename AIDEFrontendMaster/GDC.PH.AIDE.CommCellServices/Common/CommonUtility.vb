@@ -151,9 +151,21 @@ Public NotInheritable Class CommonUtility
             lstAuditQuestion.Add(3, auditQuestions)
             Me.AuditQuestions = lstAuditQuestion
         Catch ex As Exception
+            _logger.Error("Error loading AuditQuestions")
+            Throw ex
+        End Try
+    End Sub
+
+    Public Sub LoadNickNames(ByVal email As String)
+        Try
+            Me.NickNames = AideClient.GetClient().GetNicknameByDeptID(email)
+        Catch ex As Exception
+            _logger.Error("Error loading AuditQuestions")
+            Throw ex
 
         End Try
     End Sub
+
 
     Private _fiscalYears As FiscalYear()
     Public Property FiscalYears() As FiscalYear()
@@ -306,6 +318,17 @@ Public NotInheritable Class CommonUtility
         Set(ByVal value As Dictionary(Of Integer, WorkplaceAudit()))
             _auditquestions = value
             NotifyPropertyChanged("AuditQuestions")
+        End Set
+    End Property
+
+    Private _nickNames As Employee()
+    Public Property NickNames As Employee()
+        Get
+            Return _nickNames
+        End Get
+        Set(ByVal value As Employee())
+            _nickNames = value
+            NotifyPropertyChanged("NickNames")
         End Set
     End Property
 

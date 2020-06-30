@@ -201,7 +201,7 @@ Class SkillsMatrixPage
     ''' By Jhunell G. Barcenas
     Public Sub loadProfile()
         'InitializeService()
-        Dim lstProfile As Profile = AideClient.GetClient().GetProfileInformation(empid)
+        Dim lstProfile As Profile = CommonUtility.Instance().MyProfile 'AideClient.GetClient().GetProfileInformation(empid)
         Dim profileList As New ObservableCollection(Of ProfileModel)
 
         _ProfileDBProvider = New ProfileDBProvider

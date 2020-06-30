@@ -314,18 +314,21 @@ Class MainWindow
     End Sub
 
     Public Sub LoadGlobalData()
+        Dim employeeId As Integer = CommonUtility.Instance().MyEmployeeID
+        Dim emailAddress As String = CommonUtility.Instance().MyEmail
         CommonUtility.Instance().LoadFiscalYears()
-        CommonUtility.Instance().LoadMyProfile(CommonUtility.Instance().MyEmployeeID)
-        CommonUtility.Instance().LoadBirthdayToday(CommonUtility.Instance().MyEmail)
-        CommonUtility.Instance().LoadBirthdayForTheMonth(CommonUtility.Instance().MyEmail)
-        CommonUtility.Instance().LoadBirthdayAll(CommonUtility.Instance().MyEmail)
-        CommonUtility.Instance().LoadAnnouncements(CommonUtility.Instance().MyEmployeeID)
-        CommonUtility.Instance().LoadCommendations(CommonUtility.Instance().MyEmployeeID)
-        CommonUtility.Instance().LoadProjects(CommonUtility.Instance().MyEmployeeID)
-        CommonUtility.Instance().LoadAssignedProjects(CommonUtility.Instance().MyEmployeeID)
-        CommonUtility.Instance().LoadKPITargets(CommonUtility.Instance().MyEmployeeID, DateTime.Now)
-        CommonUtility.Instance().LoadKPISummary(CommonUtility.Instance().MyEmployeeID)
-        CommonUtility.Instance().LoadAuditQuestions(CommonUtility.Instance().MyEmployeeID)
+        CommonUtility.Instance().LoadMyProfile(employeeId)
+        CommonUtility.Instance().LoadBirthdayToday(emailAddress)
+        CommonUtility.Instance().LoadBirthdayForTheMonth(emailAddress)
+        CommonUtility.Instance().LoadBirthdayAll(emailAddress)
+        CommonUtility.Instance().LoadAnnouncements(employeeId)
+        CommonUtility.Instance().LoadCommendations(employeeId)
+        CommonUtility.Instance().LoadProjects(employeeId)
+        CommonUtility.Instance().LoadAssignedProjects(employeeId)
+        CommonUtility.Instance().LoadKPITargets(employeeId, DateTime.Now)
+        CommonUtility.Instance().LoadKPISummary(employeeId)
+        CommonUtility.Instance().LoadAuditQuestions(employeeId)
+        CommonUtility.Instance().LoadNickNames(emailAddress)
     End Sub
 
     Private Sub LoadAdditionalGlobalData()

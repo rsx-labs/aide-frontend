@@ -159,7 +159,7 @@ Class SkillsMatrixManagerPage
         Try
             'InitializeService()
 
-            Dim lstEmployee As Employee() = AideClient.GetClient().GetNicknameByDeptID(email)
+            Dim lstEmployee As Employee() = CommonUtility.Instance().NickNames 'AideClient.GetClient().GetNicknameByDeptID(email)
             Dim employeeList As New ObservableCollection(Of EmployeeListModel)
             Dim skillslist As New ObservableCollection(Of SkillsModel)
 
@@ -421,7 +421,7 @@ Class SkillsMatrixManagerPage
     Public Sub LoadProfile()
         Try
             'InitializeService()
-            Dim lstProfile As Profile = AideClient.GetClient().GetProfileInformation(empID)
+            Dim lstProfile As Profile = CommonUtility.Instance().MyProfile 'AideClient.GetClient().GetProfileInformation(empID)
             If Not IsNothing(lstProfile) Then
                 Dim profileList As New ObservableCollection(Of ProfileModel)
                 _ProfileDBProvider = New ProfileDBProvider
