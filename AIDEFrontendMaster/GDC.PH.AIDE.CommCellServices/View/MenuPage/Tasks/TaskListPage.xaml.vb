@@ -117,9 +117,9 @@ Public Class TaskListPage
 
         ' Load Items For Rework 
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(reworkID)
+            'Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(reworkID)
 
-            For Each objStatus As StatusGroup In lstStatus
+            For Each objStatus As StatusGroup In AppState.GetInstance().TaskRework
                 tasksDBProvider.SetMyReworkStatusList(objStatus)
             Next
 
@@ -135,9 +135,9 @@ Public Class TaskListPage
 
         ' Load Items For Severity 
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(severityID)
+            'Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(severityID)
 
-            For Each objStatus As StatusGroup In lstStatus
+            For Each objStatus As StatusGroup In AppState.GetInstance().TaskSeverities
                 tasksDBProvider.SetMySeverityStatusList(objStatus)
             Next
 
@@ -153,9 +153,9 @@ Public Class TaskListPage
 
         ' Load Items For Incident Type 
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(incidentTypeID)
+            'Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(incidentTypeID)
 
-            For Each objStatus As StatusGroup In lstStatus
+            For Each objStatus As StatusGroup In AppState.GetInstance().TaskIncidentTypes
                 tasksDBProvider.SetMyCategoryStatusList(objStatus)
             Next
 
@@ -171,9 +171,9 @@ Public Class TaskListPage
 
         ' Load Items For Phase Status 
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(phaseID)
+            'Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(phaseID)
 
-            For Each objStatus As StatusGroup In lstStatus
+            For Each objStatus As StatusGroup In AppState.GetInstance().TaskPhases
                 tasksDBProvider.SetMyPhaseStatusList(objStatus)
             Next
 
@@ -189,9 +189,9 @@ Public Class TaskListPage
 
         ' Load Items For Task Status
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(statusID)
+            'Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(statusID)
 
-            For Each objStatus As StatusGroup In lstStatus
+            For Each objStatus As StatusGroup In AppState.GetInstance().TaskStatus
                 tasksDBProvider.SetMyTaskStatusList(objStatus)
             Next
 
