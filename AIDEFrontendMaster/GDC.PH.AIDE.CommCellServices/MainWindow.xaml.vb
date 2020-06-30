@@ -301,7 +301,6 @@ Class MainWindow
         _loaderOn = True
 
         LoadGlobalData()
-        LoadAdditionalGlobalData()
 
         Attendance()
 
@@ -314,6 +313,9 @@ Class MainWindow
     End Sub
 
     Public Sub LoadGlobalData()
+
+        _logger.Info("Start : Loading global data")
+
         CommonUtility.Instance().LoadFiscalYears()
         CommonUtility.Instance().LoadMyProfile(CommonUtility.Instance().MyEmployeeID)
         CommonUtility.Instance().LoadBirthdayToday(CommonUtility.Instance().MyEmail)
@@ -326,11 +328,18 @@ Class MainWindow
         CommonUtility.Instance().LoadKPITargets(CommonUtility.Instance().MyEmployeeID, DateTime.Now)
         CommonUtility.Instance().LoadKPISummary(CommonUtility.Instance().MyEmployeeID)
         CommonUtility.Instance().LoadAuditQuestions(CommonUtility.Instance().MyEmployeeID)
+
+        LoadAdditionalGlobalData()
+
+        _logger.Info("End : Global data loaded")
     End Sub
 
     Private Sub LoadAdditionalGlobalData()
         Dim lstWeekRange As WeekRange()
 
+        _logger.Info("Loading additional data to appState")
+        _logger.Debug("Loading CurrentFY")
+        '
         AppState.GetInstance().CurrentFY = Helpers.GetFYStart(DateTime.Now.Month)
 
         lstWeekRange = AideClient.GetClient().GetWeekRangeByMonthYear(
@@ -339,11 +348,38 @@ Class MainWindow
             AppState.GetInstance().CurrentFY
         )
 
+        _logger.Debug("Loading CurrentWeek")
         For Each objWeekRange As WeekRange In lstWeekRange
             If DateTime.Now >= objWeekRange.StartWeek And DateTime.Now <= objWeekRange.EndWeek.AddDays(1) Then
                 AppState.GetInstance().CurrentWeek = objWeekRange.WeekRangeID
             End If
         Next
+
+        _logger.Debug("Loading status")
+        Dim allStatus As StatusGroup() = AideClient.GetClient().GetStatusList(0)
+
+        AppState.GetInstance().TaskIncidentTypes = (From incidentTypes In allStatus
+                                                    Where incidentTypes.StatusID = Constants.STAT_TASK_INC_TYPE
+                                                    Select incidentTypes).ToList()
+
+        AppState.GetInstance().TaskPhases = (From incidentTypes In allStatus
+                                             Where incidentTypes.StatusID = Constants.STAT_TASK_PHASE
+                                             Select incidentTypes).ToList()
+
+        AppState.GetInstance().TaskRework = (From incidentTypes In allStatus
+                                             Where incidentTypes.StatusID = Constants.STAT_TASK_REWORK
+                                             Select incidentTypes).ToList()
+
+        AppState.GetInstance().TaskSeverities = (From incidentTypes In allStatus
+                                                 Where incidentTypes.StatusID = Constants.STAT_TASK_SEVERITY
+                                                 Select incidentTypes).ToList()
+
+        AppState.GetInstance().TaskStatus = (From incidentTypes In allStatus
+                                             Where incidentTypes.StatusID = Constants.STAT_TASK_STATUS
+                                             Select incidentTypes).ToList()
+
+
+        _logger.Debug("Loading status done")
     End Sub
 
     Public Function CheckOutlook() As Boolean
