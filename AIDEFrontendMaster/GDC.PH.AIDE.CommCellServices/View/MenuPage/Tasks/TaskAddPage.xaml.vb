@@ -135,9 +135,9 @@ Class TaskAddPage
 
         ' Load Items For Category Combobox
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(incidentTypeID)
+            'Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(incidentTypeID)
 
-            For Each objStatus As StatusGroup In lstStatus
+            For Each objStatus As StatusGroup In AppState.GetInstance().TaskIncidentTypes
                 taskDBProvider.SetMyCategoryStatusList(objStatus)
             Next
 
@@ -153,9 +153,9 @@ Class TaskAddPage
 
         ' Load Items For Severity Combobox
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(severityID)
+            'Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(severityID)
 
-            For Each objStatus As StatusGroup In lstStatus
+            For Each objStatus As StatusGroup In AppState.GetInstance().TaskSeverities
                 taskDBProvider.SetMySeverityStatusList(objStatus)
             Next
 
@@ -171,10 +171,10 @@ Class TaskAddPage
 
         ' Load Items For Task Status Combobox
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(statusID)
+            'Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(statusID)
             Dim listTaskStatus As New ObservableCollection(Of TaskStatusModel)
 
-            For Each objStatus As StatusGroup In lstStatus
+            For Each objStatus As StatusGroup In AppState.GetInstance().TaskStatus
                 taskDBProvider.SetMyTaskStatusList(objStatus)
             Next
 
@@ -190,10 +190,10 @@ Class TaskAddPage
 
         ' Load Items For Phase Status Combobox
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(phaseID)
+            'Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(phaseID)
             Dim listPhaseStatus As New ObservableCollection(Of PhaseStatusModel)
 
-            For Each objStatus As StatusGroup In lstStatus
+            For Each objStatus As StatusGroup In AppState.GetInstance().TaskPhases
                 taskDBProvider.SetMyPhaseStatusList(objStatus)
             Next
 
@@ -209,10 +209,10 @@ Class TaskAddPage
 
         ' Load Items For Rework Combobox
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(reworkID)
+            'Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(reworkID)
             Dim listReworkStatus As New ObservableCollection(Of ReworkStatusModel)
 
-            For Each objStatus As StatusGroup In lstStatus
+            For Each objStatus As StatusGroup In AppState.GetInstance().TaskRework
                 taskDBProvider.SetMyReworkStatusList(objStatus)
             Next
 
