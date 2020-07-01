@@ -1,4 +1,6 @@
 ﻿Imports System.Configuration
+Imports UI_AIDE_CommCellServices.ServiceReference1
+
 Public Class AppState
     Private Shared _instance As AppState
 
@@ -67,5 +69,9 @@ Public Class AppState
     Public OptionValueDictionary As Dictionary(Of Integer, String) = New Dictionary(Of Integer, String)()
     Public OptionDictionary As Dictionary(Of Integer, OptionModel) = New Dictionary(Of Integer, OptionModel)()
 
-
+    Public TaskIncidentTypes As List(Of StatusGroup)
+    Public TaskPhases As List(Of StatusGroup)
+    Public TaskSeverities As List(Of StatusGroup)
+    Public TaskRework As List(Of StatusGroup)
+    Public TaskStatus As List(Of StatusGroup)
 End Class

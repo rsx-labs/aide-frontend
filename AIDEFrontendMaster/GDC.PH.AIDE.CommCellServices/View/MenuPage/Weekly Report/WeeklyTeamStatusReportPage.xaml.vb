@@ -153,9 +153,9 @@ Class WeeklyTeamStatusReportPage
 
     Public Sub LoadStatusData()
         Try
-            Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(statusID)
+            'Dim lstStatus As StatusGroup() = AideClient.GetClient().GetStatusList(statusID)
 
-            For Each objStatus As StatusGroup In lstStatus
+            For Each objStatus As StatusGroup In AppState.GetInstance().TaskStatus
                 weeklyReportDBProvider.SetMyWeeklyReportStatusList(objStatus)
             Next
 

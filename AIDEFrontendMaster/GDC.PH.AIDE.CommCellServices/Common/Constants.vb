@@ -55,4 +55,10 @@
     Public Const CONFIG_UPDATE_URL_FEED As Integer = 47
     Public Const CONFIG_MIN_VERSION As Integer = 48
 
+    Public Const STAT_TASK_INC_TYPE As Integer = 2
+    Public Const STAT_TASK_STATUS As Integer = 3
+    Public Const STAT_TASK_PHASE As Integer = 4
+    Public Const STAT_TASK_REWORK As Integer = 5
+    Public Const STAT_TASK_SEVERITY As Integer = 13
+
 End Class
