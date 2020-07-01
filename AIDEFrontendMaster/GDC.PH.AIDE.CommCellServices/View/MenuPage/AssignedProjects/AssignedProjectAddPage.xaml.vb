@@ -63,7 +63,7 @@ Class AssignedProjectAddPage
             Dim _EmployeeListDBProvider As New EmployeeListProvider
 
             Dim _Employee1DBProvider As New EmployeeProvider1
-            Dim lstEmployees As Employee() = AideClient.GetClient().GetNicknameByDeptID(_email)
+            Dim lstEmployees As Employee() = CommonUtility.Instance().NickNames 'AideClient.GetClient().GetNicknameByDeptID(_email)
 
             For Each objEmployee As Employee In lstEmployees
                 _EmployeeListDBProvider.SetEmployeeList(objEmployee)

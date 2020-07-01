@@ -79,7 +79,7 @@ Public Class KPISummaryPage
         Try
             'If InitializeService() Then
 
-            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
+            lstFiscalYear = CommonUtility.Instance().FiscalYears 'AideClient.GetClient().GetAllFiscalYear()
             LoadFiscalYear()
             'End If
         Catch ex As Exception
@@ -149,7 +149,7 @@ Public Class KPISummaryPage
                 '    End If
             End If
 
-            Dim lstKPISummary = AideClient.GetClient().GetKPISummaryList(Me._profile.Emp_ID, FYStart, FYEnd)
+            Dim lstKPISummary = CommonUtility.Instance().KPISummaryList(cbYear.SelectedIndex) 'AideClient.GetClient().GetKPISummaryList(Me._profile.Emp_ID, FYStart, FYEnd)
             Dim lstKPISummaryModel As New ObservableCollection(Of KPISummaryModel)
             Dim kpiSummaryVM As New KPISummaryViewModel()
             Dim kpi1 As New ChartValues(Of Double)()

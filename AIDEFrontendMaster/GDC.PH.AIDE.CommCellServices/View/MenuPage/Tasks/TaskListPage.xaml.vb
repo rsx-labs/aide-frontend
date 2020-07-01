@@ -98,8 +98,8 @@ Public Class TaskListPage
 
         ' Load Items For Projects
         Try
-            Dim displayStatus As Integer = 0
-            Dim lstProjects As Project() = AideClient.GetClient().GetProjectList(empID, displayStatus)
+            'Dim displayStatus As Integer = 0
+            Dim lstProjects As Project() = CommonUtility.Instance().Projects(0) 'AideClient.GetClient().GetProjectList(empID, displayStatus)
 
             For Each objProjects As Project In lstProjects
                 projectDBProvider.setProjectList(objProjects)
@@ -396,7 +396,7 @@ Public Class TaskListPage
         addframe.Visibility = Visibility.Hidden
     End Sub
 
-    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs)
+    Private Sub btnNext_Click(sender As Object, e As RoutedEventArgs) Handles btnNext.Click
         Dim totalRecords As Integer = lstTask.Length
 
         If totalRecords >= ((lstTasksData.CurrentPage * pagingRecordPerPage) + pagingRecordPerPage) Then
@@ -419,7 +419,7 @@ Public Class TaskListPage
         End If
     End Sub
 
-    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs)
+    Private Sub btnPrev_Click(sender As Object, e As RoutedEventArgs) Handles btnPrev.Click
         lstTasksData.CurrentPage = lstTasksData.CurrentPage - 1
         If currentPage > 1 Then
             currentPage -= 1

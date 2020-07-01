@@ -183,8 +183,8 @@ Class WeeklyReportAddPage
         ' Load Items For Projects
         Try
             'display projects assigned only to employee
-            Dim displayStatus As Integer = 2
-            Dim lstProjects As Project() = AideClient.GetClient().GetProjectList(empID, displayStatus)
+            'Dim displayStatus As Integer = 2
+            Dim lstProjects As Project() = CommonUtility.Instance().Projects(2) 'AideClient.GetClient().GetProjectList(empID, displayStatus)
 
             For Each objProjects As Project In lstProjects
                 projectDBProvider.setProjectList(objProjects)

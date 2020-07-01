@@ -69,9 +69,9 @@ Class CreateProjectPage
     Public Sub LoadProject()
         Try
             'If InitializeService() Then
-            Dim displayStatus As Integer = 1
+            'Dim displayStatus As Integer = 1
 
-            lstProjects = AideClient.GetClient().GetProjectList(empID, displayStatus)
+            lstProjects = CommonUtility.Instance().Projects(1) 'AideClient.GetClient().GetProjectList(empID, displayStatus)
             SetLists(lstProjects)
             'End If
         Catch ex As Exception

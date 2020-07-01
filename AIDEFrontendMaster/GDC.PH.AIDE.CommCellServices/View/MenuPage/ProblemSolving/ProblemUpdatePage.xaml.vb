@@ -71,7 +71,7 @@ Class ProblemUpdatePage
             Else
                 Dim _problem As Problem = setData()
                 AideClient.GetClient().UpdateProblem(_problem)
-                MsgBox("Problem has been updated.", vbOKOnly + vbInformation, "AIDE")
+                MsgBox("Problem Solving has been updated.", vbOKOnly + vbInformation, "AIDE")
                 ExitPage()
             End If
         Catch ex As Exception

@@ -41,7 +41,7 @@ Class AssignedProjectMainPage
 #Region "Methods/Functions"
     Public Sub LoadAssignedProjectList()
         Try
-            Dim lstAssignedProjects As ViewProject() = AideClient.GetClient().ViewProjectListofEmployee(_empID)
+            Dim lstAssignedProjects As ViewProject() = CommonUtility.Instance().AssignedProjects 'AideClient.GetClient().ViewProjectListofEmployee(_empID)
             For Each objAssigned As ViewProject In lstAssignedProjects
                 _assignedProjDB.SetAssignedProjectList(objAssigned)
             Next

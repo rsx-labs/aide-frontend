@@ -43,6 +43,7 @@ Class ResourcePlannerPage
     Dim perfectAttendanceID As Integer
 
     Private _logger As NLog.Logger = NLog.LogManager.GetCurrentClassLogger()
+    Private _isInitializing As Boolean
 
 #End Region
 
@@ -58,6 +59,7 @@ Class ResourcePlannerPage
         Me.attendanceFrame = _attendanceFrame
         Me.InitializeComponent()
 
+        Me._isInitializing = True
         LoadMonth()
         LoadYear()
         SetFiscalYear()
@@ -66,6 +68,8 @@ Class ResourcePlannerPage
         CountMissingLeave()
 
         PermissionSettings()
+
+        Me._isInitializing = False
 
         _logger.Debug("End : Constructor")
 
@@ -123,7 +127,7 @@ Class ResourcePlannerPage
     Public Sub LoadYear()
         Try
             'If InitializeService() Then
-            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
+            lstFiscalYear = CommonUtility.Instance().FiscalYears 'AideClient.GetClient().GetAllFiscalYear()
             LoadFiscalYear()
             'End If
         Catch ex As Exception
@@ -271,12 +275,14 @@ Class ResourcePlannerPage
     Public Sub LoadAllEmpResourcePlanner()
         Try
             'InitializeService()
+
             _ResourceDBProvider._splist.Clear()
             _ResourcePADBProvider._palist.Clear()
             
 
             Dim currentDate As DateTime = DateTime.Now
             Dim lstresource As ResourcePlanner() = AideClient.GetClient().GetAllEmpResourcePlanner(profile.Email_Address, month, year)
+            Dim lstPerfectAttendance As ResourcePlanner() = AideClient.GetClient().GetAllPerfectAttendance(profile.Email_Address, month, year)
             Dim resourcelist As New ObservableCollection(Of ResourcePlannerModel)
             Dim emp_id As Integer
             Dim bool As Boolean
@@ -307,7 +313,7 @@ Class ResourcePlannerPage
                     If cbDisplayMonth.SelectedValue <> currentDate.Month Then
                         _ResourcePADBProvider._palist.Clear()
 
-                        Dim perfectAttendancelstresource As ResourcePlanner() = AideClient.GetClient().GetAllPerfectAttendance(profile.Email_Address, month, year)
+                        Dim perfectAttendancelstresource As ResourcePlanner() = lstPerfectAttendance 'AideClient.GetClient().GetAllPerfectAttendance(profile.Email_Address, month, year)
                         Dim resourcePAlist As New ObservableCollection(Of ResourcePlannerModel)
 
                         If perfectAttendancelstresource.Length = 0 Then
@@ -490,13 +496,19 @@ Class ResourcePlannerPage
         End If
 
         MonthLabel.Text = SetDisplayMonthYr(month)
-        LoadAllEmpResourcePlanner()
+
+        If Not Me._isInitializing Then
+            LoadAllEmpResourcePlanner()
+        End If
+
     End Sub
 
     Private Sub cbYear_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbYear.SelectionChanged
         year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
         MonthLabel.Text = SetDisplayMonthYr(month)
-        LoadAllEmpResourcePlanner()
+        If Not Me._isInitializing Then
+            LoadAllEmpResourcePlanner()
+        End If
     End Sub
 
     'Private Sub cbFilterCategory_DropDownClosed(sender As Object, e As EventArgs) Handles cbFilterCategory.DropDownClosed

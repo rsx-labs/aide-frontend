@@ -107,7 +107,7 @@ Class ComcellMainPage
         Try
             'If InitializeService() Then
             lstComcell = AideClient.GetClient().GetComcellMeeting(empID, year)
-            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
+            lstFiscalYear = CommonUtility.Instance().FiscalYears 'AideClient.GetClient().GetAllFiscalYear()
 
             totalRecords = lstComcell.Count
             SetPaging(PagingMode._First)

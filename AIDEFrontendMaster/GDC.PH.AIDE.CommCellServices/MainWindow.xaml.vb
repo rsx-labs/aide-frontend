@@ -191,7 +191,7 @@ Class MainWindow
             End If
         Catch ex As Exception
             _logger.Warn(ex.ToString())
-            Return False
+            Return True
         End Try
     End Function
 
@@ -300,6 +300,7 @@ Class MainWindow
         _loader.Show()
         _loaderOn = True
 
+        LoadGlobalData()
         LoadAdditionalGlobalData()
 
         Attendance()
@@ -310,6 +311,24 @@ Class MainWindow
         SubMenuFrame.Navigate(New BlankSubMenu())
 
         _logger.Debug("End : InitializeData")
+    End Sub
+
+    Public Sub LoadGlobalData()
+        Dim employeeId As Integer = CommonUtility.Instance().MyEmployeeID
+        Dim emailAddress As String = CommonUtility.Instance().MyEmail
+        CommonUtility.Instance().LoadFiscalYears()
+        CommonUtility.Instance().LoadMyProfile(employeeId)
+        CommonUtility.Instance().LoadBirthdayToday(emailAddress)
+        CommonUtility.Instance().LoadBirthdayForTheMonth(emailAddress)
+        CommonUtility.Instance().LoadBirthdayAll(emailAddress)
+        CommonUtility.Instance().LoadAnnouncements(employeeId)
+        CommonUtility.Instance().LoadCommendations(employeeId)
+        CommonUtility.Instance().LoadProjects(employeeId)
+        CommonUtility.Instance().LoadAssignedProjects(employeeId)
+        CommonUtility.Instance().LoadKPITargets(employeeId, DateTime.Now)
+        CommonUtility.Instance().LoadKPISummary(employeeId)
+        CommonUtility.Instance().LoadAuditQuestions(employeeId)
+        CommonUtility.Instance().LoadNickNames(emailAddress)
     End Sub
 
     Private Sub LoadAdditionalGlobalData()
@@ -324,7 +343,7 @@ Class MainWindow
         )
 
         For Each objWeekRange As WeekRange In lstWeekRange
-            If DateTime.Now >= objWeekRange.StartWeek And DateTime.Now <= objWeekRange.EndWeek Then
+            If DateTime.Now >= objWeekRange.StartWeek And DateTime.Now <= objWeekRange.EndWeek.AddDays(1) Then
                 AppState.GetInstance().CurrentWeek = objWeekRange.WeekRangeID
             End If
         Next
@@ -411,6 +430,9 @@ Class MainWindow
             If profile Is Nothing Then
                 szReturn = False
             Else
+                CommonUtility.Instance().MyProfile = profile
+                CommonUtility.Instance().MyEmployeeID = profile.Emp_ID
+                CommonUtility.Instance().MyEmail = profile.Email_Address
                 szReturn = True
             End If
         Catch ex As SystemException
@@ -588,6 +610,7 @@ Class MainWindow
         _logger.Debug("Start : GetOptionData")
 
         Dim loadedOptions As StringBuilder = New StringBuilder("aide settings" + Environment.NewLine)
+        Dim loadedCount As Integer = 0
         Dim strData As String = String.Empty
         Try
             _OptionsViewModel = New OptionViewModel
@@ -604,11 +627,20 @@ Class MainWindow
                             opt.OPTION_ID,
                             opt
                         )
+
+                        loadedCount += 1
                     End If
                 Next
             End If
             _logger.Debug(loadedOptions.ToString())
-            Return True
+
+            If loadedCount > 0 Then
+                Return True
+            Else
+                _logger.Warn("No option has been loaded!")
+                Return True
+            End If
+
         Catch ex As Exception
             'MsgBox("An application error was encountered. Please contact your AIDE Administrator.", vbOKOnly + vbCritical, "AIDE")
             _logger.Error($"Error : {ex.ToString()}")
@@ -721,7 +753,7 @@ Class MainWindow
             If result = MsgBoxResult.Yes Then
                 'If InitializeService() Then
                 _logger.Info("Inserting logoff time ...")
-                    _logger.Info("****** Closing AIDE ******")
+                _logger.Info("****** Closing AIDE ******")
 
                 AideClient.GetClient().InsertLogoffTime(profile.Emp_ID, logoffTime)
                 Environment.Exit(0)

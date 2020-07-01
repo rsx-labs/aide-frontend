@@ -108,7 +108,7 @@ Class QuarterlyAuditPage
         Try
 
             'If InitializeService() Then
-            lstAuditQuestions = AideClient.GetClient().GetAuditQuestions(profile.Emp_ID, "4")
+            lstAuditQuestions = CommonUtility.Instance().AuditQuestions(3) 'AideClient.GetClient().GetAuditQuestions(profile.Emp_ID, "4")
             'End If
 
             Dim FYDBProvider As New WorkplaceAuditDBProvider
@@ -300,7 +300,7 @@ Class QuarterlyAuditPage
 
         Try
             'If InitializeService() Then
-            lstFiscalYear = AideClient.GetClient().GetAllFiscalYear()
+            lstFiscalYear = CommonUtility.Instance().FiscalYears ' AideClient.GetClient().GetAllFiscalYear()
             LoadFiscalYear()
             'End If
         Catch ex As Exception

@@ -175,6 +175,7 @@
     </ApplicationDefinition>
     <Compile Include="AideClient.vb" />
     <Compile Include="BindingProxy.vb" />
+    <Compile Include="Common\CommonUtility.vb" />
     <Compile Include="Common\Constants.vb" />
     <Compile Include="DataProviderService\ActionListDBProvider.vb" />
     <Compile Include="DataProviderService\AssignedProjectDBProvider.vb" />

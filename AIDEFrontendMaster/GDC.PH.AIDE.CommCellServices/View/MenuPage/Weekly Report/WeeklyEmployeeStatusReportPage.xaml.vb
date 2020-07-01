@@ -104,8 +104,8 @@ Class WeeklyEmployeeStatusReportPage
     Private Sub LoadData()
         ' Load Items For Projects
         Try
-            Dim displayStatus As Integer = 1
-            Dim lstProjects As Project() = AideClient.GetClient().GetProjectList(empID, displayStatus)
+            'Dim displayStatus As Integer = 1
+            Dim lstProjects As Project() = CommonUtility.Instance().Projects(1) 'AideClient.GetClient().GetProjectList(empID, displayStatus)
 
             For Each objProjects As Project In lstProjects
                 projectDBProvider.setProjectList(objProjects)
