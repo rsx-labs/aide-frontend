@@ -530,6 +530,7 @@ Public Class KPISummaryPage
     Private Sub cbYear_DropDownClosed(sender As Object, e As EventArgs) Handles cbYear.DropDownClosed
         If Not _year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4)) Then
             _year = CInt(cbYear.SelectedValue.ToString().Substring(0, 4))
+            _KPISummaryDBProvider.KPISummaryDataList.Clear()
             LoadData()
         End If
     End Sub
