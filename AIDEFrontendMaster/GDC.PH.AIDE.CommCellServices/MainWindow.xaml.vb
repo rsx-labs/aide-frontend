@@ -675,7 +675,7 @@ Class MainWindow
                 Return True
             Else
                 _logger.Warn("No option has been loaded!")
-                Return True
+                Return False
             End If
 
         Catch ex As Exception

@@ -364,21 +364,20 @@ Class UpdateContactListPage
             e.Handled = True
             contactVM.ContactProfile = DataContext
             Dim contactList As New ContactList
-            If Me.profile.Emp_ID = 0 OrElse _
-                contactVM.ContactProfile.LAST_NAME = String.Empty OrElse _
-                contactVM.ContactProfile.FIRST_NAME = String.Empty OrElse _
-                contactVM.ContactProfile.NICK_NAME = String.Empty OrElse _
-                IsNothing(contactVM.ContactProfile.BDATE) OrElse _
-                IsNothing(contactVM.ContactProfile.DT_HIRED) OrElse _
-                cbContactGroup.SelectedValue = Nothing OrElse _
-                cbContactMaritalStatus.SelectedValue = Nothing OrElse _
-                cbContactPosition.SelectedValue = Nothing OrElse _
-                cbContactShiftStatus.SelectedValue = Nothing OrElse _
-                cbContactDepartment.SelectedValue = Nothing OrElse _
-                cbContactDivision.SelectedValue = Nothing OrElse _
-                contactVM.ContactProfile.EMAIL_ADDRESS = String.Empty OrElse _
-                contactVM.ContactProfile.CEL_NO = String.Empty OrElse _
-                contactVM.ContactProfile.EMAIL_ADDRESS2 = String.Empty OrElse _
+            If Me.profile.Emp_ID = 0 OrElse
+                contactVM.ContactProfile.LAST_NAME = String.Empty OrElse
+                contactVM.ContactProfile.FIRST_NAME = String.Empty OrElse
+                contactVM.ContactProfile.NICK_NAME = String.Empty OrElse
+                IsNothing(contactVM.ContactProfile.BDATE) OrElse
+                IsNothing(contactVM.ContactProfile.DT_HIRED) OrElse
+                cbContactGroup.SelectedValue = Nothing OrElse
+                cbContactMaritalStatus.SelectedValue = Nothing OrElse
+                cbContactPosition.SelectedValue = Nothing OrElse
+                cbContactShiftStatus.SelectedValue = Nothing OrElse
+                cbContactDepartment.SelectedValue = Nothing OrElse
+                cbContactDivision.SelectedValue = Nothing OrElse
+                contactVM.ContactProfile.EMAIL_ADDRESS = String.Empty OrElse
+                contactVM.ContactProfile.CEL_NO = String.Empty OrElse
                 cbContactLocation.SelectedValue = Nothing Then
                 MsgBox("Please enter all required fields. Ensure all required fields have * indicated.", MsgBoxStyle.Exclamation, "AIDE")
             Else
