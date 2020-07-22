@@ -184,7 +184,7 @@ Class ResourcePlannerAddPage
             dtpFrom.DisplayDateStart = Date.MinValue
             dtpFrom.DisplayDateEnd = Date.Today
         Else
-            dtpFrom.DisplayDateStart = Date.Today
+            dtpFrom.DisplayDateStart = Date.MinValue
             dtpFrom.DisplayDateEnd = Date.MaxValue
         End If
 
