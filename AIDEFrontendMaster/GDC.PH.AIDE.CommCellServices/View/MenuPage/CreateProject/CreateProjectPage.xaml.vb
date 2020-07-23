@@ -235,8 +235,8 @@ Class CreateProjectPage
     End Sub
 
     Private Sub PermissionSettings()
-        If profile.Permission_ID = 1 Then
-            grdCreate.Visibility = Visibility.Visible
+        If profile.Permission_ID <> 1 Then
+            rowAddProject.Height = New GridLength(0)
         End If
     End Sub
 
