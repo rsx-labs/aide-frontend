@@ -329,7 +329,7 @@ Class MainWindow
         CommonUtility.Instance().LoadProjects(employeeId)
         CommonUtility.Instance().LoadAssignedProjects(employeeId)
         CommonUtility.Instance().LoadKPITargets(employeeId, DateTime.Now)
-        CommonUtility.Instance().LoadKPISummary(employeeId)
+        'CommonUtility.Instance().LoadKPISummary(employeeId)
         'CommonUtility.Instance().LoadAuditQuestions(employeeId)
         CommonUtility.Instance().LoadNickNames(emailAddress)
 
