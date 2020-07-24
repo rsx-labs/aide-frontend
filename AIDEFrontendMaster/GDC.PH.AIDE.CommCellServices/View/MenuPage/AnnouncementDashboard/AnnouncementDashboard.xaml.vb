@@ -57,6 +57,7 @@ Class AnnouncementDashboard
         Me.submenuframe = _submenuframe
         Me.profile = _profile
         Me.email = _email
+        CommonUtility.Instance().LoadAnnouncements(Me.empID)
         SetData()
 
         If profile.Permission_ID = 1 Then
