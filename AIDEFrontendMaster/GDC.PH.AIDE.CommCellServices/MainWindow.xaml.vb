@@ -544,7 +544,7 @@ Class MainWindow
 
             Dim dateToday As Date = DateTime.Now.Date
             Dim logName As EventLog = New EventLog()
-            logName.Log = "System"
+            logName.Log = "Security"
 
             _logger.Debug("Getting system event time.")
 
