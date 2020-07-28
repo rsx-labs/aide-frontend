@@ -103,6 +103,8 @@ Class UpdateContactListPage
     Private Sub ProcessUIAccess()
         If Not GetManagerAuth() Then
             ManagerAuthScreen.Visibility = Windows.Visibility.Visible
+            cbContactDivision.IsEnabled = False
+            cbContactDepartment.IsEnabled = False
             btnCDelete.Visibility = Windows.Visibility.Hidden
         End If
     End Sub

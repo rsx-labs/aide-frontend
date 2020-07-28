@@ -429,7 +429,7 @@
                                     <!--Division-->
                                     
                                     <Grid Grid.Row="3" Grid.Column="2">
-                                        <ComboBox IsEditable="False" Style="{DynamicResource StyleComboBox}" x:Name="cbContactShiftStatus" DisplayMemberPath="STATUS_DESCR" SelectedValuePath="STATUS_ID" Margin="5,5,0,5"/>
+                                        <ComboBox IsEditable="True" Style="{DynamicResource StyleComboBox}" x:Name="cbContactShiftStatus" DisplayMemberPath="STATUS_DESCR" SelectedValuePath="STATUS_ID" Margin="5,5,0,5" />
 
                                         <TextBlock Text="Select Work Shift *">
                                             <TextBlock.Style>
@@ -458,7 +458,7 @@
                                         </TextBlock>
                                     </Grid>
                                     <!--Work Shift-->
-                                    <Rectangle x:Name="ManagerAuthScreen" Visibility="Collapsed" Fill="Transparent" Grid.ColumnSpan="3" Grid.RowSpan="4"/>
+                                    <Rectangle x:Name="ManagerAuthScreen" Visibility="Collapsed" Fill="Transparent" Grid.ColumnSpan="3" Grid.RowSpan="3"/>
                                 </Grid>
                             
                             </TabItem>

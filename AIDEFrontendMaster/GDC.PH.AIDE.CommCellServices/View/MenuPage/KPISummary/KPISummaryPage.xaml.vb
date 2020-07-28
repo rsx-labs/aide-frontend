@@ -78,7 +78,7 @@ Public Class KPISummaryPage
     Public Sub SetData()
         Try
             'If InitializeService() Then
-
+            CommonUtility.Instance().LoadKPISummary(Me._profile.Emp_ID)
             lstFiscalYear = CommonUtility.Instance().FiscalYears 'AideClient.GetClient().GetAllFiscalYear()
             LoadFiscalYear()
             'End If

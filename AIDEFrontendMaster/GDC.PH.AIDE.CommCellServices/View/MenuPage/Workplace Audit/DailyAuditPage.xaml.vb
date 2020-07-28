@@ -60,7 +60,7 @@ Class DailyAuditPage
         LoadSChed()
         'isSetDefault = True
         LoadMonthLst()
-
+        CommonUtility.Instance().LoadAuditQuestions(_profile.Emp_ID)
         isInitialize = False
 
         _logger.Debug("End : Constructor")
