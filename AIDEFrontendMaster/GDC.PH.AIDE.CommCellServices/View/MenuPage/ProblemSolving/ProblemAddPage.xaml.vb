@@ -92,7 +92,7 @@ Class ProblemAddPage
     'End Function
     Public Sub loadAll()
         'If InitializeService() Then
-        lstnickName = AideClient.GetClient().ViewNicknameByDeptID(email, 1)
+        lstnickName = AideClient.GetClient().ViewNicknameByDeptID(email, 2)
         'End If
     End Sub
     Public Function setData() As Problem
