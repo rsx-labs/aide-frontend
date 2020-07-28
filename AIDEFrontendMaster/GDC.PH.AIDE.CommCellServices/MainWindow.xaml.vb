@@ -205,18 +205,26 @@ Class MainWindow
             If feed.GetElementsByTagName("update").Item(0).Attributes(0).Value.ToLower() = "true" Then
 
                 Dim latestCommCellVersion As String = feed.GetElementsByTagName("frontend").Item(0).Attributes(0).Value
-                'Dim backendVersion As String = feed.GetElementsByTagName("backend").Item(0).Attributes(0).Value
+                Dim latestBackendVersion As String = feed.GetElementsByTagName("backend").Item(0).Attributes(0).Value
 
-                Dim currentCommCellVersion As String = Helpers.GetCurrentVersionFromRegistry()
+                Dim updatedApp As StringBuilder = New StringBuilder()
 
-                If latestCommCellVersion > currentCommCellVersion Then
+                If Not Helpers.IsCurrentVersionUpToDate(latestCommCellVersion, Constants.APP_COMCELL) Then
+                    updatedApp.Append($"AIDE ComCell v{latestCommCellVersion} ")
+                End If
+                If Not Helpers.IsCurrentVersionUpToDate(latestBackendVersion, Constants.APP_BACKEND) Then
+                    updatedApp.Append($"AIDE Backend v{latestBackendVersion} ")
+                End If
 
-                    _logger.Info($"Update {latestCommCellVersion} is available")
+
+                If Not String.IsNullOrEmpty(updatedApp.ToString().Trim()) Then
+
+                    _logger.Info($"{updatedApp.ToString()} is available")
 
                     AppState.GetInstance().IsUpdateAvailable = True
 
                     If MessageBox.Show(
-                        $"AIDE {latestCommCellVersion} update is now available. Do you want to update now? " + Environment.NewLine + Environment.NewLine +
+                        $"{updatedApp.ToString()} update is now available. Do you want to update now? " + Environment.NewLine + Environment.NewLine +
                         "Note : By selecting YES, you will be directed to a site where you can download the new version. You will have to install the update manually.",
                         "AIDE Update",
                         MessageBoxButton.YesNo,
@@ -324,13 +332,13 @@ Class MainWindow
         CommonUtility.Instance().LoadBirthdayToday(emailAddress)
         CommonUtility.Instance().LoadBirthdayForTheMonth(emailAddress)
         CommonUtility.Instance().LoadBirthdayAll(emailAddress)
-        'CommonUtility.Instance().LoadAnnouncements(employeeId)
+        CommonUtility.Instance().LoadAnnouncements(employeeId)
         CommonUtility.Instance().LoadCommendations(employeeId)
         CommonUtility.Instance().LoadProjects(employeeId)
         CommonUtility.Instance().LoadAssignedProjects(employeeId)
         CommonUtility.Instance().LoadKPITargets(employeeId, DateTime.Now)
-        'CommonUtility.Instance().LoadKPISummary(employeeId)
-        'CommonUtility.Instance().LoadAuditQuestions(employeeId)
+        CommonUtility.Instance().LoadKPISummary(employeeId)
+        CommonUtility.Instance().LoadAuditQuestions(employeeId)
         CommonUtility.Instance().LoadNickNames(emailAddress)
 
         LoadAdditionalGlobalData()
@@ -544,7 +552,7 @@ Class MainWindow
 
             Dim dateToday As Date = DateTime.Now.Date
             Dim logName As EventLog = New EventLog()
-            logName.Log = "Security"
+            logName.Log = "System"
 
             _logger.Debug("Getting system event time.")
 
