@@ -541,27 +541,38 @@ Class MainWindow
             If machineOS.Contains("Windows 7") Then
                 eventStartUpId = "12"
             End If
-
-            Dim dateToday As Date = DateTime.Now.Date
-            Dim logName As EventLog = New EventLog()
-            logName.Log = "Security"
-
-            _logger.Debug("Getting system event time.")
-
-            Dim entries = logName.Entries.Cast(Of EventLogEntry) _
-                            ().Where(Function(x) x.InstanceId = CLng(eventStartUpId) _
-                                        And x.TimeWritten.Date = dateToday) _
-                           .[Select](Function(x) New With {x.MachineName,
-                                        x.Site, x.Source, x.TimeWritten, x.InstanceId}) _
-                           .ToList()
-
+            Dim dateEntry As Date
+            Dim eventLog As EventLogEntry = Nothing
             Dim timeIn As String
 
-            If entries.Count = 0 Then
-                timeIn = Date.Now
+            Dim dateToday As Date = DateTime.Now.Date
+            If CheckEventLog(dateEntry, eventLog, 1) Then
+                timeIn = dateEntry.ToString
+            ElseIf CheckEventLog(dateEntry, eventLog, eventStartUpId) Then
+                timeIn = eventLog.TimeWritten.ToString
             Else
-                timeIn = entries.First().TimeWritten.ToString
+                timeIn = Date.Now
             End If
+            'Dim logName As EventLog = New EventLog()
+            'logName.Log = "System"
+
+            '_logger.Debug("Getting system event time.")
+
+
+            'Dim entries = logName.Entries.Cast(Of EventLogEntry) _
+            '                ().Where(Function(x) x.InstanceId = CLng(eventStartUpId) _
+            '                            And x.TimeWritten.Date = dateToday) _
+            '               .[Select](Function(x) New With {x.MachineName,
+            '                            x.Site, x.Source, x.TimeWritten, x.InstanceId}) _
+            '               .ToList()
+
+
+            'If entries.Count = 0 Then
+            '    timeIn = Date.Now
+            'Else
+
+            '    timeIn = entries.First().TimeWritten.ToString
+            'End If
 
             Dim attendanceSummarry As New AttendanceSummary
 
@@ -972,6 +983,33 @@ Class MainWindow
             _logger.Warn($"Error at request navigate = {ex.ToString()}")
         End Try
     End Sub
+
+    Private Function CheckEventLog(ByRef dateEntry As Date, ByRef entryEvent As EventLogEntry, ByVal eventID As Integer) As Boolean
+        Dim latestLogon As EventLogEntry = Nothing
+        If eventID = 1 Then
+            Dim log = New EventLog("System", Environment.MachineName, "EventLog")
+            Dim entries = New EventLogEntry(log.Entries.Count - 1) {}
+            log.Entries.CopyTo(entries, 0)
+            Dim startupTime = entries.Where(Function(x) x.InstanceId = 2147489653).[Select](Function(x) x.TimeGenerated).FirstOrDefault()
+            dateEntry = startupTime
+            If Not IsNothing(dateEntry) Then
+                Return True
+            End If
+        Else
+            Dim Log = New EventLog With {
+                .Source = "Microsoft Windows security auditing.",
+                .Log = "Security"
+            }
+            latestLogon = Log.Entries.Cast(Of EventLogEntry)().Where(Function(entry) entry.InstanceId = eventID OrElse entry.InstanceId = 4672).OrderByDescending(Function(i) i.TimeWritten).FirstOrDefault()
+            entryEvent = latestLogon
+            If Not IsNothing(latestLogon) Then
+                Return True
+            End If
+        End If
+
+        Return False
+
+    End Function
 #End Region
 
 End Class
