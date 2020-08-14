@@ -2,10 +2,16 @@
 Imports System.Xml
 Public NotInheritable Class Helpers
 
-    Public Shared Function GetCurrentVersionFromRegistry() As String
-        Const KEY As String = "HKEY_CURRENT_USER\Software\RS Experimental Labs\AIDE CommCell"
+    Public Shared Function GetCurrentVersionFromRegistry(Optional AppType As Integer = 0) As String
+        Dim key As String
+        If AppType = Constants.APP_BACKEND Then
+            key = "HKEY_CURRENT_USER\Software\RS Experimental Labs\AIDE Backend"
+        Else
+            key = "HKEY_CURRENT_USER\Software\RS Experimental Labs\AIDE CommCell"
+        End If
+
         Try
-            Return Registry.GetValue(KEY, "version", "")
+            Return Registry.GetValue(key, "version", "")
         Catch ex As Exception
             Return String.Empty
         End Try
@@ -34,6 +40,27 @@ Public NotInheritable Class Helpers
         Else
             Return DateTime.Now.Year
         End If
+    End Function
+
+    Public Shared Function IsCurrentVersionUpToDate(newVersionString As String, Optional appType As Integer = 0) As Boolean
+        Dim result As Boolean = False
+        Dim currentVersionString As String = GetCurrentVersionFromRegistry(appType)
+
+        Try
+            Dim currentVersion As Double = Double.Parse(currentVersionString.Replace(".", ""))
+            Dim newVersion As Double = Double.Parse(newVersionString.Replace(".", ""))
+
+            If newVersion > currentVersion Then
+                result = False
+            Else
+                result = True
+            End If
+
+            Return result
+        Catch ex As Exception
+            Return False
+        End Try
+
     End Function
 
 End Class

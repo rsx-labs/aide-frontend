@@ -61,4 +61,7 @@
     Public Const STAT_TASK_REWORK As Integer = 5
     Public Const STAT_TASK_SEVERITY As Integer = 13
 
+    Public Const APP_COMCELL As Integer = 0
+    Public Const APP_BACKEND As Integer = 1
+
 End Class
