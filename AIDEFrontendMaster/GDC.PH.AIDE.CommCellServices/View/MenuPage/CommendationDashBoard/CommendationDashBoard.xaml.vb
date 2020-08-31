@@ -66,6 +66,7 @@ Class CommendationDashBoard
         Me.commendFrame = _commendFrame
         Me.email = _email
         Me.profile = _profile
+        CommonUtility.Instance().LoadCommendations(Me.empID)
         SetButtonCreateVisible()
         SetData()
         Me.DataContext = commendationVM

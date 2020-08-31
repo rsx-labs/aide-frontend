@@ -208,9 +208,11 @@ Public Class AttendanceDashBoard
             Case Constants.STAT_ATT_VL,
                 Constants.STAT_ATT_HVL,
                 Constants.STAT_ATT_EL,
-                Constants.STAT_ATT_HEL
+                Constants.STAT_ATT_HEL,
+                Constants.STAT_ATT_OL
 
                 rawUser.Display_Status = "..\..\..\Assets\Attendance\vacation.png"
+
         End Select
 
     End Sub

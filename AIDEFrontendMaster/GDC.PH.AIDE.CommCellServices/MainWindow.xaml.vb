@@ -333,7 +333,7 @@ Class MainWindow
         CommonUtility.Instance().LoadBirthdayForTheMonth(emailAddress)
         CommonUtility.Instance().LoadBirthdayAll(emailAddress)
         'CommonUtility.Instance().LoadAnnouncements(employeeId)
-        CommonUtility.Instance().LoadCommendations(employeeId)
+        'CommonUtility.Instance().LoadCommendations(employeeId)
         CommonUtility.Instance().LoadProjects(employeeId)
         CommonUtility.Instance().LoadAssignedProjects(employeeId)
         CommonUtility.Instance().LoadKPITargets(employeeId, DateTime.Now)
