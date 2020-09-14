@@ -338,7 +338,7 @@ Class MainWindow
         CommonUtility.Instance().LoadAssignedProjects(employeeId)
         CommonUtility.Instance().LoadKPITargets(employeeId, DateTime.Now)
         'CommonUtility.Instance().LoadKPISummary(employeeId)
-        'CommonUtility.Instance().LoadAuditQuestions(employeeId)
+        CommonUtility.Instance().LoadAuditQuestions(employeeId)
         CommonUtility.Instance().LoadNickNames(emailAddress)
 
         LoadAdditionalGlobalData()
@@ -549,18 +549,26 @@ Class MainWindow
             If machineOS.Contains("Windows 7") Then
                 eventStartUpId = "12"
             End If
+
+            _logger.Debug($"EventStartupID : {eventStartUpId}")
+
             Dim dateEntry As Date
             Dim eventLog As EventLogEntry = Nothing
             Dim timeIn As String
 
             Dim dateToday As Date = DateTime.Now.Date
             If CheckEventLog(dateEntry, eventLog, 1) Then
+                _logger.Debug($"Time check with event id [1] passed")
                 timeIn = dateEntry.ToString
             ElseIf CheckEventLog(dateEntry, eventLog, eventStartUpId) Then
+                _logger.Debug($"Time check with event id [{eventStartUpId}] passed")
                 timeIn = eventLog.TimeWritten.ToString
             Else
+                _logger.Debug($"Time check failed all eventLog check, using current time")
                 timeIn = Date.Now
             End If
+
+            _logger.Debug($"timeIn : {timeIn}")
             'Dim logName As EventLog = New EventLog()
             'logName.Log = "System"
 
@@ -994,28 +1002,46 @@ Class MainWindow
 
     Private Function CheckEventLog(ByRef dateEntry As Date, ByRef entryEvent As EventLogEntry, ByVal eventID As Integer) As Boolean
         Dim latestLogon As EventLogEntry = Nothing
-        If eventID = 1 Then
-            Dim log = New EventLog("System", Environment.MachineName, "EventLog")
-            Dim entries = New EventLogEntry(log.Entries.Count - 1) {}
-            log.Entries.CopyTo(entries, 0)
-            Dim startupTime = entries.Where(Function(x) x.InstanceId = 2147489653).[Select](Function(x) x.TimeGenerated).FirstOrDefault()
-            dateEntry = startupTime
-            If Not IsNothing(dateEntry) Then
-                Return True
-            End If
-        Else
-            Dim Log = New EventLog With {
-                .Source = "Microsoft Windows security auditing.",
-                .Log = "Security"
-            }
-            latestLogon = Log.Entries.Cast(Of EventLogEntry)().Where(Function(entry) entry.InstanceId = eventID OrElse entry.InstanceId = 4672).OrderByDescending(Function(i) i.TimeWritten).FirstOrDefault()
-            entryEvent = latestLogon
-            If Not IsNothing(latestLogon) Then
-                Return True
-            End If
-        End If
+        Try
+            If eventID = 1 Then
 
-        Return False
+                _logger.Debug($"Checking for event ID 1")
+
+                Dim log = New EventLog("System", Environment.MachineName, "EventLog")
+
+                Dim entries = log.Entries.Cast(Of EventLogEntry) _
+                                ().Where(Function(x) x.InstanceId = 1 _
+                                            And x.TimeWritten.Date = DateTime.Now.Date) _
+                               .[Select](Function(x) New With {x.MachineName,
+                                            x.Site, x.Source, x.TimeWritten, x.InstanceId}) _
+                               .ToList()
+
+                Dim timeIn = entries.First().TimeWritten.ToString
+                dateEntry = timeIn
+                If Not IsNothing(dateEntry) Then
+                    Return True
+                End If
+            Else
+                '_logger.Debug($"Checking for event ID {eventID}")
+                'Dim Log = New EventLog With {
+                '    .Source = "Microsoft Windows security auditing.",
+                '    .Log = "Security"
+                '}
+                'latestLogon = Log.Entries.Cast(Of EventLogEntry)().Where(Function(entry) entry.InstanceId = eventID OrElse entry.InstanceId = 4672).OrderByDescending(Function(i) i.TimeWritten).FirstOrDefault()
+                'entryEvent = latestLogon
+                'If Not IsNothing(latestLogon) Then
+                '    Return True
+                'End If
+
+                'right now lets skip this check, it requires elevated permission
+                Return False
+            End If
+
+            Return False
+        Catch ex As Exception
+            _logger.Warn($"Error : {ex.ToString()}. Returning False.")
+            Return False
+        End Try
 
     End Function
 #End Region
